@@ -7,15 +7,21 @@ import { GameComponent } from "./carApp/game-component/game.component";
 
 import { RenderService } from "./carApp/render-service/render.service";
 import { BasicService } from "./basic.service";
+import { Test2Component } from './carApp/test2/test2.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { MainGrilleComponent } from './crosswords/main-grille/main-grille.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        GameComponent
+        GameComponent,
+        Test2Component,
+        MainGrilleComponent
     ],
     imports: [
         BrowserModule,
-        HttpClientModule
+        HttpClientModule,
+        AppRoutingModule
     ],
     providers: [
         RenderService,

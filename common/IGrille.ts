@@ -4,3 +4,7 @@ export class Grille {
     mot: string;
     estHorizontal: boolean;
 }
+
+export class dictionnaireMots {
+    
+}

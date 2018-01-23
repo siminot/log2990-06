@@ -6,6 +6,7 @@
     grid-template-rows: [R1] 50% [R2] 50% [R3];
 }
 
+
 .indiceVertical {
     grid-column-start: C1;
     grid-column-end: C2;

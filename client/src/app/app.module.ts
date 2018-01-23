@@ -14,7 +14,6 @@ import { MainGrilleComponent } from './crosswords/main-grille/main-grille.compon
     declarations: [
         AppComponent,
         GameComponent,
-        Test2Component,
         MainGrilleComponent
     ],
     imports: [

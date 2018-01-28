@@ -2,32 +2,25 @@ import { Request, Response, NextFunction } from "express";
 import "reflect-metadata";
 import { injectable, } from "inversify";
 
-export const TAILLE_TABLEAU = 10;
-export const DIX_POURCENT = 10;
-
 module Route {
 
     @injectable()
     export class GenerateurGrille {
 
-        private grille: string[][];
-        private nbCarreNoirs: number;
-        private listeMots: string[];
+        grille: string[][];
+        nbCarreNoirs: number;
+        listeMots: string[];
 
         public generateurGrille(req: Request, res: Response, next: NextFunction): void {
             res.send();
         }
 
-        private creationTableau(): void {
+        creationTableau(): void {
 
 
         }
 
-        private generationNombreCasesNoires(): number {
-            return Math.floor(Math.random() * DIX_POURCENT) + DIX_POURCENT;
-        }
-
-        private generationCasesNoires(pourcentageCasesNoires: number ): void {
+        generationCasesNoires(pourcentageCasesNoires: number ): void {
 
         }
 

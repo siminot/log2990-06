@@ -1,5 +1,5 @@
 import { Mot } from './Mot';
-import * as WebRequest from 'web-request';
+//import * as WebRequest from 'web-request';
 
 class ServiceLexical{
 
@@ -9,8 +9,8 @@ class ServiceLexical{
 
 
     public async obtenirMotsSelonContrainte(contrainte : string){
-        let url = "https://api.datamuse.com/words?sp=t??k";
-        let data = await WebRequest.json<any>(url);
+        //let url = "https://api.datamuse.com/words?sp=t??k";
+        //let data = await WebRequest.json<any>(url);
         this.retirerMotsSansDefinition(null);
     }
 
@@ -28,3 +28,5 @@ class ServiceLexical{
     }
 
 }
+
+export = ServiceLexical;

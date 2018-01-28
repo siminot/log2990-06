@@ -12,7 +12,7 @@ module ServiceLexical{
 
         public constructor() {}
 
-        public helloWorld(req: Request, res: Response, next: NextFunction): void {
+        public messageServiceLexical(req: Request, res: Response, next: NextFunction): void {
             const message: Message = new Message();
             message.title = "Service";
             message.body = "Lexical";

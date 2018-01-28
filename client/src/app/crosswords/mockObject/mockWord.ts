@@ -1,7 +1,7 @@
 
 export class Mockword {
 public mots: string;
-public definition: string;,
+public definition: string;
 public vertical: boolean;
 public longeur: number;
 public premierX: number;

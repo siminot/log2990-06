@@ -7,7 +7,21 @@ import {mockWord} from "../mockObject/mockWord";
 })
 export class GrilleComponent implements OnInit {
 
+
+  public vertical: number = 0;
+  public horizontal: number = 0;
+
+  public genererClassVertical(): string {
+    return String(this.vertical++);
+  }
+
+  public genererClassHorizontal(): string {
+   return String(this.horizontal++);
+ }
+
   public constructor() { }
+
+
 
   public ngOnInit() {
   }

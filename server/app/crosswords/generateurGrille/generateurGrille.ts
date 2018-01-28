@@ -7,25 +7,21 @@ module Route {
     @injectable()
     export class GenerateurGrille {
 
-        private grille: string[][];
-        private nbCarreNoirs: number;
-        private listeMots: string[];
+        grille: string[][];
+        nbCarreNoirs: number;
+        listeMots: string[];
 
         public generateurGrille(req: Request, res: Response, next: NextFunction): void {
             res.send();
         }
 
-        private creationTableau(): void {
+        creationTableau(): void {
 
 
         }
 
-        private generationNombreCasesNoires(): number {
-            return Math.floor(Math.random() * DIX_POURCENT) + DIX_POURCENT;
-        }
+        generationCasesNoires(pourcentageCasesNoires: number ): void {
 
-        private generationCasesNoires(pourcentageCasesNoires: number ): void {
-            fo
         }
 
 

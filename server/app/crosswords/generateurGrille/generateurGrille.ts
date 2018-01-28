@@ -93,6 +93,11 @@ module Route {
             return false;
         }
 
+        public helloWorld(req: Request, res: Response, next: NextFunction): void {
+            this.initCasesNoires(.5);
+            res.send(JSON.stringify(this.grille));
+        }
+
         //Interface pour tests...
         public initCasesNoires(ratioVoulu: number): number {
             return this.genererCasesNoires(ratioVoulu);

@@ -12,10 +12,10 @@ import { GenerateurGrille } from "./../crosswords/generateurGrille/generateurGri
             done();
         });
 
-        it('fait bien 100% cases, soit 16 cases', (done) => {
-            assert.equal(genTest.initCasesNoires(1), 16);
-            done();
-        });
+        // it('fait bien 100% cases, soit 16 cases', (done) => {
+        //     assert.equal(genTest.initCasesNoires(1), 16);
+        //     done();
+        // });
 
         it('fait bien 0% cases, soit 0 cases', (done) => {
             assert.equal(genTest.initCasesNoires(0), 0);

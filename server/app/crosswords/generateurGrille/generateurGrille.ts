@@ -38,9 +38,10 @@ module Route {
                 if (Math.random() <= ratioVoulu) {
 
                     //Verif si position est valide pour insertion
-                    if (this.verifInsertCaseNoire(x, y))
-                    this.grille[y][x] = "-1";
-                    compteurCasesNoires++;
+                    if (this.verifInsertCaseNoire(x, y)) {
+                        this.grille[y][x] = "-1";
+                        compteurCasesNoires++;
+                    }
                 }
             }
             return nombreCases;

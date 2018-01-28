@@ -1,10 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { Message } from "../../../common/communication/message";
 import "reflect-metadata";
 import { injectable, } from "inversify";
-
-export const TAILLE_TABLEAU = 10;
-export const DIX_POURCENT = 10;
 
 module Route {
 
@@ -29,15 +25,9 @@ module Route {
         }
 
         private generationCasesNoires(pourcentageCasesNoires: number ): void {
-
+            fo
         }
 
-        public helloWorld(req: Request, res: Response, next: NextFunction): void {
-            const message: Message = new Message();
-            message.title = "Hello";
-            message.body = "World";
-            res.send(JSON.stringify(message));
-        }
 
     }
 }

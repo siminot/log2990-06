@@ -11,7 +11,7 @@ class ServiceLexical{
     public async obtenirMotsSelonContrainte(contrainte : string){
         let url = "https://api.datamuse.com/words?sp=t??k";
         let data = await WebRequest.json<any>(url);
-
+        this.retirerMotsSansDefinition(null);
     }
 
     private retirerMotsSansDefinition(mots : Array<Mot>) : void {

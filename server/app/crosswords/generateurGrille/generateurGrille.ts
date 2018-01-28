@@ -3,9 +3,6 @@ import { Message } from "../../../common/communication/message";
 import "reflect-metadata";
 import { injectable, } from "inversify";
 
-export const TAILLE_TABLEAU = 10;
-export const DIX_POURCENT = 10;
-
 module Route {
 
     @injectable()
@@ -29,7 +26,7 @@ module Route {
         }
 
         private generationCasesNoires(pourcentageCasesNoires: number ): void {
-
+            fo
         }
 
         public helloWorld(req: Request, res: Response, next: NextFunction): void {

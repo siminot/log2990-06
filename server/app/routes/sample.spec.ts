@@ -1,5 +1,13 @@
+{
+    const assert = require('assert');
 
-it('should complete this test', (done) => {
-    assert.ok(true);
-    done();
-});
+    describe("Sample test", () => {
+
+        it('should complete this test', (done) => {
+            assert.ok(true);
+            done();
+        });
+
+    });
+    
+}

@@ -1,11 +1,15 @@
+import { Difficulte } from "./Difficulte";
+
 export class ContrainteMot {
 	private contraintes: Map<number, string>;
 
-	constructor(private longueurMot : number){
-		
+	public constructor(private longueurMot: number, private difficulte: Difficulte) { 
+		if(longueurMot < 1)
+			throw RangeError("Longueur du mot invalide : " + longueurMot + " doit etre > 0");
+		this.contraintes.clear();
 	}
-	
-    public ajouterContrainte(lettre : string, position : number){
+
+    public ajouterContrainte(lettre: string, position: number) : void {
 		if(lettre.length != 1)
 			throw RangeError("La contrainte doit être de longueur 1 et celle reçue est de longueur " + lettre.length);
 

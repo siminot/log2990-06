@@ -9,12 +9,13 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
+        private tailleGrille: number = TAILLE_TEST;
 
         constructor() {
 
-            this.grille = new Array(TAILLE_TEST).fill("0");
-            for (let i: number = 0; i < TAILLE_TEST; i++) {
-                this.grille[i] = new Array(TAILLE_TEST).fill("0");
+            this.grille = new Array(this.tailleGrille).fill("0");
+            for (let i: number = 0; i < this.tailleGrille; i++) {
+                this.grille[i] = new Array(this.tailleGrille).fill("0");
             }
 
         }
@@ -24,15 +25,15 @@ module Route {
             if (ratioVoulu < 0 || ratioVoulu > 1)
             return null;
 
-            let nombreCases: number = Math.ceil(TAILLE_TEST * TAILLE_TEST * ratioVoulu);
+            let nombreCases: number = Math.ceil(this.tailleGrille * this.tailleGrille * ratioVoulu);
             let compteurCasesNoires: number = 0;
             let x: number = 0;
             let y: number = 0;
 
             while(compteurCasesNoires < nombreCases) {
 
-                x = Math.floor(Math.random() * TAILLE_TEST);
-                y = Math.floor(Math.random() * TAILLE_TEST);
+                x = Math.floor(Math.random() * this.tailleGrille);
+                y = Math.floor(Math.random() * this.tailleGrille);
 
                 if (Math.random() <= ratioVoulu) {
 
@@ -47,21 +48,49 @@ module Route {
 
         private verifInsertCaseNoire(positionX: number, positionY: number): Boolean {
 
-             //parcours colonne
-            for (let i: number = 0; i < TAILLE_TEST; i++) {
-            }
+            if (this.grille[positionY][positionX] == "-1")
+                return false;
 
-            //Parcours rangee
-            for (let i: number = 0; i < TAILLE_TEST; i++) {
-            }
+            this.grille[positionY][positionX] == "-1";
 
-            return true;
+            let caseDisponible: Boolean = true;
+
+            caseDisponible = this.neGenerePasDeTrou(positionX - 1, positionY);
+            if (caseDisponible)
+                caseDisponible = this.neGenerePasDeTrou(positionX + 1, positionY);
+            if (caseDisponible)
+                caseDisponible = this.neGenerePasDeTrou(positionX, positionY - 1);
+            if (caseDisponible)
+                caseDisponible = this.neGenerePasDeTrou(positionX, positionY + 1);
+            
+            if (caseDisponible)
+                this.grille[positionY][positionX] == "0";
+
+            return caseDisponible;
         }
 
-        public generateurGrille(req: Request, res: Response, next: NextFunction): void {
-            res.send();
-        }
+        private neGenerePasDeTrou(positionX: number, positionY: number): Boolean {
 
+            if (positionX < 0 || positionY <0 || positionX >= this.tailleGrille || positionY >= this.tailleGrille )
+                return true;
+            if(this.grille[positionY][positionX] == "-1")
+                return true;
+                
+            if (positionY - 1 > 0)
+                if(this.grille[positionY - 1][positionY] == "0")
+                    return true;
+            if (positionY + 1 < this.tailleGrille)
+                if(this.grille[positionY + 1][positionX] == "0")
+                    return true;
+            if (positionX - 1 > 0)
+                if(this.grille[positionY][positionX - 1] == "0")
+                    return true;
+            if (positionX + 1 < this.tailleGrille)
+                if(this.grille[positionY][positionX + 1] == "0")
+                    return true;
+
+            return false;
+        }
 
         //Interface pour tests...
         public initCasesNoires(ratioVoulu: number): number {

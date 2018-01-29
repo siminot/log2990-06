@@ -7,3 +7,7 @@ public longeur: number;
 public premierX: number;
 public premierY: number;
 }
+
+export class objetTest {
+public case: boolean; 
+}

@@ -1,8 +1,8 @@
-<div>
-    <table border="1">
+<div class = "grille">
+    <table  border="1">
         <tr *ngFor="let item of tabarnak; let i = index">
             <td *ngFor="let case of item; let j = index1">
-            {{case}}
+            {{case.mot}}
             </td>
         </tr>
     </table>

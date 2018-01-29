@@ -10,4 +10,5 @@ public premierY: number;
 
 export class objetTest {
 public case: boolean; 
+public mot:string; 
 }

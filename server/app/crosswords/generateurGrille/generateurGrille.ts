@@ -13,6 +13,12 @@ module Route {
 
         constructor() {
 
+            this.initMatrice();
+
+        }
+
+        private initMatrice(): void {
+
             this.grille = new Array(this.tailleGrille).fill("0");
             for (let i: number = 0; i < this.tailleGrille; i++) {
                 this.grille[i] = new Array(this.tailleGrille).fill("0");
@@ -52,7 +58,7 @@ module Route {
             if (this.grille[positionY][positionX] == "-1")
                 return false;
 
-            this.grille[positionY][positionX] == "-1";
+            this.grille[positionY][positionX] = "-1";
 
             let caseDisponible: Boolean = true;
 
@@ -64,8 +70,7 @@ module Route {
             if (caseDisponible)
                 caseDisponible = this.neGenerePasDeTrou(positionX, positionY + 1);
             
-            if (caseDisponible)
-                this.grille[positionY][positionX] == "0";
+            this.grille[positionY][positionX] = "0";
 
             return caseDisponible;
         }
@@ -94,12 +99,13 @@ module Route {
         }
 
         public helloWorld(req: Request, res: Response, next: NextFunction): void {
-            this.initCasesNoires(.5);
+            this.initCasesNoires(.25);
             res.send(JSON.stringify(this.grille));
         }
 
         //Interface pour tests...
         public initCasesNoires(ratioVoulu: number): number {
+            this.initMatrice();
             return this.genererCasesNoires(ratioVoulu);
         }
 

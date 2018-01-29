@@ -19,23 +19,34 @@ module ServiceLexical{
             res.send(JSON.stringify(message));
         }    
     
-        public async obtenirMotsSelonContrainte(contrainte : string){
-            //let url = "https://api.datamuse.com/words?sp=t??k";
-            //let data = await WebRequest.json<any>(url);
-            this.retirerMotsSansDefinition(null);
+        public obtenirMotsSelonContrainte(contrainte : string) : Array<Mot> {
+            let url = "https://api.datamuse.com/words?sp=";
+            url += contrainte + "&md=df";
+            let data;//= WebRequest.json<any>(url);
+            return this.importerJSON(data);
         }
     
-        private retirerMotsSansDefinition(mots : Array<Mot>) : void {
-    
+        private importerJSON(data : any) : Array<Mot> {
+            let dictionnaire : Array<Mot>;
+            
+            //Parcourir le JSON et ajouter les mots
+            let donnees = JSON.parse(data);
+            for(let objet of donnees){
+                let mot = new Mot(objet.word, objet.defs, objet.tags[0])
+                if(mot.possedeDefinition())
+                    dictionnaire.fill(mot);
+            }
+            
+            return dictionnaire;
         }
     
         public obtenirDefinitionsMot(mot : string) : Mot {
-    
-    
-            if("mot inexsistant")
-                throw Error("Mot inexistant ou sans definition");
-    
-            return null;
+            let motTrouve = this.obtenirMotsSelonContrainte(mot)[0];
+
+            if(motTrouve === undefined)
+                throw Error("Mot non trouve");
+            else
+                return motTrouve;
         }
     }
 

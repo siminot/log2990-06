@@ -1,4 +1,4 @@
-import { GenerateurGrille } from "./../crosswords/generateurGrille/generateurGrille";
+import { GenerateurGrille } from "./generateurGrille";
 
 {
 

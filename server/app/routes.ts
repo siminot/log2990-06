@@ -2,13 +2,12 @@ import { injectable, inject } from "inversify";
 import { Router, Request, Response, NextFunction } from "express";
 
 import Types from "./types";
-//import { Index } from "./routes/index";
-import { GenerateurGrille } from "./crosswords/generateurGrille/generateurGrille"
+import { Index } from "./routes/index";
 
 @injectable()
 export class Routes {
 
-    public constructor(@inject(Types.GenerateurGrille) private test: GenerateurGrille) {}
+    public constructor(@inject(Types.Index) private test: Index) {}
 
     public get routes(): Router {
         const router: Router = Router();

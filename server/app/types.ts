@@ -3,5 +3,4 @@ export default  {
         Application: Symbol("Application"),
         Routes: Symbol("Routes"),
         Index: Symbol("Index"),
-        GenerateurGrille: Symbol("GenerateurGrille")
 };

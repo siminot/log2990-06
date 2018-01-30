@@ -1,15 +1,16 @@
 
 <div class = "grille">
-    <table class="table">
-        <tr *ngFor="let item of matriceVide; let i = index" >
-            <td *ngFor="let case of item; let j = index1" >
-                <img *ngIf="case.mot == 'P'; else elseBlock" [style.opacity]="myStyle(case.activer)" (mouseover)= "case.activer = true" (mouseout) = "case.activer = false" Class = "tuile" src="../../../assets/tuile.png"><img>
-                <ng-template #elseBlock> <img src="../../../assets/tuileMorte.png" class="tuile"><img> </ng-template>
-                <p class="reponseLettre" *ngIf = "case.case">{{case.mot}}</p>
-        
-            </td>
-        </tr>
-    </table>
-</div>
-
-
+        <table class="table">
+            <tr *ngFor="let item of matriceVide; let i = index" >
+                <td *ngFor="let case of item; let j = index1" >
+                    <img *ngIf="case.mot == 'P'; else elseBlock" [style.opacity]="myStyle(case.activer)" (mouseover)= "case.activer = true" (mouseout) = "case.activer = false" Class = "tuile" src="../../../assets/tuile.png"><img>
+                    <ng-template #elseBlock> <img src="../../../assets/tuileMorte.png" class="tuile"><img> </ng-template>
+                    <p class="reponseLettre" *ngIf = "case.case">{{case.mot}}</p>
+            
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    
+    

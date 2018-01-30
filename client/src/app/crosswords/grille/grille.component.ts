@@ -1,9 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-
-import { TAILLE_TABLEAU } from "../constantes";
+import {Mockword} from "../mockObject/mockWord";
+import {TAILLE_TABLEAU} from "../constantes";
 import { objetTest } from "../mockObject/mockWord";
-import { Mockword } from '../mockObject/mockWord';
-
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
 
 
@@ -15,22 +13,7 @@ import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-
 
 
 export class GrilleComponent implements OnInit {
-  matriceVide: Array<Array<objetTest>>;
-  mots: Mockword[];
-  dessu:boolean = false;
-  compteur:number = 0;
-
-
-  public constructor(private motsGrilleService: RequeteDeGrilleService) {
-    this.matriceVide = this.genererGrille();
-  }
-
-
-  ngOnInit() { 
-    this.getMots();
-  }
-
-
+  
   genererGrille(): any[][]{
     let matrice: Array<Array<objetTest>> = new Array(TAILLE_TABLEAU);
 
@@ -54,14 +37,31 @@ export class GrilleComponent implements OnInit {
   }
 
 
-  myStyle(): string{
-    if(!this.dessu)
+  
+  dessu:boolean = false; 
+  compteur:number=0;
+
+  myStyle(etat:boolean): string{
+    if(!etat)
       return("1")
     return("0")
+
   }
+  matriceVide: Array<Array<objetTest>>;
+  public constructor(private listeMotsService: RequeteDeGrilleService) {
+    this.matriceVide = this.genererGrille();
 
 
+
+
+
+
+   }
+
+  ngOnInit() { this.getMots(); console.log(this.mots);}
+
+   mots:Mockword[];
   getMots(): void {
-    this.motsGrilleService.getMots().subscribe(mots => this.mots = mots);
+    this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
   }
 }

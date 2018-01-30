@@ -54,6 +54,6 @@ export class GrilleComponent implements OnInit {
 
 
   getMots(): void {
-
+    this.grilleService.getMots().subscribe(listeDeMots => this.mots = listeDeMots);
   }
 }

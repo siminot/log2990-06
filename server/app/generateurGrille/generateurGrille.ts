@@ -94,7 +94,9 @@ module Route {
 
         /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
+            this.initMatrice();
             this.initCasesNoires(.25);
+            //this.initListeMot();            
             res.send(JSON.stringify(this.grille));
         }
 
@@ -125,7 +127,9 @@ module Route {
                     break;
                 }
             }
-            return new Mockword(estVertical, longMot, x, y);
+            console.log(longMot + " ");
+            let mot = new Mockword(estVertical, longMot, x, y);
+            return mot;
         }
 
         private genererListeMot():number {
@@ -133,23 +137,28 @@ module Route {
                 for (let j: number = 0; i < this.tailleGrille; j++) {
                     if (this.grille[i][j] == VIDE) {
                         if (j == 0) {
+                            console.log(i + " " + j + " ");
                             this.listeMot.push(this.genererMot(j, i, false));
                         }
                         else if (this.grille[i][j - 1] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
+                             console.log(i + " " + j + " ");
                              this.listeMot.push(this.genererMot(j, i, false));
                         }
                         if (i == 0) {
+                            console.log(i + " " + j + " ");
                             this.listeMot.push(this.genererMot(j, i, true));
                         }
                         else if (this.grille[i - 1][j] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
+                            console.log(i + " " + j + " ");
                             this.listeMot.push(this.genererMot(j, i, true));
                         }
                     }
                 }
             }
             return 0;
-        }
 
+
+        }
     }
 }
 

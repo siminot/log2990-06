@@ -50,8 +50,5 @@ export class Mockword {
     setDefinition (definition: string){
         this.definition = definition;
     }
-
-
-    
-    
+  
 }

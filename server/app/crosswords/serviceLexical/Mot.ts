@@ -1,4 +1,4 @@
-import { Difficulte } from "./Difficulte";
+//import { Difficulte } from "./Difficulte";
 
 export enum Frequence { Faible, Elevee};
 

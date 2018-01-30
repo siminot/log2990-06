@@ -1,5 +1,5 @@
 {
-    const assert = require("assert");
+    //const assert = require("assert");
     let Difficulte = require("./Difficulte");
     let ContrainteMot = require("./ContrainteMot");
     let expect = require("expect");

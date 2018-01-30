@@ -1,9 +1,9 @@
-import { Difficulte } from "./Difficulte";
+//import { Difficulte } from "./Difficulte";
 
 export class ContrainteMot {
 	private contraintes: Map<number, string>;
 
-	public constructor(private longueurMot: number, private difficulte: Difficulte) { 
+	public constructor(private longueurMot: number/*, private difficulte: Difficulte*/) { 
 		if(longueurMot < 1)
 			throw RangeError("Longueur du mot invalide : " + longueurMot + " doit etre > 0");
 		this.contraintes.clear();

@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 
 import { TAILLE_TEST, VIDE, NOIR } from "./constantes";
-//import { Mockword } from  "./../../../common/mockObject/mockWord"
+import { Mockword } from  "./../../../common/mockObject/mockWord"
 
 module Route {
 
@@ -11,7 +11,7 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
-        //private listeMot: Array<Mockword>;
+        private listeMot: Array<Mockword>;
         private tailleGrille: number = TAILLE_TEST;
 
         constructor() {
@@ -48,13 +48,13 @@ module Route {
             return nombreCases;
         }
 
-        private verifCaseNoire(positionX: number, positionY: number): Boolean {
+        private verifCaseNoire(positionX: number, positionY: number): boolean {
 
             if (this.grille[positionY][positionX] == NOIR)
                 return false;
 
             this.grille[positionY][positionX] = NOIR;
-            let caseDisponible: Boolean = true;
+            let caseDisponible: boolean = true;
 
             caseDisponible = this.neGenerePasDeTrou(positionX - 1, positionY);
             if (caseDisponible)
@@ -69,7 +69,7 @@ module Route {
             return caseDisponible;
         }
 
-        private neGenerePasDeTrou(positionX: number, positionY: number): Boolean {
+        private neGenerePasDeTrou(positionX: number, positionY: number): boolean {
 
             if (positionX < 0 || positionY <0 || positionX >= this.tailleGrille || positionY >= this.tailleGrille )
                 return true;
@@ -109,39 +109,46 @@ module Route {
             return this.genererCasesNoires(ratioVoulu);
         }
 
-        // private genererMot(x: number, y: number, estVertical: Boolean): Mockword {
+        public initListeMot(): void {
 
-        //     let longMot: number = 0;
-        //     for (let i: number = x; i < this.tailleGrille; i++) {
-        //         if (this.grille[y][i] != NOIR && !estVertical) {
-        //             longMot++;
-        //         }
-        //     }
-        //     return new Mockword(x, y, longMot, estVertical);
-        // }
+            this.genererListeMot();
+        }
 
-        // private genererListeMot():number {
-        //     let ctrMots: number = 0;
-        //     for (let i: number = 0; i < this.tailleGrille; i++) {
-        //         for (let j: number = 0; i < this.tailleGrille; j++) {
-        //             if (this.grille[i][j] == VIDE) {
-        //                 if (j == 0) {
-        //                     genererMot(j, i, false);
-        //                 }
-        //                 else if (this.grille[i][j - 1] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
-        //                     genererMot(j, i, false);
-        //                 }
-        //                 if (i == 0) {
-        //                     genererMot(i, j, true);
-        //                 }
-        //                 else if (this.grille[i - 1][j] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
-        //                     genererMot(i, j, true);
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     return 0;
-        // }
+        public genererMot(x: number, y: number, estVertical: boolean): Mockword {
+
+            let longMot: number = 0;
+            for (let i: number = estVertical ? y: x; i < this.tailleGrille; i++) {
+                if (this.grille[i][x] != NOIR || this.grille[y][i] != NOIR) {
+                    longMot++;
+                }
+                else {
+                    break;
+                }
+            }
+            return new Mockword(estVertical, longMot, x, y);
+        }
+
+        private genererListeMot():number {
+            for (let i: number = 0; i < this.tailleGrille; i++) {
+                for (let j: number = 0; i < this.tailleGrille; j++) {
+                    if (this.grille[i][j] == VIDE) {
+                        if (j == 0) {
+                            this.listeMot.push(this.genererMot(j, i, false));
+                        }
+                        else if (this.grille[i][j - 1] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
+                             this.listeMot.push(this.genererMot(j, i, false));
+                        }
+                        if (i == 0) {
+                            this.listeMot.push(this.genererMot(j, i, true));
+                        }
+                        else if (this.grille[i - 1][j] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
+                            this.listeMot.push(this.genererMot(j, i, true));
+                        }
+                    }
+                }
+            }
+            return 0;
+        }
 
     }
 }

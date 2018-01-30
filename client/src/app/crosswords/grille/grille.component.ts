@@ -18,7 +18,7 @@ export class GrilleComponent implements OnInit {
   matriceVide: Array<Array<objetTest>>;
   mots: Mockword[];
   dessu:boolean = false;
-  compteur:number=0;
+  compteur:number = 0;
 
 
   public constructor(private motsGrilleService: RequeteDeGrilleService) {
@@ -26,7 +26,9 @@ export class GrilleComponent implements OnInit {
   }
 
 
-  ngOnInit() { this.getMots(); }
+  ngOnInit() { 
+    this.getMots();
+  }
 
 
   genererGrille(): any[][]{

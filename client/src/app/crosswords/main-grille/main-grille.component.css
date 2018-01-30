@@ -8,39 +8,50 @@
 
 .indiceVertical {
     grid-column-start: C1;
+    /* autoprefixer: off */
     grid-column-end: C2;
     grid-row-start: R1;
+    /* autoprefixer: off */
     grid-row-end: R2;
 }
 
 .Grille {
     grid-column-start: C2;
+    /* autoprefixer: off */
     grid-column-end: C3;
     grid-row-start: R1;
+    /* autoprefixer: off */
     grid-row-end: R3;
 }
 
 .Player1 {
     grid-column-start: C3;
+    /* autoprefixer: off */
     grid-column-end: C4;
     grid-row-start: R1;
+    /* autoprefixer: off */
     grid-row-end: R2;
 }
 
 .indiceHorizontal {
     grid-column-start: C1;
+    /* autoprefixer: off */
     grid-column-end: C2;
     grid-row-start: R2;
+    /* autoprefixer: off */
     grid-row-end: R3;
 }
 
 .Player2 {
     grid-column-start: C3;
+    /* autoprefixer: off */
     grid-column-end: C4;
     grid-row-start: R2;
+    /* autoprefixer: off */
     grid-row-end: R3;
 }
 
 .item {
-    border: solid 2px;
+    border: dashed 2px;
+    margin:1px;
 }

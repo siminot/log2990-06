@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-//import {Mockword} from "../mockObject/mockWord";
+
 import { TAILLE_TABLEAU } from "../constantes";
 import { objetTest } from "../mockObject/mockWord";
 import { Mockword } from '../mockObject/mockWord';
+
+import { RequeteDeGrilleService } from '../service-Requete-de-grille/requete-de-grille.service';
 
 
 @Component({
@@ -19,7 +21,7 @@ export class GrilleComponent implements OnInit {
   compteur:number=0;
 
 
-  public constructor() {
+  public constructor(private grilleService: RequeteDeGrilleService) {
     this.matriceVide = this.genererGrille();
 
   }
@@ -50,7 +52,7 @@ export class GrilleComponent implements OnInit {
     return("0")
   }
 
-  
+
   getMots(): void {
 
   }

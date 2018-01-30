@@ -1,9 +1,16 @@
 import { GenerateurGrille } from "./generateurGrille";
+import { Mockword } from "./../../../common/mockObject/mockWord"
 
 {
 
     let genTest: GenerateurGrille = new GenerateurGrille;
     const assert = require('assert');
+
+    let grilleTest: Array<Array<string>> = 
+                   [["-1","0","0","0"],
+                    ["0","-1","0","0"],
+                    ["0","0","-1","0"],
+                    ["0","0","0","-1"]];
 
     describe("tests generation des cases noires", () => {
 
@@ -33,5 +40,26 @@ import { GenerateurGrille } from "./generateurGrille";
         });
 
   });
+
+    describe("tests generation des mots", () => {
+
+        genTest.setGrile(grilleTest);
+
+        let motTest: Mockword = new Mockword(false, 3, 1, 0);
+
+        it('Le premier mot horizontal est bien de 3 lettres', (done) => {
+            assert.equal(genTest.genererMot(1, 0, false).getLongueur, motTest.getLongueur);
+            done();
+        });
+
+        motTest = new Mockword(true, 3, 0, 1);
+
+        it('Le mot vertical a la position (0, 1) est bien de 3 lettres', (done) => {
+            assert.equal(genTest.genererMot(0, 1, true).getLongueur, motTest.getLongueur);
+            done();
+        });
+
+  });
+
 
 }

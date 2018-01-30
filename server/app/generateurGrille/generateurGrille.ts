@@ -11,11 +11,16 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
-        private listeMot: Array<Mockword>;
+        private listeMot: Array<Mockword> = new Array<Mockword>();
         private tailleGrille: number = TAILLE_TEST;
 
         constructor() {
             this.initMatrice();
+        }
+
+        //Fonction pour tester la creation des mots
+        public setGrile(grille: Array<Array<string>>): void {
+            this.grille = grille
         }
 
         private initMatrice(): void {
@@ -96,7 +101,7 @@ module Route {
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initMatrice();
             this.initCasesNoires(.25);
-            //this.initListeMot();            
+            this.initListeMot();            
             res.send(JSON.stringify(this.grille));
         }
 
@@ -127,38 +132,35 @@ module Route {
                     break;
                 }
             }
-            console.log(longMot + " ");
-            let mot = new Mockword(estVertical, longMot, x, y);
-            return mot;
+            return new Mockword(estVertical, longMot, x, y);
         }
 
         private genererListeMot():number {
+
             for (let i: number = 0; i < this.tailleGrille; i++) {
-                for (let j: number = 0; i < this.tailleGrille; j++) {
+                for (let j: number = 0; j < this.tailleGrille; j++) {
                     if (this.grille[i][j] == VIDE) {
                         if (j == 0) {
-                            console.log(i + " " + j + " ");
                             this.listeMot.push(this.genererMot(j, i, false));
                         }
                         else if (this.grille[i][j - 1] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
-                             console.log(i + " " + j + " ");
                              this.listeMot.push(this.genererMot(j, i, false));
                         }
                         if (i == 0) {
-                            console.log(i + " " + j + " ");
                             this.listeMot.push(this.genererMot(j, i, true));
                         }
                         else if (this.grille[i - 1][j] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
-                            console.log(i + " " + j + " ");
                             this.listeMot.push(this.genererMot(j, i, true));
                         }
                     }
                 }
             }
+
+
             return 0;
 
-
         }
+
     }
 }
 

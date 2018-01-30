@@ -18,15 +18,22 @@ module Route {
             this.initMatrice();
         }
 
-        //Fonction pour tester la creation des mots
-        public setGrile(grille: Array<Array<string>>): void {
-            this.grille = grille
-        }
-
         private initMatrice(): void {
             this.grille = new Array(this.tailleGrille).fill(VIDE);
             for (let i: number = 0; i < this.tailleGrille; i++) {
                 this.grille[i] = new Array(this.tailleGrille).fill(VIDE);
+            }
+            this.listeMot = new Array<Mockword>();
+        }
+
+        private nettoyerMots(): void {
+            this.listeMot.sort((n1, n2) => n2.getLongueur() - n1.getLongueur());
+            while (this.listeMot[this.listeMot.length - 1].getLongueur() == 1) {
+                this.listeMot.pop();
+            }
+
+            for (let i: number = 0; i < this.listeMot.length; i++) {
+                console.log(this.listeMot[i].getLongueur());                
             }
         }
 
@@ -105,17 +112,6 @@ module Route {
             res.send(JSON.stringify(this.grille));
         }
 
-        /* FONCTION BIDON POUR TESTER DES CHOSES */
-        public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
-            res.send(JSON.stringify("DIFFICILE"));
-        }
-
-        //Interface pour tests...
-        public initCasesNoires(ratioVoulu: number): number {
-            this.initMatrice();
-            return this.genererCasesNoires(ratioVoulu);
-        }
-
         public initListeMot(): void {
 
             this.genererListeMot();
@@ -125,42 +121,59 @@ module Route {
 
             let longMot: number = 0;
             for (let i: number = estVertical ? y: x; i < this.tailleGrille; i++) {
-                if (this.grille[i][x] != NOIR || this.grille[y][i] != NOIR) {
+                if (this.grille[i][x] != NOIR && estVertical) {
+                    longMot++;
+                }
+                else if (this.grille[y][i] != NOIR && !estVertical){
                     longMot++;
                 }
                 else {
                     break;
                 }
             }
+            //console.log("Position (" + x + ", " + y + ") "+longMot);
             return new Mockword(estVertical, longMot, x, y);
         }
 
-        private genererListeMot():number {
+        public genererListeMot():number {
 
+            let ctrMots: number = 0;
             for (let i: number = 0; i < this.tailleGrille; i++) {
                 for (let j: number = 0; j < this.tailleGrille; j++) {
                     if (this.grille[i][j] == VIDE) {
                         if (j == 0) {
                             this.listeMot.push(this.genererMot(j, i, false));
+                            ctrMots++;
                         }
                         else if (this.grille[i][j - 1] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
                              this.listeMot.push(this.genererMot(j, i, false));
+                             ctrMots++;
                         }
                         if (i == 0) {
                             this.listeMot.push(this.genererMot(j, i, true));
+                            ctrMots++;
                         }
                         else if (this.grille[i - 1][j] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
                             this.listeMot.push(this.genererMot(j, i, true));
+                            ctrMots++;
                         }
                     }
                 }
             }
-
-
-            return 0;
-
+            this.nettoyerMots();
+            return ctrMots;
         }
 
+                /* FONCTION BIDON POUR TESTER DES CHOSES */
+        public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
+            res.send(JSON.stringify("DIFFICILE"));
+        }
+
+        //Interface pour tests...
+        public initCasesNoires(ratioVoulu: number): number {
+            this.initMatrice();
+            return this.genererCasesNoires(ratioVoulu);
+        }
     }
 }
 

@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 //import {Mockword} from "../mockObject/mockWord";
-import {TAILLE_TABLEAU} from "../constantes";
+import { TAILLE_TABLEAU } from "../constantes";
 import { objetTest } from "../mockObject/mockWord";
+import { Mockword } from '../mockObject/mockWord';
 
 
 @Component({
@@ -12,7 +13,21 @@ import { objetTest } from "../mockObject/mockWord";
 
 
 export class GrilleComponent implements OnInit {
-  
+  matriceVide: Array<Array<objetTest>>;
+  mots: Mockword[];
+  dessu:boolean = false;
+  compteur:number=0;
+
+
+  public constructor() {
+    this.matriceVide = this.genererGrille();
+
+  }
+
+
+  ngOnInit() { }
+
+
   genererGrille(): any[][]{
     let matrice: Array<Array<objetTest>> = new Array(TAILLE_TABLEAU);
 
@@ -29,26 +44,14 @@ export class GrilleComponent implements OnInit {
   }
 
 
-  
-  dessu:boolean = false; 
-  compteur:number=0;
-
   myStyle(): string{
     if(!this.dessu)
       return("1")
     return("0")
+  }
+
+  
+  getMots(): void {
 
   }
-  matriceVide: Array<Array<objetTest>>;
-  public constructor() {
-    this.matriceVide = this.genererGrille();
-
-
-
-
-
-
-   }
-
-  ngOnInit() { }
 }

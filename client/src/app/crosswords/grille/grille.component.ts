@@ -35,7 +35,14 @@ export class GrilleComponent implements OnInit {
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
       let row: Array<objetTest> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++){
-        let caseNoir: objetTest = {case:true, mot:"X"};
+        let caseNoir:objetTest;
+        if(j%2==0){
+          caseNoir = {case:true, mot:"X"};
+        }
+        else
+        {
+          caseNoir = {case:true, mot:"P"};
+        }
         row[j] = caseNoir; 
       }
       matrice[i] = row; 
@@ -45,8 +52,17 @@ export class GrilleComponent implements OnInit {
   }
 
 
+<<<<<<< HEAD
   myStyle(): string{
     if(!this.dessu)
+=======
+  
+  dessu:boolean = false; 
+  compteur:number=0;
+
+  myStyle(etat:boolean): string{
+    if(!etat)
+>>>>>>> 58087bba48adfb903a58fed763d18e10dbf92b80
       return("1")
     return("0")
   }

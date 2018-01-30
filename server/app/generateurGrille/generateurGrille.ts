@@ -103,6 +103,11 @@ module Route {
             res.send(JSON.stringify(this.grille));
         }
 
+        public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
+
+            res.send(JSON.stringify("DIFFICILE"));
+        }
+
         //Interface pour tests...
         public initCasesNoires(ratioVoulu: number): number {
             this.initMatrice();

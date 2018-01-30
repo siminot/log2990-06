@@ -26,7 +26,7 @@ export class GrilleComponent implements OnInit {
   }
 
 
-  ngOnInit() { this.getMots(); console.log(this.mots);}
+  ngOnInit() { this.getMots(); }
 
 
   genererGrille(): any[][]{

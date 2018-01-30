@@ -14,7 +14,7 @@ module ServiceLexical{
         public constructor() {}
 
         public servirMots(req: Request, res: Response, next: NextFunction): void {
-            this.obtenirMotsSelonContrainte("fa??").then(reponse => {
+            this.obtenirMotsSelonContrainte("????").then(reponse => {
                 res.send(reponse);
             });
         }    
@@ -28,7 +28,7 @@ module ServiceLexical{
         private trierMotsJSON(data : any) : Mot[] {
             let dictionnaire : Mot[] = [];
             
-            //Parcourir le JSON et ajouter les mots
+            // Parcourir le JSON et ajouter les mots
             // let donnees = JSON.parse(data);
             for(let objet of data){
                 let mot = new Mot(objet.word, objet.defs, objet.tags[0])

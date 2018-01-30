@@ -52,17 +52,8 @@ export class GrilleComponent implements OnInit {
   }
 
 
-<<<<<<< HEAD
   myStyle(): string{
     if(!this.dessu)
-=======
-  
-  dessu:boolean = false; 
-  compteur:number=0;
-
-  myStyle(etat:boolean): string{
-    if(!etat)
->>>>>>> 58087bba48adfb903a58fed763d18e10dbf92b80
       return("1")
     return("0")
   }

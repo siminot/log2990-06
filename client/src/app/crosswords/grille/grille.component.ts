@@ -28,7 +28,8 @@ export class GrilleComponent implements OnInit {
     return matrice; 
   }
 
-  matriceVide: Array<Array<objetTest>> = this.genererGrille();
+
+  
   dessu:boolean = false; 
   compteur:number=0;
 
@@ -38,8 +39,16 @@ export class GrilleComponent implements OnInit {
     return("0")
 
   }
+  matriceVide: Array<Array<objetTest>>;
+  public constructor() {
+    this.matriceVide = this.genererGrille();
 
-  public constructor() { }
+
+
+
+
+
+   }
 
   ngOnInit() { }
 }

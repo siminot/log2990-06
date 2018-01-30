@@ -1,6 +1,8 @@
 import {Mockword} from "./mockWord";
 
 export const listeMot: Mockword[] = [
-{mots: "ol", definition: "Qui mange des plume et du feu", vertical: true, longeur: 2, premierX: 0, premierY: 1 },
-{mots: "oi", definition: "Qui aime le feu et l'eau", vertical: false, longeur: 2, premierX: 0, premierY: 1 },
+{mots: "Pout", definition: "Qui aime la poutine", vertical: false, longeur: 4, premierX: 0, premierY: 0, activer: false },
+{mots: "Pome", definition: "provient du pommier", vertical: true, longeur: 4, premierX: 0, premierY: 0, activer: false },
+{mots: "Eppa", definition: "Pas super super", vertical: false, longeur: 4, premierX: 0, premierY: 3, activer: false },
+{mots: "Tata", definition: "ben nice is ben cool", vertical: true, longeur: 4, premierX: 3, premierY: 0, activer: false }
 ]

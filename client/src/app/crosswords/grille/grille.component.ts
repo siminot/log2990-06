@@ -19,7 +19,14 @@ export class GrilleComponent implements OnInit {
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
       let row: Array<objetTest> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++){
-        let caseNoir: objetTest = {case:true, mot:"X"};
+        let caseNoir:objetTest;
+        if(j%2==0){
+          caseNoir = {case:true, mot:"X"};
+        }
+        else
+        {
+          caseNoir = {case:true, mot:"P"};
+        }
         row[j] = caseNoir; 
       }
       matrice[i] = row; 

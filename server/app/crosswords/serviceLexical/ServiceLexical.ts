@@ -1,8 +1,6 @@
 import { Mot } from './Mot';
 import { injectable, } from "inversify";
 import { Request, Response, NextFunction } from "express";
-//import { Message } from "../../../../common/communication/message";
-
 import * as WebRequest from 'web-request';
 
 module ServiceLexical{
@@ -15,10 +13,8 @@ module ServiceLexical{
 
         public constructor() {}
 
-        public messageServiceLexical(req: Request, res: Response, next: NextFunction): void {
-            //const message: Message = new Message();
-            //message.title = "Service: ";
-            this.obtenirMotsSelonContrainte("f???").then(reponse => {
+        public servirMots(req: Request, res: Response, next: NextFunction): void {
+            this.obtenirMotsSelonContrainte("fa??").then(reponse => {
                 res.send(reponse);
             });
         }    
@@ -26,12 +22,10 @@ module ServiceLexical{
         public obtenirMotsSelonContrainte(contrainte : string) : Promise<Mot[]> {
             let url = URL + contrainte + FLAG;
             let promesse = WebRequest.json<any>(url);
-            let mots: Mot[];
-            return promesse.then((data) => this.importerJSON(data));
-            //return this.importerJSON(data);
+            return promesse.then((data) => this.trierMotsJSON(data));
         }
     
-        private importerJSON(data : any) : Mot[] {
+        private trierMotsJSON(data : any) : Mot[] {
             let dictionnaire : Mot[] = [];
             
             //Parcourir le JSON et ajouter les mots

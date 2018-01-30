@@ -13,7 +13,7 @@ export class Routes {
         const router: Router = Router();
 
         router.get("/",
-                   (req: Request, res: Response, next: NextFunction) => this.serviceLexical.messageServiceLexical(req, res, next));
+                   (req: Request, res: Response, next: NextFunction) => this.serviceLexical.servirMots(req, res, next));
 
         return router;
     }

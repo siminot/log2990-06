@@ -4,7 +4,7 @@ import { TAILLE_TABLEAU } from "../constantes";
 import { objetTest } from "../mockObject/mockWord";
 import { Mockword } from '../mockObject/mockWord';
 
-import { RequeteDeGrilleService } from '../service-Requete-de-grille/requete-de-grille.service';
+import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
 
 
 @Component({
@@ -21,13 +21,12 @@ export class GrilleComponent implements OnInit {
   compteur:number=0;
 
 
-  public constructor(private grilleService: RequeteDeGrilleService) {
+  public constructor(private motsGrilleService: RequeteDeGrilleService) {
     this.matriceVide = this.genererGrille();
-
   }
 
 
-  ngOnInit() { }
+  ngOnInit() { this.getMots(); console.log(this.mots);}
 
 
   genererGrille(): any[][]{
@@ -54,6 +53,6 @@ export class GrilleComponent implements OnInit {
 
 
   getMots(): void {
-    this.grilleService.getMots().subscribe(listeDeMots => this.mots = listeDeMots);
+    this.motsGrilleService.getMots().subscribe(mots => this.mots = mots);
   }
 }

@@ -98,7 +98,7 @@ module Route {
             return false;
         }
 
-        public helloWorld(req: Request, res: Response, next: NextFunction): void {
+        public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initCasesNoires(.25);
             res.send(JSON.stringify(this.grille));
         }

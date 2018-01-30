@@ -33,8 +33,8 @@ export class GrilleComponent implements OnInit {
   dessu:boolean = false; 
   compteur:number=0;
 
-  myStyle(): string{
-    if(!this.dessu)
+  myStyle(etat:boolean): string{
+    if(!etat)
       return("1")
     return("0")
 

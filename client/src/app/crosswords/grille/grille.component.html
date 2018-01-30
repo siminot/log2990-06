@@ -3,7 +3,7 @@
     <table class="table">
         <tr *ngFor="let item of matriceVide; let i = index" >
             <td *ngFor="let case of item; let j = index1" >
-                <img [style.opacity]="myStyle()" (mouseover)= "dessu = true" (mouseout) = "dessu = false" Class = "tuile" src="../../../assets/tuile.png"><img>
+                <img *ngIf="case.mot == 'X'" [style.opacity]="myStyle(case.activer)" (mouseover)= "case.activer = true" (mouseout) = "case.activer = false" Class = "tuile" src="../../../assets/tuile.png"><img>
             
                 <p class="reponseLettre" *ngIf = "case.case">{{case.mot}}</p>
         

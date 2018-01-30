@@ -19,8 +19,8 @@ export class GrilleComponent implements OnInit {
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
       let row: Array<objetTest> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++){
-        let kalise: objetTest = {case:true, mot:"XXX"};
-        row[j] = kalise; 
+        let caseNoir: objetTest = {case:true, mot:"X"};
+        row[j] = caseNoir; 
       }
       matrice[i] = row; 
     }
@@ -28,8 +28,17 @@ export class GrilleComponent implements OnInit {
     return matrice; 
   }
 
-  tabarnak: Array<Array<objetTest>> = this.genererGrille();
- 
+  matriceVide: Array<Array<objetTest>> = this.genererGrille();
+  dessu:boolean = false; 
+  compteur:number=0;
+
+  myStyle(): string{
+    if(!this.dessu)
+      return("1")
+    return("0")
+
+  }
+
   public constructor() { }
 
   ngOnInit() { }

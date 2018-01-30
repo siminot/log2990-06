@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import "reflect-metadata";
 import { injectable, } from "inversify";
-import { TAILLE_TEST } from "./constantes";
+
+import { TAILLE_TEST, VIDE, NOIR } from "./constantes";
+//import { Mockword } from  "./../../../common/mockObject/mockWord"
 
 module Route {
 
@@ -9,25 +11,23 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
+        //private listeMot: Array<Mockword>;
         private tailleGrille: number = TAILLE_TEST;
 
         constructor() {
-
             this.initMatrice();
-
         }
 
         private initMatrice(): void {
-
-            this.grille = new Array(this.tailleGrille).fill("0");
+            this.grille = new Array(this.tailleGrille).fill(VIDE);
             for (let i: number = 0; i < this.tailleGrille; i++) {
-                this.grille[i] = new Array(this.tailleGrille).fill("0");
+                this.grille[i] = new Array(this.tailleGrille).fill(VIDE);
             }
-
         }
 
+        //ratioVoulu: float entre 0 et 1
         private genererCasesNoires(ratioVoulu: number): number {
-            
+            //Verifier une bonne entree
             if (ratioVoulu < 0 || ratioVoulu > 1)
             return null;
 
@@ -37,29 +37,23 @@ module Route {
             let y: number = 0;
 
             while(compteurCasesNoires < nombreCases) {
-
+                //On genere une position aleatoire
                 x = Math.floor(Math.random() * this.tailleGrille);
                 y = Math.floor(Math.random() * this.tailleGrille);
-
-                if (Math.random() <= ratioVoulu) {
-
-                    //Verif si position est valide pour insertion
-                    if (this.verifInsertCaseNoire(x, y)) {
-                        this.grille[y][x] = "-1";
-                        compteurCasesNoires++;
-                    }
+                if (this.verifCaseNoire(x, y)) {
+                    this.grille[y][x] = NOIR;
+                    compteurCasesNoires++;
                 }
             }
             return nombreCases;
         }
 
-        private verifInsertCaseNoire(positionX: number, positionY: number): Boolean {
+        private verifCaseNoire(positionX: number, positionY: number): Boolean {
 
-            if (this.grille[positionY][positionX] == "-1")
+            if (this.grille[positionY][positionX] == NOIR)
                 return false;
 
-            this.grille[positionY][positionX] = "-1";
-
+            this.grille[positionY][positionX] = NOIR;
             let caseDisponible: Boolean = true;
 
             caseDisponible = this.neGenerePasDeTrou(positionX - 1, positionY);
@@ -79,32 +73,33 @@ module Route {
 
             if (positionX < 0 || positionY <0 || positionX >= this.tailleGrille || positionY >= this.tailleGrille )
                 return true;
-            if(this.grille[positionY][positionX] == "-1")
+            if(this.grille[positionY][positionX] == NOIR)
                 return true;
                 
             if (positionY - 1 > 0)
-                if(this.grille[positionY - 1][positionY] == "0")
+                if(this.grille[positionY - 1][positionY] == VIDE)
                     return true;
             if (positionY + 1 < this.tailleGrille)
-                if(this.grille[positionY + 1][positionX] == "0")
+                if(this.grille[positionY + 1][positionX] == VIDE)
                     return true;
             if (positionX - 1 > 0)
-                if(this.grille[positionY][positionX - 1] == "0")
+                if(this.grille[positionY][positionX - 1] == VIDE)
                     return true;
             if (positionX + 1 < this.tailleGrille)
-                if(this.grille[positionY][positionX + 1] == "0")
+                if(this.grille[positionY][positionX + 1] == VIDE)
                     return true;
 
             return false;
         }
 
+        /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initCasesNoires(.25);
             res.send(JSON.stringify(this.grille));
         }
 
+        /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
-
             res.send(JSON.stringify("DIFFICILE"));
         }
 
@@ -113,6 +108,40 @@ module Route {
             this.initMatrice();
             return this.genererCasesNoires(ratioVoulu);
         }
+
+        // private genererMot(x: number, y: number, estVertical: Boolean): Mockword {
+
+        //     let longMot: number = 0;
+        //     for (let i: number = x; i < this.tailleGrille; i++) {
+        //         if (this.grille[y][i] != NOIR && !estVertical) {
+        //             longMot++;
+        //         }
+        //     }
+        //     return new Mockword(x, y, longMot, estVertical);
+        // }
+
+        // private genererListeMot():number {
+        //     let ctrMots: number = 0;
+        //     for (let i: number = 0; i < this.tailleGrille; i++) {
+        //         for (let j: number = 0; i < this.tailleGrille; j++) {
+        //             if (this.grille[i][j] == VIDE) {
+        //                 if (j == 0) {
+        //                     genererMot(j, i, false);
+        //                 }
+        //                 else if (this.grille[i][j - 1] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
+        //                     genererMot(j, i, false);
+        //                 }
+        //                 if (i == 0) {
+        //                     genererMot(i, j, true);
+        //                 }
+        //                 else if (this.grille[i - 1][j] == NOIR) {   //Car je ne veux pas acceder a un espace memoire a [-1]
+        //                     genererMot(i, j, true);
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     return 0;
+        // }
 
     }
 }

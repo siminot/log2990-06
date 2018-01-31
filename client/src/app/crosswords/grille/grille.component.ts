@@ -28,6 +28,7 @@ export class GrilleComponent implements OnInit {
 
   ngOnInit() { 
     this.getMots();
+    this.putWordsInGrid();
   }
 
 
@@ -62,5 +63,12 @@ export class GrilleComponent implements OnInit {
   
   getMots(): void {
     this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
+  }
+
+
+  putWordsInGrid(): void {
+    for(let mot of this.mots) {
+      console.log(mot.mots);
+    }
   }
 }

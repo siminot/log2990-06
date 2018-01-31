@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import {Mockword} from "../mockObject/mockWord";
-import {TAILLE_TABLEAU} from "../constantes";
+import { Mockword } from "../mockObject/mockWord";
+import { TAILLE_TABLEAU } from "../constantes";
 import { objetTest } from "../mockObject/mockWord";
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
 

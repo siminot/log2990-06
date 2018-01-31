@@ -6,7 +6,7 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import Types from "./types";
 import { injectable, inject } from "inversify";
-import { Routes } from "./routes";
+import { RouteServiceLexical } from "./routeServiceLexical";
 
 @injectable()
 export class Application {
@@ -14,7 +14,7 @@ export class Application {
     private readonly internalError: number = 500;
     public app: express.Application;
 
-    constructor(@inject(Types.Routes) private api: Routes) {
+    constructor(@inject(Types.RouteServiceLexical) private api: RouteServiceLexical) {
         this.app = express();
 
         this.config();

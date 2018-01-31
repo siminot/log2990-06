@@ -13,7 +13,24 @@ import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-
 
 
 export class GrilleComponent implements OnInit {
-  
+  mots:Mockword[];
+  matriceVide: Array<Array<objetTest>>;
+  dessu:boolean; 
+  compteur:number;
+
+
+  public constructor(private listeMotsService: RequeteDeGrilleService) {
+    this.matriceVide = this.genererGrille();
+    this.compteur = 0;
+    this.dessu = false;
+  }
+
+
+  ngOnInit() { 
+    this.getMots();
+  }
+
+
   genererGrille(): any[][]{
     let matrice: Array<Array<objetTest>> = new Array(TAILLE_TABLEAU);
 
@@ -21,13 +38,12 @@ export class GrilleComponent implements OnInit {
       let row: Array<objetTest> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++){
         let caseNoir:objetTest;
-        if(j%2==0){
+
+        if(j%2==0)
           caseNoir = {case:true, mot:"X"};
-        }
         else
-        {
           caseNoir = {case:true, mot:"P"};
-        }
+        
         row[j] = caseNoir; 
       }
       matrice[i] = row; 
@@ -37,30 +53,13 @@ export class GrilleComponent implements OnInit {
   }
 
 
-  
-  dessu:boolean = false; 
-  compteur:number=0;
-
   myStyle(etat:boolean): string{
     if(!etat)
       return("1")
     return("0")
-
   }
-  matriceVide: Array<Array<objetTest>>;
-  public constructor(private listeMotsService: RequeteDeGrilleService) {
-    this.matriceVide = this.genererGrille();
 
-
-
-
-
-
-   }
-
-  ngOnInit() { this.getMots(); console.log(this.mots);}
-
-   mots:Mockword[];
+  
   getMots(): void {
     this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
   }

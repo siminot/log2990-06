@@ -14,6 +14,7 @@ import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-
 
 export class GrilleComponent implements OnInit {
   mots:Mockword[];
+  motsAAfiicher:String[];
   matriceVide: Array<Array<objetTest>>;
   dessu:boolean; 
   compteur:number;

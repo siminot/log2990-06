@@ -33,7 +33,7 @@ export class GrilleComponent implements OnInit {
   }
 
 
-  genererGrille(): any[][]{
+  genererGrille(): Array<Array<objetTest>>{
     let matrice: Array<Array<objetTest>> = new Array(TAILLE_TABLEAU);
 
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
@@ -57,8 +57,8 @@ export class GrilleComponent implements OnInit {
 
   myStyle(etat:boolean): string{
     if(!etat)
-      return("1")
-    return("0")
+      return("0")
+    return("1")
   }
 
   

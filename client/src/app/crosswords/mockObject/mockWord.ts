@@ -12,4 +12,5 @@ public activer: boolean;
 export class objetTest {
 public case: boolean; 
 public mot:string; 
+public lettre:boolean;
 }

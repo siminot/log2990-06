@@ -42,9 +42,9 @@ export class GrilleComponent implements OnInit {
         let caseNoir:objetTest;
 
         if(j%2==0)
-          caseNoir = {case:true, mot:"X"};
+          caseNoir = {case:true, mot:"X", lettre:true};
         else
-          caseNoir = {case:true, mot:"P"};
+          caseNoir = {case:true, mot:"P", lettre:true};
         
         row[j] = caseNoir; 
       }

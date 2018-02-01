@@ -12,7 +12,7 @@ export class RouteServiceLexical {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/serviceLexical",
+        router.get("/serviceLexical/:contrainte",
                    (req: Request, res: Response, next: NextFunction) => this.serviceLexical.servirMots(req, res, next));
 
         return router;

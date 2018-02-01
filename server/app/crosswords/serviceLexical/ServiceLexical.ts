@@ -6,7 +6,7 @@ import * as WebRequest from 'web-request';
 module ServiceLexical{
 
     const URL = "https://api.datamuse.com/words?sp=";
-    const FLAG = "&md=df";
+    const FLAG = "&md=df&max=1000";
 
     @injectable()
     export class ServiceLexical{
@@ -14,7 +14,16 @@ module ServiceLexical{
         public constructor() {}
 
         public servirMots(req: Request, res: Response, next: NextFunction): void {
-            this.obtenirMotsSelonContrainte("????").then(reponse => {
+            let contraintes : string = "";
+
+            for(let i = 0 ; i < req.params.contrainte.length ; i++){
+                if(req.params.contrainte[i] == "_")
+                    contraintes += "?";
+                else
+                    contraintes += req.params.contrainte[i];
+            }
+
+            this.obtenirMotsSelonContrainte(contraintes).then(reponse => {
                 res.send(reponse);
             });
         }    
@@ -29,7 +38,6 @@ module ServiceLexical{
             let dictionnaire : Mot[] = [];
             
             // Parcourir le JSON et ajouter les mots
-            // let donnees = JSON.parse(data);
             for(let objet of data){
                 let mot = new Mot(objet.word, objet.defs, objet.tags[0])
                 if(mot.possedeDefinition())

@@ -7,7 +7,7 @@ export class Mot {
     public definitions : Array<string>;
     private frequence : number;
 
-    private MEDIANE_FREQUENCE = 0.50;
+    private static readonly MEDIANE_FREQUENCE = 0.50;
 
     public constructor(mot : string, definitions : Array<string>, frequence : number) { 
         this.mot = mot;
@@ -20,7 +20,7 @@ export class Mot {
     }
 
     public obtenirFrequence() : Frequence {
-        if(this.frequence < this.MEDIANE_FREQUENCE)
+        if(this.frequence < Mot.MEDIANE_FREQUENCE)
             return Frequence.Faible;
         else
             return Frequence.Elevee;

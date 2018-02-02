@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Word } from "../mockObject/word";
 import { TAILLE_TABLEAU , caseNoir } from "../constantes";
 import { lettreGrille } from "../mockObject/word";
@@ -17,7 +17,7 @@ export class GrilleComponent implements OnInit {
   dessu: boolean;
   compteur: number;
 
-  chaine: String;
+
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
     this.matriceVide = this.genererGrille();
@@ -27,7 +27,7 @@ export class GrilleComponent implements OnInit {
 
   ngOnInit() {
     this.getMots();
-    this.getChaine();
+
     this.putWordsInGrid();
   }
 
@@ -52,15 +52,6 @@ export class GrilleComponent implements OnInit {
 
   getMots(): void {
     this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
-  }
-
-  getChaine(): void {
-    this.listeMotsService.getChaine().subscribe(chaine => this.chaine = chaine);
-  }
-
-  setChaine(): void {
-    this.listeMotsService.setChaine();
-    console.log(this.chaine);
   }
 
   putWordsInGrid(): void {

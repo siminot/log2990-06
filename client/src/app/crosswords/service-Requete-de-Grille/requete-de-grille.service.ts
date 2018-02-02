@@ -5,31 +5,27 @@ import { of } from 'rxjs/observable/of';
 
 import { listeMots } from "../mockObject/mockListWord";
 import { Word } from "../mockObject/word";
-// import { setTimeout } from "timers";
+
 
 
 @Injectable()
 export class RequeteDeGrilleService {
-  public uneChaine: String;
+
 
   constructor() {
-    this.uneChaine = "POP";
+    // this.uneChaine = new Chaine();;
   }
 
-  init():void {
+  // getChaine(): Observable<String> {
+  //   const obs: Observable<String> = new Observable(observer => {
+  //     observer.next(this.uneChaine.chaine);
+  //   });
+  //   return obs;
+  // }
 
-  }
-
-  getChaine(): Observable<String> {
-    const obs: Observable<String> = new Observable(observer => {
-      observer.next(this.uneChaine);
-    });
-    return obs;
-  }
-
-  setChaine(): void {
-    this.uneChaine += "S";
-  }
+  // setChaine(): void {
+  //   this.uneChaine.chaine += "S";
+  // }
 
   getMots(): Observable<Word[]> {
     return of(listeMots);

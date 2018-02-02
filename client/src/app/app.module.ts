@@ -7,14 +7,16 @@ import { GameComponent } from "./carApp/game-component/game.component";
 
 import { RenderService } from "./carApp/render-service/render.service";
 import { BasicService } from "./basic.service";
-import { AppRoutingModule } from './/app-routing.module';
-import { MainGrilleComponent } from './crosswords/main-grille/main-grille.component';
-
+import { AppRoutingModule } from ".//app-routing.module";
+import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
+import { GrilleComponent } from "./crosswords/grille/grille.component";
+import {RequeteDeGrilleService} from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
 @NgModule({
     declarations: [
         AppComponent,
         GameComponent,
-        MainGrilleComponent
+        MainGrilleComponent,
+        GrilleComponent
     ],
     imports: [
         BrowserModule,
@@ -23,7 +25,8 @@ import { MainGrilleComponent } from './crosswords/main-grille/main-grille.compon
     ],
     providers: [
         RenderService,
-        BasicService
+        BasicService,
+        RequeteDeGrilleService
     ],
     bootstrap: [AppComponent]
 })

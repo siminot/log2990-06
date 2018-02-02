@@ -6,8 +6,10 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import Types from "./types";
 import { injectable, inject } from "inversify";
-import { RouteServiceLexical } from "./crosswords/serviceLexical/routeServiceLexical";
+
+import { RouteServiceLexical } from "./serviceLexical/routeServiceLexical";
 import { ServiceWeb } from "./serviceweb";
+import { RouteGenGrille } from "./generateurGrille/routeGenGrille";
 
 @injectable()
 export class Application {
@@ -15,7 +17,8 @@ export class Application {
     private readonly internalError: number = 500;
     public app: express.Application;
 
-    constructor(@inject(Types.RouteServiceLexical) private serviceLexical: RouteServiceLexical) {
+    constructor(@inject(Types.RouteServiceLexical) private serviceLexical: RouteServiceLexical,
+                @inject(Types.RouteGenGrille) private routeGenGrille: RouteGenGrille) {
         this.app = express();
 
         this.config();
@@ -35,6 +38,7 @@ export class Application {
 
     public routes(): void {
         this.ajouterService(this.serviceLexical);
+        this.ajouterService(this.routeGenGrille);
 
         this.errorHandeling();
     }

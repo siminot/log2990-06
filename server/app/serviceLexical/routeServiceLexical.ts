@@ -1,10 +1,10 @@
 import { injectable, inject } from "inversify";
 import { Router, Request, Response, NextFunction } from "express";
 
-import Types from "../../types";
+import Types from "../types";
 import { ServiceLexical } from "./ServiceLexical";
 import { Frequence } from "./Mot";
-import { ServiceWeb } from "../../serviceweb";
+import { ServiceWeb } from "../serviceweb";
 
 @injectable()
 export class RouteServiceLexical extends ServiceWeb {

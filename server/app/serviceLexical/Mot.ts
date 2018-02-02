@@ -1,5 +1,6 @@
-export enum Frequence { Commun, NonCommun}
+import { Definition } from "./Definition";
 
+export enum Frequence { Commun, NonCommun}
 export enum TypeMot { Nom, Verbe, Adjectif, Adverbe}
 
 export class Mot {
@@ -55,15 +56,5 @@ export class Mot {
         }
 
         return new Definition(type, def[1]);
-    }
-}
-
-export class Definition {
-    public type: TypeMot;
-    public definition: string;
-
-    public constructor(type: TypeMot, definition: string) {
-        this.type = type;
-        this.definition = definition;
     }
 }

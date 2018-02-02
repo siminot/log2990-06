@@ -9,7 +9,8 @@ public premierY: number;
 public activer: boolean;
 }
 
-export class objetTest {
+export class lettreGrille {
 public case: boolean; 
 public mot:string; 
+public lettre:boolean;
 }

@@ -4,7 +4,6 @@ import { TAILLE_TABLEAU , caseNoir } from "../constantes";
 import { lettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 
-
 @Component({
   selector: "app-grille",
   templateUrl: "./grille.component.html",
@@ -12,11 +11,13 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 })
 
 export class GrilleComponent implements OnInit {
-  mots:Word[];
-  motsAAfiicher:String[];
+  mots: Word[];
+  motsAAfiicher: String[];
   matriceVide: Array<Array<lettreGrille>>;
-  dessu:boolean; 
-  compteur:number;
+  dessu: boolean;
+  compteur: number;
+
+  chaine: String;
 
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
@@ -27,6 +28,7 @@ export class GrilleComponent implements OnInit {
 
   ngOnInit() {
     this.getMots();
+    this.getChaine();
     this.putWordsInGrid();
   }
 
@@ -35,16 +37,15 @@ export class GrilleComponent implements OnInit {
 
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
       let row: Array<lettreGrille> = new Array(TAILLE_TABLEAU);
-      for(let j:number = 0; j < TAILLE_TABLEAU; j++){
+      for(let j:number = 0; j < TAILLE_TABLEAU; j++) {
         row[j] = caseNoir;
       }
       matrice[i] = row;
     }
-  
     return matrice;
   }
 
-  myStyle(etat:boolean): string{
+  myStyle(etat:boolean): String {
     if(!etat)
       return("0")
     return("1")
@@ -54,9 +55,11 @@ export class GrilleComponent implements OnInit {
     this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
   }
 
+  getChaine(): void {
+    this.listeMotsService.getChaine().subscribe(chaine => this.chaine = chaine);
+  }
+
   putWordsInGrid(): void {
-    for(let mot of this.mots) {
-      console.log(mot.mots);
-    }
+    
   }
 }

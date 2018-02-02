@@ -1,4 +1,4 @@
-import { lettreGrille } from "./mockObject/mockWord";
+import { lettreGrille } from "./mockObject/word";
 
 export const TAILLE_TABLEAU = 4;
 export const DIX_POURCENT = 4;

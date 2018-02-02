@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Mockword } from "../mockObject/mockWord";
+import { Word } from "../mockObject/word";
 import { TAILLE_TABLEAU , caseNoir } from "../constantes";
-import { lettreGrille } from "../mockObject/mockWord";
+import { lettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 
 
@@ -12,7 +12,7 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 })
 
 export class GrilleComponent implements OnInit {
-  mots:Mockword[];
+  mots:Word[];
   motsAAfiicher:String[];
   matriceVide: Array<Array<lettreGrille>>;
   dessu:boolean; 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
-import { Mockword } from "../mockObject/mockWord";
+import { Word } from "../mockObject/word";
 
 @Component({
   selector: 'app-definition',
@@ -8,7 +8,7 @@ import { Mockword } from "../mockObject/mockWord";
   styleUrls: ['./definition.component.css']
 })
 export class DefinitionComponent implements OnInit {
-  mots:Mockword[];
+  mots: Word[];
   
   constructor(private listeMotsService: RequeteDeGrilleService) { }
 

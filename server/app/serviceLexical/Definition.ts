@@ -1,3 +1,5 @@
+import { TypeMot } from "./Mot";
+
 export class Definition {
     public type: TypeMot;
     public definition: string;

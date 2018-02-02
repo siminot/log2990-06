@@ -27,7 +27,7 @@ module moduleServiceLexical {
         private modifierContraintePourAPI(contrainte: string ): String {
             let contrainteAPI: String = "";
 
-            for (const i of contrainte) {
+            for (let i = 0 ; i < contrainte.length ; i++) {
                 if (contrainte[i] === ContrainteMot.LETTRE_INCONNUE) {
                     contrainteAPI += "?";
                 } else {
@@ -61,17 +61,17 @@ module moduleServiceLexical {
             return liste.filter((mot) => mot.obtenirFrequence().valueOf() === frequence.valueOf());
         }
 
-        public servirMotsSelonFrequence(contrainte: string, frequence: Frequence, res: Response) : void {
+        public servirMotsSelonFrequence(contrainte: string, frequence: Frequence, res: Response): void {
             this.servirMots(contrainte)
                 .then((dictionnaire) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
         }
 
         public obtenirDefinitionsMot(mot: string, res: Response): void {
             this.obtenirMotsSelonContrainte(mot)
-                .then((dictionnaire) => res.send(dictionnaire[0]))
+                .then((dictionnaire) => res.send(dictionnaire[0]));
         }
 
-        private requeteEstValide(contrainte: string): boolean {
+        private requeteEstValide(contrainte: String): boolean {
             // A completer
             return true;
         }

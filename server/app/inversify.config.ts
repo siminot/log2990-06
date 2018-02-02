@@ -4,7 +4,7 @@ import { Server } from "./server";
 import { Application } from "./app";
 
 import { RouteServiceLexical } from "./serviceLexical/routeServiceLexical";
-import { ServiceLexical } from "./ServiceLexical/ServiceLexical";
+import { ServiceLexical } from "./serviceLexical/ServiceLexical";
 
 import { RouteGenGrille } from "./generateurGrille/routeGenGrille";
 import { GenerateurGrille } from "./generateurGrille/generateurGrille";

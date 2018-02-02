@@ -1,4 +1,4 @@
-//Code de Michel Gagnon tiré du cours LOG2990
+// Code de Michel Gagnon tiré du cours LOG2990
 
 import { injectable } from "inversify";
 import { Router } from "express";
@@ -7,7 +7,7 @@ import { Router } from "express";
 export  abstract class ServiceWeb {
     public readonly mainRoute: string;
 
-    public constructor() {}
+    public constructor() { /* Vide */ }
 
     public abstract get routes(): Router;
 

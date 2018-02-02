@@ -20,8 +20,7 @@ export class RouteServiceLexical extends ServiceWeb {
 
         router.get("/liste/:contrainte",
             (req: Request, res: Response, next: NextFunction) => {
-                this.serviceLexical.servirMots(req.params.contrainte)
-                    .then(reponse => res.send(reponse));
+                this.serviceLexical.servirMots(req.params.contrainte).then(reponse => res.send(reponse));
             })
 
         router.get("/liste/commun/:contrainte",

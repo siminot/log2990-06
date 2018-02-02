@@ -1,12 +1,13 @@
-import { Container } from "inversify";
 import Types from "./types";
+import { Container } from "inversify";
 import { Server } from "./server";
 import { Application } from "./app";
+
 import { RouteServiceLexical } from "./serviceLexical/routeServiceLexical";
 import { ServiceLexical } from "./ServiceLexical/ServiceLexical";
 
-import { GenerateurGrille } from "./generateurGrille/generateurGrille"
-import { RouteGenGrille } from "./generateurGrille/routeGenGrille"
+import { RouteGenGrille } from "./generateurGrille/routeGenGrille";
+import { GenerateurGrille } from "./generateurGrille/generateurGrille";
 
 const container: Container = new Container();
 

@@ -3,7 +3,7 @@
     <table class="table">
         <tr *ngFor="let item of matriceVide; let i = index" >
             <td *ngFor="let case of item; let j = index1" >
-                <img *ngIf="case.mot != '1' ; else elseBlock1" [style.opacity]="myStyle(case.case)" (mouseover)= "case.case = false;" (mouseout) = "case.case = true" class = "tuile" src="../../../assets/tuile.png">
+                <img *ngIf="case.mot != '1' ; else elseBlock1" [style.opacity]="myStyle(case.case)" (mouseover)= "case.case = false" (mouseout) = "case.case = true" class = "tuile" src="../../../assets/tuile.png">
                 <ng-template #elseBlock1><img src="../../../assets/tuileMorte.png" class="tuile"></ng-template>
                 <p class="reponseLettre" *ngIf = "case.lettre ; else elseBlock2">{{case.mot}}</p>
                 <ng-template #elseBlock2><p class="reponseLettre">  </p></ng-template>

@@ -3,10 +3,38 @@
 export class ContrainteMot {
 	private contraintes: Map<number, string>;
 
+	public static readonly LETTRE_INCONNUE = "_";
+
 	public constructor(private longueurMot: number/*, private difficulte: Difficulte*/) { 
 		if(longueurMot < 1)
 			throw RangeError("Longueur du mot invalide : " + longueurMot + " doit etre > 0");
-		this.contraintes.clear();
+		this.contraintes = new Map;
+	}
+
+	public setContrainte(contrainte : string) : boolean {
+		if(this.URLestValide(contrainte)){
+			this.longueurMot = contrainte.length;
+			this.contraintes.clear();
+
+			for(let i = 0 ; i < contrainte.length ; i++){
+				if(!(/^[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] == ContrainteMot.LETTRE_INCONNUE))
+					this.ajouterContrainte(contrainte[i], i);
+			}
+
+			return true;
+		}
+		else
+			return false;
+	}
+
+	private URLestValide(contrainte : string) : boolean {
+		
+		for(let i = 0 ; i < contrainte.length ; i++){
+			if(!(/^[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] == ContrainteMot.LETTRE_INCONNUE))
+				return false;
+		}
+
+		return true;
 	}
 
     public ajouterContrainte(lettre: string, position: number) : void {
@@ -26,10 +54,10 @@ export class ContrainteMot {
 		this.contraintes.set(position, lettre.toUpperCase());
 	}
 
-	public obtenirURLAPI() : string {
-		let url : string[];
+	public obtenirURL() : string {
+		let url : string[] = [];
 
-		url.fill("?", 0, this.longueurMot - 1);
+		url.fill(ContrainteMot.LETTRE_INCONNUE, 0, this.longueurMot - 1);
 		
 		for(let cle of this.contraintes.keys()){
 			url[cle] = this.contraintes[cle];

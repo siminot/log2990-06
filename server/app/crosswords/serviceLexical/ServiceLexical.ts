@@ -1,7 +1,9 @@
-import { Mot } from './Mot';
+import { Mot, Frequence } from './Mot';
 import { injectable, } from "inversify";
 import { Request, Response, NextFunction } from "express";
 import * as WebRequest from 'web-request';
+import { ContrainteMot } from './ContrainteMot';
+import { freemem } from 'os';
 
 module ServiceLexical{
 
@@ -13,31 +15,36 @@ module ServiceLexical{
 
         public constructor() {}
 
-        public servirMots(req: Request, res: Response, next: NextFunction): void {
-            let contraintes : string = "";
+        public servirMots(contrainte : string) : Promise<Mot[]> {
+            let contraintes : string = this.modifierContraintePourAPI(contrainte);
 
-            for(let i = 0 ; i < req.params.contrainte.length ; i++){
-                if(req.params.contrainte[i] == "_")
-                    contraintes += "?";
-                else
-                    contraintes += req.params.contrainte[i];
-            }
-
-            this.obtenirMotsSelonContrainte(contraintes).then(reponse => {
-                res.send(reponse);
-            });
+            if(this.requeteEstValide(contrainte))
+                return this.obtenirMotsSelonContrainte(contraintes);
+            else
+                throw Error("Format de la requete invalide");
         }    
     
-        public obtenirMotsSelonContrainte(contrainte : string) : Promise<Mot[]> {
+        private modifierContraintePourAPI(contrainte : string ) : string {
+            let contrainteAPI : string = "";
+
+            for(let i = 0 ; i < contrainte.length ; i++){
+                if(contrainte[i] == ContrainteMot.LETTRE_INCONNUE)
+                    contrainteAPI += "?"; 
+                else
+                    contrainteAPI += contrainte[i];
+            }
+
+            return contrainteAPI;
+        }
+
+        private obtenirMotsSelonContrainte(contrainte : string) : Promise<Mot[]> {
             let url = URL + contrainte + FLAG;
-            let promesse = WebRequest.json<any>(url);
-            return promesse.then((data) => this.trierMotsJSON(data));
+            return WebRequest.json<any>(url).then((data) => this.retirerMotsSansDefinition(data));
         }
     
-        private trierMotsJSON(data : any) : Mot[] {
+        private retirerMotsSansDefinition(data : any) : Mot[] {
             let dictionnaire : Mot[] = [];
             
-            // Parcourir le JSON et ajouter les mots
             for(let objet of data){
                 let mot = new Mot(objet.word, objet.defs, objet.tags[0])
                 if(mot.possedeDefinition())
@@ -46,17 +53,26 @@ module ServiceLexical{
             
             return dictionnaire;
         }
-    
-        public obtenirDefinitionsMot(mot : string) : Mot {
-            let motTrouve = this.obtenirMotsSelonContrainte(mot)[0];
 
-            if(motTrouve === undefined)
-                throw Error("Mot non trouve");
-            else
-                return motTrouve;
+        private trierMotsSelonFrequence(liste : Mot[], frequence : Frequence) : Mot[] {
+            return liste.filter(mot => mot.obtenirFrequence().valueOf() == frequence.valueOf());
+        }
+
+        public servirMotsSelonFrequence(contrainte : string, frequence : Frequence, res : Response) : void {
+            this.servirMots(contrainte)
+                .then(dictionnaire => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
+        }
+
+        public obtenirDefinitionsMot(mot : string, res : Response) : void {
+            this.obtenirMotsSelonContrainte(mot)
+                .then(dictionnaire => res.send(dictionnaire[0]))
+        }
+
+        private requeteEstValide(contrainte : string) : boolean {
+            //A completer
+            return true;
         }
     }
-
 }
 
 export = ServiceLexical;

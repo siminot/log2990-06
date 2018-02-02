@@ -18,7 +18,8 @@ module moduleServiceLexical {
             const contraintes: String = this.modifierContraintePourAPI(contrainte);
 
             if (this.requeteEstValide(contrainte)) {
-                return this.obtenirMotsSelonContrainte(contraintes);
+
+                return this.obtenirMotsSelonContrainte(contraintes).then((data) => this.filtrerMots(data));
             } else {
                 throw Error("Format de la requete invalide");
             }
@@ -41,17 +42,15 @@ module moduleServiceLexical {
         private obtenirMotsSelonContrainte(contrainte: String): Promise<Mot[]> {
             const url = URL + contrainte + FLAG;
 
-            return WebRequest.json<MotAPI[]>(url).then((data) => this.retirerMotsSansDefinition(data));
+            return WebRequest.json<MotAPI[]>(url).then((data) => this.convertirMotsAPI(data) );
         }
 
-        private retirerMotsSansDefinition(data: MotAPI[]): Mot[] {
+        private convertirMotsAPI(data: MotAPI[]): Mot[] {
             const dictionnaire: Mot[] = [];
 
             for (const objet of data) {
                 const mot = new Mot(objet.word, objet.defs, objet.tags[0]);
-                if (mot.possedeDefinition()) {
-                    dictionnaire.push(mot);
-                }
+                dictionnaire.push(mot);
             }
 
             return dictionnaire;
@@ -59,6 +58,20 @@ module moduleServiceLexical {
 
         private trierMotsSelonFrequence(liste: Mot[], frequence: Frequence): Mot[] {
             return liste.filter((mot) => mot.obtenirFrequence().valueOf() === frequence.valueOf());
+        }
+
+        private filtrerMots(liste: Mot[]): Mot[] {
+            const listeTriee = this.retirerMotSansDefinition(liste);
+
+            return this.retirerMotInvalides(this.retirerMotSansDefinition(listeTriee));
+        }
+
+        private retirerMotInvalides(liste: Mot[]): Mot[] {
+            return liste.filter((mot) => !mot.contientCaractereInvalide());
+        }
+
+        private retirerMotSansDefinition(liste: Mot[]): Mot[] {
+            return liste.filter((mot) => mot.possedeDefinition());
         }
 
         public servirMotsSelonFrequence(contrainte: string, frequence: Frequence, res: Response): void {

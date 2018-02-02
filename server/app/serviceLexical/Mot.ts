@@ -4,7 +4,8 @@ export enum Frequence { Commun, NonCommun}
 export enum TypeMot { Nom, Verbe, Adjectif, Adverbe}
 
 export class Mot {
-    private static readonly MEDIANE_FREQUENCE = 80;
+    private static readonly MEDIANE_FREQUENCE: number = 80;
+    private static readonly CARACTERE_INVALIDE: string[] = [" ", "-"];
 
     public mot: string;
     public definitions: Definition[];
@@ -56,5 +57,15 @@ export class Mot {
         }
 
         return new Definition(type, def[1]);
+    }
+
+    public contientCaractereInvalide(mot: string): boolean {
+        for (let i = 0 ; i < Mot.CARACTERE_INVALIDE.length ; i++) {
+            if (mot.indexOf(Mot.CARACTERE_INVALIDE[i]) >= 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

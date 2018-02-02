@@ -5,7 +5,7 @@
         "moduleResolution": "node",
         "sourceRoot": "app",
         "sourceMap": true,
-        "outDir": "out",
+        "outDir": "out/server/app",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "noImplicitAny": true,

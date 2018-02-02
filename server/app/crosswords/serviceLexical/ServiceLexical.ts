@@ -3,7 +3,6 @@ import { injectable, } from "inversify";
 import { Request, Response, NextFunction } from "express";
 import * as WebRequest from 'web-request';
 import { ContrainteMot } from './ContrainteMot';
-import { freemem } from 'os';
 
 module ServiceLexical{
 

@@ -1,11 +1,13 @@
 import { injectable, inject } from "inversify";
 import { Router, Request, Response, NextFunction } from "express";
 
-import Types from "./types";
-import { GenerateurGrille } from "./generateurGrille/generateurGrille";
+import Types from "../types";
+import { GenerateurGrille } from "./generateurGrille";
 
 @injectable()
 export class RouteGenGrille {
+
+    public readonly mainRoute: string = "/grille";
 
     public constructor(@inject(Types.GenerateurGrille) private genGrille: GenerateurGrille) {}
 

@@ -6,8 +6,10 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import Types from "./types";
 import { injectable, inject } from "inversify";
-import { Routes } from "./routes";
-import { RouteGenGrille } from "./routeGenGrille";
+
+import { RouteServiceLexical } from "./serviceLexical/routeServiceLexical";
+import { ServiceWeb } from "./serviceweb";
+import { RouteGenGrille } from "./generateurGrille/routeGenGrille";
 
 @injectable()
 export class Application {
@@ -15,7 +17,7 @@ export class Application {
     private readonly internalError: number = 500;
     public app: express.Application;
 
-    constructor(@inject(Types.Routes) private api: Routes, 
+    constructor(@inject(Types.RouteServiceLexical) private serviceLexical: RouteServiceLexical,
                 @inject(Types.RouteGenGrille) private routeGenGrille: RouteGenGrille) {
         this.app = express();
 
@@ -35,16 +37,14 @@ export class Application {
     }
 
     public routes(): void {
-        const router: express.Router = express.Router();
-        const routerGenGrille: express.Router = express.Router();
-
-        router.use(this.api.routes);
-        routerGenGrille.use(this.routeGenGrille.routes);
-
-        this.app.use(router);
-        this.app.use("/grille", routerGenGrille);
+        this.ajouterService(this.serviceLexical);
+        this.ajouterService(this.routeGenGrille);
 
         this.errorHandeling();
+    }
+
+    private ajouterService(service : ServiceWeb){
+        this.app.use(service.mainRoute, service.routes); 
     }
 
     private errorHandeling(): void {

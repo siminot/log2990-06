@@ -7,7 +7,7 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 @Component({
   selector: "app-grille",
   templateUrl: "./grille.component.html",
-  styleUrls: ["./grille.component.css"]
+  styleUrls: ["./grille.component.css"],
 })
 
 export class GrilleComponent implements OnInit {
@@ -18,7 +18,6 @@ export class GrilleComponent implements OnInit {
   compteur: number;
 
   chaine: String;
-
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
     this.matriceVide = this.genererGrille();
@@ -57,6 +56,11 @@ export class GrilleComponent implements OnInit {
 
   getChaine(): void {
     this.listeMotsService.getChaine().subscribe(chaine => this.chaine = chaine);
+  }
+
+  setChaine(): void {
+    this.listeMotsService.setChaine();
+    console.log(this.chaine);
   }
 
   putWordsInGrid(): void {

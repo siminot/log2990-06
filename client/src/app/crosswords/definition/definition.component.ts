@@ -9,14 +9,22 @@ import { Word } from "../mockObject/word";
 })
 export class DefinitionComponent implements OnInit {
   private mots: Word[];
+  chaine: String;
   
   constructor(private listeMotsService: RequeteDeGrilleService) { }
 
   ngOnInit() {
     this.getMots();
+    this.getChaine();
   }
 
   getMots(): void {
     this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
   }
+
+  getChaine(): void {
+    this.listeMotsService.getChaine().subscribe(chaine => this.chaine = chaine);
+  }
+
+  
 }

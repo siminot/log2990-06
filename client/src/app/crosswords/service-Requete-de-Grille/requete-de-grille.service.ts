@@ -5,7 +5,7 @@ import { of } from 'rxjs/observable/of';
 
 import { listeMots } from "../mockObject/mockListWord";
 import { Word } from "../mockObject/word";
-import { setTimeout } from "timers";
+// import { setTimeout } from "timers";
 
 
 @Injectable()
@@ -27,10 +27,9 @@ export class RequeteDeGrilleService {
     return obs;
   }
 
-  setChaine(chaine: String): void {
-    this.uneChaine = chaine;
+  setChaine(): void {
+    this.uneChaine += "S";
   }
-
 
   getMots(): Observable<Word[]> {
     return of(listeMots);

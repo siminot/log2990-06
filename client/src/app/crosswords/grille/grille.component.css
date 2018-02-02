@@ -36,8 +36,6 @@
     text-align: center;
     width: 25px;
     height: 1px;
+    opacity: 1 !important;
 }
 
-reponseLettre{
-    opacity: 1 !important; 
-}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Mockword } from "../mockObject/mockWord";
 import { TAILLE_TABLEAU } from "../constantes";
-import { objetTest } from "../mockObject/mockWord";
+import { lettreGrille } from "../mockObject/mockWord";
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
 
 
@@ -15,7 +15,7 @@ import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-
 export class GrilleComponent implements OnInit {
   mots:Mockword[];
   motsAAfiicher:String[];
-  matriceVide: Array<Array<objetTest>>;
+  matriceVide: Array<Array<lettreGrille>>;
   dessu:boolean; 
   compteur:number;
 
@@ -33,18 +33,18 @@ export class GrilleComponent implements OnInit {
   }
 
 
-  genererGrille(): Array<Array<objetTest>>{
-    let matrice: Array<Array<objetTest>> = new Array(TAILLE_TABLEAU);
+  genererGrille(): Array<Array<lettreGrille>>{
+    let matrice: Array<Array<lettreGrille>> = new Array(TAILLE_TABLEAU);
 
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
-      let row: Array<objetTest> = new Array(TAILLE_TABLEAU);
+      let row: Array<lettreGrille> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++){
-        let caseNoir:objetTest;
+        let caseNoir:lettreGrille;
 
         if(j%2==0)
-          caseNoir = {case:true, mot:"X", lettre:true};
+          caseNoir = {case:true, mot:"X", lettre:false};
         else
-          caseNoir = {case:true, mot:"P", lettre:true};
+          caseNoir = {case:true, mot:"P", lettre:false};
         
         row[j] = caseNoir; 
       }

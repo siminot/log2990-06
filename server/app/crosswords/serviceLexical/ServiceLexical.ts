@@ -1,6 +1,6 @@
 import { Mot, Frequence } from './Mot';
 import { injectable, } from "inversify";
-import { Request, Response, NextFunction } from "express";
+import { Response } from "express";
 import * as WebRequest from 'web-request';
 import { ContrainteMot } from './ContrainteMot';
 

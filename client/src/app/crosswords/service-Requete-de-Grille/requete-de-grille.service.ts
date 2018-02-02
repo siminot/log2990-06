@@ -9,6 +9,7 @@ import { Mockword } from "../mockObject/mockWord";
 
 @Injectable()
 export class RequeteDeGrilleService {
+  
 
   constructor() { }
 

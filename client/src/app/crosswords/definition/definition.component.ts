@@ -21,6 +21,4 @@ export class DefinitionComponent implements OnInit {
   getMots(): void {
     this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
   }
-
-
 }

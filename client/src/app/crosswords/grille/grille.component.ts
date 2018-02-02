@@ -27,7 +27,6 @@ export class GrilleComponent implements OnInit {
 
   ngOnInit() {
     this.getMots();
-
     this.putWordsInGrid();
   }
 
@@ -55,6 +54,10 @@ export class GrilleComponent implements OnInit {
   }
 
   putWordsInGrid(): void {
-    
+    // this.matriceVide[this.mots[0].premierX][this.mots[0].premierY].mot = this.mots[0].mots[0];
+    // this.matriceVide[this.mots[0].premierX][this.mots[0].premierY].lettre = true;
+      
+    // console.log(this.matriceVide);
+    this.matriceVide[0][0].mot = "A";
   }
 }

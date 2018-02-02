@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Mockword, objetTest } from "../mockObject/mockWord";
+import { Mockword } from "../mockObject/mockWord";
 import { TAILLE_TABLEAU } from "../constantes";
 import { lettreGrille } from "../mockObject/mockWord";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
@@ -12,20 +12,12 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 })
 
 export class GrilleComponent implements OnInit {
-<<<<<<< HEAD
-  private mots: Mockword[];
-  private motsAAfficher: String[];
-  private matriceVide: Array<Array<objetTest>>;
-  private dessu: boolean;
-  private compteur: number;
-=======
   mots:Mockword[];
   motsAAfiicher:String[];
   matriceVide: Array<Array<lettreGrille>>;
   dessu:boolean; 
   compteur:number;
 
->>>>>>> f87546f5eaa01cc4dc53cd1dc06711fa64acefb6
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
     this.matriceVide = this.genererGrille();
@@ -38,16 +30,6 @@ export class GrilleComponent implements OnInit {
     this.putWordsInGrid();
   }
 
-<<<<<<< HEAD
-  private genererGrille(): Array<Array<objetTest>> {
-    let matrice: Array<Array<objetTest>> = new Array(TAILLE_TABLEAU);
-
-    for (let i: number = 0; i < TAILLE_TABLEAU; i++){
-      let row: Array<objetTest> = new Array(TAILLE_TABLEAU);
-      for (let j: number = 0; j < TAILLE_TABLEAU; j++){
-        let caseNoir: objetTest;
-=======
-
   genererGrille(): Array<Array<lettreGrille>>{
     let matrice: Array<Array<lettreGrille>> = new Array(TAILLE_TABLEAU);
 
@@ -55,7 +37,6 @@ export class GrilleComponent implements OnInit {
       let row: Array<lettreGrille> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++){
         let caseNoir:lettreGrille;
->>>>>>> f87546f5eaa01cc4dc53cd1dc06711fa64acefb6
 
         if(j%2==0)
           caseNoir = {case:true, mot:"X", lettre:false};
@@ -75,7 +56,6 @@ export class GrilleComponent implements OnInit {
       return("0")
     return("1")
   }
-
 
   getMots(): void {
     this.listeMotsService.getMots().subscribe(mots => this.mots = mots);

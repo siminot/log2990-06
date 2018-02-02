@@ -1,5 +1,5 @@
 
-export class Mockword {
+export class Word {
 public mots: string;
 public definition: string;
 public vertical: boolean;

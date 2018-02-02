@@ -8,15 +8,13 @@ import { Word } from "../mockObject/word";
   styleUrls: ['./definition.component.css']
 })
 export class DefinitionComponent implements OnInit {
-  mots: Word[];
+  private mots: Word[];
   
   constructor(private listeMotsService: RequeteDeGrilleService) { }
 
   ngOnInit() {
     this.getMots();
-    console.log(this.mots);
   }
-
 
   getMots(): void {
     this.listeMotsService.getMots().subscribe(mots => this.mots = mots);

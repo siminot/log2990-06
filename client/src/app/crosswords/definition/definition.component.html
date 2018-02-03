@@ -10,7 +10,8 @@
 <p>Horizontale</p>
 <ul class="heroes" *ngFor="let mot of mots">
   <li *ngIf="!mot.vertical"  class="badge">
-    <span [style.color]="" (click)="changementMotSelectionne(mot) ">{{ mot.definition }}</span>
+    <span *ngIf="mot.activer; else elseBlock2" [style.color]="'blue'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
+    <ng-template #elseBlock2><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
   </li>
 </ul>
 

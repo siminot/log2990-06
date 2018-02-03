@@ -1,9 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import "reflect-metadata";
 import { injectable, } from "inversify";
+// import * as WebRequest from "web-request";
 
 import { TAILLE_TEST, VIDE, NOIR, POURCENTAGE_TEST } from "./constantes";
 import { Mockword } from "./../../../common/mockObject/mockWord";
+// import { Mot } from "./../../../common/communication/Mot";
 
 module Route {
 
@@ -131,18 +133,23 @@ module Route {
         public genererMot(x: number, y: number, estVertical: boolean): Mockword {
 
             let longMot = 0;
+            let mot: String = "";
             for (let i: number = estVertical ? y : x; i < this.tailleGrille; i++) {
                 if (this.grille[i][x] !== NOIR && estVertical) {
                     longMot++;
+                    mot += "_";
                 } else if (this.grille[y][i] !== NOIR && !estVertical) {
                     longMot++;
+                    mot += "_";
                 } else {
                     break;
                 }
             }
             // console.log("Position (" + x + ", " + y + ") "+longMot);
+            const nouveauMot: Mockword = new Mockword(estVertical, longMot, x, y);
+            nouveauMot.setMot(mot);
 
-            return new Mockword(estVertical, longMot, x, y);
+            return nouveauMot;
         }
 
         public genererListeMot(): number {
@@ -172,6 +179,12 @@ module Route {
 
             return ctrMots;
         }
+
+        // private demanderMot(mot: Mockword): Promise<Mot[]> {
+        //     const url = "/liste/" + mot.getMot;
+
+        //     return WebRequest.json<Mot[]>(url).then();
+        // }
 
                 /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheDifficile(req: Request, res: Response, next: NextFunction): void {

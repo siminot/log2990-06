@@ -1,28 +1,32 @@
 import { Definition } from "./Definition";
+import { MotAPI } from "./MotAPI";
 
-export enum Frequence { Commun, NonCommun}
-export enum TypeMot { Nom, Verbe, Adjectif, Adverbe}
+export enum Frequence { Commun, NonCommun }
+export enum TypeMot { Nom, Verbe, Adjectif, Adverbe }
 
 export class Mot {
     private static readonly MEDIANE_FREQUENCE: number = 80;
-    private static readonly CARACTERE_INVALIDE: string[] = [" ", "-"];
+
+    // Pour détecter ce qui n'est pas un lettre majuscule/minuscule/accentuée
+    private static readonly CARACTERES_INVALIDES: string = "[^A-Z|^a-z]";
 
     public mot: string;
     public definitions: Definition[];
     private frequence: number;
 
-    public constructor(mot: string, definitions: Array<string>, frequence: string) {
-        this.mot = mot;
+    public constructor(mot: MotAPI) {
+        this.mot = mot.word;
 
-        if (definitions !== undefined) {
-            this.definitions = this.extraireDefinitions(definitions);
-        }
+        mot.defs !== undefined
+            ? this.definitions = this.extraireDefinitions(mot.defs)
+            : this.definitions = null;
+
         const NOMBRE_A_RETIRER = 2;
-        this.frequence = Number(frequence.substring(NOMBRE_A_RETIRER, frequence.length - 1)); // Pour enlever le "/f" au debut
+        this.frequence = Number(mot.tags[0].substring(NOMBRE_A_RETIRER, mot.tags[0].length - 1)); // Pour enlever le "/f" au debut
     }
 
     public possedeDefinition(): boolean {
-        return this.definitions !== undefined;
+        return this.definitions !== null;
     }
 
     public obtenirFrequence(): Frequence {
@@ -44,13 +48,13 @@ export class Mot {
         const def: Array<string> = definition.split("\t", NOMBRE_DIVISION);
         let type: TypeMot;
         switch (def[0]) {
-            case "n" : type = TypeMot.Nom; break;
+            case "n": type = TypeMot.Nom; break;
 
-            case "v" : type = TypeMot.Verbe; break;
+            case "v": type = TypeMot.Verbe; break;
 
-            case "adv" : type = TypeMot.Adverbe; break;
+            case "adv": type = TypeMot.Adverbe; break;
 
-            case "adj" : type = TypeMot.Nom; break;
+            case "adj": type = TypeMot.Nom; break;
 
             default:
                 throw Error("Type de mot inconnu");
@@ -60,13 +64,7 @@ export class Mot {
     }
 
     public contientCaractereInvalide(): boolean {
-        for (let i = 0 ; i < Mot.CARACTERE_INVALIDE.length ; i++) {
-            if (this.mot.indexOf(Mot.CARACTERE_INVALIDE[i]) >= 0) {
-                return true;
-            }
-        }
-
-        return false;
+        return new RegExp(Mot.CARACTERES_INVALIDES, "g").test(this.mot);
     }
 
     private trierDefinitionsNomOuVerbe(definitions: Definition[]): Definition[] {

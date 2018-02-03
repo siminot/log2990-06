@@ -180,6 +180,49 @@ module Route {
             return ctrMots;
         }
 
+        private lireMotViaGrille( mot: Mockword): string {
+            let lecteur = "";
+            const x = mot.getPremierX();
+            const y = mot.getPremierY();
+
+            for (let i = 0; i < mot.getLongueur(); i++) {
+                if (mot.getVertical()) {
+                    lecteur += this.grille[y + i][x];
+                } else {
+                    lecteur += this.grille[y][x + i];
+                }
+            }
+
+            return lecteur;
+        }
+
+        private ecrireDansLaGrille(mot: Mockword) {
+            const x = mot.getPremierX();
+            const y = mot.getPremierY();
+
+            for (let i = 0; i < mot.getLongueur(); i++) {
+                if (mot.getVertical()) {
+                    this.grille[y + i][x] = mot.getMot()[i];
+                } else {
+                    this.grille[y][x + i] = mot.getMot()[i];
+                }
+            }
+        }
+
+        private remplirLaGrilleDeMots() {
+            let lecteur: string;
+            for (let element of this.listeMot) {
+                lecteur = this.lireMotViaGrille(element);
+                // demander au service lexical le mot
+                if (true) { // peut foirer (sera la demande)
+                    
+                    
+                    
+                    this.ecrireDansLaGrille()
+                }
+            }
+        }        
+
         // private demanderMot(mot: Mockword): Promise<Mot[]> {
         //     const url = "/liste/" + mot.getMot;
 

@@ -1,6 +1,9 @@
 import { TypeMot } from "./Mot";
 
 export class Definition {
+
+    private static readonly PATRON_RECHERCHE = "[\b]?";
+
     public type: TypeMot;
     public definition: string;
 
@@ -10,7 +13,7 @@ export class Definition {
     }
 
     public contient(mot: string): boolean {
-        const pattern: string = "[\b]?" + mot.toLowerCase() + "[\b]?";
+        const pattern: string = Definition.PATRON_RECHERCHE + mot.toLowerCase() + Definition.PATRON_RECHERCHE;
 
         return new RegExp(pattern, "g").test(this.definition.toLowerCase());
     }

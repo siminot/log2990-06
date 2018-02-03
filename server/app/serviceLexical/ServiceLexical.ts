@@ -8,27 +8,29 @@ import { MotAPI } from "./MotAPI";
 
 module moduleServiceLexical {
 
-    const URL = "https://api.datamuse.com/words?sp=";
-    const FLAG = "&md=df&max=1000";
-
     @injectable()
     export class ServiceLexical {
+
+        private static readonly URL = "https://api.datamuse.com/words?sp=";
+        private static readonly FLAG = "&md=df&max=";
+        private static readonly NOMBRE_MAX_REQUETE = 1000;
 
         public servirMots(contrainte: string): Promise<Mot[]> {
             const contraintes: String = this.modifierContraintePourAPI(contrainte);
 
             if (this.requeteEstValide(contrainte)) {
 
-                return this.obtenirMotsSelonContrainte(contraintes).then((data) => this.filtrerMots(data));
+                return this.obtenirMotsSelonContrainte(contraintes, ServiceLexical.NOMBRE_MAX_REQUETE)
+                           .then((data) => this.filtrerMots(data));
             } else {
                 throw Error("Format de la requete invalide");
             }
         }
 
-        private modifierContraintePourAPI(contrainte: string ): String {
+        private modifierContraintePourAPI(contrainte: string): String {
             let contrainteAPI: String = "";
 
-            for (let i = 0 ; i < contrainte.length ; i++) {
+            for (let i = 0; i < contrainte.length; i++) {
                 if (contrainte[i] === ContrainteMot.LETTRE_INCONNUE) {
                     contrainteAPI += "?";
                 } else {
@@ -39,17 +41,17 @@ module moduleServiceLexical {
             return contrainteAPI;
         }
 
-        private obtenirMotsSelonContrainte(contrainte: String): Promise<Mot[]> {
-            const url = URL + contrainte + FLAG;
+        private obtenirMotsSelonContrainte(contrainte: String, nombreDeMots: number): Promise<Mot[]> {
+            const url = URL + contrainte + FLAG + nombreDeMots;
 
-            return WebRequest.json<MotAPI[]>(url).then((data) => this.convertirMotsAPI(data) );
+            return WebRequest.json<MotAPI[]>(url).then((data) => this.convertirMotsAPI(data));
         }
 
         private convertirMotsAPI(data: MotAPI[]): Mot[] {
             const dictionnaire: Mot[] = [];
 
-            for (const objet of data) {
-                const mot = new Mot(objet.word, objet.defs, objet.tags[0]);
+            for (const motAPI of data) {
+                const mot = new Mot(motAPI);
                 dictionnaire.push(mot);
             }
 
@@ -80,7 +82,7 @@ module moduleServiceLexical {
         }
 
         public obtenirDefinitionsMot(mot: string, res: Response): void {
-            this.obtenirMotsSelonContrainte(mot)
+            this.obtenirMotsSelonContrainte(mot, 1)
                 .then((dictionnaire) => res.send(dictionnaire[0]));
         }
 

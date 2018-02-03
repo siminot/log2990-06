@@ -1,74 +1,77 @@
-//import { Difficulte } from "./Difficulte";
-
 export class ContrainteMot {
-	public static readonly LETTRE_INCONNUE = "_";
+    public static readonly LETTRE_INCONNUE = "_";
 
-	private contraintes: Map<number, string>;
+    private contraintes: Map<number, string>;
 
-	public constructor(private longueurMot: number/*, private difficulte: Difficulte*/) { 
-		if(longueurMot < 1)
-			throw RangeError("Longueur du mot invalide : " + longueurMot + " doit etre > 0");
-		this.contraintes = new Map;
-	}
+    public constructor(private longueurMot: number) {
+        if (longueurMot < 1) {
+            throw RangeError("Longueur du mot invalide : " + longueurMot + " doit etre > 0");
+        }
+        this.contraintes = new Map;
+    }
 
-	public setContrainte(contrainte : string) : boolean {
-		if(this.URLestValide(contrainte)){
-			this.longueurMot = contrainte.length;
-			this.contraintes.clear();
+    public setContrainte(contrainte: string): boolean {
+        if (this.URLestValide(contrainte)) {
+            this.longueurMot = contrainte.length;
+            this.contraintes.clear();
 
-			for(let i = 0 ; i < contrainte.length ; i++){
-				if(!(/[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] == ContrainteMot.LETTRE_INCONNUE))
-					this.ajouterContrainte(contrainte[i], i);
-			}
+            for (let i = 0 ; i < contrainte.length ; i++) {
+                if (!(/[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] === ContrainteMot.LETTRE_INCONNUE)) {
+                    this.ajouterContrainte(contrainte[i], i);
+                }
+            }
 
-			return true;
-		}
-		else
-			return false;
-	}
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	private URLestValide(contrainte : string) : boolean {
-		
-		for(let i = 0 ; i < contrainte.length ; i++){
-			if(!(/^[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] == ContrainteMot.LETTRE_INCONNUE))
-				return false;
-		}
+    private URLestValide(contrainte: string): boolean {
+        for (let i = 0 ; i < contrainte.length ; i++) {
+            if (!(/^[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] === ContrainteMot.LETTRE_INCONNUE)) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-    public ajouterContrainte(lettre: string, position: number) : void {
-		if(lettre.length != 1)
-			throw RangeError("La contrainte doit être de longueur 1 et celle reçue est de longueur " + lettre.length);
+    public ajouterContrainte(lettre: string, position: number): void {
+        if (lettre.length !== 1) {
+            throw RangeError("La contrainte doit être de longueur 1 et celle reçue est de longueur " + lettre.length);
+        }
 
-		if(/^[a-zA-Z]/.test(lettre))
-			throw RangeError(lettre + " n'est pas une lettre");
+        if (/^[a-zA-Z]/.test(lettre)) {
+            throw RangeError(lettre + " n'est pas une lettre");
+        }
 
-		if(position < 1 || position > this.longueurMot)
-			throw RangeError("La position doit être entre 0 et " + this.longueurMot + ". Position demandée : " + position);
+        if (position < 1 || position > this.longueurMot) {
+            throw RangeError("La position doit être entre 0 et " + this.longueurMot + ". Position demandée : " + position);
+        }
 
-		if(this.contraintes.has(position))
-			throw Error("Une contrainte est déjà présente à cette position : " 
-						+ position + " " + this.contraintes[position])
+        if (this.contraintes.has(position)) {
+            throw Error("Une contrainte est déjà présente à cette position : " + position + " " + this.contraintes[position]);
+        }
 
-		this.contraintes.set(position, lettre.toUpperCase());
-	}
+        this.contraintes.set(position, lettre.toUpperCase());
+    }
 
-	public obtenirURL() : string {
-		let url : string[] = [];
+    public obtenirURL(): string {
+        const url: string[] = [];
 
-		url.fill(ContrainteMot.LETTRE_INCONNUE, 0, this.longueurMot - 1);
-		
-		for(let cle of this.contraintes.keys()){
-			url[cle] = this.contraintes[cle];
-		}
+        url.fill(ContrainteMot.LETTRE_INCONNUE, 0, this.longueurMot - 1);
 
-		let urlString : string;
+        for (const cle of this.contraintes.keys()) {
+            url[cle] = this.contraintes[cle];
+        }
 
-		for(let contrainte of url)
-			urlString += contrainte;
+        let urlString: string;
 
-		
-		return urlString;
-	}
+        for (const contrainte of url) {
+            urlString += contrainte;
+        }
+
+        return urlString;
+    }
 }

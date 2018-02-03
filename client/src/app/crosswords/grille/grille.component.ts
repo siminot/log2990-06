@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Word } from "../mockObject/word";
-import { TAILLE_TABLEAU } from "../constantes";
+import { Subscription } from 'rxjs/Subscription';
+
 import { lettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 // import { MaterialCreator } from "three";
@@ -14,58 +15,33 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 export class GrilleComponent implements OnInit {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
+  private subscriptionMots: Subscription;
+  private subscriptionMatrice: Subscription;
   // private motsAAfiicher: String[];
   // private dessu: boolean;
   // private compteur: number;
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
-    this.matriceDesMotsSurGrille = this.genererGrille();
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe(mots => this.mots = mots);
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe(matrice => this.matriceDesMotsSurGrille = matrice);
   }
 
   ngOnInit() {
-    this.getMots();
-    this.putWordsInGrid();
+
   }
 
-  genererGrille(): Array<Array<lettreGrille>>{
-    let matrice: Array<Array<lettreGrille>> = new Array(TAILLE_TABLEAU);
 
-    for(let i:number = 0; i < TAILLE_TABLEAU; i++){
-      let row: Array<lettreGrille> = new Array(TAILLE_TABLEAU);
-      for(let j:number = 0; j < TAILLE_TABLEAU; j++) {
-        let caseNoir: lettreGrille = {case:true, lettre:"1", caseDecouverte:false};
-        row[j] = caseNoir;
-      }
-      matrice[i] = row;
-    }
-    return matrice;
+  envoieMots(): void {
+    this.listeMotsService.serviceEnvoieMots(this.mots);
+  }
+  
+  envoieMatrice(): void {
+    this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
   opacite(etat:boolean): String {
     if(!etat)
       return("0")
     return("1")
-  }
-
-  getMots(): void {
-    this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
-  }
-
-  putWordsInGrid(): void {
-    for (let objMot of this.mots) {
-      let tmpLettreGrille:lettreGrille;
-      for (let indice:number = 0 ; indice < objMot.longeur ; indice++) {
-        tmpLettreGrille = {
-          case: true,
-          lettre: objMot.lettres[indice],
-          caseDecouverte: true
-        };
-        if(objMot.vertical) {
-          this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY]= tmpLettreGrille;
-        } else {
-          this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY]= tmpLettreGrille;
-        }
-      }
-    }
   }
 }

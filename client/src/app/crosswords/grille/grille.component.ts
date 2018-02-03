@@ -3,7 +3,7 @@ import { Word } from "../mockObject/word";
 import { TAILLE_TABLEAU } from "../constantes";
 import { lettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { MaterialCreator } from "three";
+// import { MaterialCreator } from "three";
 
 @Component({
   selector: "app-grille",
@@ -52,20 +52,12 @@ export class GrilleComponent implements OnInit {
   }
 
   putWordsInGrid(): void {
-    // this.matriceDesMotsSurGrille[this.mots[0].premierX][this.mots[0].premierY].mot = this.mots[0].mots[0];
-    // this.matriceDesMotsSurGrille[this.mots[0].premierX][this.mots[0].premierY].lettre = true;
-      
-    // console.log(this.matriceDesMotsSurGrille);
-    // let tmp: lettreGrille = {case:true,lettre:"A",caseDecouverte:true};
-    // this.matriceDesMotsSurGrille[0][0] = tmp;
-
-
     for (let objMot of this.mots) {
       let tmpLettreGrille:lettreGrille;
       for (let indice:number = 0 ; indice < objMot.longeur ; indice++) {
         tmpLettreGrille = {
           case: true,
-          lettre: objMot.mots[indice],
+          lettre: objMot.lettres[indice],
           caseDecouverte: true
         };
         if(objMot.vertical) {

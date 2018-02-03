@@ -5,7 +5,7 @@ import { Mockword } from "./../../../common/mockObject/mockWord";
 
     const genTest: GenerateurGrille = new GenerateurGrille;
     const assert = require("assert");
-    const expect = require("expect");
+    // const expect = require("expect");
 
     describe("tests generation des cases noires", () => {
 

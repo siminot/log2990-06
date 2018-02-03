@@ -14,13 +14,11 @@ export class GrilleComponent implements OnInit {
   private mots: Word[];
   private matriceVide: Array<Array<lettreGrille>>;
   // private motsAAfiicher: String[];
-  private dessu: boolean;
-  private compteur: number;
+  // private dessu: boolean;
+  // private compteur: number;
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
     this.matriceVide = this.genererGrille();
-    this.compteur = 0;
-    this.dessu = false;
   }
 
   ngOnInit() {

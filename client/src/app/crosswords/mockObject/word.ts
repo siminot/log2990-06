@@ -11,6 +11,6 @@ public activer: boolean;
 
 export class lettreGrille {
 public case: boolean; 
-public mot:string; 
-public lettre:boolean;
+public lettre:string; 
+public caseDecouverte:boolean;
 }

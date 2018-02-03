@@ -3,6 +3,7 @@ import { Word } from "../mockObject/word";
 import { TAILLE_TABLEAU } from "../constantes";
 import { lettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { MaterialCreator } from "three";
 
 @Component({
   selector: "app-grille",
@@ -32,7 +33,7 @@ export class GrilleComponent implements OnInit {
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
       let row: Array<lettreGrille> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++) {
-        let caseNoir: lettreGrille = {case:true, mot:"1", lettre:false};
+        let caseNoir: lettreGrille = {case:true, lettre:"1", caseDecouverte:false};
         row[j] = caseNoir;
       }
       matrice[i] = row;
@@ -55,17 +56,18 @@ export class GrilleComponent implements OnInit {
     // this.matriceDesMotsSurGrille[this.mots[0].premierX][this.mots[0].premierY].lettre = true;
       
     // console.log(this.matriceDesMotsSurGrille);
-    let tmp: lettreGrille = {case:true,mot:"A",lettre:true};
+    let tmp: lettreGrille = {case:true,lettre:"A",caseDecouverte:true};
     this.matriceDesMotsSurGrille[0][0] = tmp;
 
 
     for (let objMot of this.mots) {
       if(objMot.vertical) {
         for (let j:number = 0 ; j < objMot.longeur ; j++) {
-          this.matriceDesMotsSurGrille[objMot.premierX][j + objMot.premierY].mot = objMot.mots[j];
-          this.matriceDesMotsSurGrille[objMot.premierX][j + objMot.premierY].lettre = true;
+          this.matriceDesMotsSurGrille[objMot.premierX][j + objMot.premierY].lettre = objMot.mots[j];
+          this.matriceDesMotsSurGrille[objMot.premierX][j + objMot.premierY].caseDecouverte = true;
         }
       }
     }
+    console.log(this.matriceDesMotsSurGrille);
   }
 }

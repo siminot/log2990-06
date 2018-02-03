@@ -10,9 +10,9 @@ export class Definition {
     }
 
     public contient(mot: string): boolean {
-        const pattern: string = "[\b]?" + mot + "[\b]?";
+        const pattern: string = "[\b]?" + mot.toLowerCase() + "[\b]?";
 
-        return new RegExp(pattern, "g").test(this.definition);
+        return new RegExp(pattern, "g").test(this.definition.toLowerCase());
     }
 
     public estNomOuVerbe(): boolean {

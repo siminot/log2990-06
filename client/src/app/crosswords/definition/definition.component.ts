@@ -13,12 +13,12 @@ export class DefinitionComponent implements OnInit {
   constructor(private listeMotsService: RequeteDeGrilleService) { }
 
   ngOnInit() {
-    this.getMots();
+    // this.getMots();
   }
 
-  getMots(): void {
-    this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
-  }
+  // getMots(): void {
+  //   this.listeMotsService.getMots().subscribe(mots => this.mots = mots);
+  // }
 
 
 

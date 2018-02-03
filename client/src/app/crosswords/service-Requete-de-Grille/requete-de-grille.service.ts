@@ -38,10 +38,20 @@ export class RequeteDeGrilleService {
     return this.matriceDesMotsSurGrilleObservable$;
   }
 
+  getMots(): Word[] {
+    return this.mots;
+  }
+
+  getMatrice(): Array<Array<lettreGrille>> {
+    return this.matriceDesMotsSurGrille;
+  }
+
 
   constructor() {
     this.matriceDesMotsSurGrille = this.genererGrille();
+    this.mots = listeMots;
     this.putWordsInGrid();
+
   }
 
   genererGrille(): Array<Array<lettreGrille>>{

@@ -15,7 +15,11 @@
   </li>
 </ul>
 
-<form f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-  <input name="motEssaie" ngModel>
-  <button>Submit</button>
-</form>
+
+<input #tentative  (keyup.enter)="verifierTentative(tentative.value)">
+<button (click)="verifierTentative(tentative.value)">Verifier</button>
+
+
+
+<p>{{reponse}}</p>
+

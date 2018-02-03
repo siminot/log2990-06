@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
 import { Word } from "../mockObject/word";
 import { lettreGrille } from '../mockObject/word';
-import { NgForm } from '@angular/forms';
+
 
 
 @Component({
@@ -18,9 +18,9 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
-
+  public reponse:string; 
   private motSelectionne: Word;
-  private couleurSelectionne: String = "Black";
+  //private couleurSelectionne: String = "Black";
   
   constructor(private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
@@ -63,19 +63,42 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.envoieMatrice();
   }
 
+  decouvrirLettre(mot:Word): void {
+    for (let indice:number = 0 ; indice < mot.longeur ; indice++) {
+      if(mot.vertical) {
+        this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].lettreDecouverte = true;
+      } else {
+        this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].lettreDecouverte = true;
+      }
+    }
+    this.envoieMatrice();
+  }
+
+
   cacherCases(): void {
     for(let ligne of this.matriceDesMotsSurGrille) {
       for(let lettre of ligne) {
-        if (!lettre.lettreDecouverte) {
+        console.log(lettre.caseDecouverte)
+        if (lettre.lettreDecouverte == false) {
           lettre.caseDecouverte = false;
         }
       }
     }
   }
 
-  onSubmit(f:NgForm) {
-    console.log(f.value);
-  }
+  verifierTentative(tentative:string){
+    if(tentative == this.motSelectionne.mot){
+      this.decouvrirLettre(this.motSelectionne)
+      this.reponse = "Bonne Reponse !"
+    }
+    else{
+      this.reponse = "Mauvaise Reponse !"
+      console.log(this.motSelectionne.mot)
+    }
+}
+
+
+
 
   ngOnDestroy() {
     this.subscriptionMots.unsubscribe();

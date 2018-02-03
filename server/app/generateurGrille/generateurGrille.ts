@@ -80,7 +80,7 @@ module Route {
                 caseDisponible = this.neGenerePasDeTrou(positionX, positionY + 1);
             }
 
-            this.grille[positionY][positionX] = "0";
+            this.grille[positionY][positionX] = VIDE;
 
             return caseDisponible;
         }
@@ -122,7 +122,7 @@ module Route {
             this.initMatrice();
             this.initCasesNoires(POURCENTAGE_TEST);
             this.initListeMot();
-            this.demanderMot(this.listeMot[0]);
+            this.remplirLaGrilleDeMots();
             res.send(JSON.stringify(this.grille));
         }
 
@@ -180,7 +180,7 @@ module Route {
             return ctrMots;
         }
 
-        private lireMotViaGrille( mot: Mockword): string {
+        private lireMotViaGrille( mot: Mockword) {
             let lecteur = "";
             const x = mot.getPremierX();
             const y = mot.getPremierY();
@@ -192,8 +192,7 @@ module Route {
                     lecteur += this.grille[y][x + i];
                 }
             }
-
-            return lecteur;
+            mot.setMot(lecteur);
         }
 
         private ecrireDansLaGrille(mot: Mockword) {
@@ -207,21 +206,19 @@ module Route {
                     this.grille[y][x + i] = mot.getMot()[i];
                 }
             }
+
         }
 
         private remplirLaGrilleDeMots() {
-            let lecteur: string;
-            for (let element of this.listeMot) {
-                lecteur = this.lireMotViaGrille(element);
-                // demander au service lexical le mot
-                if (true) { // peut foirer (sera la demande)
-                    
-                    
-                    
-                    this.ecrireDansLaGrille()
-                }
-            }
-        }        
+        }
+
+        private insererUnMot(index: number): Promise<void> {
+            this.lireMotViaGrille(this.listeMot[index]);
+            this.demanderMot(this.listeMot[index]).then( () =>
+            this.ecrireDansLaGrille(this.listeMot[index]));
+
+            return new Promise( () => this.insererUnMot(index++));
+        }
 
         // private demanderMot(mot: Mockword): Promise<Mot[]> {
         //     const url = "/liste/" + mot.getMot;
@@ -236,14 +233,14 @@ module Route {
             const index = Math.floor( Math.random() * listeMot.length );
             motAChanger.setMot(listeMot[index].mot);
             motAChanger.setDefinition(listeMot[index].definitions[0].definition);
-            console.log(this.listeMot[0]);
+            // console.log(this.listeMot);
 
             return listeMot;
         }
 
                 /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
-            res.send(JSON.stringify("DIFFICILE"));
+            res.send(JSON.stringify(this.listeMot));
         }
 
         // Interface pour tests...

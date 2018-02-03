@@ -56,18 +56,24 @@ export class GrilleComponent implements OnInit {
     // this.matriceDesMotsSurGrille[this.mots[0].premierX][this.mots[0].premierY].lettre = true;
       
     // console.log(this.matriceDesMotsSurGrille);
-    let tmp: lettreGrille = {case:true,lettre:"A",caseDecouverte:true};
-    this.matriceDesMotsSurGrille[0][0] = tmp;
+    // let tmp: lettreGrille = {case:true,lettre:"A",caseDecouverte:true};
+    // this.matriceDesMotsSurGrille[0][0] = tmp;
 
 
     for (let objMot of this.mots) {
-      if(objMot.vertical) {
-        for (let j:number = 0 ; j < objMot.longeur ; j++) {
-          this.matriceDesMotsSurGrille[objMot.premierX][j + objMot.premierY].lettre = objMot.mots[j];
-          this.matriceDesMotsSurGrille[objMot.premierX][j + objMot.premierY].caseDecouverte = true;
+      let tmpLettreGrille:lettreGrille;
+      for (let indice:number = 0 ; indice < objMot.longeur ; indice++) {
+        tmpLettreGrille = {
+          case: true,
+          lettre: objMot.mots[indice],
+          caseDecouverte: true
+        };
+        if(objMot.vertical) {
+          this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY]= tmpLettreGrille;
+        } else {
+          this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY]= tmpLettreGrille;
         }
       }
     }
-    console.log(this.matriceDesMotsSurGrille);
   }
 }

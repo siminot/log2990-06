@@ -54,9 +54,9 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.cacherCases();
     for (let indice:number = 0 ; indice < mot.longeur ; indice++) {
       if(mot.vertical) {
-        this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].case = false;
+        this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].caseDecouverte = true;
       } else {
-        this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].case = false;
+        this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].caseDecouverte = true;
       }
     }
     this.envoieMatrice();
@@ -65,7 +65,8 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   cacherCases(): void {
     for(let ligne of this.matriceDesMotsSurGrille) {
       for(let lettre of ligne) {
-        lettre.case = true;
+        if(!lettre.lettreDecouverte)
+          lettre.caseDecouverte = false;
       }
     }
   }

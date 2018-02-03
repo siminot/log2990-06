@@ -10,7 +10,7 @@ export class Word {
 }
 
 export class lettreGrille {
-    public case: boolean; 
+    public caseDecouverte: boolean; 
     public lettre:string; 
-    public caseDecouverte:boolean;
+    public lettreDecouverte:boolean;
 }

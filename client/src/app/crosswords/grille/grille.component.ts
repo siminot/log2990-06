@@ -42,8 +42,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   opacite(etat:boolean): String {
     if(!etat)
-      return("0")
-    return("1")
+      return("1")
+    return("0")
   }
 
   ngOnDestroy() {

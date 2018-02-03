@@ -5,7 +5,7 @@ export enum Frequence { Commun, NonCommun};
 export enum TypeMot { Nom, Verbe, Adjectif, Adverbe};
 
 export class Mot {
-    public mot : string;
+    public mot : String;
     public definitions : Definition[];
     private frequence : number;
 
@@ -20,6 +20,10 @@ export class Mot {
         this.frequence = Number(frequence.substring(2, frequence.length-1)); //Pour enlever le "/f" au debut
     }
     
+    public obtenirLeMot(): String {
+        return this.mot;
+    }
+
     public possedeDefinition() : boolean {
         return this.definitions !== undefined;
     }

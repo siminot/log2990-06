@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import "reflect-metadata";
 import { injectable, } from "inversify";
-// import * as WebRequest from "web-request";
+import * as WebRequest from "web-request";
 
 import { TAILLE_TEST, VIDE, NOIR, POURCENTAGE_TEST } from "./constantes";
 import { Mockword } from "./../../../common/mockObject/mockWord";
-// import { Mot } from "./../../../common/communication/Mot";
+import { Mot } from "./../../../common/communication/Mot";
 
 module Route {
 
@@ -122,6 +122,7 @@ module Route {
             this.initMatrice();
             this.initCasesNoires(POURCENTAGE_TEST);
             this.initListeMot();
+            this.demanderMot(this.listeMot[0]);
             res.send(JSON.stringify(this.grille));
         }
 
@@ -145,7 +146,6 @@ module Route {
                     break;
                 }
             }
-            // console.log("Position (" + x + ", " + y + ") "+longMot);
             const nouveauMot: Mockword = new Mockword(estVertical, longMot, x, y);
             nouveauMot.setMot(mot);
 
@@ -225,9 +225,21 @@ module Route {
 
         // private demanderMot(mot: Mockword): Promise<Mot[]> {
         //     const url = "/liste/" + mot.getMot;
+        private demanderMot(mot: Mockword): Promise<Mot[]> {
+            const url = "http://localhost:3000/servicelexical/liste/" + mot.getMot();
 
-        //     return WebRequest.json<Mot[]>(url).then();
-        // }
+            return WebRequest.json<Mot[]>(url).then((data) => this.affecterMot(data, mot));
+        }
+
+        private affecterMot(listeMot: Mot[], motAChanger: Mockword): Mot[] {
+            // regarder avec simon si on doit trouver un mot en particulier dans la liste
+            const index = Math.floor( Math.random() * listeMot.length );
+            motAChanger.setMot(listeMot[index].mot);
+            motAChanger.setDefinition(listeMot[index].definitions[0].definition);
+            console.log(this.listeMot[0]);
+
+            return listeMot;
+        }
 
                 /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheDifficile(req: Request, res: Response, next: NextFunction): void {

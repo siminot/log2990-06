@@ -74,7 +74,7 @@ export class RequeteDeGrilleService {
       for (let indice:number = 0 ; indice < objMot.longeur ; indice++) {
         tmpLettreGrille = {
           case: true,
-          lettre: objMot.lettres[indice],
+          lettre: objMot.mot[indice],
           caseDecouverte: true
         };
 

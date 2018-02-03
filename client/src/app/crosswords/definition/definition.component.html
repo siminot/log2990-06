@@ -2,14 +2,14 @@
 <p>Vertical</p>
 <ul class="heroes" *ngFor="let mot of mots">
   <li *ngIf="mot.vertical"  class="badge">
-    <span>{{ mot.lettres }}</span>
+    <span>{{ mot.mot }}</span>
   </li>
 </ul>
 
 <p>Horizontale</p>
 <ul class="heroes" *ngFor="let mot of mots">
   <li *ngIf="!mot.vertical"  class="badge">
-    <span>{{ mot.lettres }}</span>
+    <span>{{ mot.mot }}</span>
   </li>
 </ul>
 

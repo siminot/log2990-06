@@ -1,6 +1,6 @@
 
 export class Word {
-    public lettres: string;
+    public mot: string;
     public definition: string;
     public vertical: boolean;
     public longeur: number;

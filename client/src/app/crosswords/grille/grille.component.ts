@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { lettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 @Component({
   selector: "app-grille",
@@ -11,7 +12,7 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
   styleUrls: ["./grille.component.css"]
 })
 
-export class GrilleComponent implements OnInit {
+export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
   private subscriptionMots: Subscription;
@@ -44,5 +45,10 @@ export class GrilleComponent implements OnInit {
     if(!etat)
       return("0")
     return("1")
+  }
+
+  ngOnDestroy() {
+    this.subscriptionMots.unsubscribe();
+    this.subscriptionMatrice.unsubscribe();
   }
 }

@@ -12,13 +12,13 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 
 export class GrilleComponent implements OnInit {
   private mots: Word[];
-  private matriceVide: Array<Array<lettreGrille>>;
+  private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
   // private motsAAfiicher: String[];
   // private dessu: boolean;
   // private compteur: number;
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
-    this.matriceVide = this.genererGrille();
+    this.matriceDesMotsSurGrille = this.genererGrille();
   }
 
   ngOnInit() {
@@ -51,12 +51,12 @@ export class GrilleComponent implements OnInit {
   }
 
   putWordsInGrid(): void {
-    // this.matriceVide[this.mots[0].premierX][this.mots[0].premierY].mot = this.mots[0].mots[0];
-    // this.matriceVide[this.mots[0].premierX][this.mots[0].premierY].lettre = true;
+    // this.matriceDesMotsSurGrille[this.mots[0].premierX][this.mots[0].premierY].mot = this.mots[0].mots[0];
+    // this.matriceDesMotsSurGrille[this.mots[0].premierX][this.mots[0].premierY].lettre = true;
       
-    // console.log(this.matriceVide);
+    // console.log(this.matriceDesMotsSurGrille);
     let tmp: lettreGrille = {case:true,mot:"A",lettre:true};
-    this.matriceVide[0][0] = tmp;
+    this.matriceDesMotsSurGrille[0][0] = tmp;
 
 
   }

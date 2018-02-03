@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Word } from "../mockObject/word";
 import { TAILLE_TABLEAU } from "../constantes";
 import { lettreGrille } from "../mockObject/word";
@@ -11,13 +11,11 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 })
 
 export class GrilleComponent implements OnInit {
-  mots: Word[];
-  motsAAfiicher: String[];
-  matriceVide: Array<Array<lettreGrille>>;
-  dessu: boolean;
-  compteur: number;
-
-
+  private mots: Word[];
+  private matriceVide: Array<Array<lettreGrille>>;
+  // private motsAAfiicher: String[];
+  private dessu: boolean;
+  private compteur: number;
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
     this.matriceVide = this.genererGrille();
@@ -60,6 +58,8 @@ export class GrilleComponent implements OnInit {
       
     // console.log(this.matriceVide);
     let tmp: lettreGrille = {case:true,mot:"A",lettre:true};
-    this.matriceVide[0][0].mot = "A";
+    this.matriceVide[0][0] = tmp;
+
+
   }
 }

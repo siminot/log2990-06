@@ -59,5 +59,13 @@ export class GrilleComponent implements OnInit {
     this.matriceDesMotsSurGrille[0][0] = tmp;
 
 
+    for (let objMot of this.mots) {
+      if(objMot.vertical) {
+        for (let j:number = 0 ; j < objMot.longeur ; j++) {
+          this.matriceDesMotsSurGrille[objMot.premierX][j + objMot.premierY].mot = objMot.mots[j];
+          this.matriceDesMotsSurGrille[objMot.premierX][j + objMot.premierY].lettre = true;
+        }
+      }
+    }
   }
 }

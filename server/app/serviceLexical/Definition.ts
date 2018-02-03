@@ -10,11 +10,9 @@ export class Definition {
     }
 
     public contient(mot: string): boolean {
-        return this.definition.indexOf(" " + mot + " ") >= 0 || this.definition.substring(0, mot.length) === mot;
+        const pattern: string = "[\b]?" + mot + "[\b]?";
 
-        /* Essai d'utiliser une expression reguliere
-        const pattern: string = "[^\w]?^" + mot + "[[^\w]";
-        return new RegExp("\d*", "g").test(this.definition); */
+        return new RegExp(pattern, "g").test(this.definition);
     }
 
     public estNomOuVerbe(): boolean {

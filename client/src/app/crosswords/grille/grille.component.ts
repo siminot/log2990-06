@@ -21,11 +21,10 @@ export class GrilleComponent implements OnInit {
   // private compteur: number;
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
-    // this.mots = this.listeMotsService.getMots();
-    // this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
+    this.mots = this.listeMotsService.getMots();
+    this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe(mots => this.mots = mots);
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe(matrice => this.matriceDesMotsSurGrille = matrice);
-    console.log(this.matriceDesMotsSurGrille);
   }
 
   ngOnInit() {

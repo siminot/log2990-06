@@ -46,6 +46,28 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     }
     this.motSelectionne = mot;
     mot.activer = !mot.activer;
+
+    this.decouvrirCases(mot);
+  }
+
+  decouvrirCases(mot:Word): void {
+    this.cacherCases();
+    for (let indice:number = 0 ; indice < mot.longeur ; indice++) {
+      if(mot.vertical) {
+        this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].case = false;
+      } else {
+        this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].case = false;
+      }
+    }
+    this.envoieMatrice();
+  }
+
+  cacherCases(): void {
+    for(let ligne of this.matriceDesMotsSurGrille) {
+      for(let lettre of ligne) {
+        lettre.case = true;
+      }
+    }
   }
 
   ngOnDestroy() {

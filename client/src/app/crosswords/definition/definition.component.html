@@ -2,15 +2,15 @@
 <p>Vertical</p>
 <ul class="heroes" *ngFor="let mot of mots">
   <li *ngIf="mot.vertical"  class="badge">
-    <span *ngIf="mot.activer; else elseBlock1" [style.color]="'blue'" (click)="changementMotSelectionne(mot)">{{ mot.mot }}</span>
-    <ng-template #elseBlock1><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.mot }}</span></ng-template>
+    <span *ngIf="mot.activer; else elseBlock1" [style.color]="'blue'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
+    <ng-template #elseBlock1><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
   </li>
 </ul>
 
 <p>Horizontale</p>
 <ul class="heroes" *ngFor="let mot of mots">
   <li *ngIf="!mot.vertical"  class="badge">
-    <span [style.color]="" (click)="changementMotSelectionne(mot) ">{{ mot.mot }}</span>
+    <span [style.color]="" (click)="changementMotSelectionne(mot) ">{{ mot.definition }}</span>
   </li>
 </ul>
 

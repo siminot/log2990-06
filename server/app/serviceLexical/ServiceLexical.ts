@@ -15,6 +15,8 @@ module moduleServiceLexical {
         private static readonly FLAG = "&md=df&max=";
         private static readonly NOMBRE_MAX_REQUETE = 1000;
 
+        // Obtention de plusieurs mots
+
         public servirMots(contrainte: string): Promise<Mot[]> {
             const contraintes: String = this.modifierContraintePourAPI(contrainte);
 
@@ -41,8 +43,15 @@ module moduleServiceLexical {
             return contrainteAPI;
         }
 
+        private requeteEstValide(contrainte: String): boolean {
+            // A completer
+            return true;
+        }
+
+        // Utilisation de l'API externe
+
         private obtenirMotsSelonContrainte(contrainte: String, nombreDeMots: number): Promise<Mot[]> {
-            const url = URL + contrainte + FLAG + nombreDeMots;
+            const url = ServiceLexical.URL + contrainte + ServiceLexical.FLAG + String(nombreDeMots);
 
             return WebRequest.json<MotAPI[]>(url).then((data) => this.convertirMotsAPI(data));
         }
@@ -51,16 +60,31 @@ module moduleServiceLexical {
             const dictionnaire: Mot[] = [];
 
             for (const motAPI of data) {
-                const mot = new Mot(motAPI);
-                dictionnaire.push(mot);
+                dictionnaire.push(new Mot(motAPI));
             }
 
             return dictionnaire;
         }
 
+        // Obtention d'une définition d'un mot
+
+        public obtenirDefinitionsMot(mot: string, res: Response): void {
+            this.obtenirMotsSelonContrainte(mot, 1)
+                .then((dictionnaire) => res.send(dictionnaire[0]));
+        }
+
+        // Obtention des mots selon la fréquence
+
+        public servirMotsSelonFrequence(contrainte: string, frequence: Frequence, res: Response): void {
+            this.servirMots(contrainte)
+                .then((dictionnaire) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
+        }
+
         private trierMotsSelonFrequence(liste: Mot[], frequence: Frequence): Mot[] {
             return liste.filter((mot) => mot.obtenirFrequence().valueOf() === frequence.valueOf());
         }
+
+        // Filtrer les mots
 
         private filtrerMots(liste: Mot[]): Mot[] {
             const listeTriee = this.retirerMotSansDefinition(liste);
@@ -74,21 +98,6 @@ module moduleServiceLexical {
 
         private retirerMotSansDefinition(liste: Mot[]): Mot[] {
             return liste.filter((mot) => mot.possedeDefinition());
-        }
-
-        public servirMotsSelonFrequence(contrainte: string, frequence: Frequence, res: Response): void {
-            this.servirMots(contrainte)
-                .then((dictionnaire) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
-        }
-
-        public obtenirDefinitionsMot(mot: string, res: Response): void {
-            this.obtenirMotsSelonContrainte(mot, 1)
-                .then((dictionnaire) => res.send(dictionnaire[0]));
-        }
-
-        private requeteEstValide(contrainte: String): boolean {
-            // A completer
-            return true;
         }
     }
 }

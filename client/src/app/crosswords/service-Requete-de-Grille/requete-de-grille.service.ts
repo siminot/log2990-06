@@ -11,6 +11,8 @@ import { Word } from "../mockObject/word";
 @Injectable()
 export class RequeteDeGrilleService {
 
+  
+
 
   constructor() {
     // this.uneChaine = new Chaine();;

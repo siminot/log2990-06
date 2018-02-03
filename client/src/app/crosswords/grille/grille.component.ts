@@ -41,7 +41,7 @@ export class GrilleComponent implements OnInit {
     return matrice;
   }
 
-  myStyle(etat:boolean): String {
+  opacite(etat:boolean): String {
     if(!etat)
       return("0")
     return("1")

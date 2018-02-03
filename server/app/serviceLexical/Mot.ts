@@ -59,13 +59,29 @@ export class Mot {
         return new Definition(type, def[1]);
     }
 
-    public contientCaractereInvalide(mot: string): boolean {
+    public contientCaractereInvalide(): boolean {
         for (let i = 0 ; i < Mot.CARACTERE_INVALIDE.length ; i++) {
-            if (mot.indexOf(Mot.CARACTERE_INVALIDE[i]) >= 0) {
+            if (this.mot.indexOf(Mot.CARACTERE_INVALIDE[i]) >= 0) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    private trierDefinitionsNomOuVerbe(definitions: Definition[]): Definition[] {
+        return this.definitions.filter((definition) => definition.estNomOuVerbe());
+    }
+
+    private trierDefinitionsSansLeMot(definitions: Definition[]): Definition[] {
+        return this.definitions.filter((definition) => !definition.contient(this.mot));
+    }
+
+    public obtenirDefinitionsPourJeu(): Definition[] {
+        let definitions: Definition[] = [];
+
+        definitions = this.trierDefinitionsNomOuVerbe(this.definitions);
+
+        return this.trierDefinitionsSansLeMot(definitions);
     }
 }

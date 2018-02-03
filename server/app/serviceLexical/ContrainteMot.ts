@@ -1,9 +1,9 @@
 //import { Difficulte } from "./Difficulte";
 
 export class ContrainteMot {
-	private contraintes: Map<number, string>;
-
 	public static readonly LETTRE_INCONNUE = "_";
+
+	private contraintes: Map<number, string>;
 
 	public constructor(private longueurMot: number/*, private difficulte: Difficulte*/) { 
 		if(longueurMot < 1)
@@ -17,7 +17,7 @@ export class ContrainteMot {
 			this.contraintes.clear();
 
 			for(let i = 0 ; i < contrainte.length ; i++){
-				if(!(/^[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] == ContrainteMot.LETTRE_INCONNUE))
+				if(!(/[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] == ContrainteMot.LETTRE_INCONNUE))
 					this.ajouterContrainte(contrainte[i], i);
 			}
 

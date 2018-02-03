@@ -11,9 +11,9 @@ module moduleServiceLexical {
     @injectable()
     export class ServiceLexical {
 
-        private static readonly URL = "https://api.datamuse.com/words?sp=";
-        private static readonly FLAG = "&md=df&max=";
-        private static readonly NOMBRE_MAX_REQUETE = 1000;
+        private static readonly URL: string = "https://api.datamuse.com/words?sp=";
+        private static readonly FLAG: string = "&md=df&max=";
+        private static readonly NOMBRE_MAX_REQUETE: number = 1000;
 
         // Obtention de plusieurs mots
 
@@ -23,7 +23,7 @@ module moduleServiceLexical {
             if (this.requeteEstValide(contrainte)) {
 
                 return this.obtenirMotsSelonContrainte(contraintes, ServiceLexical.NOMBRE_MAX_REQUETE)
-                           .then((data) => this.filtrerMots(data));
+                           .then((data: Mot[]) => this.filtrerMots(data));
             } else {
                 throw Error("Format de la requete invalide");
             }
@@ -51,9 +51,9 @@ module moduleServiceLexical {
         // Utilisation de l'API externe
 
         private obtenirMotsSelonContrainte(contrainte: String, nombreDeMots: number): Promise<Mot[]> {
-            const url = ServiceLexical.URL + contrainte + ServiceLexical.FLAG + String(nombreDeMots);
+            const url: string = ServiceLexical.URL + contrainte + ServiceLexical.FLAG + String(nombreDeMots);
 
-            return WebRequest.json<MotAPI[]>(url).then((data) => this.convertirMotsAPI(data));
+            return WebRequest.json<MotAPI[]>(url).then((data: MotAPI[]) => this.convertirMotsAPI(data));
         }
 
         private convertirMotsAPI(data: MotAPI[]): Mot[] {
@@ -70,34 +70,34 @@ module moduleServiceLexical {
 
         public obtenirDefinitionsMot(mot: string, res: Response): void {
             this.obtenirMotsSelonContrainte(mot, 1)
-                .then((dictionnaire) => res.send(dictionnaire[0]));
+                .then((dictionnaire: Mot[]) => res.send(dictionnaire[0]));
         }
 
         // Obtention des mots selon la fréquence
 
         public servirMotsSelonFrequence(contrainte: string, frequence: Frequence, res: Response): void {
             this.servirMots(contrainte)
-                .then((dictionnaire) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
+                .then((dictionnaire: Mot[]) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
         }
 
         private trierMotsSelonFrequence(liste: Mot[], frequence: Frequence): Mot[] {
-            return liste.filter((mot) => mot.obtenirFrequence().valueOf() === frequence.valueOf());
+            return liste.filter((mot: Mot) => mot.obtenirFrequence().valueOf() === frequence.valueOf());
         }
 
         // Filtrer les mots
 
         private filtrerMots(liste: Mot[]): Mot[] {
-            const listeTriee = this.retirerMotSansDefinition(liste);
+            const listeTriee: Mot[] = this.retirerMotSansDefinition(liste);
 
             return this.retirerMotInvalides(this.retirerMotSansDefinition(listeTriee));
         }
 
         private retirerMotInvalides(liste: Mot[]): Mot[] {
-            return liste.filter((mot) => !mot.contientCaractereInvalide());
+            return liste.filter((mot: Mot) => !mot.contientCaractereInvalide());
         }
 
         private retirerMotSansDefinition(liste: Mot[]): Mot[] {
-            return liste.filter((mot) => mot.possedeDefinition());
+            return liste.filter((mot: Mot) => mot.possedeDefinition());
         }
     }
 }

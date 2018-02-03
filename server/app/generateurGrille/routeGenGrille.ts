@@ -22,7 +22,7 @@ export class RouteGenGrille {
 
         router.get("/normal",
                    (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheDifficile(req, res, next));
-            
+
         router.get("/difficile",
                    (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheDifficile(req, res, next));
 

@@ -1,5 +1,6 @@
 import { Definition } from "./Definition";
 import { MotAPI } from "./MotAPI";
+import { define } from "mime";
 
 export enum Frequence { Commun, NonCommun }
 export enum TypeMot { Nom, Verbe, Adjectif, Adverbe }
@@ -103,20 +104,24 @@ export class Mot {
     }
 
     public obtenirDefinitionsPourJeu(): Definition[] {
-        let definitions: Definition[] = [];
-
-        definitions = this.trierDefinitionsNomOuVerbe(this.definitions);
-
-        return this.trierDefinitionsSansLeMot(definitions);
+        return this.trierDefinitionsSansLeMot(this.trierDefinitionsNomOuVerbe(this.definitions));
     }
 
     // Tri des définitions
 
     private trierDefinitionsNomOuVerbe(definitions: Definition[]): Definition[] {
-        return this.definitions.filter((definition: Definition) => definition.estNomOuVerbe());
+        if (definitions !== null) {
+            return this.definitions.filter((definition: Definition) => definition.estNomOuVerbe());
+        }
+
+        return null;
     }
 
     private trierDefinitionsSansLeMot(definitions: Definition[]): Definition[] {
-        return this.definitions.filter((definition: Definition) => !definition.contient(this.mot));
+        if (definitions !== null) {
+            return this.definitions.filter((definition: Definition) => !definition.contient(this.mot));
+        }
+
+        return null;
     }
 }

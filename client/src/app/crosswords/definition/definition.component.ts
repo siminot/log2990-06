@@ -17,6 +17,9 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
+
+  private motSelectionne: Word;
+  private couleurSelectionne: String = "Black";
   
   constructor(private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
@@ -35,6 +38,14 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   
   envoieMatrice(): void {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
+  }
+
+  changementMotSelectionne(mot:Word): void{
+    for(let mot of this.mots) {
+      mot.activer = false;
+    }
+    this.motSelectionne = mot;
+    mot.activer = !mot.activer;
   }
 
   ngOnDestroy() {

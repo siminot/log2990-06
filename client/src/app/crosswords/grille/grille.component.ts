@@ -40,11 +40,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
-  modifierUnMot():void {
-    this.mots[0].mot="POP";
-    this.envoieMots();
-  }
-
   opacite(etat:boolean): String {
     if(!etat)
       return("0")

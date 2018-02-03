@@ -14,38 +14,39 @@ export class Mot {
     public definitions: Definition[];
     private frequence: number;
 
+    // Construction d'un mot
+
     public constructor(mot: MotAPI) {
-        this.mot = mot.word;
+        mot.word !== undefined
+            ? this.mot = mot.word
+            : this.mot = null;
 
-        mot.defs !== undefined
-            ? this.definitions = this.extraireDefinitions(mot.defs)
-            : this.definitions = null;
+        this.definitions = this.extraireDefinitions(mot.defs);
 
-        const NOMBRE_A_RETIRER = 2;
-        this.frequence = Number(mot.tags[0].substring(NOMBRE_A_RETIRER, mot.tags[0].length - 1)); // Pour enlever le "/f" au debut
-    }
-
-    public possedeDefinition(): boolean {
-        return this.definitions !== null;
-    }
-
-    public obtenirFrequence(): Frequence {
-        return this.frequence > Mot.MEDIANE_FREQUENCE ? Frequence.Commun : Frequence.NonCommun;
+        this.frequence = this.extraireFrequence(mot.tags[MotAPI.TAG_INDICE_FREQUENCE]);
     }
 
     private extraireDefinitions(definitions: Array<String>): Definition[] {
+        if (definitions === undefined) {
+            return null;
+        }
+
         const tableau: Definition[] = [];
 
         for (const def of definitions) {
-            tableau.push(this.creerDefinition(def));
+            const DEFINITION: Definition = this.creerDefinition(def);
+
+            if (DEFINITION !== null) {
+                tableau.push(DEFINITION);
+            }
         }
 
         return tableau;
     }
 
     private creerDefinition(definition: String): Definition {
-        const NOMBRE_DIVISION = 2;
-        const def: Array<string> = definition.split("\t", NOMBRE_DIVISION);
+        const NOMBRE_DIVISION: number  = 2;
+        const def: Array<string> = definition.split(MotAPI.SEPARATEUR_DEFINITION, NOMBRE_DIVISION);
         let type: TypeMot;
         switch (def[0]) {
             case "n": type = TypeMot.Nom; break;
@@ -54,25 +55,51 @@ export class Mot {
 
             case "adv": type = TypeMot.Adverbe; break;
 
-            case "adj": type = TypeMot.Nom; break;
+            case "adj": type = TypeMot.Adjectif; break;
 
             default:
-                throw Error("Type de mot inconnu");
+                return null;
         }
 
         return new Definition(type, def[1]);
     }
 
+    private extraireFrequence(frequence: string): number {
+        if (frequence === undefined) {
+            return null;
+        }
+
+        // Pour obtenir le "f:" au debut
+        const NOMBRE_A_RETIRER: number = MotAPI.MARQUEUR_FREQUENCE.length;
+        const TAG_FREQUENCE: string = frequence.substring(0, NOMBRE_A_RETIRER);
+
+        const FREQUENCE: number = Number.parseInt(frequence.substring(NOMBRE_A_RETIRER));
+
+        if (TAG_FREQUENCE === MotAPI.MARQUEUR_FREQUENCE && !isNaN(FREQUENCE)) {
+            return FREQUENCE;
+        } else {
+            return null;
+        }
+    }
+
+    // Méthodes publiques
+
+    public possedeDefinition(): boolean {
+        return this.definitions !== null;
+    }
+
+    public obtenirFrequence(): Frequence {
+        if (this.frequence !== null) {
+            return this.frequence >= Mot.MEDIANE_FREQUENCE
+                ? Frequence.Commun
+                : Frequence.NonCommun;
+        } else {
+            return null;
+        }
+    }
+
     public contientCaractereInvalide(): boolean {
         return new RegExp(Mot.CARACTERES_INVALIDES, "g").test(this.mot);
-    }
-
-    private trierDefinitionsNomOuVerbe(definitions: Definition[]): Definition[] {
-        return this.definitions.filter((definition) => definition.estNomOuVerbe());
-    }
-
-    private trierDefinitionsSansLeMot(definitions: Definition[]): Definition[] {
-        return this.definitions.filter((definition) => !definition.contient(this.mot));
     }
 
     public obtenirDefinitionsPourJeu(): Definition[] {
@@ -81,5 +108,15 @@ export class Mot {
         definitions = this.trierDefinitionsNomOuVerbe(this.definitions);
 
         return this.trierDefinitionsSansLeMot(definitions);
+    }
+
+    // Tri des définitions
+
+    private trierDefinitionsNomOuVerbe(definitions: Definition[]): Definition[] {
+        return this.definitions.filter((definition: Definition) => definition.estNomOuVerbe());
+    }
+
+    private trierDefinitionsSansLeMot(definitions: Definition[]): Definition[] {
+        return this.definitions.filter((definition: Definition) => !definition.contient(this.mot));
     }
 }

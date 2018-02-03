@@ -2,7 +2,7 @@ import { TypeMot } from "./Mot";
 
 export class Definition {
 
-    private static readonly PATRON_RECHERCHE = "[\b]?";
+    private static readonly PATRON_RECHERCHE: string = "[\b]?";
 
     public type: TypeMot;
     public definition: string;

@@ -15,4 +15,7 @@
   </li>
 </ul>
 
-<span>{{ chaine }}</span>
+<form f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+  <input name="motEssaie" ngModel>
+  <button>Submit</button>
+</form>

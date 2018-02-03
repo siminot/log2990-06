@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
 import { Word } from "../mockObject/word";
 import { lettreGrille } from '../mockObject/word';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -65,10 +66,15 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   cacherCases(): void {
     for(let ligne of this.matriceDesMotsSurGrille) {
       for(let lettre of ligne) {
-        if(!lettre.lettreDecouverte)
+        if (!lettre.lettreDecouverte) {
           lettre.caseDecouverte = false;
+        }
       }
     }
+  }
+
+  onSubmit(f:NgForm) {
+    console.log(f.value);
   }
 
   ngOnDestroy() {

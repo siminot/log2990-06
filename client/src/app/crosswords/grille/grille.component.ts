@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-//import {Mockword} from "../mockObject/mockWord";
-import {TAILLE_TABLEAU} from "../constantes";
-import { objetTest } from "../mockObject/mockWord";
+import { Word } from "../mockObject/word";
+import { Subscription } from 'rxjs/Subscription';
 
+import { lettreGrille } from "../mockObject/word";
+import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 @Component({
   selector: "app-grille",
@@ -10,45 +12,55 @@ import { objetTest } from "../mockObject/mockWord";
   styleUrls: ["./grille.component.css"]
 })
 
+export class GrilleComponent implements OnInit, OnDestroy {
+  private mots: Word[];
+  private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
+  private subscriptionMots: Subscription;
+  private subscriptionMatrice: Subscription;
+  // private motsAAfiicher: String[];
+  // private dessu: boolean;
+  // private compteur: number;
 
-export class GrilleComponent implements OnInit {
-  
-  genererGrille(): any[][]{
-    let matrice: Array<Array<objetTest>> = new Array(TAILLE_TABLEAU);
-
-    for(let i:number = 0; i < TAILLE_TABLEAU; i++){
-      let row: Array<objetTest> = new Array(TAILLE_TABLEAU);
-      for(let j:number = 0; j < TAILLE_TABLEAU; j++){
-        let caseNoir: objetTest = {case:true, mot:"X"};
-        row[j] = caseNoir; 
-      }
-      matrice[i] = row; 
-    }
-  
-    return matrice; 
+  public constructor(private listeMotsService: RequeteDeGrilleService) {
+    this.mots = this.listeMotsService.getMots();
+    this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe(mots => this.mots = mots);
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe(matrice => this.matriceDesMotsSurGrille = matrice);
   }
 
+  ngOnInit() {
 
+  }
+
+  envoieMots(): void {
+    this.listeMotsService.serviceEnvoieMots(this.mots);
+  }
   
-  dessu:boolean = false; 
-  compteur:number=0;
+  envoieMatrice(): void {
+    this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
+  }
 
-  myStyle(): string{
-    if(!this.dessu)
+  opacite(etat:boolean): String {
+    if(!etat)
       return("1")
     return("0")
+  }
+
+  onKey(event:any){
+    let element = event.srcElement.nextElementSibling
+    if(element == null){
+      console.log("null")
+      return;
+    }
+    else{
+      console.log(element)
+      element.focus()
+    }
 
   }
-  matriceVide: Array<Array<objetTest>>;
-  public constructor() {
-    this.matriceVide = this.genererGrille();
 
-
-
-
-
-
-   }
-
-  ngOnInit() { }
+  ngOnDestroy() {
+    this.subscriptionMots.unsubscribe();
+    this.subscriptionMatrice.unsubscribe();
+  }
 }

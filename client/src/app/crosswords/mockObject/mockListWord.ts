@@ -1,8 +1,8 @@
-import {Mockword} from "./mockWord";
+import { Word } from "./word";
 
-export const listeMot: Mockword[] = [
-{mots: "Pout", definition: "Qui aime la poutine", vertical: false, longeur: 4, premierX: 0, premierY: 0, activer: false },
-{mots: "Pome", definition: "provient du pommier", vertical: true, longeur: 4, premierX: 0, premierY: 0, activer: false },
-{mots: "Eppa", definition: "Pas super super", vertical: false, longeur: 4, premierX: 0, premierY: 3, activer: false },
-{mots: "Tata", definition: "ben nice is ben cool", vertical: true, longeur: 4, premierX: 3, premierY: 0, activer: false }
-]
+export const listeMots: Word[] = [
+    {mot: "Pout", definition: "Qui aime la poutine", vertical: false, longeur: 4, premierX: 0, premierY: 0, activer: false },
+    {mot: "Pome", definition: "provient du pommier", vertical: true, longeur: 4, premierX: 0, premierY: 0, activer: false },
+    {mot: "Eppa", definition: "Pas super super", vertical: false, longeur: 4, premierX: 0, premierY: 3, activer: false },
+    {mot: "Tata", definition: "ben nice is ben cool", vertical: true, longeur: 4, premierX: 3, premierY: 0, activer: false }
+];

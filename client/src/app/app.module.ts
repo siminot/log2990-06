@@ -10,13 +10,16 @@ import { BasicService } from "./basic.service";
 import { AppRoutingModule } from ".//app-routing.module";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
-import {RequeteDeGrilleService} from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
+import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
+import { DefinitionComponent } from './crosswords/definition/definition.component';
+
 @NgModule({
     declarations: [
         AppComponent,
         GameComponent,
         MainGrilleComponent,
-        GrilleComponent
+        GrilleComponent,
+        DefinitionComponent
     ],
     imports: [
         BrowserModule,

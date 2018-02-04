@@ -1,15 +1,19 @@
 
 <div class = "grille">
     <table class="table">
-        <tr *ngFor="let item of matriceVide; let i = index" >
+        <tr *ngFor="let item of matriceDesMotsSurGrille; let i = index" >
             <td *ngFor="let case of item; let j = index1" >
-                <img [style.opacity]="myStyle()" (mouseover)= "dessu = true" (mouseout) = "dessu = false" Class = "tuile" src="../../../assets/tuile.png"><img>
-            
-                <p class="reponseLettre" *ngIf = "case.case">{{case.mot}}</p>
-        
+                <img *ngIf="case.lettre != '1' ; else elseBlock1" [style.opacity]="opacite(case.caseDecouverte)" class = "tuile" src="../../../assets/tuile.png">
+                <ng-template #elseBlock1><img src="../../../assets/tuileMorte.png" class="tuile"></ng-template>
+                <input *ngIf="case.caseDecouverte" name="intext" class="tuile" (keyup.enter)="onKey($event)" >
+
+
+
+                <p class="reponseLettre" *ngIf = "case.lettreDecouverte && case.lettre ; else elseBlock2">{{case.lettre | uppercase}}</p>
+                <ng-template #elseBlock2><p class="reponseLettre">  </p></ng-template>
             </td>
         </tr>
     </table>
 </div>
 
-
+<!-- <img *ngIf="case.lettre != '1' ; else elseBlock1" [style.opacity]="opacite(case.case)" (mouseover)= "case.case = false" (mouseout) = "case.case = true" class = "tuile" src="../../../assets/tuile.png"> -->

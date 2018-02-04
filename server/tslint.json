@@ -1,5 +1,5 @@
 {
-  "rulesDirectory":[
+  "rulesDirecnory":[
     "node_modules/tslint-eslint-rules/dist/rules",
     "node_modules/tslint-microsoft-contrib"
   ],
@@ -163,7 +163,7 @@
     "prefer-conditional-expression": [true, "check-else-if"],
     "switch-default": true,
     "typedef": [
-      true, 
+      false, 
       "call-signature", 
       "parameter", 
       "member-variable-declaration",

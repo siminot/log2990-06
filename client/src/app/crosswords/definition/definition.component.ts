@@ -18,7 +18,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
-  private reponse:string; 
+  private reponse: String; 
   private motSelectionne: Word;
   
   constructor(private listeMotsService: RequeteDeGrilleService) {
@@ -28,9 +28,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe(matrice => this.matriceDesMotsSurGrille = matrice);
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   envoieMots(): void {
     this.listeMotsService.serviceEnvoieMots(this.mots);
@@ -40,7 +38,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
-  changementMotSelectionne(mot:Word): void{
+  changementMotSelectionne(mot: Word): void {
     for(let mot of this.mots) {
       mot.activer = false;
     }
@@ -50,10 +48,10 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.decouvrirCases(mot);
   }
 
-  decouvrirCases(mot:Word): void {
+  decouvrirCases(mot: Word): void {
     this.cacherCases();
-    for (let indice:number = 0 ; indice < mot.longeur ; indice++) {
-      if(mot.vertical) {
+    for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
+      if (mot.vertical) {
         this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].caseDecouverte = true;
       } else {
         this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].caseDecouverte = true;
@@ -62,9 +60,9 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.envoieMatrice();
   }
 
-  decouvrirLettre(mot:Word): void {
-    for (let indice:number = 0 ; indice < mot.longeur ; indice++) {
-      if(mot.vertical) {
+  decouvrirLettre(mot: Word): void {
+    for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
+      if (mot.vertical) {
         this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].lettreDecouverte = true;
       } else {
         this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].lettreDecouverte = true;
@@ -74,8 +72,8 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
 
   cacherCases(): void {
-    for(let ligne of this.matriceDesMotsSurGrille) {
-      for(let lettre of ligne) {
+    for (let ligne of this.matriceDesMotsSurGrille) {
+      for (let lettre of ligne) {
         console.log(lettre.caseDecouverte)
         if (lettre.lettreDecouverte == false) {
           lettre.caseDecouverte = false;
@@ -84,14 +82,13 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     }
   }
 
-  verifierTentative(tentative:string){
-    if(tentative == this.motSelectionne.mot){
-      this.decouvrirLettre(this.motSelectionne)
-      this.reponse = "Bonne Reponse !"
-    }
-    else{
-      this.reponse = "Mauvaise Reponse !"
-      console.log(this.motSelectionne.mot)
+  verifierTentative(tentative: String) {
+    if(tentative == this.motSelectionne.mot) {
+      this.decouvrirLettre(this.motSelectionne);
+      this.reponse = "Bonne Reponse !";
+    } else {
+      this.reponse = "Mauvaise Reponse !";
+      console.log(this.motSelectionne.mot);
     }
 }
 

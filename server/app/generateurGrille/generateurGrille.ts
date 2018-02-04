@@ -45,7 +45,6 @@ module Route {
         }
 
         public initListeMot(): void {
-
             this.genererListeMot();
         }
 
@@ -167,7 +166,7 @@ module Route {
             return listeMot;
         }
 
-                /* FONCTION BIDON POUR TESTER DES CHOSES */
+        /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
             res.send(JSON.stringify(this.listeMot));
         }

@@ -58,7 +58,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
       let elem = document.getElementById("testFocus");
       elem.focus();
     }
-
   }
 
   ngOnDestroy() {

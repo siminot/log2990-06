@@ -15,7 +15,7 @@ import { lettreGrille } from '../mockObject/word';
 
 export class DefinitionComponent implements OnDestroy, OnInit {
   private mots: Word[];
-  private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
+  public matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private reponse: String; 
@@ -95,7 +95,6 @@ export class DefinitionComponent implements OnDestroy, OnInit {
       this.reponse = "Bonne Reponse !";
     } else {
       this.reponse = "Mauvaise Reponse !";
-      console.log(this.motSelectionne.mot);
     }
   }
 

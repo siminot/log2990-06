@@ -15,7 +15,7 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Word[];
-  private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
+  public matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   // private motsAAfiicher: String[];

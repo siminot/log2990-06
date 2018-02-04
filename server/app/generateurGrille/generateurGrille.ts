@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { TAILLE_TEST, VIDE, NOIR } from "./constantes";
+import { TAILLE_TEST, VIDE, NOIR, TAILLE_TABLEAU, POURCENTAGE_TEST } from "./constantes";
 import { Mockword } from "./../../../common/mockObject/mockWord";
 import { Mot } from "./../../../common/communication/Mot";
 
@@ -15,9 +15,9 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
-        private listeMot: Array<Mockword> = new Array<Mockword>();
+        private listeMot: Array<Mockword>;
         private tailleGrille: number = TAILLE_TEST;
-        private generateurSquelette: GenerateurSquelette = new GenerateurSquelette;
+        private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TABLEAU, POURCENTAGE_TEST);
 
         constructor() {
             this.initMatrice();
@@ -25,7 +25,7 @@ module Route {
 
         private initMatrice(): void {
             this.listeMot = new Array<Mockword>();
-            this.grille = this.generateurSquelette.obtenirSqueletteGrille();
+            this.grille = this.generateurSquelette.getSqueletteGrille();
         }
 
         private nettoyerMots(): void {

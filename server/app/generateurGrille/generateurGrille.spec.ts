@@ -3,8 +3,8 @@ import { Mockword } from "./../../../common/mockObject/mockWord";
 import * as assert from "assert";
 
 {
-
-    const genTest: GenerateurGrille = new GenerateurGrille;
+    
+    const genTest: GenerateurGrille = new GenerateurGrille();
 
     describe("Tests GenerateurGrille", () => {
 

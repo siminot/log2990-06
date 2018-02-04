@@ -42,6 +42,10 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     return this.mots;
   }
 
+  setMot(indice: number, nouveauMot: string): void {
+    this.mots[indice].mot = nouveauMot;
+  }
+
   changementMotSelectionne(mot: Word): void {
     for(let mot of this.mots) {
       mot.activer = false;

@@ -9,6 +9,13 @@ export class GenerateurSquelette {
         return this.grille;
     }
 
+    public modifierLaTaille(nouvelleTaille: number): number {
+        this.tailleGrille = nouvelleTaille;
+        this.allocationDeLaGrille();
+
+        return this.tailleGrille;
+    }
+
     constructor() {
         this.allocationDeLaGrille();
         this.genererCasesNoires(POURCENTAGE_TEST);

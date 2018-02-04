@@ -18,9 +18,8 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
-  public reponse:string; 
+  private reponse:string; 
   private motSelectionne: Word;
-  //private couleurSelectionne: String = "Black";
   
   constructor(private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
@@ -73,7 +72,6 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     }
     this.envoieMatrice();
   }
-
 
   cacherCases(): void {
     for(let ligne of this.matriceDesMotsSurGrille) {

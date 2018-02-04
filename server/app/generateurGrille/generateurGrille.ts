@@ -123,6 +123,7 @@ module Route {
             this.initCasesNoires(POURCENTAGE_TEST);
             this.initListeMot();
             this.remplirLaGrilleDeMots(0);
+
             res.send(JSON.stringify(this.grille));
         }
 
@@ -213,7 +214,6 @@ module Route {
         }
 
         private remplirLaGrilleDeMots(ctr: number): void {
-            console.log(this.listeMot.length);
             const loop = (i: number) => {
                 this.insererUnMot(i).then(() => {
                     if (i < this.listeMot.length - 1) {
@@ -223,19 +223,17 @@ module Route {
                 })
                 .catch( () => console.log("CA PLANTE"));
             };
-
             loop(ctr);
         }
 
         private insererUnMot(index: number): Promise<void> {
             this.lireMotViaGrille(this.listeMot[index]);
 
-            return this.demanderMot(this.listeMot[index]).then( () =>
-            this.ecrireDansLaGrille(this.listeMot[index]));
+            return this.demanderMot(this.listeMot[index]).then( () => {
+            this.ecrireDansLaGrille(this.listeMot[index]);
+            });
         }
 
-        // private demanderMot(mot: Mockword): Promise<Mot[]> {
-        //     const url = "/liste/" + mot.getMot;
         private demanderMot(mot: Mockword): Promise<Mot[]> {
             const url = "http://localhost:3000/servicelexical/liste/" + mot.getMot();
 
@@ -245,6 +243,7 @@ module Route {
         private affecterMot(listeMot: Mot[], motAChanger: Mockword): Mot[] {
             // regarder avec simon si on doit trouver un mot en particulier dans la liste
             const index = Math.floor( Math.random() * listeMot.length );
+
             motAChanger.setMot(listeMot[index].mot);
             motAChanger.setDefinition(listeMot[index].definitions[0].definition);
             // console.log(this.listeMot);

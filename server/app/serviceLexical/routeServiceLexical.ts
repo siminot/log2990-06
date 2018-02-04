@@ -3,7 +3,7 @@ import { Router, Request, Response, NextFunction } from "express";
 
 import Types from "../types";
 import { ServiceLexical } from "./ServiceLexical";
-import { Mot, Frequence } from "./Mot";
+import { Frequence } from "./Mot";
 import { ServiceWeb } from "../serviceweb";
 
 @injectable()

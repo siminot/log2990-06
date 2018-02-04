@@ -38,6 +38,10 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
+  getMots(): Word[] {
+    return this.mots;
+  }
+
   changementMotSelectionne(mot: Word): void {
     for(let mot of this.mots) {
       mot.activer = false;

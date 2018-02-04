@@ -1,24 +1,21 @@
-import { TAILLE_TEST, VIDE, NOIR, POURCENTAGE_TEST } from "./constantes";
+import { VIDE, NOIR } from "./constantes";
 
 export class GenerateurSquelette {
 
     private grille: Array<Array<string>>;
-    private tailleGrille = TAILLE_TEST;
+    private tailleGrille: number;
 
-    public obtenirSqueletteGrille(): Array<Array<string>> {
+    public getSqueletteGrille(): Array<Array<string>> {
         return this.grille;
     }
-
-    public modifierLaTaille(nouvelleTaille: number): number {
-        this.tailleGrille = nouvelleTaille;
-        this.allocationDeLaGrille();
-
+    public getTailleGrille(): number {
         return this.tailleGrille;
     }
 
-    constructor() {
+    constructor(tailleGrille: number, pourcentageDeCasesNoires: number) {
+        this.tailleGrille = tailleGrille;
         this.allocationDeLaGrille();
-        this.genererCasesNoires(POURCENTAGE_TEST);
+        this.genererCasesNoires(pourcentageDeCasesNoires);
     }
 
     private allocationDeLaGrille(): void {

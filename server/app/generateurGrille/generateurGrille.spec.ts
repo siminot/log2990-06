@@ -4,8 +4,8 @@ import { GenerateurSquelette } from "./generateurSquelette";
 import * as assert from "assert";
 
 {
-
-    const genTest: GenerateurGrille = new GenerateurGrille;
+    
+    const genTest: GenerateurGrille = new GenerateurGrille();
 
     describe("Test GenerateurGrille", () => {
 

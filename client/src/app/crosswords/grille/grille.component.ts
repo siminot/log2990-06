@@ -46,6 +46,19 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return("0")
   }
 
+  onKey(event:any){
+    let element = event.srcElement.nextElementSibling
+    if(element == null){
+      console.log("null")
+      return;
+    }
+    else{
+      console.log(element)
+      element.focus()
+    }
+
+  }
+
   ngOnDestroy() {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();

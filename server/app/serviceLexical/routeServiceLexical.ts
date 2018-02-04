@@ -18,12 +18,6 @@ export class RouteServiceLexical extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        // Pas utile: à enlever
-        /*router.get("/liste/:contrainte", (req: Request, res: Response, next: NextFunction) => {
-            this.serviceLexical.servirMots(req.params.contrainte)
-                .then((reponse: Mot[]) => res.send(reponse));
-        });*/
-
         router.get("/commun/contrainte/:contrainte", (req: Request, res: Response, next: NextFunction) => {
             this.serviceLexical.servirMotsSelonContrainte(req.params.contrainte, Frequence.Commun, res);
         });

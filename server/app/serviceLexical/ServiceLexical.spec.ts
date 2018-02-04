@@ -1,14 +1,18 @@
 // import { Mot, TypeMot, Frequence } from "./Mot";
 // import { MotAPI } from "./MotAPI";
 import * as assert from "assert";
+import { ServiceLexical } from "./ServiceLexical";
 
 {
+
+    const SERVICE: ServiceLexical = new ServiceLexical();
 
     describe("Objet ServiceLexical", () => {
         describe("Constructeur", () => {
             describe("Methodes privées", () => {
                 describe("modifierContraintePourAPI", () => {
                     it("Remplace '_' par '?'", () => {
+                        
                         assert(true);
                     });
                 });

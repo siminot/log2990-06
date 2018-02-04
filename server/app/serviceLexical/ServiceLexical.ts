@@ -40,8 +40,7 @@ module moduleServiceLexical {
             const url: string = ServiceLexical.URL + contrainte + ServiceLexical.FLAG + String(nombreDeMots);
 
             return WebRequest.json<MotAPI[]>(url)
-                .then((data: MotAPI[]) => this.convertirMotsAPI(data))
-                .catch(() => { throw new Error(ServiceLexical.MESSAGE_AUCUN_RESULTAT); });
+                .then((data: MotAPI[]) => this.convertirMotsAPI(data));
         }
 
         private convertirMotsAPI(data: MotAPI[]): Mot[] {
@@ -60,8 +59,8 @@ module moduleServiceLexical {
             const contrainteAPI: string = this.modifierContraintePourAPI(contrainte);
 
             return this.obtenirMotsDeLAPI(contrainteAPI, ServiceLexical.NOMBRE_MAX_REQUETE)
-                    .then((data: Mot[]) => this.filtrerMots(data))
-                    .catch((erreur: Error) => null);
+                .then((data: Mot[]) => this.filtrerMots(data))
+                .catch((erreur: Error) => null);
         }
 
         // Services de mots
@@ -78,7 +77,7 @@ module moduleServiceLexical {
         }
 
         private estUnMotValide(mot: string): boolean {
-            for (let i = 0 ; i < mot.length ; i++) {
+            for (let i = 0; i < mot.length; i++) {
                 if (!mot.toLowerCase().charAt(i).match(/[a-z]/)) {
                     return false;
                 }
@@ -88,7 +87,7 @@ module moduleServiceLexical {
         }
 
         private requeteEstValide(contrainte: string): boolean {
-            for (let i = 0 ; i < contrainte.length ; i++) {
+            for (let i = 0; i < contrainte.length; i++) {
                 if (!contrainte.toLowerCase().charAt(i).match("[a-z" + ServiceLexical.LETTRE_INCONNUE + "]")) {
                     return false;
                 }
@@ -105,8 +104,7 @@ module moduleServiceLexical {
         public servirMotsSelonContrainte(contrainte: string, frequence: Frequence, res: Response): void {
             if (this.requeteEstValide(contrainte)) {
                 this.obtenirMotsFormattes(contrainte)
-                    .then((dictionnaire: Mot[]) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)))
-                    .catch((erreur: Error) => { res.send(erreur); });
+                    .then((dictionnaire: Mot[]) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
             } else {
                 throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
             }
@@ -117,8 +115,7 @@ module moduleServiceLexical {
             const LONGUEUR: number = Number.parseInt(longueur);
             if (!isNaN(LONGUEUR)) {
                 this.obtenirMotsFormattes(this.obtenirContrainteLongueur(LONGUEUR))
-                    .then((dictionnaire: Mot[]) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)))
-                    .catch((erreur: Error) => { res.send(erreur); });
+                    .then((dictionnaire: Mot[]) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
             } else {
                 throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
             }
@@ -127,7 +124,7 @@ module moduleServiceLexical {
         private obtenirContrainteLongueur(longueur: number): string {
             let contrainte: string = "";
 
-            for (let i = 0 ; i < longueur ; i++) {
+            for (let i = 0; i < longueur; i++) {
                 contrainte += ServiceLexical.LETTRE_INCONNUE;
             }
 

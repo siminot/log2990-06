@@ -3,7 +3,6 @@ import { Response } from "express";
 import * as WebRequest from "web-request";
 
 import { Mot, Frequence } from "./Mot";
-import { ContrainteMot } from "./ContrainteMot";
 import { MotAPI } from "./MotAPI";
 
 module moduleServiceLexical {
@@ -26,7 +25,7 @@ module moduleServiceLexical {
 
             // tslint:disable-next-line:prefer-for-of
             for (let i = 0; i < contrainte.length; i++) {
-                if (contrainte[i] === ContrainteMot.LETTRE_INCONNUE) {
+                if (contrainte[i] === ServiceLexical.LETTRE_INCONNUE) {
                     contrainteAPI += ServiceLexical.LETTRE_INCONNUE_API;
                 } else {
                     contrainteAPI += contrainte[i];

@@ -122,7 +122,7 @@ module Route {
             this.initMatrice();
             this.initCasesNoires(POURCENTAGE_TEST);
             this.initListeMot();
-            this.remplirLaGrilleDeMots();
+            this.remplirLaGrilleDeMots(0);
             res.send(JSON.stringify(this.grille));
         }
 
@@ -195,7 +195,7 @@ module Route {
             mot.setMot(lecteur);
         }
 
-        private ecrireDansLaGrille(mot: Mockword) {
+        private ecrireDansLaGrille(mot: Mockword): Promise<void> {
             const x = mot.getPremierX();
             const y = mot.getPremierY();
 
@@ -206,18 +206,32 @@ module Route {
                     this.grille[y][x + i] = mot.getMot()[i];
                 }
             }
+            console.log(mot.getMot());
+            console.log(this.grille);
 
+            return new Promise( (resolve, reject) => {console.log("ok"); resolve(); } );
         }
 
-        private remplirLaGrilleDeMots() {
+        private remplirLaGrilleDeMots(ctr: number): void {
+            console.log(this.listeMot.length);
+            const loop = (i: number) => {
+                this.insererUnMot(i).then(() => {
+                    if (i < this.listeMot.length - 1) {
+                        i++;
+                        loop(i++);
+                    }
+                })
+                .catch( () => console.log("CA PLANTE"));
+            };
+
+            loop(ctr);
         }
 
         private insererUnMot(index: number): Promise<void> {
             this.lireMotViaGrille(this.listeMot[index]);
-            this.demanderMot(this.listeMot[index]).then( () =>
-            this.ecrireDansLaGrille(this.listeMot[index]));
 
-            return new Promise( () => this.insererUnMot(index++));
+            return this.demanderMot(this.listeMot[index]).then( () =>
+            this.ecrireDansLaGrille(this.listeMot[index]));
         }
 
         // private demanderMot(mot: Mockword): Promise<Mot[]> {

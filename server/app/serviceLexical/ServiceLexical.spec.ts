@@ -7,104 +7,97 @@ import * as assert from "assert";
     describe("Objet ServiceLexical", () => {
         describe("Constructeur", () => {
             describe("Methodes privées", () => {
-                describe("ObtenirMotsSelonContrainte", () => {
-                    it("Nom", () => {
+                describe("modifierContraintePourAPI", () => {
+                    it("Remplace '_' par '?'", () => {
                         assert(true);
                     });
-
-                    it("Verbe", () => {
+                });
+                describe("obtenirMotsDeLAPI", () => {
+                    it("Retourne une promesse", () => {
                         assert(true);
                     });
                 });
                 describe("convertirMotsAPI", () => {
-                    it("Nom", () => {
+                    it("Erreur si aucun mot", () => {
                         assert(true);
                     });
 
-                    it("Verbe", () => {
+                    it("Même nombre de mots avant et après", () => {
+                        assert(true);
+                    });
+                });
+                describe("obtenirMotsFormattes", () => {
+                    it("Retourne une promesse", () => {
+                        assert(true);
+                    });
+                });
+                describe("requeteEstValide", () => {
+                    it("Identifie requête valide", () => {
+                        assert(true);
+                    });
+
+                    it("Identifie requête invalide", () => {
                         assert(true);
                     });
                 });
                 describe("trierMotsSelonFrequence", () => {
-                    it("Nom", () => {
+                    it("Conserve mots fréquents", () => {
                         assert(true);
                     });
 
-                    it("Verbe", () => {
+                    it("Conserve mots infréquents", () => {
                         assert(true);
                     });
                 });
                 describe("obtenirContrainteLongueur", () => {
-                    it("Nom", () => {
-                        assert(true);
-                    });
-
-                    it("Verbe", () => {
+                    it("Produit une chaîne de '_' de la bonne longueur", () => {
                         assert(true);
                     });
                 });
-                describe("filtrerMots", () => {
-                    it("Nom", () => {
+                describe("retirerMotInvalides", () => {
+                    it("Retire mot invalide", () => {
                         assert(true);
                     });
 
-                    it("Verbe", () => {
-                        assert(true);
-                    });
-                });
-                describe("retirerMotsInvalides", () => {
-                    it("Nom", () => {
-                        assert(true);
-                    });
-
-                    it("Verbe", () => {
+                    it("Conserve mot valide", () => {
                         assert(true);
                     });
                 });
                 describe("retirerMotSansDefinition", () => {
-                    it("Nom", () => {
+                    it("Retire mot sans définition", () => {
                         assert(true);
                     });
 
-                    it("Verbe", () => {
-                        assert(true);
-                    });
-                });
-                describe("servirMots", () => {
-                    it("Nom", () => {
-                        assert(true);
-                    });
-
-                    it("Verbe", () => {
+                    it("Conserve mot avec définition", () => {
                         assert(true);
                     });
                 });
             });
         });
         describe("servirDefinitionsMot", () => {
-            it("Nom", () => {
+            it("Envoie un seul mot", () => {
                 assert(true);
             });
 
-            it("Verbe", () => {
+            it("Le mot envoyé est le même que le mot de la requête", () => {
                 assert(true);
             });
         });
-        describe("servirMotsSelonFrequence", () => {
-            it("Nom", () => {
+        describe("servirMotsSelonContrainte", () => {
+            it("Message d'erreur si requête invalide", () => {
                 assert(true);
             });
 
-            it("Verbe", () => {
+            it("Envoie un tableau de mots", () => {
                 assert(true);
             });
         });
         describe("servirMotsSelonLongueur", () => {
-            it("Nom", () => {
+            it("Message d'erreur si requête invalide", () => {
                 assert(true);
             });
 
-            it("Verbe", () => {
+            it("Envoie un tableau de mots", () => {
                 assert(true);
             });
         });

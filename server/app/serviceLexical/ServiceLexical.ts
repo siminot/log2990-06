@@ -117,10 +117,10 @@ module moduleServiceLexical {
         private filtrerMots(liste: Mot[]): Mot[] {
             // const listeTriee: Mot[] = this.retirerMotSansDefinition(liste);
 
-            return this.retirerMotInvalides(this.retirerMotSansDefinition(liste));
+            return this.retirerMotsInvalides(this.retirerMotSansDefinition(liste));
         }
 
-        private retirerMotInvalides(liste: Mot[]): Mot[] {
+        private retirerMotsInvalides(liste: Mot[]): Mot[] {
             return liste.filter((mot: Mot) => !mot.contientCaractereInvalide());
         }
 

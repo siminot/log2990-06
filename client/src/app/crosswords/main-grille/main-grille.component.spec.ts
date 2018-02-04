@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainGrilleComponent } from './main-grille.component';
-import { DefinitionComponent } from '../definition/definition.component';
 
 describe('MainGrilleComponent', () => {
   let component: MainGrilleComponent;

@@ -47,14 +47,16 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   onKey(event:any){
-    let element = event.srcElement.nextElementSibling
+    let element = event.srcElement.nextElementSibling;
+    console.log(element);
+
     if(element == null){
       console.log("null")
       return;
     }
     else{
-      console.log(element)
-      element.focus()
+      let elem = document.getElementById("testFocus");
+      elem.focus();
     }
 
   }
@@ -62,5 +64,17 @@ export class GrilleComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
+  }
+
+  print(event:any):void {
+    var target = event.target || event.srcElement || event.currentTarget;
+    var idAttr = target.attributes.id;
+    console.log(idAttr);
+  }
+
+  makeIDs(i:any, j:any): any{
+    let a = String(i);
+    let b = String(j);
+    return a+b;
   }
 }

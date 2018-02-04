@@ -1,11 +1,12 @@
 export class ContrainteMot {
-    public static readonly LETTRE_INCONNUE = "_";
+    public static readonly LETTRE_INCONNUE: string = "_";
 
     private contraintes: Map<number, string>;
 
     public constructor(private longueurMot: number) {
         if (longueurMot < 1) {
-            throw RangeError("Longueur du mot invalide : " + longueurMot + " doit etre > 0");
+            // throw RangeError("Longueur du mot invalide : " + longueurMot + " doit etre > 0");
+            throw new Error("Erreur");
         }
         this.contraintes = new Map;
     }
@@ -15,7 +16,7 @@ export class ContrainteMot {
             this.longueurMot = contrainte.length;
             this.contraintes.clear();
 
-            for (let i = 0 ; i < contrainte.length ; i++) {
+            for (let i = 0; i < contrainte.length; i++) {
                 if (!(/[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] === ContrainteMot.LETTRE_INCONNUE)) {
                     this.ajouterContrainte(contrainte[i], i);
                 }
@@ -28,7 +29,7 @@ export class ContrainteMot {
     }
 
     private URLestValide(contrainte: string): boolean {
-        for (let i = 0 ; i < contrainte.length ; i++) {
+        for (let i = 0; i < contrainte.length; i++) {
             if (!(/^[a-zA-Z]/.test(contrainte[i])) && !(contrainte[i] === ContrainteMot.LETTRE_INCONNUE)) {
                 return false;
             }

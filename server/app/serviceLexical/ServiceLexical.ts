@@ -11,6 +11,7 @@ module moduleServiceLexical {
     @injectable()
     export class ServiceLexical {
 
+        private static readonly CONTRAINTE_VALIDE: string = "(([A-Z])|([a-z])|([_]))*";
         private static readonly URL: string = "https://api.datamuse.com/words?sp=";
         private static readonly FLAG: string = "&md=df&max=";
         private static readonly NOMBRE_MAX_REQUETE: number = 1000;
@@ -18,7 +19,7 @@ module moduleServiceLexical {
         // Obtention de plusieurs mots
 
         public servirMots(contrainte: string): Promise<Mot[]> {
-            const contraintes: String = this.modifierContraintePourAPI(contrainte);
+            const contraintes: string = this.modifierContraintePourAPI(contrainte);
 
             if (this.requeteEstValide(contrainte)) {
 
@@ -29,8 +30,8 @@ module moduleServiceLexical {
             }
         }
 
-        private modifierContraintePourAPI(contrainte: string): String {
-            let contrainteAPI: String = "";
+        private modifierContraintePourAPI(contrainte: string): string {
+            let contrainteAPI: string = "";
 
             for (let i = 0; i < contrainte.length; i++) {
                 if (contrainte[i] === ContrainteMot.LETTRE_INCONNUE) {
@@ -43,8 +44,8 @@ module moduleServiceLexical {
             return contrainteAPI;
         }
 
-        private requeteEstValide(contrainte: String): boolean {
-            // A completer
+        private requeteEstValide(contrainte: string): boolean {
+            // return new RegExp(ServiceLexical.CONTRAINTE_VALIDE, "g").test(contrainte);
             return true;
         }
 

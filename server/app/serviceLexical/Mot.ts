@@ -104,24 +104,23 @@ export class Mot {
     }
 
     public obtenirDefinitionsPourJeu(): Definition[] {
-        return this.trierDefinitionsSansLeMot(this.trierDefinitionsNomOuVerbe(this.definitions));
+        this.trierDefinitionsSansLeMot();
+        this.trierDefinitionsNomOuVerbe();
+
+        return this.definitions;
     }
 
     // Tri des définitions
 
-    private trierDefinitionsNomOuVerbe(definitions: Definition[]): Definition[] {
-        if (definitions !== null) {
-            return this.definitions.filter((definition: Definition) => definition.estNomOuVerbe());
+    private trierDefinitionsNomOuVerbe(/*definitions: Definition[]*/): void {
+        if (this.definitions !== null) {
+            this.definitions = this.definitions.filter((definition: Definition) => definition.estNomOuVerbe());
         }
-
-        return null;
     }
 
-    private trierDefinitionsSansLeMot(definitions: Definition[]): Definition[] {
-        if (definitions !== null) {
-            return this.definitions.filter((definition: Definition) => !definition.contient(this.mot));
+    private trierDefinitionsSansLeMot(/*definitions: Definition[]*/): void {
+        if (this.definitions !== null) {
+            this.definitions = this.definitions.filter((definition: Definition) => !definition.contient(this.mot));
         }
-
-        return null;
     }
 }

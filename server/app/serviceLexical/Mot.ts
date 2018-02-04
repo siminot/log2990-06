@@ -1,6 +1,6 @@
 import { Definition } from "./Definition";
 import { MotAPI } from "./MotAPI";
-import { define } from "mime";
+// import { define } from "mime";
 
 export enum Frequence { Commun, NonCommun }
 export enum TypeMot { Nom, Verbe, Adjectif, Adverbe }
@@ -112,13 +112,13 @@ export class Mot {
 
     // Tri des définitions
 
-    private trierDefinitionsNomOuVerbe(/*definitions: Definition[]*/): void {
+    private trierDefinitionsNomOuVerbe(): void {
         if (this.definitions !== null) {
             this.definitions = this.definitions.filter((definition: Definition) => definition.estNomOuVerbe());
         }
     }
 
-    private trierDefinitionsSansLeMot(/*definitions: Definition[]*/): void {
+    private trierDefinitionsSansLeMot(): void {
         if (this.definitions !== null) {
             this.definitions = this.definitions.filter((definition: Definition) => !definition.contient(this.mot));
         }

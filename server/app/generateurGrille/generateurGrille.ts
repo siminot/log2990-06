@@ -15,7 +15,7 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
-        private listeMot: Array<Mockword> = new Array<Mockword>();
+        private listeMot: Array<Mockword>;
         private tailleGrille: number = TAILLE_TEST;
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette;
 

@@ -69,8 +69,13 @@ module moduleServiceLexical {
         public servirDefinitionsMot(mot: string, res: Response): void {
             if (this.estUnMotValide(mot)) {
                 this.obtenirMotsDeLAPI(mot, 1)
-                    .then((dictionnaire: Mot[]) => res.send(dictionnaire[0]))
-                    .catch((erreur: Error) => { res.send(erreur); });
+                    .then((dictionnaire: Mot[]) => {
+                        if (dictionnaire[0].definitions !== null) {
+                            res.send(dictionnaire[0]);
+                        } else {
+                            res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
+                        }
+                    });
             } else {
                 throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
             }
@@ -104,7 +109,13 @@ module moduleServiceLexical {
         public servirMotsSelonContrainte(contrainte: string, frequence: Frequence, res: Response): void {
             if (this.requeteEstValide(contrainte)) {
                 this.obtenirMotsFormattes(contrainte)
-                    .then((dictionnaire: Mot[]) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
+                    .then((dictionnaire: Mot[]) => {
+                        if (dictionnaire.length > 0) {
+                            res.send(this.trierMotsSelonFrequence(dictionnaire, frequence));
+                        } else {
+                            res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
+                        }
+                    });
             } else {
                 throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
             }
@@ -115,7 +126,13 @@ module moduleServiceLexical {
             const LONGUEUR: number = Number.parseInt(longueur);
             if (!isNaN(LONGUEUR)) {
                 this.obtenirMotsFormattes(this.obtenirContrainteLongueur(LONGUEUR))
-                    .then((dictionnaire: Mot[]) => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
+                    .then((dictionnaire: Mot[]) => {
+                        if (dictionnaire.length > 0) {
+                            res.send(this.trierMotsSelonFrequence(dictionnaire, frequence));
+                        } else {
+                            res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
+                        }
+                    });
             } else {
                 throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
             }

@@ -32,5 +32,12 @@ import { DefinitionComponent } from './crosswords/definition/definition.componen
         RequeteDeGrilleService
     ],
     bootstrap: [AppComponent]
+    // exports: [ 
+    //     AppComponent,
+    //     GameComponent,
+    //     MainGrilleComponent,
+    //     GrilleComponent,
+    //     DefinitionComponent
+    // ]
 })
 export class AppModule { }

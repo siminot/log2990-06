@@ -60,7 +60,7 @@ export class RequeteDeGrilleService {
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
       let row: Array<lettreGrille> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++) {
-        let caseNoir: lettreGrille = {caseDecouverte:false, lettre:"1", lettreDecouverte:false};
+        let caseNoir: lettreGrille = {caseDecouverte: false, lettre:"1", lettreDecouverte: false};
         row[j] = caseNoir;
       }
       matrice[i] = row;
@@ -75,7 +75,7 @@ export class RequeteDeGrilleService {
         tmpLettreGrille = {
           caseDecouverte: false,
           lettre: objMot.mot[indice],
-          lettreDecouverte: false
+          lettreDecouverte: true
         };
 
         if(objMot.vertical) {
@@ -86,4 +86,6 @@ export class RequeteDeGrilleService {
       }
     }
   }
+
+  
 }

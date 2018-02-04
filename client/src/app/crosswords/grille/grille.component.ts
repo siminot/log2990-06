@@ -9,7 +9,8 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 @Component({
   selector: "app-grille",
   templateUrl: "./grille.component.html",
-  styleUrls: ["./grille.component.css"]
+  styleUrls: ["./grille.component.css"],
+  providers:[ RequeteDeGrilleService ]
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {
@@ -53,8 +54,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     if(element == null){
       console.log("null")
       return;
-    }
-    else{
+    } else {
       let elem = document.getElementById("testFocus");
       elem.focus();
     }

@@ -15,11 +15,9 @@
   </li>
 </ul>
 
-
 <input #tentative  (keyup.enter)="verifierTentative(tentative.value)">
 <button (click)="verifierTentative(tentative.value)">Verifier</button>
 
-
-
 <p>{{reponse}}</p>
+<button (click)="afficherRegle()">Règle du jeu</button>
 

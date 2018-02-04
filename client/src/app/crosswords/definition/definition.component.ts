@@ -6,13 +6,13 @@ import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-
 import { Word } from "../mockObject/word";
 import { lettreGrille } from '../mockObject/word';
 
-
-
 @Component({
   selector: 'app-definition',
   templateUrl: './definition.component.html',
-  styleUrls: ['./definition.component.css']
+  styleUrls: ['./definition.component.css'],
+  providers:[ RequeteDeGrilleService ]
 })
+
 export class DefinitionComponent implements OnDestroy, OnInit {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
@@ -21,7 +21,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   private reponse: String; 
   private motSelectionne: Word;
   
-  constructor(private listeMotsService: RequeteDeGrilleService) {
+  constructor (private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe(mots => this.mots = mots);
@@ -74,10 +74,9 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   cacherCases(): void {
     for (let ligne of this.matriceDesMotsSurGrille) {
       for (let lettre of ligne) {
-        console.log(lettre.caseDecouverte)
-        if (lettre.lettreDecouverte == false) {
+        // if (lettre.lettreDecouverte == true) {
           lettre.caseDecouverte = false;
-        }
+        // }
       }
     }
   }
@@ -90,13 +89,14 @@ export class DefinitionComponent implements OnDestroy, OnInit {
       this.reponse = "Mauvaise Reponse !";
       console.log(this.motSelectionne.mot);
     }
-}
-
-
-
+  }
 
   ngOnDestroy() {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
+  }
+
+  afficherRegle() {
+    alert("Cliquez sur une définition afin d'effectuer une tentative.");
   }
 }

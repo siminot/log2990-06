@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 
-import { BasicService } from "./basic.service";
-import { Message } from "../../../common/communication/message";
 
 @Component({
     selector: "app-root",
@@ -10,7 +8,7 @@ import { Message } from "../../../common/communication/message";
 })
 export class AppComponent implements OnInit {
 
-    public constructor(private basicService: BasicService) { }
+    public constructor() { }
 
     public readonly title: string = "LOG2990";
     public message: string;

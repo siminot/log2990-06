@@ -5,7 +5,7 @@
             <td *ngFor="let case of item; let j = index" >
                 <img *ngIf="case.lettre != '1' ; else elseBlock1" [style.opacity]="opacite(case.caseDecouverte)" class = "tuile" src="../../../assets/tuile.png">
                 <ng-template #elseBlock1><img src="../../../assets/tuileMorte.png" class="tuile"></ng-template>
-                <input *ngIf="case.caseDecouverte" class="tuile" [attr.id]="makeIDs(i,j)" (click)="print($event)">
+                <!-- <input *ngIf="case.caseDecouverte" class="tuile" [attr.id]="makeIDs(i,j)" (click)="print($event)"> -->
 
 
 

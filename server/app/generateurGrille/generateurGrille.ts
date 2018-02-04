@@ -50,6 +50,10 @@ module Route {
 
         public genererMot(x: number, y: number, estVertical: boolean): Mockword {
 
+            if (x < 0 || y < 0) {
+                throw new Error("Entree negative interdite");
+            }
+
             let longMot = 0;
             let mot: String = "";
             for (let i: number = estVertical ? y : x; i < this.tailleGrille; i++) {
@@ -97,7 +101,7 @@ module Route {
             return ctrMots;
         }
 
-        private lireMotViaGrille( mot: Mockword) {
+        private lireMotViaGrille(mot: Mockword) {
             let lecteur = "";
             const x = mot.getPremierX();
             const y = mot.getPremierY();
@@ -146,7 +150,7 @@ module Route {
             this.lireMotViaGrille(this.listeMot[index]);
 
             return this.demanderMot(this.listeMot[index]).then( () => {
-            this.ecrireDansLaGrille(this.listeMot[index]);
+                this.ecrireDansLaGrille(this.listeMot[index]);
             });
         }
 

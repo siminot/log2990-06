@@ -9,8 +9,8 @@ export class Word {
     public activer: boolean;
 }
 
-export class lettreGrille {
-    public caseDecouverte: boolean; 
-    public lettre:string; 
-    public lettreDecouverte:boolean;
+export class LettreGrille {
+    public caseDecouverte: boolean;
+    public lettre: String;
+    public lettreDecouverte: boolean;
 }

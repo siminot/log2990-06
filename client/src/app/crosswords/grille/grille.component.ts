@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Word } from "../mockObject/word";
 import { Subscription } from 'rxjs/Subscription';
 
-import { lettreGrille } from "../mockObject/word";
+import { LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
@@ -14,7 +14,7 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Word[];
-  public matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
+  public matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   // private motsAAfiicher: String[];

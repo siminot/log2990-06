@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { DefinitionComponent } from "./definition.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Word, lettreGrille } from "../mockObject/word";
+import { Word, LettreGrille } from "../mockObject/word";
 
 describe("DefinitionComponent", () => {
   let service: RequeteDeGrilleService;
@@ -31,7 +31,7 @@ describe("DefinitionComponent", () => {
   // lettreDecouverte a true puisque les lettres sont initialisées à true
   // pour qu'on les voit dans la grille. Mettre false quand on initialisera
   // les lettres à false.
-  const realLetterFromGrid: lettreGrille = {
+  const realLetterFromGrid: LettreGrille = {
     caseDecouverte: false,
     lettre: "P",
     lettreDecouverte: true

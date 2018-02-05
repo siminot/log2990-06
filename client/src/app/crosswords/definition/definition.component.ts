@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
 import { Word } from "../mockObject/word";
-import { lettreGrille } from '../mockObject/word';
+import { LettreGrille } from '../mockObject/word';
 
 @Component({
   selector: 'app-definition',
@@ -14,7 +14,7 @@ import { lettreGrille } from '../mockObject/word';
 
 export class DefinitionComponent implements OnDestroy, OnInit {
   private mots: Word[];
-  public matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
+  public matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private reponse: String; 
@@ -41,7 +41,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     return this.mots;
   }
 
-  getMatriceDesMotsGrille(): Array<Array<lettreGrille>> {
+  getMatriceDesMotsGrille(): Array<Array<LettreGrille>> {
     return this.matriceDesMotsSurGrille;
   }
 

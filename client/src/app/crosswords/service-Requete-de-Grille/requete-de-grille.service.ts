@@ -6,18 +6,18 @@ import { Observable } from 'rxjs/Observable';
 import { TAILLE_TABLEAU } from "../constantes";
 import { listeMots } from "../mockObject/mockListWord";
 import { Word } from "../mockObject/word";
-import { lettreGrille } from "../mockObject/word";
+import { LettreGrille } from "../mockObject/word";
 
 
 
 @Injectable()
 export class RequeteDeGrilleService {
   private mots: Word[];
-  private matriceDesMotsSurGrille: Array<Array<lettreGrille>>;
+  private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 
   // Création de nos sujets pour le partage des informations au travers des composants (Patron observateur).
   private listeMotsSujet = new Subject<Word[]>();
-  private matriceDesMotsSurGrilleSujet = new Subject<Array<Array<lettreGrille>>>();
+  private matriceDesMotsSurGrilleSujet = new Subject<Array<Array<LettreGrille>>>();
 
   // Attribution de la propriété Observable aux suejts.
   private listeMotsObservable$ = this.listeMotsSujet.asObservable();
@@ -27,14 +27,14 @@ export class RequeteDeGrilleService {
   serviceEnvoieMots(listeMots:Word[]) {
     this.listeMotsSujet.next(listeMots);
   }
-  serviceEnvoieMatriceLettres(matriceLettres:Array<Array<lettreGrille>>) {
+  serviceEnvoieMatriceLettres(matriceLettres:Array<Array<LettreGrille>>) {
     this.matriceDesMotsSurGrilleSujet.next(matriceLettres);
   }
 
   serviceReceptionMots(): Observable<Word[]> {
     return this.listeMotsObservable$;
   }
-  serviceReceptionMatriceLettres(): Observable<Array<Array<lettreGrille>>> {
+  serviceReceptionMatriceLettres(): Observable<Array<Array<LettreGrille>>> {
     return this.matriceDesMotsSurGrilleObservable$;
   }
 
@@ -42,7 +42,7 @@ export class RequeteDeGrilleService {
     return this.mots;
   }
 
-  getMatrice(): Array<Array<lettreGrille>> {
+  getMatrice(): Array<Array<LettreGrille>> {
     return this.matriceDesMotsSurGrille;
   }
 
@@ -54,13 +54,13 @@ export class RequeteDeGrilleService {
 
   }
 
-  genererGrille(): Array<Array<lettreGrille>>{
-    let matrice: Array<Array<lettreGrille>> = new Array(TAILLE_TABLEAU);
+  genererGrille(): Array<Array<LettreGrille>>{
+    let matrice: Array<Array<LettreGrille>> = new Array(TAILLE_TABLEAU);
 
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
-      let row: Array<lettreGrille> = new Array(TAILLE_TABLEAU);
+      let row: Array<LettreGrille> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++) {
-        let caseNoir: lettreGrille = {caseDecouverte: false, lettre:"1", lettreDecouverte: false};
+        let caseNoir: LettreGrille = {caseDecouverte: false, lettre:"1", lettreDecouverte: false};
         row[j] = caseNoir;
       }
       matrice[i] = row;
@@ -70,7 +70,7 @@ export class RequeteDeGrilleService {
 
   putWordsInGrid(): void {
     for (let objMot of this.mots) {
-      let tmpLettreGrille:lettreGrille;
+      let tmpLettreGrille:LettreGrille;
       for (let indice:number = 0 ; indice < objMot.longeur ; indice++) {
         tmpLettreGrille = {
           caseDecouverte: false,

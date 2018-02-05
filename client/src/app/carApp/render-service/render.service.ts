@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import Stats = require("stats.js");
-import { PerspectiveCamera, WebGLRenderer, Scene, AmbientLight, Vector3, Vector2 } from "three";
+import { PerspectiveCamera, WebGLRenderer, Scene, AmbientLight, Vector3, GridHelper, AxisHelper, CameraHelper } from "three";
 import { Car } from "../car/car";
 
 const FAR_CLIPPING_PLANE: number = 1000;
@@ -11,6 +11,7 @@ const ACCELERATE_KEYCODE: number = 87;  // w
 const LEFT_KEYCODE: number = 65;        // a
 const BRAKE_KEYCODE: number = 83;       // s
 const RIGHT_KEYCODE: number = 68;       // d
+const CHANGER_VUE: number = 86;         // v
 
 const INITIAL_CAMERA_POSITION_Y: number = 25;
 const WHITE: number = 0xFFFFFF;
@@ -25,6 +26,7 @@ export class RenderService {
     private scene: THREE.Scene;
     private stats: Stats;
     private lastDate: number;
+    private cameraEst3e: boolean;
 
     public get car(): Car {
         return this._car;
@@ -32,6 +34,7 @@ export class RenderService {
 
     public constructor() {
         this._car = new Car();
+        this.cameraEst3e = false;
     }
 
     public async initialize(container: HTMLDivElement): Promise<void> {
@@ -54,22 +57,42 @@ export class RenderService {
         const timeSinceLastFrame: number = Date.now() - this.lastDate;
         this._car.update(timeSinceLastFrame);
         this.lastDate = Date.now();
+
+        this.updateCamera();
+    }
+
+    private updateCamera(): void {
+        this.scene.remove(this.camera);
+
+        if (this.cameraEst3e) {
+            this.reglerCameraTroisimePersonne();
+        } else {
+            this.reglerCameraVueDessus();
+        }
     }
 
     private async createScene(): Promise<void> {
         this.scene = new Scene();
 
-        this.camera = new PerspectiveCamera(
-            FIELD_OF_VIEW,
-            this.getAspectRatio(),
-            NEAR_CLIPPING_PLANE,
-            FAR_CLIPPING_PLANE
-        );
-
         await this._car.init();
 
-        // this.reglerCameraVueDessus();
-        this.reglerCameraTroisimePersonne();
+        this.updateCamera();
+
+        // Grille
+        const TAILLE_GRILLE: number = 1000;
+        const DIVISION_GRILLE: number = 100;
+        const COULEUR_GRAND_CARRE: number = 0x000000;
+        const COULEUR_PETIT_CARRE: number = 0x00BFFF;
+        this.scene.add( new GridHelper( TAILLE_GRILLE, DIVISION_GRILLE, COULEUR_GRAND_CARRE, COULEUR_PETIT_CARRE ) );
+
+        // Axes
+        const TAILLE_AXE: number = 1000;
+        const AXES: AxisHelper = new AxisHelper(TAILLE_AXE);
+        this.scene.add(AXES);
+
+        // Camera helper
+        // const AIDE_CAMERA: CameraHelper = new CameraHelper(this.camera);
+        // this.scene.add(AIDE_CAMERA);
 
         this.scene.add(this._car);
         this.scene.add(new AmbientLight(WHITE, AMBIENT_LIGHT_OPACITY));
@@ -77,28 +100,30 @@ export class RenderService {
 
     private reglerCameraTroisimePersonne(): void {
         const ANGLE_DROIT: number = 90;
-        const POSITION_X: number = 0; // Vue derriere la voiture
-        const POSITION_Y: number = 0; // Hauteur de la camera
-        const POSITION_Z: number = 0;
+        const POSITION_X: number = -10; // Vue derriere la voiture
+        const POSITION_Y: number = 25; // Hauteur de la camera
+        const POSITION_Z: number = 10;
 
         const POSITION_RELATIVE_CAMERA: Vector3 = new Vector3(POSITION_X, POSITION_Y, POSITION_Z);
-        const POSITION_CAMERA: Vector3 = this._car.speed.normalize().multiply(POSITION_RELATIVE_CAMERA);
+        const POSITION_CAMERA: Vector3 = POSITION_RELATIVE_CAMERA.add(this._car.position);
 
         /*
         const FAR_CLIPPING_PLANE: number = 1000;
         const NEAR_CLIPPING_PLANE: number = 1;
         const FIELD_OF_VIEW: number = 70; */
 
-        const DISTANCE_CAMERA_VOITURE: number = 15;
+        const CHAMP_DE_VISION: number = 70;
+        const PLAN_RAPPROCHE: number = 1;
+        const PLAN_ELOIGNE: number = 1000;
 
         this.camera = new PerspectiveCamera(
-            DISTANCE_CAMERA_VOITURE,
+            CHAMP_DE_VISION,
             this.getAspectRatio(),
-            NEAR_CLIPPING_PLANE,
-            FIELD_OF_VIEW
+            PLAN_RAPPROCHE,
+            PLAN_ELOIGNE
         );
 
-        this.camera.position.set(POSITION_CAMERA.x, 25, POSITION_CAMERA.z);
+        this.camera.position.set(POSITION_CAMERA.x, POSITION_CAMERA.y, POSITION_CAMERA.z);
         this.camera.lookAt(this._car.position);
     }
 
@@ -173,6 +198,9 @@ export class RenderService {
                 break;
             case BRAKE_KEYCODE:
                 this._car.releaseBrakes();
+                break;
+            case CHANGER_VUE:
+                this.cameraEst3e = !this.cameraEst3e;
                 break;
             default:
                 break;

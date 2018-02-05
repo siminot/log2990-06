@@ -43,8 +43,8 @@ export class Application {
         this.errorHandeling();
     }
 
-    private ajouterService(service : ServiceWeb){
-        this.app.use(service.mainRoute, service.routes); 
+    private ajouterService(service: ServiceWeb): void {
+        this.app.use(service.mainRoute, service.routes);
     }
 
     private errorHandeling(): void {

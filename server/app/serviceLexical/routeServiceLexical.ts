@@ -18,27 +18,26 @@ export class RouteServiceLexical extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/liste/:contrainte",
-            (req: Request, res: Response, next: NextFunction) => {
-                this.serviceLexical.servirMots(req.params.contrainte)
-                    .then(reponse => res.send(reponse));
-            })
+        router.get("/commun/contrainte/:contrainte", (req: Request, res: Response, next: NextFunction) => {
+            this.serviceLexical.servirMotsSelonContrainte(req.params.contrainte, Frequence.Commun, res);
+        });
 
-        router.get("/liste/commun/:contrainte",
-            (req: Request, res: Response, next: NextFunction) => {
-                this.serviceLexical.servirMotsSelonFrequence(req.params.contrainte, Frequence.Commun, res)
-            })
+        router.get("/noncommun/contrainte/:contrainte", (req: Request, res: Response, next: NextFunction) => {
+            this.serviceLexical.servirMotsSelonContrainte(req.params.contrainte, Frequence.NonCommun, res);
+        });
 
-        router.get("/liste/noncommun/:contrainte",
-            (req: Request, res: Response, next: NextFunction) => {
-                this.serviceLexical.servirMotsSelonFrequence(req.params.contrainte, Frequence.NonCommun, res)
-            })
+        router.get("/commun/longueur/:longueur", (req: Request, res: Response, next: NextFunction) => {
+            this.serviceLexical.servirMotsSelonLongueur(req.params.longueur, Frequence.Commun, res);
+        });
 
-        router.get("/def/:mot",
-            (req: Request, res: Response, next: NextFunction) => {
-                this.serviceLexical.obtenirDefinitionsMot(req.params.mot, res);
-            })
-        
+        router.get("/noncommun/longueur/:longueur", (req: Request, res: Response, next: NextFunction) => {
+            this.serviceLexical.servirMotsSelonLongueur(req.params.longueur, Frequence.NonCommun, res);
+        });
+
+        router.get("/def/:mot", (req: Request, res: Response, next: NextFunction) => {
+                this.serviceLexical.servirDefinitionsMot(req.params.mot, res);
+        });
+
         return router;
     }
 }

@@ -1,77 +1,166 @@
-import { Mot, Frequence } from './Mot';
 import { injectable, } from "inversify";
 import { Response } from "express";
-import * as WebRequest from 'web-request';
-import { ContrainteMot } from './ContrainteMot';
+import * as WebRequest from "web-request";
 
-module ServiceLexical{
+import { Mot, Frequence } from "./Mot";
+import { MotAPI } from "./MotAPI";
 
-    const URL = "https://api.datamuse.com/words?sp=";
-    const FLAG = "&md=df&max=1000";
+module moduleServiceLexical {
 
     @injectable()
-    export class ServiceLexical{
+    export class ServiceLexical {
 
-        public constructor() {}
+        private static readonly LETTRE_INCONNUE: string = "_";
+        private static readonly LETTRE_INCONNUE_API: string = "?";
+        private static readonly URL: string = "https://api.datamuse.com/words?sp=";
+        private static readonly FLAG: string = "&md=df&max=";
+        private static readonly NOMBRE_MAX_REQUETE: number = 10;
+        private static readonly MESSAGE_REQUETE_INVALIDE: string = "Erreur : requete invalide";
+        private static readonly MESSAGE_AUCUN_RESULTAT: string = "Aucun resultat";
 
-        public servirMots(contrainte : string) : Promise<Mot[]> {
-            let contraintes : string = this.modifierContraintePourAPI(contrainte);
+        // Utilisation de l'API externe
 
-            if(this.requeteEstValide(contrainte))
-                return this.obtenirMotsSelonContrainte(contraintes);
-            else
-                throw Error("Format de la requete invalide");
-        }    
-    
-        private modifierContraintePourAPI(contrainte : string ) : string {
-            let contrainteAPI : string = "";
+        private modifierContraintePourAPI(contrainte: string): string {
+            let contrainteAPI: string = "";
 
-            for(let i = 0 ; i < contrainte.length ; i++){
-                if(contrainte[i] == ContrainteMot.LETTRE_INCONNUE)
-                    contrainteAPI += "?"; 
-                else
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < contrainte.length; i++) {
+                if (contrainte[i] === ServiceLexical.LETTRE_INCONNUE) {
+                    contrainteAPI += ServiceLexical.LETTRE_INCONNUE_API;
+                } else {
                     contrainteAPI += contrainte[i];
+                }
             }
 
             return contrainteAPI;
         }
 
-        private obtenirMotsSelonContrainte(contrainte : string) : Promise<Mot[]> {
-            let url = URL + contrainte + FLAG;
-            return WebRequest.json<any>(url).then((data) => this.retirerMotsSansDefinition(data));
+        private obtenirMotsDeLAPI(contrainte: string, nombreDeMots: number): Promise<Mot[]> {
+            const url: string = ServiceLexical.URL + contrainte + ServiceLexical.FLAG + String(nombreDeMots);
+
+            return WebRequest.json<MotAPI[]>(url)
+                .then((data: MotAPI[]) => this.convertirMotsAPI(data));
         }
-    
-        private retirerMotsSansDefinition(data : any) : Mot[] {
-            let dictionnaire : Mot[] = [];
-            
-            for(let objet of data){
-                let mot = new Mot(objet.word, objet.defs, objet.tags[0])
-                if(mot.possedeDefinition())
-                    dictionnaire.push(mot);
+
+        private convertirMotsAPI(data: MotAPI[]): Mot[] {
+            const dictionnaire: Mot[] = [];
+
+            for (const motAPI of data) {
+                dictionnaire.push(new Mot(motAPI));
             }
-            
+
             return dictionnaire;
         }
 
-        private trierMotsSelonFrequence(liste : Mot[], frequence : Frequence) : Mot[] {
-            return liste.filter(mot => mot.obtenirFrequence().valueOf() == frequence.valueOf());
+        // Intermédiaire entre API et services de mots
+
+        private obtenirMotsFormattes(contrainte: string): Promise<Mot[]> {
+            const contrainteAPI: string = this.modifierContraintePourAPI(contrainte);
+
+            return this.obtenirMotsDeLAPI(contrainteAPI, ServiceLexical.NOMBRE_MAX_REQUETE)
+                .then((data: Mot[]) => this.filtrerMots(data))
+                .catch((erreur: Error) => null);
         }
 
-        public servirMotsSelonFrequence(contrainte : string, frequence : Frequence, res : Response) : void {
-            this.servirMots(contrainte)
-                .then(dictionnaire => res.send(this.trierMotsSelonFrequence(dictionnaire, frequence)));
+        // Services de mots
+
+        // Obtention des définitions d'un seul mot
+        public servirDefinitionsMot(mot: string, res: Response): void {
+            if (this.estUnMotValide(mot)) {
+                this.obtenirMotsDeLAPI(mot, 1)
+                    .then((dictionnaire: Mot[]) => {
+                        if (dictionnaire[0].definitions !== null) {
+                            res.send(dictionnaire[0]);
+                        } else {
+                            res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
+                        }
+                    });
+            } else {
+                throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
+            }
         }
 
-        public obtenirDefinitionsMot(mot : string, res : Response) : void {
-            this.obtenirMotsSelonContrainte(mot)
-                .then(dictionnaire => res.send(dictionnaire[0]))
-        }
+        private estUnMotValide(mot: string): boolean {
+            for (let i = 0; i < mot.length; i++) {
+                if (!mot.toLowerCase().charAt(i).match(/[a-z]/)) {
+                    return false;
+                }
+            }
 
-        private requeteEstValide(contrainte : string) : boolean {
-            //A completer
             return true;
+        }
+
+        private requeteEstValide(contrainte: string): boolean {
+            for (let i = 0; i < contrainte.length; i++) {
+                if (!contrainte.toLowerCase().charAt(i).match("[a-z" + ServiceLexical.LETTRE_INCONNUE + "]")) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private trierMotsSelonFrequence(liste: Mot[], frequence: Frequence): Mot[] {
+            return liste.filter((mot: Mot) => mot.obtenirFrequence().valueOf() === frequence.valueOf());
+        }
+
+        // Obtention des mots selon la fréquence
+        public servirMotsSelonContrainte(contrainte: string, frequence: Frequence, res: Response): void {
+            if (this.requeteEstValide(contrainte)) {
+                this.obtenirMotsFormattes(contrainte)
+                    .then((dictionnaire: Mot[]) => {
+                        if (dictionnaire.length > 0) {
+                            res.send(this.trierMotsSelonFrequence(dictionnaire, frequence));
+                        } else {
+                            res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
+                        }
+                    });
+            } else {
+                throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
+            }
+        }
+
+        // Obtention des mots selon la longueur
+        public servirMotsSelonLongueur(longueur: string, frequence: Frequence, res: Response): void {
+            const LONGUEUR: number = Number.parseInt(longueur);
+            if (!isNaN(LONGUEUR)) {
+                this.obtenirMotsFormattes(this.obtenirContrainteLongueur(LONGUEUR))
+                    .then((dictionnaire: Mot[]) => {
+                        if (dictionnaire.length > 0) {
+                            res.send(this.trierMotsSelonFrequence(dictionnaire, frequence));
+                        } else {
+                            res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
+                        }
+                    });
+            } else {
+                throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
+            }
+        }
+
+        private obtenirContrainteLongueur(longueur: number): string {
+            let contrainte: string = "";
+
+            for (let i = 0; i < longueur; i++) {
+                contrainte += ServiceLexical.LETTRE_INCONNUE;
+            }
+
+            return contrainte;
+        }
+
+        // Filtrer les mots
+
+        private filtrerMots(liste: Mot[]): Mot[] {
+            return this.retirerMotsInvalides(this.retirerMotSansDefinition(liste));
+        }
+
+        private retirerMotsInvalides(liste: Mot[]): Mot[] {
+            return liste.filter((mot: Mot) => !mot.contientCaractereInvalide());
+        }
+
+        private retirerMotSansDefinition(liste: Mot[]): Mot[] {
+            return liste.filter((mot: Mot) => mot.possedeDefinition());
         }
     }
 }
 
-export = ServiceLexical;
+export = moduleServiceLexical;

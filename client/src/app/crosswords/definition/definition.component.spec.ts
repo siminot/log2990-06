@@ -1,10 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import * as assert from 'assert';
-import { DefinitionComponent } from './definition.component';
-import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
-import { listeMots } from '../mockObject/mockListWord';
-import { Word, lettreGrille } from '../mockObject/word';
-import { GrilleComponent } from '../grille/grille.component';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { DefinitionComponent } from "./definition.component";
+import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { Word, lettreGrille } from "../mockObject/word";
+import { GrilleComponent } from "../grille/grille.component";
 
 
 describe('DefinitionComponent', () => {

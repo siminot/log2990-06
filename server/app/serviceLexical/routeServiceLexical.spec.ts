@@ -9,11 +9,11 @@ const SERVICE: ServiceLexical = new ServiceLexical();
 const ROUTE: ServiceWeb = new RouteServiceLexical(SERVICE);
 
 const URL_SERVICE_LEXICAL: string = "http://localhost:3000" + ROUTE.mainRoute;
-const URL_DEFINITION: string = "/def";
-const URL_LONGUEUR: string = "/longueur";
+const URL_DEFINITION: string = "/def/";
+const URL_LONGUEUR: string = "/longueur/";
 const URL_COMMUN: string = "/commun";
 const URL_NONCOMMUN: string = "/noncommun";
-const URL_CONTRAINTE: string = "/contrainte";
+const URL_CONTRAINTE: string = "/contrainte/";
 
 {
     describe("routeServiceLexical", () => {
@@ -30,10 +30,14 @@ const URL_CONTRAINTE: string = "/contrainte";
 
             it("/commun/contrainte/:contrainte doit retourner un tableau de mots", () => {
                 const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_CONTRAINTE + CONTRAINTE;
+                let mots: Mot[] = [];
 
-                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
-                    assert.notEqual(data.length, 0);
-                });
+                WebRequest.json<Mot[]>(URL_TEST).then(async (data: Mot[]) => {
+                    await data;
+                    mots = data;
+                }).catch();
+
+                assert.notEqual(mots.length, 0);
             });
 
             it("/noncommun/contrainte/:contrainte doit retourner un tableau de mots", () => {

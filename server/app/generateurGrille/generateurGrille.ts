@@ -35,7 +35,7 @@ module Route {
             }
         }
 
-        /* FONCTION BIDON POUR TESTER DES CHOSES */
+        /* FONCTION BIDON POUR EXAMINER DES CHOSES */
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initMatrice();
             this.initListeMot();

@@ -8,6 +8,7 @@ export class GenerateurSquelette {
     public getSqueletteGrille(): Array<Array<string>> {
         return this.grille;
     }
+
     public getTailleGrille(): number {
         return this.tailleGrille;
     }

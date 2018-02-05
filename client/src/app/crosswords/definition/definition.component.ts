@@ -10,7 +10,7 @@ import { lettreGrille } from '../mockObject/word';
   selector: 'app-definition',
   templateUrl: './definition.component.html',
   styleUrls: ['./definition.component.css'],
-  providers:[ RequeteDeGrilleService ]
+  
 })
 
 export class DefinitionComponent implements OnDestroy, OnInit {

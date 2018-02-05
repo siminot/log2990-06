@@ -29,15 +29,15 @@ import { DefinitionComponent } from './crosswords/definition/definition.componen
     providers: [
         RenderService,
         BasicService,
-        RequeteDeGrilleService
+        //RequeteDeGrilleService
     ],
-    bootstrap: [AppComponent]
-    // exports: [ 
-    //     AppComponent,
-    //     GameComponent,
-    //     MainGrilleComponent,
-    //     GrilleComponent,
-    //     DefinitionComponent
-    // ]
+    bootstrap: [AppComponent],
+    exports: [ 
+        AppComponent,
+        GameComponent,
+        MainGrilleComponent,
+        GrilleComponent,
+        DefinitionComponent
+    ]
 })
 export class AppModule { }

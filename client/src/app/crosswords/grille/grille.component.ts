@@ -9,8 +9,7 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 @Component({
   selector: "app-grille",
   templateUrl: "./grille.component.html",
-  styleUrls: ["./grille.component.css"],
-  providers:[ RequeteDeGrilleService ]
+  styleUrls: ["./grille.component.css"]
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {

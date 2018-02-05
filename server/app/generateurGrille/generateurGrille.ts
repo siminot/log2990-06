@@ -27,6 +27,7 @@ module Route {
 
         private initMatrice(): void {
             this.listeMot = new Array<Mockword>();
+            this.grille = new Array<Array<string>>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
         }

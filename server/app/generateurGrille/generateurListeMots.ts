@@ -9,7 +9,6 @@ export class GenerateurListeMots {
         this.genererListeMot(uneGrille);
         this.nettoyerMots();
         const laListeAretourner: Array<Mockword> = this.listeMot;
-        this.detruireListeDeMots();
 
         return laListeAretourner;
     }
@@ -20,10 +19,6 @@ export class GenerateurListeMots {
         while (this.listeMot[this.listeMot.length - 1].getLongueur() === 1) {
             this.listeMot.pop();
         }
-    }
-
-    private detruireListeDeMots(): void {
-        this.listeMot = [];
     }
 
     public genererMot(x: number, y: number, estVertical: boolean, uneGrille: Array<Array<string>>): Mockword {

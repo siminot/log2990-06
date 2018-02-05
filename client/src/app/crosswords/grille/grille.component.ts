@@ -28,7 +28,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
   }
 
-  ngOnInit() { }
+  private ngOnInit(): void { }
 
   private envoieMots(): void {
     this.listeMotsService.serviceEnvoieMots(this.mots);
@@ -39,29 +39,16 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private opacite(etat: boolean): String {
-    if (!etat) {
-      return('1');
-    }
-
-    return('0');
+    return(etat ? '0' : '1');
   }
 
   private onKey(event: any) {
-    const element = event.srcElement.nextElementSibling;
-    console.log(element);
+    const element: any = event.srcElement.nextElementSibling;
 
-    if(element == null){
-      console.log("null")
-      return;
-    } else {
+    if (element != null) {
       let elem = document.getElementById("testFocus");
       elem.focus();
     }
-  }
-
-  ngOnDestroy() {
-    this.subscriptionMots.unsubscribe();
-    this.subscriptionMatrice.unsubscribe();
   }
 
   print(event:any):void {
@@ -74,5 +61,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let a = String(i);
     let b = String(j);
     return a+b;
+  }
+
+  ngOnDestroy() {
+    this.subscriptionMots.unsubscribe();
+    this.subscriptionMatrice.unsubscribe();
   }
 }

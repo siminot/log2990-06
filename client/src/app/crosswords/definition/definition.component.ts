@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from "@angular/core";
+import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
+import { Subscription } from "rxjs/Subscription";
 
-import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
-import { Word } from "../mockObject/word";
-import { LettreGrille } from '../mockObject/word';
+import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { Word, LettreGrille } from "../mockObject/word";
+
 
 @Component({
-  selector: 'app-definition',
-  templateUrl: './definition.component.html',
-  styleUrls: ['./definition.component.css'],
+  selector: "app-definition",
+  templateUrl: "./definition.component.html",
+  styleUrls: ["./definition.component.css"]
 })
 
 export class DefinitionComponent implements OnDestroy, OnInit {
@@ -91,7 +91,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
 
   verifierTentative(tentative: String) {
-    if(tentative == this.motSelectionne.mot) {
+    if(tentative.toLocaleUpperCase() === this.motSelectionne.mot.toLocaleUpperCase()) {
       this.decouvrirLettre(this.motSelectionne);
       this.reponse = "Bonne Reponse !";
     } else {

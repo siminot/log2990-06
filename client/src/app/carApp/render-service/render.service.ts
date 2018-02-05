@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import Stats = require("stats.js");
-import { PerspectiveCamera, WebGLRenderer, Scene, AmbientLight, Vector3, GridHelper, AxisHelper, CameraHelper } from "three";
+import { PerspectiveCamera, WebGLRenderer, Scene, AmbientLight, Vector3, GridHelper, AxisHelper } from "three";
 import { Car } from "../car/car";
 
 const FAR_CLIPPING_PLANE: number = 1000;
@@ -99,15 +99,15 @@ export class RenderService {
     }
 
     private reglerCameraTroisimePersonne(): void {
-        const ANGLE_DROIT: number = 90;
+        // const ANGLE_DROIT: number = 90;
         const POSITION_X: number = 5; // Vue derriere la voiture
         const POSITION_Y: number = 3; // Hauteur de la camera
         const POSITION_Z: number = 0;
 
         const POSITION_RELATIVE_CAMERA: Vector3 = new Vector3(POSITION_X, POSITION_Y, POSITION_Z);
-        const POSITION_CAMERA: Vector3 = POSITION_RELATIVE_CAMERA.add(this._car.position);
+        const POSITION_CAMERA: Vector3 = POSITION_RELATIVE_CAMERA.add(this._car.getPosition());
 
-        this.camera.rotateY(this._car.angle);
+        // this.camera.rotateY(this._car.angle);
         /*
         const FAR_CLIPPING_PLANE: number = 1000;
         const NEAR_CLIPPING_PLANE: number = 1;
@@ -125,7 +125,7 @@ export class RenderService {
         );
 
         this.camera.position.set(POSITION_CAMERA.x, POSITION_CAMERA.y, POSITION_CAMERA.z);
-        this.camera.lookAt(this._car.position);
+        this.camera.lookAt(this._car.getPosition());
     }
 
     private reglerCameraVueDessus(): void {

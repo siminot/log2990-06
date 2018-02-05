@@ -28,26 +28,26 @@ export class GrilleComponent implements OnInit, OnDestroy {
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
   }
 
-  ngOnInit() {
+  ngOnInit() { }
 
-  }
-
-  envoieMots(): void {
+  private envoieMots(): void {
     this.listeMotsService.serviceEnvoieMots(this.mots);
   }
-  
-  envoieMatrice(): void {
+
+  private envoieMatrice(): void {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
-  opacite(etat:boolean): String {
-    if(!etat)
-      return("1")
-    return('0')
+  private opacite(etat: boolean): String {
+    if (!etat) {
+      return('1');
+    }
+
+    return('0');
   }
 
-  onKey(event:any){
-    let element = event.srcElement.nextElementSibling;
+  private onKey(event: any) {
+    const element = event.srcElement.nextElementSibling;
     console.log(element);
 
     if(element == null){

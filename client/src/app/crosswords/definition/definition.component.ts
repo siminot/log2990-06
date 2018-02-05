@@ -1,15 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
-import { Subscription } from "rxjs/Subscription";
+import { Component, OnInit } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Subscription } from 'rxjs/Subscription';
 
-import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Word, LettreGrille } from "../mockObject/word";
-
+import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
+import { Word, LettreGrille } from '../mockObject/word';
 
 @Component({
-  selector: "app-definition",
-  templateUrl: "./definition.component.html",
-  styleUrls: ["./definition.component.css"]
+  selector: 'app-definition',
+  templateUrl: './definition.component.html',
+  styleUrls: ['./definition.component.css']
 })
 
 export class DefinitionComponent implements OnDestroy, OnInit {
@@ -17,10 +16,10 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   public matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
-  private reponse: String; 
+  private reponse: String;
   private motSelectionne: Word;
-  
-  constructor (private listeMotsService: RequeteDeGrilleService) {
+
+  private constructor (private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe(mots => this.mots = mots);
@@ -93,9 +92,9 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   verifierTentative(tentative: String) {
     if(tentative.toLocaleUpperCase() === this.motSelectionne.mot.toLocaleUpperCase()) {
       this.decouvrirLettre(this.motSelectionne);
-      this.reponse = "Bonne Reponse !";
+      this.reponse = 'Bonne Reponse !';
     } else {
-      this.reponse = "Mauvaise Reponse !";
+      this.reponse = 'Mauvaise Reponse !';
     }
   }
 
@@ -104,7 +103,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.subscriptionMatrice.unsubscribe();
   }
 
-  afficherRegle() {
-    alert("Cliquez sur une définition afin d'effectuer une tentative.");
+  private afficherRegle(): void {
+    alert('Cliquez sur une définition afin d\'effectuer une tentative.');
   }
 }

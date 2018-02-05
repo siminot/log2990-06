@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Word, LettreGrille } from '../mockObject/word';
 import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Event } from '@angular/router/src/events';
 
 @Component({
   selector: 'app-grille',
@@ -14,7 +13,7 @@ import { Event } from '@angular/router/src/events';
 
 export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Word[];
-  public matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
+  private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
 
@@ -29,22 +28,22 @@ export class GrilleComponent implements OnInit, OnDestroy {
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
   }
 
-  ngOnInit(): void { }
+  public ngOnInit(): void { }
 
-  private envoieMots(): void {
+  public envoieMots(): void {
     this.listeMotsService.serviceEnvoieMots(this.mots);
   }
 
-  private envoieMatrice(): void {
+  public envoieMatrice(): void {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
-  private opacite(etat: boolean): String {
+  public opacite(etat: boolean): String {
     return(etat ? '0' : '1');
   }
 
   // Pour une autre carte que celle du sprint 1.
-  private onKey(event: any) {
+  public onKey(event: any): void {
     const element: any = event.srcElement.nextElementSibling;
 
     if (element != null) {
@@ -55,20 +54,20 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   // Permet de vérifier si l'assignation des ID est bonne.
   // Pour une autre carte que celle du sprint 1.
-  private print(event: any): void {
-    const target: any = event.target || event.srcElement || event.currentTarget;
-    const idAttr: any = target.attributes.id;
+  public print(event: any): void {
+    // const target: any = event.target || event.srcElement || event.currentTarget;
+    // const idAttr: any = target.attributes.id;
   }
 
   // Pour une autre carte que celle du sprint 1.
-  private makeIDs(i: any, j: any): String {
+  public makeIDs(i: number, j: number): String {
     const a = String(i);
     const b = String(j);
 
     return a + b;
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
   }

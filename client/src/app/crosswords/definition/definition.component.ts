@@ -19,7 +19,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   private reponse: String;
   private motSelectionne: Word;
 
-  private constructor (private listeMotsService: RequeteDeGrilleService) {
+  public constructor (private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
@@ -30,25 +30,25 @@ export class DefinitionComponent implements OnDestroy, OnInit {
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
   }
 
-  ngOnInit() { }
+  public ngOnInit(): void { }
 
-  private envoieMots(): void {
+  public envoieMots(): void {
     this.listeMotsService.serviceEnvoieMots(this.mots);
   }
 
-  envoieMatrice(): void {
+  public envoieMatrice(): void {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
-  getMots(): Word[] {
+  public getMots(): Word[] {
     return this.mots;
   }
 
-  getMatriceDesMotsGrille(): Array<Array<LettreGrille>> {
+  public getMatriceDesMotsGrille(): Array<Array<LettreGrille>> {
     return this.matriceDesMotsSurGrille;
   }
 
-  changementMotSelectionne(mot: Word): void {
+  public changementMotSelectionne(mot: Word): void {
     for(let mot of this.mots) {
       mot.activer = false;
     }
@@ -58,7 +58,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.decouvrirCases(mot);
   }
 
-  decouvrirCases(mot: Word): void {
+  public decouvrirCases(mot: Word): void {
     this.cacherCases();
     for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
       if (mot.vertical) {
@@ -70,7 +70,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.envoieMatrice();
   }
 
-  decouvrirLettre(mot: Word): void {
+  public decouvrirLettre(mot: Word): void {
     for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
       if (mot.vertical) {
         this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].lettreDecouverte = true;
@@ -83,7 +83,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
 
   // Décommenter les lignes dans cette fonction pour remettre la fonctionnalité
   // des lettres cachées sur la grille.
-  cacherCases(): void {
+  public cacherCases(): void {
     for (let ligne of this.matriceDesMotsSurGrille) {
       for (let lettre of ligne) {
         // if (lettre.lettreDecouverte == true) {
@@ -93,7 +93,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     }
   }
 
-  verifierTentative(tentative: String) {
+  public verifierTentative(tentative: String): void {
     if(tentative.toLocaleUpperCase() === this.motSelectionne.mot.toLocaleUpperCase()) {
       this.decouvrirLettre(this.motSelectionne);
       this.reponse = 'Bonne Reponse !';
@@ -102,12 +102,12 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     }
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
   }
 
-  private afficherRegle(): void {
+  public afficherRegle(): void {
     alert('Cliquez sur une définition afin d\'effectuer une tentative.');
   }
 }

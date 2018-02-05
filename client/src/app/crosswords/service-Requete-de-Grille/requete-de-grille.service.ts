@@ -1,14 +1,11 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
-import { TAILLE_TABLEAU } from "../constantes";
-import { listeMots } from "../mockObject/mockListWord";
-import { Word } from "../mockObject/word";
-import { LettreGrille } from "../mockObject/word";
-
-
+import { TAILLE_TABLEAU } from '../constantes';
+import { listeMots } from '../mockObject/mockListWord';
+import { Word, LettreGrille } from '../mockObject/word';
 
 @Injectable()
 export class RequeteDeGrilleService {
@@ -16,8 +13,8 @@ export class RequeteDeGrilleService {
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 
   // Création de nos sujets pour le partage des informations au travers des composants (Patron observateur).
-  private listeMotsSujet = new Subject<Word[]>();
-  private matriceDesMotsSurGrilleSujet = new Subject<Array<Array<LettreGrille>>>();
+  private listeMotsSujet: Subject<Word[]> = new Subject<Word[]>();
+  private matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();
 
   // Attribution de la propriété Observable aux suejts.
   private listeMotsObservable$ = this.listeMotsSujet.asObservable();
@@ -60,7 +57,7 @@ export class RequeteDeGrilleService {
     for(let i:number = 0; i < TAILLE_TABLEAU; i++){
       let row: Array<LettreGrille> = new Array(TAILLE_TABLEAU);
       for(let j:number = 0; j < TAILLE_TABLEAU; j++) {
-        let caseNoir: LettreGrille = {caseDecouverte: false, lettre:"1", lettreDecouverte: false};
+        let caseNoir: LettreGrille = {caseDecouverte: false, lettre:'1', lettreDecouverte: false};
         row[j] = caseNoir;
       }
       matrice[i] = row;
@@ -86,6 +83,4 @@ export class RequeteDeGrilleService {
       }
     }
   }
-
-  
 }

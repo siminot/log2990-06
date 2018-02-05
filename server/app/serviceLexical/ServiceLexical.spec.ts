@@ -1,3 +1,11 @@
+/*
+    Tests que nous désirions faire au départ, mais finalement
+    nous avons décidé de tester l'interface Web de notre service
+    par ses routes.
+*/
+
+/*
+
 // import { Mot } from "./Mot";
 // import { MotAPI } from "./MotAPI";
 import * as assert from "assert";
@@ -12,8 +20,7 @@ const APP = EXPRESS();
 describe("Objet ServiceLexical", () => {
     describe("servirDefinitionsMot", () => {
         const mots: string[] = ["word", "erreurRequete384", "constitution", "erreurAucunMot"];
-        // let serviceLexical: ServiceLexical;
-        // let res: Response = require("express");
+
         it("Message d'erreur si requête invalide", () => {
             assert(true);
         });
@@ -77,3 +84,4 @@ describe("Objet ServiceLexical", () => {
         });
     });
 });
+*/

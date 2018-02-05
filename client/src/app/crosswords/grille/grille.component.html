@@ -2,8 +2,8 @@
 <div class = "grille">
     <table class="table">
         <br>
-        <tr *ngFor="let indiceX of [0,1,2,3]; let i = index" >
-            <td *ngFor="let indiceY of [0,1,2,3]; let j = index">
+        <tr *ngFor="let indiceX of tabIndicesGrille; let i = index" >
+            <td *ngFor="let indiceY of tabIndicesGrille; let j = index">
                 <p class="indicesHorizontals" *ngIf="i == 0">A</p>
                 <p class="indicesVerticals" *ngIf="j == 0">B</p>
                 <img *ngIf="matriceDesMotsSurGrille[i][j].lettre != '1' ; else elseBlock1" [style.opacity]="opacite(matriceDesMotsSurGrille[i][j].caseDecouverte)" class = "tuile" src="../../../assets/tuile.png">
@@ -12,8 +12,6 @@
 
                 <p class="reponseLettre" *ngIf = "matriceDesMotsSurGrille[i][j].lettreDecouverte && matriceDesMotsSurGrille[i][j].lettre ; else elseBlock2">{{ matriceDesMotsSurGrille[i][j].lettre | uppercase }}</p>
                 <ng-template #elseBlock2><p class="reponseLettre"></p></ng-template>
-
-                
             </td>
         </tr>
     </table>

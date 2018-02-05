@@ -8,7 +8,7 @@ import * as assert from "assert";
     // MotAPI pour test
     const WORD: string = "test";
     const SCORE: number = 1000;
-    const FREQUENCE_MEDIANE: number = 80;
+    const FREQUENCE_MEDIANE: number = 10;
     const DEFINITION1: string = "n\tAction de faire un test";
     const TAGS: Array<string> = [MotAPI.MARQUEUR_FREQUENCE + FREQUENCE_MEDIANE];
     const DEFS: Array<string> = [DEFINITION1];

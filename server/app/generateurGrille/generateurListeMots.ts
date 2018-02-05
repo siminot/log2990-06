@@ -21,7 +21,7 @@ export class GenerateurListeMots {
         }
     }
 
-    public genererMot(x: number, y: number, estVertical: boolean, uneGrille: Array<Array<string>>): Mockword {
+    private genererMot(x: number, y: number, estVertical: boolean, uneGrille: Array<Array<string>>): Mockword {
 
         if (x < 0 || y < 0) {
             throw new Error("Entree negative interdite");
@@ -46,7 +46,7 @@ export class GenerateurListeMots {
         return nouveauMot;
     }
 
-    public genererListeMot(uneGrille: Array<Array<string>>): number {
+    private genererListeMot(uneGrille: Array<Array<string>>): number {
 
         let ctrMots = 0;
         for (let i = 0; i < uneGrille.length; i++) {

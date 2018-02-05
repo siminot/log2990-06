@@ -14,7 +14,7 @@ module moduleServiceLexical {
         private static readonly LETTRE_INCONNUE_API: string = "?";
         private static readonly URL: string = "https://api.datamuse.com/words?sp=";
         private static readonly FLAG: string = "&md=df&max=";
-        private static readonly NOMBRE_MAX_REQUETE: number = 10;
+        private static readonly NOMBRE_MAX_REQUETE: number = 1000;
         private static readonly MESSAGE_REQUETE_INVALIDE: string = "Erreur : requete invalide";
         private static readonly MESSAGE_AUCUN_RESULTAT: string = "Aucun resultat";
 
@@ -104,13 +104,14 @@ module moduleServiceLexical {
             return liste.filter((mot: Mot) => mot.obtenirFrequence().valueOf() === frequence.valueOf());
         }
 
-        // Obtention des mots selon la fréquence
+        // Obtention des mots selon la contrainte
         public servirMotsSelonContrainte(contrainte: string, frequence: Frequence, res: Response): void {
             if (this.requeteEstValide(contrainte)) {
                 this.obtenirMotsFormattes(contrainte)
                     .then((dictionnaire: Mot[]) => {
-                        if (dictionnaire.length > 0) {
-                            res.send(this.trierMotsSelonFrequence(dictionnaire, frequence));
+                        const dictionnaireTrie = this.trierMotsSelonFrequence(dictionnaire, frequence);
+                        if (dictionnaireTrie.length !== 0) {
+                            res.send(dictionnaireTrie);
                         } else {
                             res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
                         }
@@ -126,8 +127,9 @@ module moduleServiceLexical {
             if (!isNaN(LONGUEUR)) {
                 this.obtenirMotsFormattes(this.obtenirContrainteLongueur(LONGUEUR))
                     .then((dictionnaire: Mot[]) => {
-                        if (dictionnaire.length > 0) {
-                            res.send(this.trierMotsSelonFrequence(dictionnaire, frequence));
+                        const dictionnaireTrie = this.trierMotsSelonFrequence(dictionnaire, frequence);
+                        if (dictionnaireTrie.length > 0) {
+                            res.send(dictionnaireTrie);
                         } else {
                             res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
                         }

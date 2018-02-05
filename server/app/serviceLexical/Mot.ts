@@ -6,14 +6,15 @@ export enum Frequence { Commun, NonCommun }
 export enum TypeMot { Nom, Verbe, Adjectif, Adverbe }
 
 export class Mot {
-    private static readonly MEDIANE_FREQUENCE: number = 80;
+    // tslint:disable-next-line:no-magic-numbers
+    private static readonly MEDIANE_FREQUENCE: number[] = [0, 0, 10, 10, 10, 10, 10, 5, 2, 2, 2];
 
     // Pour détecter ce qui n'est pas un lettre majuscule/minuscule/accentuée
     private static readonly CARACTERES_INVALIDES: string = "[^A-Z|^a-z]";
 
     public mot: string;
     public definitions: Definition[];
-    private frequence: number;
+    public frequence: number;
 
     // Construction d'un mot
 
@@ -91,7 +92,7 @@ export class Mot {
 
     public obtenirFrequence(): Frequence {
         if (this.frequence !== null) {
-            return this.frequence >= Mot.MEDIANE_FREQUENCE
+            return this.frequence >= Mot.MEDIANE_FREQUENCE[this.mot.length]
                 ? Frequence.Commun
                 : Frequence.NonCommun;
         } else {

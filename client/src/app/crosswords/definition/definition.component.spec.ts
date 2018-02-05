@@ -3,7 +3,7 @@ import * as assert from 'assert';
 import { DefinitionComponent } from './definition.component';
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
 import { listeMots } from '../mockObject/mockListWord';
-import { Word } from '../mockObject/word';
+import { Word, lettreGrille } from '../mockObject/word';
 import { GrilleComponent } from '../grille/grille.component';
 
 
@@ -12,9 +12,18 @@ describe('DefinitionComponent', () => {
   let component: DefinitionComponent;
   let fixture: ComponentFixture<DefinitionComponent>;
   let fakeGrille: GrilleComponent;
-  let fakeWord: Word;
 
-  const realWordFromOurFakeList : Word = {
+  const fakeWord: Word = {
+    mot: "POPO",
+    definition: "ton père en latino",
+    vertical: true,
+    longeur: 4,
+    premierX: 0,
+    premierY: 0,
+    activer: false
+  };
+
+  const realWordFromOurFakeList: Word = {
     mot: "Tata",
     definition: "Ni papa, ni  mama",
     vertical: true,
@@ -22,7 +31,13 @@ describe('DefinitionComponent', () => {
     premierX: 3,
     premierY: 0,
     activer: false 
-  }
+  };
+
+  const realLetterFromGrid: lettreGrille = {
+    caseDecouverte: false,
+    lettre: "P",
+    lettreDecouverte: false
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,15 +56,7 @@ describe('DefinitionComponent', () => {
     //component = fixture.componentInstance;
     fixture.detectChanges();
 
-    fakeWord = {
-      mot: "POPO",
-      definition: "ton père en latino",
-      vertical: true,
-      longeur: 4,
-      premierX: 0,
-      premierY: 0,
-      activer: false
-    };
+
   });
 
   describe('Création d\'objets.', () => {  
@@ -58,10 +65,14 @@ describe('DefinitionComponent', () => {
     });
   });
 
-  describe('Accesseurs et mutateurs', () => {
-    it('Accesseurs de la liste de mots', () => {
+  describe('Accesseurs et mutateurs.', () => {
+    it('Accesseur de la liste de mots.', () => {
       expect(component.getMots()).toContain(realWordFromOurFakeList);
-    })
+    });
+
+    it('Accesseur de la matrice de mots de la grille.', () => {
+      expect(component.getMatriceDesMotsGrille()).toContain()
+    });
   })
 
   describe('Modification de la grille.', () => {
@@ -75,11 +86,4 @@ describe('DefinitionComponent', () => {
       expect(result).toEqual(expectedValues);
     });
   });
-
-
-  // describe('Modification de la grille.', () => {
-  //   it('Découvrir les cases dans la grille selon le mot selectionné.', () => {
-  //     expect(result).toEqual(expectedValues);
-  //   });
-  // });
 });

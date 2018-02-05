@@ -1,8 +1,8 @@
 
 export class Mockword {
    
-    private mot: string;
-    private definition: string;
+    private mot: String;
+    private definition: String;
     private estVertical: boolean;
     private longeur: number;
     private premierX: number;
@@ -35,19 +35,19 @@ export class Mockword {
         return this.premierY;
     }
 
-    getMot(): string {
+    getMot(): String {
         return this.mot;
     }
 
-    getDefinition(): string {
+    getDefinition(): String {
         return this.definition;
     }
 
     // setters
-    setMot(mot: string){
+    setMot(mot: String){
         this.mot = mot;
     }
-    setDefinition (definition: string){
+    setDefinition (definition: String){
         this.definition = definition;
     }
   

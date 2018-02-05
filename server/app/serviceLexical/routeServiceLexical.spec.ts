@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { RouteServiceLexical } from "./routeServiceLexical";
 import { ServiceLexical } from "./ServiceLexical";
-import { MotAPI } from "./MotAPI";
+import { Mot } from "./Mot";
 import * as WebRequest from "web-request";
 import { ServiceWeb } from "../serviceweb";
 
@@ -31,7 +31,7 @@ const URL_CONTRAINTE: string = "/contrainte";
             it("/commun/contrainte/:contrainte doit retourner un tableau de mots", () => {
                 const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_CONTRAINTE + CONTRAINTE;
 
-                WebRequest.json<MotAPI[]>(URL_TEST).then((data: MotAPI[]) => {
+                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
                     assert.notEqual(data.length, 0);
                 });
             });
@@ -39,7 +39,7 @@ const URL_CONTRAINTE: string = "/contrainte";
             it("/noncommun/contrainte/:contrainte doit retourner un tableau de mots", () => {
                 const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_CONTRAINTE + CONTRAINTE;
 
-                WebRequest.json<MotAPI[]>(URL_TEST).then((data: MotAPI[]) => {
+                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
                     assert.notEqual(data.length, 0);
                 });
             });
@@ -47,7 +47,7 @@ const URL_CONTRAINTE: string = "/contrainte";
             it("/noncommun/longueur/:longueur doit retourner un tableau de mots", () => {
                 const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_LONGUEUR + LONGUEUR;
 
-                WebRequest.json<MotAPI[]>(URL_TEST).then((data: MotAPI[]) => {
+                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
                     assert.notEqual(data.length, 0);
                 });
             });
@@ -55,7 +55,7 @@ const URL_CONTRAINTE: string = "/contrainte";
             it("/commun/longueur/:longueur doit retourner un tableau de mots", () => {
                 const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_LONGUEUR + LONGUEUR;
 
-                WebRequest.json<MotAPI[]>(URL_TEST).then((data: MotAPI[]) => {
+                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
                     assert.notEqual(data.length, 0);
                 });
             });
@@ -64,7 +64,7 @@ const URL_CONTRAINTE: string = "/contrainte";
                 const MOT: string = "test";
                 const URL_TEST: string = URL_SERVICE_LEXICAL + URL_DEFINITION + MOT;
 
-                WebRequest.json<MotAPI[]>(URL_TEST).then((data: MotAPI[]) => {
+                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
                     assert.equal(data.length, 1);
                 });
             });
@@ -75,7 +75,7 @@ const URL_CONTRAINTE: string = "/contrainte";
                     const MOT_TEST: string = "a+()";
                     const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_CONTRAINTE + MOT_TEST;
 
-                    WebRequest.json<MotAPI[]>(URL_TEST).then((data: MotAPI[]) => {
+                    WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
                         assert.equal(data, undefined);
                     });
                 });
@@ -84,7 +84,7 @@ const URL_CONTRAINTE: string = "/contrainte";
                     const LONGUEUR_TEST: string = "abcd";
                     const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_LONGUEUR + LONGUEUR_TEST;
 
-                    WebRequest.json<MotAPI[]>(URL_TEST).then((data: MotAPI[]) => {
+                    WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
                         assert.equal(data, undefined);
                     });
                 });

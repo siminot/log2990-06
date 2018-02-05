@@ -33,10 +33,13 @@ describe('DefinitionComponent', () => {
     activer: false 
   };
 
+  // lettreDecouverte a true puisque les lettres sont initialisées à true
+  // pour qu'on les voit dans la grille. Mettre false quand on initialisera
+  // les lettres à false.
   const realLetterFromGrid: lettreGrille = {
     caseDecouverte: false,
     lettre: "P",
-    lettreDecouverte: false
+    lettreDecouverte: true
   };
 
   beforeEach(async(() => {
@@ -71,7 +74,8 @@ describe('DefinitionComponent', () => {
     });
 
     it('Accesseur de la matrice de mots de la grille.', () => {
-      expect(component.getMatriceDesMotsGrille()).toContain()
+      const indicePremiereLigne: number = 0;
+      expect(component.getMatriceDesMotsGrille()[indicePremiereLigne]).toContain(realLetterFromGrid);
     });
   })
 

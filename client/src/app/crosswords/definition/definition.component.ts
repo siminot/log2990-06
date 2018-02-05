@@ -79,6 +79,8 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.envoieMatrice();
   }
 
+  // Décommenter les lignes dans cette fonction pour remettre la fonctionnalité
+  // des lettres cachées sur la grille.
   cacherCases(): void {
     for (let ligne of this.matriceDesMotsSurGrille) {
       for (let lettre of ligne) {

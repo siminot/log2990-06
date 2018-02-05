@@ -1,4 +1,4 @@
-//import { Mot } from "./Mot";
+// import { Mot } from "./Mot";
 // import { MotAPI } from "./MotAPI";
 import * as assert from "assert";
 import { ServiceLexical } from "./ServiceLexical";

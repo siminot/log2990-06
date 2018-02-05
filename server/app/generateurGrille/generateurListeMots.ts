@@ -6,11 +6,11 @@ export class GenerateurListeMots {
     private listeMot: Array<Mockword> = new Array<Mockword>();
 
     public donnerUneListe(uneGrille: Array<Array<string>>): Array<Mockword> {
+        this.listeMot = new Array<Mockword>();
         this.genererListeMot(uneGrille);
         this.nettoyerMots();
-        const laListeAretourner: Array<Mockword> = this.listeMot;
 
-        return laListeAretourner;
+        return this.listeMot;
     }
 
     // Sort la liste en ordre decroissant et retire les mots de 1 lettres

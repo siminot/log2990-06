@@ -5,6 +5,7 @@ import * as WebRequest from "web-request";
 
 import { TAILLE_TEST, POURCENTAGE_TEST } from "./constantes";
 import { Mockword } from "./../../../common/mockObject/mockWord";
+import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../../../common/communication/Mot";
 
 import { GenerateurSquelette } from "./generateurSquelette";
@@ -17,13 +18,15 @@ module Route {
 
         private grille: Array<Array<string>>;
         private listeMot: Array<Mockword>;
-        // private tailleGrille: number = TAILLE_TEST;
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_TEST);
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
         private motsDejaPlaces: Array<string> = new Array<string>();
+        private optionsPartie: MockOptionPartie;
+
 
         constructor() {
             this.initMatrice();
+            this.optionsPartie = new MockOptionPartie("Facile", 1); // j'impose facile pour l'instant
         }
 
         private initMatrice(): void {
@@ -97,7 +100,21 @@ module Route {
         }
 
         private demanderMot(mot: Mockword): Promise<Mot[]> {
-            const url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
+
+            let url: string;
+            switch (this.optionsPartie.niveau) {
+
+                case "Facile":
+                case "Normal":
+                url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
+                break;
+
+                case "Difficile":
+                url = "http://localhost:3000/servicelexical/noncommun/contrainte/" + mot.getMot();
+                break;
+
+                default: /*devrait jamais arriver?*/ break;
+            }
 
             return WebRequest.json<Mot[]>(url).then((data) => this.affecterMot(data, mot));
         }

@@ -20,6 +20,7 @@ module Route {
         // private tailleGrille: number = TAILLE_TEST;
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_TEST);
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
+        private motsDejaPlaces: Array<string> = new Array<string>();
 
         constructor() {
             this.initMatrice();
@@ -28,6 +29,7 @@ module Route {
         private initMatrice(): void {
             this.listeMot = new Array<Mockword>();
             this.grille = new Array<Array<string>>();
+            this.motsDejaPlaces = new Array<string>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
         }

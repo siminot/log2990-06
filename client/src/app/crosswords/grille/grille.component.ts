@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Event } from '@angular/router/src/events';
 
 @Component({
   selector: 'app-grille',
@@ -28,7 +29,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
   }
 
-  private ngOnInit(): void { }
+  ngOnInit(): void { }
 
   private envoieMots(): void {
     this.listeMotsService.serviceEnvoieMots(this.mots);
@@ -42,28 +43,32 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return(etat ? '0' : '1');
   }
 
+  // Pour une autre carte que celle du sprint 1.
   private onKey(event: any) {
     const element: any = event.srcElement.nextElementSibling;
 
     if (element != null) {
-      let elem = document.getElementById("testFocus");
+      const elem: HTMLElement = document.getElementById('testFocus');
       elem.focus();
     }
   }
 
-  print(event:any):void {
-    var target = event.target || event.srcElement || event.currentTarget;
-    var idAttr = target.attributes.id;
-    console.log(idAttr);
+  // Permet de vérifier si l'assignation des ID est bonne.
+  // Pour une autre carte que celle du sprint 1.
+  private print(event: any): void {
+    const target: any = event.target || event.srcElement || event.currentTarget;
+    const idAttr: any = target.attributes.id;
   }
 
-  makeIDs(i:any, j:any): any{
-    let a = String(i);
-    let b = String(j);
-    return a+b;
+  // Pour une autre carte que celle du sprint 1.
+  private makeIDs(i: any, j: any): String {
+    const a = String(i);
+    const b = String(j);
+
+    return a + b;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
   }

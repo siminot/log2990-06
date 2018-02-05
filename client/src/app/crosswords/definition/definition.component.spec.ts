@@ -14,6 +14,16 @@ describe('DefinitionComponent', () => {
   let fakeGrille: GrilleComponent;
   let fakeWord: Word;
 
+  const realWordFromOurFakeList : Word = {
+    mot: "Tata",
+    definition: "Ni papa, ni  mama",
+    vertical: true,
+    longeur: 4,
+    premierX: 3,
+    premierY: 0,
+    activer: false 
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DefinitionComponent ],
@@ -42,20 +52,24 @@ describe('DefinitionComponent', () => {
     };
   });
 
-  // describe('Création d\'objets.', () => {  
-  //   it('Création d\'objet Definition.', () => {
-  //     expect(component).toBeTruthy();
-  //   });
-  // });
+  describe('Création d\'objets.', () => {  
+    it('Création d\'objet Definition.', () => {
+      expect(component).toBeTruthy();
+    });
+  });
+
+  describe('Accesseurs et mutateurs', () => {
+    it('Accesseurs de la liste de mots', () => {
+      expect(component.getMots()).toContain(realWordFromOurFakeList);
+    })
+  })
 
   describe('Modification de la grille.', () => {
     it('Découvrir les cases dans la grille selon le mot selectionné.', () => {
       component.decouvrirCases(fakeWord);
-      console.log(component.matriceDesMotsSurGrille);
       let expectedValues:boolean[] = [true,true,true,true];
       let result:boolean[] = [];
       for(let i:number = 0; i < fakeWord.longeur; i++) {
-        console.log(component.matriceDesMotsSurGrille[0][i].caseDecouverte);
         result[i] = component.matriceDesMotsSurGrille[0][i].caseDecouverte;
       }
       expect(result).toEqual(expectedValues);
@@ -66,14 +80,6 @@ describe('DefinitionComponent', () => {
   // describe('Modification de la grille.', () => {
   //   it('Découvrir les cases dans la grille selon le mot selectionné.', () => {
   //     expect(result).toEqual(expectedValues);
-
   //   });
   // });
-
-
-
-
-
-
-
 });

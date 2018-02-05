@@ -2,14 +2,11 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { DefinitionComponent } from "./definition.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, lettreGrille } from "../mockObject/word";
-import { GrilleComponent } from "../grille/grille.component";
 
-
-describe('DefinitionComponent', () => {
+describe("DefinitionComponent", () => {
   let service: RequeteDeGrilleService;
   let component: DefinitionComponent;
   let fixture: ComponentFixture<DefinitionComponent>;
-  let fakeGrille: GrilleComponent;
 
   const fakeWord: Word = {
     mot: "POPO",
@@ -28,7 +25,7 @@ describe('DefinitionComponent', () => {
     longeur: 4,
     premierX: 3,
     premierY: 0,
-    activer: false 
+    activer: false
   };
 
   // lettreDecouverte a true puisque les lettres sont initialisées à true
@@ -51,38 +48,34 @@ describe('DefinitionComponent', () => {
   beforeEach(() => {
     service = new RequeteDeGrilleService();
     component = new DefinitionComponent(service);
-    fakeGrille = new GrilleComponent(service);
-
     fixture = TestBed.createComponent(DefinitionComponent);
-    //component = fixture.componentInstance;
     fixture.detectChanges();
-
-
   });
 
-  describe('Création d\'objets.', () => {  
-    it('Création d\'objet Definition.', () => {
+  describe("Création d\'objets.", () => {
+    it("Création d\'objet Definition.", () => {
       expect(component).toBeTruthy();
     });
   });
 
-  describe('Accesseurs et mutateurs.', () => {
-    it('Accesseur de la liste de mots.', () => {
+  describe("Accesseurs et mutateurs.", () => {
+    it("Accesseur de la liste de mots.", () => {
       expect(component.getMots()).toContain(realWordFromOurFakeList);
     });
 
-    it('Accesseur de la matrice de mots de la grille.', () => {
+    it("Accesseur de la matrice de mots de la grille.", () => {
       const indicePremiereLigne: number = 0;
       expect(component.getMatriceDesMotsGrille()[indicePremiereLigne]).toContain(realLetterFromGrid);
     });
-  })
+  });
 
-  describe('Modification de la grille.', () => {
-    it('Découvrir les cases dans la grille selon le mot selectionné.', () => {
+  describe("Modification de la grille.", () => {
+    it("Découvrir les cases dans la grille selon le mot selectionné.", () => {
       component.decouvrirCases(fakeWord);
-      let expectedValues:boolean[] = [true,true,true,true];
-      let result:boolean[] = [];
-      for(let i:number = 0; i < fakeWord.longeur; i++) {
+      const expectedValues: boolean[] = [true, true, true, true];
+      const result: boolean[] = [];
+
+      for (let i: number = 0; i < fakeWord.longeur; i++) {
         result[i] = component.matriceDesMotsSurGrille[0][i].caseDecouverte;
       }
       expect(result).toEqual(expectedValues);

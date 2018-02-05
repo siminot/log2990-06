@@ -18,5 +18,4 @@ describe('GrilleComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
 });

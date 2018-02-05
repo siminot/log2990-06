@@ -10,7 +10,6 @@ import { lettreGrille } from '../mockObject/word';
   selector: 'app-definition',
   templateUrl: './definition.component.html',
   styleUrls: ['./definition.component.css'],
-  
 })
 
 export class DefinitionComponent implements OnDestroy, OnInit {
@@ -40,6 +39,10 @@ export class DefinitionComponent implements OnDestroy, OnInit {
 
   getMots(): Word[] {
     return this.mots;
+  }
+
+  getMatriceDesMotsGrille(): Array<Array<lettreGrille>> {
+    return this.matriceDesMotsSurGrille;
   }
 
   changementMotSelectionne(mot: Word): void {

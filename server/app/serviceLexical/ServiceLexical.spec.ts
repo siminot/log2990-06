@@ -1,89 +1,33 @@
-// import { Mot, TypeMot, Frequence } from "./Mot";
+import { Mot } from "./Mot";
 // import { MotAPI } from "./MotAPI";
 import * as assert from "assert";
 // import { ServiceLexical } from "./ServiceLexical";
 
-{
+const SERVICE: ServiceLexical = new ServiceLexical();
+let express = require("express");
+let app = express();
 
     // const SERVICE: ServiceLexical = new ServiceLexical();
 
     describe("Objet ServiceLexical", () => {
-        describe("Constructeur", () => {
-            describe("Methodes privées", () => {
-                describe("modifierContraintePourAPI", () => {
-                    it("Remplace '_' par '?'", () => {
-                        
-                        assert(true);
-                    });
-                });
-                describe("obtenirMotsDeLAPI", () => {
-                    it("Retourne une promesse", () => {
-                        assert(true);
-                    });
-                });
-                describe("convertirMotsAPI", () => {
-                    it("Erreur si aucun mot", () => {
-                        assert(true);
-                    });
-
-                    it("Même nombre de mots avant et après", () => {
-                        assert(true);
-                    });
-                });
-                describe("obtenirMotsFormattes", () => {
-                    it("Retourne une promesse", () => {
-                        assert(true);
-                    });
-                });
-                describe("requeteEstValide", () => {
-                    it("Identifie requête valide", () => {
-                        assert(true);
-                    });
-
-                    it("Identifie requête invalide", () => {
-                        assert(true);
-                    });
-                });
-                describe("trierMotsSelonFrequence", () => {
-                    it("Conserve mots fréquents", () => {
-                        assert(true);
-                    });
-
-                    it("Conserve mots infréquents", () => {
-                        assert(true);
-                    });
-                });
-                describe("obtenirContrainteLongueur", () => {
-                    it("Produit une chaîne de '_' de la bonne longueur", () => {
-                        assert(true);
-                    });
-                });
-                describe("retirerMotInvalides", () => {
-                    it("Retire mot invalide", () => {
-                        assert(true);
-                    });
-
-                    it("Conserve mot valide", () => {
-                        assert(true);
-                    });
-                });
-                describe("retirerMotSansDefinition", () => {
-                    it("Retire mot sans définition", () => {
-                        assert(true);
-                    });
-
-                    it("Conserve mot avec définition", () => {
-                        assert(true);
-                    });
-                });
-            });
-        });
         describe("servirDefinitionsMot", () => {
-            it("Envoie un seul mot", () => {
+            // const mots: string[] = ["word", "erreurRequete384", "constitution", "erreurAucunMot"];
+            // let serviceLexical: ServiceLexical;
+            // let res: Response = require("express");
+            it("Message d'erreur si requête invalide", () => {
                 assert(true);
             });
-
+            it("Envoie un seul mot", () => {
+                const mot = app.SERVICE.servirDefinitionsMot("/serviceLexical/def/:${id}").find();
+                assert(mot instanceof Mot);
+            });
             it("Le mot envoyé est le même que le mot de la requête", () => {
+                assert(true);
+            });
+            it("Erreur si aucun mot", () => {
+                assert(true);
+            });
+            it("Envoie un mot avec des définitions", () => {
                 assert(true);
             });
         });
@@ -91,8 +35,22 @@ import * as assert from "assert";
             it("Message d'erreur si requête invalide", () => {
                 assert(true);
             });
-
             it("Envoie un tableau de mots", () => {
+                assert(true);
+            });
+            it("Erreur si aucun mot", () => {
+                assert(true);
+            });
+            it("Envoie mots de la bonne fréquence", () => {
+                assert(true);
+            });
+            it("Envoie mots de la bonne longueur", () => {
+                assert(true);
+            });
+            it("Envoie mots avec des définitions", () => {
+                assert(true);
+            });
+            it("Envoie mots sans espace ou trait d'union", () => {
                 assert(true);
             });
         });
@@ -100,8 +58,22 @@ import * as assert from "assert";
             it("Message d'erreur si requête invalide", () => {
                 assert(true);
             });
-
             it("Envoie un tableau de mots", () => {
+                assert(true);
+            });
+            it("Erreur si aucun mot", () => {
+                assert(true);
+            });
+            it("Envoie mots de la bonne fréquence", () => {
+                assert(true);
+            });
+            it("Envoie mots de la bonne longueur", () => {
+                assert(true);
+            });
+            it("Envoie mots avec des définitions", () => {
+                assert(true);
+            });
+            it("Envoie mots sans espace ou trait d'union", () => {
                 assert(true);
             });
         });

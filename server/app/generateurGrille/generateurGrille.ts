@@ -3,11 +3,12 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { TAILLE_TEST, VIDE, NOIR, POURCENTAGE_TEST } from "./constantes";
+import { TAILLE_TEST, POURCENTAGE_TEST } from "./constantes";
 import { Mockword } from "./../../../common/mockObject/mockWord";
 import { Mot } from "./../../../common/communication/Mot";
 
 import { GenerateurSquelette } from "./generateurSquelette";
+import { GenerateurListeMots } from "./generateurListeMots";
 
 module Route {
 
@@ -16,8 +17,9 @@ module Route {
 
         private grille: Array<Array<string>>;
         private listeMot: Array<Mockword>;
-        private tailleGrille: number = TAILLE_TEST;
+        // private tailleGrille: number = TAILLE_TEST;
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_TEST);
+        private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
 
         constructor() {
             this.initMatrice();
@@ -26,79 +28,16 @@ module Route {
         private initMatrice(): void {
             this.listeMot = new Array<Mockword>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
-        }
-
-        private nettoyerMots(): void {
-            this.listeMot.sort((n1, n2) => n2.getLongueur() - n1.getLongueur());
-            while (this.listeMot[this.listeMot.length - 1].getLongueur() === 1) {
-                this.listeMot.pop();
-            }
+            this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
         }
 
         /* FONCTION BIDON POUR EXAMINER DES CHOSES */
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initMatrice();
-            this.initListeMot();
+            // this.initListeMot();
             this.remplirLaGrilleDeMots(0);
 
             res.send(JSON.stringify(this.grille));
-        }
-
-        public initListeMot(): void {
-            this.genererListeMot();
-        }
-
-        public genererMot(x: number, y: number, estVertical: boolean): Mockword {
-
-            if (x < 0 || y < 0) {
-                throw new Error("Entree negative interdite");
-            }
-
-            let longMot = 0;
-            let mot: String = "";
-            for (let i: number = estVertical ? y : x; i < this.tailleGrille; i++) {
-                if (this.grille[i][x] !== NOIR && estVertical) {
-                    longMot++;
-                    mot += "_";
-                } else if (this.grille[y][i] !== NOIR && !estVertical) {
-                    longMot++;
-                    mot += "_";
-                } else {
-                    break;
-                }
-            }
-            const nouveauMot: Mockword = new Mockword(estVertical, longMot, x, y);
-            nouveauMot.setMot(mot);
-
-            return nouveauMot;
-        }
-
-        public genererListeMot(): number {
-
-            let ctrMots = 0;
-            for (let i = 0; i < this.tailleGrille; i++) {
-                for (let j = 0; j < this.tailleGrille; j++) {
-                    if (this.grille[i][j] === VIDE) {
-                        if (j === 0) {
-                            this.listeMot.push(this.genererMot(j, i, false));
-                            ctrMots++;
-                        } else if (this.grille[i][j - 1] === NOIR) {   // Car je ne veux pas acceder a un espace memoire a [-1]
-                             this.listeMot.push(this.genererMot(j, i, false));
-                             ctrMots++;
-                        }
-                        if (i === 0) {
-                            this.listeMot.push(this.genererMot(j, i, true));
-                            ctrMots++;
-                        } else if (this.grille[i - 1][j] === NOIR) {   // Car je ne veux pas acceder a un espace memoire a [-1]
-                            this.listeMot.push(this.genererMot(j, i, true));
-                            ctrMots++;
-                        }
-                    }
-                }
-            }
-            this.nettoyerMots();
-
-            return ctrMots;
         }
 
         private lireMotViaGrille(mot: Mockword) {

@@ -3,7 +3,7 @@ import { Mockword } from "./../../../common/mockObject/mockWord";
 
 export class GenerateurListeMots {
 
-    private listeMot: Array<Mockword>;
+    private listeMot: Array<Mockword> = new Array<Mockword>();
 
     public donnerUneListe(uneGrille: Array<Array<string>>): Array<Mockword> {
         this.genererListeMot(uneGrille);

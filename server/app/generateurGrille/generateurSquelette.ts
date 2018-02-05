@@ -5,19 +5,26 @@ export class GenerateurSquelette {
     private grille: Array<Array<string>>;
     private tailleGrille: number;
 
+    constructor(tailleGrille: number, pourcentageDeCasesNoires: number) {
+        this.tailleGrille = tailleGrille;
+        this.allocationDeLaGrille();
+        this.genererCasesNoires(pourcentageDeCasesNoires);
+    }
+
     public getSqueletteGrille(): Array<Array<string>> {
-        return this.grille;
+        const laGrilleARemettre: Array<Array<string>> = this.grille;
+
+        return laGrilleARemettre;
     }
 
     public getTailleGrille(): number {
         return this.tailleGrille;
     }
 
-    constructor(tailleGrille: number, pourcentageDeCasesNoires: number) {
-        this.tailleGrille = tailleGrille;
-        this.allocationDeLaGrille();
-        this.genererCasesNoires(pourcentageDeCasesNoires);
-    }
+    // A REVOIR
+    // private detruireLaGrille(): void {
+    //     this.grille = [[]];
+    // }
 
     private allocationDeLaGrille(): void {
         this.grille = new Array(this.tailleGrille).fill(VIDE);

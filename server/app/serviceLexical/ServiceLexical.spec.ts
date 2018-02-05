@@ -4,8 +4,8 @@ import * as assert from "assert";
 import { ServiceLexical } from "./ServiceLexical";
 
 const SERVICE: ServiceLexical = new ServiceLexical();
-let express = require("express");
-let app = express();
+const EXPRESS = require("express");
+const APP = EXPRESS();
 
     // const SERVICE: ServiceLexical = new ServiceLexical();
 
@@ -18,7 +18,7 @@ describe("Objet ServiceLexical", () => {
             assert(true);
         });
         it("Envoie un seul mot", () => {
-            SERVICE.servirDefinitionsMot(mots[0], app.res);
+            SERVICE.servirDefinitionsMot(mots[0], APP.res);
         });
         it("Le mot envoyé est le même que le mot de la requête", () => {
             assert(true);

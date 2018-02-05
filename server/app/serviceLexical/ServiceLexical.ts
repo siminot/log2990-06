@@ -12,6 +12,7 @@ const FLAG = "&md=df&max=";
 const NOMBRE_MAX_REQUETE = 1000;
 const MESSAGE_REQUETE_INVALIDE = "Erreur : requete invalide";
 const MESSAGE_AUCUN_RESULTAT = "Aucun resultat";
+const MESSAGE_ERREUR_API_EXTERNE = "Erreur de l'API externe";
 
 module moduleServiceLexical {
 
@@ -35,11 +36,12 @@ module moduleServiceLexical {
             return contrainteAPI;
         }
 
-        private obtenirMotsDeLAPI(contrainte: string, nombreDeMots: number): Promise<Mot[]> {
+        private async obtenirMotsDeLAPI(contrainte: string, nombreDeMots: number): Promise<Mot[]> {
             const URL_API: string = URL + contrainte + FLAG + String(nombreDeMots);
 
             return WebRequest.json<MotAPI[]>(URL_API)
-                .then((data: MotAPI[]) => this.convertirMotsAPI(data));
+                .then((data: MotAPI[]) => this.convertirMotsAPI(data))
+                .catch(() => { throw Error(MESSAGE_ERREUR_API_EXTERNE); });
         }
 
         private convertirMotsAPI(data: MotAPI[]): Mot[] {
@@ -54,12 +56,12 @@ module moduleServiceLexical {
 
         // Intermédiaire entre API et services de mots
 
-        private obtenirMotsFormattes(contrainte: string): Promise<Mot[]> {
+        private async obtenirMotsFormattes(contrainte: string): Promise<Mot[]> {
             const CONTRAINTE_API: string = this.modifierContraintePourAPI(contrainte);
 
             return this.obtenirMotsDeLAPI(CONTRAINTE_API, NOMBRE_MAX_REQUETE)
                 .then((data: Mot[]) => this.filtrerMots(data))
-                .catch((erreur: Error) => null);
+                .catch((erreur: Error) => { throw Error(MESSAGE_ERREUR_API_EXTERNE); });
         }
 
         // Services de mots
@@ -74,7 +76,8 @@ module moduleServiceLexical {
                         } else {
                             res.send(MESSAGE_AUCUN_RESULTAT);
                         }
-                    });
+                    })
+                    .catch(() => { res.send(new Error(MESSAGE_ERREUR_API_EXTERNE)); });
             } else {
                 throw new Error(MESSAGE_REQUETE_INVALIDE);
             }
@@ -110,7 +113,8 @@ module moduleServiceLexical {
                 this.obtenirMotsFormattes(contrainte)
                     .then((dictionnaire: Mot[]) => {
                         this.renvoyerMots(this.trierMotsSelonFrequence(dictionnaire, frequence), res);
-                    });
+                    })
+                    .catch(() => res.send(new Error(MESSAGE_ERREUR_API_EXTERNE)));
             } else {
                 throw new Error(MESSAGE_REQUETE_INVALIDE);
             }
@@ -123,7 +127,8 @@ module moduleServiceLexical {
                 this.obtenirMotsFormattes(this.obtenirContrainteLongueur(LONGUEUR))
                     .then((dictionnaire: Mot[]) => {
                         this.renvoyerMots(this.trierMotsSelonFrequence(dictionnaire, frequence), res);
-                    });
+                    })
+                    .catch(() => { res.send(Error(MESSAGE_ERREUR_API_EXTERNE)); });
             } else {
                 throw new Error(MESSAGE_REQUETE_INVALIDE);
             }

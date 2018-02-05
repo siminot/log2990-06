@@ -22,16 +22,20 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   private constructor (private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe(mots => this.mots = mots);
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe(matrice => this.matriceDesMotsSurGrille = matrice);
+
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
+      .subscribe((mots) => this.mots = mots);
+
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
+      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
   }
 
   ngOnInit() { }
 
-  envoieMots(): void {
+  private envoieMots(): void {
     this.listeMotsService.serviceEnvoieMots(this.mots);
   }
-  
+
   envoieMatrice(): void {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }

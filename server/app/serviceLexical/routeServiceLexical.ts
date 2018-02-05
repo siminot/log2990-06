@@ -5,6 +5,7 @@ import Types from "../types";
 import { ServiceLexical } from "./ServiceLexical";
 import { Frequence } from "./Mot";
 import { ServiceWeb } from "../serviceweb";
+// import { read } from "fs";
 
 @injectable()
 export class RouteServiceLexical extends ServiceWeb {
@@ -35,7 +36,7 @@ export class RouteServiceLexical extends ServiceWeb {
         });
 
         router.get("/def/:mot", (req: Request, res: Response, next: NextFunction) => {
-                this.serviceLexical.servirDefinitionsMot(req.params.mot, res);
+            this.serviceLexical.servirDefinitionsMot(req.params.mot, res);
         });
 
         return router;

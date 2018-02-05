@@ -6,10 +6,10 @@ import * as assert from "assert";
     // const expect = require("expect");
 
     // MotAPI pour test
-    const WORD: string = "test";
-    const SCORE: number = 1000;
-    const FREQUENCE_MEDIANE: number = 80;
-    const DEFINITION1: string = "n\tAction de faire un test";
+    const WORD = "test";
+    const SCORE = 1000;
+    const FREQUENCE_MEDIANE = 10;
+    const DEFINITION1 = "n\tAction de faire un test";
     const TAGS: Array<string> = [MotAPI.MARQUEUR_FREQUENCE + FREQUENCE_MEDIANE];
     const DEFS: Array<string> = [DEFINITION1];
     const MOT_DE_API: MotAPI = { word: WORD, score: SCORE, tags: TAGS, defs: DEFS };
@@ -19,31 +19,31 @@ import * as assert from "assert";
             describe("Methodes privées : extraireDefinitions() et creerDefinition()", () => {
                 describe("Tri des types de definition", () => {
                     it("Nom", () => {
-                        const DEFINITION: string = "n\tAction de faire un test";
+                        const DEFINITION = "n\tAction de faire un test";
                         const MOT_TEST: MotAPI = { word: WORD, score: SCORE, tags: TAGS, defs: [DEFINITION] };
                         assert.equal(new Mot(MOT_TEST).definitions[0].type, TypeMot.Nom);
                     });
 
                     it("Verbe", () => {
-                        const DEFINITION: string = "v\tAction de faire un test";
+                        const DEFINITION = "v\tAction de faire un test";
                         const MOT_TEST: MotAPI = { word: WORD, score: SCORE, tags: TAGS, defs: [DEFINITION] };
                         assert.equal(new Mot(MOT_TEST).definitions[0].type, TypeMot.Verbe);
                     });
 
                     it("Adjectif", () => {
-                        const DEFINITION: string = "adj\tAction de faire un test";
+                        const DEFINITION = "adj\tAction de faire un test";
                         const MOT_TEST: MotAPI = { word: WORD, score: SCORE, tags: TAGS, defs: [DEFINITION] };
                         assert.equal(new Mot(MOT_TEST).definitions[0].type, TypeMot.Adjectif);
                     });
 
                     it("Adverbe", () => {
-                        const DEFINITION: string = "adv\tAction de faire un test";
+                        const DEFINITION = "adv\tAction de faire un test";
                         const MOT_TEST: MotAPI = { word: WORD, score: SCORE, tags: TAGS, defs: [DEFINITION] };
                         assert.equal(new Mot(MOT_TEST).definitions[0].type, TypeMot.Adverbe);
                     });
 
                     it("Type inconnu", () => {
-                        const DEFINITION: string = "mauvaisType\tAction de faire un test";
+                        const DEFINITION = "mauvaisType\tAction de faire un test";
                         const MOT_TEST: MotAPI = { word: WORD, score: SCORE, tags: TAGS, defs: [DEFINITION] };
                         assert.equal(new Mot(MOT_TEST).definitions.length, 0);
                     });
@@ -57,15 +57,15 @@ import * as assert from "assert";
                 });
 
                 it("Une seule définition", () => {
-                    const DEFINITION: string = "n\tAction de faire un test";
+                    const DEFINITION = "n\tAction de faire un test";
                     const DEFINITIONS: string[] = [DEFINITION];
                     const MOT_TEST: MotAPI = { word: WORD, score: SCORE, tags: TAGS, defs: DEFINITIONS };
                     assert.equal(new Mot(MOT_TEST).definitions.length, DEFINITIONS.length);
                 });
 
                 it("Plus d'une définition", () => {
-                    const DEFINITION: string = "n\tAction de faire un test";
-                    const DEFINITION2: string = "adj\tAction de faire un autre test";
+                    const DEFINITION = "n\tAction de faire un test";
+                    const DEFINITION2 = "adj\tAction de faire un autre test";
                     const DEFINITIONS: string[] = [DEFINITION, DEFINITION2];
                     const MOT_TEST: MotAPI = { word: WORD, score: SCORE, tags: TAGS, defs: DEFINITIONS };
                     assert.equal(new Mot(MOT_TEST).definitions.length, DEFINITIONS.length);
@@ -132,35 +132,35 @@ import * as assert from "assert";
 
         describe("Méthode contientCaractereInvalide()", () => {
             it("détection d'un espace", () => {
-                const MOT: string = "up to";
+                const MOT = "up to";
                 const MOT_API: MotAPI = { word: MOT, score: SCORE, tags: TAGS, defs: DEFS };
                 const MOT_TEST: Mot = new Mot(MOT_API);
                 assert.equal(MOT_TEST.contientCaractereInvalide(), true);
             });
 
             it("détection d'un tiret", () => {
-                const MOT: string = "up-to-date";
+                const MOT = "up-to-date";
                 const MOT_API: MotAPI = { word: MOT, score: SCORE, tags: TAGS, defs: DEFS };
                 const MOT_TEST: Mot = new Mot(MOT_API);
                 assert.equal(MOT_TEST.contientCaractereInvalide(), true);
             });
 
             it("détection d'un apostrophe", () => {
-                const MOT: string = "j'ai";
+                const MOT = "j'ai";
                 const MOT_API: MotAPI = { word: MOT, score: SCORE, tags: TAGS, defs: DEFS };
                 const MOT_TEST: Mot = new Mot(MOT_API);
                 assert.equal(MOT_TEST.contientCaractereInvalide(), true);
             });
 
             it("détection d'un caractère accentué", () => {
-                const MOT: string = "caractère";
+                const MOT = "caractère";
                 const MOT_API: MotAPI = { word: MOT, score: SCORE, tags: TAGS, defs: DEFS };
                 const MOT_TEST: Mot = new Mot(MOT_API);
                 assert.equal(MOT_TEST.contientCaractereInvalide(), true);
             });
 
             it("détection d'aucun caractere invalide", () => {
-                const MOT: string = "test";
+                const MOT = "test";
                 const MOT_API: MotAPI = { word: MOT, score: SCORE, tags: TAGS, defs: DEFS };
                 const MOT_TEST: Mot = new Mot(MOT_API);
                 assert.equal(MOT_TEST.contientCaractereInvalide(), false);

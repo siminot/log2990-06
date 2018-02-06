@@ -40,7 +40,7 @@ describe('DefinitionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DefinitionComponent ],
-      providers: [RequeteDeGrilleService]
+      providers: [ RequeteDeGrilleService ]
     })
     .compileComponents();
   }));

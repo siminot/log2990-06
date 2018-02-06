@@ -17,13 +17,13 @@ export class GenerateurSquelette {
         return this.grille;
     }
 
-    public genererNouvelleGrille(): void {
-        this.allocationDeLaGrille();
-        this.genererCasesNoires(this.pourcentageCasesNoires);
-    }
-
     public getTailleGrille(): number {
         return this.tailleGrille;
+    }
+
+    private genererNouvelleGrille(): void {
+        this.allocationDeLaGrille();
+        this.genererCasesNoires(this.pourcentageCasesNoires);
     }
 
     private allocationDeLaGrille(): void {

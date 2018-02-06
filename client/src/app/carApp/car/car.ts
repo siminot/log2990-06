@@ -46,7 +46,7 @@ export class Car extends Object3D {
     }
 
     public get angle(): number {
-        return this.mesh.rotation.y * RAD_TO_DEG;
+        return this.mesh.rotation.y;
     }
 
     private get direction(): Vector3 {

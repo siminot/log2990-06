@@ -95,11 +95,17 @@ export class RenderService {
     }
 
     private reglerCameraTroisimePersonne(): void {
-        const POSITION_X: number = 5; // Vue derriere la voiture
-        const POSITION_Y: number = 3; // Hauteur de la camera
-        const POSITION_Z: number = 0;
+        const RAYON: number = 15;
 
-        const POSITION_RELATIVE_CAMERA: Vector3 = new Vector3(POSITION_X, POSITION_Y, POSITION_Z);
+        const POSITION_PLAN_XZ: Vector3 = new Vector3();
+
+        const POSITION_X: number = Math.sin(this._car.angle); // Vue derriere la voiture
+        const POSITION_Z: number = Math.cos(this._car.angle);
+
+        const POSITION_Y: number = 0.5; // Hauteur de la camera
+
+        const POSITION_RELATIVE_CAMERA: Vector3 = new Vector3(POSITION_X, POSITION_Y, POSITION_Z).normalize().multiplyScalar(RAYON);
+
         const POSITION_CAMERA: Vector3 = POSITION_RELATIVE_CAMERA.add(this._car.getPosition());
 
         const CHAMP_DE_VISION: number = 70;
@@ -114,10 +120,20 @@ export class RenderService {
         );
 
         this.camera.position.set(POSITION_CAMERA.x, POSITION_CAMERA.y, POSITION_CAMERA.z);
+        this.camera.rotateY(this._car.angle);
         this.camera.lookAt(this._car.getPosition());
     }
 
     private reglerCameraVueDessus(): void {
+        const RAYON: number = 7;
+        const POSITION_X: number = 0; // Vue derriere la voiture
+        const POSITION_Y: number = INITIAL_CAMERA_POSITION_Y; // Hauteur de la camera
+        const POSITION_Z: number = 0;
+
+        const POSITION_RELATIVE_CAMERA: Vector3 = new Vector3(POSITION_X, POSITION_Y, POSITION_Z).normalize().multiplyScalar(RAYON);
+
+        const POSITION_CAMERA: Vector3 = POSITION_RELATIVE_CAMERA.add(this._car.getPosition());
+
         this.camera = new PerspectiveCamera(
             FIELD_OF_VIEW,
             this.getAspectRatio(),
@@ -125,8 +141,8 @@ export class RenderService {
             FAR_CLIPPING_PLANE
         );
 
-        this.camera.position.set(0, INITIAL_CAMERA_POSITION_Y, 0);
-        this.camera.lookAt(this._car.position);
+        this.camera.position.set(POSITION_CAMERA.x, POSITION_CAMERA.y, POSITION_CAMERA.z);
+        this.camera.lookAt(this._car.getPosition());
     }
 
     private getAspectRatio(): number {

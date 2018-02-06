@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Subject } from "rxjs/Subject";
+import { Observable } from "rxjs/Observable";
 
-import { TAILLE_TABLEAU } from '../constantes';
-import { listeMots } from '../mockObject/mockListWord';
-import { Word, LettreGrille } from '../mockObject/word';
+import { TAILLE_TABLEAU } from "../constantes";
+import { listeMots } from "../mockObject/mockListWord";
+import { Word, LettreGrille } from "../mockObject/word";
 
 @Injectable()
 export class RequeteDeGrilleService {
@@ -55,7 +55,7 @@ export class RequeteDeGrilleService {
     for (let i: number = 0 ; i < TAILLE_TABLEAU ; i++) {
       const row: Array<LettreGrille> = new Array(TAILLE_TABLEAU);
       for (let j: number = 0 ; j < TAILLE_TABLEAU ; j++) {
-        caseNoir = { caseDecouverte: false, lettre: '1', lettreDecouverte: false };
+        caseNoir = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
         row[j] = caseNoir;
       }
       matrice[i] = row;

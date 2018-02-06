@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from "@angular/core";
+import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
+import { Subscription } from "rxjs/Subscription";
 
-import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
-import { Word, LettreGrille } from '../mockObject/word';
+import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { Word, LettreGrille } from "../mockObject/word";
 
 @Component({
-  selector: 'app-definition',
-  templateUrl: './definition.component.html',
-  styleUrls: ['./definition.component.css']
+  selector: "app-definition",
+  templateUrl: "./definition.component.html",
+  styleUrls: ["./definition.component.css"]
 })
 
 export class DefinitionComponent implements OnInit, OnDestroy {
@@ -97,9 +97,9 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   public verifierTentative(tentative: String): void {
     if (tentative === this.motSelectionne.mot) {
       this.decouvrirLettre(this.motSelectionne);
-      this.reponse = 'Bonne Reponse !';
+      this.reponse = "Bonne Reponse !";
     } else {
-      this.reponse = 'Mauvaise Reponse !';
+      this.reponse = "Mauvaise Reponse !";
     }
   }
 
@@ -109,6 +109,6 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   }
 
   public afficherRegle(): void {
-    alert('Cliquez sur une définition afin d\'effectuer une tentative.');
+    alert("Cliquez sur une définition afin d\"effectuer une tentative.");
   }
 }

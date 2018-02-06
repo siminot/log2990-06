@@ -1,9 +1,9 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { RequeteDeGrilleService } from './requete-de-grille.service';
-import { GrilleComponent } from '../grille/grille.component';
-import { DefinitionComponent } from '../definition/definition.component';
+import { TestBed, inject } from "@angular/core/testing";
+import { RequeteDeGrilleService } from "./requete-de-grille.service";
+import { GrilleComponent } from "../grille/grille.component";
+import { DefinitionComponent } from "../definition/definition.component";
 
-describe('RequeteDeGrilleService', () => {
+describe("RequeteDeGrilleService", () => {
   let service: RequeteDeGrilleService;
   let grille: GrilleComponent;
   let definition: DefinitionComponent;
@@ -17,51 +17,51 @@ describe('RequeteDeGrilleService', () => {
     definition = new DefinitionComponent(service);
   });
 
-  it('should be created', inject([RequeteDeGrilleService], (serv: RequeteDeGrilleService) => {
+  it("should be created", inject([RequeteDeGrilleService], (serv: RequeteDeGrilleService) => {
     expect(serv).toBeTruthy();
   }));
 
-  describe('Construction des objets.', () => {
-    it('Construction du service réussie.', () => {
+  describe("Construction des objets.", () => {
+    it("Construction du service réussie.", () => {
       expect(service).toBeTruthy();
     });
 
-    it('Construction du composant grille réussie.', () => {
+    it("Construction du composant grille réussie.", () => {
       expect(grille).toBeTruthy();
     });
   });
 
-  describe('Envoie de la liste de mots aux différents composants.', () => {
-    it('Envoie de la liste de mots au composant de la grille.', () => {
+  describe("Envoie de la liste de mots aux différents composants.", () => {
+    it("Envoie de la liste de mots au composant de la grille.", () => {
       service.serviceEnvoieMots(service.getMots());
       expect(grille.getListeMots()).toEqual(service.getMots());
     });
 
-    it('Envoie de la liste de mots au composant de définition.', () => {
+    it("Envoie de la liste de mots au composant de définition.", () => {
       service.serviceEnvoieMots(service.getMots());
       expect(definition.getMots()).toEqual(service.getMots());
     });
   });
 
-  describe('Envoie de la matrice aux différents composants.', () => {
-    it('Envoie de la matrice au composant de la grille.', () => {
+  describe("Envoie de la matrice aux différents composants.", () => {
+    it("Envoie de la matrice au composant de la grille.", () => {
       service.serviceEnvoieMatriceLettres(service.getMatrice());
       expect(grille.getMatrice()).toEqual(service.getMatrice());
     });
 
-    it('Envoie de la matrice au composant de définition.', () => {
+    it("Envoie de la matrice au composant de définition.", () => {
       service.serviceEnvoieMatriceLettres(service.getMatrice());
       expect(definition.getMatrice()).toEqual(service.getMatrice());
     });
   });
 
-  describe('Réception d\'information de la part des composants.', () => {
-    it('Reception d\'une liste de mots de la part du composant de définition.', () => {
+  describe("Réception d\"information de la part des composants.", () => {
+    it("Reception d\"une liste de mots de la part du composant de définition.", () => {
       definition.envoieMots();
       expect(service.getMots()).toEqual(definition.getMots());
     });
 
-    it('Reception de la matrice de la part du composant de définition.', () => {
+    it("Reception de la matrice de la part du composant de définition.", () => {
       definition.envoieMatrice();
       expect(service.getMatrice()).toEqual(definition.getMatrice());
     });

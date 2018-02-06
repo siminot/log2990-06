@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Word, LettreGrille } from '../mockObject/word';
-import { Subscription } from 'rxjs/Subscription';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Component, OnInit } from "@angular/core";
+import { Word, LettreGrille } from "../mockObject/word";
+import { Subscription } from "rxjs/Subscription";
+import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
-import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
+import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 
 @Component({
-  selector: 'app-grille',
-  templateUrl: './grille.component.html',
-  styleUrls: ['./grille.component.css']
+  selector: "app-grille",
+  templateUrl: "./grille.component.html",
+  styleUrls: ["./grille.component.css"]
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {
@@ -39,7 +39,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public opacite(etat: boolean): String {
-    return(etat ? '0' : '1');
+    return(etat ? "0" : "1");
   }
 
   public ngOnDestroy(): void {
@@ -54,7 +54,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const element: any = event.srcElement.nextElementSibling;
 
     if (element != null) {
-      const elem: HTMLElement = document.getElementById('testFocus');
+      const elem: HTMLElement = document.getElementById("testFocus");
       elem.focus();
     }
   }

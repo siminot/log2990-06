@@ -1,16 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DefinitionComponent } from './definition.component';
-import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
-import { Word, LettreGrille } from '../mockObject/word';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { DefinitionComponent } from "./definition.component";
+import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { Word, LettreGrille } from "../mockObject/word";
 
-describe('DefinitionComponent', () => {
+describe("DefinitionComponent", () => {
   let service: RequeteDeGrilleService;
   let component: DefinitionComponent;
   let fixture: ComponentFixture<DefinitionComponent>;
 
   const fakeWord: Word = {
-    mot: 'POPO',
-    definition: 'ton père en latino',
+    mot: "POPO",
+    definition: "ton père en latino",
     vertical: true,
     longeur: 4,
     premierX: 0,
@@ -19,8 +19,8 @@ describe('DefinitionComponent', () => {
   };
 
   const realWordFromOurFakeList: Word = {
-    mot: 'Tata',
-    definition: 'Ni papa, ni  mama',
+    mot: "Tata",
+    definition: "Ni papa, ni  mama",
     vertical: true,
     longeur: 4,
     premierX: 3,
@@ -29,11 +29,11 @@ describe('DefinitionComponent', () => {
   };
 
   // lettreDecouverte a true puisque les lettres sont initialisées à true
-  // pour qu'on les voit dans la grille. Mettre false quand on initialisera
+  // pour qu"on les voit dans la grille. Mettre false quand on initialisera
   // les lettres à false.
   const realLetterFromGrid: LettreGrille = {
     caseDecouverte: false,
-    lettre: 'P',
+    lettre: "P",
     lettreDecouverte: true
   };
 
@@ -52,25 +52,25 @@ describe('DefinitionComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('Création d\'objets.', () => {
-    it('Création d\'objet Definition.', () => {
+  describe("Création d\"objets.", () => {
+    it("Création d\"objet Definition.", () => {
       expect(component).toBeTruthy();
     });
   });
 
-  describe('Accesseurs et mutateurs.', () => {
-    it('Accesseur de la liste de mots.', () => {
+  describe("Accesseurs et mutateurs.", () => {
+    it("Accesseur de la liste de mots.", () => {
       expect(component.getMots()).toContain(realWordFromOurFakeList);
     });
 
-    it('Accesseur de la matrice de mots de la grille.', () => {
+    it("Accesseur de la matrice de mots de la grille.", () => {
       const indicePremiereLigne: number = 0;
       expect(component.getMatrice()[indicePremiereLigne]).toContain(realLetterFromGrid);
     });
   });
 
-  describe('Modification de la grille.', () => {
-    it('Découvrir les cases dans la grille selon le mot selectionné.', () => {
+  describe("Modification de la grille.", () => {
+    it("Découvrir les cases dans la grille selon le mot selectionné.", () => {
       component.decouvrirCases(fakeWord);
       const expectedValues: boolean[] = [true, true, true, true];
       const result: boolean[] = [];
@@ -81,7 +81,7 @@ describe('DefinitionComponent', () => {
       }
       expect(result).toEqual(expectedValues);
     });
-    it('Decouvrir les lettre dans la grille selon le mot selectionne', () => { 
+    it("Decouvrir les lettre dans la grille selon le mot selectionne", () => { 
       component.decouvrirLettre(fakeWord);
       const expectedValues: boolean[] = [true, true, true, true];
       const result: boolean[] = [];

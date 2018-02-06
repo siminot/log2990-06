@@ -19,7 +19,6 @@ const URL_COMMUN = "/commun";
 const URL_NONCOMMUN = "/noncommun";
 const URL_CONTRAINTE = "/contrainte/";
 const MESSAGE_AUCUN_RESULTAT = "Aucun resultat";
-const MESSAGE_REQUETE_INVALIDE = "Erreur : requete invalide";
 
 {
     describe("routeServiceLexical", () => {

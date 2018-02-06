@@ -6,6 +6,7 @@ import { GenerateurSquelette } from "./generateurSquelette";
     const TAILLE_GRILLE = 10;
     const POURCENTAGE_CASES_NOIRES = 0.25;
     const genSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_GRILLE, POURCENTAGE_CASES_NOIRES);
+    /* tslint:disable: no-magic-numbers */
 
     describe("Tests du squelette", () => {
 

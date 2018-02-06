@@ -95,20 +95,23 @@ module Route {
 
         private affecterMot(listeMot: Mot[], motAChanger: Mockword): Mot[] {
             // regarder avec simon si on doit trouver un mot en particulier dans la liste
-            const indexMot = Math.floor( Math.random() * listeMot.length );
+            const indexMot = this.nombreAlleatoire(this.listeMot.length) - 1;
             let indexDef = 0;
+            console.log("IndexMot: " + indexMot + " Longueur liste: " + this.listeMot.length);
             const nbDef: number = listeMot[indexMot].definitions.length;
+            console.log("LE BOGUE EST ICI");
             switch (this.optionsPartie.niveau) {
 
                 case "Normal":
                 case "Difficile":
                 if (listeMot[indexMot].definitions.length > 0) {    // S'il n'y a aucune autre def
-                    indexDef = Math.floor(Math.random() * (nbDef - 1)) + 1;
+                    indexDef = this.nombreAlleatoire(nbDef) - 1;
                 }
                 break;
 
                 default: /*devrait jamais arriver?*/ break;
             }
+
             motAChanger.setMot(listeMot[indexMot].mot);
             motAChanger.setDefinition(listeMot[indexMot].definitions[indexDef].definition);
             // console.log(this.listeMot);
@@ -130,7 +133,15 @@ module Route {
             console.log(mot.getMot());
             console.log(this.grille);
 
-            return new Promise( (resolve, reject) => {console.log("ok"); resolve(); } );
+            return new Promise( (resolve, reject) => { resolve(); } );
+        }
+
+        // retourne un nmbre entre 1 et nbMax
+        private nombreAlleatoire(nbMax: number): number {
+            const millisecondes = new Date().getMilliseconds();
+            const MILLE = 1000;
+
+            return Math.floor(millisecondes * nbMax / MILLE) + 1;
         }
 
                 /* FONCTION BIDON POUR EXAMINER DES CHOSES */

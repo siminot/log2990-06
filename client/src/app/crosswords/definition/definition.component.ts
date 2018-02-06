@@ -14,8 +14,10 @@ import { Word, LettreGrille } from "../mockObject/word";
 export class DefinitionComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
+
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
+
   private reponse: String;
   private motSelectionne: Word;
 
@@ -38,6 +40,10 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   public envoieMatrice(): void {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
+  }
+
+  public envoieMotSelectionne(): void {
+    this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
 
   public getMatrice(): Array<Array<LettreGrille>> {
@@ -71,11 +77,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
     this.decouvrirCases(mot);
 
-    const id: string = this.genererID(this.motSelectionne);
-  }
-
-  public genererID(mot: Word): string {
-    return String(mot.premierX) + String(mot.premierY);
+    this.envoieMotSelectionne();
   }
 
   public decouvrirCases(mot: Word): void {

@@ -14,9 +14,11 @@ export class RequeteDeGrilleService {
 
   private listeMotsSujet: Subject<Word[]> = new Subject<Word[]>();
   private matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();
+  private motSelectionneSuject: Subject<Word> = new Subject<Word>();
 
   private listeMotsObservable$: Observable<Word[]> = this.listeMotsSujet.asObservable();
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
+  private motSelectionneObservable$: Observable<Word> = this.motSelectionneSuject.asObservable();
 
   public constructor() {
     this.matriceDesMotsSurGrille = this.genererGrille();
@@ -32,12 +34,20 @@ export class RequeteDeGrilleService {
     this.matriceDesMotsSurGrilleSujet.next(matriceLettres);
   }
 
+  public serviceEnvoieMotSelectionne(motSelec: Word): void {
+    this.motSelectionneSuject.next(motSelec);
+  }
+
   public serviceReceptionMots(): Observable<Word[]> {
     return this.listeMotsObservable$;
   }
 
   public serviceReceptionMatriceLettres(): Observable<Array<Array<LettreGrille>>> {
     return this.matriceDesMotsSurGrilleObservable$;
+  }
+
+  public serviceReceptionMotSelectionne(): Observable<Word> {
+    return this.motSelectionneObservable$;
   }
 
   public getMots(): Word[] {

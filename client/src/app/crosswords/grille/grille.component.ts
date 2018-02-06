@@ -14,8 +14,12 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
+  private motSelectionne: Word;
+  private lettreSelectionne: LettreGrille;
+
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
+  private subscriptionMotSelec: Subscription;
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
@@ -26,6 +30,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+
+    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
+      .subscribe((motSelec) => this.motSelectionne = motSelec);
   }
 
   public ngOnInit(): void { }
@@ -50,6 +57,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public focusOnID(id: string): void {
+    
     if (id != null) {
       const elem: HTMLElement = document.getElementById(id);
       elem.focus();
@@ -59,6 +67,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
+    this.subscriptionMotSelec.unsubscribe();
   }
 }
 

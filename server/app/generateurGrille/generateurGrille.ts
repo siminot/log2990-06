@@ -64,11 +64,33 @@ module Route {
             loop(ctr);
         }
 
+        private updateListeMot(mot: Mockword): void {
+            const indexConstant = mot.getVertical() ? mot.getPremierX() : mot.getPremierY();
+
+            for (const elem of this.listeMot) {
+                if (elem.getVertical() !== mot.getVertical()) {
+                    const premierIndex = elem.getVertical() ? elem.getPremierY() : elem.getPremierX();
+                    const dernierIndex = premierIndex + elem.getLongueur() - 1;
+                    const indexCharAModifier = mot.getVertical() ?
+                    elem.getPremierY() - mot.getPremierY() : elem.getPremierX() - mot.getPremierX();
+
+                    if (premierIndex <= indexConstant && indexConstant < dernierIndex ) {
+                        let motModifie = elem.getMot();
+                        const indexAModifier = indexConstant - premierIndex;
+                        motModifie = motModifie.substring(0, indexAModifier)
+                                      + mot.getMot().charAt(indexCharAModifier) + motModifie.substring(indexAModifier + 1);
+                        console.log(elem);
+                        elem.setMot(motModifie);
+                    }
+                }
+            }
+        }
+
         private insererUnMot(index: number): Promise<void> {
             this.lireMotViaGrille(this.listeMot[index]);
 
             return this.demanderMot(this.listeMot[index]).then( () => {
-                this.ecrireDansLaGrille(this.listeMot[index]);
+                this.updateListeMot(this.listeMot[index]);
             });
         }
 
@@ -115,7 +137,7 @@ module Route {
             return listeMot;
         }
 
-        private ecrireDansLaGrille(mot: Mockword): Promise<void> {
+       /* private ecrireDansLaGrille(mot: Mockword): Promise<void> {
             const x = mot.getPremierX();
             const y = mot.getPremierY();
 
@@ -130,7 +152,7 @@ module Route {
             // console.log(this.grille);
 
             return new Promise( (resolve, reject) => { resolve(); } );
-        }
+        }*/
 
         // retourne un nmbre entre 1 et nbMax
         private nombreAlleatoire(nbMax: number): number {

@@ -70,6 +70,12 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     mot.activer = !mot.activer;
 
     this.decouvrirCases(mot);
+
+    const id: string = this.genererID(this.motSelectionne);
+  }
+
+  public genererID(mot: Word): string {
+    return String(mot.premierX) + String(mot.premierY);
   }
 
   public decouvrirCases(mot: Word): void {

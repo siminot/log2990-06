@@ -49,6 +49,13 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return a + b;
   }
 
+  public focusOnID(id: string): void {
+    if (id != null) {
+      const elem: HTMLElement = document.getElementById(id);
+      elem.focus();
+    }
+  }
+
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
@@ -64,13 +71,5 @@ export class GrilleComponent implements OnInit, OnDestroy {
       const elem: HTMLElement = document.getElementById("testFocus");
       elem.focus();
     }
-  }
-
-  // ** Pour une autre carte que celle du sprint 1. **
-  public makeIDs(i: number, j: number): String {
-    const a = String(i);
-    const b = String(j);
-
-    return a + b;
   }
   */

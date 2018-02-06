@@ -30,14 +30,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void { }
 
-  public envoieMots(): void {
-    this.listeMotsService.serviceEnvoieMots(this.mots);
-  }
-
-  public envoieMatrice(): void {
-    this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
-  }
-
   public opacite(etat: boolean): String {
     return(etat ? '0' : '1');
   }

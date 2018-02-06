@@ -34,10 +34,4 @@ describe('GrilleComponent', () => {
       expect(component).toBeTruthy();
     });
   });
-
-  describe('Partage avec le service.', () => {
-    it('Envoie de mot vers le service.', () => {
-      console.log(serviceGrille.getMatrice());
-    });
-  });
 });

@@ -1,22 +1,22 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { Observable } from "rxjs/Observable";
-import { catchError } from "rxjs/operators";
-import { of } from "rxjs/observable/of";
+import { Observable } from 'rxjs/Observable';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
-import { Message } from "../../../common/communication/message";
+import { Message } from '../../../common/communication/message';
 
 @Injectable()
 export class BasicService {
 
-    private readonly BASE_URL: string = "http://localhost:3000/";
+    private readonly BASE_URL: string = 'http://localhost:3000/';
     public constructor(private http: HttpClient) { }
 
     public basicGet(): Observable<Message> {
 
         return this.http.get<Message>(this.BASE_URL).pipe(
-            catchError(this.handleError<Message>("basicGet"))
+            catchError(this.handleError<Message>('basicGet'))
         );
     }
 

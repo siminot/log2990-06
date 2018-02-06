@@ -1,20 +1,22 @@
 
-<div class = "grille">
+<div class="grille">
     <table class="table">
-        <tr *ngFor="let item of matriceDesMotsSurGrille; let i = index" >
-            <td *ngFor="let case of item; let j = index" >
-                <img *ngIf="case.lettre != '1' ; else elseBlock1" [style.opacity]="opacite(case.caseDecouverte)" class = "tuile" src="../../../assets/tuile.png">
-                <ng-template #elseBlock1><img src="../../../assets/tuileMorte.png" class="tuile"></ng-template>
-                <!-- <input *ngIf="case.caseDecouverte" class="tuile" [attr.id]="makeIDs(i,j)" (click)="print($event)"> -->
+        <br>
+        <tr *ngFor="let item of matriceDesMotsSurGrille; let i = index">
+            <td *ngFor="let case of item; let j = index">
+                <p class="indicesHorizontals" *ngIf="i == 0">{{ j + 1 }}</p>
+                <p class="indicesVerticals" *ngIf="j == 0">{{ i + 1 }}</p>
 
-
+                <img *ngIf="case.lettre != '1' ; else elseBlock1" [style.opacity]="opacite(case.caseDecouverte)" class="tuile" src="../../../assets/tuile.png">
+                <ng-template #elseBlock1>
+                    <img src="../../../assets/tuileMorte.png" class="tuile">
+                </ng-template>
 
                 <p class="reponseLettre" *ngIf = "case.lettreDecouverte && case.lettre ; else elseBlock2">{{ case.lettre | uppercase }}</p>
-                <ng-template #elseBlock2><p class="reponseLettre">  </p></ng-template>
+                <ng-template #elseBlock2>
+                    <p class="reponseLettre"></p>
+                </ng-template>
             </td>
         </tr>
     </table>
 </div>
-
-
-<!-- <img *ngIf="case.lettre != '1' ; else elseBlock1" [style.opacity]="opacite(case.case)" (mouseover)= "case.case = false" (mouseout) = "case.case = true" class = "tuile" src="../../../assets/tuile.png"> -->

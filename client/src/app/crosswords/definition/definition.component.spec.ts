@@ -65,7 +65,7 @@ describe('DefinitionComponent', () => {
 
     it('Accesseur de la matrice de mots de la grille.', () => {
       const indicePremiereLigne: number = 0;
-      expect(component.getMatriceDesMotsGrille()[indicePremiereLigne]).toContain(realLetterFromGrid);
+      expect(component.getMatrice()[indicePremiereLigne]).toContain(realLetterFromGrid);
     });
   });
 
@@ -74,11 +74,23 @@ describe('DefinitionComponent', () => {
       component.decouvrirCases(fakeWord);
       const expectedValues: boolean[] = [true, true, true, true];
       const result: boolean[] = [];
+      const matrice: Array<Array<LettreGrille>> = component.getMatrice();
 
       for (let i: number = 0; i < fakeWord.longeur; i++) {
-        result[i] = component.matriceDesMotsSurGrille[0][i].caseDecouverte;
+        result[i] = matrice[0][i].caseDecouverte;
       }
       expect(result).toEqual(expectedValues);
     });
+    it('Decouvrir les lettre dans la grille selon le mot selectionne', () => { 
+      component.decouvrirLettre(fakeWord);
+      const expectedValues: boolean[] = [true, true, true, true];
+      const result: boolean[] = [];
+      const matrice: Array<Array<LettreGrille>> = component.getMatrice();
+
+      for (let i: number = 0; i < fakeWord.longeur; i++) {
+        result[i] = matrice[0][i].lettreDecouverte;
+    }
+      expect(result).toEqual(expectedValues);
   });
+});
 });

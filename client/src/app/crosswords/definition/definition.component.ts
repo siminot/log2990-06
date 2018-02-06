@@ -3,49 +3,52 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
 
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
-import { Word, LettreGrille } from '../mockObject/word';
+import { Word } from "../mockObject/word";
+import { LettreGrille } from '../mockObject/word';
+
 
 @Component({
   selector: 'app-definition',
   templateUrl: './definition.component.html',
-  styleUrls: ['./definition.component.css']
+  styleUrls: ['./definition.component.css'],
+  
 })
+
 
 export class DefinitionComponent implements OnDestroy, OnInit {
   private mots: Word[];
-  public matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
+  private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
-  private reponse: String;
+  private reponse: String; 
   private motSelectionne: Word;
-
-  public constructor (private listeMotsService: RequeteDeGrilleService) {
+  
+  constructor (private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
-
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
-      .subscribe((mots) => this.mots = mots);
-
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
-      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe(mots => this.mots = mots);
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe(matrice => this.matriceDesMotsSurGrille = matrice);
   }
 
-  public ngOnInit(): void { }
+  ngOnInit() { }
 
   public envoieMots(): void {
     this.listeMotsService.serviceEnvoieMots(this.mots);
   }
 
-  public envoieMatrice(): void {
+  private envoieMatrice(): void {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
+  public getMatrice(): Array<Array<LettreGrille>> {
+    return this.matriceDesMotsSurGrille;
+  }
   public getMots(): Word[] {
     return this.mots;
   }
 
-  public getMatriceDesMotsGrille(): Array<Array<LettreGrille>> {
-    return this.matriceDesMotsSurGrille;
+  public setMot(indice: number, nouveauMot: string): void {
+    this.mots[indice].mot = nouveauMot;
   }
 
   public changementMotSelectionne(mot: Word): void {
@@ -81,9 +84,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.envoieMatrice();
   }
 
-  // Décommenter les lignes dans cette fonction pour remettre la fonctionnalité
-  // des lettres cachées sur la grille.
-  public cacherCases(): void {
+  private cacherCases(): void {
     for (let ligne of this.matriceDesMotsSurGrille) {
       for (let lettre of ligne) {
         // if (lettre.lettreDecouverte == true) {
@@ -93,21 +94,21 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     }
   }
 
-  public verifierTentative(tentative: String): void {
-    if(tentative.toLocaleUpperCase() === this.motSelectionne.mot.toLocaleUpperCase()) {
+  public verifierTentative(tentative: String) {
+    if(tentative == this.motSelectionne.mot) {
       this.decouvrirLettre(this.motSelectionne);
-      this.reponse = 'Bonne Reponse !';
+      this.reponse = "Bonne Reponse !";
     } else {
-      this.reponse = 'Mauvaise Reponse !';
+      this.reponse = "Mauvaise Reponse !";
     }
   }
 
-  public ngOnDestroy(): void {
+  public ngOnDestroy() {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
   }
 
-  public afficherRegle(): void {
-    alert('Cliquez sur une définition afin d\'effectuer une tentative.');
+  public afficherRegle() {
+    alert("Cliquez sur une définition afin d'effectuer une tentative.");
   }
 }

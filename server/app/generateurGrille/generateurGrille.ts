@@ -59,20 +59,21 @@ module Route {
                         loop(i++);
                     }
                 })
-                .catch( (resolve) => console.log("Erreur"));
+                .catch();
             };
             loop(ctr);
         }
 
-        private insererUnMot(index: number): Promise<void> {
+        private async insererUnMot(index: number): Promise<void> {
             this.lireMotViaGrille(this.listeMot[index]);
 
             return this.demanderMot(this.listeMot[index]).then( () => {
-                this.ecrireDansLaGrille(this.listeMot[index]);
-            });
+                this.ecrireDansLaGrille(this.listeMot[index]).catch();
+            })
+            .catch();
         }
 
-        private demanderMot(mot: Mockword): Promise<Mot[]> {
+        private async demanderMot(mot: Mockword): Promise<Mot[]> {
 
             let url: string;
             switch (this.optionsPartie.niveau) {
@@ -89,7 +90,8 @@ module Route {
                 default: /*devrait jamais arriver?*/ break;
             }
 
-            return WebRequest.json<Mot[]>(url).then((data) => this.affecterMot(data, mot));
+            return WebRequest.json<Mot[]>(url).then((data) => this.affecterMot(data, mot))
+            .catch();
         }
 
         private affecterMot(listeMot: Mot[], motAChanger: Mockword): Mot[] {
@@ -115,7 +117,7 @@ module Route {
             return listeMot;
         }
 
-        private ecrireDansLaGrille(mot: Mockword): Promise<void> {
+        private async ecrireDansLaGrille(mot: Mockword): Promise<void> {
             const x = mot.getPremierX();
             const y = mot.getPremierY();
 
@@ -129,7 +131,7 @@ module Route {
             // console.log(mot.getMot());
             // console.log(this.grille);
 
-            return new Promise( (resolve, reject) => { resolve(); } );
+            return;
         }
 
         // retourne un nmbre entre 1 et nbMax

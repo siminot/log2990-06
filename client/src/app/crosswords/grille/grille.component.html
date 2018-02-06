@@ -4,8 +4,8 @@
         <br>
         <tr *ngFor="let indiceX of tabIndicesGrille; let i = index" >
             <td *ngFor="let indiceY of tabIndicesGrille; let j = index">
-                <p class="indicesHorizontals" *ngIf="i == 0">A</p>
-                <p class="indicesVerticals" *ngIf="j == 0">B</p>
+                <p class="indicesHorizontals" *ngIf="i == 0">{{ indiceY+1 }}</p>
+                <p class="indicesVerticals" *ngIf="j == 0">{{ indiceX+1 }}</p>
                 <img *ngIf="matriceDesMotsSurGrille[i][j].lettre != '1' ; else elseBlock1" [style.opacity]="opacite(matriceDesMotsSurGrille[i][j].caseDecouverte)" class = "tuile" src="../../../assets/tuile.png">
                 <ng-template #elseBlock1><img src="../../../assets/tuileMorte.png" class="tuile"></ng-template>
                 <!-- <input *ngIf="case.caseDecouverte" class="tuile" [attr.id]="makeIDs(i,j)" (click)="print($event)"> -->

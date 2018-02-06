@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { GameComponent } from './carApp/game-component/game.component';
-
-import { RenderService } from './carApp/render-service/render.service';
 import { BasicService } from './basic.service';
 import { AppRoutingModule } from './/app-routing.module';
+
+import { GameComponent } from './carApp/game-component/game.component';
+import { RenderService } from './carApp/render-service/render.service';
 
 import { MainGrilleComponent } from './crosswords/main-grille/main-grille.component';
 import { GrilleComponent } from './crosswords/grille/grille.component';

@@ -25,6 +25,7 @@ describe('RequeteDeGrilleService', () => {
     it('Construction du service réussie.', () => {
       expect(service).toBeTruthy();
     });
+    
     it('Construction du composant grille réussie.', () => {
       expect(grille).toBeTruthy();
     });
@@ -54,8 +55,15 @@ describe('RequeteDeGrilleService', () => {
     });
   });
 
-  it('Reception d\'une liste de mots de la part du composant de la grille.', () => {
-    definition.envoieMots();
-    expect(service.getMots()).toEqual(definition.getMots());
+  describe('Réception d\'information de la part des composants.', () => {
+    it('Reception d\'une liste de mots de la part du composant de définition.', () => {
+      definition.envoieMots();
+      expect(service.getMots()).toEqual(definition.getMots());
+    });
+
+    it('Reception de la matrice de la part du composant de définition.', () => {
+      definition.envoieMatrice();
+      expect(service.getMatrice()).toEqual(definition.getMatrice());
+    });
   });
 });

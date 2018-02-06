@@ -90,28 +90,17 @@ export class RenderService {
         const AXES: AxisHelper = new AxisHelper(TAILLE_AXE);
         this.scene.add(AXES);
 
-        // Camera helper
-        // const AIDE_CAMERA: CameraHelper = new CameraHelper(this.camera);
-        // this.scene.add(AIDE_CAMERA);
-
         this.scene.add(this._car);
         this.scene.add(new AmbientLight(WHITE, AMBIENT_LIGHT_OPACITY));
     }
 
     private reglerCameraTroisimePersonne(): void {
-        // const ANGLE_DROIT: number = 90;
         const POSITION_X: number = 5; // Vue derriere la voiture
         const POSITION_Y: number = 3; // Hauteur de la camera
         const POSITION_Z: number = 0;
 
         const POSITION_RELATIVE_CAMERA: Vector3 = new Vector3(POSITION_X, POSITION_Y, POSITION_Z);
         const POSITION_CAMERA: Vector3 = POSITION_RELATIVE_CAMERA.add(this._car.getPosition());
-
-        // this.camera.rotateY(this._car.angle);
-        /*
-        const FAR_CLIPPING_PLANE: number = 1000;
-        const NEAR_CLIPPING_PLANE: number = 1;
-        const FIELD_OF_VIEW: number = 70; */
 
         const CHAMP_DE_VISION: number = 70;
         const PLAN_RAPPROCHE: number = 1;

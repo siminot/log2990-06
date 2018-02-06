@@ -47,6 +47,17 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     return this.mots;
   }
 
+  public setMotSelectionne(motSelectione: Word): void {
+    this.motSelectionne = motSelectione;
+  }
+  public getMotselectionne(): Word {
+    return this.motSelectionne;
+  }
+
+  public getReponse(): String {
+    return this.reponse;
+  }
+
   public setMot(indice: number, nouveauMot: string): void {
     this.mots[indice].mot = nouveauMot;
   }
@@ -84,7 +95,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     this.envoieMatrice();
   }
 
-  private cacherCases(): void {
+  public cacherCases(): void {
     for (const ligne of this.matriceDesMotsSurGrille) {
       for (const lettre of ligne) {
         // if (lettre.lettreDecouverte == true) {

@@ -29,6 +29,10 @@ export class Car extends Object3D {
     private steeringWheelDirection: number;
     private weightRear: number;
 
+    public getPosition(): Vector3 {
+        return this.mesh.position.clone();
+    }
+
     public get speed(): Vector3 {
         return this._speed.clone();
     }

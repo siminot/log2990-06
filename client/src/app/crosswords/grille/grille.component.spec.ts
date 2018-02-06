@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GrilleComponent } from './grille.component';
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
+import { listeMots } from '../mockObject/mockListWord';
 
 describe('GrilleComponent', () => {
   let component: GrilleComponent;
@@ -32,6 +33,12 @@ describe('GrilleComponent', () => {
 
     it('Construction du composant Grille réussie.', () => {
       expect(component).toBeTruthy();
+    });
+  });
+
+  describe('Accesseurs fonctionnels.', () => {
+    it('Accesseur liste de mots.', () => {
+      expect(component.getListeMots()).toEqual(listeMots);
     });
   });
 });

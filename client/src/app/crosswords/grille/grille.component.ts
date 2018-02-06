@@ -12,7 +12,6 @@ import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {
-  public tabIndicesGrille: number[] = [0, 1, 2, 3];
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private subscriptionMots: Subscription;

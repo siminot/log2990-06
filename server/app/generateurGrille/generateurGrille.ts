@@ -6,7 +6,7 @@ import * as WebRequest from "web-request";
 import { TAILLE_TEST, POURCENTAGE_TEST } from "./constantes";
 import { Mockword } from "./../../../common/mockObject/mockWord";
 import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
-import { Mot } from "./../../../common/communication/Mot";
+import { Mot } from "./../serviceLexical/Mot";
 
 import { GenerateurSquelette } from "./generateurSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";
@@ -59,7 +59,7 @@ module Route {
                         loop(i++);
                     }
                 })
-                .catch( (resolve) => resolve());
+                .catch( (resolve) => console.log("quoi"));
             };
             loop(ctr);
         }

@@ -1,109 +1,87 @@
-// import { Mot, TypeMot, Frequence } from "./Mot";
+/*
+    Tests que nous désirions faire au départ, mais finalement
+    nous avons décidé de tester l'interface Web de notre service
+    par ses routes.
+*/
+
+/*
+
+// import { Mot } from "./Mot";
 // import { MotAPI } from "./MotAPI";
 import * as assert from "assert";
-// import { ServiceLexical } from "./ServiceLexical";
+import { ServiceLexical } from "./ServiceLexical";
 
-{
+const SERVICE: ServiceLexical = new ServiceLexical();
+const EXPRESS = require("express");
+const APP = EXPRESS();
 
     // const SERVICE: ServiceLexical = new ServiceLexical();
 
-    describe("Objet ServiceLexical", () => {
-        describe("Constructeur", () => {
-            describe("Methodes privées", () => {
-                describe("modifierContraintePourAPI", () => {
-                    it("Remplace '_' par '?'", () => {
-                        
-                        assert(true);
-                    });
-                });
-                describe("obtenirMotsDeLAPI", () => {
-                    it("Retourne une promesse", () => {
-                        assert(true);
-                    });
-                });
-                describe("convertirMotsAPI", () => {
-                    it("Erreur si aucun mot", () => {
-                        assert(true);
-                    });
+describe("Objet ServiceLexical", () => {
+    describe("servirDefinitionsMot", () => {
+        const mots: string[] = ["word", "erreurRequete384", "constitution", "erreurAucunMot"];
 
-                    it("Même nombre de mots avant et après", () => {
-                        assert(true);
-                    });
-                });
-                describe("obtenirMotsFormattes", () => {
-                    it("Retourne une promesse", () => {
-                        assert(true);
-                    });
-                });
-                describe("requeteEstValide", () => {
-                    it("Identifie requête valide", () => {
-                        assert(true);
-                    });
-
-                    it("Identifie requête invalide", () => {
-                        assert(true);
-                    });
-                });
-                describe("trierMotsSelonFrequence", () => {
-                    it("Conserve mots fréquents", () => {
-                        assert(true);
-                    });
-
-                    it("Conserve mots infréquents", () => {
-                        assert(true);
-                    });
-                });
-                describe("obtenirContrainteLongueur", () => {
-                    it("Produit une chaîne de '_' de la bonne longueur", () => {
-                        assert(true);
-                    });
-                });
-                describe("retirerMotInvalides", () => {
-                    it("Retire mot invalide", () => {
-                        assert(true);
-                    });
-
-                    it("Conserve mot valide", () => {
-                        assert(true);
-                    });
-                });
-                describe("retirerMotSansDefinition", () => {
-                    it("Retire mot sans définition", () => {
-                        assert(true);
-                    });
-
-                    it("Conserve mot avec définition", () => {
-                        assert(true);
-                    });
-                });
-            });
+        it("Message d'erreur si requête invalide", () => {
+            assert(true);
         });
-        describe("servirDefinitionsMot", () => {
-            it("Envoie un seul mot", () => {
-                assert(true);
-            });
-
-            it("Le mot envoyé est le même que le mot de la requête", () => {
-                assert(true);
-            });
+        it("Envoie un seul mot", () => {
+            SERVICE.servirDefinitionsMot(mots[0], APP.res);
         });
-        describe("servirMotsSelonContrainte", () => {
-            it("Message d'erreur si requête invalide", () => {
-                assert(true);
-            });
-
-            it("Envoie un tableau de mots", () => {
-                assert(true);
-            });
+        it("Le mot envoyé est le même que le mot de la requête", () => {
+            assert(true);
         });
-        describe("servirMotsSelonLongueur", () => {
-            it("Message d'erreur si requête invalide", () => {
-                assert(true);
-            });
-
-            it("Envoie un tableau de mots", () => {
-                assert(true);
-            });
+        it("Erreur si aucun mot", () => {
+            assert(true);
+        });
+        it("Envoie un mot avec des définitions", () => {
+            assert(true);
         });
     });
-}
+    describe("servirMotsSelonContrainte", () => {
+        it("Message d'erreur si requête invalide", () => {
+            assert(true);
+        });
+        it("Envoie un tableau de mots", () => {
+            assert(true);
+        });
+        it("Erreur si aucun mot", () => {
+            assert(true);
+        });
+        it("Envoie mots de la bonne fréquence", () => {
+            assert(true);
+        });
+        it("Envoie mots de la bonne longueur", () => {
+            assert(true);
+        });
+        it("Envoie mots avec des définitions", () => {
+            assert(true);
+        });
+        it("Envoie mots sans espace ou trait d'union", () => {
+            assert(true);
+        });
+    });
+    describe("servirMotsSelonLongueur", () => {
+        it("Message d'erreur si requête invalide", () => {
+            assert(true);
+        });
+        it("Envoie un tableau de mots", () => {
+            assert(true);
+        });
+        it("Erreur si aucun mot", () => {
+            assert(true);
+        });
+        it("Envoie mots de la bonne fréquence", () => {
+            assert(true);
+        });
+        it("Envoie mots de la bonne longueur", () => {
+            assert(true);
+        });
+        it("Envoie mots avec des définitions", () => {
+            assert(true);
+        });
+        it("Envoie mots sans espace ou trait d'union", () => {
+            assert(true);
+        });
+    });
+});
+*/

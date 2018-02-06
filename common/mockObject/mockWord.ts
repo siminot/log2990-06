@@ -7,12 +7,12 @@ export class Mockword {
     private longeur: number;
     private premierX: number;
     private premierY: number;
-    private activer: boolean;
+    // private activer: boolean;
 
     constructor(estVertical : boolean, longueur: number, premierX: number, premierY: number){
         this.mot = "";
         this.definition = "";
-        this.activer = false;
+        // this.activer = false;
         this.estVertical = estVertical;
         this.longeur = longueur;
         this.premierX = premierX;

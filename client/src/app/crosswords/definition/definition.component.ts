@@ -3,7 +3,7 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
 
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
-import { Word } from "../mockObject/word";
+import { Word } from '../mockObject/word';
 import { LettreGrille } from '../mockObject/word';
 
 
@@ -36,7 +36,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.listeMotsService.serviceEnvoieMots(this.mots);
   }
 
-  private envoieMatrice(): void {
+  public envoieMatrice(): void {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
@@ -109,6 +109,6 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
 
   public afficherRegle(): void {
-    alert("Cliquez sur une définition afin d'effectuer une tentative.");
+    alert('Cliquez sur une définition afin d\'effectuer une tentative.');
   }
 }

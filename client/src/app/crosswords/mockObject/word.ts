@@ -1,4 +1,3 @@
-
 export class Word {
     public mot: string;
     public definition: string;

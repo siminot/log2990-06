@@ -53,4 +53,9 @@ describe('RequeteDeGrilleService', () => {
       expect(definition.getMatrice()).toEqual(service.getMatrice());
     });
   });
+
+  it('Reception d\'une liste de mots de la part du composant de la grille.', () => {
+    definition.envoieMots();
+    expect(service.getMots()).toEqual(definition.getMots());
+  });
 });

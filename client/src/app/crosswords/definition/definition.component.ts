@@ -20,9 +20,9 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
-  private reponse: String; 
+  private reponse: String;
   private motSelectionne: Word;
-  
+
   constructor (private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
@@ -45,6 +45,17 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
   public getMots(): Word[] {
     return this.mots;
+  }
+
+  public setMotSelectionne(motSelectione: Word): void {
+    this.motSelectionne = motSelectione;
+  }
+  public getMotselectionne(): Word {
+    return this.motSelectionne;
+  }
+
+  public getReponse(): String {
+    return this.reponse;
   }
 
   public setMot(indice: number, nouveauMot: string): void {
@@ -84,7 +95,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     this.envoieMatrice();
   }
 
-  private cacherCases(): void {
+  public cacherCases(): void {
     for (const ligne of this.matriceDesMotsSurGrille) {
       for (const lettre of ligne) {
         // if (lettre.lettreDecouverte == true) {

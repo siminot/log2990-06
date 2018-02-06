@@ -92,5 +92,26 @@ describe('DefinitionComponent', () => {
     }
       expect(result).toEqual(expectedValues);
   });
+    it('remettre toute les caseDecouverte a false', () => {
+      let matrice: Array<Array<LettreGrille>> = component.getMatrice();
+      matrice[0][0] = {
+        caseDecouverte: true,
+        lettre: 'P',
+        lettreDecouverte: true
+      };
+      // Après l'appel a la fonction la caseDecouverte devrait redevenir a false.
+      component.cacherCases();
+      console.log(matrice[0][0])
+
+      expect(matrice[0][0].caseDecouverte).toBeFalsy();
+});
+
+    it('Verifier le input de l/utilisateur', () => {
+      component.setMotSelectionne(realWordFromOurFakeList);
+      component.verifierTentative(realWordFromOurFakeList.mot);
+      const aVerifier: String = component.getReponse();
+      const verification: String = 'Bonne Reponse !';
+      expect(aVerifier).toEqual(verification);
+});
 });
 });

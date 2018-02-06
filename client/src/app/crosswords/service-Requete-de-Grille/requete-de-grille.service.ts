@@ -64,20 +64,20 @@ export class RequeteDeGrilleService {
     return matrice;
   }
 
-  putWordsInGrid(): void {
-    for (let objMot of this.mots) {
-      let tmpLettreGrille:LettreGrille;
-      for (let indice:number = 0 ; indice < objMot.longeur ; indice++) {
+  public putWordsInGrid(): void {
+    for (const objMot of this.mots) {
+      let tmpLettreGrille: LettreGrille;
+      for (let indice: number = 0 ; indice < objMot.longeur ; indice++) {
         tmpLettreGrille = {
           caseDecouverte: false,
           lettre: objMot.mot[indice],
           lettreDecouverte: true
         };
 
-        if(objMot.vertical) {
-          this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY]= tmpLettreGrille;
+        if (objMot.vertical) {
+          this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY] = tmpLettreGrille;
         } else {
-          this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY]= tmpLettreGrille;
+          this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY] = tmpLettreGrille;
         }
       }
     }

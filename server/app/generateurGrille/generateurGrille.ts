@@ -59,7 +59,7 @@ module Route {
                         loop(i++);
                     }
                 })
-                .catch( (resolve) => console.log("quoi"));
+                .catch( (resolve) => console.log("Erreur"));
             };
             loop(ctr);
         }

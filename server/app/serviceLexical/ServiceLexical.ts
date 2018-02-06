@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { injectable, } from "inversify";
 import { Response } from "express";
 import * as WebRequest from "web-request";

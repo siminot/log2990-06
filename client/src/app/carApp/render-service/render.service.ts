@@ -95,16 +95,16 @@ export class RenderService {
     }
 
     private reglerCameraTroisimePersonne(): void {
-        const RAYON: number = 15;
+        const RAYON: number = 10;
 
-        const POSITION_PLAN_XZ: Vector3 = new Vector3();
+        const POSITION_PLAN_XZ: Vector3 = this._car.direction.negate();
 
-        const POSITION_X: number = Math.sin(this._car.angle); // Vue derriere la voiture
-        const POSITION_Z: number = Math.cos(this._car.angle);
-
+        const POSITION_X: number = POSITION_PLAN_XZ.x; // Vue derriere la voiture
+        const POSITION_Z: number = POSITION_PLAN_XZ.z;
         const POSITION_Y: number = 0.5; // Hauteur de la camera
 
-        const POSITION_RELATIVE_CAMERA: Vector3 = new Vector3(POSITION_X, POSITION_Y, POSITION_Z).normalize().multiplyScalar(RAYON);
+        const POSITION_RELATIVE_CAMERA: Vector3 =
+            new Vector3(POSITION_X, POSITION_Y, POSITION_Z).normalize().multiplyScalar(RAYON);
 
         const POSITION_CAMERA: Vector3 = POSITION_RELATIVE_CAMERA.add(this._car.getPosition());
 

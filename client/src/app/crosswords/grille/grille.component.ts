@@ -42,6 +42,13 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return(etat ? "0" : "1");
   }
 
+  public makeIDs(i: number, j: number): String {
+    const a: string = String(i);
+    const b: string = String(j);
+
+    return a + b;
+  }
+
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();

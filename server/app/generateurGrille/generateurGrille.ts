@@ -23,7 +23,6 @@ module Route {
         private motsDejaPlaces: Array<string> = new Array<string>();
         private optionsPartie: MockOptionPartie;
 
-
         constructor() {
             this.initMatrice();
             this.optionsPartie = new MockOptionPartie("Facile", 1); // j'impose facile pour l'instant
@@ -60,7 +59,7 @@ module Route {
                         loop(i++);
                     }
                 })
-                .catch( () => console.log("CA PLANTE"));
+                .catch( (resolve) => resolve());
             };
             loop(ctr);
         }

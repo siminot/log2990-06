@@ -3,40 +3,40 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
 
 import { RequeteDeGrilleService } from '../service-Requete-de-Grille/requete-de-grille.service';
-import { Word } from "../mockObject/word";
-import { LettreGrille } from '../mockObject/word';
-
+import { Word, LettreGrille } from '../mockObject/word';
 
 @Component({
   selector: 'app-definition',
   templateUrl: './definition.component.html',
-  styleUrls: ['./definition.component.css'],
-  
+  styleUrls: ['./definition.component.css']
 })
 
-
-export class DefinitionComponent implements OnDestroy, OnInit {
+export class DefinitionComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
-  private reponse: String; 
+  private reponse: String;
   private motSelectionne: Word;
-  
-  constructor (private listeMotsService: RequeteDeGrilleService) {
+
+  public constructor (private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.getMots();
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe(mots => this.mots = mots);
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe(matrice => this.matriceDesMotsSurGrille = matrice);
+
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
+      .subscribe((mots) => this.mots = mots);
+
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
+      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
   }
 
-  ngOnInit() { }
+  public ngOnInit(): void { }
 
   public envoieMots(): void {
     this.listeMotsService.serviceEnvoieMots(this.mots);
   }
 
-  private envoieMatrice(): void {
+  public envoieMatrice(): void {
     this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 
@@ -52,8 +52,8 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
 
   public changementMotSelectionne(mot: Word): void {
-    for(let mot of this.mots) {
-      mot.activer = false;
+    for (const item of this.mots) {
+      item.activer = false;
     }
     this.motSelectionne = mot;
     mot.activer = !mot.activer;
@@ -85,8 +85,8 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
 
   private cacherCases(): void {
-    for (let ligne of this.matriceDesMotsSurGrille) {
-      for (let lettre of ligne) {
+    for (const ligne of this.matriceDesMotsSurGrille) {
+      for (const lettre of ligne) {
         // if (lettre.lettreDecouverte == true) {
           lettre.caseDecouverte = false;
         // }
@@ -95,7 +95,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
 
   public verifierTentative(tentative: String): void {
-    if(tentative == this.motSelectionne.mot) {
+    if (tentative === this.motSelectionne.mot) {
       this.decouvrirLettre(this.motSelectionne);
       this.reponse = 'Bonne Reponse !';
     } else {
@@ -109,6 +109,6 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
 
   public afficherRegle(): void {
-    alert("Cliquez sur une définition afin d'effectuer une tentative.");
+    alert('Cliquez sur une définition afin d\'effectuer une tentative.');
   }
 }

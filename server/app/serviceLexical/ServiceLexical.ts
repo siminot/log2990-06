@@ -71,7 +71,7 @@ module moduleServiceLexical {
             if (this.estUnMotValide(mot)) {
                 this.obtenirMotsDeLAPI(mot, 1)
                     .then((dictionnaire: Mot[]) => {
-                        if (dictionnaire[0].definitions !== null) {
+                        if ((dictionnaire.length !== 0) && (dictionnaire[0].definitions !== null)) {
                             res.send(dictionnaire[0]);
                         } else {
                             res.send(MESSAGE_AUCUN_RESULTAT);

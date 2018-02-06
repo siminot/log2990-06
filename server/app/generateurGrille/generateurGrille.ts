@@ -5,6 +5,7 @@ import * as WebRequest from "web-request";
 
 import { TAILLE_TEST, POURCENTAGE_TEST } from "./constantes";
 import { Mockword } from "./../../../common/mockObject/mockWord";
+import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../../../common/communication/Mot";
 
 import { GenerateurSquelette } from "./generateurSquelette";
@@ -17,28 +18,23 @@ module Route {
 
         private grille: Array<Array<string>>;
         private listeMot: Array<Mockword>;
-        // private tailleGrille: number = TAILLE_TEST;
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_TEST);
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
+        private motsDejaPlaces: Array<string> = new Array<string>();
+        private optionsPartie: MockOptionPartie;
+
 
         constructor() {
             this.initMatrice();
+            this.optionsPartie = new MockOptionPartie("Facile", 1); // j'impose facile pour l'instant
         }
 
         private initMatrice(): void {
             this.listeMot = new Array<Mockword>();
             this.grille = new Array<Array<string>>();
+            this.motsDejaPlaces = new Array<string>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
-        }
-
-        /* FONCTION BIDON POUR EXAMINER DES CHOSES */
-        public afficheGrille(req: Request, res: Response, next: NextFunction): void {
-            this.initMatrice();
-            // this.initListeMot();
-            this.remplirLaGrilleDeMots(0);
-
-            res.send(JSON.stringify(this.grille));
         }
 
         private lireMotViaGrille(mot: Mockword) {
@@ -54,23 +50,6 @@ module Route {
                 }
             }
             mot.setMot(lecteur);
-        }
-
-        private ecrireDansLaGrille(mot: Mockword): Promise<void> {
-            const x = mot.getPremierX();
-            const y = mot.getPremierY();
-
-            for (let i = 0; i < mot.getLongueur(); i++) {
-                if (mot.getVertical()) {
-                    this.grille[y + i][x] = mot.getMot()[i];
-                } else {
-                    this.grille[y][x + i] = mot.getMot()[i];
-                }
-            }
-            console.log(mot.getMot());
-            console.log(this.grille);
-
-            return new Promise( (resolve, reject) => {console.log("ok"); resolve(); } );
         }
 
         private remplirLaGrilleDeMots(ctr: number): void {
@@ -95,19 +74,83 @@ module Route {
         }
 
         private demanderMot(mot: Mockword): Promise<Mot[]> {
-            const url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
+
+            let url: string;
+            switch (this.optionsPartie.niveau) {
+
+                case "Facile":
+                case "Normal":
+                url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
+                break;
+
+                case "Difficile":
+                url = "http://localhost:3000/servicelexical/noncommun/contrainte/" + mot.getMot();
+                break;
+
+                default: /*devrait jamais arriver?*/ break;
+            }
 
             return WebRequest.json<Mot[]>(url).then((data) => this.affecterMot(data, mot));
         }
 
         private affecterMot(listeMot: Mot[], motAChanger: Mockword): Mot[] {
             // regarder avec simon si on doit trouver un mot en particulier dans la liste
-            const index = Math.floor( Math.random() * listeMot.length );
-            motAChanger.setMot(listeMot[index].mot);
-            motAChanger.setDefinition(listeMot[index].definitions[0].definition);
+            const indexMot = this.nombreAlleatoire(this.listeMot.length) - 1;
+            let indexDef = 0;
+            console.log("IndexMot: " + indexMot + " Longueur liste: " + this.listeMot.length);
+            const nbDef: number = listeMot[indexMot].definitions.length;
+            console.log("LE BOGUE EST ICI");
+            switch (this.optionsPartie.niveau) {
+
+                case "Normal":
+                case "Difficile":
+                if (listeMot[indexMot].definitions.length > 0) {    // S'il n'y a aucune autre def
+                    indexDef = this.nombreAlleatoire(nbDef) - 1;
+                }
+                break;
+
+                default: /*devrait jamais arriver?*/ break;
+            }
+
+            motAChanger.setMot(listeMot[indexMot].mot);
+            motAChanger.setDefinition(listeMot[indexMot].definitions[indexDef].definition);
             // console.log(this.listeMot);
 
             return listeMot;
+        }
+
+        private ecrireDansLaGrille(mot: Mockword): Promise<void> {
+            const x = mot.getPremierX();
+            const y = mot.getPremierY();
+
+            for (let i = 0; i < mot.getLongueur(); i++) {
+                if (mot.getVertical()) {
+                    this.grille[y + i][x] = mot.getMot()[i];
+                } else {
+                    this.grille[y][x + i] = mot.getMot()[i];
+                }
+            }
+            console.log(mot.getMot());
+            console.log(this.grille);
+
+            return new Promise( (resolve, reject) => { resolve(); } );
+        }
+
+        // retourne un nmbre entre 1 et nbMax
+        private nombreAlleatoire(nbMax: number): number {
+            const millisecondes = new Date().getMilliseconds();
+            const MILLE = 1000;
+
+            return Math.floor(millisecondes * nbMax / MILLE) + 1;
+        }
+
+                /* FONCTION BIDON POUR EXAMINER DES CHOSES */
+        public afficheGrille(req: Request, res: Response, next: NextFunction): void {
+            this.initMatrice();
+            // this.initListeMot();
+            this.remplirLaGrilleDeMots(0);
+
+            res.send(JSON.stringify(this.grille));
         }
 
         /* FONCTION BIDON POUR TESTER DES CHOSES */

@@ -4,18 +4,26 @@ export class GenerateurSquelette {
 
     private grille: Array<Array<string>>;
     private tailleGrille: number;
+    private pourcentageCasesNoires: number;
+
+    constructor(tailleGrille: number, pourcentageDeCasesNoires: number) {
+        this.tailleGrille = tailleGrille;
+        this.pourcentageCasesNoires = pourcentageDeCasesNoires;
+    }
 
     public getSqueletteGrille(): Array<Array<string>> {
+        this.genererNouvelleGrille();
+
         return this.grille;
     }
+
     public getTailleGrille(): number {
         return this.tailleGrille;
     }
 
-    constructor(tailleGrille: number, pourcentageDeCasesNoires: number) {
-        this.tailleGrille = tailleGrille;
+    private genererNouvelleGrille(): void {
         this.allocationDeLaGrille();
-        this.genererCasesNoires(pourcentageDeCasesNoires);
+        this.genererCasesNoires(this.pourcentageCasesNoires);
     }
 
     private allocationDeLaGrille(): void {

@@ -85,8 +85,8 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
 
   private cacherCases(): void {
-    for (let ligne of this.matriceDesMotsSurGrille) {
-      for (let lettre of ligne) {
+    for (const ligne of this.matriceDesMotsSurGrille) {
+      for (const lettre of ligne) {
         // if (lettre.lettreDecouverte == true) {
           lettre.caseDecouverte = false;
         // }
@@ -95,7 +95,7 @@ export class DefinitionComponent implements OnDestroy, OnInit {
   }
 
   public verifierTentative(tentative: String): void {
-    if(tentative == this.motSelectionne.mot) {
+    if (tentative === this.motSelectionne.mot) {
       this.decouvrirLettre(this.motSelectionne);
       this.reponse = 'Bonne Reponse !';
     } else {

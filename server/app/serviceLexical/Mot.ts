@@ -5,15 +5,18 @@ import { MotAPI } from "./MotAPI";
 export enum Frequence { Commun, NonCommun }
 export enum TypeMot { Nom, Verbe, Adjectif, Adverbe }
 
-export class Mot {
-    private static readonly MEDIANE_FREQUENCE: number = 80;
+// tslint:disable-next-line:no-magic-numbers
+const MEDIANE_FREQUENCE: number[] = [0, 0, 10, 10, 10, 10, 10, 5, 2, 2, 2];
+const MEDIANE_FREQUENCE_DEFAUT = 80;
 
-    // Pour détecter ce qui n'est pas un lettre majuscule/minuscule/accentuée
-    private static readonly CARACTERES_INVALIDES: string = "[^A-Z|^a-z]";
+// Pour détecter ce qui n'est pas un lettre majuscule/minuscule/accentuée
+const CARACTERES_INVALIDES = "[^A-Z|^a-z]";
+
+export class Mot {
 
     public mot: string;
     public definitions: Definition[];
-    private frequence: number;
+    public frequence: number;
 
     // Construction d'un mot
 
@@ -46,10 +49,10 @@ export class Mot {
     }
 
     private creerDefinition(definition: String): Definition {
-        const NOMBRE_DIVISION: number  = 2;
-        const def: Array<string> = definition.split(MotAPI.SEPARATEUR_DEFINITION, NOMBRE_DIVISION);
+        const NOMBRE_DIVISION = 2;
+        const DEFINITION: Array<string> = definition.split(MotAPI.SEPARATEUR_DEFINITION, NOMBRE_DIVISION);
         let type: TypeMot;
-        switch (def[0]) {
+        switch (DEFINITION[0]) {
             case "n": type = TypeMot.Nom; break;
 
             case "v": type = TypeMot.Verbe; break;
@@ -62,7 +65,7 @@ export class Mot {
                 return null;
         }
 
-        return new Definition(type, def[1]);
+        return new Definition(type, DEFINITION[1]);
     }
 
     private extraireFrequence(frequence: string): number {
@@ -91,7 +94,13 @@ export class Mot {
 
     public obtenirFrequence(): Frequence {
         if (this.frequence !== null) {
-            return this.frequence >= Mot.MEDIANE_FREQUENCE
+            let frequenceComparaison: number;
+
+            this.mot.length > MEDIANE_FREQUENCE.length
+                ? frequenceComparaison = MEDIANE_FREQUENCE_DEFAUT
+                : frequenceComparaison = MEDIANE_FREQUENCE[this.mot.length];
+
+            return this.frequence >= frequenceComparaison
                 ? Frequence.Commun
                 : Frequence.NonCommun;
         } else {
@@ -100,7 +109,7 @@ export class Mot {
     }
 
     public contientCaractereInvalide(): boolean {
-        return new RegExp(Mot.CARACTERES_INVALIDES, "g").test(this.mot);
+        return new RegExp(CARACTERES_INVALIDES, "g").test(this.mot);
     }
 
     public obtenirDefinitionsPourJeu(): Definition[] {

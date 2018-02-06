@@ -94,21 +94,21 @@ export class DefinitionComponent implements OnDestroy, OnInit {
     }
   }
 
-  public verifierTentative(tentative: String) {
+  public verifierTentative(tentative: String): void {
     if(tentative == this.motSelectionne.mot) {
       this.decouvrirLettre(this.motSelectionne);
-      this.reponse = "Bonne Reponse !";
+      this.reponse = 'Bonne Reponse !';
     } else {
-      this.reponse = "Mauvaise Reponse !";
+      this.reponse = 'Mauvaise Reponse !';
     }
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
   }
 
-  public afficherRegle() {
+  public afficherRegle(): void {
     alert("Cliquez sur une définition afin d'effectuer une tentative.");
   }
 }

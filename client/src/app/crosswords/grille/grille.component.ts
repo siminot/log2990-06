@@ -34,7 +34,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return(etat ? '0' : '1');
   }
 
-  // Pour une autre carte que celle du sprint 1.
+  public ngOnDestroy(): void {
+    this.subscriptionMots.unsubscribe();
+    this.subscriptionMatrice.unsubscribe();
+  }
+}
+
+  /*
+  ** Pour une autre carte que celle du sprint 1. **
   public onKey(event: any): void {
     const element: any = event.srcElement.nextElementSibling;
 
@@ -44,23 +51,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Permet de vérifier si l'assignation des ID est bonne.
-  // Pour une autre carte que celle du sprint 1.
-  public print(event: any): void {
-    // const target: any = event.target || event.srcElement || event.currentTarget;
-    // const idAttr: any = target.attributes.id;
-  }
-
-  // Pour une autre carte que celle du sprint 1.
+  // ** Pour une autre carte que celle du sprint 1. **
   public makeIDs(i: number, j: number): String {
     const a = String(i);
     const b = String(j);
 
     return a + b;
   }
-
-  public ngOnDestroy(): void {
-    this.subscriptionMots.unsubscribe();
-    this.subscriptionMatrice.unsubscribe();
-  }
-}
+  */

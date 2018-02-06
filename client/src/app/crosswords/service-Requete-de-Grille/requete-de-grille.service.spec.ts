@@ -25,7 +25,7 @@ describe('RequeteDeGrilleService', () => {
     it('Construction du service réussie.', () => {
       expect(service).toBeTruthy();
     });
-    
+
     it('Construction du composant grille réussie.', () => {
       expect(grille).toBeTruthy();
     });

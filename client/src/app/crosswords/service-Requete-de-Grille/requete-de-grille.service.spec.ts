@@ -4,7 +4,7 @@ import { RequeteDeGrilleService } from './requete-de-grille.service';
 describe('RequeteDeGrilleService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RequeteDeGrilleService]
+      providers: [ RequeteDeGrilleService ]
     });
   });
 

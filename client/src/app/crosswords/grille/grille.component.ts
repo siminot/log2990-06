@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, Renderer2 } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Word, LettreGrille } from "../mockObject/word";
 import { Subscription } from "rxjs/Subscription";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { setTimeout } from "timers";
 
 @Component({
   selector: "app-grille",
@@ -13,26 +12,16 @@ import { setTimeout } from "timers";
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {
-  //@ViewChild("macro", {read: ElementRef})
-  //private e: ElementRef;
 
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private motSelectionne: Word;
-  private lettreSelectionne: LettreGrille;
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  /*@Input("this.motSelectionne")
-  public set focusOnMotSelectionne(this.motSelectionne: LettreGrille): void {
-    const elem: HTMLElement = document.getElementById("00");
-    console.log(elem);
-    elem.focus();
-  }*/
-
-  public constructor(private listeMotsService: RequeteDeGrilleService, private el: ElementRef, private renderer: Renderer2) { }
+  public constructor(private listeMotsService: RequeteDeGrilleService) { }
 
   public ngOnInit(): void {
     this.mots = this.listeMotsService.getMots();
@@ -47,17 +36,18 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
-        console.log(this.el.nativeElement);
-        this.renderer.addClass(this.el.nativeElement, "faefaef");
-        let element = this.renderer.selectRootElement("#c00");
-        console.log(element);
-        console.log(element.nativeElement.querySelector("#c00"));
-        console.log(element.nativeElement.getElementById(".c00"));
-        console.log(this.el.nativeElement.querySelector(".c00"));
-        let hElem: HTMLElement = this.el.nativeElement;
-        console.log(hElem.getElementById("c00"));
-        const elem: HTMLElement = this.el.nativeElement.getElementById("c00");
-        console.log(elem);
+        console.log(document.getElementById("c00"));
+        // console.log(this.el.nativeElement);
+        // this.renderer.addClass(this.el.nativeElement, "faefaef");
+        // let element = this.renderer.selectRootElement("#c00");
+        // console.log(element);
+        // console.log(element.nativeElement.querySelector("#c00"));
+        // console.log(element.nativeElement.getElementById(".c00"));
+        // console.log(this.el.nativeElement.querySelector(".c00"));
+        // let hElem: HTMLElement = this.el.nativeElement;
+        // console.log(hElem.getElementById("c00"));
+        // const elem: HTMLElement = this.el.nativeElement.getElementById("c00");
+        // console.log(elem);
         //const elem: HTMLElement = document.getElementById("00");
       });
   }
@@ -97,6 +87,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const target: any = event.target || event.srcElement || event.currentTarget;
     const idAttr: any = target.attributes.id;
     const value: any = idAttr.nodeValue;
+    console.log(value);
   }
 
   public ngOnDestroy(): void {

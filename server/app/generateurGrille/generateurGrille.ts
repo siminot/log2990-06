@@ -70,18 +70,18 @@ module Route {
 
             const loop = (i: number) => {
                 console.log(i);
-                console.log(indice);
+                console.log(this.grille);
                 this.affecterMot(lesMots[i], this.listeMot[indice]);
-                this.   (this.listeMot[indice]);
+                this.ecrireDansLaGrille(this.listeMot[indice]);
                 this.remplirGrilleRecursif(indice)
                 .catch(() => {
                     if ( ++i < lesMots.length) {
                         loop(i);
-                    } else {
-                        throw new Error("bout de liste");
                     }
-
                 });
+                if (i === lesMots.length) {
+                    throw new Error("pls");
+                }
             };
             loop(0);
 

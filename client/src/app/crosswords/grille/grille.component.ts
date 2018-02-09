@@ -48,7 +48,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
         // console.log(hElem.getElementById("c00"));
         // const elem: HTMLElement = this.el.nativeElement.getElementById("c00");
         // console.log(elem);
-        //const elem: HTMLElement = document.getElementById("00");
+        // const elem: HTMLElement = document.getElementById("00");
       });
   }
 

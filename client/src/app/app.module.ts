@@ -13,6 +13,7 @@ import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.compon
 import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { DefinitionComponent } from "./crosswords/definition/definition.component";
 import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
+import { DirectiveFocusDirective } from './crosswords/directive-focus/directive-focus.directive';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/r
         GameComponent,
         MainGrilleComponent,
         GrilleComponent,
-        DefinitionComponent
+        DefinitionComponent,
+        DirectiveFocusDirective
     ],
     imports: [
         BrowserModule,

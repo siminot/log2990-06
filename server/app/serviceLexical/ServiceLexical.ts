@@ -149,7 +149,7 @@ module moduleServiceLexical {
             if (dictionnaire.length > 0) {
                 res.send(dictionnaire);
             } else {
-                res.send(MESSAGE_AUCUN_RESULTAT);
+                res.send(undefined);
             }
         }
 

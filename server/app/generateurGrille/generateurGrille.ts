@@ -54,22 +54,37 @@ module Route {
         private remplirLaGrilleDeMots() {
             this.remplirGrilleRecursif(0)
             .then(() =>  console.log("ca marche"))
-            .catch(() => console.log("ca foire"));
+            .catch((error) => console.log("wtf esti"));
         }
 
         private async remplirGrilleRecursif(indice: number): Promise<void> {
-            this.lireMotViaGrille(this.listeMot[indice]);
-            this.demanderMot(this.listeMot[indice])
-            .then((data) => {
-                const loop = (i: number) => {
-                    this.affecterMot(data[i], this.listeMot[indice]);
-                    this.remplirGrilleRecursif(indice++)
-                    .catch(() => loop(i++));
-                };
-                loop(0);
-            });
 
-            return;
+            indice++;
+            this.lireMotViaGrille(this.listeMot[indice]);
+            let lesMots: Mot[];
+            lesMots = await this.demanderMot(this.listeMot[indice]);
+            if (lesMots === undefined) {
+                console.log("pas de mot");
+                throw new Error("Pas de mot");
+            }
+
+            const loop = (i: number) => {
+                console.log(i);
+                console.log(indice);
+                this.affecterMot(lesMots[i], this.listeMot[indice]);
+                this.   (this.listeMot[indice]);
+                this.remplirGrilleRecursif(indice)
+                .catch(() => {
+                    if ( ++i < lesMots.length) {
+                        loop(i);
+                    } else {
+                        throw new Error("bout de liste");
+                    }
+
+                });
+            };
+            loop(0);
+
         }
 
        /* private remplirLaGrilleDeMots(ctr: number): void {
@@ -165,7 +180,7 @@ module Route {
             return unMot;
         }
 
-       /* private ecrireDansLaGrille(mot: Mockword): Promise<void> {
+        private ecrireDansLaGrille(mot: Mockword): void {
             const x = mot.getPremierX();
             const y = mot.getPremierY();
 
@@ -178,9 +193,7 @@ module Route {
             }
             // console.log(mot.getMot());
             // console.log(this.grille);
-
-            return new Promise( (resolve, reject) => { resolve(); } );
-        }*/
+        }
 
         // retourne un nmbre entre 1 et nbMax
         private nombreAlleatoire(nbMax: number): number {
@@ -194,6 +207,7 @@ module Route {
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initMatrice();
             // this.initListeMot();
+            this.remplirLaGrilleDeMots();
             res.send(JSON.stringify(this.grille));
         }
 

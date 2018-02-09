@@ -20,6 +20,8 @@ export class RequeteDeGrilleService {
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   private motSelectionneObservable$: Observable<Word> = this.motSelectionneSuject.asObservable();
 
+  public chaine: String = "Pomme";
+
   public constructor() {
     this.matriceDesMotsSurGrille = this.genererGrille();
     this.mots = listeMots;

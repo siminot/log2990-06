@@ -51,7 +51,28 @@ module Route {
             mot.setMot(lecteur);
         }
 
-        private remplirLaGrilleDeMots(ctr: number): void {
+        private remplirLaGrilleDeMots() {
+            this.remplirGrilleRecursif(0)
+            .then(() =>  console.log("ca marche"))
+            .catch(() => console.log("ca foire"));
+        }
+
+        private async remplirGrilleRecursif(indice: number): Promise<void> {
+            this.lireMotViaGrille(this.listeMot[indice]);
+            this.demanderMot(this.listeMot[indice])
+            .then((data) => {
+                const loop = (i: number) => {
+                    this.affecterMot(data[i], this.listeMot[indice]);
+                    this.remplirGrilleRecursif(indice++)
+                    .catch(() => loop(i++));
+                };
+                loop(0);
+            });
+
+            return;
+        }
+
+       /* private remplirLaGrilleDeMots(ctr: number): void {
             const loop = (i: number) => {
                 this.insererUnMot(i).then(() => {
                     if (i < this.listeMot.length - 1) {
@@ -62,9 +83,9 @@ module Route {
                 .catch( (resolve) => console.log("Erreur"));
             };
             loop(ctr);
-        }
+        }*/
 
-        private updateListeMot(mot: Mockword): void {
+       /* private updateListeMot(mot: Mockword): void {
             const indexConstant = mot.getVertical() ? mot.getPremierX() : mot.getPremierY();
 
             for (const elem of this.listeMot) {
@@ -84,15 +105,23 @@ module Route {
                     }
                 }
             }
-        }
+        }*/
 
-        private insererUnMot(index: number): Promise<void> {
+       /* private insererUnMot(index: number): Promise<void> {
             this.lireMotViaGrille(this.listeMot[index]);
 
-            return this.demanderMot(this.listeMot[index]).then( () => {
-                this.updateListeMot(this.listeMot[index]);
+            return this.demanderMot(this.listeMot[index]).then( (data) => {
+                this.updateListeMot(this.listeMot[index])
+                .then();
+
+                const loop = (i: number ) => {
+
+                    })
+                    .catch( (resolve) => console.log("Erreur"));
+                };
+                loop(ctr);
             });
-        }
+        }*/
 
         private demanderMot(mot: Mockword): Promise<Mot[]> {
 
@@ -111,19 +140,18 @@ module Route {
                 default: /*devrait jamais arriver?*/ break;
             }
 
-            return WebRequest.json<Mot[]>(url).then((data) => this.affecterMot(data, mot));
+            return WebRequest.json<Mot[]>(url);
         }
 
-        private affecterMot(listeMot: Mot[], motAChanger: Mockword): Mot[] {
+        private affecterMot(unMot: Mot, motAChanger: Mockword): Mot {
             // regarder avec simon si on doit trouver un mot en particulier dans la liste
-            const indexMot = this.nombreAlleatoire(listeMot.length) - 1;
             let indexDef = 0;
-            const nbDef: number = listeMot[indexMot].definitions.length;
+            const nbDef: number = unMot.definitions.length;
             switch (this.optionsPartie.niveau) {
 
                 case "Normal":
                 case "Difficile":
-                if (listeMot[indexMot].definitions.length > 0) {    // S'il n'y a aucune autre def
+                if (unMot.definitions.length > 0) {    // S'il n'y a aucune autre def
                     indexDef = this.nombreAlleatoire(nbDef) - 1;
                 }
                 break;
@@ -131,10 +159,10 @@ module Route {
                 default: /*devrait jamais arriver?*/ break;
             }
 
-            motAChanger.setMot(listeMot[indexMot].mot);
-            motAChanger.setDefinition(listeMot[indexMot].definitions[indexDef].definition);
+            motAChanger.setMot(unMot.mot);
+            motAChanger.setDefinition(unMot.definitions[indexDef].definition);
 
-            return listeMot;
+            return unMot;
         }
 
        /* private ecrireDansLaGrille(mot: Mockword): Promise<void> {
@@ -166,8 +194,6 @@ module Route {
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initMatrice();
             // this.initListeMot();
-            this.remplirLaGrilleDeMots(0);
-
             res.send(JSON.stringify(this.grille));
         }
 

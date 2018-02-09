@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef } from "@angular/core";
 import { Word, LettreGrille } from "../mockObject/word";
 import { Subscription } from "rxjs/Subscription";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
@@ -22,9 +22,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  public constructor(private listeMotsService: RequeteDeGrilleService) { }
+  public constructor(private listeMotsService: RequeteDeGrilleService, private elementRef: ElementRef) { }
 
-  public ngOnInit(): void { 
+  public ngOnInit(): void {
     this.mots = this.listeMotsService.getMots();
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
@@ -38,8 +38,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
 
-        // this.focusOn();
+        this.focusOn();
       });
+
   }
 
   public getListeMots(): Word[] {
@@ -62,15 +63,15 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public focusOn(): void {
-    // const elem: HTMLElement = this.getElementID();
-    // console.log(elem);
-    // elem.focus();
-    // console.log(this.motSelectionne);
+    const elem: HTMLElement = this.getElementID();
+    console.log(elem);
+    elem.focus();
+    console.log(this.motSelectionne);
   }
 
-  // public getElementID(): HTMLElement {
-  //  return document.getElementById("01");
-  // }
+  public getElementID(): HTMLElement {
+   return document.getElementById("01");
+  }
 
   public printID($event: any): void {
     const target: any = event.target || event.srcElement || event.currentTarget;

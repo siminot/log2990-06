@@ -1,5 +1,5 @@
 
-<div class="grille">
+<div class="grille" #macro>
     <table class="table">
         <br>
         <tr *ngFor="let item of matriceDesMotsSurGrille; let i = index">
@@ -12,7 +12,7 @@
                     <img src="../../../assets/tuileMorte.png" class="tuile">
                 </ng-template>
 
-                <input *ngIf="case.caseDecouverte" class="tuile" [attr.id]="makeIDs(i,j)" (click)="printID($event)">
+                <input *ngIf="case.caseDecouverte" [focus]="isElementFocused(i,j)" class="tuile" [attr.id]="makeIDs(i,j)" (click)="printID($event)">
 
                 <p class="reponseLettre" *ngIf = "case.lettreDecouverte && case.lettre ; else elseBlock2">{{ case.lettre | uppercase }}</p>
                 <ng-template #elseBlock2>

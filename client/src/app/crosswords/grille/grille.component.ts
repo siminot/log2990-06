@@ -32,7 +32,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
-      .subscribe((motSelec) => this.motSelectionne = motSelec);
+      .subscribe((motSelec) => {
+        this.motSelectionne = motSelec;
+        this.focusOn();
+      });
   }
 
   public ngOnInit(): void { }
@@ -56,12 +59,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return a + b;
   }
 
-  public focusOnID(id: string): void {
-    
-    if (id != null) {
-      const elem: HTMLElement = document.getElementById(id);
-      elem.focus();
-    }
+  public focusOn(): void {
+    const id: string = "00";
+    const elem: HTMLElement = document.getElementById(id);
+    console.log(elem);
+    elem.focus();
   }
 
   public ngOnDestroy(): void {

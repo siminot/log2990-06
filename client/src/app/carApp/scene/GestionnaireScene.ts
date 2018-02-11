@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Scene, GridHelper, AxisHelper, AmbientLight, BoxGeometry,
-        BackSide, Mesh, MeshBasicMaterial, TextureLoader, MeshFaceMaterial } from "three";
+import { Scene, GridHelper, AxisHelper, AmbientLight } from "three";
 import { Voiture } from "../voiture/voiture";
+import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 
 // Grille
 const TAILLE_GRILLE: number = 1000;
@@ -19,28 +19,13 @@ const OPACITE_LUMIERE: number = 1;
 // AI
 const NOMBRE_AI: number = 0;
 
-// Skybox
-const TAILLE_SKYBOX: number = 1000;
-const RAPPOR_HAUTEUR_SOL: number = 25;
-const HAUTEUR_SOL: number = TAILLE_SKYBOX / RAPPOR_HAUTEUR_SOL;
-const NOMBRE_FACE_CUBE: number = 6;
-const CHEMIN: string = "./../../../assets/camero/";
-const FORMAT: string = ".jpg";
-const URLS: string[] = [
-    CHEMIN + "posx" + FORMAT,
-    CHEMIN + "negx" + FORMAT,
-    CHEMIN + "posy" + FORMAT,
-    CHEMIN + "negy" + FORMAT,
-    CHEMIN + "posz" + FORMAT,
-    CHEMIN + "negz" + FORMAT,
-];
-
 @Injectable()
 export class GestionnaireScene {
 
     private _scene: Scene;
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
+    private estModeNuit: boolean;
 
     public get voitureJoueur(): Voiture {
         return this._voitureJoueur;
@@ -50,29 +35,17 @@ export class GestionnaireScene {
         return this._scene;
     }
 
-    public constructor() {
+    public constructor(private gestionnaireSkybox: GestionnaireSkybox) {
         this._scene = new Scene;
         this._voituresAI = [];
+        this.estModeNuit = false;
     }
 
     private initialiserEnvironnement(): void {
         this._scene.add(new GridHelper(TAILLE_GRILLE, DIVISION_GRILLE, COULEUR_GRAND_CARRE, COULEUR_PETIT_CARRE));
         this._scene.add(new AxisHelper(TAILLE_AXE));
         this._scene.add(new AmbientLight(BLANC, OPACITE_LUMIERE));
-        this.ajouterSkyBox();
-    }
-
-    private ajouterSkyBox(): void {
-        const materiaux: MeshBasicMaterial[] = [];
-
-        for (let i: number = 0 ; i < NOMBRE_FACE_CUBE ; i++) {
-            materiaux.push(new MeshBasicMaterial({map: new TextureLoader().load(URLS[i]), side: BackSide}));
-        }
-
-        const boite: BoxGeometry = new BoxGeometry(TAILLE_SKYBOX, TAILLE_SKYBOX, TAILLE_SKYBOX);
-        boite.translate(0, HAUTEUR_SOL, 0);
-        const mesh: Mesh = new Mesh(boite, new MeshFaceMaterial(materiaux));
-        this._scene.add(mesh);
+        this._scene.add(this.gestionnaireSkybox.skybox);
     }
 
     private ajouterPiste(): void {
@@ -105,5 +78,17 @@ export class GestionnaireScene {
         this.ajouterPiste();
         await this.ajouterVoitureJoueur();
         await this.ajouterVoituresAI();
+    }
+
+    public changerTempsJournee(): void {
+        this._scene.remove(this.gestionnaireSkybox.skybox);
+        this.gestionnaireSkybox.changerTempsJournee();
+        this._scene.add(this.gestionnaireSkybox.skybox);
+    }
+
+    public changerDecor(): void {
+        this._scene.remove(this.gestionnaireSkybox.skybox);
+        this.gestionnaireSkybox.changerDecor();
+        this._scene.add(this.gestionnaireSkybox.skybox);
     }
 }

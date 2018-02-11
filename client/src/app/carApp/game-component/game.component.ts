@@ -10,6 +10,8 @@ const DIRECTION_DROITE: number = 68;        // d
 const CHANGER_VUE: number = 86;             // v
 const ZOOM_OUT: number = 61;                // =
 const ZOOM_IN: number = 173;                // -
+const CHANGER_DECOR: number = 84;           // t
+const CHANGER_HEURE_JOURNEE: number = 89;   // y
 
 @Component({
     moduleId: module.id,
@@ -80,6 +82,12 @@ export class GameComponent implements AfterViewInit {
                 break;
             case CHANGER_VUE:
                 this.gestionnaireCamera.changerCamera();
+                break;
+            case CHANGER_DECOR:
+                this.gestionnaireScene.changerDecor();
+                break;
+            case CHANGER_HEURE_JOURNEE:
+                this.gestionnaireScene.changerTempsJournee();
                 break;
             default:
                 break;

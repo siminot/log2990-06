@@ -1,7 +1,8 @@
-import { Vector3, Matrix4, Object3D, Euler, Quaternion } from "three";
+import { Vector3, Matrix4, Object3D, Euler, Quaternion, SpotLightHelper } from "three";
 import { Engine } from "./engine";
-import { MS_TO_SECONDS, GRAVITY, PI_OVER_2, /*RAD_TO_DEG*/ } from "../constants";
+import { MS_TO_SECONDS, GRAVITY, PI_OVER_2 } from "../constants";
 import { Wheel } from "./wheel";
+import { Phare } from "./phare";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -28,6 +29,7 @@ export class Voiture extends Object3D {
     private mesh: Object3D;
     private steeringWheelDirection: number;
     private weightRear: number;
+    private phares: Phare[];
 
     public getPosition(): Vector3 {
         return this.mesh.position.clone();
@@ -92,12 +94,14 @@ export class Voiture extends Object3D {
         this.steeringWheelDirection = 0;
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
+        this.phares = [];
     }
 
     public init(texture: Object3D): void {
         this.mesh = texture;
         this.mesh.setRotationFromEuler(INITIAL_MODEL_ROTATION);
         this.add(this.mesh);
+        this.initialiserPhares();
     }
 
     public steerLeft(): void {
@@ -140,6 +144,49 @@ export class Voiture extends Object3D {
         const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
         const omega: number = this._speed.length() / R;
         this.mesh.rotateY(omega);
+
+        // Mise a jour des phares
+        this.miseAJourPhares();
+    }
+
+    public eteindrePhares(): void {
+        for (const PHARE of this.phares) {
+            PHARE.eteindre();
+        }
+    }
+
+    public allumerPhares(): void {
+        for (const PHARE of this.phares) {
+            PHARE.allumer();
+        }
+    }
+
+    private initialiserPhares(): void {
+        const HAUTEUR: number = 0.1;
+        const LARGEUR: number = 0.5;
+        const PROFONDEUR: number = -1.75;
+        const ANGLE_DIRECTION: number = 0.2;
+
+        const PHARE_GAUCHE_POSITION_RELATIVE: Vector3 = new Vector3(LARGEUR, HAUTEUR, PROFONDEUR);
+        const PHARE_DROITE_POSITION_RELATIVE: Vector3 = new Vector3(-LARGEUR, HAUTEUR, PROFONDEUR);
+
+        this.phares.push(new Phare(PHARE_GAUCHE_POSITION_RELATIVE, ANGLE_DIRECTION));
+        this.phares.push(new Phare(PHARE_DROITE_POSITION_RELATIVE, -ANGLE_DIRECTION));
+
+        this.miseAJourPhares();
+        this.ajouterPhares();
+    }
+
+    private ajouterPhares(): void {
+        for (const PHARE of this.phares) {
+            this.mesh.add(new SpotLightHelper(PHARE));
+        }
+    }
+
+    private miseAJourPhares(): void {
+        for (const PHARE of this.phares) {
+            PHARE.miseAJourPosition(this.getPosition());
+        }
     }
 
     private physicsUpdate(deltaTime: number): void {
@@ -187,7 +234,6 @@ export class Voiture extends Object3D {
     private getRollingResistance(): Vector3 {
         const tirePressure: number = 1;
         // formula taken from: https://www.engineeringtoolbox.com/rolling-friction-resistance-d_1303.html
-
         // tslint:disable-next-line:no-magic-numbers
         const rollingCoefficient: number = (1 / tirePressure) * (Math.pow(this.speed.length() * 3.6 / 100, 2) * 0.0095 + 0.01) + 0.005;
 

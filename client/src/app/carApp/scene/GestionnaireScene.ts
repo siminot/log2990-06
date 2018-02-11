@@ -1,27 +1,26 @@
 import { Injectable } from "@angular/core";
-import { Scene, GridHelper, AxisHelper, AmbientLight } from "three";
+import { Scene, AxisHelper,
+    /*,GridHelper, DoubleSide, AmbientLight, SpotLight, Vector3, MeshBasicMaterial, PlaneGeometry, Mesh*/ } from "three";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 
+/*
 // Grille
 const TAILLE_GRILLE: number = 1000;
 const DIVISION_GRILLE: number = 100;
 const COULEUR_GRAND_CARRE: number = 0x000000;
 const COULEUR_PETIT_CARRE: number = 0x00BFFF;
+*/
 
 // Axes
 const TAILLE_AXE: number = 1000;
-
-// Lumière ambiante
-const BLANC: number = 0xFFFFFF;
-const OPACITE_LUMIERE: number = 1;
 
 @Injectable()
 export class GestionnaireScene {
 
     private _scene: Scene;
-    // private estModeNuit: boolean;
+    private estModeNuit: boolean;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
@@ -34,13 +33,12 @@ export class GestionnaireScene {
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures) {
         this._scene = new Scene;
-        // this.estModeNuit = false;
+        this.estModeNuit = true;
     }
 
     private initialiserEnvironnement(): void {
-        this._scene.add(new GridHelper(TAILLE_GRILLE, DIVISION_GRILLE, COULEUR_GRAND_CARRE, COULEUR_PETIT_CARRE));
+        // this._scene.add(new GridHelper(TAILLE_GRILLE, DIVISION_GRILLE, COULEUR_GRAND_CARRE, COULEUR_PETIT_CARRE));
         this._scene.add(new AxisHelper(TAILLE_AXE));
-        this._scene.add(new AmbientLight(BLANC, OPACITE_LUMIERE));
         this._scene.add(this.gestionnaireSkybox.skybox);
     }
 
@@ -72,6 +70,7 @@ export class GestionnaireScene {
     }
 
     public changerTempsJournee(): void {
+        this.estModeNuit = !this.estModeNuit;
         this._scene.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerTempsJournee();
         this._scene.add(this.gestionnaireSkybox.skybox);

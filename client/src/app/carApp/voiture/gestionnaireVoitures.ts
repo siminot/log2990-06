@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
-import { ObjectLoader, SpotLight, Object3D } from "three";
+import { ObjectLoader, Object3D } from "three";
 import { Voiture } from "../voiture/voiture";
 
 // AI
-const NOMBRE_AI: number = 0;
+const NOMBRE_AI: number = 1;
 
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
 const NOMS_TEXTURES: string[] = ["camero-2010-low-poly.json", "voiture-2010-low-poly.json"];
+const TEXTURE_DEFAUT_JOUEUR: number = 1;
 
 @Injectable()
 export class GestionnaireVoitures {
@@ -33,24 +34,12 @@ export class GestionnaireVoitures {
     private initialiser(): void {
         this.creerVoitureJoueur();
         this.creerVoituresAI();
-    }
-
-    private initialiserLumieres(): void {
-        // Lumiere voiture
-        const COULEUR_PHARE: number = 0xFFFFFF;
-        const INTENSITE: number = 1;
-        const DISTANCE: number = 25;
-        const ANGLE: number = 50;
-        const phare1: SpotLight = new SpotLight(COULEUR_PHARE, INTENSITE, DISTANCE, ANGLE);
-        phare1.castShadow = true;
-        phare1.position.set(this.voitureJoueur.getPosition().x, this.voitureJoueur.getPosition().y, this.voitureJoueur.getPosition().z);
+        this.miseAJourPhares();
     }
 
     private async creerVoitureJoueur(): Promise<void> {
         this._voitureJoueur = new Voiture();
-        this._voitureJoueur.init(await this.chargerTexture(NOMS_TEXTURES[1]));
-
-        this.initialiserLumieres();
+        this._voitureJoueur.init(await this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR]));
     }
 
     private async creerVoituresAI(): Promise<void> {
@@ -70,6 +59,23 @@ export class GestionnaireVoitures {
 
     public changerTempsJournee(): void {
         this.estModeNuit = !this.estModeNuit;
+        this.miseAJourPhares();
+    }
+
+    private miseAJourPhares(): void {
+        if (this.estModeNuit) {
+            this._voitureJoueur.eteindrePhares();
+
+            for (const voiture of this._voituresAI) {
+                voiture.eteindrePhares();
+            }
+        } else {
+            this._voitureJoueur.allumerPhares();
+
+            for (const voiture of this._voituresAI) {
+                voiture.allumerPhares();
+            }
+        }
     }
 
     private async chargerTexture(URL_TEXTURE: string): Promise<Object3D> {

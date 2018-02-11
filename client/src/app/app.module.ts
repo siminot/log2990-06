@@ -9,6 +9,7 @@ import { ServiceDeRendu } from "./carApp/serviceDeRendu/serviceDeRendu";
 import { GestionnaireScene } from "./carApp/scene/GestionnaireScene";
 import { GestionnaireCamera } from "./carApp/camera/GestionnaireCamera";
 import { GestionnaireSkybox } from "./carApp/skybox/gestionnaireSkybox";
+import { GestionnaireVoitures } from "./carApp/voiture/gestionnaireVoitures";
 
 import { BasicService } from "./basic.service";
 import { AppRoutingModule } from ".//app-routing.module";
@@ -35,6 +36,7 @@ import { DefinitionComponent } from "./crosswords/definition/definition.componen
         GestionnaireScene,
         GestionnaireCamera,
         GestionnaireSkybox,
+        GestionnaireVoitures,
         BasicService,
         RequeteDeGrilleService
     ],

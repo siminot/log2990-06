@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Scene, GridHelper, AxisHelper, AmbientLight } from "three";
+import { Scene, GridHelper, AxisHelper, AmbientLight, BoxGeometry,
+        BackSide, Mesh, MeshBasicMaterial, TextureLoader, MeshFaceMaterial } from "three";
 import { Voiture } from "../voiture/voiture";
 
 // Grille
@@ -17,6 +18,22 @@ const OPACITE_LUMIERE: number = 1;
 
 // AI
 const NOMBRE_AI: number = 0;
+
+// Skybox
+const TAILLE_SKYBOX: number = 1000;
+const RAPPOR_HAUTEUR_SOL: number = 25;
+const HAUTEUR_SOL: number = TAILLE_SKYBOX / RAPPOR_HAUTEUR_SOL;
+const NOMBRE_FACE_CUBE: number = 6;
+const CHEMIN: string = "./../../../assets/camero/";
+const FORMAT: string = ".jpg";
+const URLS: string[] = [
+    CHEMIN + "posx" + FORMAT,
+    CHEMIN + "negx" + FORMAT,
+    CHEMIN + "posy" + FORMAT,
+    CHEMIN + "negy" + FORMAT,
+    CHEMIN + "posz" + FORMAT,
+    CHEMIN + "negz" + FORMAT,
+];
 
 @Injectable()
 export class GestionnaireScene {
@@ -42,6 +59,20 @@ export class GestionnaireScene {
         this._scene.add(new GridHelper(TAILLE_GRILLE, DIVISION_GRILLE, COULEUR_GRAND_CARRE, COULEUR_PETIT_CARRE));
         this._scene.add(new AxisHelper(TAILLE_AXE));
         this._scene.add(new AmbientLight(BLANC, OPACITE_LUMIERE));
+        this.ajouterSkyBox();
+    }
+
+    private ajouterSkyBox(): void {
+        const materiaux: MeshBasicMaterial[] = [];
+
+        for (let i: number = 0 ; i < NOMBRE_FACE_CUBE ; i++) {
+            materiaux.push(new MeshBasicMaterial({map: new TextureLoader().load(URLS[i]), side: BackSide}));
+        }
+
+        const boite: BoxGeometry = new BoxGeometry(TAILLE_SKYBOX, TAILLE_SKYBOX, TAILLE_SKYBOX);
+        boite.translate(0, HAUTEUR_SOL, 0);
+        const mesh: Mesh = new Mesh(boite, new MeshFaceMaterial(materiaux));
+        this._scene.add(mesh);
     }
 
     private ajouterPiste(): void {

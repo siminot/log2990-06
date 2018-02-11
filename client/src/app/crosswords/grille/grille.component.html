@@ -12,7 +12,7 @@
                     <img src="../../../assets/tuileMorte.png" class="tuile">
                 </ng-template>
 
-                <input id="makeIDs(i,j)" *ngIf="case.caseDecouverte" class="tuile" (click)="printID($event)">
+                <input id="makeIDs(i,j)" *ngIf="case.caseDecouverte" class="tuile" (click)="printID($event)" [appDirectiveFocus] = "stalker">
 
                 <p class="reponseLettre" *ngIf = "case.lettreDecouverte && case.lettre ; else elseBlock2">{{ case.lettre | uppercase }}</p>
                 <ng-template #elseBlock2>
@@ -21,4 +21,5 @@
             </td>
         </tr>
     </table>
+    <input id = "test1"> 
 </div>

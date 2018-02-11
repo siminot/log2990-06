@@ -5,13 +5,16 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { GameComponent } from "./carApp/game-component/game.component";
 
-import { RenderService } from "./carApp/render-service/render.service";
+import { ServiceDeRendu } from "./carApp/serviceDeRendu/serviceDeRendu";
+import { GestionnaireScene } from "./carApp/scene/GestionnaireScene";
+import { GestionnaireCamera } from "./carApp/camera/GestionnaireCamera";
+
 import { BasicService } from "./basic.service";
 import { AppRoutingModule } from ".//app-routing.module";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
-import { DefinitionComponent } from './crosswords/definition/definition.component';
+import { DefinitionComponent } from "./crosswords/definition/definition.component";
 
 @NgModule({
     declarations: [
@@ -27,7 +30,9 @@ import { DefinitionComponent } from './crosswords/definition/definition.componen
         AppRoutingModule
     ],
     providers: [
-        RenderService,
+        ServiceDeRendu,
+        GestionnaireScene,
+        GestionnaireCamera,
         BasicService,
         RequeteDeGrilleService
     ],

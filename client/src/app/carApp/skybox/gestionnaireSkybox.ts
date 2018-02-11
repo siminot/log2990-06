@@ -9,7 +9,7 @@ const GRIS: number = 0x595959;
 const VERT: number = 0x669900;
 
 // Paysage
-const TAILLE_SKYBOX: number = 512;
+const TAILLE_SKYBOX: number = 8192;
 const RAPPOR_HAUTEUR_SOL: number = 25;
 const HAUTEUR_SOL: number = TAILLE_SKYBOX / RAPPOR_HAUTEUR_SOL;
 const NOMBRE_FACE_CUBE: number = 6;

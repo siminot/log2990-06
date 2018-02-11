@@ -1,7 +1,7 @@
 import { Voiture, DEFAULT_WHEELBASE, DEFAULT_MASS, DEFAULT_DRAG_COEFFICIENT } from "./voiture";
 import { Engine } from "./engine";
 import { Wheel } from "./wheel";
-import { Vector3 } from "three";
+import { Vector3, Object3D } from "three";
 
 const MS_BETWEEN_FRAMES: number = 16.6667;
 
@@ -17,7 +17,7 @@ describe("Car", () => {
 
     beforeEach(async (done: () => void) => {
         car = new Voiture(new MockEngine());
-        await car.init();
+        car.init(new Object3D);
 
         car.isAcceleratorPressed = true;
         car.update(MS_BETWEEN_FRAMES);

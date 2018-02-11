@@ -28,10 +28,12 @@ export class GestionnaireVoitures {
     public constructor() {
         this._voituresAI = [];
         this.estModeNuit = false;
-        this.initialiser();
+        this.initialiser().catch(() => new Error("Erreur construction des voitures"));
     }
 
-    private initialiser(): void {
+    // Creation des voitures
+
+    private async initialiser(): Promise<void> {
         this.creerVoitureJoueur();
         this.creerVoituresAI();
         this.miseAJourPhares();
@@ -49,12 +51,23 @@ export class GestionnaireVoitures {
         }
     }
 
+    private async chargerTexture(URL_TEXTURE: string): Promise<Object3D> {
+        return new Promise<Object3D>((resolve, reject) => {
+            const loader: ObjectLoader = new ObjectLoader();
+            loader.load(CHEMIN_TEXTURE + URL_TEXTURE, (object) => {
+                resolve(object);
+            });
+        });
+    }
+
+    // Changements affectant les voitures
+
     public miseAJourVoitures(tempsDepuisDerniereTrame: number): void {
             this.voitureJoueur.update(tempsDepuisDerniereTrame);
-            /*
+
             for (const voiture of this._voituresAI) {
                 voiture.update(tempsDepuisDerniereTrame);
-            } */
+            }
     }
 
     public changerTempsJournee(): void {
@@ -77,14 +90,4 @@ export class GestionnaireVoitures {
             }
         }
     }
-
-    private async chargerTexture(URL_TEXTURE: string): Promise<Object3D> {
-        return new Promise<Object3D>((resolve, reject) => {
-            const loader: ObjectLoader = new ObjectLoader();
-            loader.load(CHEMIN_TEXTURE + URL_TEXTURE, (object) => {
-                resolve(object);
-            });
-        });
-    }
-
 }

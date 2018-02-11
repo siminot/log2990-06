@@ -36,6 +36,15 @@ export class GestionnaireScene {
         this.estModeNuit = true;
     }
 
+    // Creation de la scene
+
+    public creerScene(): void {
+        this.initialiserEnvironnement();
+        this.ajouterPiste();
+        this.ajouterVoitureJoueur();
+        this.ajouterVoituresAI();
+    }
+
     private initialiserEnvironnement(): void {
         // this._scene.add(new GridHelper(TAILLE_GRILLE, DIVISION_GRILLE, COULEUR_GRAND_CARRE, COULEUR_PETIT_CARRE));
         this._scene.add(new AxisHelper(TAILLE_AXE));
@@ -58,15 +67,10 @@ export class GestionnaireScene {
         }
     }
 
+    // Changement dans la scene
+
     public miseAJour(tempsDepuisDerniereTrame: number): void {
             this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
-    }
-
-    public async creerScene(): Promise<void> {
-        this.initialiserEnvironnement();
-        this.ajouterPiste();
-        this.ajouterVoitureJoueur();
-        this.ajouterVoituresAI();
     }
 
     public changerTempsJournee(): void {

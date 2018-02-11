@@ -4,7 +4,7 @@ import { Vector3 } from "three";
 // Attributs camera
 const CHAMP_DE_VISION: number = 70;
 const PLAN_RAPPROCHE: number = 0.1;
-const PLAN_ELOIGNE: number = 1000;
+const PLAN_ELOIGNE: number = 10000;
 
 const RAYON_MINIMUM_3D: number = 3;
 const RAYON_3D_DEFAUT: number = 10;

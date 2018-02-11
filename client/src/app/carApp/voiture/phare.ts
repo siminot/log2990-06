@@ -2,33 +2,35 @@ import { SpotLight, Vector3 } from "three";
 import { PI_OVER_2 } from "../constants";
 
 const COULEUR: number = 0xFFFFFF;
-const INTENSITE: number = 50;
-const DISTANCE: number = 20;
+const INTENSITE_DEFAUT: number = 1;
+const DISTANCE: number = 15;
+const PENOMBRE: number = 0.5;
 const RATIO_ANGLE: number = 5;
 const ANGLE: number = PI_OVER_2 / RATIO_ANGLE;
 
 export class Phare extends SpotLight {
 
     private positionRelative: Vector3;
-    private _angle: number;
+    private angleCentre: number;
 
     public constructor(positionRelative: Vector3, angle: number) {
-        super(COULEUR, INTENSITE, -DISTANCE, ANGLE);
+        super(COULEUR, INTENSITE_DEFAUT, -DISTANCE, ANGLE, PENOMBRE);
         this.positionRelative = positionRelative;
-        this._angle = angle;
+        this.angleCentre = angle;
     }
 
     public miseAJourPosition(positionVoiture: Vector3): void {
         const PHARE_POSITION_ABSOLU: Vector3 = this.positionRelative.add(positionVoiture);
         this.position.set(PHARE_POSITION_ABSOLU.x, PHARE_POSITION_ABSOLU.y, PHARE_POSITION_ABSOLU.z);
-        this.rotateY(this._angle);
+        this.rotateY(this.angleCentre);
+        this.rotateX(-ANGLE);
     }
 
     public allumer(): void {
-        this.intensity = INTENSITE;
+        this.intensity = 0;
     }
 
     public eteindre(): void {
-        this.intensity = INTENSITE;
+        this.intensity = 0;
     }
 }

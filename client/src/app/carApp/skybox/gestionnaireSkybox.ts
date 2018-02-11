@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { BoxGeometry, BackSide, Mesh, MeshBasicMaterial, TextureLoader, MultiMaterial } from "three";
 
 // Skybox
-const TAILLE_SKYBOX: number = 1024; // 1024 = valeur maximale, car sinon glitchs apparaissent
+const TAILLE_SKYBOX: number = 512;
 const RAPPOR_HAUTEUR_SOL: number = 25;
 const HAUTEUR_SOL: number = TAILLE_SKYBOX / RAPPOR_HAUTEUR_SOL;
 const NOMBRE_FACE_CUBE: number = 6;
@@ -24,7 +24,7 @@ export class GestionnaireSkybox {
     }
 
     public constructor() {
-        this.estModeNuit = false;
+        this.estModeNuit = true;
         this.initialiserURL();
         this.charger();
     }
@@ -65,9 +65,11 @@ export class GestionnaireSkybox {
     }
 
     public changerDecor(): void {
-        const POSITION_COURANTE: number = this.urlSkybox.findIndex((nom) => this.urlSkyboxCourante === nom );
-        this.urlSkyboxCourante = this.urlSkybox[(POSITION_COURANTE + 1) % this.urlSkybox.length];
-
+        this.urlSkyboxCourante = this.urlSkybox[(this.positionCouranteSkybox() + 1) % this.urlSkybox.length];
         this.charger();
+    }
+
+    private positionCouranteSkybox(): number {
+        return this.urlSkybox.findIndex((nom) => this.urlSkyboxCourante === nom );
     }
 }

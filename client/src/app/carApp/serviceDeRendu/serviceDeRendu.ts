@@ -39,7 +39,7 @@ export class ServiceDeRendu {
     }
 
     private initialiserCameras(): void {
-        this.gestionnaireCamera.initialiserCameras(this.gestionnaireScene.voitureJoueur);
+        this.gestionnaireCamera.initialiserCameras();
         this.redimensionnerCamera();
     }
 
@@ -64,7 +64,7 @@ export class ServiceDeRendu {
 
     private miseAJour(): void {
         const tempsDepuisDerniereTrame: number = Date.now() - this.tempsDerniereMiseAJour;
-        this.gestionnaireScene.miseAJourVoitures(tempsDepuisDerniereTrame);
+        this.gestionnaireScene.miseAJour(tempsDepuisDerniereTrame);
         this.gestionnaireCamera.miseAJourCameraCourante();
         this.tempsDerniereMiseAJour = Date.now();
     }

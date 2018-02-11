@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Scene, GridHelper, AxisHelper, AmbientLight } from "three";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
+import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 
 // Grille
 const TAILLE_GRILLE: number = 1000;
@@ -16,29 +17,24 @@ const TAILLE_AXE: number = 1000;
 const BLANC: number = 0xFFFFFF;
 const OPACITE_LUMIERE: number = 1;
 
-// AI
-const NOMBRE_AI: number = 0;
-
 @Injectable()
 export class GestionnaireScene {
 
     private _scene: Scene;
-    private _voitureJoueur: Voiture;
-    private _voituresAI: Voiture[];
-    private estModeNuit: boolean;
+    // private estModeNuit: boolean;
 
     public get voitureJoueur(): Voiture {
-        return this._voitureJoueur;
+        return this.gestionnaireVoiture.voitureJoueur;
     }
 
     public get scene(): Scene {
         return this._scene;
     }
 
-    public constructor(private gestionnaireSkybox: GestionnaireSkybox) {
+    public constructor(private gestionnaireSkybox: GestionnaireSkybox,
+                       private gestionnaireVoiture: GestionnaireVoitures) {
         this._scene = new Scene;
-        this._voituresAI = [];
-        this.estModeNuit = false;
+        // this.estModeNuit = false;
     }
 
     private initialiserEnvironnement(): void {
@@ -52,32 +48,27 @@ export class GestionnaireScene {
         return;
     }
 
-    private async ajouterVoitureJoueur(): Promise<void> {
-        this._scene.add(this._voitureJoueur = new Voiture());
-        await this._voitureJoueur.init();
+    private ajouterVoitureJoueur(): void {
+        this._scene.add(this.gestionnaireVoiture.voitureJoueur);
     }
 
-    private async ajouterVoituresAI(): Promise<void> {
-        for (let i: number = 0; i < NOMBRE_AI; i++) {
-            this._voituresAI[i] = new Voiture();
-            await this._voituresAI[i].init();
-            this.scene.add(this._voituresAI[i]);
+    private ajouterVoituresAI(): void {
+        const VOITURES_AI: Voiture[] = this.gestionnaireVoiture.voituresAI;
+
+        for (const VOITURE of VOITURES_AI) {
+            this._scene.add(VOITURE);
         }
     }
 
-    public miseAJourVoitures(tempsDepuisDerniereTrame: number): void {
-            this.voitureJoueur.update(tempsDepuisDerniereTrame);
-
-            for (const voiture of this._voituresAI) {
-                voiture.update(tempsDepuisDerniereTrame);
-            }
+    public miseAJour(tempsDepuisDerniereTrame: number): void {
+            this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
     }
 
     public async creerScene(): Promise<void> {
         this.initialiserEnvironnement();
         this.ajouterPiste();
-        await this.ajouterVoitureJoueur();
-        await this.ajouterVoituresAI();
+        this.ajouterVoitureJoueur();
+        this.ajouterVoituresAI();
     }
 
     public changerTempsJournee(): void {

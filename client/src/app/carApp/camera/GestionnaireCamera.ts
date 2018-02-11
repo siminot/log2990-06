@@ -4,6 +4,7 @@ import { Voiture } from "../voiture/voiture";
 import { CameraJeu } from "./CameraJeu";
 import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
+import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 
 @Injectable()
 export class GestionnaireCamera {
@@ -15,16 +16,16 @@ export class GestionnaireCamera {
         return this.cameraCourante;
     }
 
-    public constructor() {
+    public constructor(private gestionnaireVoitures: GestionnaireVoitures) {
         this.cameras = [];
     }
 
     // Initialisation
 
-    public initialiserCameras(voiture: Voiture): void {
+    public initialiserCameras(): void {
         this.ajouterNouvelleCamera3D();
         this.ajouterNouvelleCamera2D();
-        this.suivre(voiture);
+        this.suivre(this.gestionnaireVoitures.voitureJoueur);
         this.cameraCourante = this.cameras[0];
     }
 

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild, HostListener } from "@
 import { ServiceDeRendu } from "../serviceDeRendu/serviceDeRendu";
 import { GestionnaireCamera } from "../camera/GestionnaireCamera";
 import { GestionnaireScene } from "../scene/GestionnaireScene";
+import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 
 const ACCELERATEUR: number = 87;            // w
 const DIRECTION_GAUCHE: number = 65;        // a
@@ -27,6 +28,7 @@ export class GameComponent implements AfterViewInit {
 
     public constructor(private serviceDeRendu: ServiceDeRendu,
                        private gestionnaireCamera: GestionnaireCamera,
+                       private gestionnaireVoitures: GestionnaireVoitures,
                        private gestionnaireScene: GestionnaireScene) { }
 
     @HostListener("window:resize", ["$event"])
@@ -45,16 +47,16 @@ export class GameComponent implements AfterViewInit {
     public onKeyDown(event: KeyboardEvent): void {
         switch (event.keyCode) {
             case ACCELERATEUR:
-                this.gestionnaireScene.voitureJoueur.isAcceleratorPressed = true;
+                this.gestionnaireVoitures.voitureJoueur.isAcceleratorPressed = true;
                 break;
             case DIRECTION_GAUCHE:
-                this.gestionnaireScene.voitureJoueur.steerLeft();
+                this.gestionnaireVoitures.voitureJoueur.steerLeft();
                 break;
             case DIRECTION_DROITE:
-                this.gestionnaireScene.voitureJoueur.steerRight();
+                this.gestionnaireVoitures.voitureJoueur.steerRight();
                 break;
             case FREIN:
-                this.gestionnaireScene.voitureJoueur.brake();
+                this.gestionnaireVoitures.voitureJoueur.brake();
                 break;
             case ZOOM_IN:
                 this.gestionnaireCamera.zoomer();
@@ -71,14 +73,14 @@ export class GameComponent implements AfterViewInit {
     public onKeyUp(event: KeyboardEvent): void {
         switch (event.keyCode) {
             case ACCELERATEUR:
-                this.gestionnaireScene.voitureJoueur.isAcceleratorPressed = false;
+                this.gestionnaireVoitures.voitureJoueur.isAcceleratorPressed = false;
                 break;
             case DIRECTION_GAUCHE:
             case DIRECTION_DROITE:
-                this.gestionnaireScene.voitureJoueur.releaseSteering();
+                this.gestionnaireVoitures.voitureJoueur.releaseSteering();
                 break;
             case FREIN:
-                this.gestionnaireScene.voitureJoueur.releaseBrakes();
+                this.gestionnaireVoitures.voitureJoueur.releaseBrakes();
                 break;
             case CHANGER_VUE:
                 this.gestionnaireCamera.changerCamera();

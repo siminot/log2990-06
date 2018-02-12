@@ -22,6 +22,7 @@ module Route {
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
         private motsDejaPlaces: Array<string> = new Array<string>();
         private optionsPartie: MockOptionPartie;
+        private listeMotsRemplis: Array<Mockword>;
 
         constructor() {
             this.initMatrice();
@@ -32,6 +33,7 @@ module Route {
             this.listeMot = new Array<Mockword>();
             this.grille = new Array<Array<string>>();
             this.motsDejaPlaces = new Array<string>();
+            this.listeMotsRemplis = new Array<Mockword>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
         }
@@ -49,6 +51,30 @@ module Route {
                 }
             }
             mot.setMot(lecteur);
+            mot.setEtatAvantEcriture(lecteur);
+        }
+
+        private async remplirLaGrilleDeMotsSeq() {
+            let tabMot: Mot[];
+            for (let i = 0; i < this.listeMot.length; ++i) {
+                this.lireMotViaGrille(this.listeMot[i]);
+                tabMot = await this.demanderMot(this.listeMot[i])
+                .then(() => {
+                    this.listeMot[i].setListeMot(tabMot);
+                    // il faut faire les updates multiples
+                    this.affecterMot(tabMot[0], this.listeMot[i]);
+                    this.ecrireDansLaGrille(this.listeMot[i]);
+                })
+                .catch(() => {
+                    let j = i;
+                    while (!this.listeMot[i].estLieAvecAutreMot(this.initMatrice[--j])) {
+                        this.remiseMotAEtatInitial(this.listeMot[j]);
+                    }
+                    this.remiseMotAEtatInitial(this.listeMot[j]);
+                    this.listeMot[j].prochainMot();
+                    i = j;
+                });
+            }
         }
 
         private remplirLaGrilleDeMots() {
@@ -86,6 +112,8 @@ module Route {
             loop(0);
 
         }
+
+    
 
        /* private remplirLaGrilleDeMots(ctr: number): void {
             const loop = (i: number) => {
@@ -167,7 +195,7 @@ module Route {
                 case "Normal":
                 case "Difficile":
                 if (unMot.definitions.length > 0) {    // S'il n'y a aucune autre def
-                    indexDef = this.nombreAlleatoire(nbDef) - 1;
+                    indexDef = this.nombreAleatoire(nbDef) - 1;
                 }
                 break;
 
@@ -191,12 +219,23 @@ module Route {
                     this.grille[y][x + i] = mot.getMot()[i];
                 }
             }
-            // console.log(mot.getMot());
-            // console.log(this.grille);
+        }
+        private remiseMotAEtatInitial(mot: Mockword): void {
+            const x = mot.getPremierX();
+            const y = mot.getPremierY();
+
+            for (let i = 0; i < mot.getLongueur(); i++) {
+                if (mot.getVertical()) {
+                    this.grille[y + i][x] = mot.getEtatAvantEcriture()[i];
+                } else {
+                    this.grille[y][x + i] = mot.getEtatAvantEcriture()[i];
+                }
+            }
         }
 
+
         // retourne un nmbre entre 1 et nbMax
-        private nombreAlleatoire(nbMax: number): number {
+        private nombreAleatoire(nbMax: number): number {
             const millisecondes = new Date().getMilliseconds();
             const MILLE = 1000;
 

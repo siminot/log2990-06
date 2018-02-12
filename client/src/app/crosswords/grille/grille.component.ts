@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from "@angular/core";
+import { Component, OnInit} from "@angular/core";
 import { Word, LettreGrille } from "../mockObject/word";
 import { Subscription } from "rxjs/Subscription";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
@@ -21,7 +21,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  public constructor(private listeMotsService: RequeteDeGrilleService, private renderer: Renderer2) { }
+  public constructor(private listeMotsService: RequeteDeGrilleService) { }
 
   public ngOnInit(): void {
     this.mots = this.listeMotsService.getMots();
@@ -36,6 +36,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.stalker = true;
+        const elem: HTMLElement = document.getElementById("00");
+        elem.focus();
         // this.motSelectionne = motSelec;
         // console.log(document.getElementById("c00"));
         // console.log(this.el.nativeElement);
@@ -95,7 +97,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
   }
+
+  public prnt(): void {
+    console.log("test");
+  }
 }
+
 
   /*
   ** Pour une autre carte que celle du sprint 1. **

@@ -54,29 +54,6 @@ module Route {
             mot.setEtatAvantEcriture(lecteur);
         }
 
-        private async remplirLaGrilleDeMotsSeq() {
-            let tabMot: Mot[];
-            for (let i = 0; i < this.listeMot.length; ++i) {
-                this.lireMotViaGrille(this.listeMot[i]);
-                tabMot = await this.demanderMot(this.listeMot[i])
-                .then(() => {
-                    this.listeMot[i].setListeMot(tabMot);
-                    // il faut faire les updates multiples
-                    this.affecterMot(tabMot[0], this.listeMot[i]);
-                    this.ecrireDansLaGrille(this.listeMot[i]);
-                })
-                .catch(() => {
-                    let j = i;
-                    while (!this.listeMot[i].estLieAvecAutreMot(this.initMatrice[--j])) {
-                        this.remiseMotAEtatInitial(this.listeMot[j]);
-                    }
-                    this.remiseMotAEtatInitial(this.listeMot[j]);
-                    this.listeMot[j].prochainMot();
-                    i = j;
-                });
-            }
-        }
-
         private remplirLaGrilleDeMots() {
             this.remplirGrilleRecursif(0)
             .then(() =>  { console.log("ca marche"); console.log(this.grille); })
@@ -88,6 +65,7 @@ module Route {
             // indice++;
             this.lireMotViaGrille(this.listeMot[indice]);
             let lesMots: Mot[];
+            const contrainte = this.listeMot[indice].getMot();
             lesMots = await this.demanderMot(this.listeMot[indice]);
             if (lesMots === undefined) {
                 console.log("pas de mot");
@@ -99,74 +77,24 @@ module Route {
             let prochainMotTrouve = false;
             do {
                 if (ctr >= lesMots.length) {
+                    this.listeMot[indice].setMot(contrainte);
+                    this.ecrireDansLaGrille(this.listeMot[indice]);
+
                     return false;
                 }
                 console.log("ctr : " + ctr + " indice : " + indice);
                 this.affecterMot(lesMots[ctr++], this.listeMot[indice]);
                 this.ecrireDansLaGrille(this.listeMot[indice]);
 
-                if (++indice >= this.listeMot.length) {
+                if (indice + 1 >= this.listeMot.length) {
                     return true;
                 }
-                prochainMotTrouve = await this.remplirGrilleRecursif(indice);
+                prochainMotTrouve = await this.remplirGrilleRecursif(indice + 1);
 
             } while (!prochainMotTrouve);
 
             return true;
         }
-
-    
-
-       /* private remplirLaGrilleDeMots(ctr: number): void {
-            const loop = (i: number) => {
-                this.insererUnMot(i).then(() => {
-                    if (i < this.listeMot.length - 1) {
-                        i++;
-                        loop(i++);
-                    }
-                })
-                .catch( (resolve) => console.log("Erreur"));
-            };
-            loop(ctr);
-        }*/
-
-       /* private updateListeMot(mot: Mockword): void {
-            const indexConstant = mot.getVertical() ? mot.getPremierX() : mot.getPremierY();
-
-            for (const elem of this.listeMot) {
-                if (elem.getVertical() !== mot.getVertical()) {
-                    const premierIndex = elem.getVertical() ? elem.getPremierY() : elem.getPremierX();
-                    const dernierIndex = premierIndex + elem.getLongueur() - 1;
-                    const indexCharAModifier = mot.getVertical() ?
-                    elem.getPremierY() - mot.getPremierY() : elem.getPremierX() - mot.getPremierX();
-
-                    if (premierIndex <= indexConstant && indexConstant < dernierIndex ) {
-                        let motModifie = elem.getMot();
-                        const indexAModifier = indexConstant - premierIndex;
-                        motModifie = motModifie.substring(0, indexAModifier)
-                                      + mot.getMot().charAt(indexCharAModifier) + motModifie.substring(indexAModifier + 1);
-                        console.log(elem);
-                        elem.setMot(motModifie);
-                    }
-                }
-            }
-        }*/
-
-       /* private insererUnMot(index: number): Promise<void> {
-            this.lireMotViaGrille(this.listeMot[index]);
-
-            return this.demanderMot(this.listeMot[index]).then( (data) => {
-                this.updateListeMot(this.listeMot[index])
-                .then();
-
-                const loop = (i: number ) => {
-
-                    })
-                    .catch( (resolve) => console.log("Erreur"));
-                };
-                loop(ctr);
-            });
-        }*/
 
         private demanderMot(mot: Mockword): Promise<Mot[]> {
 
@@ -222,7 +150,7 @@ module Route {
                 }
             }
         }
-        private remiseMotAEtatInitial(mot: Mockword): void {
+       /* private remiseMotAEtatInitial(mot: Mockword): void {
             const x = mot.getPremierX();
             const y = mot.getPremierY();
 
@@ -233,8 +161,7 @@ module Route {
                     this.grille[y][x + i] = mot.getEtatAvantEcriture()[i];
                 }
             }
-        }
-
+        }*/
 
         // retourne un nmbre entre 1 et nbMax
         private nombreAleatoire(nbMax: number): number {

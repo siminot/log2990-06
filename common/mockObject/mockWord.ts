@@ -1,5 +1,3 @@
-import { Mot } from "./../../server/app/serviceLexical/Mot";
-
 export class Mockword {
    
     private mot: String;
@@ -9,8 +7,6 @@ export class Mockword {
     private longeur: number;
     private premierX: number;
     private premierY: number;
-    private indexListe: number;
-    private liste: Mot[];
 
     constructor(estVertical : boolean, longueur: number, premierX: number, premierY: number){
         this.mot = "";
@@ -20,7 +16,6 @@ export class Mockword {
         this.longeur = longueur;
         this.premierX = premierX;
         this.premierY = premierY;
-        this.indexListe = 0;
     }
     // getters 
     getVertical(): boolean{
@@ -59,12 +54,9 @@ export class Mockword {
     setDefinition (definition: String){
         this.definition = definition;
     }
+    
     setEtatAvantEcriture(etat: String ){
         this.etatAvantEcriture = etat;
-    }
-
-    setListeMot(liste: Mot[]){
-        this.liste = liste;
     }
 
     // autre
@@ -84,20 +76,15 @@ export class Mockword {
         return false;
     }
 
-    private peutIncrementerIndiceMot() : boolean {
-        if(++this.indexListe < this.liste.length) {
-            return true;
+    public getImportance(): number {
+        let i = 0;
+        for(let char of this.mot) {
+            if(char !== "_") {
+                i++;
+            }
         }
-        return false;
-    }
 
-    prochainMot() : void {
-        if(this.peutIncrementerIndiceMot){
-            this.setMot(this.liste[this.indexListe].mot);
-            // random plus tard
-            this.setDefinition(this.liste[this.indexListe].definitions[0].definition);
-        }
-        throw new Error("liste de Mot d'une requete finie");
+        return i/this.mot.length;
     }
   
 }

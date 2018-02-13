@@ -15,8 +15,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private motSelectionne: Word;
-  private stalker: boolean = false;
-
+  
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
@@ -35,24 +34,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
-        this.stalker = true;
-        const idTmp: string = String(motSelec.premierX) + String(motSelec.premierY);
-        const elem: HTMLElement = document.getElementById(idTmp);
+        this.motSelectionne = motSelec;
+
+        const idSelectionne: string = String(this.motSelectionne.premierX) + String(this.motSelectionne.premierY);
+        const elem: HTMLElement = document.getElementById(idSelectionne);
+        
         elem.focus();
-        console.log(elem);
-        // this.motSelectionne = motSelec;
-        // console.log(document.getElementById("c00"));
-        // console.log(this.el.nativeElement);
-        // this.renderer.addClass(this.el.nativeElement, "faefaef");
-        // let element = this.renderer.selectRootElement("#c00");
-        // console.log(element);
-        // console.log(element.nativeElement.querySelector("#c00"));
-        // console.log(this.el.nativeElement.querySelector(".c00"));
-        // let hElem: HTMLElement = this.el.nativeElement;
-        // console.log(hElem.getElementById("c00"));
-        // const elem: HTMLElement = this.el.nativeElement.getElementById("c00");
-        // console.log(elem);
-        // const elem: HTMLElement = document.getElementById("00");
       });
   }
 

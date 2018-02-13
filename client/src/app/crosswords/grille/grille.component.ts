@@ -20,8 +20,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private positionLettresSelectionnees: string[];
   private positionCourante: number;
 
-  public inputValue: string = "Hello";
-
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
@@ -42,12 +40,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
 
-        const idSelectionne: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY);
-        const elem: HTMLElement = document.getElementById(idSelectionne);
-
-        elem.focus();
-
         this.remplirLettresSelect();
+
+        this.focusOnRightLetter();
       });
   }
 
@@ -85,6 +80,24 @@ export class GrilleComponent implements OnInit, OnDestroy {
       }
       this.positionLettresSelectionnees[i] = tmp;
     }
+  }
+
+  private focusOnRightLetter(): void {
+    let elemTmp:HTMLElement;
+    let idTmp: string;
+    
+    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+      idTmp = this.positionLettresSelectionnees[i];
+      elemTmp = document.getElementById(idTmp);
+
+      if(elemTmp.value === '') {
+        this.positionCourante = i;
+        elemTmp.focus();
+        return;
+      }
+    }
+    this.positionCourante = this.motSelectionne.longeur - 1;
+    elemTmp.focus();
   }
 
   private manageKeyEntry(event: any): void {

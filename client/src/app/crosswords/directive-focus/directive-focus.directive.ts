@@ -1,14 +1,14 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 
 @Directive({ selector: "[appDirectiveFocus]" })
 
 export class DirectiveFocusDirective {
 
-  constructor(private el: ElementRef) { }
+  constructor() { }
 
     @Input() appDirectiveFocus: boolean;
 
-    @HostListener('keydown', ['$event']) onKeyDown(event) {
+    @HostListener('keydown', ['$event']) onKeyDown(event: any) {
         let e = <KeyboardEvent> event;
 
         if (this.appDirectiveFocus) {

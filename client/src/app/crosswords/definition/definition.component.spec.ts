@@ -58,17 +58,6 @@ describe("DefinitionComponent", () => {
     });
   });
 
-  describe("Accesseurs et mutateurs.", () => {
-    it("Accesseur de la liste de mots.", () => {
-      expect(component.getMots()).toContain(realWordFromOurFakeList);
-    });
-
-    it("Accesseur de la matrice de mots de la grille.", () => {
-      const indicePremiereLigne: number = 0;
-      expect(component.getMatrice()[indicePremiereLigne]).toContain(realLetterFromGrid);
-    });
-  });
-
   describe("Modification de la grille.", () => {
     it("Découvrir les cases dans la grille selon le mot selectionné.", () => {
       component.decouvrirCases(fakeWord);

@@ -84,12 +84,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnRightLetter(): void {
-    let elemTmp:HTMLElement;
+    let elemTmp:HTMLInputElement;
     let idTmp: string;
     
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
-      elemTmp = document.getElementById(idTmp);
+      elemTmp = <HTMLInputElement>document.getElementById(idTmp);
 
       if(elemTmp.value === '') {
         this.positionCourante = i;
@@ -120,12 +120,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnPreviousLetter(): void {
-    const elemCourant: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+    const elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
     if(this.positionCourante === this.motSelectionne.longeur - 1 && elemCourant.value != '') {
       elemCourant.value = '';
     } else if (this.positionCourante > 0) {
       this.positionCourante--;
-      const elem: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+      const elem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
       elem.focus();
       elem.value = '';
     }

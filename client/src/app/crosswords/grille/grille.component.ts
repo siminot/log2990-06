@@ -15,7 +15,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private motSelectionne: Word;
-  
+
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
@@ -38,7 +38,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
         const idSelectionne: string = String(this.motSelectionne.premierX) + String(this.motSelectionne.premierY);
         const elem: HTMLElement = document.getElementById(idSelectionne);
-        
+
         elem.focus();
       });
   }
@@ -55,10 +55,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return(etat ? "0" : "1");
   }
 
-  public makeIDs(i: number, j: number): String {
+  private makeIDs(i: number, j: number): String {
     const a: string = String(i);
     const b: string = String(j);
-    // const c: string = "c";
 
     return a + b;
   }
@@ -72,13 +71,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   public getElementID(): HTMLElement {
    return document.getElementById("01");
-  }
-
-  public printID($event: any): void {
-    const target: any = event.target || event.srcElement || event.currentTarget;
-    const idAttr: any = target.attributes.id;
-    const value: any = idAttr.nodeValue;
-    console.log(value);
   }
 
   public ngOnDestroy(): void {

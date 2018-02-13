@@ -6,7 +6,7 @@
             <td *ngFor="let case of item; let j = index">
                 <p class="indicesHorizontals" *ngIf="i == 0">{{ j + 1 }}</p>
                 <p class="indicesVerticals" *ngIf="j == 0">{{ i + 1 }}</p>
-                <input [attr.id] = "makeIDs(i,j)" class="tuile" (click)="printID($event)" [appDirectiveFocus] = "stalker">
+                <input [attr.id] = "makeIDs(i,j)" class="tuile" [appDirectiveFocus] = "stalker">
                 <img *ngIf="case.lettre != '1' ; else elseBlock1" [style.opacity]="opacite(case.caseDecouverte)" class="tuile" src="../../../assets/tuile.png">
                 <ng-template #elseBlock1>
                     <img src="../../../assets/tuileMorte.png" class="tuile">

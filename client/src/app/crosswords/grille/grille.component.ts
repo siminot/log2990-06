@@ -1,8 +1,10 @@
 import { Component, OnInit} from "@angular/core";
-import { Word, LettreGrille } from "../mockObject/word";
 import { Subscription } from "rxjs/Subscription";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
+
+import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { DirectiveFocusDirective } from "../directive-focus/directive-focus.directive";
 
 @Component({
   selector: "app-grille",
@@ -83,12 +85,25 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
+  private manageKeyEntry(event: any): void {
+    console.log(event.keyCode);
+    if (event.key === "Backspace") {
+      this.focusOnPreviousLetter();
+    } else if (event.keyCode >= 65 && event.keyCode <= 90) {
+      this.focusOnNextLetter();
+    }
+  }
+
   private focusOnNextLetter(): void {
     if (this.positionCourante < this.motSelectionne.longeur - 1) {
       this.positionCourante++;
       const elem: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
       elem.focus();
     }
+  }
+
+  private focusOnPreviousLetter(): void {
+    console.log("backspace.");
   }
 
   public ngOnDestroy(): void {

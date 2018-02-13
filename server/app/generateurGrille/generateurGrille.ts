@@ -56,8 +56,8 @@ module Route {
 
         private remplirLaGrilleDeMots() {
             this.remplirGrilleRecursif(0)
-            .then(() =>  { console.log("ca marche"); console.log(this.grille); })
-            .catch((error) => console.log("wtf esti"));
+            .then(() =>  { console.log("ca marche"); console.log(this.grille); });
+            // .catch((error) => console.log("wtf esti"));
         }
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {
@@ -73,27 +73,46 @@ module Route {
                 return false;
                 // throw new Error("Pas de mot");
             }
+            let prochainIndice: number;
             let ctr = 0;
+            const DIX = 2;
             let prochainMotTrouve = false;
             do {
-                if (ctr >= lesMots.length) {
+                if (ctr++ === DIX || ctr >= lesMots.length) {
                     this.listeMot[indice].setMot(contrainte);
                     this.ecrireDansLaGrille(this.listeMot[indice]);
+                    this.listeMot[indice].setEstTraite(false);
 
                     return false;
                 }
                 console.log("ctr : " + ctr + " indice : " + indice);
-                this.affecterMot(lesMots[ctr++], this.listeMot[indice]);
+                this.affecterMot(lesMots[this.nombreAleatoire(lesMots.length) - 1], this.listeMot[indice]);
                 this.ecrireDansLaGrille(this.listeMot[indice]);
-
-                if (indice + 1 >= this.listeMot.length) {
+                prochainIndice = this.obtenirLeMotLePlusImportant(this.listeMot[indice]);
+                if (prochainIndice === -1) {
                     return true;
                 }
-                prochainMotTrouve = await this.remplirGrilleRecursif(indice + 1);
+                console.log(this.grille);
+                prochainMotTrouve = await this.remplirGrilleRecursif(prochainIndice);
 
             } while (!prochainMotTrouve);
 
             return true;
+        }
+
+        private obtenirLeMotLePlusImportant(mock: Mockword): number {
+            let max = 0;
+            let indiceDuMax = -1;
+            for (let i = 0; i < this.listeMot.length; i++) {
+                if (!this.listeMot[i].getEstTraite()) {
+                    if (max <= this.listeMot[i].getImportance(mock)) {
+                        max = this.listeMot[i].getImportance(mock);
+                        indiceDuMax = i;
+                    }
+                }
+            }
+
+            return indiceDuMax;
         }
 
         private demanderMot(mot: Mockword): Promise<Mot[]> {
@@ -134,6 +153,7 @@ module Route {
 
             motAChanger.setMot(unMot.mot);
             motAChanger.setDefinition(unMot.definitions[indexDef].definition);
+            motAChanger.setEstTraite(true);
 
             return unMot;
         }
@@ -166,6 +186,7 @@ module Route {
         // retourne un nmbre entre 1 et nbMax
         private nombreAleatoire(nbMax: number): number {
             const millisecondes = new Date().getMilliseconds();
+            console.log(millisecondes);
             const MILLE = 1000;
 
             return Math.floor(millisecondes * nbMax / MILLE) + 1;

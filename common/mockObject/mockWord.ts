@@ -1,3 +1,5 @@
+const PRIORITEADJACENCE = 20;
+
 export class Mockword {
    
     private mot: String;
@@ -7,6 +9,7 @@ export class Mockword {
     private longeur: number;
     private premierX: number;
     private premierY: number;
+    private estTraite: boolean;
 
     constructor(estVertical : boolean, longueur: number, premierX: number, premierY: number){
         this.mot = "";
@@ -16,6 +19,7 @@ export class Mockword {
         this.longeur = longueur;
         this.premierX = premierX;
         this.premierY = premierY;
+        this.estTraite = false;
     }
     // getters 
     getVertical(): boolean{
@@ -45,6 +49,9 @@ export class Mockword {
         return this.etatAvantEcriture;
     }
 
+    getEstTraite(){
+        return this.estTraite;
+    }
 
 
     // setters
@@ -57,6 +64,10 @@ export class Mockword {
     
     setEtatAvantEcriture(etat: String ){
         this.etatAvantEcriture = etat;
+    }
+
+    setEstTraite(etat: boolean){
+        this.estTraite = etat;
     }
 
     // autre
@@ -76,15 +87,17 @@ export class Mockword {
         return false;
     }
 
-    public getImportance(): number {
+    public getImportance(ancienMot: Mockword): number {
         let i = 0;
         for(let char of this.mot) {
             if(char !== "_") {
                 i++;
             }
         }
-
-        return i/this.mot.length;
+        if(this.estLieAvecAutreMot(ancienMot)){
+            i+=PRIORITEADJACENCE // priorite a
+        }
+        return i + this.mot.length;
     }
   
 }

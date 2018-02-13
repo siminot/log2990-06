@@ -5,10 +5,12 @@ export class GenerateurSquelette {
     private grille: Array<Array<string>>;
     private tailleGrille: number;
     private pourcentageCasesNoires: number;
+    private compteurCasesNoires: number;
 
     constructor(tailleGrille: number, pourcentageDeCasesNoires: number) {
         this.tailleGrille = tailleGrille;
         this.pourcentageCasesNoires = pourcentageDeCasesNoires;
+        this.compteurCasesNoires = 0;
     }
 
     public getSqueletteGrille(): Array<Array<string>> {
@@ -22,7 +24,9 @@ export class GenerateurSquelette {
     }
 
     private genererNouvelleGrille(): void {
+        this.compteurCasesNoires = 0;
         this.allocationDeLaGrille();
+        this.genererMotifInitial();
         this.genererCasesNoires(this.pourcentageCasesNoires);
     }
 
@@ -33,6 +37,37 @@ export class GenerateurSquelette {
         }
     }
 
+    private genererMotifInitial(): void {
+        for (let i = 1; i < this.tailleGrille; i += 2) {
+            for (let j = 1; j < this.tailleGrille; j += 2) {
+                this.grille[i][j] = NOIR;
+                this.compteurCasesNoires++;
+            }
+        }
+        /*for (let y = 1; y < this.tailleGrille; y += 2) {
+            let x: number;
+            do {
+                x = this.nombreAleatoire(5) * 2 + 1;
+            } while (this.grille[y][x] === VIDE);
+            this.grille[y][x] = VIDE;
+            }
+
+        for (let x = 1; x < this.tailleGrille; x += 2) {
+            let y: number;
+            do {
+               y = this.nombreAleatoire(5) * 2 + 1;
+            } while (this.grille[y][x] === VIDE);
+            this.grille[y][x] = VIDE;
+        }*/
+    }
+
+    /*private nombreAleatoire(nbMax: number): number {
+        const millisecondes = new Date().getMilliseconds();
+        const MILLE = 1000;
+
+        return Math.floor(millisecondes * nbMax / MILLE);
+    }*/
+
     private genererCasesNoires(ratioVoulu: number): number {
         // Verifier une bonne entree
         if (ratioVoulu < 0 || ratioVoulu > 1) {
@@ -40,17 +75,17 @@ export class GenerateurSquelette {
         }
 
         const nombreCases = Math.ceil(this.tailleGrille * this.tailleGrille * ratioVoulu);
-        let compteurCasesNoires = 0;
+
         let x = 0;
         let y = 0;
 
-        while (compteurCasesNoires < nombreCases) {
+        while (this.compteurCasesNoires < nombreCases) {
             // On genere une position aleatoire
             x = Math.floor(Math.random() * this.tailleGrille);
             y = Math.floor(Math.random() * this.tailleGrille);
             if (this.verifCaseNoire(x, y)) {
                 this.grille[y][x] = NOIR;
-                compteurCasesNoires++;
+                this.compteurCasesNoires++;
             }
         }
 

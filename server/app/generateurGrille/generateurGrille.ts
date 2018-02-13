@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { TAILLE_TEST, POURCENTAGE_TEST } from "./constantes";
+import { TAILLE_TEST, POURCENTAGE_NOIR } from "./constantes";
 import { Mockword } from "./../../../common/mockObject/mockWord";
 import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../serviceLexical/Mot";
@@ -18,7 +18,7 @@ module Route {
 
         private grille: Array<Array<string>>;
         private listeMot: Array<Mockword>;
-        private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_TEST);
+        private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_NOIR);
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
         private motsDejaPlaces: Array<string> = new Array<string>();
         private optionsPartie: MockOptionPartie;
@@ -52,6 +52,19 @@ module Route {
             }
             mot.setMot(lecteur);
             mot.setEtatAvantEcriture(lecteur);
+        }
+
+        private ecrireDansLaGrille(mot: Mockword): void {
+            const x = mot.getPremierX();
+            const y = mot.getPremierY();
+
+            for (let i = 0; i < mot.getLongueur(); i++) {
+                if (mot.getVertical()) {
+                    this.grille[y + i][x] = mot.getMot()[i];
+                } else {
+                    this.grille[y][x + i] = mot.getMot()[i];
+                }
+            }
         }
 
         private remplirLaGrilleDeMots() {
@@ -103,10 +116,12 @@ module Route {
         private obtenirLeMotLePlusImportant(mock: Mockword): number {
             let max = 0;
             let indiceDuMax = -1;
+            let temp: number;
             for (let i = 0; i < this.listeMot.length; i++) {
                 if (!this.listeMot[i].getEstTraite()) {
-                    if (max <= this.listeMot[i].getImportance(mock)) {
-                        max = this.listeMot[i].getImportance(mock);
+                    temp = this.listeMot[i].getImportance(mock);
+                    if (max < temp) {
+                        max = temp;
                         indiceDuMax = i;
                     }
                 }
@@ -158,18 +173,6 @@ module Route {
             return unMot;
         }
 
-        private ecrireDansLaGrille(mot: Mockword): void {
-            const x = mot.getPremierX();
-            const y = mot.getPremierY();
-
-            for (let i = 0; i < mot.getLongueur(); i++) {
-                if (mot.getVertical()) {
-                    this.grille[y + i][x] = mot.getMot()[i];
-                } else {
-                    this.grille[y][x + i] = mot.getMot()[i];
-                }
-            }
-        }
        /* private remiseMotAEtatInitial(mot: Mockword): void {
             const x = mot.getPremierX();
             const y = mot.getPremierY();
@@ -183,7 +186,7 @@ module Route {
             }
         }*/
 
-        // retourne un nmbre entre 1 et nbMax
+        // retourne un nombre entre 1 et nbMax
         private nombreAleatoire(nbMax: number): number {
             const millisecondes = new Date().getMilliseconds();
             console.log(millisecondes);

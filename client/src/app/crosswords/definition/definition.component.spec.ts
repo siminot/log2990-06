@@ -28,15 +28,6 @@ describe("DefinitionComponent", () => {
     activer: false
   };
 
-  // lettreDecouverte a true puisque les lettres sont initialisées à true
-  // pour qu"on les voit dans la grille. Mettre false quand on initialisera
-  // les lettres à false.
-  const realLetterFromGrid: LettreGrille = {
-    caseDecouverte: false,
-    lettre: "P",
-    lettreDecouverte: true
-  };
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DefinitionComponent ],

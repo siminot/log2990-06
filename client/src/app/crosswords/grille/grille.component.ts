@@ -62,6 +62,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return a + b;
   }
 
+  private focusOnNextLetter(): void {
+    console.log("Next Letter Asked.");
+  }
+
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();

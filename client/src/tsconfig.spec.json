@@ -9,14 +9,5 @@
       "jasmine",
       "node"
     ]
-  },
-  "files": [
-    "test.ts",
-    "/Users/Adrimeov/Desktop/projet/client/src/app/crosswords/grille/ grille.component.ts"
-  ],
-  "include": [
-    "**/*.spec.ts",
-    "/Users/Adrimeov/Desktop/projet/client/src/app/crosswords/grille/ grille.component.ts",
-    "**/*.d.ts"
-  ]
+  }
 }

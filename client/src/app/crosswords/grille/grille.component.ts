@@ -62,28 +62,17 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return a + b;
   }
 
-  public focusOn(): void {
-    const elem: HTMLElement = this.getElementID();
-    console.log(elem);
-    elem.focus();
-    console.log(this.motSelectionne);
-  }
-
-  public getElementID(): HTMLElement {
-   return document.getElementById("01");
-  }
-
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
   }
 
+  // Fonction appelée dans la Directive.
   public prnt(): void {
     console.log("test");
   }
 }
-
 
   /*
   ** Pour une autre carte que celle du sprint 1. **

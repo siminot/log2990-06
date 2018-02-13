@@ -19,6 +19,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private motSelectionne: Word;
   private positionLettresSelectionnees: string[];
   private positionCourante: number;
+  public textvalue: string = "HELLO WORLD";
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;

@@ -83,7 +83,7 @@ export class RequeteDeGrilleService {
         tmpLettreGrille = {
           caseDecouverte: false,
           lettre: objMot.mot[indice],
-          lettreDecouverte: true
+          lettreDecouverte: false
         };
 
         if (objMot.vertical) {

@@ -1,7 +1,6 @@
 export class Mockword {
    
     private mot: String;
-    private etatAvantEcriture: String;
     private definition: String;
     private estVertical: boolean;
     private longeur: number;
@@ -12,7 +11,6 @@ export class Mockword {
     constructor(estVertical : boolean, longueur: number, premierX: number, premierY: number){
         this.mot = "";
         this.definition = "";
-        this.etatAvantEcriture = "";
         this.estVertical = estVertical;
         this.longeur = longueur;
         this.premierX = premierX;
@@ -43,9 +41,6 @@ export class Mockword {
     getDefinition(): String {
         return this.definition;
     }
-    getEtatAvantEcriture(): String {
-        return this.etatAvantEcriture;
-    }
 
     getEstTraite(){
         return this.estTraite;
@@ -59,10 +54,6 @@ export class Mockword {
     setDefinition (definition: String){
         this.definition = definition;
     }
-    
-    setEtatAvantEcriture(etat: String ){
-        this.etatAvantEcriture = etat;
-    }
 
     setEstTraite(etat: boolean){
         this.estTraite = etat;
@@ -71,14 +62,30 @@ export class Mockword {
     // autre
 
     public estLieAvecAutreMot(autreMot: Mockword): boolean {
-        let coordonneeFixe: number;
-        this.getVertical() ? coordonneeFixe = this.getPremierX() : coordonneeFixe = this.getPremierY();
+        
         if (this.getVertical() !== autreMot.getVertical()) {
-            let coordMin: number;
-            autreMot.getVertical() ? coordMin = autreMot.getPremierX() : coordMin = autreMot.getPremierY();
-            const coordMax = coordMin + autreMot.getLongueur() - 1;
-            if (coordMin <= coordonneeFixe && coordonneeFixe <= coordMax) {
-                return true;
+
+            let coordonneeVariableMin: number;
+            let coordonneeVariableMax: number;
+            let coordAutre: number;
+
+            this.getVertical() ? coordonneeVariableMin = this.getPremierY() : coordonneeVariableMin = this.getPremierX();
+            coordonneeVariableMax = coordonneeVariableMin + this.getLongueur() - 1;
+            this.getVertical() ? coordAutre = this.getPremierY() : coordAutre = this.getPremierX();
+
+            if(coordonneeVariableMin <= coordAutre && coordAutre <= coordonneeVariableMax) {
+                
+                let coordonneeFixe: number;
+                let coordMinAutre: number;
+                let coordMaxAutre: number;
+
+                this.getVertical() ? coordonneeFixe = this.getPremierX() : coordonneeFixe = this.getPremierY();
+                autreMot.getVertical() ? coordMinAutre = autreMot.getPremierY() : coordMinAutre = autreMot.getPremierX();
+                coordMaxAutre = coordMinAutre + autreMot.getLongueur() - 1;
+
+                if (coordMinAutre <= coordonneeFixe && coordonneeFixe <= coordMaxAutre) {
+                    return true;
+                }
             }
         }
 

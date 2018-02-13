@@ -36,8 +36,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.stalker = true;
-        const elem: HTMLElement = document.getElementById("00");
+        const idTmp: string = String(motSelec.premierX) + String(motSelec.premierY);
+        const elem: HTMLElement = document.getElementById(idTmp);
         elem.focus();
+        console.log(elem);
         // this.motSelectionne = motSelec;
         // console.log(document.getElementById("c00"));
         // console.log(this.el.nativeElement);

@@ -20,6 +20,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private positionLettresSelectionnees: string[];
   private positionCourante: number;
 
+  public inputValue: string = "Hello";
+
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
@@ -95,6 +97,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnNextLetter(): void {
+    console.log("forward.");
     if (this.positionCourante < this.motSelectionne.longeur - 1) {
       this.positionCourante++;
       const elem: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
@@ -103,7 +106,15 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnPreviousLetter(): void {
-    console.log("backspace.");
+    const elemCourant: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+    if(this.positionCourante === this.motSelectionne.longeur - 1 && elemCourant.value != '') {
+      elemCourant.value = '';
+    } else if (this.positionCourante > 0) {
+      this.positionCourante--;
+      const elem: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+      elem.focus();
+      elem.value = '';
+    }
   }
 
   public ngOnDestroy(): void {

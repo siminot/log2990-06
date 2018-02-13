@@ -170,18 +170,6 @@ module Route {
                 }
             }
         }
-       /* private remiseMotAEtatInitial(mot: Mockword): void {
-            const x = mot.getPremierX();
-            const y = mot.getPremierY();
-
-            for (let i = 0; i < mot.getLongueur(); i++) {
-                if (mot.getVertical()) {
-                    this.grille[y + i][x] = mot.getEtatAvantEcriture()[i];
-                } else {
-                    this.grille[y][x + i] = mot.getEtatAvantEcriture()[i];
-                }
-            }
-        }*/
 
         // retourne un nmbre entre 1 et nbMax
         private nombreAleatoire(nbMax: number): number {

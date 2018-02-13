@@ -178,7 +178,8 @@ export class Voiture extends Object3D {
 
     private ajouterPhares(): void {
         for (const PHARE of this.phares) {
-            this.mesh.add(new SpotLightHelper(PHARE)); // Remettre les phares normaux pour tester
+            this.mesh.add(new SpotLightHelper(PHARE.faisceau)); // Remettre les phares normaux pour tester
+            this.mesh.add(PHARE.ampoule);
         }
     }
 

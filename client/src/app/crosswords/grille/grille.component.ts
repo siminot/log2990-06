@@ -15,6 +15,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private motSelectionne: Word;
+  private positionLettresSelectionnees: String[];
+  private positionCourante: number;
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
@@ -40,6 +42,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
         const elem: HTMLElement = document.getElementById(idSelectionne);
 
         elem.focus();
+
+        this.remplirLettresSelect();
       });
   }
 
@@ -62,8 +66,24 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return a + b;
   }
 
-  private focusOnNextLetter(): void {
-    console.log("Next Letter Asked.");
+  private remplirLettresSelect(): void {
+    this.positionLettresSelectionnees = [];
+
+    let tmp: String = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY);
+    this.positionLettresSelectionnees[0] = tmp;
+
+    for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
+      if (this.motSelectionne.vertical) {
+        tmp = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY + i);
+      } else {
+        tmp = this.makeID(this.motSelectionne.premierX + i, this.motSelectionne.premierY);
+      }
+      this.positionLettresSelectionnees[i] = tmp;
+    }
+  }
+
+  private focusOnNextLetter(i: number, j: number): void {
+
   }
 
   public ngOnDestroy(): void {

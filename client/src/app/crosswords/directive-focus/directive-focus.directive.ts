@@ -1,18 +1,23 @@
-import { Directive, OnInit, Input} from "@angular/core";
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import {GrilleComponent} from "../grille/grille.component";
 
 @Directive({ selector: "[appDirectiveFocus]" })
 
-export class DirectiveFocusDirective implements OnInit {
+export class DirectiveFocusDirective {
 
-  @Input("appDirectiveFocus") public isFocused: boolean;
+  constructor(private el: ElementRef) { }
 
-  public constructor(private prvtCmpt: GrilleComponent) { }
+    @Input() appDirectiveFocus: boolean;
 
-  public ngOnInit(): void {
-    if (this.isFocused) {
-      console.log("test");
-      this.prvtCmpt.prnt();
+    @HostListener('keydown', ['$event']) onKeyDown(event) {
+        let e = <KeyboardEvent> event;
+
+        if (this.appDirectiveFocus) {
+            if (e.keyCode < 65 || e.keyCode > 90) {
+              e.preventDefault();
+            } else if ((e.keyCode >= 65 && e.keyCode <= 90)) {
+              return;
+            }
+        }
     }
-  }
 }

@@ -36,7 +36,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
 
-        const idSelectionne: string = String(this.motSelectionne.premierX) + String(this.motSelectionne.premierY);
+        const idSelectionne: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY);
         const elem: HTMLElement = document.getElementById(idSelectionne);
 
         elem.focus();
@@ -55,7 +55,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return(etat ? "0" : "1");
   }
 
-  private makeIDs(i: number, j: number): String {
+  private makeID(i: number, j: number): string {
     const a: string = String(i);
     const b: string = String(j);
 

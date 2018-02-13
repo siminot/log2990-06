@@ -53,38 +53,40 @@ module Route {
 
         private remplirLaGrilleDeMots() {
             this.remplirGrilleRecursif(0)
-            .then(() =>  console.log("ca marche"))
+            .then(() =>  { console.log("ca marche"); console.log(this.grille); })
             .catch((error) => console.log("wtf esti"));
         }
 
-        private async remplirGrilleRecursif(indice: number): Promise<void> {
+        private async remplirGrilleRecursif(indice: number): Promise<boolean> {
 
-            indice++;
+            // indice++;
             this.lireMotViaGrille(this.listeMot[indice]);
             let lesMots: Mot[];
             lesMots = await this.demanderMot(this.listeMot[indice]);
             if (lesMots === undefined) {
                 console.log("pas de mot");
-                throw new Error("Pas de mot");
+
+                return false;
+                // throw new Error("Pas de mot");
             }
-
-            const loop = (i: number) => {
-                console.log(i);
-                console.log(this.grille);
-                this.affecterMot(lesMots[i], this.listeMot[indice]);
-                this.ecrireDansLaGrille(this.listeMot[indice]);
-                this.remplirGrilleRecursif(indice)
-                .catch(() => {
-                    if ( ++i < lesMots.length) {
-                        loop(i);
-                    }
-                });
-                if (i === lesMots.length) {
-                    throw new Error("pls");
+            let ctr = 0;
+            let prochainMotTrouve = false;
+            do {
+                if (ctr >= lesMots.length) {
+                    return false;
                 }
-            };
-            loop(0);
+                console.log("ctr : " + ctr + " indice : " + indice);
+                this.affecterMot(lesMots[ctr++], this.listeMot[indice]);
+                this.ecrireDansLaGrille(this.listeMot[indice]);
 
+                if (++indice >= this.listeMot.length) {
+                    return true;
+                }
+                prochainMotTrouve = await this.remplirGrilleRecursif(indice);
+
+            } while (!prochainMotTrouve);
+
+            return true;
         }
 
        /* private remplirLaGrilleDeMots(ctr: number): void {

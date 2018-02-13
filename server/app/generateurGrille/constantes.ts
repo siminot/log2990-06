@@ -4,7 +4,7 @@ export const TAILLE_TEST = 10;
 export const TAILLE_MINIMUM = 2;
 export const VIDE = "_";
 export const NOIR = "0";
-export const POURCENTAGE_NOIR = 0.5;
+export const POURCENTAGE_TEST = 0.45;
 
 export enum Difficultees {
     Facile = "Facile",

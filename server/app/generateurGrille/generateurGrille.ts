@@ -56,7 +56,7 @@ module Route {
 
         private remplirLaGrilleDeMots() {
             this.remplirGrilleRecursif(0)
-            .then(() =>  { console.log("ca marche"); console.log(this.grille); });
+            .then(() =>  { console.log(this.grille); });
             // .catch((error) => console.log("wtf esti"));
         }
 
@@ -68,14 +68,12 @@ module Route {
             const contrainte = this.listeMot[indice].getMot();
             lesMots = await this.demanderMot(this.listeMot[indice]);
             if (lesMots === undefined) {
-                console.log("pas de mot");
-
                 return false;
                 // throw new Error("Pas de mot");
             }
             let prochainIndice: number;
             let ctr = 0;
-            const DIX = 2;
+            const DIX = 3;
             let prochainMotTrouve = false;
             do {
                 if (ctr++ === DIX || ctr >= lesMots.length) {
@@ -85,7 +83,6 @@ module Route {
 
                     return false;
                 }
-                console.log("ctr : " + ctr + " indice : " + indice);
                 this.affecterMot(lesMots[this.nombreAleatoire(lesMots.length) - 1], this.listeMot[indice]);
                 this.ecrireDansLaGrille(this.listeMot[indice]);
                 prochainIndice = this.obtenirLeMotLePlusImportant(this.listeMot[indice]);
@@ -174,7 +171,6 @@ module Route {
         // retourne un nmbre entre 1 et nbMax
         private nombreAleatoire(nbMax: number): number {
             const millisecondes = new Date().getMilliseconds();
-            console.log(millisecondes);
             const MILLE = 1000;
 
             return Math.floor(millisecondes * nbMax / MILLE) + 1;

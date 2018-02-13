@@ -56,7 +56,7 @@ module Route {
 
         private remplirLaGrilleDeMots() {
             this.remplirGrilleRecursif(0)
-            .then(() =>  { console.log(this.grille); });
+            .then(() =>  { console.log(this.grille + "\n CA MARCHE"); });
             // .catch((error) => console.log("wtf esti"));
         }
 
@@ -102,6 +102,7 @@ module Route {
             let indiceDuMax = -1;
             for (let i = 0; i < this.listeMot.length; i++) {
                 if (!this.listeMot[i].getEstTraite()) {
+                    this.lireMotViaGrille(this.listeMot[i]);
                     if (max <= this.listeMot[i].getImportance(mock)) {
                         max = this.listeMot[i].getImportance(mock);
                         indiceDuMax = i;

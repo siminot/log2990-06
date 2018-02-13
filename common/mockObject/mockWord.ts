@@ -1,5 +1,3 @@
-const PRIORITEADJACENCE = 20;
-
 export class Mockword {
    
     private mot: String;
@@ -94,9 +92,7 @@ export class Mockword {
                 i++;
             }
         }
-        if(this.estLieAvecAutreMot(ancienMot)){
-            i+=PRIORITEADJACENCE // priorite a
-        }
+
         return i + this.mot.length;
     }
   

@@ -1,5 +1,4 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-import {GrilleComponent} from "../grille/grille.component";
 
 @Directive({ selector: "[appDirectiveFocus]" })
 

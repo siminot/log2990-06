@@ -21,9 +21,10 @@ export class Mot {
     // Construction d'un mot
 
     public constructor(mot: MotAPI) {
-        mot.word !== undefined
-            ? this.mot = mot.word
-            : this.mot = null;
+        this.mot = null;
+        if (mot.word !== undefined) {
+            this.mot = mot.word;
+        }
 
         this.definitions = this.extraireDefinitions(mot.defs);
 

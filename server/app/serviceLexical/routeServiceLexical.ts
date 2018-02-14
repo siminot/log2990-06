@@ -27,7 +27,9 @@ export class RouteServiceLexical extends ServiceWeb {
             this.serviceLexical.servirMotsSelonContrainte(req.params.contrainte, Frequence.NonCommun, res);
         });
 
-        router.get("/commun/longueur/:longueur", (req: Request, res: Response, next: NextFunction) => {
+        // Routes pas utilisées... à effacer?
+
+        /* router.get("/commun/longueur/:longueur", (req: Request, res: Response, next: NextFunction) => {
             this.serviceLexical.servirMotsSelonLongueur(req.params.longueur, Frequence.Commun, res);
         });
 
@@ -38,7 +40,7 @@ export class RouteServiceLexical extends ServiceWeb {
         router.get("/def/:mot", (req: Request, res: Response, next: NextFunction) => {
             this.serviceLexical.servirDefinitionsMot(req.params.mot, res);
         });
-
+ */
         return router;
     }
 }

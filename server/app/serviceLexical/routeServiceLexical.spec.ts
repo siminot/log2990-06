@@ -14,7 +14,7 @@ const ROUTE: ServiceWeb = new RouteServiceLexical(SERVICE);
 
 const URL_SERVICE_LEXICAL: string = "http://localhost:3000" + ROUTE.mainRoute;
 const URL_DEFINITION = "/def/";
-const URL_LONGUEUR = "/longueur/";
+// const URL_LONGUEUR = "/longueur/";
 const URL_COMMUN = "/commun";
 const URL_NONCOMMUN = "/noncommun";
 const URL_CONTRAINTE = "/contrainte/";
@@ -32,7 +32,7 @@ const MESSAGE_AUCUN_RESULTAT = "Aucun resultat";
         describe("Accéder aux routes (serveur doit rouler pour que ca fonctionne)", () => {
             const CONTRAINTES = ["t__", "_r_b_", "__ws", "g____r___", "h____r__"];
             const CONTRAINTE_IMPOSSIBLE = "dwz__";
-            const LONGUEUR = 4;
+            // const LONGUEUR = 4;
 
             describe("/commun/contrainte/:contrainte", () => {
                 for (const CONTRAINTE of CONTRAINTES) {
@@ -75,7 +75,7 @@ const MESSAGE_AUCUN_RESULTAT = "Aucun resultat";
                 });
             });
 
-            describe("/noncommun/longueur/:longueur", () => {
+            /* describe("/noncommun/longueur/:longueur", () => {
 
                 it("Doit retourner un tableau de mots", async () => {
                     const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_LONGUEUR + LONGUEUR;
@@ -114,7 +114,7 @@ const MESSAGE_AUCUN_RESULTAT = "Aucun resultat";
                     const data = await WebRequest.json<Mot[]>(URL_TEST).catch();
                     assert.equal(data, MESSAGE_AUCUN_RESULTAT);
                 });
-            });
+            }); */
 
             describe("Test de la validite des contraintes", () => {
 
@@ -125,12 +125,12 @@ const MESSAGE_AUCUN_RESULTAT = "Aucun resultat";
                     assert.equal(mots[0], undefined);
                 });
 
-                it("Longueur invalide doit retourner une erreur", async () => {
+                /* it("Longueur invalide doit retourner une erreur", async () => {
                     const LONGUEUR_TEST = "abcd";
                     const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_LONGUEUR + LONGUEUR_TEST;
                     const mots = await WebRequest.json<Mot[]>(URL_TEST);
                     assert.equal(mots[0], undefined);
-                });
+                }); */
 
                 it("Mot invalide doit retourner une erreur", async () => {
                     const MOT_TEST = "abc4";

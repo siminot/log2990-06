@@ -1,10 +1,10 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 
 @Directive({ selector: "[appDirectiveFocus]" })
 
 export class DirectiveFocusDirective {
 
-  constructor(private el: ElementRef) { }
+  constructor() { }
 
     @Input() appDirectiveFocus: boolean;
 

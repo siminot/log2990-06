@@ -51,7 +51,6 @@ module Route {
                 }
             }
             mot.setMot(lecteur);
-            mot.setEtatAvantEcriture(lecteur);
         }
 
         private ecrireDansLaGrille(mot: Mockword): void {

@@ -71,7 +71,7 @@ export class Mockword {
 
             this.getVertical() ? coordonneeVariableMin = this.getPremierY() : coordonneeVariableMin = this.getPremierX();
             coordonneeVariableMax = coordonneeVariableMin + this.getLongueur() - 1;
-            this.getVertical() ? coordAutre = this.getPremierY() : coordAutre = this.getPremierX();
+            this.getVertical() ? coordAutre = autreMot.getPremierY() : coordAutre = autreMot.getPremierX();
 
             if(coordonneeVariableMin <= coordAutre && coordAutre <= coordonneeVariableMax) {
                 
@@ -99,7 +99,9 @@ export class Mockword {
                 i++;
             }
         }
-
+        if(this.estLieAvecAutreMot(ancienMot)){
+            i+=20;
+        }
         return i + this.mot.length;
     }
   

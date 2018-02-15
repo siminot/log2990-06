@@ -100,14 +100,13 @@ export class GrilleComponent implements OnInit, OnDestroy {
     elemTmp.focus();
   }
 
-    private manageKeyEntry(event: any): void {
-      console.log(event.keyCode);
-      if (event.key === "Backspace") {
-        this.focusOnPreviousLetter();
-      } else if (event.keyCode >= 65 && event.keyCode <= 90) {
-        this.focusOnNextLetter();
-      }
+  private manageKeyEntry(event: any): void {
+    if (event.key === "Backspace") {
+      this.focusOnPreviousLetter();
+    } else if (event.keyCode >= 65 && event.keyCode <= 90) {
+      this.focusOnNextLetter();
     }
+  }
 
   private focusOnNextLetter(): void {
     console.log("forward.");

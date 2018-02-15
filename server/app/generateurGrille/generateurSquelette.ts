@@ -126,7 +126,7 @@ export class GenerateurSquelette {
             return true;
         }
         if (positionY - 1 > 0) {
-            if (this.grille[positionY - 1][positionY] === VIDE) {
+            if (this.grille[positionY - 1][positionX] === VIDE) {
                 return true;
             }
         }

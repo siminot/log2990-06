@@ -8,7 +8,7 @@ export class DirectiveFocusDirective {
 
     @Input() appDirectiveFocus: boolean;
 
-    @HostListener('keydown', ['$event']) onKeyDown(event) {
+    @HostListener('keydown', ['$event']) onKeyDown(event: any) {
         let e = <KeyboardEvent> event;
 
         if (this.appDirectiveFocus) {

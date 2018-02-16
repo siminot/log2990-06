@@ -128,6 +128,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
     
     let valid: boolean = usersWord === this.motSelectionne.mot;
 
+    valid ? console.log("VALID WORD") : console.log("INVALID WORD");
+
     return valid;
   }
 
@@ -143,7 +145,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private focusOnPreviousLetter(): void {
     let elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
     
-    if(this.onLastLetterOfWord(elemCourant) && elemCourant.value != '') {
+    if(this.isLastLetterOfWord(elemCourant) && elemCourant.value != '') {
       elemCourant.value = '';
     } else if (this.positionCourante > 0) {
       this.positionCourante--;
@@ -153,7 +155,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
+  private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
     return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
   }
 

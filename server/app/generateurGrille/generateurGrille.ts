@@ -21,8 +21,8 @@ module Route {
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_NOIR);
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
         private motsDejaPlaces: Map<string, number> = new Map();
+        private requetesInvalides: Map<string, number> = new Map();
         private optionsPartie: MockOptionPartie;
-        private listeMotsRemplis: Array<Mockword>;
 
         constructor() {
             this.initMatrice();
@@ -32,7 +32,6 @@ module Route {
         private initMatrice(): void {
             this.listeMot = new Array<Mockword>();
             this.grille = new Array<Array<string>>();
-            this.listeMotsRemplis = new Array<Mockword>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
         }
@@ -68,7 +67,6 @@ module Route {
         private async remplirLaGrilleDeMots(): Promise<void> {
             while (!await this.remplirGrilleRecursif(0)) {
                 this.motsDejaPlaces.clear();
-                console.log("un essai de pas reussi");
             }
             // .catch((error) => console.log("wtf esti"));
         }
@@ -79,8 +77,15 @@ module Route {
             this.lireMotViaGrille(motActuel);
             let lesMots: Mot[];
             const contrainte = motActuel.getMot();
+
+            if (motActuel.getMot() in this.requetesInvalides) {
+                return false;
+            }
             lesMots = await this.demanderMot(motActuel);
+            // Pas de mots trouve
             if (lesMots === undefined) {
+                this.requetesInvalides[motActuel.getMot()] = 1;
+
                 return false;
             }
             let prochainIndice: number;
@@ -199,6 +204,8 @@ module Route {
 
             this.listeMot = new Array<Mockword>();
             this.grille = new Array<Array<string>>();
+            this.requetesInvalides.clear();
+            this.requetesInvalides = new Map();
             this.motsDejaPlaces.clear();
             this.motsDejaPlaces = new Map();
             this.grille = [["_", "_", "_", "_", "_", "_" , "_", "_", "_", "_"],
@@ -214,7 +221,6 @@ module Route {
 
             this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
             await this.remplirLaGrilleDeMots();
-            console.log(this.grille);
 
             res.send(this.listeMot);
         }

@@ -1,1 +1,1 @@
-export enum Difficulte {Facile, Moyen, Difficile};
+export enum Difficulte {Facile, Moyen, Difficile}

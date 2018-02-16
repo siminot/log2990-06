@@ -15,10 +15,12 @@ import { GestionnaireEcran } from "./carApp/ecran/gestionnaireEcran";
 
 import { BasicService } from "./basic.service";
 import { AppRoutingModule } from ".//app-routing.module";
+
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
-import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
 import { DefinitionComponent } from "./crosswords/definition/definition.component";
+import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
+import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 
 @NgModule({
     declarations: [
@@ -26,7 +28,8 @@ import { DefinitionComponent } from "./crosswords/definition/definition.componen
         GameComponent,
         MainGrilleComponent,
         GrilleComponent,
-        DefinitionComponent
+        DefinitionComponent,
+        DirectiveFocusDirective
     ],
     imports: [
         BrowserModule,
@@ -44,6 +47,13 @@ import { DefinitionComponent } from "./crosswords/definition/definition.componen
         BasicService,
         RequeteDeGrilleService
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [ AppComponent ],
+    exports: [
+        AppComponent,
+        GameComponent,
+        MainGrilleComponent,
+        GrilleComponent,
+        DefinitionComponent
+    ]
 })
 export class AppModule { }

@@ -1,33 +1,34 @@
+import "reflect-metadata";
 import { injectable, } from "inversify";
 import { Response } from "express";
 import * as WebRequest from "web-request";
 
 import { Mot, Frequence } from "./Mot";
-import { ContrainteMot } from "./ContrainteMot";
 import { MotAPI } from "./MotAPI";
+
+const LETTRE_INCONNUE = "_";
+const LETTRE_INCONNUE_API = "?";
+const URL = "https://api.datamuse.com/words?sp=";
+const FLAG = "&md=df&max=";
+const NOMBRE_MAX_REQUETE = 1000;
+const MESSAGE_REQUETE_INVALIDE = "Erreur : requete invalide";
+const MESSAGE_AUCUN_RESULTAT = "Aucun resultat";
+const MESSAGE_ERREUR_API_EXTERNE = "Erreur de l'API externe";
 
 module moduleServiceLexical {
 
     @injectable()
     export class ServiceLexical {
 
-        private static readonly LETTRE_INCONNUE: string = "_";
-        private static readonly LETTRE_INCONNUE_API: string = "?";
-        private static readonly URL: string = "https://api.datamuse.com/words?sp=";
-        private static readonly FLAG: string = "&md=df&max=";
-        private static readonly NOMBRE_MAX_REQUETE: number = 10;
-        private static readonly MESSAGE_REQUETE_INVALIDE: string = "Erreur : requete invalide";
-        private static readonly MESSAGE_AUCUN_RESULTAT: string = "Aucun resultat";
-
         // Utilisation de l'API externe
 
         private modifierContraintePourAPI(contrainte: string): string {
-            let contrainteAPI: string = "";
+            let contrainteAPI = "";
 
             // tslint:disable-next-line:prefer-for-of
             for (let i = 0; i < contrainte.length; i++) {
-                if (contrainte[i] === ContrainteMot.LETTRE_INCONNUE) {
-                    contrainteAPI += ServiceLexical.LETTRE_INCONNUE_API;
+                if (contrainte[i] === LETTRE_INCONNUE) {
+                    contrainteAPI += LETTRE_INCONNUE_API;
                 } else {
                     contrainteAPI += contrainte[i];
                 }
@@ -36,18 +37,19 @@ module moduleServiceLexical {
             return contrainteAPI;
         }
 
-        private obtenirMotsDeLAPI(contrainte: string, nombreDeMots: number): Promise<Mot[]> {
-            const url: string = ServiceLexical.URL + contrainte + ServiceLexical.FLAG + String(nombreDeMots);
+        private async obtenirMotsDeLAPI(contrainte: string, nombreDeMots: number): Promise<Mot[]> {
+            const URL_API: string = URL + contrainte + FLAG + String(nombreDeMots);
 
-            return WebRequest.json<MotAPI[]>(url)
-                .then((data: MotAPI[]) => this.convertirMotsAPI(data));
+            return WebRequest.json<MotAPI[]>(URL_API)
+                .then((data: MotAPI[]) => this.convertirMotsAPI(data))
+                .catch(() => { throw Error(MESSAGE_ERREUR_API_EXTERNE); });
         }
 
         private convertirMotsAPI(data: MotAPI[]): Mot[] {
             const dictionnaire: Mot[] = [];
 
-            for (const motAPI of data) {
-                dictionnaire.push(new Mot(motAPI));
+            for (const MOT_API of data) {
+                dictionnaire.push(new Mot(MOT_API));
             }
 
             return dictionnaire;
@@ -55,12 +57,12 @@ module moduleServiceLexical {
 
         // Intermédiaire entre API et services de mots
 
-        private obtenirMotsFormattes(contrainte: string): Promise<Mot[]> {
-            const contrainteAPI: string = this.modifierContraintePourAPI(contrainte);
+        private async obtenirMotsFormattes(contrainte: string): Promise<Mot[]> {
+            const CONTRAINTE_API: string = this.modifierContraintePourAPI(contrainte);
 
-            return this.obtenirMotsDeLAPI(contrainteAPI, ServiceLexical.NOMBRE_MAX_REQUETE)
+            return this.obtenirMotsDeLAPI(CONTRAINTE_API, NOMBRE_MAX_REQUETE)
                 .then((data: Mot[]) => this.filtrerMots(data))
-                .catch((erreur: Error) => null);
+                .catch((erreur: Error) => { throw Error(MESSAGE_ERREUR_API_EXTERNE); });
         }
 
         // Services de mots
@@ -70,14 +72,15 @@ module moduleServiceLexical {
             if (this.estUnMotValide(mot)) {
                 this.obtenirMotsDeLAPI(mot, 1)
                     .then((dictionnaire: Mot[]) => {
-                        if (dictionnaire[0].definitions !== null) {
+                        if ((dictionnaire.length !== 0) && (dictionnaire[0].definitions !== null)) {
                             res.send(dictionnaire[0]);
                         } else {
-                            res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
+                            res.send(MESSAGE_AUCUN_RESULTAT);
                         }
-                    });
+                    })
+                    .catch(() => { res.send(new Error(MESSAGE_ERREUR_API_EXTERNE)); });
             } else {
-                throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
+                throw new Error(MESSAGE_REQUETE_INVALIDE);
             }
         }
 
@@ -93,7 +96,7 @@ module moduleServiceLexical {
 
         private requeteEstValide(contrainte: string): boolean {
             for (let i = 0; i < contrainte.length; i++) {
-                if (!contrainte.toLowerCase().charAt(i).match("[a-z" + ServiceLexical.LETTRE_INCONNUE + "]")) {
+                if (!contrainte.toLowerCase().charAt(i).match("[a-z" + LETTRE_INCONNUE + "]")) {
                     return false;
                 }
             }
@@ -105,19 +108,16 @@ module moduleServiceLexical {
             return liste.filter((mot: Mot) => mot.obtenirFrequence().valueOf() === frequence.valueOf());
         }
 
-        // Obtention des mots selon la fréquence
+        // Obtention des mots selon la contrainte
         public servirMotsSelonContrainte(contrainte: string, frequence: Frequence, res: Response): void {
             if (this.requeteEstValide(contrainte)) {
                 this.obtenirMotsFormattes(contrainte)
                     .then((dictionnaire: Mot[]) => {
-                        if (dictionnaire.length > 0) {
-                            res.send(this.trierMotsSelonFrequence(dictionnaire, frequence));
-                        } else {
-                            res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
-                        }
-                    });
+                        this.renvoyerMots(this.trierMotsSelonFrequence(dictionnaire, frequence), res);
+                    })
+                    .catch(() => res.send(new Error(MESSAGE_ERREUR_API_EXTERNE)));
             } else {
-                throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
+                throw new Error(MESSAGE_REQUETE_INVALIDE);
             }
         }
 
@@ -127,25 +127,30 @@ module moduleServiceLexical {
             if (!isNaN(LONGUEUR)) {
                 this.obtenirMotsFormattes(this.obtenirContrainteLongueur(LONGUEUR))
                     .then((dictionnaire: Mot[]) => {
-                        if (dictionnaire.length > 0) {
-                            res.send(this.trierMotsSelonFrequence(dictionnaire, frequence));
-                        } else {
-                            res.send(ServiceLexical.MESSAGE_AUCUN_RESULTAT);
-                        }
-                    });
+                        this.renvoyerMots(this.trierMotsSelonFrequence(dictionnaire, frequence), res);
+                    })
+                    .catch(() => { res.send(Error(MESSAGE_ERREUR_API_EXTERNE)); });
             } else {
-                throw new Error(ServiceLexical.MESSAGE_REQUETE_INVALIDE);
+                throw new Error(MESSAGE_REQUETE_INVALIDE);
             }
         }
 
         private obtenirContrainteLongueur(longueur: number): string {
-            let contrainte: string = "";
+            let contrainte = "";
 
             for (let i = 0; i < longueur; i++) {
-                contrainte += ServiceLexical.LETTRE_INCONNUE;
+                contrainte += LETTRE_INCONNUE;
             }
 
             return contrainte;
+        }
+
+        private renvoyerMots(dictionnaire: Mot[], res: Response): void {
+            if (dictionnaire.length > 0) {
+                res.send(dictionnaire);
+            } else {
+                res.send(MESSAGE_AUCUN_RESULTAT);
+            }
         }
 
         // Filtrer les mots

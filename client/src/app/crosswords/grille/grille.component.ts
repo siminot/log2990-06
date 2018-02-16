@@ -109,11 +109,29 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnNextLetter(): void {
+    // Vérifier s'il y a déjà une lettre sur la case. Passer à la prochaine case si c'est le cas.
     if (this.positionCourante < this.motSelectionne.longeur - 1) {
       this.positionCourante++;
       const elem: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
       elem.focus();
+    } else if (this.positionCourante === this.motSelectionne.longeur - 1) {   // TODO : Vérifier si la condition est réellement nécessaire.
+      this.validateWord();
     }
+  }
+
+  private validateWord(): void {
+    let usersWord: string = this.createWordFromSelectedLetters();
+    console.log("created word from the letters in the input : ", usersWord);
+    
+  }
+
+  private createWordFromSelectedLetters(): string {
+    let wordCreated: string = "";
+    for(let i: number = 0 ; i < this.positionLettresSelectionnees.length ; i++) {
+      wordCreated += (<HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[i])).value;
+    }
+    
+    return wordCreated;
   }
 
   private focusOnPreviousLetter(): void {

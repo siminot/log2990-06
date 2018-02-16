@@ -66,9 +66,10 @@ module Route {
             }
         }
 
-        private remplirLaGrilleDeMots() {
-            this.remplirGrilleRecursif(0)
-            .then(() =>  { console.log(this.grille + "\n CA MARCHE"); });
+        private async remplirLaGrilleDeMots(): Promise<void> {
+            while (!await this.remplirGrilleRecursif(0)) {
+                console.log("un essai de pas reussi");
+            }
             // .catch((error) => console.log("wtf esti"));
         }
 
@@ -185,18 +186,20 @@ module Route {
             res.send(JSON.stringify(this.grille));
         }
 
-        public prototypeRequete(req: Request, res: Response, next: NextFunction): void {
+        public async prototypeRequete(req: Request, res: Response, next: NextFunction): Promise<void> {
 
-            this.initMatrice();
-            this.grille = [["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
-                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
-                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
-                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
-                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
-                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"]];
+            this.listeMot = new Array<Mockword>();
+            this.grille = new Array<Array<string>>();
+            this.grille = [["_", "_", "_", "_", "_", "_"],
+                           ["_", "0", "0", "0", "0", "0"],
+                           ["_", "0", "0", "0", "0", "0"],
+                           ["_", "0", "0", "0", "0", "0"],
+                           ["_", "0", "0", "0", "0", "0"],
+                           ["_", "0", "0", "0", "0", "0"]];
 
+            this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
+            await this.remplirLaGrilleDeMots();
             console.log(this.grille);
-            this.generateurListeMots.donnerUneListe(this.grille);
 
             res.send(this.listeMot);
         }

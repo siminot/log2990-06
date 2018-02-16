@@ -126,7 +126,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let usersWord: string = this.createWordFromSelectedLetters();
     console.log("created word from the letters in the input : ", usersWord);
     
-    let valid: boolean = usersWord === this.motSelectionne.mot;
+    let valid: boolean = usersWord.toUpperCase() === this.motSelectionne.mot.toUpperCase();
     console.log(valid);
 
     return true;

@@ -203,7 +203,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
         }
       }
     }
-
+    console.log("salut")
     return motTrouve;
   }
 

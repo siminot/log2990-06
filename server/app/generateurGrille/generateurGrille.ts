@@ -67,6 +67,7 @@ module Route {
 
         private async remplirLaGrilleDeMots(): Promise<void> {
             while (!await this.remplirGrilleRecursif(0)) {
+                this.motsDejaPlaces.clear();
                 console.log("un essai de pas reussi");
             }
             // .catch((error) => console.log("wtf esti"));
@@ -91,10 +92,10 @@ module Route {
                 indiceAleatoire = this.nombreAleatoire(lesMots.length) - 1;
                 // limiter le nombre d'essai pour chaque mot
                 if (ctr++ === DIX || ctr >= lesMots.length) {
+                    this.motsDejaPlaces.delete(motActuel.getMot());
                     motActuel.setMot(contrainte);
                     this.ecrireDansLaGrille(motActuel);
                     motActuel.setEstTraite(false);
-                    // delete this.motsDejaPlaces[motActuel.getMot()];
 
                     return false;
                 }
@@ -104,17 +105,15 @@ module Route {
                 this.ecrireDansLaGrille(motActuel);
                 prochainIndice = this.obtenirLeMotLePlusImportant(motActuel);
                 if (prochainIndice === -1) {
+                    this.motsDejaPlaces[motActuel.getMot()] = 1;
                     return true;
                 }
                 // }
-
-                if (prochainIndice === -1) {
-                    return true;
-                }
                 // console.log(this.grille);
                 prochainMotTrouve = await this.remplirGrilleRecursif(prochainIndice);
 
             } while (!prochainMotTrouve);
+            this.motsDejaPlaces[motActuel.getMot()] = 1;
 
             return true;
         }
@@ -175,7 +174,6 @@ module Route {
             motAChanger.setMot(unMot.mot);
             motAChanger.setDefinition(unMot.definitions[indexDef].definition);
             motAChanger.setEstTraite(true);
-            this.motsDejaPlaces[unMot.mot] = 1; // pour eviter les doublons
 
             return unMot;
         }
@@ -200,6 +198,8 @@ module Route {
 
             this.listeMot = new Array<Mockword>();
             this.grille = new Array<Array<string>>();
+            this.motsDejaPlaces.clear();
+            this.motsDejaPlaces = new Map();
             this.grille = [["_", "_", "_", "_", "_", "_"],
                            ["_", "0", "_", "0", "0", "0"],
                            ["_", "0", "_", "_", "_", "_"],

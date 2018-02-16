@@ -30,6 +30,7 @@ export class Voiture extends Object3D {
     private steeringWheelDirection: number;
     private weightRear: number;
     private phares: Phare[];
+    private ciblePhares: Object3D;
 
     public getPosition(): Vector3 {
         return this.mesh.position.clone();
@@ -95,6 +96,7 @@ export class Voiture extends Object3D {
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
         this.phares = [];
+        this.ciblePhares = new Object3D();
     }
 
     public init(texture: Object3D): void {
@@ -172,20 +174,24 @@ export class Voiture extends Object3D {
         this.phares.push(new Phare(PHARE_GAUCHE_POSITION_RELATIVE, ANGLE_DIRECTION));
         this.phares.push(new Phare(PHARE_DROITE_POSITION_RELATIVE, -ANGLE_DIRECTION));
 
+        this.ciblePhares.position.set(0, 0, -10);
         this.miseAJourPhares();
         this.ajouterPhares();
     }
 
     private ajouterPhares(): void {
+        this.mesh.add(this.ciblePhares);
         for (const PHARE of this.phares) {
-            this.mesh.add(new SpotLightHelper(PHARE.faisceau)); // Remettre les phares normaux pour tester
+            // this.mesh.add(new SpotLightHelper(PHARE.faisceau)); // Remettre les phares normaux pour tester
+            this.mesh.add(PHARE.faisceau);
             this.mesh.add(PHARE.ampoule);
+            PHARE.suivre(this.ciblePhares);
         }
     }
 
     private miseAJourPhares(): void {
         for (const PHARE of this.phares) {
-            PHARE.miseAJourPosition(this.getPosition());
+            PHARE.miseAJourPosition(/*this.getPosition()*/);
         }
     }
 

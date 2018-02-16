@@ -28,7 +28,7 @@ export class GenerateurListeMots {
         }
 
         let longMot = 0;
-        let mot: String = "";
+        let mot = "";
         for (let i: number = estVertical ? y : x; i < uneGrille.length; i++) {
             if (uneGrille[i][x] !== NOIR && estVertical) {
                 longMot++;

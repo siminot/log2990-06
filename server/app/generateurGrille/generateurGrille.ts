@@ -75,18 +75,16 @@ module Route {
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {
 
-            // indice++;
             this.lireMotViaGrille(this.listeMot[indice]);
             let lesMots: Mot[];
             const contrainte = this.listeMot[indice].getMot();
             lesMots = await this.demanderMot(this.listeMot[indice]);
             if (lesMots === undefined) {
                 return false;
-                // throw new Error("Pas de mot");
             }
             let prochainIndice: number;
             let ctr = 0;
-            const DIX = 3;
+            const DIX = 2;
             let prochainMotTrouve = false;
             do {
                 if (ctr++ === DIX || ctr >= lesMots.length) {
@@ -191,11 +189,11 @@ module Route {
             this.listeMot = new Array<Mockword>();
             this.grille = new Array<Array<string>>();
             this.grille = [["_", "_", "_", "_", "_", "_"],
-                           ["_", "0", "0", "0", "0", "0"],
-                           ["_", "0", "0", "0", "0", "0"],
-                           ["_", "0", "0", "0", "0", "0"],
-                           ["_", "0", "0", "0", "0", "0"],
-                           ["_", "0", "0", "0", "0", "0"]];
+                           ["_", "0", "_", "0", "0", "0"],
+                           ["_", "0", "_", "_", "_", "_"],
+                           ["_", "_", "_", "0", "0", "_"],
+                           ["_", "0", "_", "0", "0", "_"],
+                           ["0", "_", "_", "_", "_", "_"]];
 
             this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
             await this.remplirLaGrilleDeMots();

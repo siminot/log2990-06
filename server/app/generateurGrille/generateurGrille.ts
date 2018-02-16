@@ -20,7 +20,7 @@ module Route {
         private listeMot: Array<Mockword>;
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_NOIR);
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
-        // private motsDejaPlaces: String;
+        private motsDejaPlaces: Map<string, number> = new Map();
         private optionsPartie: MockOptionPartie;
         private listeMotsRemplis: Array<Mockword>;
 
@@ -175,7 +175,7 @@ module Route {
             motAChanger.setMot(unMot.mot);
             motAChanger.setDefinition(unMot.definitions[indexDef].definition);
             motAChanger.setEstTraite(true);
-            // this.motsDejaPlaces[unMot.mot] = 1; // pour eviter les doublons
+            this.motsDejaPlaces[unMot.mot] = 1; // pour eviter les doublons
 
             return unMot;
         }
@@ -209,7 +209,7 @@ module Route {
 
             this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
             await this.remplirLaGrilleDeMots();
-            // console.log(this.grille);
+            console.log(this.motsDejaPlaces);
 
             res.send(this.listeMot);
         }

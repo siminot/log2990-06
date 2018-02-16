@@ -100,15 +100,16 @@ module Route {
                     return false;
                 }
                 // Verif si le mot est deja place dans la grille
-                // if (!(lesMots[indiceAleatoire].mot in this.motsDejaPlaces)) {
-                this.affecterMot(lesMots[indiceAleatoire], motActuel);
-                this.ecrireDansLaGrille(motActuel);
-                prochainIndice = this.obtenirLeMotLePlusImportant(motActuel);
-                if (prochainIndice === -1) {
-                    this.motsDejaPlaces[motActuel.getMot()] = 1;
-                    return true;
+                if (!(lesMots[indiceAleatoire].mot in this.motsDejaPlaces)) {
+                    this.affecterMot(lesMots[indiceAleatoire], motActuel);
+                    this.ecrireDansLaGrille(motActuel);
+                    prochainIndice = this.obtenirLeMotLePlusImportant(motActuel);
+                    if (prochainIndice === -1) {
+                        this.motsDejaPlaces[motActuel.getMot()] = 1;
+
+                        return true;
+                    }
                 }
-                // }
                 // console.log(this.grille);
                 prochainMotTrouve = await this.remplirGrilleRecursif(prochainIndice);
 

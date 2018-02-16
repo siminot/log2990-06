@@ -20,7 +20,7 @@ module Route {
         private listeMot: Array<Mockword>;
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_NOIR);
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
-        private motsDejaPlaces: Array<string> = new Array<string>();
+        // private motsDejaPlaces: String;
         private optionsPartie: MockOptionPartie;
         private listeMotsRemplis: Array<Mockword>;
 
@@ -32,7 +32,6 @@ module Route {
         private initMatrice(): void {
             this.listeMot = new Array<Mockword>();
             this.grille = new Array<Array<string>>();
-            this.motsDejaPlaces = new Array<string>();
             this.listeMotsRemplis = new Array<Mockword>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
@@ -66,42 +65,53 @@ module Route {
             }
         }
 
-        private remplirLaGrilleDeMots() {
-            this.remplirGrilleRecursif(0)
-            .then(() =>  { console.log(this.grille + "\n CA MARCHE"); });
+        private async remplirLaGrilleDeMots(): Promise<void> {
+            while (!await this.remplirGrilleRecursif(0)) {
+                console.log("un essai de pas reussi");
+            }
             // .catch((error) => console.log("wtf esti"));
         }
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {
 
-            // indice++;
-            this.lireMotViaGrille(this.listeMot[indice]);
+            const motActuel: Mockword = this.listeMot[indice];
+            this.lireMotViaGrille(motActuel);
             let lesMots: Mot[];
-            const contrainte = this.listeMot[indice].getMot();
-            lesMots = await this.demanderMot(this.listeMot[indice]);
+            const contrainte = motActuel.getMot();
+            lesMots = await this.demanderMot(motActuel);
             if (lesMots === undefined) {
                 return false;
-                // throw new Error("Pas de mot");
             }
             let prochainIndice: number;
             let ctr = 0;
-            const DIX = 3;
+            const DIX = 2; // A rajouter dans les constantes quand on va avoir un bon chiffre
             let prochainMotTrouve = false;
+            let indiceAleatoire = 0;
             do {
+                indiceAleatoire = this.nombreAleatoire(lesMots.length) - 1;
+                // limiter le nombre d'essai pour chaque mot
                 if (ctr++ === DIX || ctr >= lesMots.length) {
-                    this.listeMot[indice].setMot(contrainte);
-                    this.ecrireDansLaGrille(this.listeMot[indice]);
-                    this.listeMot[indice].setEstTraite(false);
+                    motActuel.setMot(contrainte);
+                    this.ecrireDansLaGrille(motActuel);
+                    motActuel.setEstTraite(false);
+                    // delete this.motsDejaPlaces[motActuel.getMot()];
 
                     return false;
                 }
-                this.affecterMot(lesMots[this.nombreAleatoire(lesMots.length) - 1], this.listeMot[indice]);
-                this.ecrireDansLaGrille(this.listeMot[indice]);
-                prochainIndice = this.obtenirLeMotLePlusImportant(this.listeMot[indice]);
+                // Verif si le mot est deja place dans la grille
+                // if (!(lesMots[indiceAleatoire].mot in this.motsDejaPlaces)) {
+                this.affecterMot(lesMots[indiceAleatoire], motActuel);
+                this.ecrireDansLaGrille(motActuel);
+                prochainIndice = this.obtenirLeMotLePlusImportant(motActuel);
                 if (prochainIndice === -1) {
                     return true;
                 }
-                console.log(this.grille);
+                // }
+
+                if (prochainIndice === -1) {
+                    return true;
+                }
+                // console.log(this.grille);
                 prochainMotTrouve = await this.remplirGrilleRecursif(prochainIndice);
 
             } while (!prochainMotTrouve);
@@ -165,6 +175,7 @@ module Route {
             motAChanger.setMot(unMot.mot);
             motAChanger.setDefinition(unMot.definitions[indexDef].definition);
             motAChanger.setEstTraite(true);
+            // this.motsDejaPlaces[unMot.mot] = 1; // pour eviter les doublons
 
             return unMot;
         }
@@ -183,6 +194,24 @@ module Route {
             // this.initListeMot();
             this.remplirLaGrilleDeMots();
             res.send(JSON.stringify(this.grille));
+        }
+
+        public async prototypeRequete(req: Request, res: Response, next: NextFunction): Promise<void> {
+
+            this.listeMot = new Array<Mockword>();
+            this.grille = new Array<Array<string>>();
+            this.grille = [["_", "_", "_", "_", "_", "_"],
+                           ["_", "0", "_", "0", "0", "0"],
+                           ["_", "0", "_", "_", "_", "_"],
+                           ["_", "_", "_", "0", "0", "_"],
+                           ["_", "0", "_", "0", "0", "_"],
+                           ["0", "_", "_", "_", "_", "_"]];
+
+            this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
+            await this.remplirLaGrilleDeMots();
+            // console.log(this.grille);
+
+            res.send(this.listeMot);
         }
 
         /* FONCTION BIDON POUR TESTER DES CHOSES */

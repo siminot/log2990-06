@@ -17,8 +17,8 @@ export class RouteGenGrille {
         router.get("/",
                    (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheGrille(req, res, next));
 
-        router.get("/testRequete",
-                   (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheDifficile(req, res, next));
+        router.get("/requeteTemporaire",
+                   (req: Request, res: Response, next: NextFunction) => this.genGrille.prototypeRequete(req, res, next));
 
         router.get("/normal",
                    (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheDifficile(req, res, next));

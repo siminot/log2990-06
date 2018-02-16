@@ -185,6 +185,22 @@ module Route {
             res.send(JSON.stringify(this.grille));
         }
 
+        public prototypeRequete(req: Request, res: Response, next: NextFunction): void {
+
+            this.initMatrice();
+            this.grille = [["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
+                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
+                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
+                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
+                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"],
+                           ["0"], ["0"], ["0"], ["0"], ["0"], ["0"]];
+
+            console.log(this.grille);
+            this.generateurListeMots.donnerUneListe(this.grille);
+
+            res.send(this.listeMot);
+        }
+
         /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
             res.send(JSON.stringify(this.listeMot));

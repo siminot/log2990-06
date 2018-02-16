@@ -1,8 +1,8 @@
-import { Vector3, Matrix4, Object3D, Euler, Quaternion, SpotLightHelper } from "three";
+import { Vector3, Matrix4, Object3D, Euler, Quaternion } from "three";
 import { Engine } from "./engine";
 import { MS_TO_SECONDS, GRAVITY, PI_OVER_2 } from "../constants";
 import { Wheel } from "./wheel";
-import { Phare } from "./phare";
+import { GroupePhares } from "./groupePhares";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -29,8 +29,7 @@ export class Voiture extends Object3D {
     private mesh: Object3D;
     private steeringWheelDirection: number;
     private weightRear: number;
-    private phares: Phare[];
-    private ciblePhares: Object3D;
+    private phares: GroupePhares;
 
     public getPosition(): Vector3 {
         return this.mesh.position.clone();
@@ -95,8 +94,7 @@ export class Voiture extends Object3D {
         this.steeringWheelDirection = 0;
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
-        this.phares = [];
-        this.ciblePhares = new Object3D();
+        this.phares = new GroupePhares();
     }
 
     public init(texture: Object3D): void {
@@ -148,51 +146,20 @@ export class Voiture extends Object3D {
         this.mesh.rotateY(omega);
 
         // Mise a jour des phares
-        this.miseAJourPhares();
+        this.phares.miseAJour();
     }
 
     public eteindrePhares(): void {
-        for (const PHARE of this.phares) {
-            PHARE.eteindre();
-        }
+        this.phares.eteindrePhares();
     }
 
     public allumerPhares(): void {
-        for (const PHARE of this.phares) {
-            PHARE.allumer();
-        }
+        this.phares.allumerPhares();
     }
 
     private initialiserPhares(): void {
-        const HAUTEUR: number = 0.5;
-        const LARGEUR: number = 0.5;
-        const PROFONDEUR: number = -1.65;
-        const ANGLE_DIRECTION: number = 0.2;
-
-        const PHARE_GAUCHE_POSITION_RELATIVE: Vector3 = new Vector3(LARGEUR, HAUTEUR, PROFONDEUR);
-        const PHARE_DROITE_POSITION_RELATIVE: Vector3 = new Vector3(-LARGEUR, HAUTEUR, PROFONDEUR);
-        this.phares.push(new Phare(PHARE_GAUCHE_POSITION_RELATIVE, ANGLE_DIRECTION));
-        this.phares.push(new Phare(PHARE_DROITE_POSITION_RELATIVE, -ANGLE_DIRECTION));
-
-        this.ciblePhares.position.set(0, 0, -10);
-        this.miseAJourPhares();
-        this.ajouterPhares();
-    }
-
-    private ajouterPhares(): void {
-        this.mesh.add(this.ciblePhares);
-        for (const PHARE of this.phares) {
-            // this.mesh.add(new SpotLightHelper(PHARE.faisceau)); // Remettre les phares normaux pour tester
-            this.mesh.add(PHARE.faisceau);
-            this.mesh.add(PHARE.ampoule);
-            PHARE.suivre(this.ciblePhares);
-        }
-    }
-
-    private miseAJourPhares(): void {
-        for (const PHARE of this.phares) {
-            PHARE.miseAJourPosition(/*this.getPosition()*/);
-        }
+        this.phares.init();
+        this.mesh.add(this.phares);
     }
 
     private physicsUpdate(deltaTime: number): void {

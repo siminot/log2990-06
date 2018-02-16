@@ -3,27 +3,23 @@ import Stats = require("stats.js");
 import { WebGLRenderer } from "three";
 import { GestionnaireScene } from "../scene/GestionnaireScene";
 import { GestionnaireCamera } from "../camera/GestionnaireCamera";
+import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 
 @Injectable()
 export class ServiceDeRendu {
-    private conteneur: HTMLDivElement;
     private renderer: WebGLRenderer;
     private stats: Stats;
     private tempsDerniereMiseAJour: number;
 
     public constructor(private gestionnaireScene: GestionnaireScene,
-                       private gestionnaireCamera: GestionnaireCamera) {
+                       private gestionnaireCamera: GestionnaireCamera,
+                       private gestionnaireEcran: GestionnaireEcran) {
     }
 
     // Initialisation
 
-    public async initialiser(container: HTMLDivElement): Promise<void> {
-        if (container) {
-            this.conteneur = container;
-        }
-
+    public async initialiser(): Promise<void> {
         await this.initialiserScene();
-        this.initialiserCameras();
         this.initialiserStats();
         this.commencerBoucleDeRendu();
     }
@@ -31,16 +27,11 @@ export class ServiceDeRendu {
     private initialiserStats(): void {
         this.stats = new Stats();
         this.stats.dom.style.position = "absolute";
-        this.conteneur.appendChild(this.stats.dom);
+        this.gestionnaireEcran.ajouterElementConteneur(this.stats.dom);
     }
 
     private async initialiserScene(): Promise<void> {
         await this.gestionnaireScene.creerScene();
-    }
-
-    private initialiserCameras(): void {
-        this.gestionnaireCamera.initialiserCameras();
-        this.redimensionnerCamera();
     }
 
     // Rendu
@@ -48,10 +39,10 @@ export class ServiceDeRendu {
     private commencerBoucleDeRendu(): void {
         this.renderer = new WebGLRenderer();
         this.renderer.setPixelRatio(devicePixelRatio);
-        this.renderer.setSize(this.conteneur.clientWidth, this.conteneur.clientHeight);
+        this.redimensionnement();
 
         this.tempsDerniereMiseAJour = Date.now();
-        this.conteneur.appendChild(this.renderer.domElement);
+        this.gestionnaireEcran.ajouterElementConteneur(this.renderer.domElement);
         this.rendu();
     }
 
@@ -65,22 +56,13 @@ export class ServiceDeRendu {
     private miseAJour(): void {
         const tempsDepuisDerniereTrame: number = Date.now() - this.tempsDerniereMiseAJour;
         this.gestionnaireScene.miseAJour(tempsDepuisDerniereTrame);
-        this.gestionnaireCamera.miseAJourCameraCourante();
         this.tempsDerniereMiseAJour = Date.now();
+        this.redimensionnement();
     }
 
     // Mise à jour de la taille de la fenetre
 
     public redimensionnement(): void {
-        this.redimensionnerCamera();
-        this.renderer.setSize(this.conteneur.clientWidth, this.conteneur.clientHeight);
-    }
-
-    public redimensionnerCamera(): void {
-        this.gestionnaireCamera.redimensionnement(this.obtenirRatio());
-    }
-
-    private obtenirRatio(): number {
-        return this.conteneur.clientWidth / this.conteneur.clientHeight;
+        this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
     }
 }

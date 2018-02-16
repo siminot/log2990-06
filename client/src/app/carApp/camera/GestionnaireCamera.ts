@@ -13,11 +13,14 @@ export class GestionnaireCamera {
     private cameraCourante: CameraJeu;
 
     public get camera(): PerspectiveCamera {
+        this.miseAJourCameraCourante();
+
         return this.cameraCourante;
     }
 
     public constructor(private gestionnaireVoitures: GestionnaireVoitures) {
         this.cameras = [];
+        this.initialiserCameras();
     }
 
     // Initialisation

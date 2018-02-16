@@ -4,6 +4,7 @@ import { GestionnaireCamera } from "../camera/GestionnaireCamera";
 import { GestionnaireScene } from "../scene/GestionnaireScene";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 
 @Component({
     moduleId: module.id,
@@ -21,18 +22,22 @@ export class GameComponent implements AfterViewInit {
                        private gestionnaireCamera: GestionnaireCamera,
                        private gestionnaireVoitures: GestionnaireVoitures,
                        private gestionnaireScene: GestionnaireScene,
-                       private gestionnaireClavier: GestionnaireClavier) { }
+                       private gestionnaireClavier: GestionnaireClavier,
+                       private gestionnaireEcran: GestionnaireEcran) { }
+
+    public ngAfterViewInit(): void {
+        this.gestionnaireEcran.initialiserConteneur(this.containerRef.nativeElement);
+        this.serviceDeRendu
+            .initialiser()
+            .then(/* do nothing */)
+            .catch((err) => console.error(err));
+    }
+
+    // Gestion des évènements
 
     @HostListener("window:resize", ["$event"])
     public redimensionnement(): void {
-        this.serviceDeRendu.redimensionnement();
-    }
-
-    public ngAfterViewInit(): void {
-        this.serviceDeRendu
-            .initialiser(this.containerRef.nativeElement)
-            .then(/* do nothing */)
-            .catch((err) => console.error(err));
+        this.gestionnaireEcran.redimensionnement();
     }
 
     @HostListener("window:keydown", ["$event"])

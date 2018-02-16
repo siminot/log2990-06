@@ -16,6 +16,8 @@ const CHANGER_HEURE_JOURNEE: number = 89;   // y
 @Injectable()
 export class GestionnaireClavier {
 
+    private conteneur: HTMLDivElement;
+
     public constructor(private gestionnaireCamera: GestionnaireCamera,
                        private gestionnaireVoitures: GestionnaireVoitures,
                        private gestionnaireScene: GestionnaireScene) { }

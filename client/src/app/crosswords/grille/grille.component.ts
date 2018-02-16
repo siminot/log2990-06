@@ -56,7 +56,18 @@ export class GrilleComponent implements OnInit, OnDestroy {
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       let idTmp: string = this.positionLettresSelectionnees[i];
       let n: number = 10 * +idTmp[0] + +idTmp[1];
-      document.getElementsByTagName('td')[n].style.borderColor = "red";
+      if(!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
+        if(i === 0) {
+          document.getElementsByTagName('td')[n].style.borderTopColor = "red";
+        } else if (i === this.motSelectionne.longeur - 1) {
+          document.getElementsByTagName('td')[n].style.borderBottomColor = "red";
+        }
+        document.getElementsByTagName('td')[n].style.borderRightColor = "red";
+        document.getElementsByTagName('td')[n].style.borderLeftColor = "red";
+      }
+      
+      // document.getElementsByTagName('td')[n].style.borderColor = "red";
+      
       // console.log(document.getElementsByTagName('td')[n]);
     }
   }

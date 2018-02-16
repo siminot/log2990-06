@@ -39,10 +39,11 @@ export class ServiceDeRendu {
     private commencerBoucleDeRendu(): void {
         this.renderer = new WebGLRenderer();
         this.renderer.setPixelRatio(devicePixelRatio);
+        this.gestionnaireEcran.ajouterElementConteneur(this.renderer.domElement);
         this.redimensionnement();
 
         this.tempsDerniereMiseAJour = Date.now();
-        this.gestionnaireEcran.ajouterElementConteneur(this.renderer.domElement);
+
         this.rendu();
     }
 
@@ -57,12 +58,17 @@ export class ServiceDeRendu {
         const tempsDepuisDerniereTrame: number = Date.now() - this.tempsDerniereMiseAJour;
         this.gestionnaireScene.miseAJour(tempsDepuisDerniereTrame);
         this.tempsDerniereMiseAJour = Date.now();
+
         this.redimensionnement();
     }
 
     // Mise à jour de la taille de la fenetre
 
     public redimensionnement(): void {
-        this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
+        if (this.gestionnaireEcran.aEteRedimensionne) {
+            this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
+            this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.ratio);
+            this.gestionnaireEcran.aEteRedimensionne = false;
+        }
     }
 }

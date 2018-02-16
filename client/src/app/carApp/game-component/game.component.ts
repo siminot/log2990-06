@@ -1,8 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, HostListener } from "@angular/core";
 import { ServiceDeRendu } from "../serviceDeRendu/serviceDeRendu";
-import { GestionnaireCamera } from "../camera/GestionnaireCamera";
-import { GestionnaireScene } from "../scene/GestionnaireScene";
-import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 
@@ -19,9 +16,6 @@ export class GameComponent implements AfterViewInit {
     private containerRef: ElementRef;
 
     public constructor(private serviceDeRendu: ServiceDeRendu,
-                       private gestionnaireCamera: GestionnaireCamera,
-                       private gestionnaireVoitures: GestionnaireVoitures,
-                       private gestionnaireScene: GestionnaireScene,
                        private gestionnaireClavier: GestionnaireClavier,
                        private gestionnaireEcran: GestionnaireEcran) { }
 

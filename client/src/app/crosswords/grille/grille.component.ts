@@ -61,7 +61,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private makeID(i: number, j: number, k: string): string {
     const a: string = String(i);
     const b: string = String(j);
-    
 
     return a + b + k;
   }
@@ -84,7 +83,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnRightLetter(): void {
-    let elemTmp:HTMLInputElement;
+    let elemTmp: HTMLInputElement;
     let idTmp: string;
     
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
@@ -110,35 +109,52 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnNextLetter(): void {
-    console.log("forward.");
+    // Vérifier s'il y a déjà une lettre sur la case. Passer à la prochaine case si c'est le cas.
     if (this.positionCourante < this.motSelectionne.longeur - 1) {
       this.positionCourante++;
       const elem: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
       elem.focus();
+    } else if (this.positionCourante === this.motSelectionne.longeur - 1) {   // TODO : Vérifier si la condition est réellement nécessaire.
+      this.validateWord();
     }
   }
 
+  private validateWord(): void {
+    let usersWord: string = this.createWordFromSelectedLetters();
+    console.log("created word from the letters in the input : ", usersWord);
+    
+  }
+
+  private createWordFromSelectedLetters(): string {
+    let wordCreated: string = "";
+    for(let i: number = 0 ; i < this.positionLettresSelectionnees.length ; i++) {
+      wordCreated += (<HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[i])).value;
+    }
+    
+    return wordCreated;
+  }
+
   private focusOnPreviousLetter(): void {
-    const elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-    if(this.positionCourante === this.motSelectionne.longeur - 1 && elemCourant.value != '') {
+    let elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+    
+    if(this.onLastLetterOfWord(elemCourant) && elemCourant.value != '') {
       elemCourant.value = '';
     } else if (this.positionCourante > 0) {
       this.positionCourante--;
-      const elem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-      elem.focus();
-      elem.value = '';
+      const previousElem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+      previousElem.focus();
+      previousElem.value = '';
     }
+  }
+
+  private onLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
+    return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
   }
 
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
-  }
-
-  // Fonction appelée dans la Directive.
-  public prnt(): void {
-    console.log("test");
   }
 
   public printID($event: any): void {
@@ -150,38 +166,48 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   public retrieveWordFromClick(event: any): void {
 
-    //retrieve Id from the event
+    // retrieve Id from the event
     const target: any = event.target || event.srcElement || event.currentTarget;
     const idAttr: any = target.attributes.id;
     const id: any = idAttr.nodeValue;
     const cordinate: string[] = id.split("");
-
-    //coordonne X et Y de la case selectionne
+    // coordonne X et Y de la case selectionne
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];
-
     const motSousJacent: Word = this.findWordFromXY(x,y);
 
   }
 
-  public findWordFromXY( X:number, Y:number): Word{
-    let other: number;
-    let max: number;
-    for(const mot of  this.mots){
-      if(!mot.vertical){
+  public findWordFromXY( X:number, Y:number): Word {
+    let motTrouve: Word;
+    for(const mot of  this.mots) {
+      let other: number;
+      let max: number;
+
+      if ( !mot.vertical) {
         other = mot.premierY;
-        max = mot.premierX + mot.longeur;
-        console.log(other, max, mot.mot);
+        max = mot.premierX + mot.longeur - 1;
+        if( X <= max && Y === other) {
+          console.log(mot.mot);
+          motTrouve = mot;
+          break;
+        }
       }
-      else if( mot.vertical) {
+      else if ( mot.vertical) {
         other = mot.premierX;
-        max = mot.premierY + mot.longeur;
+        max = mot.premierY + mot.longeur - 1;
+        if ( Y <= max && X === other) {
+          console.log(mot.mot);
+          motTrouve = mot;
+          break;
+        }
       }
+    }
+
+    return motTrouve;
   }
 
-  return null;
 
-}
 }
 
 

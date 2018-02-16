@@ -1,13 +1,15 @@
 import { Injectable } from "@angular/core";
-import { GestionnaireCamera } from "../camera/GestionnaireCamera";
-import { ServiceDeRendu } from "../serviceDeRendu/serviceDeRendu";
 
 @Injectable()
 export class GestionnaireEcran {
 
     private conteneur: HTMLDivElement;
+    public aEteRedimensionne: boolean;
 
-    public constructor(private gestionnaireCamera: GestionnaireCamera) { }
+    public constructor() {
+        this.conteneur = null;
+        this.aEteRedimensionne = true;
+    }
 
     public get ratio(): number {
         return this.conteneur.clientWidth / this.conteneur.clientHeight;
@@ -27,11 +29,11 @@ export class GestionnaireEcran {
         }
     }
 
-    public redimensionnement(): void {
-        this.gestionnaireCamera.redimensionnement(this.ratio);
-    }
-
     public ajouterElementConteneur(element: HTMLElement): void {
         this.conteneur.appendChild(element);
+    }
+
+    public redimensionnement(): void {
+        this.aEteRedimensionne = true;
     }
 }

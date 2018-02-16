@@ -39,6 +39,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
+        this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
 
         this.remplirLettresSelect();
 
@@ -123,13 +124,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private validateWord(): boolean {
-    let usersWord: string = this.createWordFromSelectedLetters();
-    console.log("created word from the letters in the input : ", usersWord);
+    let usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
     
-    let valid: boolean = usersWord.toUpperCase() === this.motSelectionne.mot.toUpperCase();
-    console.log(valid);
+    let valid: boolean = usersWord === this.motSelectionne.mot;
 
-    return true;
+    return valid;
   }
 
   private createWordFromSelectedLetters(): string {

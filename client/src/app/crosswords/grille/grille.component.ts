@@ -58,25 +58,26 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return(etat ? "0" : "1");
   }
 
-  private makeID(i: number, j: number): string {
+  private makeID(i: number, j: number, k: string): string {
     const a: string = String(i);
     const b: string = String(j);
+    
 
-    return a + b;
+    return a + b + k;
   }
 
   private remplirLettresSelect(): void {
     this.positionCourante = 0;
     this.positionLettresSelectionnees = [];
 
-    let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY);
+    let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY, "");
     this.positionLettresSelectionnees[0] = tmp;
 
     for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
       if (this.motSelectionne.vertical) {
-        tmp = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY + i);
+        tmp = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY + i, "");
       } else {
-        tmp = this.makeID(this.motSelectionne.premierX + i, this.motSelectionne.premierY);
+        tmp = this.makeID(this.motSelectionne.premierX + i, this.motSelectionne.premierY, "");
       }
       this.positionLettresSelectionnees[i] = tmp;
     }
@@ -139,7 +140,50 @@ export class GrilleComponent implements OnInit, OnDestroy {
   public prnt(): void {
     console.log("test");
   }
+
+  public printID($event: any): void {
+    const target: any = event.target || event.srcElement || event.currentTarget;
+    const idAttr: any = target.attributes.id;
+    const value: any = idAttr.nodeValue;
+    console.log(value);
+  }
+
+  public retrieveWordFromClick(event: any): void {
+
+    //retrieve Id from the event
+    const target: any = event.target || event.srcElement || event.currentTarget;
+    const idAttr: any = target.attributes.id;
+    const id: any = idAttr.nodeValue;
+    const cordinate: string[] = id.split("");
+
+    //coordonne X et Y de la case selectionne
+    const x: number = +cordinate[0];
+    const y: number = +cordinate[1];
+
+    const motSousJacent: Word = this.findWordFromXY(x,y);
+
+  }
+
+  public findWordFromXY( X:number, Y:number): Word{
+    let other: number;
+    let max: number;
+    for(const mot of  this.mots){
+      if(!mot.vertical){
+        other = mot.premierY;
+        max = mot.premierX + mot.longeur;
+        console.log(other, max, mot.mot);
+      }
+      else if( mot.vertical) {
+        other = mot.premierX;
+        max = mot.premierY + mot.longeur;
+      }
+  }
+
+  return null;
+
 }
+}
+
 
   /*
   ** Pour une autre carte que celle du sprint 1. **

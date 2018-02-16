@@ -113,7 +113,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.positionCourante++;
       let elem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
       elem.focus();
-      
+
       if(elem.value != '') {
         this.focusOnNextLetter();
       }
@@ -122,10 +122,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private validateWord(): void {
+  private validateWord(): boolean {
     let usersWord: string = this.createWordFromSelectedLetters();
     console.log("created word from the letters in the input : ", usersWord);
     
+    let valid: boolean = usersWord === this.motSelectionne.mot;
+    console.log(valid);
+
+    return true;
   }
 
   private createWordFromSelectedLetters(): string {

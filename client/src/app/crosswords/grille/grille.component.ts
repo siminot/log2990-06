@@ -110,9 +110,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private focusOnNextLetter(): void {
     // Vérifier s'il y a déjà une lettre sur la case. Passer à la prochaine case si c'est le cas.
+    let elem:HTMLElement;
+
+
     if (this.positionCourante < this.motSelectionne.longeur - 1) {
       this.positionCourante++;
-      const elem: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+      elem = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
       elem.focus();
     } else if (this.positionCourante === this.motSelectionne.longeur - 1) {   // TODO : Vérifier si la condition est réellement nécessaire.
       this.validateWord();

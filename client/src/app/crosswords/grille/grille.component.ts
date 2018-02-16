@@ -84,7 +84,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnRightLetter(): void {
-    let elemTmp:HTMLInputElement;
+    let elemTmp: HTMLInputElement;
     let idTmp: string;
     
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
@@ -120,7 +120,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private focusOnPreviousLetter(): void {
     const elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-    if(this.positionCourante === this.motSelectionne.longeur - 1 && elemCourant.value != '') {
+    if (this.positionCourante === this.motSelectionne.longeur - 1 && elemCourant.value != '') {
       elemCourant.value = '';
     } else if (this.positionCourante > 0) {
       this.positionCourante--;
@@ -150,13 +150,13 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   public retrieveWordFromClick(event: any): void {
 
-    //retrieve Id from the event
+    // retrieve Id from the event
     const target: any = event.target || event.srcElement || event.currentTarget;
     const idAttr: any = target.attributes.id;
     const id: any = idAttr.nodeValue;
     const cordinate: string[] = id.split("");
 
-    //coordonne X et Y de la case selectionne
+    // coordonne X et Y de la case selectionne
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];
 
@@ -164,24 +164,34 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   }
 
-  public findWordFromXY( X:number, Y:number): Word{
-    let other: number;
-    let max: number;
-    for(const mot of  this.mots){
-      if(!mot.vertical){
+  public findWordFromXY( X:number, Y:number): Word {
+
+    for(const mot of  this.mots) {
+      let other: number;
+      let max: number;
+
+      if ( !mot.vertical) {
         other = mot.premierY;
-        max = mot.premierX + mot.longeur;
-        console.log(other, max, mot.mot);
+        max = mot.premierX + mot.longeur - 1;
+        if( X <= max && Y === other) {
+          console.log(mot.mot);
+          break;
+        }
       }
-      else if( mot.vertical) {
+      else if ( mot.vertical) {
         other = mot.premierX;
-        max = mot.premierY + mot.longeur;
+        max = mot.premierY + mot.longeur - 1;
+        if ( Y <= max && X === other) {
+          console.log(mot.mot);
+          break;
+        }
       }
+    }
+
+    return null;
   }
 
-  return null;
 
-}
 }
 
 

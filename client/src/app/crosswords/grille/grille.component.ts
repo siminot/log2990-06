@@ -43,8 +43,22 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
         this.remplirLettresSelect();
 
+        this.miseEnEvidence();
+
         this.focusOnRightLetter();
       });
+  }
+
+  private miseEnEvidence(): void {
+    let listeCase: any;
+    console.log(document.getElementsByTagName('td'));
+
+    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+      let idTmp: string = this.positionLettresSelectionnees[i];
+      let n: number = 10 * +idTmp[0] + +idTmp[1];
+      document.getElementsByTagName('td')[n].style.borderColor = "red";
+      // console.log(document.getElementsByTagName('td')[n]);
+    }
   }
 
   public getListeMots(): Word[] {

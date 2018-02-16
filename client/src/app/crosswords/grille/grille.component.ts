@@ -61,7 +61,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private makeID(i: number, j: number, k: string): string {
     const a: string = String(i);
     const b: string = String(j);
-    
 
     return a + b + k;
   }

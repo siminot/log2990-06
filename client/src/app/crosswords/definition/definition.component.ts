@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Subscription } from "rxjs/Subscription";
-
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, LettreGrille } from "../mockObject/word";
 
@@ -17,6 +16,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
+  private subscriptionMotSelec: Subscription;ß
 
   private reponse: String;
   private motSelectionne: Word;
@@ -30,8 +30,13 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
-  }
 
+    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect)=>{
+      this.motSelectionne = motSelect;
+      this.changementMotSelectionneFF(this.motSelectionne);
+    })
+
+  }
   public ngOnInit(): void { }
 
   public envoieMots(): void {
@@ -78,6 +83,15 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     this.decouvrirCases(mot);
 
     this.envoieMotSelectionne();
+  }
+
+  public changementMotSelectionneFF(mot: Word): void {
+    for (const item of this.mots) {
+      item.activer = false;
+    }
+    this.motSelectionne = mot;
+    mot.activer = !mot.activer;
+    this.decouvrirCases(mot);
   }
 
   public decouvrirCases(mot: Word): void {

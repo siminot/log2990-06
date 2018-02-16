@@ -55,7 +55,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public opacite(etat: boolean): String {
-    return(etat ? "0" : "1");
+    return(etat ? "0" : ".3");
   }
 
   private makeID(i: number, j: number, k: string): string {
@@ -164,7 +164,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     console.log(value);
   }
 
-  public retrieveWordFromClick(event: any): void {
+  private retrieveWordFromClick(event: any): void {
 
     // retrieve Id from the event
     const target: any = event.target || event.srcElement || event.currentTarget;
@@ -175,10 +175,15 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];
     const motSousJacent: Word = this.findWordFromXY(x,y);
+    this.motSelectionne = motSousJacent;
+
+    this.envoieMotSelectionne(); 
+    //this.remplirLettresSelect();
+    this.focusOnRightLetter();
 
   }
 
-  public findWordFromXY( X:number, Y:number): Word {
+  private findWordFromXY( X:number, Y:number): Word {
     let motTrouve: Word;
     for(const mot of  this.mots) {
       let other: number;
@@ -203,8 +208,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
         }
       }
     }
-    console.log("salut")
     return motTrouve;
+  }
+
+  public envoieMotSelectionne(): void {
+    this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
 
 

@@ -20,7 +20,7 @@ module Route {
         private listeMot: Array<Mockword>;
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_NOIR);
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
-        private motsDejaPlaces: Array<string> = new Array<string>();
+        private motsDejaPlaces: String;
         private optionsPartie: MockOptionPartie;
         private listeMotsRemplis: Array<Mockword>;
 
@@ -86,7 +86,9 @@ module Route {
             let ctr = 0;
             const DIX = 2;
             let prochainMotTrouve = false;
+            let indiceAleatoire = 0;
             do {
+                indiceAleatoire = this.nombreAleatoire(lesMots.length) - 1;
                 if (ctr++ === DIX || ctr >= lesMots.length) {
                     this.listeMot[indice].setMot(contrainte);
                     this.ecrireDansLaGrille(this.listeMot[indice]);
@@ -94,9 +96,16 @@ module Route {
 
                     return false;
                 }
-                this.affecterMot(lesMots[this.nombreAleatoire(lesMots.length) - 1], this.listeMot[indice]);
-                this.ecrireDansLaGrille(this.listeMot[indice]);
-                prochainIndice = this.obtenirLeMotLePlusImportant(this.listeMot[indice]);
+                // Verif si le mot est deja place dans la grille
+                if (!(lesMots[indiceAleatoire].mot in this.motsDejaPlaces)) {
+                    this.affecterMot(lesMots[indiceAleatoire], this.listeMot[indice]);
+                    this.ecrireDansLaGrille(this.listeMot[indice]);
+                    prochainIndice = this.obtenirLeMotLePlusImportant(this.listeMot[indice]);
+                    if (prochainIndice === -1) {
+                        return true;
+                    }
+                }
+
                 if (prochainIndice === -1) {
                     return true;
                 }
@@ -164,6 +173,7 @@ module Route {
             motAChanger.setMot(unMot.mot);
             motAChanger.setDefinition(unMot.definitions[indexDef].definition);
             motAChanger.setEstTraite(true);
+            this.motsDejaPlaces[unMot.mot] = 1; // pour eviter les doublons
 
             return unMot;
         }

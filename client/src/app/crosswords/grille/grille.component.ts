@@ -109,7 +109,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnNextLetter(): void {
-    console.log("forward.");
     if (this.positionCourante < this.motSelectionne.longeur - 1) {
       this.positionCourante++;
       const elem: HTMLElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
@@ -133,11 +132,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
-  }
-
-  // Fonction appelée dans la Directive.
-  public prnt(): void {
-    console.log("test");
   }
 
   public printID($event: any): void {

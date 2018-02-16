@@ -87,9 +87,8 @@ export class GestionnaireSkybox {
             ? COULEUR_PLANCHER = COULEUR_PLANCHER_NUIT[this.positionCouranteSkybox()]
             : COULEUR_PLANCHER = COULEUR_PLANCHER_JOUR[this.positionCouranteSkybox()];
 
-        const materiel: MeshPhongMaterial = new MeshPhongMaterial( { color: COULEUR_PLANCHER } );
+        const materiel: MeshPhongMaterial = new MeshPhongMaterial( { color: COULEUR_PLANCHER, side: DoubleSide } );
         const plancher: Mesh = new Mesh( geometrie, materiel );
-        plancher.material.side = DoubleSide;
         const ANGLE: number = 90;
         plancher.rotation.x = ANGLE / RAD_TO_DEG;
         plancher.castShadow = true;

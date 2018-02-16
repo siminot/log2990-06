@@ -20,7 +20,7 @@ module Route {
         private listeMot: Array<Mockword>;
         private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_NOIR);
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
-        private motsDejaPlaces: String;
+        // private motsDejaPlaces: String;
         private optionsPartie: MockOptionPartie;
         private listeMotsRemplis: Array<Mockword>;
 

@@ -32,7 +32,6 @@ module Route {
         private initMatrice(): void {
             this.listeMot = new Array<Mockword>();
             this.grille = new Array<Array<string>>();
-            this.motsDejaPlaces = new Array<string>();
             this.listeMotsRemplis = new Array<Mockword>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
@@ -75,41 +74,44 @@ module Route {
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {
 
-            this.lireMotViaGrille(this.listeMot[indice]);
+            const motActuel: Mockword = this.listeMot[indice];
+            this.lireMotViaGrille(motActuel);
             let lesMots: Mot[];
-            const contrainte = this.listeMot[indice].getMot();
-            lesMots = await this.demanderMot(this.listeMot[indice]);
+            const contrainte = motActuel.getMot();
+            lesMots = await this.demanderMot(motActuel);
             if (lesMots === undefined) {
                 return false;
             }
             let prochainIndice: number;
             let ctr = 0;
-            const DIX = 2;
+            const DIX = 2; // A rajouter dans les constantes quand on va avoir un bon chiffre
             let prochainMotTrouve = false;
             let indiceAleatoire = 0;
             do {
                 indiceAleatoire = this.nombreAleatoire(lesMots.length) - 1;
+                // limiter le nombre d'essai pour chaque mot
                 if (ctr++ === DIX || ctr >= lesMots.length) {
-                    this.listeMot[indice].setMot(contrainte);
-                    this.ecrireDansLaGrille(this.listeMot[indice]);
-                    this.listeMot[indice].setEstTraite(false);
+                    motActuel.setMot(contrainte);
+                    this.ecrireDansLaGrille(motActuel);
+                    motActuel.setEstTraite(false);
+                    // delete this.motsDejaPlaces[motActuel.getMot()];
 
                     return false;
                 }
                 // Verif si le mot est deja place dans la grille
-                if (!(lesMots[indiceAleatoire].mot in this.motsDejaPlaces)) {
-                    this.affecterMot(lesMots[indiceAleatoire], this.listeMot[indice]);
-                    this.ecrireDansLaGrille(this.listeMot[indice]);
-                    prochainIndice = this.obtenirLeMotLePlusImportant(this.listeMot[indice]);
-                    if (prochainIndice === -1) {
-                        return true;
-                    }
+                // if (!(lesMots[indiceAleatoire].mot in this.motsDejaPlaces)) {
+                this.affecterMot(lesMots[indiceAleatoire], motActuel);
+                this.ecrireDansLaGrille(motActuel);
+                prochainIndice = this.obtenirLeMotLePlusImportant(motActuel);
+                if (prochainIndice === -1) {
+                    return true;
                 }
+                // }
 
                 if (prochainIndice === -1) {
                     return true;
                 }
-                console.log(this.grille);
+                // console.log(this.grille);
                 prochainMotTrouve = await this.remplirGrilleRecursif(prochainIndice);
 
             } while (!prochainMotTrouve);
@@ -173,7 +175,7 @@ module Route {
             motAChanger.setMot(unMot.mot);
             motAChanger.setDefinition(unMot.definitions[indexDef].definition);
             motAChanger.setEstTraite(true);
-            this.motsDejaPlaces[unMot.mot] = 1; // pour eviter les doublons
+            // this.motsDejaPlaces[unMot.mot] = 1; // pour eviter les doublons
 
             return unMot;
         }
@@ -207,7 +209,7 @@ module Route {
 
             this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
             await this.remplirLaGrilleDeMots();
-            console.log(this.grille);
+            // console.log(this.grille);
 
             res.send(this.listeMot);
         }

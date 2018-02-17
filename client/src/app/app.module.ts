@@ -13,7 +13,6 @@ import { GestionnaireVoitures } from "./carApp/voiture/gestionnaireVoitures";
 import { GestionnaireClavier } from "./carApp/clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "./carApp/ecran/gestionnaireEcran";
 
-import { BasicService } from "./basic.service";
 import { AppRoutingModule } from ".//app-routing.module";
 
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
@@ -44,7 +43,6 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         GestionnaireVoitures,
         GestionnaireClavier,
         GestionnaireEcran,
-        BasicService,
         RequeteDeGrilleService
     ],
     bootstrap: [ AppComponent ],

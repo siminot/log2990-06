@@ -67,7 +67,7 @@ export class ServiceDeRendu {
     public redimensionnement(): void {
         if (this.gestionnaireEcran.aEteRedimensionne) {
             this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
-            this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.ratio);
+            this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
             this.gestionnaireEcran.aEteRedimensionne = false;
         }
     }

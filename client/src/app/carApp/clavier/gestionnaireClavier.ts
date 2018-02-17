@@ -8,8 +8,8 @@ const DIRECTION_GAUCHE: number = 65;        // a
 const FREIN: number = 83;                   // s
 const DIRECTION_DROITE: number = 68;        // d
 const CHANGER_VUE: number = 86;             // v
-const ZOOM_OUT: number = 61;                // =
-const ZOOM_IN: number = 173;                // -
+const ZOOM_IN: number = 61;                 // =
+const ZOOM_OUT: number = 173;               // -
 const CHANGER_DECOR: number = 84;           // t
 const CHANGER_HEURE_JOURNEE: number = 89;   // y
 

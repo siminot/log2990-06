@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { PerspectiveCamera } from "three";
+import { Camera } from "three";
 import { Voiture } from "../voiture/voiture";
 import { CameraJeu } from "./CameraJeu";
 import { CameraJeu2D } from "./CameraJeu2D";
@@ -12,10 +12,10 @@ export class GestionnaireCamera {
     private cameras: CameraJeu[];
     private cameraCourante: CameraJeu;
 
-    public get camera(): PerspectiveCamera {
+    public get camera(): Camera {
         this.miseAJourCameraCourante();
 
-        return this.cameraCourante;
+        return this.cameraCourante.camera;
     }
 
     public constructor(private gestionnaireVoitures: GestionnaireVoitures) {
@@ -65,9 +65,9 @@ export class GestionnaireCamera {
         this.cameraCourante.dezoomer();
     }
 
-    public redimensionnement(ratio: number): void {
+    public redimensionnement(largeur: number, hauteur: number): void {
         for (const cameraJeu of this.cameras) {
-            cameraJeu.redimensionnement(ratio);
+            cameraJeu.redimensionnement(largeur, hauteur);
         }
     }
 }

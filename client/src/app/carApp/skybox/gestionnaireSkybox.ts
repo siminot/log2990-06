@@ -4,9 +4,11 @@ import { BoxGeometry, BackSide, Mesh, MeshBasicMaterial, TextureLoader,
 import { RAD_TO_DEG } from "../constants";
 
 // Couleurs pour le plancher
-const NOIR_GRIS: number = 0x0D0D0D;
+// const NOIR_GRIS: number = 0x0D0D0D;
 const GRIS: number = 0x595959;
 const VERT: number = 0x669900;
+const VERT_FONCE: number = 0x394D00;
+const BRUN_FONCE: number = 0x604020;
 
 // Paysage
 const TAILLE_SKYBOX: number = 8192;
@@ -16,7 +18,7 @@ const NOMBRE_FACE_CUBE: number = 6;
 const CHEMIN: string = "./../../../assets/skybox/";
 const URL_SKYBOX_JOUR: string[] = ["jour1/", "jour2/"];
 const COULEUR_PLANCHER_JOUR: number[] = [VERT, GRIS];
-const COULEUR_PLANCHER_NUIT: number[] = [NOIR_GRIS, NOIR_GRIS];
+const COULEUR_PLANCHER_NUIT: number[] = [VERT_FONCE, BRUN_FONCE];
 const URL_SKYBOX_NUIT: string[] = ["nuit1/", "nuit2/"];
 const FORMAT: string = ".jpg";
 

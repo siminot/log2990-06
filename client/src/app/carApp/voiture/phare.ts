@@ -1,7 +1,8 @@
-import { SpotLight, Vector3, Mesh, SphereGeometry, MeshBasicMaterial, Object3D} from "three";
+import { SpotLight, Vector3, Mesh, SphereGeometry, MeshBasicMaterial, Object3D, Color} from "three";
 import { PI_OVER_2 } from "../constants";
 
 const COULEUR_ALLUMEE: number = 0xFFCC00;
+const COULEUR_ETEINTE: number = 0x000000;
 const INTENSITE_DEFAUT: number = 1;
 const DISTANCE: number = 30;
 const PENOMBRE: number = 0.5;
@@ -49,9 +50,11 @@ export class Phare {
 
     public allumer(): void {
         this._faisceau.intensity = INTENSITE_DEFAUT;
+        this.materielSphere.color = new Color(COULEUR_ALLUMEE);
     }
 
     public eteindre(): void {
         this._faisceau.intensity = 0;
+        this.materielSphere.color = new Color(COULEUR_ETEINTE);
     }
 }

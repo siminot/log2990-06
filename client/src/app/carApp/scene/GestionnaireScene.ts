@@ -77,6 +77,7 @@ export class GestionnaireScene {
         this.estModeNuit = !this.estModeNuit;
         this._scene.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerTempsJournee();
+        this.gestionnaireVoiture.changerTempsJournee();
         this._scene.add(this.gestionnaireSkybox.skybox);
     }
 

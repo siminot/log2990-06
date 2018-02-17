@@ -26,14 +26,9 @@ export class Voiture extends Object3D {
 
     private _speed: Vector3;
     private isBraking: boolean;
-    private mesh: Object3D;
     private steeringWheelDirection: number;
     private weightRear: number;
     private phares: GroupePhares;
-
-    public getPosition(): Vector3 {
-        return this.mesh.position.clone();
-    }
 
     public get speed(): Vector3 {
         return this._speed.clone();
@@ -48,14 +43,14 @@ export class Voiture extends Object3D {
     }
 
     public get angle(): number {
-        return this.mesh.rotation.y;
+        return this.rotation.y;
     }
 
     public get direction(): Vector3 {
         const rotationMatrix: Matrix4 = new Matrix4();
         const carDirection: Vector3 = new Vector3(0, 0, -1);
 
-        rotationMatrix.extractRotation(this.mesh.matrix);
+        rotationMatrix.extractRotation(this.matrix);
         carDirection.applyMatrix4(rotationMatrix);
 
         return carDirection;
@@ -98,9 +93,8 @@ export class Voiture extends Object3D {
     }
 
     public init(texture: Object3D): void {
-        this.mesh = texture;
-        this.mesh.setRotationFromEuler(INITIAL_MODEL_ROTATION);
-        this.add(this.mesh);
+        this.add(texture);
+        this.setRotationFromEuler(INITIAL_MODEL_ROTATION);
         this.initialiserPhares();
     }
 
@@ -129,7 +123,7 @@ export class Voiture extends Object3D {
 
         // Move to car coordinates
         const rotationMatrix: Matrix4 = new Matrix4();
-        rotationMatrix.extractRotation(this.mesh.matrix);
+        rotationMatrix.extractRotation(this.matrix);
         const rotationQuaternion: Quaternion = new Quaternion();
         rotationQuaternion.setFromRotationMatrix(rotationMatrix);
         this._speed.applyMatrix4(rotationMatrix);
@@ -143,7 +137,7 @@ export class Voiture extends Object3D {
         // Angular rotation of the car
         const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
         const omega: number = this._speed.length() / R;
-        this.mesh.rotateY(omega);
+        this.rotateY(omega);
 
         // Mise a jour des phares
         this.phares.miseAJour();
@@ -159,7 +153,7 @@ export class Voiture extends Object3D {
 
     private initialiserPhares(): void {
         this.phares.init();
-        this.mesh.add(this.phares);
+        this.add(this.phares);
     }
 
     private physicsUpdate(deltaTime: number): void {
@@ -168,7 +162,7 @@ export class Voiture extends Object3D {
         this.weightRear = this.getWeightDistribution();
         this._speed.add(this.getDeltaSpeed(deltaTime));
         this._speed.setLength(this._speed.length() <= MINIMUM_SPEED ? 0 : this._speed.length());
-        this.mesh.position.add(this.getDeltaPosition(deltaTime));
+        this.position.add(this.getDeltaPosition(deltaTime));
         this.rearWheel.update(this._speed.length());
     }
 

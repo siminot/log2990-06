@@ -32,13 +32,13 @@ export class CameraJeu2D extends CameraJeu {
 
     protected reglerPositionnement(POSITION_ABSOLUE: Vector3): void {
         this.camera.position.set(POSITION_ABSOLUE.x, POSITION_ABSOLUE.y, POSITION_ABSOLUE.z);
-        this.camera.lookAt(this.voitureSuivie.getPosition());
+        this.camera.lookAt(this.voitureSuivie.position);
         this.ajusterVue();
     }
 
     protected calculerNouvellePositionAbsolue(position: Vector3): Vector3 {
         return position.normalize()
-            .add(this.voitureSuivie.getPosition());
+            .add(this.voitureSuivie.position);
     }
 
     private ajusterVue(): void {

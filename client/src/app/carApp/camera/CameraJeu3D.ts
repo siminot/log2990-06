@@ -33,7 +33,7 @@ export class CameraJeu3D extends CameraJeu {
     protected reglerPositionnement(POSITION_ABSOLUE: Vector3): void {
         this.camera.position.set(POSITION_ABSOLUE.x, POSITION_ABSOLUE.y, POSITION_ABSOLUE.z);
         this.camera.rotateY(this.voitureSuivie.angle);
-        this.camera.lookAt(this.voitureSuivie.getPosition());
+        this.camera.lookAt(this.voitureSuivie.position);
     }
 
     public redimensionnement(largeur: number, hauteur: number): void {
@@ -44,7 +44,7 @@ export class CameraJeu3D extends CameraJeu {
     public calculerNouvellePositionAbsolue(position: Vector3): Vector3 {
         return position.normalize()
             .multiplyScalar(this.distance)
-            .add(this.voitureSuivie.getPosition());
+            .add(this.voitureSuivie.position);
     }
 
     public zoomer(): void {

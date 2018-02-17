@@ -3,34 +3,14 @@ export const DEFAULT_WHEEL_MASS: number = 15;
 export const DEFAULT_FRICTION_COEFFICIENT: number = 1;
 
 export class Wheel {
-    private _angularVelocity: number;
-    private _mass: number;
-    private _radius: number;
-    private _frictionCoefficient: number;
-
-    public get angularVelocity(): number {
-        return this._angularVelocity;
-    }
-
-    public set angularVelocity(value: number) {
-        this._angularVelocity = value;
-    }
+    public angularVelocity: number;
+    public mass: number;
+    public radius: number;
+    public frictionCoefficient: number;
 
     public get inertia(): number {
         // tslint:disable-next-line:no-magic-numbers
-        return this._mass * this._radius * this._radius / 2;
-    }
-
-    public get radius(): number {
-        return this._radius;
-    }
-
-    public get frictionCoefficient(): number {
-        return this._frictionCoefficient;
-    }
-
-    public get mass(): number {
-        return this._mass;
+        return this.mass * this.radius * this.radius / 2;
     }
 
     public constructor(
@@ -52,13 +32,13 @@ export class Wheel {
             frictionCoefficient = DEFAULT_FRICTION_COEFFICIENT;
         }
 
-        this._mass = mass;
-        this._radius = radius;
-        this._frictionCoefficient = frictionCoefficient;
-        this._angularVelocity = 0;
+        this.mass = mass;
+        this.radius = radius;
+        this.frictionCoefficient = frictionCoefficient;
+        this.angularVelocity = 0;
     }
 
     public update(speed: number): void {
-        this._angularVelocity = speed / this.radius;
+        this.angularVelocity = speed / this.radius;
     }
 }

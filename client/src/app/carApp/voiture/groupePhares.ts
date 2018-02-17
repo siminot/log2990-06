@@ -22,14 +22,12 @@ export class GroupePhares extends Group {
         const HAUTEUR: number = 0.5;
         const LARGEUR: number = 0.5;
         const PROFONDEUR: number = -1.65;
-        const ANGLE_DIRECTION: number = 0.2;
 
         const PHARE_GAUCHE_POSITION_RELATIVE: Vector3 = new Vector3(LARGEUR, HAUTEUR, PROFONDEUR);
         const PHARE_DROITE_POSITION_RELATIVE: Vector3 = new Vector3(-LARGEUR, HAUTEUR, PROFONDEUR);
-        this.phares.push(new Phare(PHARE_GAUCHE_POSITION_RELATIVE, ANGLE_DIRECTION));
-        this.phares.push(new Phare(PHARE_DROITE_POSITION_RELATIVE, -ANGLE_DIRECTION));
+        this.phares.push(new Phare(PHARE_GAUCHE_POSITION_RELATIVE));
+        this.phares.push(new Phare(PHARE_DROITE_POSITION_RELATIVE));
 
-        this.miseAJour();
         this.ajouterPhares();
     }
 
@@ -43,12 +41,6 @@ export class GroupePhares extends Group {
             this.add(PHARE.faisceau);
             this.add(PHARE.ampoule);
             PHARE.suivre(this.ciblePhares);
-        }
-    }
-
-    public miseAJour(): void {
-        for (const PHARE of this.phares) {
-            PHARE.miseAJourPosition();
         }
     }
 

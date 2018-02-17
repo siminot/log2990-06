@@ -138,9 +138,6 @@ export class Voiture extends Object3D {
         const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
         const omega: number = this._speed.length() / R;
         this.rotateY(omega);
-
-        // Mise a jour des phares
-        this.phares.miseAJour();
     }
 
     public eteindrePhares(): void {

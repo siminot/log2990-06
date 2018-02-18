@@ -28,15 +28,6 @@ describe("DefinitionComponent", () => {
     activer: false
   };
 
-  // lettreDecouverte a true puisque les lettres sont initialisées à true
-  // pour qu"on les voit dans la grille. Mettre false quand on initialisera
-  // les lettres à false.
-  const realLetterFromGrid: LettreGrille = {
-    caseDecouverte: false,
-    lettre: "P",
-    lettreDecouverte: true
-  };
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DefinitionComponent ],
@@ -55,17 +46,6 @@ describe("DefinitionComponent", () => {
   describe("Création d\"objets.", () => {
     it("Création d\"objet Definition.", () => {
       expect(component).toBeTruthy();
-    });
-  });
-
-  describe("Accesseurs et mutateurs.", () => {
-    it("Accesseur de la liste de mots.", () => {
-      expect(component.getMots()).toContain(realWordFromOurFakeList);
-    });
-
-    it("Accesseur de la matrice de mots de la grille.", () => {
-      const indicePremiereLigne: number = 0;
-      expect(component.getMatrice()[indicePremiereLigne]).toContain(realLetterFromGrid);
     });
   });
 

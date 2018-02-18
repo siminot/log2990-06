@@ -14,6 +14,7 @@ import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { DefinitionComponent } from "./crosswords/definition/definition.component";
 import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
 import { ConfigPartieComponent } from './crosswords/config-partie/config-partie.component';
+import { DirectiveFocusDirective } from './crosswords/directive-focus/directive-focus.directive';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { ConfigPartieComponent } from './crosswords/config-partie/config-partie.
         MainGrilleComponent,
         GrilleComponent,
         DefinitionComponent,
-        ConfigPartieComponent
+        ConfigPartieComponent,
+        DirectiveFocusDirective
     ],
     imports: [
         BrowserModule,

@@ -5,7 +5,6 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { TAILLE_TABLEAU } from "../constantes";
-// import { DirectiveFocusDirective } from "../directive-focus/directive-focus.directive";
 
 @Component({
   selector: "app-grille",
@@ -14,7 +13,6 @@ import { TAILLE_TABLEAU } from "../constantes";
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {
-
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private motSelectionne: Word;

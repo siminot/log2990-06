@@ -4,7 +4,7 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-// import { DirectiveFocusDirective } from "../directive-focus/directive-focus.directive";
+import { TAILLE_TABLEAU } from "../constantes";
 
 @Component({
   selector: "app-grille",
@@ -13,7 +13,6 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {
-
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private motSelectionne: Word;
@@ -43,8 +42,52 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
         this.remplirLettresSelect();
 
+        this.miseEnEvidence();
+
         this.focusOnRightLetter();
       });
+  }
+
+  private miseEnEvidence(): void {
+    this.putDefaultStyleGrid();
+
+    let uneCase: HTMLElement;
+    let idTmp: string;
+    let n: number;
+    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+      idTmp = this.positionLettresSelectionnees[i];
+      n = 10 * +idTmp[0] + +idTmp[1];
+      uneCase = document.getElementsByTagName('td')[n];
+
+      if(!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
+        if(i === 0) {                                         // Premiere case.
+          uneCase.style.borderTopColor = "red";
+        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
+          uneCase.style.borderBottomColor = "red";
+        }                                                     // Toutes les cases.
+        uneCase.style.borderRightColor = "red";
+        uneCase.style.borderLeftColor = "red";
+      } else {
+        if (i === 0) {                                        // Premiere case.
+          uneCase.style.borderLeftColor = "red";
+        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
+          uneCase.style.borderRightColor = "red";
+        }                                                     // Toutes les cases du mot.
+        uneCase.style.borderTopColor = "red";
+        uneCase.style.borderBottomColor = "red";
+      }
+    }
+  }
+
+  private putDefaultStyleGrid(): void {
+    let uneCase: HTMLElement;
+    for (let n: number = 0 ; n < TAILLE_TABLEAU * TAILLE_TABLEAU ; n++) {
+      uneCase = document.getElementsByTagName('td')[n];
+      uneCase.style.borderBottomColor = "black";
+      uneCase.style.borderTopColor = "black";
+      uneCase.style.borderLeftColor = "black";
+      uneCase.style.borderRightColor = "black";
+    }
   }
 
   public getListeMots(): Word[] {

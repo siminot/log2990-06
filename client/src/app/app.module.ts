@@ -13,7 +13,7 @@ import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.compon
 import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { DefinitionComponent } from "./crosswords/definition/definition.component";
 import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
-import { ConfigPartieComponent } from './config-partie/config-partie.component';
+import { ConfigPartieComponent } from './crosswords/config-partie/config-partie.component';
 
 @NgModule({
     declarations: [

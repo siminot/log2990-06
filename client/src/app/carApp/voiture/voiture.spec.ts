@@ -12,7 +12,7 @@ class MockEngine extends Engine {
     }
 }
 
-describe("Car", () => {
+describe("Voiture", () => {
     let car: Voiture;
 
     beforeEach(async (done: () => void) => {

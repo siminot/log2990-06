@@ -38,19 +38,18 @@ export class GroupePhares extends Group {
 
     private ajouterPhares(): void {
         for (const PHARE of this.phares) {
-            this.add(PHARE.faisceau);
-            this.add(PHARE.ampoule);
-            PHARE.suivre(this.ciblePhares);
+            this.add(PHARE);
+            PHARE.target = this.ciblePhares;
         }
     }
 
-    public eteindrePhares(): void {
+    public eteindre(): void {
         for (const PHARE of this.phares) {
             PHARE.eteindre();
         }
     }
 
-    public allumerPhares(): void {
+    public allumer(): void {
         for (const PHARE of this.phares) {
             PHARE.allumer();
         }

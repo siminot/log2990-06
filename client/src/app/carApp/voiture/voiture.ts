@@ -141,11 +141,11 @@ export class Voiture extends Object3D {
     }
 
     public eteindrePhares(): void {
-        this.phares.eteindrePhares();
+        this.phares.eteindre();
     }
 
     public allumerPhares(): void {
-        this.phares.allumerPhares();
+        this.phares.allumer();
     }
 
     private initialiserPhares(): void {

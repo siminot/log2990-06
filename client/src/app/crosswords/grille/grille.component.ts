@@ -265,19 +265,4 @@ export class GrilleComponent implements OnInit, OnDestroy {
   public envoieMotSelectionne(): void {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
-
-
 }
-
-
-  /*
-  ** Pour une autre carte que celle du sprint 1. **
-  public onKey(event: any): void {
-    const element: any = event.srcElement.nextElementSibling;
-
-    if (element != null) {
-      const elem: HTMLElement = document.getElementById("testFocus");
-      elem.focus();
-    }
-  }
-  */

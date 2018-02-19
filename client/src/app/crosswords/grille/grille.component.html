@@ -1,5 +1,5 @@
 
-<div class="grille">
+<div class="grille" #macro>
     <table class="table">
         <br>
         <tr *ngFor="let item of matriceDesMotsSurGrille; let i = index">
@@ -7,12 +7,16 @@
                 <p class="indicesHorizontals" *ngIf="i == 0">{{ j + 1 }}</p>
                 <p class="indicesVerticals" *ngIf="j == 0">{{ i + 1 }}</p>
 
-                <img *ngIf="case.lettre != '1' ; else elseBlock1" [style.opacity]="opacite(case.caseDecouverte)" class="tuile" src="../../../assets/tuile.png">
+                <input [attr.id] = "makeID(i,j,'')" class="tuile" appDirectiveFocus="true" style="text-transform:uppercase" (keyup)="manageKeyEntry($event)" maxlength="1">
+
+                <img *ngIf="case.lettre != '1' ; else elseBlock1" [attr.id] = "makeID(i,j,'c')" [style.opacity]="opacite(case.caseDecouverte)" (click) = "retrieveWordFromClick($event)" class="tuile" src="../../../assets/tuile.png">
+
                 <ng-template #elseBlock1>
                     <img src="../../../assets/tuileMorte.png" class="tuile">
                 </ng-template>
 
                 <p class="reponseLettre" *ngIf = "case.lettreDecouverte && case.lettre ; else elseBlock2">{{ case.lettre | uppercase }}</p>
+
                 <ng-template #elseBlock2>
                     <p class="reponseLettre"></p>
                 </ng-template>

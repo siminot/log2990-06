@@ -19,7 +19,8 @@ import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.compon
 import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { DefinitionComponent } from "./crosswords/definition/definition.component";
 import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
-import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
+import { ConfigPartieComponent } from './crosswords/config-partie/config-partie.component';
+import { DirectiveFocusDirective } from './crosswords/directive-focus/directive-focus.directive';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         MainGrilleComponent,
         GrilleComponent,
         DefinitionComponent,
+        ConfigPartieComponent,
         DirectiveFocusDirective
     ],
     imports: [

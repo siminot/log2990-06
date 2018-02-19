@@ -16,7 +16,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
-  private subscriptionMotSelec: Subscription;ß
+  private subscriptionMotSelec: Subscription;
 
   private reponse: String;
   private motSelectionne: Word;

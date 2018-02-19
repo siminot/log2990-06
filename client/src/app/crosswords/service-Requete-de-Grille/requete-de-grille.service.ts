@@ -11,7 +11,7 @@ import { Word, LettreGrille } from "../mockObject/word";
 export class RequeteDeGrilleService {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
-  rivate heroesUrl = 'api/heroes';
+  private heroesUrl = 'api/heroes';
 
   private listeMotsSujet: Subject<Word[]> = new Subject<Word[]>();
   private matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();
@@ -53,12 +53,10 @@ export class RequeteDeGrilleService {
     return this.motSelectionneObservable$;
   }
 
-  // Observable<Hero[]> {
-  // return this.http.get<Hero[]>(this.heroesUrl)
+)
 
-  public getMots(): Observable<Word[]> {
-    retunr this.http.get<Word[]>(this.url)
-    // return this.mots;
+  public getMots(): Word[] {
+    return this.mots;
   }
 
   public getMatrice(): Array<Array<LettreGrille>> {

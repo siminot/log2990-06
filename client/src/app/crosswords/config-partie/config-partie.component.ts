@@ -10,6 +10,8 @@ export class ConfigPartieComponent implements OnInit {
   public constructor() { }
 
   public ngOnInit(): void {
+    document.getElementById("difficulte").style.display = "none";
+    document.getElementById("creerOuJoindre").style.display = "none";
   }
 
 }

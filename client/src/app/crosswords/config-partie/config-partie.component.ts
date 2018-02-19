@@ -7,6 +7,8 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ConfigPartieComponent implements OnInit {
 
+  private requete: string = "localhost:3000/grille"; // Changer pour une constante
+
   public constructor() { }
 
   public ngOnInit(): void {
@@ -15,8 +17,16 @@ export class ConfigPartieComponent implements OnInit {
   }
 
   public apparaitreSection(laSection: string): void {
-    // Verifier si block est le bon displau
+    // Verifier si block est le bon display
     document.getElementById(laSection).style.display = "block";
+  }
+
+  public disparaitreSection(laSection: string): void {
+    document.getElementById(laSection).style.display = "none";
+  }
+
+  public ajouterDansRequete(ajout: string): void {
+    this.requete += ajout;
   }
 
 }

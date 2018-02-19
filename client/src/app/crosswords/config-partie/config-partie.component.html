@@ -2,8 +2,12 @@
 <div>
 
   <div id="soloOuMulti">
-    <button (click)="apparaitreSection('difficulte')">Partie solo</button>
-    <button (click)="apparaitreSection('creerOuJoindre')">Partie en ligne</button>
+    <button (click)="apparaitreSection('difficulte')"
+            (click)="disparaitreSection('soloOuMulti')">
+      Partie solo</button>
+    <button (click)="apparaitreSection('creerOuJoindre')"
+            (click)="disparaitreSection('soloOuMulti')">
+      Partie en ligne</button>
   </div>
 
   <div id="difficulte">
@@ -13,8 +17,12 @@
   </div>
 
   <div id="creerOuJoindre">
-    <button (click)="apparaitreSection('difficulte')">Créer une partie</button>
-    <button>Rejoindre une partie</button>
+    <button (click)="apparaitreSection('difficulte')"
+            (click)="disparaitreSection('creerOuJoindre')">
+      Créer une partie</button>
+    <button (click)="apparaitreSection('difficulte')"
+            (click)="disparaitreSection('creerOuJoindre')"> <!-- Pas encore sur si on choisi une difficulte ici -->
+      Rejoindre une partie</button>
   </div>
 
 </div>

@@ -22,4 +22,14 @@ describe("ConfigPartieComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  describe("test ajoutDansRequete", () => {
+
+    it("devrait pas planter lol", () => {
+      // Pour l'instant
+      expect(component).toBeTruthy();
+    });
+
+  });
+
 });

@@ -14,4 +14,9 @@ export class ConfigPartieComponent implements OnInit {
     document.getElementById("creerOuJoindre").style.display = "none";
   }
 
+  public apparaitreSection(laSection: string): void {
+    // Verifier si block est le bon displau
+    document.getElementById(laSection).style.display = "block";
+  }
+
 }

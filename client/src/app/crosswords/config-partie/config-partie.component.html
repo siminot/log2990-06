@@ -2,8 +2,8 @@
 <div>
 
   <div id="soloOuMulti">
-    <button>Partie solo</button>
-    <button>Partie en ligne</button>
+    <button (click)="apparaitreSection('difficulte')">Partie solo</button>
+    <button (click)="apparaitreSection('creerOuJoindre')">Partie en ligne</button>
   </div>
 
   <div id="difficulte">
@@ -13,7 +13,7 @@
   </div>
 
   <div id="creerOuJoindre">
-    <button>Créer une partie</button>
+    <button (click)="apparaitreSection('difficulte')">Créer une partie</button>
     <button>Rejoindre une partie</button>
   </div>
 

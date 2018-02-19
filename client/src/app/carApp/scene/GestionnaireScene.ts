@@ -17,22 +17,23 @@ const COULEUR_PETIT_CARRE: number = 0x00BFFF;
 const TAILLE_AXE: number = 1000;
 
 @Injectable()
-export class GestionnaireScene {
+export class GestionnaireScene extends Scene {
 
-    private _scene: Scene;
+    // private _scene: Scene;
     private estModeNuit: boolean;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
     }
 
-    public get scene(): Scene {
+    /* public get scene(): Scene {
         return this._scene;
-    }
+    } */
 
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures) {
-        this._scene = new Scene;
+        // this._scene = new Scene;
+        super();
         this.estModeNuit = true;
     }
 
@@ -47,8 +48,8 @@ export class GestionnaireScene {
 
     private initialiserEnvironnement(): void {
         // this._scene.add(new GridHelper(TAILLE_GRILLE, DIVISION_GRILLE, COULEUR_GRAND_CARRE, COULEUR_PETIT_CARRE));
-        this._scene.add(new AxisHelper(TAILLE_AXE));
-        this._scene.add(this.gestionnaireSkybox.skybox);
+        this.add(new AxisHelper(TAILLE_AXE));
+        this.add(this.gestionnaireSkybox.skybox);
     }
 
     private ajouterPiste(): void {
@@ -56,14 +57,14 @@ export class GestionnaireScene {
     }
 
     private ajouterVoitureJoueur(): void {
-        this._scene.add(this.gestionnaireVoiture.voitureJoueur);
+        this.add(this.gestionnaireVoiture.voitureJoueur);
     }
 
     private ajouterVoituresAI(): void {
         const VOITURES_AI: Voiture[] = this.gestionnaireVoiture.voituresAI;
 
         for (const VOITURE of VOITURES_AI) {
-            this._scene.add(VOITURE);
+            this.add(VOITURE);
         }
     }
 
@@ -75,15 +76,15 @@ export class GestionnaireScene {
 
     public changerTempsJournee(): void {
         this.estModeNuit = !this.estModeNuit;
-        this._scene.remove(this.gestionnaireSkybox.skybox);
+        this.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerTempsJournee();
         this.gestionnaireVoiture.changerTempsJournee();
-        this._scene.add(this.gestionnaireSkybox.skybox);
+        this.add(this.gestionnaireSkybox.skybox);
     }
 
     public changerDecor(): void {
-        this._scene.remove(this.gestionnaireSkybox.skybox);
+        this.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerDecor();
-        this._scene.add(this.gestionnaireSkybox.skybox);
+        this.add(this.gestionnaireSkybox.skybox);
     }
 }

@@ -144,7 +144,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     elemTmp.focus();
   }
 
-  private manageKeyEntry(event: any): void {
+  public manageKeyEntry(event: any): void {
     if (event.key === "Backspace") {
       this.focusOnPreviousLetter();
     } else if (event.keyCode >= 65 && event.keyCode <= 90) {
@@ -202,12 +202,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
   }
 
-  public ngOnDestroy(): void {
-    this.subscriptionMots.unsubscribe();
-    this.subscriptionMatrice.unsubscribe();
-    this.subscriptionMotSelec.unsubscribe();
-  }
-
   public printID($event: any): void {
     const target: any = event.target || event.srcElement || event.currentTarget;
     const idAttr: any = target.attributes.id;
@@ -215,7 +209,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     console.log(value);
   }
 
-  private retrieveWordFromClick(event: any): void {
+  public retrieveWordFromClick(event: any): void {
 
     // retrieve Id from the event
     const target: any = event.target || event.srcElement || event.currentTarget;
@@ -264,5 +258,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   public envoieMotSelectionne(): void {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptionMots.unsubscribe();
+    this.subscriptionMatrice.unsubscribe();
+    this.subscriptionMotSelec.unsubscribe();
   }
 }

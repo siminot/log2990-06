@@ -1,4 +1,9 @@
 p {
     text-align: center;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Press Start 2P', cursive;
+}
+
+span{
+    font-family: 'Press Start 2P', cursive;
+    font-size:8px;
 }

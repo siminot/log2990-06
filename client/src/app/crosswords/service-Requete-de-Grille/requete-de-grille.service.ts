@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 
@@ -11,6 +11,7 @@ import { Word, LettreGrille } from "../mockObject/word";
 export class RequeteDeGrilleService {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
+  rivate heroesUrl = 'api/heroes';
 
   private listeMotsSujet: Subject<Word[]> = new Subject<Word[]>();
   private matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();
@@ -22,7 +23,7 @@ export class RequeteDeGrilleService {
 
   public chaine: String = "Pomme";
 
-  public constructor() {
+  public constructor( private http: HttpClient) {
     this.matriceDesMotsSurGrille = this.genererGrille();
     this.mots = listeMots;
     this.putWordsInGrid();
@@ -52,8 +53,12 @@ export class RequeteDeGrilleService {
     return this.motSelectionneObservable$;
   }
 
-  public getMots(): Word[] {
-    return this.mots;
+  // Observable<Hero[]> {
+  // return this.http.get<Hero[]>(this.heroesUrl)
+
+  public getMots(): Observable<Word[]> {
+    retunr this.http.get<Word[]>(this.url)
+    // return this.mots;
   }
 
   public getMatrice(): Array<Array<LettreGrille>> {

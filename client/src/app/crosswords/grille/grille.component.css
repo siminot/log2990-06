@@ -19,7 +19,9 @@
     height: 100%;
     padding:0px;
     position: absolute;
+
 }
+
 
 .table td {
     padding:0 0px 0 0px;
@@ -33,25 +35,29 @@
 .table {
     line-height:0;
     border-spacing:0;
+    cursor:pointer;
 }
 
 .reponseLettre{
     text-align: center;
+    font-family: 'Press Start 2P', cursive !important;
     width: 25px;
     height: 1px;
     opacity: 1 !important;
 }
 
 .indicesHorizontals {
-    font-size: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
     position: absolute;
     z-index: 1;
-    top: -5px;
-    left: 6px;
+    top: -3px;
+    left: 4px;
 }
 
 .indicesVerticals {
-    font-size: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
     position: absolute;
     z-index: 1;
     top: 3px;
@@ -60,4 +66,8 @@
 
 input {
     text-align: center;
+    font-size:10px;
+    font-family: 'Press Start 2P', cursive;
+    
+    
 }

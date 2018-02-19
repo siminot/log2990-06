@@ -117,4 +117,10 @@ describe("Voiture", () => {
         car = new Voiture(new MockEngine(), new Wheel(), DEFAULT_WHEELBASE, DEFAULT_MASS, -10);
         expect(car["dragCoefficient"]).toBe(DEFAULT_DRAG_COEFFICIENT);
     });
+
+    it("phares initialises", () => {
+        car = new Voiture(undefined);
+        car.init(new Object3D());
+        expect(car.children.length).toBe(2);
+    });
 });

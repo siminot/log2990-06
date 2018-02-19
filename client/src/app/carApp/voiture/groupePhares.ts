@@ -5,23 +5,23 @@ const POSITION_CIBLE_Z: number = -10;
 
 export class GroupePhares extends Group {
     private _phares: Phare[];
-    private ciblePhares: Object3D;
-    private allumes: boolean;
+    private _ciblePhares: Object3D;
+    private _sontAllumes: boolean;
 
     public get sontAllumes(): boolean {
-        return this.allumes.valueOf();
+        return this._sontAllumes.valueOf();
     }
 
     public constructor() {
         super();
         this._phares = [];
-        this.ciblePhares = new Object3D();
+        this._ciblePhares = new Object3D();
     }
 
     public init(): void {
         this.initialiserCible();
         this.initialiserPhares();
-        this.allumes = true;
+        this._sontAllumes = true;
     }
 
     private initialiserPhares(): void {
@@ -38,14 +38,14 @@ export class GroupePhares extends Group {
     }
 
     private initialiserCible(): void {
-        this.ciblePhares.position.set(0, 0, POSITION_CIBLE_Z);
-        this.add(this.ciblePhares);
+        this._ciblePhares.position.set(0, 0, POSITION_CIBLE_Z);
+        this.add(this._ciblePhares);
     }
 
     private ajouterPhares(): void {
         for (const PHARE of this._phares) {
             this.add(PHARE);
-            PHARE.target = this.ciblePhares;
+            PHARE.target = this._ciblePhares;
         }
     }
 
@@ -53,13 +53,13 @@ export class GroupePhares extends Group {
         for (const PHARE of this._phares) {
             PHARE.eteindre();
         }
-        this.allumes = false;
+        this._sontAllumes = false;
     }
 
     public allumer(): void {
         for (const PHARE of this._phares) {
             PHARE.allumer();
         }
-        this.allumes = true;
+        this._sontAllumes = true;
     }
 }

@@ -1,4 +1,4 @@
-import { TestBed, inject } from "@angular/core/testing";
+/* import { TestBed, inject } from "@angular/core/testing";
 
 import { ServiceDeRendu } from "./serviceDeRendu";
 
@@ -13,3 +13,4 @@ describe("ServiceDeRendu", () => {
         expect(service).toBeTruthy();
     }));
 });
+ */

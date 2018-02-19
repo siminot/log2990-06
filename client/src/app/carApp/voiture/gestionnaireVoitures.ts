@@ -15,7 +15,7 @@ export class GestionnaireVoitures {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
-    private estModeNuit: boolean;
+    private _estModeNuit: boolean;
 
     public get voitureJoueur(): Voiture {
         return this._voitureJoueur;
@@ -25,9 +25,13 @@ export class GestionnaireVoitures {
         return this._voituresAI;
     }
 
+    public get estModeNuit(): boolean {
+        return this._estModeNuit.valueOf();
+    }
+
     public constructor() {
         this._voituresAI = [];
-        this.estModeNuit = false;
+        this._estModeNuit = false;
         this.initialiser().catch(() => new Error("Erreur construction des voitures"));
     }
 
@@ -71,12 +75,12 @@ export class GestionnaireVoitures {
     }
 
     public changerTempsJournee(): void {
-        this.estModeNuit = !this.estModeNuit;
+        this._estModeNuit = !this._estModeNuit;
         this.miseAJourPhares();
     }
 
     private miseAJourPhares(): void {
-        if (this.estModeNuit) {
+        if (this._estModeNuit) {
             this._voitureJoueur.eteindrePhares();
 
             for (const voiture of this._voituresAI) {

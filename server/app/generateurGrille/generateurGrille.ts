@@ -225,6 +225,10 @@ module Route {
             res.send(this.listeMot);
         }
 
+        public getMots(req: Request, res: Response, next: NextFunction): void {
+            res.send(this.listeMot);
+        }
+
         /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
             res.send(JSON.stringify(this.listeMot));

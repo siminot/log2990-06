@@ -40,17 +40,17 @@ export class GrilleComponent implements OnInit, OnDestroy {
         this.motSelectionne = motSelec;
         this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
 
-        this.remplirLettresSelect();
-
-        this.miseEnEvidence();
-
-        this.focusOnRightLetter();
+        this.putDefaultStyleGrid();
+        if (!this.motSelectionne.motTrouve) {
+          this.remplirLettresSelect();
+          this.miseEnEvidence();
+          this.focusOnRightLetter();
+        }
+        
       });
   }
 
   private miseEnEvidence(): void {
-    this.putDefaultStyleGrid();
-
     let uneCase: HTMLElement;
     let idTmp: string;
     let n: number;
@@ -171,6 +171,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
     
     let valid: boolean = usersWord === this.motSelectionne.mot;
 
+    if (valid) {
+      this.motSelectionne.motTrouve = true;
+    }
+
     valid ? console.log("VALID WORD") : console.log("INVALID WORD");
 
     return valid;
@@ -185,6 +189,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return wordCreated;
   }
 
+  // TODO : Endroit où vérifier que la lettre n'est pas asociée à un mot déjà trouvé.
   private focusOnPreviousLetter(): void {
     let elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
     

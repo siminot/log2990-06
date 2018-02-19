@@ -7,13 +7,19 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ConfigPartieComponent implements OnInit {
 
-  private requete: string = "localhost:3000/grille"; // Changer pour une constante
+  private requete: string; // Changer pour une constante
 
-  public constructor() { }
+  public constructor() {
+    this.requete = "localhost:3000/grille";
+  }
 
   public ngOnInit(): void {
     document.getElementById("difficulte").style.display = "none";
     document.getElementById("creerOuJoindre").style.display = "none";
+  }
+
+  public get getRequete(): string {
+    return this.requete;
   }
 
   public apparaitreSection(laSection: string): void {
@@ -26,6 +32,12 @@ export class ConfigPartieComponent implements OnInit {
   }
 
   public ajouterDansRequete(ajout: string): void {
+    // On veut seulement ajouter des requetes valides
+    if (ajout.length === 0) {
+      return;
+    } else if (ajout[0] !== "/") {
+      return;
+    }
     this.requete += ajout;
   }
 

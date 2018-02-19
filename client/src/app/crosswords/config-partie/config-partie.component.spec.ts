@@ -25,9 +25,21 @@ describe("ConfigPartieComponent", () => {
 
   describe("test ajoutDansRequete", () => {
 
-    it("devrait pas planter lol", () => {
-      // Pour l'instant
-      expect(component).toBeTruthy();
+    component = new ConfigPartieComponent();
+
+    it("devrait modifier la requete", () => {
+      component.ajouterDansRequete("/ajout");
+      expect(component.getRequete).toEqual("localhost:3000/grille/ajout");
+    });
+
+    it("devrait rien ajouter a la requete", () => {
+      component.ajouterDansRequete("");
+      expect(component.getRequete).toEqual("localhost:3000/grille");
+    });
+
+    it("ne devrait pas accepter cette entree", () => {
+      component.ajouterDansRequete("ajout");
+      expect(component.getRequete).toEqual("localhost:3000/grille");
     });
 
   });

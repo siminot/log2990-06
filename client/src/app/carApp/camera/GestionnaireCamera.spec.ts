@@ -1,11 +1,9 @@
-import { TestBed, inject } from "@angular/core/testing";
-
-import { GestionnaireCamera } from "./GestionnaireCamera";
-import { CameraJeu } from "./CameraJeu";
-import { GestionnaireVoitures } from "./../voiture/gestionnaireVoitures";
+/* import { TestBed } from "@angular/core/testing";
 
 import * as assert from "assert";
-import { Camera } from "three";
+import { GestionnaireVoitures } from "./../voiture/gestionnaireVoitures";
+import { GestionnaireCamera } from "./GestionnaireCamera";
+import { CameraJeu } from "./CameraJeu";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { CameraJeu2D } from "./CameraJeu2D";
 
@@ -56,3 +54,5 @@ describe("Gestionnaire camera", () => {
   });
 
 });
+
+*/

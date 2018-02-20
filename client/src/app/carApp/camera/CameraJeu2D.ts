@@ -3,13 +3,13 @@ import { Vector3, OrthographicCamera } from "three";
 
 // Attributs camera
 
-const PLAN_RAPPROCHE: number = 0;
-const PLAN_ELOIGNE: number = 10;
+export const PLAN_RAPPROCHE: number = 0;
+export const PLAN_ELOIGNE: number = 10;
 
-const ZOOM_MINIMUM: number = 16;
-const ZOOM_DEFAUT: number = 30;
-const ZOOM_MAXIMUM: number = 50;
-const PAS_ZOOM: number = 2;
+export const ZOOM_MINIMUM: number = 16;
+export const ZOOM_DEFAUT: number = 30;
+export const ZOOM_MAXIMUM: number = 50;
+export const PAS_ZOOM: number = 2;
 
 export class CameraJeu2D extends CameraJeu {
 
@@ -56,15 +56,15 @@ export class CameraJeu2D extends CameraJeu {
     }
 
     public zoomer(): void {
-        if (this.zoom < ZOOM_MAXIMUM) {
-            this.zoom += PAS_ZOOM;
-        }
+        this.zoom + PAS_ZOOM <= ZOOM_MAXIMUM
+            ? this.zoom += PAS_ZOOM
+            : this.zoom = ZOOM_MAXIMUM;
     }
 
     public dezoomer(): void {
-        if (this.zoom > ZOOM_MINIMUM) {
-            this.zoom -= PAS_ZOOM;
-        }
+        this.zoom - PAS_ZOOM >= ZOOM_MAXIMUM
+            ? this.zoom -= PAS_ZOOM
+            : this.zoom = ZOOM_MINIMUM;
     }
 
     public redimensionnement(largeur: number, hauteur: number): void {

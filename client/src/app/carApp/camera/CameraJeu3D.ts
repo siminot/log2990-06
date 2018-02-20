@@ -2,14 +2,14 @@ import { CameraJeu } from "./CameraJeu";
 import { Vector3, PerspectiveCamera } from "three";
 
 // Attributs camera
-const CHAMP_DE_VISION: number = 70;
-const PLAN_RAPPROCHE: number = 0.1;
-const PLAN_ELOIGNE: number = 10000;
+export const CHAMP_DE_VISION: number = 70;
+export const PLAN_RAPPROCHE: number = 0.1;
+export const PLAN_ELOIGNE: number = 10000;
 
-const DISTANCE_MINIMUM: number = 3;
-const DISTANCE_DEFAUT: number = 10;
-const DISTANCE_MAXIMUM: number = 25;
-const PAS_DISTANCE: number = 1;
+export const DISTANCE_MINIMUM: number = 3;
+export const DISTANCE_DEFAUT: number = 10;
+export const DISTANCE_MAXIMUM: number = 13;
+export const PAS_DISTANCE: number = 1;
 
 const POSITION_Y: number = 0.3;
 

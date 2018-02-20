@@ -4,24 +4,20 @@ import { Phare } from "./phare";
 const POSITION_CIBLE_Z: number = -10;
 
 export class GroupePhares extends Group {
-    private _phares: Phare[];
-    private _ciblePhares: Object3D;
-    private _sontAllumes: boolean;
-
-    public get sontAllumes(): boolean {
-        return this._sontAllumes.valueOf();
-    }
+    private phares: Phare[];
+    private ciblePhares: Object3D;
+    private sontAllumes: boolean;
 
     public constructor() {
         super();
-        this._phares = [];
-        this._ciblePhares = new Object3D();
+        this.phares = [];
+        this.ciblePhares = new Object3D();
     }
 
     public init(): void {
         this.initialiserCible();
         this.initialiserPhares();
-        this._sontAllumes = true;
+        this.sontAllumes = true;
     }
 
     private initialiserPhares(): void {
@@ -31,35 +27,35 @@ export class GroupePhares extends Group {
 
         const PHARE_GAUCHE_POSITION_RELATIVE: Vector3 = new Vector3(LARGEUR, HAUTEUR, PROFONDEUR);
         const PHARE_DROITE_POSITION_RELATIVE: Vector3 = new Vector3(-LARGEUR, HAUTEUR, PROFONDEUR);
-        this._phares.push(new Phare(PHARE_GAUCHE_POSITION_RELATIVE));
-        this._phares.push(new Phare(PHARE_DROITE_POSITION_RELATIVE));
+        this.phares.push(new Phare(PHARE_GAUCHE_POSITION_RELATIVE));
+        this.phares.push(new Phare(PHARE_DROITE_POSITION_RELATIVE));
 
         this.ajouterPhares();
     }
 
     private initialiserCible(): void {
-        this._ciblePhares.position.set(0, 0, POSITION_CIBLE_Z);
-        this.add(this._ciblePhares);
+        this.ciblePhares.position.set(0, 0, POSITION_CIBLE_Z);
+        this.add(this.ciblePhares);
     }
 
     private ajouterPhares(): void {
-        for (const PHARE of this._phares) {
+        for (const PHARE of this.phares) {
             this.add(PHARE);
-            PHARE.target = this._ciblePhares;
+            PHARE.target = this.ciblePhares;
         }
     }
 
     public eteindre(): void {
-        for (const PHARE of this._phares) {
+        for (const PHARE of this.phares) {
             PHARE.eteindre();
         }
-        this._sontAllumes = false;
+        this.sontAllumes = false;
     }
 
     public allumer(): void {
-        for (const PHARE of this._phares) {
+        for (const PHARE of this.phares) {
             PHARE.allumer();
         }
-        this._sontAllumes = true;
+        this.sontAllumes = true;
     }
 }

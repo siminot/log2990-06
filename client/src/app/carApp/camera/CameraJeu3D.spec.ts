@@ -6,11 +6,6 @@ describe("CameraJeu3D", () => {
 
   let cameraJeu3D: CameraJeu3D;
 
-  it("Constructeur", () => {
-    cameraJeu3D = new CameraJeu3D();
-    expect(cameraJeu3D).toBeDefined();
-  });
-
   describe("Constructeur", () => {
     it("Objet est construit", () => {
       cameraJeu3D = new CameraJeu3D();

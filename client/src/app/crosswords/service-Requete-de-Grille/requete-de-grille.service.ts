@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 
@@ -11,14 +11,19 @@ import { Word, LettreGrille } from "../mockObject/word";
 export class RequeteDeGrilleService {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
+  private heroesUrl = 'api/heroes';
 
   private listeMotsSujet: Subject<Word[]> = new Subject<Word[]>();
   private matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();
+  private motSelectionneSuject: Subject<Word> = new Subject<Word>();
 
   private listeMotsObservable$: Observable<Word[]> = this.listeMotsSujet.asObservable();
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
+  private motSelectionneObservable$: Observable<Word> = this.motSelectionneSuject.asObservable();
 
-  public constructor() {
+
+
+  public constructor( private http: HttpClient ) {
     this.matriceDesMotsSurGrille = this.genererGrille();
     this.mots = listeMots;
     this.putWordsInGrid();
@@ -32,6 +37,10 @@ export class RequeteDeGrilleService {
     this.matriceDesMotsSurGrilleSujet.next(matriceLettres);
   }
 
+  public serviceEnvoieMotSelectionne(motSelec: Word): void {
+    this.motSelectionneSuject.next(motSelec);
+  }
+
   public serviceReceptionMots(): Observable<Word[]> {
     return this.listeMotsObservable$;
   }
@@ -39,6 +48,12 @@ export class RequeteDeGrilleService {
   public serviceReceptionMatriceLettres(): Observable<Array<Array<LettreGrille>>> {
     return this.matriceDesMotsSurGrilleObservable$;
   }
+
+  public serviceReceptionMotSelectionne(): Observable<Word> {
+    return this.motSelectionneObservable$;
+  }
+
+)
 
   public getMots(): Word[] {
     return this.mots;
@@ -71,7 +86,7 @@ export class RequeteDeGrilleService {
         tmpLettreGrille = {
           caseDecouverte: false,
           lettre: objMot.mot[indice],
-          lettreDecouverte: true
+          lettreDecouverte: false
         };
 
         if (objMot.vertical) {

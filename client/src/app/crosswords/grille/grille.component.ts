@@ -4,7 +4,7 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { TAILLE_TABLEAU, KEYCODE_MAX, KEYCODE_MIN } from "../constantes";
+import { TAILLE_TABLEAU, KEYCODE_MAX, KEYCODE_MIN, DIZAINE } from "../constantes";
 
 @Component({
   selector: "app-grille",
@@ -92,7 +92,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let n: number;
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
-      n = +idTmp[0] * 10 + +idTmp[1];
+      n = +idTmp[0] * DIZAINE + +idTmp[1];
       uneCase = document.getElementsByTagName("td")[n];
 
       if (!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
@@ -115,27 +115,24 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
+  // TODO : Focus doit se faire sur une lettre qui n'est pas LOCK.
   private focusOnRightLetter(): void {
-    let elemTmp: HTMLInputElement;
-    let idTmp: string;
+    let elemTmp: HTMLInputElement, idTmp: string, x: number, y: number, i: number;
 
-    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+    for (i = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
+      x = +idTmp[0]; y = +idTmp[1];
       elemTmp = document.getElementById(idTmp) as HTMLInputElement;
-
       if (elemTmp.value === "") {
-        this.positionCourante = i;
-        elemTmp.focus();
-
-        return;
+        break;
       }
     }
 
-    this.positionCourante = this.motSelectionne.longeur - 1;
+    this.positionCourante = i;
     elemTmp.focus();
   }
 
-  public manageKeyEntry(event: any): void {
+  public manageKeyEntry(event: KeyboardEvent): void {
     if (event.key === "Backspace") {
       this.focusOnPreviousLetter();
     } else if (event.keyCode >= KEYCODE_MIN && event.keyCode <= KEYCODE_MAX) {
@@ -182,8 +179,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private createWordFromSelectedLetters(): string {
     let wordCreated: string = "";
-    for (let i: number = 0 ; i < this.positionLettresSelectionnees.length ; i++) {
-      wordCreated += (document.getElementById(this.positionLettresSelectionnees[i]) as HTMLInputElement).value;
+    // for (let i: number = 0 ; i < this.positionLettresSelectionnees.length ; i++) {
+    for (const elem of this.positionLettresSelectionnees) {
+      wordCreated += (document.getElementById(elem) as HTMLInputElement).value;
     }
 
     return wordCreated;
@@ -195,21 +193,21 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const xCour: number = +this.positionLettresSelectionnees[this.positionCourante][0];
     const yCour: number = +this.positionLettresSelectionnees[this.positionCourante][1];
 
-    if (!this.lockedLetter[xCour][yCour]) {
-      if (this.isLastLetterOfWord(elemCourant) && elemCourant.value !== "") {
-        elemCourant.value = "";
-      } else if (this.positionCourante > 0) {
-        this.positionCourante--;
+    if (this.isLastLetterOfWord(elemCourant) && !this.lockedLetter[xCour][yCour]) {     // Si c'est la dernière lettre
+      elemCourant.value = "";
+    } else if (this.positionCourante > 0 || this.isLastLetterOfWord(elemCourant) && this.lockedLetter[xCour][yCour]) {
+      this.positionCourante--;
 
-        const idPrev: string = this.positionLettresSelectionnees[this.positionCourante];
-        const previousElem: HTMLInputElement = document.getElementById(idPrev) as HTMLInputElement;
-        const xPrev: number = +this.positionLettresSelectionnees[this.positionCourante][0];
-        const yPrev: number = +this.positionLettresSelectionnees[this.positionCourante][1];
+      const idPrev: string = this.positionLettresSelectionnees[this.positionCourante];
+      const previousElem: HTMLInputElement = document.getElementById(idPrev) as HTMLInputElement;
+      const xPrev: number = +this.positionLettresSelectionnees[this.positionCourante][0];
+      const yPrev: number = +this.positionLettresSelectionnees[this.positionCourante][1];
 
-        if (!this.lockedLetter[xPrev][yPrev]) {
-          previousElem.focus();
-          previousElem.value = "";
-        }
+      if (!this.lockedLetter[xPrev][yPrev]) {
+        previousElem.focus();
+        previousElem.value = "";
+      } else {
+        this.focusOnPreviousLetter();
       }
     }
   }
@@ -217,7 +215,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
     return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
   }
-
 
   public getListeMots(): Word[] {
     return this.mots;

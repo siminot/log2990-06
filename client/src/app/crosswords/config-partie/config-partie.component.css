@@ -3,8 +3,17 @@ p {
     font-size: 20px;
 }
 
-div {
-    border: 1px solid black;
+/* div {
+    border: solid 1px black;
+} */
+
+div div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button {
@@ -26,6 +35,7 @@ button:hover {
 
 .visible {
     visibility: visible;
+    display: flex;
     opacity: 1;
     -webkit-transition:  opacity 1s linear;
     transition: opacity 1s linear;
@@ -33,6 +43,7 @@ button:hover {
 
 .pasVisible {
     visibility: hidden;
+    display: flex;
     opacity: 0;
     transition: visibility 0s 1s, opacity 1s linear;
 }

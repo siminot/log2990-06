@@ -14,8 +14,8 @@ export class ConfigPartieComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    document.getElementById("difficulte").style.display = "none";
-    document.getElementById("creerOuJoindre").style.display = "none";
+    document.getElementById("difficulte").classList.add("pasVisible");
+    document.getElementById("creerOuJoindre").classList.add("pasVisible");
   }
 
   public get getRequete(): string {
@@ -24,15 +24,15 @@ export class ConfigPartieComponent implements OnInit {
 
   public apparaitreSection(laSection: string): void {
     // Verifier si block est le bon display
-    // document.getElementById(laSection).classList.remove("pasVisible");
+    document.getElementById(laSection).classList.remove("pasVisible");
     document.getElementById(laSection).classList.add("visible");
-    document.getElementById(laSection).style.display = "block";
+    // document.getElementById(laSection).style.display = "flex";
   }
 
   public disparaitreSection(laSection: string): void {
-    // document.getElementById(laSection).classList.remove("visible");
-    // document.getElementById(laSection).classList.add("pasVisible");
-    document.getElementById(laSection).style.display = "none";
+    document.getElementById(laSection).classList.remove("visible");
+    document.getElementById(laSection).classList.add("pasVisible");
+    // document.getElementById(laSection).style.display = "none";
   }
 
   public ajouterDansRequete(ajout: string): void {

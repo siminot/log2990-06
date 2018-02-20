@@ -160,9 +160,15 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.motSelectionne.motTrouve = true;
       this.lockLettersFromWord(this.motSelectionne);
       this.miseEnEvidenceMot("green");
+      this.removeFocusFromSelectedWord();
     }
 
     return valid;
+  }
+
+  private removeFocusFromSelectedWord(): void {
+    const elem: HTMLInputElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]) as HTMLInputElement;
+    elem.blur();
   }
 
   private lockLettersFromWord(word: Word): void {
@@ -206,6 +212,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
       } else {
         this.focusOnPreviousLetter();
       }
+    } else {
+      this.focusOnPreviousLetter();
     }
   }
 

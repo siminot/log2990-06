@@ -1,32 +1,27 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
-
+import {HttpeReqService} from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
-import { listeMots } from "../mockObject/mockListWord";
+//import { listeMots } from "../mockObject/mockListWord";
 import { Word, LettreGrille } from "../mockObject/word";
 
 @Injectable()
 export class RequeteDeGrilleService {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
-  private heroesUrl = 'api/heroes';
-
   private listeMotsSujet: Subject<Word[]> = new Subject<Word[]>();
   private matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();
   private motSelectionneSuject: Subject<Word> = new Subject<Word>();
-
   private listeMotsObservable$: Observable<Word[]> = this.listeMotsSujet.asObservable();
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   private motSelectionneObservable$: Observable<Word> = this.motSelectionneSuject.asObservable();
 
+  //public  retourMatrice: = new Rx.BehaviorSubject();
 
-
-  public constructor( private http: HttpClient ) {
+  public constructor( private httpReq : HttpeReqService ) {
     this.matriceDesMotsSurGrille = this.genererGrille();
-    this.mots = listeMots;
-    this.putWordsInGrid();
+    this.httpReq.getWord().subscribe( (x) => {this.mots = x; this.putWordsInGrid();  });
   }
 
   public serviceEnvoieMots(mots: Word[]): void {
@@ -52,9 +47,7 @@ export class RequeteDeGrilleService {
   public serviceReceptionMotSelectionne(): Observable<Word> {
     return this.motSelectionneObservable$;
   }
-
 )
-
   public getMots(): Word[] {
     return this.mots;
   }

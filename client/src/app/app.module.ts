@@ -8,13 +8,15 @@ import { AppRoutingModule } from ".//app-routing.module";
 
 import { GameComponent } from "./carApp/game-component/game.component";
 import { RenderService } from "./carApp/render-service/render.service";
+import {HttpeReqService} from "./crosswords/httpRequest/http-request.service";
+
 
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { DefinitionComponent } from "./crosswords/definition/definition.component";
 import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
-import { ConfigPartieComponent } from './crosswords/config-partie/config-partie.component';
-import { DirectiveFocusDirective } from './crosswords/directive-focus/directive-focus.directive';
+import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
+import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 
 @NgModule({
     declarations: [
@@ -34,7 +36,8 @@ import { DirectiveFocusDirective } from './crosswords/directive-focus/directive-
     providers: [
         RenderService,
         BasicService,
-        RequeteDeGrilleService
+        RequeteDeGrilleService,
+        HttpeReqService
     ],
     bootstrap: [ AppComponent ],
     exports: [

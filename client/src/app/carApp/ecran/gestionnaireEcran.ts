@@ -4,11 +4,9 @@ import { Injectable } from "@angular/core";
 export class GestionnaireEcran {
 
     private conteneur: HTMLDivElement;
-    private aEteRedimensionne: boolean;
 
     public constructor() {
         this.conteneur = null;
-        this.aEteRedimensionne = true;
     }
 
     public get ratio(): number {
@@ -31,19 +29,5 @@ export class GestionnaireEcran {
 
     public ajouterElementConteneur(element: HTMLElement): void {
         this.conteneur.appendChild(element);
-    }
-
-    public redimensionnement(): void {
-        this.aEteRedimensionne = true;
-    }
-
-    public besoinRedimensionnement(): boolean {
-        if (this.aEteRedimensionne) {
-            this.aEteRedimensionne = false;
-
-            return true;
-        } else {
-            return false;
-        }
     }
 }

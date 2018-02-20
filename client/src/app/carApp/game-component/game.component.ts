@@ -31,7 +31,7 @@ export class GameComponent implements AfterViewInit {
 
     @HostListener("window:resize", ["$event"])
     public redimensionnement(): void {
-        this.gestionnaireEcran.redimensionnement();
+        this.serviceDeRendu.redimensionnement();
     }
 
     @HostListener("window:keydown", ["$event"])

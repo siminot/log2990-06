@@ -58,16 +58,12 @@ export class ServiceDeRendu {
         const tempsDepuisDerniereTrame: number = Date.now() - this.tempsDerniereMiseAJour;
         this.gestionnaireScene.miseAJour(tempsDepuisDerniereTrame);
         this.tempsDerniereMiseAJour = Date.now();
-
-        this.redimensionnement();
     }
 
     // Mise à jour de la taille de la fenetre
 
     public redimensionnement(): void {
-        if (this.gestionnaireEcran.besoinRedimensionnement()) {
-            this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
-            this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
-        }
+        this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
+        this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
     }
 }

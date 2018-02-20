@@ -57,4 +57,12 @@ describe("Wheel", () => {
         wheel.ajouterVelociteAngulaire(newAngularVelocity);
         expect(wheel.angularVelocity).toBeCloseTo(angularVelocityDefault + newAngularVelocity);
     });
+
+    it("angular velocity is properly updated", () => {
+        const wheel: Wheel = new Wheel();
+        const speed: number = 100;
+        wheel.update(speed);
+
+        expect(wheel.angularVelocity).toBeCloseTo(speed / wheel.radius);
+    });
 });

@@ -17,11 +17,11 @@ describe("Voiture", () => {
 
     beforeEach(async (done: () => void) => {
         car = new Voiture(new MockEngine());
-        car.init(new Object3D);
+        car.initialiser(new Object3D);
 
         car.accelerer();
         car.update(MS_BETWEEN_FRAMES);
-        car.lacherAccelerateur();
+        car.relacherAccelerateur();
         done();
     });
 
@@ -50,10 +50,10 @@ describe("Voiture", () => {
 
         car.accelerer();
         car.update(MS_BETWEEN_FRAMES);
-        car.lacherAccelerateur();
+        car.relacherAccelerateur();
 
         const initialSpeed: number = car.speed.length();
-        car.brake();
+        car.freiner();
         car.update(MS_BETWEEN_FRAMES);
         expect(car.speed.length()).toBeLessThan(initialSpeed);
     });
@@ -61,7 +61,7 @@ describe("Voiture", () => {
     it("should decelerate without brakes", () => {
         const initialSpeed: number = car.speed.length();
 
-        car.releaseBrakes();
+        car.relacherFreins();
         car.update(MS_BETWEEN_FRAMES);
         expect(car.speed.length()).toBeLessThan(initialSpeed);
     });
@@ -69,7 +69,7 @@ describe("Voiture", () => {
     it("should turn left when left turn key is pressed", () => {
         const initialAngle: number = car.angle;
         car.accelerer();
-        car.steerLeft();
+        car.virerGauche();
         car.update(MS_BETWEEN_FRAMES * 2);
         expect(car.angle).toBeLessThan(initialAngle);
     });
@@ -77,18 +77,18 @@ describe("Voiture", () => {
     it("should turn right when right turn key is pressed", () => {
         const initialAngle: number = car.angle;
         car.accelerer();
-        car.steerRight();
+        car.virerDroite();
         car.update(MS_BETWEEN_FRAMES * 2);
         expect(car.angle).toBeLessThan(initialAngle);
     });
 
     it("should not turn when steering keys are released", () => {
         car.accelerer();
-        car.steerRight();
+        car.virerDroite();
         car.update(MS_BETWEEN_FRAMES);
 
         const initialAngle: number = car.angle;
-        car.releaseSteering();
+        car.relacherVolant();
         car.update(MS_BETWEEN_FRAMES);
         expect(car.angle).toBe(initialAngle);
     });
@@ -120,7 +120,7 @@ describe("Voiture", () => {
 
     it("phares initialises", () => {
         car = new Voiture(undefined);
-        car.init(new Object3D());
+        car.initialiser(new Object3D());
         expect(car.children.length).toBe(2);
     });
 });

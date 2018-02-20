@@ -138,4 +138,76 @@ describe("Engine", () => {
         engine = new Engine();
         expect(() => { engine.update(10, 0); }).toThrowError();
     });
+
+    it("should throw an error when wheel radius is invalid.", () => {
+        engine = new Engine();
+        expect(() => { engine.update(10, 0); }).toThrowError();
+    });
+
+    it("devrait baisser rpm lors d'un Shift", () => {
+        let aShifteUp: boolean = false;
+
+        let gearAvant: number;
+        let rpmAvant: number;
+        let gearApres: number;
+        let rpmApres: number;
+
+        for (let speed: number = 0; !aShifteUp ; speed++) {
+            gearAvant = engine.currentGear;
+            rpmAvant = engine.rpm;
+
+            engine.update(speed, 1);
+
+            gearApres = engine.currentGear;
+            rpmApres = engine.rpm;
+
+            if (gearAvant  < gearApres) {
+                aShifteUp = true;
+            }
+        }
+
+        expect(rpmAvant).toBeGreaterThan(rpmApres);
+    });
+
+    it("devrait augmenter rpm lors d'un ShiftDown", () => {
+        let aShifteDown: boolean = false;
+        let speed: number = 100;
+        engine.update(speed, 1);
+
+        let gearAvant: number;
+        let rpmAvant: number;
+        let gearApres: number;
+        let rpmApres: number;
+
+        for (null ; !aShifteDown ; speed--) {
+            gearAvant = engine.currentGear;
+            rpmAvant = engine.rpm;
+
+            engine.update(speed, 1);
+
+            gearApres = engine.currentGear;
+            rpmApres = engine.rpm;
+
+            if (gearApres  < gearAvant) {
+                aShifteDown = true;
+            }
+        }
+
+        expect(rpmApres).toBeGreaterThan(rpmAvant);
+    });
+
+    it("devrait ne pas depasser le rpm max", () => {
+        let rpmAvant: number = 0;
+        let rpmApres: number = 0;
+
+        for (let speed: number = 0 ; rpmAvant !== DEFAULT_MAX_RPM ; speed += 25) {
+            rpmAvant = engine.rpm;
+
+            engine.update(speed, 1);
+
+            rpmApres = engine.rpm;
+        }
+
+        expect(rpmApres).toEqual(DEFAULT_MAX_RPM);
+    });
 });

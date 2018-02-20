@@ -26,13 +26,13 @@ export class GestionnaireClavier {
                 this.gestionnaireVoitures.voitureJoueur.accelerer();
                 break;
             case DIRECTION_GAUCHE:
-                this.gestionnaireVoitures.voitureJoueur.steerLeft();
+                this.gestionnaireVoitures.voitureJoueur.virerGauche();
                 break;
             case DIRECTION_DROITE:
-                this.gestionnaireVoitures.voitureJoueur.steerRight();
+                this.gestionnaireVoitures.voitureJoueur.virerDroite();
                 break;
             case FREIN:
-                this.gestionnaireVoitures.voitureJoueur.brake();
+                this.gestionnaireVoitures.voitureJoueur.freiner();
                 break;
             case ZOOM_IN:
                 this.gestionnaireCamera.zoomer();
@@ -48,14 +48,14 @@ export class GestionnaireClavier {
     public toucheRelevee(evenement: KeyboardEvent): void {
         switch (evenement.keyCode) {
             case ACCELERATEUR:
-                this.gestionnaireVoitures.voitureJoueur.lacherAccelerateur();
+                this.gestionnaireVoitures.voitureJoueur.relacherAccelerateur();
                 break;
             case DIRECTION_GAUCHE:
             case DIRECTION_DROITE:
-                this.gestionnaireVoitures.voitureJoueur.releaseSteering();
+                this.gestionnaireVoitures.voitureJoueur.relacherVolant();
                 break;
             case FREIN:
-                this.gestionnaireVoitures.voitureJoueur.releaseBrakes();
+                this.gestionnaireVoitures.voitureJoueur.relacherFreins();
                 break;
             case CHANGER_VUE:
                 this.gestionnaireCamera.changerCamera();

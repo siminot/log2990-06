@@ -32,26 +32,26 @@ export class GestionnaireVoitures {
     public constructor() {
         this._voituresAI = [];
         this._estModeNuit = false;
-        this.initialiser().catch(() => new Error("Erreur construction des voitures"));
+        this.initialiser().catch(() => new Error("Erreur lors de l'initialisation"));
     }
 
     // Creation des voitures
 
     private async initialiser(): Promise<void> {
-        this.creerVoitureJoueur();
-        this.creerVoituresAI();
+        this.creerVoitureJoueur().catch(() => new Error("Erreur construction de la voiture du joueur"));
+        this.creerVoituresAI().catch(() => new Error("Erreur construction des voituresAI"));
         this.miseAJourPhares();
     }
 
     private async creerVoitureJoueur(): Promise<void> {
         this._voitureJoueur = new Voiture();
-        this._voitureJoueur.init(await this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR]));
+        this._voitureJoueur.initialiser(await this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR]));
     }
 
     private async creerVoituresAI(): Promise<void> {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-            this._voituresAI[i].init(await this.chargerTexture(NOMS_TEXTURES[i % NOMS_TEXTURES.length]));
+            this._voituresAI[i].initialiser(await this.chargerTexture(NOMS_TEXTURES[i % NOMS_TEXTURES.length]));
         }
     }
 

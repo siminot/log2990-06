@@ -4,7 +4,7 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { TAILLE_TABLEAU } from "../constantes";
+import { TAILLE_TABLEAU, KEYCODE_MAX, KEYCODE_MIN, DIZAINE } from "../constantes";
 
 @Component({
   selector: "app-grille",
@@ -83,10 +83,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const y: number = this.motSelectionne.premierY;
 
     for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
-
-      this.motSelectionne.vertical ? tmp = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY + i, "") :
-                                     tmp = this.makeID(this.motSelectionne.premierX + i, this.motSelectionne.premierY, "");
-
+      this.motSelectionne.vertical ? tmp = this.makeID(x, y + i, "") : tmp = this.makeID(x + i, y, "");
       this.positionLettresSelectionnees[i] = tmp;
     }
   }
@@ -97,11 +94,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let n: number;
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
-      n = 10 * +idTmp[0] + +idTmp[1];
-      uneCase = document.getElementsByTagName('td')[n];
+      n = +idTmp[0] * DIZAINE + +idTmp[1];
+      uneCase = document.getElementsByTagName("td")[n];
 
-      if(!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
-        if(i === 0) {                                         // Premiere case.
+      if (!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
+        if (i === 0) {                                         // Premiere case.
           uneCase.style.borderTopColor = couleur;
         } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
           uneCase.style.borderBottomColor = couleur;
@@ -121,28 +118,24 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnRightLetter(): void {
-    let elemTmp: HTMLInputElement;
-    let idTmp: string;
-    
+    let elemTmp: HTMLInputElement, idTmp: string;
+
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
-      elemTmp = <HTMLInputElement>document.getElementById(idTmp);
+      elemTmp = document.getElementById(idTmp) as HTMLInputElement;
 
-      if(elemTmp.value === '') {
+      if (elemTmp.value === "") {
         this.positionCourante = i;
         elemTmp.focus();
-        return;
+        break;
       }
     }
-
-    this.positionCourante = this.motSelectionne.longeur - 1;
-    elemTmp.focus();
   }
 
-  public manageKeyEntry(event: any): void {
+  public manageKeyEntry(event: KeyboardEvent): void {
     if (event.key === "Backspace") {
       this.focusOnPreviousLetter();
-    } else if (event.keyCode >= 65 && event.keyCode <= 90) {
+    } else if (event.keyCode >= KEYCODE_MIN && event.keyCode <= KEYCODE_MAX) {
       this.focusOnNextLetter();
     }
   }
@@ -150,33 +143,39 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private focusOnNextLetter(): void {
     if (this.positionCourante < this.motSelectionne.longeur - 1) {
       this.positionCourante++;
-      let elem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+      const elem: HTMLInputElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]) as HTMLInputElement;
       elem.focus();
 
-      if(elem.value != '') {
+      if (elem.value !== "") {
         this.focusOnNextLetter();
       }
-    } else if (this.positionCourante === this.motSelectionne.longeur - 1) {   // TODO : Vérifier si la condition est réellement nécessaire.
+    } else if (this.positionCourante === this.motSelectionne.longeur - 1) {
       this.validateWord();
     }
   }
 
   private validateWord(): boolean {
-    let usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
+    const usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
     const valid: boolean = usersWord === this.motSelectionne.mot;
 
     if (valid) {
       this.motSelectionne.motTrouve = true;
       this.lockLettersFromWord(this.motSelectionne);
       this.miseEnEvidenceMot("green");
+      this.removeFocusFromSelectedWord();
     }
 
     return valid;
   }
 
-  private lockLettersFromWord(word: Word) {
-    for(let i: number = 0 ; i < word.longeur ; i++) {
-      if(word.vertical) {
+  private removeFocusFromSelectedWord(): void {
+    const elem: HTMLInputElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]) as HTMLInputElement;
+    elem.blur();
+  }
+
+  private lockLettersFromWord(word: Word): void {
+    for (let i: number = 0 ; i < word.longeur ; i++) {
+      if (word.vertical) {
         this.lockedLetter[word.premierX][word.premierY + i] = true;
       } else {
         this.lockedLetter[word.premierX + i][word.premierY] = true;
@@ -186,32 +185,34 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private createWordFromSelectedLetters(): string {
     let wordCreated: string = "";
-    for(let i: number = 0 ; i < this.positionLettresSelectionnees.length ; i++) {
-      wordCreated += (<HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[i])).value;
+
+    for (const elem of this.positionLettresSelectionnees) {
+      wordCreated += (document.getElementById(elem) as HTMLInputElement).value;
     }
-    
+
     return wordCreated;
   }
 
   private focusOnPreviousLetter(): void {
-    let elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+    const idCourant: string = this.positionLettresSelectionnees[this.positionCourante];
+    const elemCourant: HTMLInputElement = document.getElementById(idCourant) as HTMLInputElement;
     const xCour: number = +this.positionLettresSelectionnees[this.positionCourante][0];
     const yCour: number = +this.positionLettresSelectionnees[this.positionCourante][1];
 
-    if(!this.lockedLetter[xCour][yCour]) {
-      if(this.isLastLetterOfWord(elemCourant) && elemCourant.value != '') {
-        elemCourant.value = '';
-      } else if (this.positionCourante > 0) {
-        this.positionCourante--;
+    if (this.isLastLetterOfWord(elemCourant) && !this.lockedLetter[xCour][yCour] && elemCourant.value !== "") {
+      elemCourant.value = "";
+    } else if (this.positionCourante > 0 || (this.isLastLetterOfWord(elemCourant) && this.lockedLetter[xCour][yCour])) {
+      this.positionCourante--;
+      const idPrev: string = this.positionLettresSelectionnees[this.positionCourante];
+      const previousElem: HTMLInputElement = document.getElementById(idPrev) as HTMLInputElement;
+      const xPrev: number = +this.positionLettresSelectionnees[this.positionCourante][0];
+      const yPrev: number = +this.positionLettresSelectionnees[this.positionCourante][1];
 
-        const previousElem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-        const xPrev: number = +this.positionLettresSelectionnees[this.positionCourante][0];
-        const yPrev: number = +this.positionLettresSelectionnees[this.positionCourante][1];
-
-        if(!this.lockedLetter[xPrev][yPrev]) {
-          previousElem.focus();
-          previousElem.value = '';
-        }
+      if (!this.lockedLetter[xPrev][yPrev]) {
+        previousElem.focus();
+        previousElem.value = "";
+      } else {
+        this.focusOnPreviousLetter();
       }
     }
   }
@@ -219,7 +220,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
     return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
   }
-
 
   public getListeMots(): Word[] {
     return this.mots;
@@ -238,13 +238,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const b: string = String(j);
 
     return a + b + k;
-  }
-
-  public printID($event: any): void {
-    const target: any = event.target || event.srcElement || event.currentTarget;
-    const idAttr: any = target.attributes.id;
-    const value: any = idAttr.nodeValue;
-    console.log(value);
   }
 
   public retrieveWordFromClick(event: any): void {

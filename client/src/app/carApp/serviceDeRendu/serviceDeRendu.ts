@@ -31,7 +31,7 @@ export class ServiceDeRendu {
     }
 
     private async initialiserScene(): Promise<void> {
-        await this.gestionnaireScene.creerScene();
+        this.gestionnaireScene.creerScene();
     }
 
     // Rendu

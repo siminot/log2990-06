@@ -15,7 +15,8 @@ describe("DefinitionComponent", () => {
     longeur: 4,
     premierX: 0,
     premierY: 0,
-    activer: false
+    activer: false,
+    motTrouve: false
   };
 
   const realWordFromOurFakeList: Word = {
@@ -25,7 +26,8 @@ describe("DefinitionComponent", () => {
     longeur: 4,
     premierX: 3,
     premierY: 0,
-    activer: false
+    activer: false,
+    motTrouve: false
   };
 
   beforeEach(async(() => {

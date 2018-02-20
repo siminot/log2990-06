@@ -60,7 +60,6 @@ describe("Wheel", () => {
 
     it("angular velocity is properly updated", () => {
         const wheel: Wheel = new Wheel();
-        const angularVelocityDefault: number = 0;
         const speed: number = 100;
         wheel.update(speed);
 

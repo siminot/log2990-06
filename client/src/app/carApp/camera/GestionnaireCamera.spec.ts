@@ -7,6 +7,7 @@ import { GestionnaireVoitures } from "./../voiture/gestionnaireVoitures";
 import * as assert from "assert";
 import { Camera } from "three";
 import { CameraJeu3D } from "./CameraJeu3D";
+import { CameraJeu2D } from "./CameraJeu2D";
 
 describe("Gestionnaire camera", () => {
 
@@ -35,8 +36,23 @@ describe("Gestionnaire camera", () => {
   it("La premiere camera est 3D", () => {
     const cameraCourante: CameraJeu = gestionnaireCamera["cameraCourante"];
 
-    expect (cameraCourante instanceof CameraJeu3D);
+    expect(cameraCourante instanceof CameraJeu3D);
 
+  });
+
+  it("Changer camera", () => {
+    let cameraCourante: CameraJeu;
+    if (gestionnaireCamera["cameraCourante"] instanceof CameraJeu3D) {
+      gestionnaireCamera.changerCamera();
+      cameraCourante = gestionnaireCamera["cameraCourante"];
+      assert(cameraCourante instanceof CameraJeu2D);
+    } else if ( gestionnaireCamera["cameraCourante"] instanceof CameraJeu2D) {
+      gestionnaireCamera.changerCamera();
+      cameraCourante = gestionnaireCamera["cameraCourante"];
+      assert(cameraCourante instanceof CameraJeu2D);
+    } else {
+      assert(false);
+    }
   });
 
 });

@@ -95,11 +95,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let n: number;
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
-      n = 10 * +idTmp[0] + +idTmp[1];
-      uneCase = document.getElementsByTagName('td')[n];
+      n = +idTmp[0] * 10 + +idTmp[1];
+      uneCase = document.getElementsByTagName("td")[n];
 
-      if(!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
-        if(i === 0) {                                         // Premiere case.
+      if (!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
+        if (i === 0) {                                         // Premiere case.
           uneCase.style.borderTopColor = couleur;
         } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
           uneCase.style.borderBottomColor = couleur;

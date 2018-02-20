@@ -24,15 +24,15 @@ export class ConfigPartieComponent implements OnInit {
 
   public apparaitreSection(laSection: string): void {
     // Verifier si block est le bon display
-    document.getElementById(laSection).classList.remove("pasVisible");
+    // document.getElementById(laSection).classList.remove("pasVisible");
     document.getElementById(laSection).classList.add("visible");
     document.getElementById(laSection).style.display = "block";
   }
 
   public disparaitreSection(laSection: string): void {
-    document.getElementById(laSection).classList.remove("visible");
-    document.getElementById(laSection).classList.add("pasVisible");
-    // document.getElementById(laSection).style.display = "none";
+    // document.getElementById(laSection).classList.remove("visible");
+    // document.getElementById(laSection).classList.add("pasVisible");
+    document.getElementById(laSection).style.display = "none";
   }
 
   public ajouterDansRequete(ajout: string): void {

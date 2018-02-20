@@ -2,6 +2,14 @@ p {
     text-align: center;
 }
 
+div {
+    border: 1px solid black;
+}
+
+div div {
+    margin-left: 50%;
+}
+
 button {
     color: white;
     display: inline-block;
@@ -13,4 +21,17 @@ button {
 
 button:hover {
     background-color: darkorchid;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition:  opacity 1s linear;
+    transition: opacity 1s linear;
+}
+
+.pasVisible {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
 }

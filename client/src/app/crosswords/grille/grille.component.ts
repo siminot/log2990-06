@@ -179,7 +179,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private createWordFromSelectedLetters(): string {
     let wordCreated: string = "";
-    // for (let i: number = 0 ; i < this.positionLettresSelectionnees.length ; i++) {
+
     for (const elem of this.positionLettresSelectionnees) {
       wordCreated += (document.getElementById(elem) as HTMLInputElement).value;
     }
@@ -233,13 +233,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const b: string = String(j);
 
     return a + b + k;
-  }
-
-  public printID($event: any): void {
-    const target: any = event.target || event.srcElement || event.currentTarget;
-    const idAttr: any = target.attributes.id;
-    const value: any = idAttr.nodeValue;
-    console.log(value);
   }
 
   public retrieveWordFromClick(event: any): void {

@@ -31,7 +31,6 @@
 .table {
     line-height:0;
     border-spacing:1px;
-    cursor:pointer;
 }
 
 .indicesHorizontals {
@@ -53,9 +52,8 @@
 }
 
 input {
+    position:absolute;
     text-align: center;
-    font-size:10px;
+    font-size:12px;
     font-family: 'Press Start 2P', cursive;
-    
-    
 }

@@ -97,6 +97,10 @@ export class GestionnaireSkybox {
         this.skybox.add(plancher);
     }
 
+    private positionCouranteSkybox(): number {
+        return this.urlSkybox.findIndex((nom) => this.urlSkyboxCourante === nom );
+    }
+
     private chargerLumiereAmbiante(): void {
         let opacite: number;
 
@@ -116,9 +120,5 @@ export class GestionnaireSkybox {
     public changerDecor(): void {
         this.urlSkyboxCourante = this.urlSkybox[(this.positionCouranteSkybox() + 1) % this.urlSkybox.length];
         this.charger();
-    }
-
-    private positionCouranteSkybox(): number {
-        return this.urlSkybox.findIndex((nom) => this.urlSkyboxCourante === nom );
     }
 }

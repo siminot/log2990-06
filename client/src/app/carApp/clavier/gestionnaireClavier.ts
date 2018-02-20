@@ -23,7 +23,7 @@ export class GestionnaireClavier {
     public toucheAppuyee(evenement: KeyboardEvent): void {
         switch (evenement.keyCode) {
             case ACCELERATEUR:
-                this.gestionnaireVoitures.voitureJoueur.isAcceleratorPressed = true;
+                this.gestionnaireVoitures.voitureJoueur.accelerer();
                 break;
             case DIRECTION_GAUCHE:
                 this.gestionnaireVoitures.voitureJoueur.steerLeft();
@@ -48,7 +48,7 @@ export class GestionnaireClavier {
     public toucheRelevee(evenement: KeyboardEvent): void {
         switch (evenement.keyCode) {
             case ACCELERATEUR:
-                this.gestionnaireVoitures.voitureJoueur.isAcceleratorPressed = false;
+                this.gestionnaireVoitures.voitureJoueur.lacherAccelerateur();
                 break;
             case DIRECTION_GAUCHE:
             case DIRECTION_DROITE:

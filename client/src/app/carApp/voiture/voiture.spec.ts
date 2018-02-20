@@ -19,9 +19,9 @@ describe("Voiture", () => {
         car = new Voiture(new MockEngine());
         car.init(new Object3D);
 
-        car.isAcceleratorPressed = true;
+        car.accelerer();
         car.update(MS_BETWEEN_FRAMES);
-        car.isAcceleratorPressed = false;
+        car.lacherAccelerateur();
         done();
     });
 
@@ -33,7 +33,7 @@ describe("Voiture", () => {
 
     it("should accelerate when accelerator is pressed", () => {
         const initialSpeed: number = car.speed.length();
-        car.isAcceleratorPressed = true;
+        car.accelerer();
         car.update(MS_BETWEEN_FRAMES);
         expect(car.speed.length()).toBeGreaterThan(initialSpeed);
     });
@@ -48,9 +48,9 @@ describe("Voiture", () => {
             return new Vector3(0, 0, 0);
         };
 
-        car.isAcceleratorPressed = true;
+        car.accelerer();
         car.update(MS_BETWEEN_FRAMES);
-        car.isAcceleratorPressed = false;
+        car.lacherAccelerateur();
 
         const initialSpeed: number = car.speed.length();
         car.brake();
@@ -68,7 +68,7 @@ describe("Voiture", () => {
 
     it("should turn left when left turn key is pressed", () => {
         const initialAngle: number = car.angle;
-        car.isAcceleratorPressed = true;
+        car.accelerer();
         car.steerLeft();
         car.update(MS_BETWEEN_FRAMES * 2);
         expect(car.angle).toBeLessThan(initialAngle);
@@ -76,14 +76,14 @@ describe("Voiture", () => {
 
     it("should turn right when right turn key is pressed", () => {
         const initialAngle: number = car.angle;
-        car.isAcceleratorPressed = true;
+        car.accelerer();
         car.steerRight();
         car.update(MS_BETWEEN_FRAMES * 2);
         expect(car.angle).toBeLessThan(initialAngle);
     });
 
     it("should not turn when steering keys are released", () => {
-        car.isAcceleratorPressed = true;
+        car.accelerer();
         car.steerRight();
         car.update(MS_BETWEEN_FRAMES);
 

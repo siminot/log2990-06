@@ -15,12 +15,16 @@ const POSITION_Y: number = 0.3;
 
 export class CameraJeu3D extends CameraJeu {
 
-    public camera: PerspectiveCamera;
+    private _camera: PerspectiveCamera;
     private distance: number;
+
+    public get camera(): PerspectiveCamera {
+        return this._camera;
+    }
 
     public constructor() {
         super();
-        this.camera = new PerspectiveCamera(CHAMP_DE_VISION, null, PLAN_RAPPROCHE, PLAN_ELOIGNE);
+        this._camera = new PerspectiveCamera(CHAMP_DE_VISION, null, PLAN_RAPPROCHE, PLAN_ELOIGNE);
         this.distance = DISTANCE_DEFAUT;
     }
 
@@ -36,12 +40,7 @@ export class CameraJeu3D extends CameraJeu {
         this.camera.lookAt(this.voitureSuivie.position);
     }
 
-    public redimensionnement(largeur: number, hauteur: number): void {
-        this.camera.aspect = largeur / hauteur;
-        this.camera.updateProjectionMatrix();
-    }
-
-    public calculerNouvellePositionAbsolue(position: Vector3): Vector3 {
+    protected calculerNouvellePositionAbsolue(position: Vector3): Vector3 {
         return position.normalize()
             .multiplyScalar(this.distance)
             .add(this.voitureSuivie.position);
@@ -59,4 +58,8 @@ export class CameraJeu3D extends CameraJeu {
         }
     }
 
+    public redimensionnement(largeur: number, hauteur: number): void {
+        this.camera.aspect = largeur / hauteur;
+        this.camera.updateProjectionMatrix();
+    }
 }

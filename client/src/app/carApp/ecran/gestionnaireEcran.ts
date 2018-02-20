@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 export class GestionnaireEcran {
 
     private conteneur: HTMLDivElement;
-    public aEteRedimensionne: boolean;
+    private aEteRedimensionne: boolean;
 
     public constructor() {
         this.conteneur = null;
@@ -35,5 +35,15 @@ export class GestionnaireEcran {
 
     public redimensionnement(): void {
         this.aEteRedimensionne = true;
+    }
+
+    public besoinRedimensionnement(): boolean {
+        if (this.aEteRedimensionne) {
+            this.aEteRedimensionne = false;
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

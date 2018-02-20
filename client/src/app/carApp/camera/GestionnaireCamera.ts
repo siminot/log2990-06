@@ -25,7 +25,7 @@ export class GestionnaireCamera {
 
     // Initialisation
 
-    public initialiserCameras(): void {
+    private initialiserCameras(): void {
         this.ajouterNouvelleCamera3D();
         this.ajouterNouvelleCamera2D();
         this.suivre(this.gestionnaireVoitures.voitureJoueur);
@@ -42,13 +42,13 @@ export class GestionnaireCamera {
 
     // Modifications des cameras
 
-    public suivre(voiture: Voiture): void {
+    private suivre(voiture: Voiture): void {
         for (const camera of this.cameras) {
             camera.miseAJourVoitureSuivie(voiture);
         }
     }
 
-    public miseAJourCameraCourante(): void {
+    private miseAJourCameraCourante(): void {
         this.cameraCourante.mettreAJour();
     }
 

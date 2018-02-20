@@ -65,10 +65,9 @@ export class ServiceDeRendu {
     // Mise à jour de la taille de la fenetre
 
     public redimensionnement(): void {
-        if (this.gestionnaireEcran.aEteRedimensionne) {
+        if (this.gestionnaireEcran.besoinRedimensionnement()) {
             this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
             this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
-            this.gestionnaireEcran.aEteRedimensionne = false;
         }
     }
 }

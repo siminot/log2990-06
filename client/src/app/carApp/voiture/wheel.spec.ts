@@ -50,10 +50,11 @@ describe("Wheel", () => {
 
     it("angular velocity is properly modified", () => {
         const wheel: Wheel = new Wheel();
-        expect(wheel.angularVelocity).toBeCloseTo(0);
+        const angularVelocityDefault: number = 0;
+        expect(wheel.angularVelocity).toBeCloseTo(angularVelocityDefault);
 
         const newAngularVelocity: number = 100;
-        wheel.angularVelocity = newAngularVelocity;
-        expect(wheel.angularVelocity).toBeCloseTo(newAngularVelocity);
+        wheel.ajouterVelociteAngulaire(newAngularVelocity);
+        expect(wheel.angularVelocity).toBeCloseTo(angularVelocityDefault + newAngularVelocity);
     });
 });

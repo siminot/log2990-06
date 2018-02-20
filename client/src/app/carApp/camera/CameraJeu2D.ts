@@ -13,14 +13,18 @@ const PAS_ZOOM: number = 2;
 
 export class CameraJeu2D extends CameraJeu {
 
-    public camera: OrthographicCamera;
+    private _camera: OrthographicCamera;
     private zoom: number;
     private largeur: number;
     private hauteur: number;
 
+    public get camera(): OrthographicCamera {
+        return this._camera;
+    }
+
     public constructor() {
         super();
-        this.camera = new OrthographicCamera(null, null, null, null, PLAN_RAPPROCHE, PLAN_ELOIGNE);
+        this._camera = new OrthographicCamera(null, null, null, null, PLAN_RAPPROCHE, PLAN_ELOIGNE);
         this.zoom = ZOOM_DEFAUT;
         this.largeur = null;
         this.hauteur = null;
@@ -67,5 +71,4 @@ export class CameraJeu2D extends CameraJeu {
         this.largeur = largeur;
         this.hauteur = hauteur;
     }
-
 }

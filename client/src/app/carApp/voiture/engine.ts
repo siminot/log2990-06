@@ -19,8 +19,8 @@ export const DEFAULT_GEAR_RATIOS: number[] = [
 /* tslint:enable: no-magic-numbers */
 
 export class Engine {
-    public currentGear: number;
-    public rpm: number;
+    private _currentGear: number;
+    private _rpm: number;
 
     private gearRatios: number[];
     private driveRatio: number;
@@ -28,6 +28,14 @@ export class Engine {
     private minimumRPM: number;
     private shiftRPM: number;
     private transmissionEfficiency: number;
+
+    public get rpm(): number {
+        return this._rpm;
+    }
+
+    public get currentGear(): number {
+        return this._currentGear;
+    }
 
     public constructor(
         gearRatios: number[] = DEFAULT_GEAR_RATIOS,
@@ -66,8 +74,8 @@ export class Engine {
         this.shiftRPM = shiftRPM;
         this.transmissionEfficiency = transmissionEfficiency;
 
-        this.currentGear = 0;
-        this.rpm = this.minimumRPM;
+        this._currentGear = 0;
+        this._rpm = this.minimumRPM;
     }
 
     // Torque
@@ -91,7 +99,7 @@ export class Engine {
     // Transmission
 
     public update(speed: number, wheelRadius: number): void {
-        this.rpm = this.getRPM(speed, wheelRadius);
+        this._rpm = this.getRPM(speed, wheelRadius);
         this.handleTransmission(speed, wheelRadius);
     }
 
@@ -116,11 +124,11 @@ export class Engine {
 
     private handleTransmission(speed: number, wheelRadius: number): void {
         if (this.shouldShift()) {
-            this.currentGear++;
-            this.rpm = this.getRPM(speed, wheelRadius);
+            this._currentGear++;
+            this._rpm = this.getRPM(speed, wheelRadius);
         } else if (this.shouldDownshift()) {
-            this.currentGear--;
-            this.rpm = this.getRPM(speed, wheelRadius);
+            this._currentGear--;
+            this._rpm = this.getRPM(speed, wheelRadius);
         }
     }
 

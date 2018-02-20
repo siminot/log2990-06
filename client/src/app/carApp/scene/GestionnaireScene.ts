@@ -19,20 +19,14 @@ const TAILLE_AXE: number = 1000;
 @Injectable()
 export class GestionnaireScene extends Scene {
 
-    // private _scene: Scene;
     private estModeNuit: boolean;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
     }
 
-    /* public get scene(): Scene {
-        return this._scene;
-    } */
-
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures) {
-        // this._scene = new Scene;
         super();
         this.estModeNuit = true;
     }

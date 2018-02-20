@@ -26,7 +26,7 @@ export class GestionnaireVoitures {
     }
 
     public get estModeNuit(): boolean {
-        return this._estModeNuit.valueOf();
+        return this._estModeNuit;
     }
 
     public constructor() {

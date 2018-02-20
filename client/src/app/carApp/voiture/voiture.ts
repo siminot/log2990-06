@@ -16,8 +16,6 @@ const NUMBER_REAR_WHEELS: number = 2;
 const NUMBER_WHEELS: number = 4;
 
 export class Voiture extends Object3D {
-    public isAcceleratorPressed: boolean;
-
     private readonly engine: Engine;
     private readonly mass: number;
     private readonly rearWheel: Wheel;
@@ -25,10 +23,15 @@ export class Voiture extends Object3D {
     private readonly dragCoefficient: number;
 
     private _speed: Vector3;
+    private _isAcceleratorPressed: boolean;
     private isBraking: boolean;
     private steeringWheelDirection: number;
     private weightRear: number;
     private phares: GroupePhares;
+
+    public get isAcceleratorPressed(): boolean {
+        return this._isAcceleratorPressed;
+    }
 
     public get speed(): Vector3 {
         return this._speed.clone();
@@ -118,6 +121,14 @@ export class Voiture extends Object3D {
         this.isBraking = true;
     }
 
+    public lacherAccelerateur(): void {
+        this._isAcceleratorPressed = false;
+    }
+
+    public accelerer(): void {
+        this._isAcceleratorPressed = true;
+    }
+
     public update(deltaTime: number): void {
         deltaTime = deltaTime / MS_TO_SECONDS;
 
@@ -154,7 +165,7 @@ export class Voiture extends Object3D {
     }
 
     private physicsUpdate(deltaTime: number): void {
-        this.rearWheel.angularVelocity += this.getAngularAcceleration() * deltaTime;
+        this.rearWheel.ajouterVelociteAngulaire(this.getAngularAcceleration() * deltaTime);
         this.engine.update(this._speed.length(), this.rearWheel.radius);
         this.weightRear = this.getWeightDistribution();
         this._speed.add(this.getDeltaSpeed(deltaTime));

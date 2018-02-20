@@ -11,7 +11,6 @@ import { Word, LettreGrille } from "../mockObject/word";
 export class RequeteDeGrilleService {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
-  private heroesUrl = 'api/heroes';
 
   private listeMotsSujet: Subject<Word[]> = new Subject<Word[]>();
   private matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();

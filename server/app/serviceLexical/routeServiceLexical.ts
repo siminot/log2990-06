@@ -5,7 +5,6 @@ import Types from "../types";
 import { ServiceLexical } from "./ServiceLexical";
 import { Frequence } from "./Mot";
 import { ServiceWeb } from "../serviceweb";
-// import { read } from "fs";
 
 @injectable()
 export class RouteServiceLexical extends ServiceWeb {
@@ -27,20 +26,6 @@ export class RouteServiceLexical extends ServiceWeb {
             this.serviceLexical.servirMotsSelonContrainte(req.params.contrainte, Frequence.NonCommun, res);
         });
 
-        // Routes pas utilisées... à effacer?
-
-        /* router.get("/commun/longueur/:longueur", (req: Request, res: Response, next: NextFunction) => {
-            this.serviceLexical.servirMotsSelonLongueur(req.params.longueur, Frequence.Commun, res);
-        });
-
-        router.get("/noncommun/longueur/:longueur", (req: Request, res: Response, next: NextFunction) => {
-            this.serviceLexical.servirMotsSelonLongueur(req.params.longueur, Frequence.NonCommun, res);
-        });
-
-        router.get("/def/:mot", (req: Request, res: Response, next: NextFunction) => {
-            this.serviceLexical.servirDefinitionsMot(req.params.mot, res);
-        });
- */
         return router;
     }
 }

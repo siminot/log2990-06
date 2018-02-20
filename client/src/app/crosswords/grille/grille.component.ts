@@ -18,12 +18,21 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private motSelectionne: Word;
   private positionLettresSelectionnees: string[];
   private positionCourante: number;
+  private lockedLetter: boolean[][];
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  public constructor(private listeMotsService: RequeteDeGrilleService) { }
+  public constructor(private listeMotsService: RequeteDeGrilleService) { 
+    this.lockedLetter = []
+    for (let i: number = 0 ; i < TAILLE_TABLEAU ; i++) {
+      this.lockedLetter[i] = [];
+      for(let j: number = 0 ; j < TAILLE_TABLEAU ; j++) {
+        this.lockedLetter[i][j] = false;
+      }
+    }
+  }
 
   public ngOnInit(): void {
     this.mots = this.listeMotsService.getMots();
@@ -173,11 +182,22 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     if (valid) {
       this.motSelectionne.motTrouve = true;
+      this.lockLettersFromWord(this.motSelectionne);
     }
 
     valid ? console.log("VALID WORD") : console.log("INVALID WORD");
 
     return valid;
+  }
+
+  private lockLettersFromWord(word: Word) {
+    for(let i: number = 0 ; i < word.longeur ; i++) {
+      if(word.vertical) {
+        this.lockedLetter[word.premierX][word.premierY + i] = true;
+      } else {
+        this.lockedLetter[word.premierX + i][word.premierY] = true;
+      }
+    }
   }
 
   private createWordFromSelectedLetters(): string {
@@ -197,9 +217,17 @@ export class GrilleComponent implements OnInit, OnDestroy {
       elemCourant.value = '';
     } else if (this.positionCourante > 0) {
       this.positionCourante--;
+
       const previousElem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-      previousElem.focus();
-      previousElem.value = '';
+      const x: number = +this.positionLettresSelectionnees[this.positionCourante][0];
+      const y: number = +this.positionLettresSelectionnees[this.positionCourante][1];
+      
+      if(!this.lockedLetter[x][y]) {
+        previousElem.focus();
+        previousElem.value = '';
+      } else {
+        console.log("LOCKED LETTER");
+      }
     }
   }
 

@@ -24,11 +24,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  public constructor(private listeMotsService: RequeteDeGrilleService) { 
-    this.lockedLetter = []
+  public constructor(private listeMotsService: RequeteDeGrilleService) {
+    this.lockedLetter = [];
     for (let i: number = 0 ; i < TAILLE_TABLEAU ; i++) {
       this.lockedLetter[i] = [];
-      for(let j: number = 0 ; j < TAILLE_TABLEAU ; j++) {
+      for (let j: number = 0 ; j < TAILLE_TABLEAU ; j++) {
         this.lockedLetter[i][j] = false;
       }
     }
@@ -46,17 +46,47 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
-        this.motSelectionne = motSelec;
-        this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
+      this.motSelectionne = motSelec;
+      this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
 
-        this.putDefaultStyleGrid();
-        if (!this.motSelectionne.motTrouve) {
-          this.remplirLettresSelect();
-          this.miseEnEvidenceMot("red");
-          this.focusOnRightLetter();
-        }
-        
-      });
+      this.putDefaultStyleGrid();
+
+      if (!this.motSelectionne.motTrouve) {
+        this.remplirLettresSelect();
+        this.miseEnEvidenceMot("red");
+        this.focusOnRightLetter();
+      }
+    });
+  }
+
+  private putDefaultStyleGrid(): void {
+    let uneCase: HTMLElement;
+    for (let n: number = 0 ; n < TAILLE_TABLEAU * TAILLE_TABLEAU ; n++) {
+      uneCase = document.getElementsByTagName("td")[n];
+      uneCase.style.borderBottomColor = "black";
+      uneCase.style.borderTopColor = "black";
+      uneCase.style.borderLeftColor = "black";
+      uneCase.style.borderRightColor = "black";
+    }
+  }
+
+  private remplirLettresSelect(): void {
+    this.positionCourante = 0;
+    this.positionLettresSelectionnees = [];
+
+    let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY, "");
+    this.positionLettresSelectionnees[0] = tmp;
+
+    const x: number = this.motSelectionne.premierX;
+    const y: number = this.motSelectionne.premierY;
+
+    for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
+
+      this.motSelectionne.vertical ? tmp = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY + i, "") :
+                                     tmp = this.makeID(this.motSelectionne.premierX + i, this.motSelectionne.premierY, "");
+
+      this.positionLettresSelectionnees[i] = tmp;
+    }
   }
 
   private miseEnEvidenceMot(couleur: string): void {
@@ -87,54 +117,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-  private putDefaultStyleGrid(): void {
-    let uneCase: HTMLElement;
-    for (let n: number = 0 ; n < TAILLE_TABLEAU * TAILLE_TABLEAU ; n++) {
-      uneCase = document.getElementsByTagName('td')[n];
-      uneCase.style.borderBottomColor = "black";
-      uneCase.style.borderTopColor = "black";
-      uneCase.style.borderLeftColor = "black";
-      uneCase.style.borderRightColor = "black";
-    }
-  }
-
-  public getListeMots(): Word[] {
-    return this.mots;
-  }
-
-  public getMatrice(): Array<Array<LettreGrille>> {
-    return this.matriceDesMotsSurGrille;
-  }
-
-  public opacite(etat: boolean): String {
-    return(etat ? "0" : ".3");
-  }
-
-  private makeID(i: number, j: number, k: string): string {
-    const a: string = String(i);
-    const b: string = String(j);
-
-    return a + b + k;
-  }
-
-  private remplirLettresSelect(): void {
-    this.positionCourante = 0;
-    this.positionLettresSelectionnees = [];
-
-    let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY, "");
-    this.positionLettresSelectionnees[0] = tmp;
-
-    for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
-      if (this.motSelectionne.vertical) {
-        tmp = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY + i, "");
-      } else {
-        tmp = this.makeID(this.motSelectionne.premierX + i, this.motSelectionne.premierY, "");
-      }
-      this.positionLettresSelectionnees[i] = tmp;
-    }
-  }
-
+  
   private focusOnRightLetter(): void {
     let elemTmp: HTMLInputElement;
     let idTmp: string;
@@ -149,6 +132,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
         return;
       }
     }
+
     this.positionCourante = this.motSelectionne.longeur - 1;
     elemTmp.focus();
   }
@@ -177,16 +161,13 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private validateWord(): boolean {
     let usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
-    
-    let valid: boolean = usersWord === this.motSelectionne.mot;
+    const valid: boolean = usersWord === this.motSelectionne.mot;
 
     if (valid) {
       this.motSelectionne.motTrouve = true;
       this.lockLettersFromWord(this.motSelectionne);
       this.miseEnEvidenceMot("green");
     }
-
-    valid ? console.log("VALID WORD") : console.log("INVALID WORD");
 
     return valid;
   }
@@ -222,24 +203,39 @@ export class GrilleComponent implements OnInit, OnDestroy {
         this.positionCourante--;
 
         const previousElem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-
         const xPrev: number = +this.positionLettresSelectionnees[this.positionCourante][0];
         const yPrev: number = +this.positionLettresSelectionnees[this.positionCourante][1];
 
         if(!this.lockedLetter[xPrev][yPrev]) {
           previousElem.focus();
           previousElem.value = '';
-        } else {
-          console.log("LOCKED WORD");
         }
       }
-    } else {
-      console.log("LOCKED WORD");
     }
   }
 
   private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
     return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
+  }
+
+
+  public getListeMots(): Word[] {
+    return this.mots;
+  }
+
+  public getMatrice(): Array<Array<LettreGrille>> {
+    return this.matriceDesMotsSurGrille;
+  }
+
+  public opacite(etat: boolean): String {
+    return(etat ? "0" : ".3");
+  }
+
+  private makeID(i: number, j: number, k: string): string {
+    const a: string = String(i);
+    const b: string = String(j);
+
+    return a + b + k;
   }
 
   public printID($event: any): void {

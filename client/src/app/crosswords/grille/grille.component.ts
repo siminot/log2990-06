@@ -77,8 +77,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY, "");
     this.positionLettresSelectionnees[0] = tmp;
 
-    const x: number = this.motSelectionne.premierX;
-    const y: number = this.motSelectionne.premierY;
+    // const x: number = this.motSelectionne.premierX;
+    // const y: number = this.motSelectionne.premierY;
 
     for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
 

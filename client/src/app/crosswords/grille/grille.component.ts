@@ -212,8 +212,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
       } else {
         this.focusOnPreviousLetter();
       }
-    } else {
-      this.focusOnPreviousLetter();
     }
   }
 

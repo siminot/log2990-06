@@ -52,14 +52,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
         this.putDefaultStyleGrid();
         if (!this.motSelectionne.motTrouve) {
           this.remplirLettresSelect();
-          this.miseEnEvidence();
+          this.miseEnEvidenceMot("red");
           this.focusOnRightLetter();
         }
         
       });
   }
 
-  private miseEnEvidence(): void {
+  private miseEnEvidenceMot(couleur: string): void {
     let uneCase: HTMLElement;
     let idTmp: string;
     let n: number;
@@ -70,20 +70,20 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
       if(!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
         if(i === 0) {                                         // Premiere case.
-          uneCase.style.borderTopColor = "red";
+          uneCase.style.borderTopColor = couleur;
         } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderBottomColor = "red";
+          uneCase.style.borderBottomColor = couleur;
         }                                                     // Toutes les cases.
-        uneCase.style.borderRightColor = "red";
-        uneCase.style.borderLeftColor = "red";
+        uneCase.style.borderRightColor = couleur;
+        uneCase.style.borderLeftColor = couleur;
       } else {
         if (i === 0) {                                        // Premiere case.
-          uneCase.style.borderLeftColor = "red";
+          uneCase.style.borderLeftColor = couleur;
         } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderRightColor = "red";
+          uneCase.style.borderRightColor = couleur;
         }                                                     // Toutes les cases du mot.
-        uneCase.style.borderTopColor = "red";
-        uneCase.style.borderBottomColor = "red";
+        uneCase.style.borderTopColor = couleur;
+        uneCase.style.borderBottomColor = couleur;
       }
     }
   }
@@ -183,6 +183,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     if (valid) {
       this.motSelectionne.motTrouve = true;
       this.lockLettersFromWord(this.motSelectionne);
+      this.miseEnEvidenceMot("green");
     }
 
     valid ? console.log("VALID WORD") : console.log("INVALID WORD");
@@ -209,25 +210,24 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return wordCreated;
   }
 
-  // TODO : Endroit où vérifier que la lettre n'est pas asociée à un mot déjà trouvé.
   private focusOnPreviousLetter(): void {
     let elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-    
-    if(this.isLastLetterOfWord(elemCourant) && elemCourant.value != '') {
-      elemCourant.value = '';
-    } else if (this.positionCourante > 0) {
-      this.positionCourante--;
+    const xCour: number = +this.positionLettresSelectionnees[this.positionCourante][0];
+    const yCour: number = +this.positionLettresSelectionnees[this.positionCourante][1];
 
-      const previousElem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-      const x: number = +this.positionLettresSelectionnees[this.positionCourante][0];
-      const y: number = +this.positionLettresSelectionnees[this.positionCourante][1];
-      
-      if(!this.lockedLetter[x][y]) {
+    if(!this.lockedLetter[xCour][yCour]) {
+      if(this.isLastLetterOfWord(elemCourant) && elemCourant.value != '') {
+        elemCourant.value = '';
+      } else if (this.positionCourante > 0) {
+        this.positionCourante--;
+
+        const previousElem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
+
         previousElem.focus();
         previousElem.value = '';
-      } else {
-        console.log("LOCKED LETTER");
       }
+    } else {
+      console.log("LOCKED WORD");
     }
   }
 

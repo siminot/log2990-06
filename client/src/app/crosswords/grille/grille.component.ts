@@ -191,9 +191,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const xCour: number = +this.positionLettresSelectionnees[this.positionCourante][0];
     const yCour: number = +this.positionLettresSelectionnees[this.positionCourante][1];
 
-    if (this.isLastLetterOfWord(elemCourant) && !this.lockedLetter[xCour][yCour]) {
+    if (this.isLastLetterOfWord(elemCourant) && !this.lockedLetter[xCour][yCour] && elemCourant.value !== "") {
       elemCourant.value = "";
-    } else if (this.positionCourante > 0 || this.isLastLetterOfWord(elemCourant) && this.lockedLetter[xCour][yCour]) {
+    } else if (this.positionCourante > 0 || (this.isLastLetterOfWord(elemCourant) && this.lockedLetter[xCour][yCour])) {
       this.positionCourante--;
       const idPrev: string = this.positionLettresSelectionnees[this.positionCourante];
       const previousElem: HTMLInputElement = document.getElementById(idPrev) as HTMLInputElement;

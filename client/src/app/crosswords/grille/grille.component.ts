@@ -223,8 +223,15 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
         const previousElem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
 
-        previousElem.focus();
-        previousElem.value = '';
+        const xPrev: number = +this.positionLettresSelectionnees[this.positionCourante][0];
+        const yPrev: number = +this.positionLettresSelectionnees[this.positionCourante][1];
+
+        if(!this.lockedLetter[xPrev][yPrev]) {
+          previousElem.focus();
+          previousElem.value = '';
+        } else {
+          console.log("LOCKED WORD");
+        }
       }
     } else {
       console.log("LOCKED WORD");

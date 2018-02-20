@@ -10,7 +10,8 @@ describe("ConfigPartieComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ ConfigPartieComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch();
   }));
 
   beforeEach(() => {

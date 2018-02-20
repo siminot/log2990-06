@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+const REQUETE_INIT: string = "localhost:3000/grille";
 
 @Component({
   selector: "app-config-partie",
@@ -8,9 +9,11 @@ import { Component, OnInit } from "@angular/core";
 export class ConfigPartieComponent implements OnInit {
 
   private requete: string; // Changer pour une constante
+  private estSolo: boolean;
 
   public constructor() {
-    this.requete = "localhost:3000/grille";
+    this.requete = REQUETE_INIT;
+    this.estSolo = false;
   }
 
   public ngOnInit(): void {
@@ -20,6 +23,10 @@ export class ConfigPartieComponent implements OnInit {
 
   public get getRequete(): string {
     return this.requete;
+  }
+
+  public requeteEstSolo(): void {
+    this.estSolo = true;
   }
 
   public apparaitreSection(laSection: string): void {

@@ -95,33 +95,33 @@ export class Voiture extends Object3D {
         this.phares = new GroupePhares();
     }
 
-    public init(texture: Object3D): void {
+    public initialiser(texture: Object3D): void {
         this.add(texture);
         this.setRotationFromEuler(INITIAL_MODEL_ROTATION);
         this.initialiserPhares();
     }
 
-    public steerLeft(): void {
+    public virerGauche(): void {
         this.steeringWheelDirection = MAXIMUM_STEERING_ANGLE;
     }
 
-    public steerRight(): void {
+    public virerDroite(): void {
         this.steeringWheelDirection = -MAXIMUM_STEERING_ANGLE;
     }
 
-    public releaseSteering(): void {
+    public relacherVolant(): void {
         this.steeringWheelDirection = 0;
     }
 
-    public releaseBrakes(): void {
+    public relacherFreins(): void {
         this.isBraking = false;
     }
 
-    public brake(): void {
+    public freiner(): void {
         this.isBraking = true;
     }
 
-    public lacherAccelerateur(): void {
+    public relacherAccelerateur(): void {
         this._isAcceleratorPressed = false;
     }
 

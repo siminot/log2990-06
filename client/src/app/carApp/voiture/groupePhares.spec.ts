@@ -12,7 +12,7 @@ describe("GroupePhares", () => {
     });
 
     it("Initialisation se fait bien", () => {
-        groupePhares.init();
+        groupePhares.initialiser();
         expect(groupePhares["sontAllumes"]).toBeTruthy();
         expect(groupePhares.children.length).toBe(NOMBRE_ENFANTS);
     });

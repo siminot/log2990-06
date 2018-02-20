@@ -160,7 +160,7 @@ export class Voiture extends Object3D {
     }
 
     private initialiserPhares(): void {
-        this.phares.init();
+        this.phares.initialiser();
         this.add(this.phares);
     }
 

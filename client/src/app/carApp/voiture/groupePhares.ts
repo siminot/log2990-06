@@ -14,7 +14,7 @@ export class GroupePhares extends Group {
         this.ciblePhares = new Object3D();
     }
 
-    public init(): void {
+    public initialiser(): void {
         this.initialiserCible();
         this.initialiserPhares();
         this.sontAllumes = true;

@@ -115,21 +115,19 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  // TODO : Focus doit se faire sur une lettre qui n'est pas LOCK.
   private focusOnRightLetter(): void {
-    let elemTmp: HTMLInputElement, idTmp: string, x: number, y: number, i: number;
+    let elemTmp: HTMLInputElement, idTmp: string;
 
-    for (i = 0 ; i < this.motSelectionne.longeur ; i++) {
+    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
-      x = +idTmp[0]; y = +idTmp[1];
       elemTmp = document.getElementById(idTmp) as HTMLInputElement;
+
       if (elemTmp.value === "") {
+        this.positionCourante = i;
+        elemTmp.focus();
         break;
       }
     }
-
-    this.positionCourante = i;
-    elemTmp.focus();
   }
 
   public manageKeyEntry(event: KeyboardEvent): void {
@@ -193,7 +191,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const xCour: number = +this.positionLettresSelectionnees[this.positionCourante][0];
     const yCour: number = +this.positionLettresSelectionnees[this.positionCourante][1];
 
-    if (this.isLastLetterOfWord(elemCourant) && !this.lockedLetter[xCour][yCour]) {     // Si c'est la dernière lettre
+    if (this.isLastLetterOfWord(elemCourant) && !this.lockedLetter[xCour][yCour]) {
       elemCourant.value = "";
     } else if (this.positionCourante > 0 || this.isLastLetterOfWord(elemCourant) && this.lockedLetter[xCour][yCour]) {
       this.positionCourante--;

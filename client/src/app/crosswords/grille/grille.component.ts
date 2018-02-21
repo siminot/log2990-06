@@ -41,7 +41,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots;});
 
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
+      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {

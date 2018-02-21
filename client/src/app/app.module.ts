@@ -8,8 +8,7 @@ import { AppRoutingModule } from ".//app-routing.module";
 
 import { GameComponent } from "./carApp/game-component/game.component";
 import { RenderService } from "./carApp/render-service/render.service";
-import {HttpeReqService} from "./crosswords/httpRequest/http-request.service";
-
+import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
 
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
@@ -48,4 +47,5 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         DefinitionComponent
     ]
 })
+
 export class AppModule { }

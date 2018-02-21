@@ -1,48 +1,36 @@
-.grille{
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-top: 25%;
-    position: relative; 
+.grille {
+    margin: 12% 12%;
+    position: relative;
     overflow: hidden;
 }
 
 .tuile{
     width: 100%;
     height: 100%;
-    /* opacity: 1;  */
-    padding:0px;
+    top:0px;
+    left:0px;
     position: absolute;
 }
 
-.Input{
+.input{
     width: 100%;
     height: 100%;
-    padding:0px;
     position: absolute;
-
 }
 
 
 .table td {
-    padding: 0 0 0 0;
-    padding-right: 10px;
+    width: 40px;
+    height: 40px;
     border: 1px solid black;
     overflow: hidden;
     position: relative;
+    border-radius: 3px;
 }
 
 .table {
     line-height:0;
-    border-spacing:0;
-    cursor:pointer;
-}
-
-.reponseLettre{
-    text-align: center;
-    font-family: 'Press Start 2P', cursive !important;
-    width: 25px;
-    height: 1px;
-    opacity: 1 !important;
+    border-spacing:1px;
 }
 
 .indicesHorizontals {
@@ -64,9 +52,8 @@
 }
 
 input {
+    position:absolute;
     text-align: center;
-    font-size:10px;
+    font-size:12px;
     font-family: 'Press Start 2P', cursive;
-    
-    
 }

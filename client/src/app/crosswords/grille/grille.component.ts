@@ -240,12 +240,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return a + b + k;
   }
 
-  public retrieveWordFromClick(event: any): void {
+  public retrieveWordFromClick(event: KeyboardEvent): void {
 
     // retrieve Id from the event
     const target: any = event.target || event.srcElement || event.currentTarget;
     const idAttr: any = target.attributes.id;
-    const id: any = idAttr.nodeValue;
+    const id: string = idAttr.nodeValue;
     const cordinate: string[] = id.split("");
     // coordonne X et Y de la case selectionne
     const x: number = +cordinate[0];
@@ -253,37 +253,34 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const motSousJacent: Word = this.findWordFromXY(x,y);
     this.motSelectionne = motSousJacent;
 
-    this.envoieMotSelectionne(); 
-    //this.remplirLettresSelect();
+    this.envoieMotSelectionne();
     this.focusOnRightLetter();
 
   }
 
-  private findWordFromXY( X:number, Y:number): Word {
+  private findWordFromXY( X: number, Y: number): Word {
     let motTrouve: Word;
-    for(const mot of  this.mots) {
+    for (const mot of  this.mots) {
       let other: number;
       let max: number;
 
-      if ( !mot.vertical) {
+      if (!mot.vertical) {
         other = mot.premierY;
         max = mot.premierX + mot.longeur - 1;
-        if( X <= max && Y === other) {
-          console.log(mot.mot);
+        if ( X <= max && Y === other) {
           motTrouve = mot;
           break;
         }
-      }
-      else if ( mot.vertical) {
+      } else if ( mot.vertical) {
         other = mot.premierX;
         max = mot.premierY + mot.longeur - 1;
         if ( Y <= max && X === other) {
-          console.log(mot.mot);
           motTrouve = mot;
           break;
         }
       }
     }
+
     return motTrouve;
   }
 

@@ -9,16 +9,10 @@
 
                 <input [attr.id] = "makeID(i,j,'')" class="tuile" appDirectiveFocus="true" style="text-transform:uppercase" (keyup)="manageKeyEntry($event)" maxlength="1">
 
-                <img *ngIf="case.lettre != '1' ; else elseBlock1" [attr.id] = "makeID(i,j,'c')" [style.opacity]="opacite(case.caseDecouverte)" (click) = "retrieveWordFromClick($event)" class="tuile" src="../../../assets/tuile.png">
+                <img *ngIf="case.lettre != '1' ; else elseBlock1" [attr.id] = "makeID(i,j,'c')" [style.opacity]="opacite(case.caseDecouverte)" (click) = "retrieveWordFromClick($event)" class="tuile" src="../../../assets/tuile.png" style="cursor:pointer;">
 
                 <ng-template #elseBlock1>
                     <img src="../../../assets/tuileMorte.png" class="tuile">
-                </ng-template>
-
-                <p class="reponseLettre" *ngIf = "case.lettreDecouverte && case.lettre ; else elseBlock2">{{ case.lettre | uppercase }}</p>
-
-                <ng-template #elseBlock2>
-                    <p class="reponseLettre"></p>
                 </ng-template>
             </td>
         </tr>

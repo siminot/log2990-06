@@ -48,7 +48,7 @@ export class RequeteDeGrilleService {
   public serviceReceptionMotSelectionne(): Observable<Word> {
     return this.motSelectionneObservable$;
   }
-)
+
   public getMots(): Word[] {
     return this.mots;
   }
@@ -83,7 +83,7 @@ export class RequeteDeGrilleService {
           lettreDecouverte: false
         };
 
-        if (objMot.vertical) {
+        if (objMot.estVertical) {
           this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY] = tmpLettreGrille;
         } else {
           this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY] = tmpLettreGrille;

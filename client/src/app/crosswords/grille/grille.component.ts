@@ -36,21 +36,17 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.mots = this.listeMotsService.getMots();
+
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    //this.listeMotsService.retourMatrice.subscribe( (x) => {this.matriceDesMotsSurGrille = x; console.log("Matrice mot sur grille actualiser grille comp!");})
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots;});
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
-      .subscribe((mots) => {this.mots = mots; console.log("salut!"); });
-
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
-      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
       this.motSelectionne = motSelec;
       this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
-
       this.putDefaultStyleGrid();
 
       if (!this.motSelectionne.motTrouve) {
@@ -83,7 +79,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const y: number = this.motSelectionne.premierY;
 
     for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
-      this.motSelectionne.vertical ? tmp = this.makeID(x, y + i, "") : tmp = this.makeID(x + i, y, "");
+      this.motSelectionne.estVertical ? tmp = this.makeID(x, y + i, "") : tmp = this.makeID(x + i, y, "");
       this.positionLettresSelectionnees[i] = tmp;
     }
   }
@@ -97,7 +93,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       n = +idTmp[0] * DIZAINE + +idTmp[1];
       uneCase = document.getElementsByTagName("td")[n];
 
-      if (!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
+      if (!this.motSelectionne.estVertical) {   // Wrong side. Horizontal et vertical inversé.
         if (i === 0) {                                         // Premiere case.
           uneCase.style.borderTopColor = couleur;
         } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
@@ -175,7 +171,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private lockLettersFromWord(word: Word): void {
     for (let i: number = 0 ; i < word.longeur ; i++) {
-      if (word.vertical) {
+      if (word.estVertical) {
         this.lockedLetter[word.premierX][word.premierY + i] = true;
       } else {
         this.lockedLetter[word.premierX + i][word.premierY] = true;
@@ -264,14 +260,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
       let other: number;
       let max: number;
 
-      if (!mot.vertical) {
+      if (!mot.estVertical) {
         other = mot.premierY;
         max = mot.premierX + mot.longeur - 1;
         if ( X <= max && Y === other) {
           motTrouve = mot;
           break;
         }
-      } else if ( mot.vertical) {
+      } else if ( mot.estVertical) {
         other = mot.premierX;
         max = mot.premierY + mot.longeur - 1;
         if ( Y <= max && X === other) {

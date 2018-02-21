@@ -11,7 +11,7 @@ describe("DefinitionComponent", () => {
   const fakeWord: Word = {
     mot: "POPO",
     definition: "ton père en latino",
-    vertical: true,
+    estVertical: true,
     longeur: 4,
     premierX: 0,
     premierY: 0,
@@ -22,7 +22,7 @@ describe("DefinitionComponent", () => {
   const realWordFromOurFakeList: Word = {
     mot: "Tata",
     definition: "Ni papa, ni  mama",
-    vertical: true,
+    estVertical: true,
     longeur: 4,
     premierX: 3,
     premierY: 0,

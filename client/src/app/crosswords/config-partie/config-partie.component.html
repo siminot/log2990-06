@@ -12,14 +12,13 @@
   </div>
 
   <div id="difficulte" >
-    <button (click)="ajouterDansRequete('/facile')"
-    routerLink="/CrosswordsGame" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">
+    <button (click)="ajouterDansRequete('facile')"
+      routerLink="/CrosswordsGame"
+    >
       Facile</button>
-    <button (click)="ajouterDansRequete('/normal')"
-    routerLink="/CrosswordsGame" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">
+    <button (click)="ajouterDansRequete('normal')" >
     Normal</button>
-    <button (click)="ajouterDansRequete('/difficile')"
-    routerLink="/CrosswordsGame" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">
+    <button (click)="ajouterDansRequete('difficile')">
     Difficile</button>
   </div>
 

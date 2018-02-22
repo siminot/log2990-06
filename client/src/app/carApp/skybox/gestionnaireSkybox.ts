@@ -1,151 +1,81 @@
 import { Injectable } from "@angular/core";
-import { BoxGeometry, BackSide, Mesh, MeshBasicMaterial, TextureLoader,
-         MultiMaterial, PlaneGeometry, AmbientLight, MeshPhongMaterial,
-         DirectionalLight, Texture, RepeatWrapping } from "three";
-import { RAD_TO_DEG } from "../constants";
+import { Mesh } from "three";
+import { Skybox, TempsJournee } from "./skybox";
 
-// Paysage
-const TAILLE_SKYBOX: number = 8192;
-const RAPPOR_HAUTEUR_SOL: number = 25;
-const HAUTEUR_SOL: number = TAILLE_SKYBOX / RAPPOR_HAUTEUR_SOL;
-const NOMBRE_FACE_CUBE: number = 6;
-const CHEMIN: string = "./../../../assets/";
-const CHEMIN_PAYSAGE: string = CHEMIN + "skybox/";
-const URL_SKYBOX_JOUR: string[] = ["jour1/", "jour2/"];
-const URL_SKYBOX_NUIT: string[] = ["nuit1/", "nuit2/"];
-const FORMAT: string = ".jpg";
+export class ConstructionSkybox {
+    public tempsJournee: TempsJournee;
+    public paysage: string;
+    public plancher: string;
 
-// Plancher
-// const COULEUR_PLANCHER_JOUR: number[] = [VERT, GRIS];
-// const COULEUR_PLANCHER_NUIT: number[] = [VERT_FONCE, BRUN_FONCE];
-const CHEMIN_TEXTURE: string = CHEMIN_PAYSAGE + "textures/";
-const TEXTURE_PLANCHER_JOUR: string[] = ["grass2", "roche1"];
-const TEXTURE_PLANCHER_NUIT: string[] = ["grass4", "pave1"];
-const TAILLE_REPETITION: number = 1024;
+    public constructor(tempsJournee: TempsJournee, paysage: string, plancher: string) {
+        this.tempsJournee = tempsJournee;
+        this.paysage = paysage;
+        this.plancher = plancher;
+    }
+}
 
-// Lumière ambiante
-const COULEUR_LUMIERE_AMBIANTE: number = 0xFFFFFF;
-const INTENSITE_AMBIANTE_NUIT: number = 0.3;
-const INTENSITE_AMBIANTE_JOUR: number = 0.7;
-const COULEUR_LUMIERE_SOLEIL: number = 0xFFFFFF;
-const INTENSITE_SOLEIL: number = 0.1;
-// const POSITION_SOLEIL: Vector3 = new Vector3(0, 1, 0);
+const SKYBOX: ConstructionSkybox[] = [
+    new ConstructionSkybox(TempsJournee.Nuit, "nuit1", "grass4"),
+    new ConstructionSkybox(TempsJournee.Nuit, "nuit2", "pave1"),
+    new ConstructionSkybox(TempsJournee.Jour, "jour1", "grass2"),
+    new ConstructionSkybox(TempsJournee.Jour, "jour2", "roche1"),
+];
 
 @Injectable()
 export class GestionnaireSkybox {
 
-    private estModeNuit: boolean;
+    private tempsJournee: TempsJournee;
     private skyboxCourante: Mesh;
-    private urlSkyboxCourante: string;
-    private urlSkybox: string[];
+    private environnementsJour: Skybox[];
+    private environnementsNuit: Skybox[];
 
     public get skybox(): Mesh {
         return this.skyboxCourante;
     }
 
     public constructor() {
-        this.estModeNuit = true;
-        this.initialiserURL();
-        this.charger();
+        this.tempsJournee = TempsJournee.Nuit;
+        this.environnementsJour = [];
+        this.environnementsNuit = [];
+        this.chargerSkybox();
+        this.skyboxCourante = this.environnementsNuit[0];
     }
 
-    private initialiserURL(): void {
-        this.estModeNuit
-            ? this.urlSkybox = URL_SKYBOX_NUIT
-            : this.urlSkybox = URL_SKYBOX_JOUR;
-
-        this.urlSkyboxCourante = this.urlSkybox[0];
-    }
-
-    private charger(): void {
-        this.chargerPaysage();
-        this.chargerPlancher();
-        this.chargerLumieres();
-    }
-
-    private chargerPaysage(): void {
-        const materiaux: MeshBasicMaterial[] = [];
-
-        const URLS: string[] = [
-            CHEMIN_PAYSAGE + this.urlSkyboxCourante + "posx" + FORMAT,
-            CHEMIN_PAYSAGE + this.urlSkyboxCourante + "negx" + FORMAT,
-            CHEMIN_PAYSAGE + this.urlSkyboxCourante + "posy" + FORMAT,
-            CHEMIN_PAYSAGE + this.urlSkyboxCourante + "negy" + FORMAT,
-            CHEMIN_PAYSAGE + this.urlSkyboxCourante + "posz" + FORMAT,
-            CHEMIN_PAYSAGE + this.urlSkyboxCourante + "negz" + FORMAT,
-        ];
-
-        for (let i: number = 0 ; i < NOMBRE_FACE_CUBE ; i++) {
-            materiaux.push(new MeshBasicMaterial({map: new TextureLoader().load(URLS[i]), side: BackSide}));
+    private chargerSkybox(): void {
+        for (const liens of SKYBOX) {
+            if (liens.tempsJournee === TempsJournee.Jour) {
+                this.environnementsJour.push(new Skybox(TempsJournee.Jour, liens.paysage, liens.plancher));
+            } else {
+                this.environnementsNuit.push(new Skybox(TempsJournee.Nuit, liens.paysage, liens.plancher));
+            }
         }
-
-        const boite: BoxGeometry = new BoxGeometry(TAILLE_SKYBOX, TAILLE_SKYBOX, TAILLE_SKYBOX);
-        boite.translate(0, HAUTEUR_SOL, 0);
-        this.skyboxCourante = new Mesh(boite, new MultiMaterial(materiaux));
-    }
-
-    private chargerPlancher(): void {
-        const geometrie: PlaneGeometry = new PlaneGeometry( TAILLE_SKYBOX, TAILLE_SKYBOX, 1, 1 );
-        const materiel: MeshPhongMaterial = new MeshPhongMaterial( { side: BackSide, map: this.obtenirTexturePlancher() } );
-        const plancher: Mesh = new Mesh( geometrie, materiel );
-        plancher.receiveShadow = true;
-        const ANGLE: number = 90;
-        plancher.rotation.x = ANGLE / RAD_TO_DEG;
-        plancher.castShadow = true;
-        this.skybox.add(plancher);
-    }
-
-    private obtenirTexturePlancher(): Texture {
-        let nomFichiertexturePlancher: string;
-
-        this.estModeNuit
-            ? nomFichiertexturePlancher = TEXTURE_PLANCHER_NUIT[this.positionCouranteSkybox()]
-            : nomFichiertexturePlancher = TEXTURE_PLANCHER_JOUR[this.positionCouranteSkybox()];
-
-        const texturePlancher: Texture = new TextureLoader().load(CHEMIN_TEXTURE + nomFichiertexturePlancher + FORMAT);
-        texturePlancher.wrapS = texturePlancher.wrapT = RepeatWrapping;
-        texturePlancher.offset.set(0, 0);
-        texturePlancher.repeat.set(TAILLE_REPETITION, TAILLE_REPETITION);
-
-        return texturePlancher;
     }
 
     private positionCouranteSkybox(): number {
-        return this.urlSkybox.findIndex((nom) => this.urlSkyboxCourante === nom );
+        return this.obtenirPaysagesSelonTemps().findIndex((paysage) => this.skyboxCourante === paysage );
     }
 
-    private chargerLumieres(): void {
-        this.chargerLumiereAmbiante();
-        this.chargerSoleil();
-    }
-
-    private chargerLumiereAmbiante(): void {
-        let opacite: number;
-
-        this.estModeNuit
-            ? opacite = INTENSITE_AMBIANTE_NUIT
-            : opacite = INTENSITE_AMBIANTE_JOUR;
-
-        this.skyboxCourante.add(new AmbientLight(COULEUR_LUMIERE_AMBIANTE, opacite));
-    }
-
-    private chargerSoleil(): void {
-        if (!this.estModeNuit) {
-            const soleil: DirectionalLight = new DirectionalLight(COULEUR_LUMIERE_SOLEIL, INTENSITE_SOLEIL);
-            // soleil.position = POSITION_SOLEIL;
-            soleil.castShadow = true;
-            this.skyboxCourante.add(soleil);
+    private obtenirPaysagesSelonTemps(): Skybox[] {
+        if (this.tempsJournee === TempsJournee.Nuit) {
+            return this.environnementsNuit;
+        } else {
+            return this.environnementsJour;
         }
     }
 
     public changerTempsJournee(): void {
-        this.estModeNuit = !this.estModeNuit;
-        this.initialiserURL();
-        this.charger();
+        if (this.tempsJournee === TempsJournee.Nuit) {
+            this.tempsJournee = TempsJournee.Jour;
+            this.skyboxCourante = this.environnementsJour[0];
+        } else {
+            this.tempsJournee = TempsJournee.Nuit;
+            this.skyboxCourante = this.environnementsNuit[0];
+        }
+        this.changerDecor();
     }
 
     public changerDecor(): void {
-        this.urlSkyboxCourante = this.urlSkybox[(this.positionCouranteSkybox() + 1) % this.urlSkybox.length];
-        this.charger();
+        const tableau: Skybox[] = this.obtenirPaysagesSelonTemps();
+        this.skyboxCourante = tableau[(this.positionCouranteSkybox() + 1) % tableau.length];
     }
 }

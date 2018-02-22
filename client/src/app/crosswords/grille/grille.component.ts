@@ -39,9 +39,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots;});
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots; });
 
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
+    .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
@@ -75,8 +76,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY, "");
     this.positionLettresSelectionnees[0] = tmp;
 
-    // const x: number = this.motSelectionne.premierX;
-    // const y: number = this.motSelectionne.premierY;
+    const x: number = this.motSelectionne.premierX;
+    const y: number = this.motSelectionne.premierY;
 
     for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
       this.motSelectionne.estVertical ? tmp = this.makeID(x, y + i, "") : tmp = this.makeID(x + i, y, "");
@@ -246,7 +247,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     // coordonne X et Y de la case selectionne
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];
-    const motSousJacent: Word = this.findWordFromXY(x,y);
+    const motSousJacent: Word = this.findWordFromXY(x, y);
     this.motSelectionne = motSousJacent;
 
     this.envoieMotSelectionne();

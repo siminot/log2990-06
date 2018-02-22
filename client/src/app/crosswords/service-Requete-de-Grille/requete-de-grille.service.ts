@@ -4,7 +4,7 @@ import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import {HttpeReqService} from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
-//import { listeMots } from "../mockObject/mockListWord";
+// import { listeMots } from "../mockObject/mockListWord";
 import { Word, LettreGrille } from "../mockObject/word";
 
 @Injectable()

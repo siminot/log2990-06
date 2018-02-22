@@ -63,6 +63,12 @@ export class Mockword {
         this.estTraite = etat;
     }
 
+    public inverserXY(): void {
+        const temp = this.premierX;
+        this.premierX = this .premierY;
+        this.premierY = temp;
+    }
+
     // autre
 
     public estLieAvecAutreMot(autreMot: Mockword): boolean {

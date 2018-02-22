@@ -12,14 +12,18 @@
   </div>
 
   <div id="difficulte" >
-    <button (click)="ajouterDansRequete('facile')"
+    <button (click)="ajouterDansRequete('/facile')"
       routerLink="/CrosswordsGame"
     >
       Facile</button>
-    <button (click)="ajouterDansRequete('normal')" >
-    Normal</button>
-    <button (click)="ajouterDansRequete('difficile')">
-    Difficile</button>
+    <button (click)="ajouterDansRequete('/normal')" 
+      routerLink="/CrosswordsGame"
+    >
+      Normal</button>
+    <button (click)="ajouterDansRequete('/difficile')"
+      routerLink="/CrosswordsGame"
+    >
+      Difficile</button>
   </div>
 
   <div id="creerOuJoindre">

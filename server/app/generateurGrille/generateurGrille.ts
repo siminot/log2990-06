@@ -221,7 +221,7 @@ module Route {
 
             this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
             await this.remplirLaGrilleDeMots();
-            this.inverserXYMots();
+            //this.inverserXYMots();
 
             res.send(this.listeMot);
         }

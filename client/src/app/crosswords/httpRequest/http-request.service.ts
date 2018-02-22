@@ -8,7 +8,7 @@ import "rxjs/add/operator/catch";
 @Injectable()
 export class HttpeReqService {
   private url = "http://localhost:3000/grille/requeteTemporaire";
-  private constructor(private http: HttpClient) { }
+  public constructor(private http: HttpClient) { }
 
   public getWord(): Observable<Word[] > {
 

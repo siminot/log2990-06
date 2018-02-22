@@ -1,19 +1,11 @@
-import { Phare } from "./phare";
+import { Phare, COULEUR_ALLUMEE, INTENSITE_ALLUME, INTENSITE_ETEINT, DISTANCE, PENOMBRE, COULEUR_ETEINTE} from "./phare";
 import { Vector3 } from "three";
-
-const COULEUR_ALLUMEE: number = 0xFFCC00;
-const INTENSITE_DEFAUT: number = 3;
-const DISTANCE: number = 30;
-const PENOMBRE: number = 0.5;
-
-// const POSITION: Vector3 = new Vector3(0, 0, 0);
 
 const HAUTEUR: number = 0.5;
 const LARGEUR: number = 0.5;
 const PROFONDEUR: number = -1.65;
 const AJUSTEMENT_FAISCEAU_DISTANCE_VOITURE: number = 0.75;
 
-// const PHARE_GAUCHE_POSITION_RELATIVE: Vector3 = new Vector3(LARGEUR, HAUTEUR, PROFONDEUR);
 const PHARE_POSITION_RELATIVE: Vector3 = new Vector3(LARGEUR, HAUTEUR, PROFONDEUR);
 const PHARE_POSITION: Vector3 = new Vector3(LARGEUR, HAUTEUR, PROFONDEUR + AJUSTEMENT_FAISCEAU_DISTANCE_VOITURE);
 
@@ -28,14 +20,16 @@ describe("Phare", () => {
         expect(phare.position).toEqual(PHARE_POSITION);
     });
 
-    it("Phare s'eteint", () => {
-        phare.eteindre();
-        expect(phare.intensity).toBe(0);
-    });
-
     it("Phare s'allume", () => {
         phare.allumer();
+        expect(phare["materielSphere"].color.getHex()).toBe(COULEUR_ALLUMEE);
         expect(phare.color.getHex()).toBe(COULEUR_ALLUMEE);
-        expect(phare.intensity).toBe(INTENSITE_DEFAUT);
+        expect(phare.intensity).toBe(INTENSITE_ALLUME);
+    });
+
+    it("Phare s'eteint", () => {
+        phare.eteindre();
+        expect(phare["materielSphere"].color.getHex()).toBe(COULEUR_ETEINTE);
+        expect(phare.intensity).toBeCloseTo(INTENSITE_ETEINT);
     });
 });

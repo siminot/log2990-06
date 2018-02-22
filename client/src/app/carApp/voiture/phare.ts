@@ -1,11 +1,12 @@
 import { SpotLight, Vector3, Mesh, SphereGeometry, MeshBasicMaterial, Color} from "three";
 import { PI_OVER_2 } from "../constants";
 
-const COULEUR_ALLUMEE: number = 0xFFCC00;
-const COULEUR_ETEINTE: number = 0x000000;
-const INTENSITE_DEFAUT: number = 3;
-const DISTANCE: number = 30;
-const PENOMBRE: number = 0.5;
+export const COULEUR_ALLUMEE: number = 0xFFCC00;
+export const COULEUR_ETEINTE: number = 0x000000;
+export const INTENSITE_ALLUME: number = 3;
+export const INTENSITE_ETEINT: number = 0;
+export const DISTANCE: number = 30;
+export const PENOMBRE: number = 0.5;
 const RATIO_ANGLE: number = 2.5;
 const ANGLE: number = PI_OVER_2 / RATIO_ANGLE;
 const RAYON_AMPOULE: number = 0.05;
@@ -17,7 +18,7 @@ export class Phare extends SpotLight {
     private materielSphere: MeshBasicMaterial;
 
     public constructor(positionRelative: Vector3) {
-        super(COULEUR_ALLUMEE, INTENSITE_DEFAUT, DISTANCE, ANGLE, PENOMBRE);
+        super(COULEUR_ALLUMEE, INTENSITE_ALLUME, DISTANCE, ANGLE, PENOMBRE);
         this.position.set(positionRelative.x, positionRelative.y, positionRelative.z + AJUSTEMENT_FAISCEAU_DISTANCE_VOITURE);
 
         this.materielSphere = new MeshBasicMaterial( {color: COULEUR_ALLUMEE} );
@@ -27,12 +28,12 @@ export class Phare extends SpotLight {
     }
 
     public allumer(): void {
-        this.intensity = INTENSITE_DEFAUT;
+        this.intensity = INTENSITE_ALLUME;
         this.materielSphere.color = new Color(COULEUR_ALLUMEE);
     }
 
     public eteindre(): void {
-        this.intensity = 0;
+        this.intensity = INTENSITE_ETEINT;
         this.materielSphere.color = new Color(COULEUR_ETEINTE);
     }
 }

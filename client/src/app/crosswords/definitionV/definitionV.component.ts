@@ -34,7 +34,7 @@ export class DefinitionVComponent implements OnInit, OnDestroy {
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect)=>{
       this.motSelectionne = motSelect;
       this.changementMotSelectionneFF(this.motSelectionne);
-    })
+    });
 
   }
   public ngOnInit(): void { }

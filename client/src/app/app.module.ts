@@ -10,7 +10,8 @@ import { GameComponent } from "./carApp/game-component/game.component";
 import { RenderService } from "./carApp/render-service/render.service";
 import {HttpeReqService} from "./crosswords/httpRequest/http-request.service";
 
-
+import { DefinitionHComponent} from "./crosswords/definitionH/definitionH.component";
+import { DefinitionVComponent} from "./crosswords/definitionV/definitionV.component";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { DefinitionComponent } from "./crosswords/definition/definition.component";
@@ -26,7 +27,9 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         GrilleComponent,
         DefinitionComponent,
         ConfigPartieComponent,
-        DirectiveFocusDirective
+        DirectiveFocusDirective,
+        DefinitionHComponent,
+        DefinitionVComponent
     ],
     imports: [
         BrowserModule,
@@ -45,7 +48,8 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         GameComponent,
         MainGrilleComponent,
         GrilleComponent,
-        DefinitionComponent
+        DefinitionVComponent,
+        DefinitionHComponent
     ]
 })
 export class AppModule { }

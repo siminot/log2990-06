@@ -9,16 +9,16 @@ export class GestionnaireEcran {
         this.conteneur = null;
     }
 
-    public get ratio(): number {
-        return this.conteneur.clientWidth / this.conteneur.clientHeight;
-    }
-
     public get largeur(): number {
         return this.conteneur.clientWidth;
     }
 
     public get hauteur(): number {
         return this.conteneur.clientHeight;
+    }
+
+    public get ratio(): number {
+        return this.largeur / this.hauteur;
     }
 
     public initialiserConteneur(container: HTMLDivElement): void {

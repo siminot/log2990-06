@@ -44,29 +44,7 @@ export class GenerateurSquelette {
                 this.compteurCasesNoires++;
             }
         }
-        /*for (let y = 1; y < this.tailleGrille; y += 2) {
-            let x: number;
-            do {
-                x = this.nombreAleatoire(5) * 2 + 1;
-            } while (this.grille[y][x] === VIDE);
-            this.grille[y][x] = VIDE;
-            }
-
-        for (let x = 1; x < this.tailleGrille; x += 2) {
-            let y: number;
-            do {
-               y = this.nombreAleatoire(5) * 2 + 1;
-            } while (this.grille[y][x] === VIDE);
-            this.grille[y][x] = VIDE;
-        }*/
     }
-
-    /*private nombreAleatoire(nbMax: number): number {
-        const millisecondes = new Date().getMilliseconds();
-        const MILLE = 1000;
-
-        return Math.floor(millisecondes * nbMax / MILLE);
-    }*/
 
     private genererCasesNoires(ratioVoulu: number): number {
         // Verifier une bonne entree

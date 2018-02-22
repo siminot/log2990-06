@@ -32,20 +32,40 @@ describe("Service de rendu", () => {
     serviceDeRendu = new ServiceDeRendu(gestionnaireScene, gestionnaireCamera, gestionnaireEcran);
   }));
 
-  beforeEach(() => {
-  });
-
   describe("Constructeur", () => {
     it("Objet est construit", () => {
       expect(serviceDeRendu).toBeDefined();
     });
 
-    it("Composante utilises sont construites", () => {
-      expect(gestionnaireVoitures).toBeDefined();
-      expect(gestionnaireSkybox).toBeDefined();
-      expect(gestionnaireScene).toBeDefined();
-      expect(gestionnaireEcran).toBeDefined();
-      expect(gestionnaireCamera).toBeDefined();
+    it("Composants utilisés sont construits", () => {
+      expect(serviceDeRendu["gestionnaireScene"]).toBeDefined();
+      expect(serviceDeRendu["gestionnaireCamera"]).toBeDefined();
+      expect(serviceDeRendu["gestionnaireEcran"]).toBeDefined();
+    });
+  });
+
+  // TODO: toHaveBeenCalled ne fonctionne pas encore
+  describe("Initialisation", () => {
+    it("Boucle de rendue partie", async () => {
+      await serviceDeRendu.initialiser();
+      const fonctionRender: Function = serviceDeRendu["renderer"].render;
+      expect(fonctionRender).toHaveBeenCalled();
+    });
+  });
+
+  describe("Redimensionnement", () => {
+    it("Renderer mis à jour", async () => {
+      await serviceDeRendu.initialiser();
+      const fonctionSetSize: Function = serviceDeRendu["renderer"].setSize;
+      serviceDeRendu.redimensionnement();
+      expect(fonctionSetSize).toHaveBeenCalled();
+    });
+
+    it("Cameras mises à jour", async () => {
+      await serviceDeRendu.initialiser();
+      const redimensionnementCameras: Function = serviceDeRendu["gestionnaireCamera"].redimensionnement;
+      serviceDeRendu.redimensionnement();
+      expect(redimensionnementCameras).toHaveBeenCalled();
     });
   });
 });

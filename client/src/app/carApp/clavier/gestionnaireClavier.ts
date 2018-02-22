@@ -3,15 +3,15 @@ import { GestionnaireCamera } from "../camera/GestionnaireCamera";
 import { GestionnaireScene } from "../scene/GestionnaireScene";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 
-const ACCELERATEUR: number = 87;            // w
-const DIRECTION_GAUCHE: number = 65;        // a
-const FREIN: number = 83;                   // s
-const DIRECTION_DROITE: number = 68;        // d
-const CHANGER_VUE: number = 86;             // v
-const ZOOM_IN: number = 61;                 // =
-const ZOOM_OUT: number = 173;               // -
-const CHANGER_DECOR: number = 84;           // t
-const CHANGER_HEURE_JOURNEE: number = 89;   // y
+export const ACCELERATEUR: number = 87;            // w
+export const DIRECTION_GAUCHE: number = 65;        // a
+export const FREIN: number = 83;                   // s
+export const DIRECTION_DROITE: number = 68;        // d
+export const CHANGER_VUE: number = 86;             // v
+export const ZOOM_IN: number = 61;                 // =
+export const ZOOM_OUT: number = 173;               // -
+export const CHANGER_DECOR: number = 84;           // t
+export const CHANGER_HEURE_JOURNEE: number = 89;   // y
 
 @Injectable()
 export class GestionnaireClavier {

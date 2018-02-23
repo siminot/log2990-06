@@ -123,4 +123,12 @@ describe("Voiture", () => {
         car.initialiser(new Object3D());
         expect(car.children.length).toBe(2);
     });
+
+    it("boiteCollision suit la voiture", () => {
+        car = new Voiture(undefined);
+        car.initialiser(new Object3D());
+        car.accelerer();
+        car.update(MS_BETWEEN_FRAMES);
+        expect(car["boiteCollision"].getCenter()).toEqual(car.position);
+    });
 });

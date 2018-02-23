@@ -1,4 +1,4 @@
-import { Vector3, Matrix4, Object3D, Euler, Quaternion } from "three";
+import { Vector3, Matrix4, Object3D, Euler, Quaternion, Box3 } from "three";
 import { Engine } from "./engine";
 import { MS_TO_SECONDS, GRAVITY, PI_OVER_2 } from "../constants";
 import { Wheel } from "./wheel";
@@ -28,6 +28,7 @@ export class Voiture extends Object3D {
     private steeringWheelDirection: number;
     private weightRear: number;
     private phares: GroupePhares;
+    private boiteCollision: Box3;
 
     public get isAcceleratorPressed(): boolean {
         return this._isAcceleratorPressed;
@@ -92,12 +93,14 @@ export class Voiture extends Object3D {
         this.steeringWheelDirection = 0;
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
+        this.boiteCollision = new Box3();
         this.phares = new GroupePhares();
     }
 
     public initialiser(texture: Object3D): void {
         this.add(texture);
         this.setRotationFromEuler(INITIAL_MODEL_ROTATION);
+        this.boiteCollision.setFromObject(this);
         this.initialiserPhares();
     }
 
@@ -149,6 +152,8 @@ export class Voiture extends Object3D {
         const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
         const omega: number = this._speed.length() / R;
         this.rotateY(omega);
+
+        this.boiteCollision.setFromCenterAndSize(this.position, this.boiteCollision.getSize()); // manque orientation de la boite...
     }
 
     public eteindrePhares(): void {

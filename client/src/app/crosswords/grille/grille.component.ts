@@ -39,7 +39,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots;});
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => { this.mots = mots; });
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
@@ -123,11 +123,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
       elemTmp = document.getElementById(idTmp) as HTMLInputElement;
 
       if (elemTmp.value === "") {
-        break;
+        this.positionCourante = i;
+        elemTmp.focus();
+
+        return;
       }
     }
 
-    this.positionCourante = i;
+    this.positionCourante = this.motSelectionne.longeur - 1;
     elemTmp.focus();
   }
 

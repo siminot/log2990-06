@@ -22,88 +22,124 @@ describe("gestionnaireClavier", () => {
         expect(gestionnaireClavier).toBeDefined();
     });
 
-    // TODO: toHaveBeenCalled ne fonctionne pas encore
     describe("Touches appuyees", () => {
         it("Zoomer", () => {
-            // const zoomer: Function = gestionnaireClavier["gestionnaireCamera"].zoomer;
-            const touche: KeyboardEvent = new KeyboardEvent(ZOOM_IN.toString());
+            const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+                "keyCode": ZOOM_IN
+            });
+            spyOn(gestionnaireClavier["gestionnaireCamera"], "zoomer");
             gestionnaireClavier.toucheAppuyee(touche);
-            // expect(zoomer).toHaveBeenCalled();
-            assert(true);
+            expect(gestionnaireClavier["gestionnaireCamera"].zoomer).toHaveBeenCalled();
         });
 
         it("Dezoomer", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(ZOOM_OUT.toString());
+            const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+                "keyCode": ZOOM_OUT
+            });
+            spyOn(gestionnaireClavier["gestionnaireCamera"], "dezoomer");
             gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            expect(gestionnaireClavier["gestionnaireCamera"].dezoomer).toHaveBeenCalled();
         });
 
         it("Accelerer", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(ACCELERATEUR.toString());
+            const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+                "keyCode": ACCELERATEUR
+            });
+            spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "accelerer");
             gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            expect(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur.accelerer).toHaveBeenCalled();
         });
 
         it("Gauche", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(DIRECTION_GAUCHE.toString());
+            const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+                "keyCode": DIRECTION_GAUCHE
+            });
+            spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "virerGauche");
             gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            expect(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur.virerGauche).toHaveBeenCalled();
         });
 
         it("Droite", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(DIRECTION_DROITE.toString());
+            const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+                "keyCode": DIRECTION_DROITE
+            });
+            spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "virerDroite");
             gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            expect(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur.virerDroite).toHaveBeenCalled();
         });
 
         it("Freiner", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(FREIN.toString());
+            const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+                "keyCode": FREIN
+            });
+            spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "freiner");
             gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            expect(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur.freiner).toHaveBeenCalled();
         });
     });
 
     describe("Touches relâchees", () => {
         it("Changer de camera", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(CHANGER_VUE.toString());
-            gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            const touche: KeyboardEvent = new KeyboardEvent("keyup", {
+                "keyCode": CHANGER_VUE
+            });
+            spyOn(gestionnaireClavier["gestionnaireCamera"], "changerCamera");
+            gestionnaireClavier.toucheRelevee(touche);
+            expect(gestionnaireClavier["gestionnaireCamera"].changerCamera).toHaveBeenCalled();
         });
 
         it("Changer heure de la journee", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(CHANGER_HEURE_JOURNEE.toString());
-            gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            const touche: KeyboardEvent = new KeyboardEvent("keyup", {
+                "keyCode": CHANGER_HEURE_JOURNEE
+            });
+            spyOn(gestionnaireClavier["gestionnaireScene"], "changerTempsJournee");
+            gestionnaireClavier.toucheRelevee(touche);
+            expect(gestionnaireClavier["gestionnaireScene"].changerTempsJournee).toHaveBeenCalled();
         });
 
         it("Changer le decor", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(CHANGER_DECOR.toString());
-            gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            const touche: KeyboardEvent = new KeyboardEvent("keyup", {
+                "keyCode": CHANGER_DECOR
+            });
+            spyOn(gestionnaireClavier["gestionnaireScene"], "changerDecor");
+            gestionnaireClavier.toucheRelevee(touche);
+            expect(gestionnaireClavier["gestionnaireScene"].changerDecor).toHaveBeenCalled();
         });
 
         it("Accelerer", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(ACCELERATEUR.toString());
-            gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            const touche: KeyboardEvent = new KeyboardEvent("keyup", {
+                "keyCode": ACCELERATEUR
+            });
+            spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "relacherAccelerateur");
+            gestionnaireClavier.toucheRelevee(touche);
+            expect(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur.relacherAccelerateur).toHaveBeenCalled();
         });
 
         it("Gauche", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(DIRECTION_GAUCHE.toString());
-            gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            const touche: KeyboardEvent = new KeyboardEvent("keyup", {
+                "keyCode": DIRECTION_GAUCHE
+            });
+            spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "relacherVolant");
+            gestionnaireClavier.toucheRelevee(touche);
+            expect(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur.relacherVolant).toHaveBeenCalled();
         });
 
         it("Droite", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(DIRECTION_DROITE.toString());
-            gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            const touche: KeyboardEvent = new KeyboardEvent("keyup", {
+                "keyCode": DIRECTION_DROITE
+            });
+            spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "relacherVolant");
+            gestionnaireClavier.toucheRelevee(touche);
+            expect(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur.relacherVolant).toHaveBeenCalled();
         });
 
         it("Freiner", () => {
-            const touche: KeyboardEvent = new KeyboardEvent(FREIN.toString());
-            gestionnaireClavier.toucheAppuyee(touche);
-            assert(true);
+            const touche: KeyboardEvent = new KeyboardEvent("keyup", {
+                "keyCode": FREIN
+            });
+            spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "relacherFreins");
+            gestionnaireClavier.toucheRelevee(touche);
+            expect(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur.relacherFreins).toHaveBeenCalled();
         });
     });
 });

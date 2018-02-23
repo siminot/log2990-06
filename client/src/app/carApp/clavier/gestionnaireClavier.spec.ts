@@ -25,7 +25,7 @@ describe("gestionnaireClavier", () => {
     describe("Touches appuyees", () => {
         it("Zoomer", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keydown", {
-                "keyCode": ZOOM_IN
+                "key": ZOOM_IN
             });
             spyOn(gestionnaireClavier["gestionnaireCamera"], "zoomer");
             gestionnaireClavier.toucheAppuyee(touche);
@@ -34,7 +34,7 @@ describe("gestionnaireClavier", () => {
 
         it("Dezoomer", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keydown", {
-                "keyCode": ZOOM_OUT
+                "key": ZOOM_OUT
             });
             spyOn(gestionnaireClavier["gestionnaireCamera"], "dezoomer");
             gestionnaireClavier.toucheAppuyee(touche);
@@ -43,7 +43,7 @@ describe("gestionnaireClavier", () => {
 
         it("Accelerer", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keydown", {
-                "keyCode": ACCELERATEUR
+                "key": ACCELERATEUR
             });
             spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "accelerer");
             gestionnaireClavier.toucheAppuyee(touche);
@@ -52,7 +52,7 @@ describe("gestionnaireClavier", () => {
 
         it("Gauche", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keydown", {
-                "keyCode": DIRECTION_GAUCHE
+                "key": DIRECTION_GAUCHE
             });
             spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "virerGauche");
             gestionnaireClavier.toucheAppuyee(touche);
@@ -61,7 +61,7 @@ describe("gestionnaireClavier", () => {
 
         it("Droite", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keydown", {
-                "keyCode": DIRECTION_DROITE
+                "key": DIRECTION_DROITE
             });
             spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "virerDroite");
             gestionnaireClavier.toucheAppuyee(touche);
@@ -70,7 +70,7 @@ describe("gestionnaireClavier", () => {
 
         it("Freiner", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keydown", {
-                "keyCode": FREIN
+                "key": FREIN
             });
             spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "freiner");
             gestionnaireClavier.toucheAppuyee(touche);
@@ -81,7 +81,7 @@ describe("gestionnaireClavier", () => {
     describe("Touches relâchees", () => {
         it("Changer de camera", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keyup", {
-                "keyCode": CHANGER_VUE
+                "key": CHANGER_VUE
             });
             spyOn(gestionnaireClavier["gestionnaireCamera"], "changerCamera");
             gestionnaireClavier.toucheRelevee(touche);
@@ -90,7 +90,7 @@ describe("gestionnaireClavier", () => {
 
         it("Changer heure de la journee", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keyup", {
-                "keyCode": CHANGER_HEURE_JOURNEE
+                "key": CHANGER_HEURE_JOURNEE
             });
             spyOn(gestionnaireClavier["gestionnaireScene"], "changerTempsJournee");
             gestionnaireClavier.toucheRelevee(touche);
@@ -99,7 +99,7 @@ describe("gestionnaireClavier", () => {
 
         it("Changer le decor", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keyup", {
-                "keyCode": CHANGER_DECOR
+                "key": CHANGER_DECOR
             });
             spyOn(gestionnaireClavier["gestionnaireScene"], "changerDecor");
             gestionnaireClavier.toucheRelevee(touche);
@@ -108,7 +108,7 @@ describe("gestionnaireClavier", () => {
 
         it("Accelerer", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keyup", {
-                "keyCode": ACCELERATEUR
+                "key": ACCELERATEUR
             });
             spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "relacherAccelerateur");
             gestionnaireClavier.toucheRelevee(touche);
@@ -117,7 +117,7 @@ describe("gestionnaireClavier", () => {
 
         it("Gauche", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keyup", {
-                "keyCode": DIRECTION_GAUCHE
+                "key": DIRECTION_GAUCHE
             });
             spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "relacherVolant");
             gestionnaireClavier.toucheRelevee(touche);
@@ -126,7 +126,7 @@ describe("gestionnaireClavier", () => {
 
         it("Droite", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keyup", {
-                "keyCode": DIRECTION_DROITE
+                "key": DIRECTION_DROITE
             });
             spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "relacherVolant");
             gestionnaireClavier.toucheRelevee(touche);
@@ -135,7 +135,7 @@ describe("gestionnaireClavier", () => {
 
         it("Freiner", () => {
             const touche: KeyboardEvent = new KeyboardEvent("keyup", {
-                "keyCode": FREIN
+                "key": FREIN
             });
             spyOn(gestionnaireClavier["gestionnaireVoitures"].voitureJoueur, "relacherFreins");
             gestionnaireClavier.toucheRelevee(touche);

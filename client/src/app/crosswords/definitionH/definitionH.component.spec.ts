@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DefinitioHComponent } from './definitio-h.component';
+import { DefinitioHComponent } from "./definitio-h.component";
 
-describe('DefinitioHComponent', () => {
+describe("DefinitioHComponent", () => {
   let component: DefinitioHComponent;
   let fixture: ComponentFixture<DefinitioHComponent>;
 
@@ -19,7 +19,7 @@ describe('DefinitioHComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

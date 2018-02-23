@@ -39,9 +39,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots; });
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => { this.mots = mots; });
 
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
+      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
@@ -115,17 +116,22 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private focusOnRightLetter(): void {
     let elemTmp: HTMLInputElement, idTmp: string;
+    let i: number;
 
-    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+    for (i = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
       elemTmp = document.getElementById(idTmp) as HTMLInputElement;
 
       if (elemTmp.value === "") {
         this.positionCourante = i;
         elemTmp.focus();
-        break;
+
+        return;
       }
     }
+
+    this.positionCourante = this.motSelectionne.longeur - 1;
+    elemTmp.focus();
   }
 
   public manageKeyEntry(event: KeyboardEvent): void {

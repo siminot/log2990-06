@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import {HttpeReqService} from "../httpRequest/http-request.service";
-const REQUETE_INIT: string = "http://localhost:3000/grille";
+import { HttpeReqService } from "../httpRequest/http-request.service";
+import { OptionPartie } from "./../../../../../common/communication/optionPartie";
+const REQUETE_INIT: string = "http://localhost:3000/grille/";
 
 @Component({
   selector: "app-config-partie",
@@ -10,6 +11,7 @@ const REQUETE_INIT: string = "http://localhost:3000/grille";
 export class ConfigPartieComponent implements OnInit {
 
   private requete: string; // Changer pour une constante
+  private lesOptions: OptionPartie = new OptionPartie;
 
   public constructor(private serviceHTTP: HttpeReqService) {
     this.requete = REQUETE_INIT;
@@ -25,7 +27,9 @@ export class ConfigPartieComponent implements OnInit {
   }
 
   public modificationDeRequeteHTTP(): void {
-    this.serviceHTTP.modifierRequete(this.requete);
+    this.lesOptions.requete = this.requete;
+    console.log(this.lesOptions);
+    this.serviceHTTP.modifierRequete(this.lesOptions.requete);
   }
 
   public apparaitreSection(laSection: string): void {
@@ -41,9 +45,8 @@ export class ConfigPartieComponent implements OnInit {
   public ajouterDansRequete(ajout: string): void {
     if (ajout.length === 0) {
       return;
-    } else if (ajout[0] !== "/") {
-      return;
     }
+    this.lesOptions.difficulte = ajout;
     this.requete += ajout;
   }
 

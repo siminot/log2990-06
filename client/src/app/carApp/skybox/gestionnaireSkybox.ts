@@ -14,7 +14,7 @@ export class ConstructionSkybox {
     }
 }
 
-const SKYBOX: ConstructionSkybox[] = [
+export const SKYBOX: ConstructionSkybox[] = [
     new ConstructionSkybox(TempsJournee.Nuit, "nuit1", "grass4"),
     new ConstructionSkybox(TempsJournee.Nuit, "nuit2", "pave1"),
     new ConstructionSkybox(TempsJournee.Jour, "jour1", "grass2"),

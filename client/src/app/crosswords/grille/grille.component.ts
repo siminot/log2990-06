@@ -39,22 +39,22 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => { this.mots = mots; });
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => { this.mots = mots; console.log(this.mots); });
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
-      this.motSelectionne = motSelec;
-      this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
-      this.putDefaultStyleGrid();
+        this.motSelectionne = motSelec;
+        this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
+        this.putDefaultStyleGrid();
 
-      if (!this.motSelectionne.motTrouve) {
-        this.remplirLettresSelect();
-        this.miseEnEvidenceMot("red");
-        this.focusOnRightLetter();
-      }
+        if (!this.motSelectionne.motTrouve) {
+          this.remplirLettresSelect();
+          this.miseEnEvidenceMot("red");
+          this.focusOnRightLetter();
+        }
     });
   }
 
@@ -243,7 +243,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public retrieveWordFromClick(event: KeyboardEvent): void {
-
+    console.log(this.motSelectionne);
     // retrieve Id from the event
     const target: any = event.target || event.srcElement || event.currentTarget;
     const idAttr: any = target.attributes.id;
@@ -252,12 +252,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
     // coordonne X et Y de la case selectionne
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];
-    const motSousJacent: Word = this.findWordFromXY(x,y);
+    const motSousJacent: Word = this.findWordFromXY(x, y);
     this.motSelectionne = motSousJacent;
 
     this.envoieMotSelectionne();
-    this.focusOnRightLetter();
-
+    // this.focusOnRightLetter();
   }
 
   private findWordFromXY( X: number, Y: number): Word {

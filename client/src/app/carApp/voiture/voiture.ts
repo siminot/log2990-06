@@ -11,7 +11,7 @@ export const DEFAULT_DRAG_COEFFICIENT: number = 0.35;
 const MAXIMUM_STEERING_ANGLE: number = 0.25;
 const INITIAL_MODEL_ROTATION: Euler = new Euler(0, PI_OVER_2, 0);
 const INITIAL_WEIGHT_DISTRIBUTION: number = 0.5;
-const MINIMUM_SPEED: number = 0.05;
+const MINIMUM_SPEED: number = 0.2;
 const NUMBER_REAR_WHEELS: number = 2;
 const NUMBER_WHEELS: number = 4;
 
@@ -169,7 +169,7 @@ export class Voiture extends Object3D {
         this.engine.update(this._speed.length(), this.rearWheel.radius);
         this.weightRear = this.getWeightDistribution();
         this._speed.add(this.getDeltaSpeed(deltaTime));
-        this._speed.setLength(this._speed.length() <= MINIMUM_SPEED ? 0 : this._speed.length());
+        this._speed.setLength(this._speed.length() <= MINIMUM_SPEED && !this._isAcceleratorPressed ? 0 : this._speed.length());
         this.position.add(this.getDeltaPosition(deltaTime));
         this.rearWheel.update(this._speed.length());
     }

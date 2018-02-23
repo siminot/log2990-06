@@ -19,7 +19,7 @@ export class RequeteDeGrilleService {
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   private motSelectionneObservable$: Observable<Word> = this.motSelectionneSuject.asObservable();
 
-  public constructor() {
+  public constructor( private httpReq: HttpeReqService ) {
     this.matriceDesMotsSurGrille = this.genererGrille();
     this.httpReq.getWord().subscribe( (x) => {this.mots = x; this.serviceEnvoieMots(this.mots);
                                               this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille); this.putWordsInGrid(); });

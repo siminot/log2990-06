@@ -6,7 +6,7 @@ import { RAD_TO_DEG } from "../constants";
 export enum TempsJournee { Jour, Nuit }
 
 // Paysage
-const TAILLE_SKYBOX: number = 8192;
+export const TAILLE_SKYBOX: number = 8192;
 const RAPPOR_HAUTEUR_SOL: number = 25;
 const HAUTEUR_SOL: number = TAILLE_SKYBOX / RAPPOR_HAUTEUR_SOL;
 const NOMBRE_FACE_CUBE: number = 6;
@@ -16,7 +16,7 @@ const FORMAT: string = ".jpg";
 
 // Plancher
 const CHEMIN_TEXTURE: string = CHEMIN_PAYSAGE + "textures/";
-const TAILLE_REPETITION: number = 1024;
+export const TAILLE_REPETITION: number = 8192;
 
 // Lumière ambiante
 const COULEUR_LUMIERE_AMBIANTE: number = 0xFFFFFF;

@@ -31,7 +31,7 @@ export class DefinitionHComponent implements OnInit {
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
-    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect)=>{
+    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect) => {
       this.motSelectionne = motSelect;
       this.changementMotSelectionneFF(this.motSelectionne);
     });

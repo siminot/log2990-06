@@ -39,7 +39,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots;});
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots; });
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
@@ -246,7 +246,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     // coordonne X et Y de la case selectionne
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];
-    const motSousJacent: Word = this.findWordFromXY(x,y);
+    const motSousJacent: Word = this.findWordFromXY(x, y);
     this.motSelectionne = motSousJacent;
 
     this.envoieMotSelectionne();

@@ -63,7 +63,7 @@ describe("DefinitionComponent", () => {
       }
       expect(result).toEqual(expectedValues);
     });
-    it("Decouvrir les lettre dans la grille selon le mot selectionne", () => { 
+    it("Decouvrir les lettre dans la grille selon le mot selectionne", () => {
       component.decouvrirLettre(fakeWord);
       const expectedValues: boolean[] = [true, true, true, true];
       const result: boolean[] = [];
@@ -74,25 +74,25 @@ describe("DefinitionComponent", () => {
     }
       expect(result).toEqual(expectedValues);
   });
-    it('remettre toute les caseDecouverte a false', () => {
-      let matrice: Array<Array<LettreGrille>> = component.getMatrice();
+    it("remettre toute les caseDecouverte a false", () => {
+      const matrice: Array<Array<LettreGrille>> = component.getMatrice();
       matrice[0][0] = {
         caseDecouverte: true,
-        lettre: 'P',
+        lettre: "P",
         lettreDecouverte: true
       };
       // Après l'appel a la fonction la caseDecouverte devrait redevenir a false.
       component.cacherCases();
-      console.log(matrice[0][0])
+      console.log(matrice[0][0]);
 
       expect(matrice[0][0].caseDecouverte).toBeFalsy();
 });
 
-    it('Verifier le input de l/utilisateur', () => {
+    it("Verifier le input de l/utilisateur", () => {
       component.setMotSelectionne(realWordFromOurFakeList);
       component.verifierTentative(realWordFromOurFakeList.mot);
       const aVerifier: String = component.getReponse();
-      const verification: String = 'Bonne Reponse !';
+      const verification: String = "Bonne Reponse !";
       expect(aVerifier).toEqual(verification);
 });
 });

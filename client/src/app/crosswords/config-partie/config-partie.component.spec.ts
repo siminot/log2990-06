@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ConfigPartieComponent } from './config-partie.component';
+import { ConfigPartieComponent } from "./config-partie.component";
 
-describe('ConfigPartieComponent', () => {
+describe("ConfigPartieComponent", () => {
   let component: ConfigPartieComponent;
   let fixture: ComponentFixture<ConfigPartieComponent>;
 
@@ -19,7 +19,7 @@ describe('ConfigPartieComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

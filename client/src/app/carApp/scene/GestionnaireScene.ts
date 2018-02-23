@@ -1,20 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Scene, AxisHelper,
-    /*,GridHelper, DoubleSide, AmbientLight, SpotLight, Vector3, MeshBasicMaterial, PlaneGeometry, Mesh*/ } from "three";
+import { Scene } from "three";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
-
-/*
-// Grille
-const TAILLE_GRILLE: number = 1000;
-const DIVISION_GRILLE: number = 100;
-const COULEUR_GRAND_CARRE: number = 0x000000;
-const COULEUR_PETIT_CARRE: number = 0x00BFFF;
-*/
-
-// Axes
-const TAILLE_AXE: number = 1000;
 
 @Injectable()
 export class GestionnaireScene extends Scene {
@@ -41,8 +29,6 @@ export class GestionnaireScene extends Scene {
     }
 
     private initialiserEnvironnement(): void {
-        // this._scene.add(new GridHelper(TAILLE_GRILLE, DIVISION_GRILLE, COULEUR_GRAND_CARRE, COULEUR_PETIT_CARRE));
-        this.add(new AxisHelper(TAILLE_AXE));
         this.add(this.gestionnaireSkybox.skybox);
     }
 

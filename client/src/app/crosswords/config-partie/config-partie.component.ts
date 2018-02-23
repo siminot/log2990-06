@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-const REQUETE_INIT: string = "localhost:3000/grille";
+import {HttpeReqService} from "../httpRequest/http-request.service";
+const REQUETE_INIT: string = "http://localhost:3000/grille";
 
 @Component({
   selector: "app-config-partie",
@@ -10,7 +11,7 @@ export class ConfigPartieComponent implements OnInit {
 
   private requete: string; // Changer pour une constante
 
-  public constructor() {
+  public constructor(private serviceHTTP: HttpeReqService) {
     this.requete = REQUETE_INIT;
   }
 
@@ -21,6 +22,10 @@ export class ConfigPartieComponent implements OnInit {
 
   public get getRequete(): string {
     return this.requete;
+  }
+
+  public modificationDeRequeteHTTP(): void {
+    this.serviceHTTP.modifierRequete(this.requete);
   }
 
   public apparaitreSection(laSection: string): void {

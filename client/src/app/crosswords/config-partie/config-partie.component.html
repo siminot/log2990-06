@@ -11,17 +11,20 @@
       Partie en ligne</button>
   </div>
 
-  <div id="difficulte" >
+  <div id="difficulte">
     <button (click)="ajouterDansRequete('/facile')"
-      routerLink="/CrosswordsGame"
+    (click)="modificationDeRequeteHTTP()"
+    routerLink="/CrosswordsGame"
     >
       Facile</button>
-    <button (click)="ajouterDansRequete('/normal')" 
-      routerLink="/CrosswordsGame"
+    <button (click)="ajouterDansRequete('/normal')"
+    (click)="modificationDeRequeteHTTP()"
+    routerLink="/CrosswordsGame"
     >
       Normal</button>
     <button (click)="ajouterDansRequete('/difficile')"
-      routerLink="/CrosswordsGame"
+    (click)="modificationDeRequeteHTTP()"
+    routerLink="/CrosswordsGame"
     >
       Difficile</button>
   </div>

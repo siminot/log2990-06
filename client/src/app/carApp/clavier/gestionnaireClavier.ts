@@ -3,15 +3,15 @@ import { GestionnaireCamera } from "../camera/GestionnaireCamera";
 import { GestionnaireScene } from "../scene/GestionnaireScene";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 
-export const ACCELERATEUR: number = 87;            // w
-export const DIRECTION_GAUCHE: number = 65;        // a
-export const FREIN: number = 83;                   // s
-export const DIRECTION_DROITE: number = 68;        // d
-export const CHANGER_VUE: number = 86;             // v
-export const ZOOM_IN: number = 61;                 // =
-export const ZOOM_OUT: number = 173;               // -
-export const CHANGER_DECOR: number = 84;           // t
-export const CHANGER_HEURE_JOURNEE: number = 89;   // y
+export const ACCELERATEUR: string = "w";
+export const DIRECTION_GAUCHE: string = "a";
+export const FREIN: string = "s";
+export const DIRECTION_DROITE: string = "d";
+export const CHANGER_VUE: string = "v";
+export const ZOOM_IN: string = "=";
+export const ZOOM_OUT: string = "-";
+export const CHANGER_DECOR: string = "t";
+export const CHANGER_HEURE_JOURNEE: string = "y";
 
 @Injectable()
 export class GestionnaireClavier {
@@ -21,7 +21,7 @@ export class GestionnaireClavier {
                        private gestionnaireScene: GestionnaireScene) { }
 
     public toucheAppuyee(evenement: KeyboardEvent): void {
-        switch (evenement.keyCode) {
+        switch (evenement.key) {
             case ACCELERATEUR:
                 this.gestionnaireVoitures.voitureJoueur.accelerer();
                 break;
@@ -46,7 +46,7 @@ export class GestionnaireClavier {
     }
 
     public toucheRelevee(evenement: KeyboardEvent): void {
-        switch (evenement.keyCode) {
+        switch (evenement.key) {
             case ACCELERATEUR:
                 this.gestionnaireVoitures.voitureJoueur.relacherAccelerateur();
                 break;

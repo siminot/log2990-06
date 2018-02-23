@@ -44,12 +44,11 @@ describe("Service de rendu", () => {
     });
   });
 
-  // TODO: toHaveBeenCalled ne fonctionne pas encore
   describe("Initialisation", () => {
     it("Boucle de rendue partie", async () => {
       await serviceDeRendu.initialiser();
-      const fonctionRender: Function = serviceDeRendu["renderer"].render;
-      expect(fonctionRender).toHaveBeenCalled();
+      spyOn(serviceDeRendu["renderer"], "render");
+      expect(serviceDeRendu["renderer"].render).toHaveBeenCalled();
     });
   });
 

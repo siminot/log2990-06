@@ -2,7 +2,7 @@ import { GestionnaireScene } from "./GestionnaireScene";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 
-const NB_ENFANTS: number = 4;
+const NB_ENFANTS: number = 3;
 
 describe("GestionnaireScence", () => {
 

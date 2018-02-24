@@ -1,10 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-<<<<<<< HEAD
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { OptionPartie } from "./../../../../../common/communication/optionPartie";
 const REQUETE_INIT: string = "http://localhost:3000/grille/";
-=======
->>>>>>> develop
 
 @Component({
   selector: "app-config-partie",
@@ -13,7 +10,6 @@ const REQUETE_INIT: string = "http://localhost:3000/grille/";
 })
 export class ConfigPartieComponent implements OnInit {
 
-<<<<<<< HEAD
   private requete: string; // Changer pour une constante
   private lesOptions: OptionPartie = new OptionPartie;
 
@@ -51,11 +47,6 @@ export class ConfigPartieComponent implements OnInit {
     }
     this.lesOptions.difficulte = ajout;
     this.requete += ajout;
-=======
-  public constructor() { }
-
-  public ngOnInit(): void {
->>>>>>> develop
   }
 
 }

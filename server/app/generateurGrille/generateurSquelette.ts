@@ -45,7 +45,7 @@ export class MotSquelette {
         return this._verticalite;
     }
     public get index() {
-        return this._verticalite;
+        return this._index;
     }
 
 }
@@ -107,10 +107,11 @@ export class GenerateurSquelette {
     private estEmplacementValide(): boolean {
 
         let compteurMotsParalleles: Array<number>;
-        verticalite ? compteurMotsParalleles = this.compteurMotsParX : compteurMotsParalleles = this.compteurMotsParY;
+        this.motSquelette.verticalite ? compteurMotsParalleles = this.compteurMotsParX : compteurMotsParalleles = this.compteurMotsParY;
+        const index = this.motSquelette.index;
 
         if ( index === 0 || compteurMotsParalleles[index - 1] === 0) {
-            if (index === this.tailleGrille - 1 || compteurMotsParalleles[index + 1] === 0) {
+            if (this.motSquelette.index === this.tailleGrille - 1 || compteurMotsParalleles[index + 1] === 0) {
                 return true;
             }
         }
@@ -118,50 +119,33 @@ export class GenerateurSquelette {
         return false;
     }
 
-    private rajouterMotVide( longueurMot: number): boolean {
+    private rajouterMotSquelette(): void {
 
-                let nbMotsPourCetteLigne = compteurMotsParalleles[index];
+        let nbMotsPourCetteLigne: number;
+        this.motSquelette.verticalite ? nbMotsPourCetteLigne = this.compteurMotsParX[this.motSquelette.index]
+            : nbMotsPourCetteLigne = this.compteurMotsParY[this.motSquelette.index];
+        if (nbMotsPourCetteLigne === 0 ) {
+            this.rajouterMotSqueletteSurLigneVide();
+        } else if (nbMotsPourCetteLigne === 1) {
+            this.rajouterMotSqueletteSurLigneAvecUnMot();
+        } else {
+            return; // en attendant ca doit faire une erreur 2 mots max
+        }
+    }
 
-                if (nbMotsPourCetteLigne === 0) {
-                    if (verticalite) {
-                        for (let i = 0; i < longueurLigne; i++) {
-                            this.grille[i][index] = VIDE;
-                        }
-                    } else {
-                        for (let i = 0; i < longueurLigne; i++) {
-                            this.grille[index][i] = VIDE;
-                        }
-                    }
-                    nbMotsPourCetteLigne++;
+    private rajouterMotSqueletteSurLigneVide(): void {
 
-                } else if (nbMotsPourCetteLigne === 1) {
-                    if (verticalite) {
-                        let i = 0;
-                        while (this.grille[i][index] === VIDE) {
-                            i++;
-                        }
-                        // Faire attention on peut depasser la grille
-                        while (i < longueurLigne) {
-                            this.grille[i][index] = VIDE;
-                            i++;
-                        }
-                    } else {
-                        let i = 0;
-                        while (this.grille[index][i] === VIDE) {
-                            i++;
-                        }
-                        // Faire attention on peut depasser la grille
-                        while (i < longueurLigne) {
-                            this.grille[index][i] = VIDE;
-                            i++;
-
-                    }
-                } else {
-
-                }
+        if (this.motSquelette.verticalite) {
+            for (let i = 0; i < this.motSquelette.longueur; i++) {
+                this.grille[i][this.motSquelette.index] = VIDE;
+                this.compteurMotsParX[this.motSquelette.index]++;
+            }
+        } else {
+            for (let i = 0; i < this.motSquelette.longueur; i++) {
+                this.grille[this.motSquelette.index][i] = VIDE;
+                this.compteurMotsParY[this.motSquelette.index]++;
             }
         }
-        return false;
     }
 
     private genererMotifInitial(): void {
@@ -170,6 +154,30 @@ export class GenerateurSquelette {
             for (let j = 1; j < this.tailleGrille; j += PAS) {
                 this.grille[i][j] = NOIR;
                 this.compteurCasesNoires++;
+            }
+        }
+    }
+
+    private rajouterMotSqueletteSurLigneAvecUnMot(): void {
+        if (verticalite) {
+            let i = 0;
+            while (this.grille[i][index] === VIDE) {
+                i++;
+            }
+            // Faire attention on peut depasser la grille
+            while (i < longueurLigne) {
+                this.grille[i][index] = VIDE;
+                i++;
+            }
+        } else {
+            let i = 0;
+            while (this.grille[index][i] === VIDE) {
+                i++;
+            }
+            // Faire attention on peut depasser la grille
+            while (i < longueurLigne) {
+                this.grille[index][i] = VIDE;
+                i++;
             }
         }
     }

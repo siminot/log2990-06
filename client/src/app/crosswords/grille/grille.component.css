@@ -23,13 +23,13 @@
     height: 40px;
     border: 1px solid black;
     overflow: hidden;
-    border-radius: 3px;
+    border-radius: 5px;
     position: relative;
 }
 
 .table {
     line-height:0;
-    border-spacing:1px;
+    border-spacing:3px;
 }
 
 .indicesHorizontals {

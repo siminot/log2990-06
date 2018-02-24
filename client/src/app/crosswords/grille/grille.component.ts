@@ -39,7 +39,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => { this.mots = mots; });
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => { this.mots = mots; console.log(this.mots);});
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
@@ -66,6 +66,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
       uneCase.style.borderTopColor = "black";
       uneCase.style.borderLeftColor = "black";
       uneCase.style.borderRightColor = "black";
+      uneCase.style.borderBottomWidth = "1px";
+      uneCase.style.borderTopWidth = "1px";
+      uneCase.style.borderLeftWidth = "1px";
+      uneCase.style.borderRightWidth = "1px";
     }
   }
 
@@ -96,20 +100,20 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
       if (!this.motSelectionne.estVertical) {   // Wrong side. Horizontal et vertical inversé.
         if (i === 0) {                                         // Premiere case.
-          uneCase.style.borderTopColor = couleur;
+          uneCase.style.borderTopColor = couleur; uneCase.style.borderTopWidth = "2px";
         } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderBottomColor = couleur;
+          uneCase.style.borderBottomColor = couleur; uneCase.style.borderBottomWidth = "2px";
         }                                                     // Toutes les cases.
-        uneCase.style.borderRightColor = couleur;
-        uneCase.style.borderLeftColor = couleur;
+        uneCase.style.borderRightColor = couleur; uneCase.style.borderRightWidth = "2px";
+        uneCase.style.borderLeftColor = couleur; uneCase.style.borderLeftWidth = "2px";
       } else {
         if (i === 0) {                                        // Premiere case.
-          uneCase.style.borderLeftColor = couleur;
+          uneCase.style.borderLeftColor = couleur; uneCase.style.borderLeftWidth = "2px";
         } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderRightColor = couleur;
+          uneCase.style.borderRightColor = couleur; uneCase.style.borderRightWidth = "2px";
         }                                                     // Toutes les cases du mot.
-        uneCase.style.borderTopColor = couleur;
-        uneCase.style.borderBottomColor = couleur;
+        uneCase.style.borderTopColor = couleur; uneCase.style.borderTopWidth = "2px";
+        uneCase.style.borderBottomColor = couleur; uneCase.style.borderBottomWidth = "2px";
       }
     }
   }
@@ -162,7 +166,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     if (valid) {
       this.motSelectionne.motTrouve = true;
-      this.lockLettersFromWord(this.motSelectionne);
+      this.lockLettersFromWord();
       this.miseEnEvidenceMot("green");
       this.removeFocusFromSelectedWord();
     }
@@ -175,12 +179,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
     elem.blur();
   }
 
-  private lockLettersFromWord(word: Word): void {
-    for (let i: number = 0 ; i < word.longeur ; i++) {
-      if (word.estVertical) {
-        this.lockedLetter[word.premierX][word.premierY + i] = true;
+  private lockLettersFromWord(): void {
+    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+      if (this.motSelectionne.estVertical) {
+        this.lockedLetter[this.motSelectionne.premierX][this.motSelectionne.premierY + i] = true;
       } else {
-        this.lockedLetter[word.premierX + i][word.premierY] = true;
+        this.lockedLetter[this.motSelectionne.premierX + i][this.motSelectionne.premierY] = true;
       }
     }
   }

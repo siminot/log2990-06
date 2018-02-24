@@ -1,3 +1,7 @@
+/*
+    Tests des routes.
+    Le serveur doit être en marche pour que les tests fonctionnent.
+*/
 import * as assert from "assert";
 import { RouteServiceLexical } from "./routeServiceLexical";
 import { ServiceLexical } from "./ServiceLexical";
@@ -10,7 +14,6 @@ const ROUTE: ServiceWeb = new RouteServiceLexical(SERVICE);
 
 const URL_SERVICE_LEXICAL: string = "http://localhost:3000" + ROUTE.mainRoute;
 const URL_DEFINITION = "/def/";
-const URL_LONGUEUR = "/longueur/";
 const URL_COMMUN = "/commun";
 const URL_NONCOMMUN = "/noncommun";
 const URL_CONTRAINTE = "/contrainte/";
@@ -24,73 +27,65 @@ const URL_CONTRAINTE = "/contrainte/";
             });
         });
 
-        describe("Accéder aux routes", () => {
-            const CONTRAINTE = "t__";
-            const LONGUEUR = 4;
+        describe("Accéder aux routes (serveur doit rouler pour que ca fonctionne)", () => {
+            const CONTRAINTES = ["t__", "_r_b_", "__ws", "g____r___", "h____r__"];
+            const CONTRAINTE_IMPOSSIBLE = "dwz__";
 
-            it("/commun/contrainte/:contrainte doit retourner un tableau de mots", () => {
-                const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_CONTRAINTE + CONTRAINTE;
-                let mots: Mot[] = [];
-
-                WebRequest.json<Mot[]>(URL_TEST).then(async (data: Mot[]) => {
-                    await data;
-                    mots = data;
-                }).catch();
-
-                assert.notEqual(mots.length, 0);
+            describe("/commun/contrainte/:contrainte", () => {
+                for (const CONTRAINTE of CONTRAINTES) {
+                    it("Doit retourner un tableau non-vide " + CONTRAINTE, async () => {
+                        const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_CONTRAINTE + CONTRAINTE;
+                        const mots = await WebRequest.json<Mot[]>(URL_TEST);
+                        assert.notEqual(mots.length, 0);
+                    });
+                    it("Doit retourner des mots ayant des definitions " + CONTRAINTE, async () => {
+                        const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_CONTRAINTE + CONTRAINTE;
+                        const mots = await WebRequest.json<Mot[]>(URL_TEST);
+                        for (const MOT of mots) {
+                        assert.notEqual(MOT.definitions.length, 0);
+                        }
+                    });
+                }
             });
 
-            it("/noncommun/contrainte/:contrainte doit retourner un tableau de mots", () => {
-                const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_CONTRAINTE + CONTRAINTE;
+            describe("/noncommun/contrainte/:contrainte", () => {
 
-                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
-                    assert.notEqual(data.length, 0);
-                });
-            });
+                for (const CONTRAINTE of CONTRAINTES) {
+                    it("Doit retourner un tableau non-vide " + CONTRAINTE, async () => {
+                        const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_CONTRAINTE + CONTRAINTE;
+                        const mots = await WebRequest.json<Mot[]>(URL_TEST);
+                        assert.notEqual(mots.length, 0);
+                    });
+                    it("Doit retourner des mots ayant des definitions " + CONTRAINTE, async () => {
+                        const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_CONTRAINTE + CONTRAINTE;
+                        const mots = await WebRequest.json<Mot[]>(URL_TEST);
+                        for (const MOT of mots) {
+                        assert.notEqual(MOT.definitions.length, 0);
+                        }
+                    });
+                }
 
-            it("/noncommun/longueur/:longueur doit retourner un tableau de mots", () => {
-                const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_LONGUEUR + LONGUEUR;
-
-                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
-                    assert.notEqual(data.length, 0);
-                });
-            });
-
-            it("/commun/longueur/:longueur doit retourner un tableau de mots", () => {
-                const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_LONGUEUR + LONGUEUR;
-
-                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
-                    assert.notEqual(data.length, 0);
-                });
-            });
-
-            it("/def/:mot doit retourner un tableau de mots", () => {
-                const MOT = "test";
-                const URL_TEST: string = URL_SERVICE_LEXICAL + URL_DEFINITION + MOT;
-
-                WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
-                    assert.equal(data.length, 1);
+                it("Erreur si aucun mot ne satisfait a la requete", async () => {
+                    const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_CONTRAINTE + CONTRAINTE_IMPOSSIBLE;
+                    const data = await WebRequest.json<Mot[]>(URL_TEST);
+                    assert.equal(data, null);
                 });
             });
 
             describe("Test de la validite des contraintes", () => {
 
-                it("Contrainte invalide ne doit pas retourner un tableau", () => {
+                it("Contrainte invalide doit retourner une erreur", async () => {
                     const MOT_TEST = "a+()";
                     const URL_TEST: string = URL_SERVICE_LEXICAL + URL_NONCOMMUN + URL_CONTRAINTE + MOT_TEST;
-
-                    WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
-                        assert.equal(data, undefined);
-                    });
+                    const mots = await WebRequest.json<Mot[]>(URL_TEST);
+                    assert.equal(mots[0], undefined);
                 });
 
-                it("Longueur invalide ne doit pas retourner un tableau", () => {
-                    const LONGUEUR_TEST = "abcd";
-                    const URL_TEST: string = URL_SERVICE_LEXICAL + URL_COMMUN + URL_LONGUEUR + LONGUEUR_TEST;
-
-                    WebRequest.json<Mot[]>(URL_TEST).then((data: Mot[]) => {
-                        assert.equal(data, undefined);
-                    });
+                it("Mot invalide doit retourner une erreur", async () => {
+                    const MOT_TEST = "abc4";
+                    const URL_TEST: string = URL_SERVICE_LEXICAL + URL_DEFINITION + MOT_TEST;
+                    const data = await WebRequest.json<Mot>(URL_TEST);
+                    assert.equal(data[0], undefined);
                 });
             });
         });

@@ -1,2 +1,5 @@
-export const TAILLE_TABLEAU = 4;
-export const DIX_POURCENT = 4;
+export const TAILLE_TABLEAU: number = 10;
+export const DIX_POURCENT: number = 4;
+export const KEYCODE_MIN: number = 65;
+export const KEYCODE_MAX: number = 90;
+export const DIZAINE: number = 10;

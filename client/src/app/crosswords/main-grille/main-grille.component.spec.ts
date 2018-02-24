@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { MainGrilleComponent } from './main-grille.component';
+import { MainGrilleComponent } from "./main-grille.component";
 
-describe('MainGrilleComponent', () => {
+describe("MainGrilleComponent", () => {
   let component: MainGrilleComponent;
   let fixture: ComponentFixture<MainGrilleComponent>;
 
@@ -18,8 +18,4 @@ describe('MainGrilleComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
 });

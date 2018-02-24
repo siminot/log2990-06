@@ -8,6 +8,7 @@ export class Mockword {
     private premierY: number;
     private estTraite: boolean;
 
+
     constructor(estVertical : boolean, longueur: number, premierX: number, premierY: number){
         this.mot = "";
         this.definition = "";
@@ -16,6 +17,7 @@ export class Mockword {
         this.premierX = premierX;
         this.premierY = premierY;
         this.estTraite = false;
+
     }
     // getters 
     getVertical(): boolean{
@@ -57,6 +59,12 @@ export class Mockword {
 
     setEstTraite(etat: boolean){
         this.estTraite = etat;
+    }
+
+    public inverserXY(): void {
+        const temp = this.premierX;
+        this.premierX = this .premierY;
+        this.premierY = temp;
     }
 
     // autre

@@ -2,8 +2,9 @@
     height:100vh;
     width:100vw;
     display:grid;
-    grid-template-columns: [C1] 20% [C2] 60% [C3] 20% [C4];
-    grid-template-rows: [R1] 50% [R2] 50% [R3];
+    
+    grid-template-columns: [C1] 20% [C2] 20% [C3] 60% [C4];
+    grid-template-rows: [R1] 20% [R2] 80% [R3];
 }
 
 .indiceVertical {
@@ -15,7 +16,7 @@
     grid-row-end: R3;
 }
 
-.Grille {
+.indiceHorizontal {
     grid-column-start: C2;
     /* autoprefixer: off */
     grid-column-end: C3;
@@ -24,7 +25,16 @@
     grid-row-end: R3;
 }
 
-.Player1 {
+.Grille {
+    grid-column-start: C3;
+    /* autoprefixer: off */
+    grid-column-end: C4;
+    grid-row-start: R2;
+    /* autoprefixer: off */
+    grid-row-end: R3;
+}
+
+.PlayerInfo {
     grid-column-start: C3;
     /* autoprefixer: off */
     grid-column-end: C4;
@@ -33,15 +43,6 @@
     grid-row-end: R2;
 }
 
-
-.Player2 {
-    grid-column-start: C3;
-    /* autoprefixer: off */
-    grid-column-end: C4;
-    grid-row-start: R2;
-    /* autoprefixer: off */
-    grid-row-end: R3;
-}
 
 .item {
     border: dashed 2px;

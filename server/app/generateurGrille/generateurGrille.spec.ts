@@ -1,21 +1,21 @@
-// import { GenerateurGrille } from "./generateurGrille";
-import * as assert from "assert";
+// // import { GenerateurGrille } from "./generateurGrille";
+// import * as assert from "assert";
 
-{
+// {
 
-    // const genTest: GenerateurGrille = new GenerateurGrille();
+//     // const genTest: GenerateurGrille = new GenerateurGrille();
 
-    describe("Tests GenerateurGrille", () => {
+//     describe("Tests GenerateurGrille", () => {
 
-        describe("- tests de l'interface", () => {
+//         describe("- tests de l'interface", () => {
 
-            it("- templateTest", (done) => {
-                assert(true);
-                done();
-            });
+//             it("- templateTest", (done) => {
+//                 assert(true);
+//                 done();
+//             });
 
-        });
+//         });
 
-    });
+//     });
 
-}
+// }

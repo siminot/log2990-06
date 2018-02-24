@@ -165,8 +165,9 @@ export class GenerateurSquelette {
     }
 
     private genererMotifInitial(): void {
-        for (let i = 1; i < this.tailleGrille; i += 2) {
-            for (let j = 1; j < this.tailleGrille; j += 2) {
+        const PAS = 2;
+        for (let i = 1; i < this.tailleGrille; i += PAS) {
+            for (let j = 1; j < this.tailleGrille; j += PAS) {
                 this.grille[i][j] = NOIR;
                 this.compteurCasesNoires++;
             }

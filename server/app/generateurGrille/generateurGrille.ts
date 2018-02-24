@@ -141,7 +141,7 @@ module Route {
             return indiceDuMax;
         }
 
-        private demanderMot(mot: Mockword): Promise<Mot[]> {
+        private async demanderMot(mot: Mockword): Promise<Mot[]> {
 
             let url: string;
             switch (this.optionsPartie.niveau) {
@@ -196,7 +196,7 @@ module Route {
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initMatrice();
             // this.initListeMot();
-            this.remplirLaGrilleDeMots();
+            this.remplirLaGrilleDeMots().catch(() => new Error("Erreur de remplissage de la grille"));
             res.send(JSON.stringify(this.grille));
         }
 
@@ -221,6 +221,7 @@ module Route {
 
             this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
             await this.remplirLaGrilleDeMots();
+            // this.inverserXYMots();
 
             res.send(this.listeMot);
         }
@@ -228,6 +229,12 @@ module Route {
         public getMots(req: Request, res: Response, next: NextFunction): void {
             res.send(this.listeMot);
         }
+
+        // private inverserXYMots(): void {
+        //     for (const unMot of this.listeMot) {
+        //         unMot.inverserXY();
+        //     }
+        // }
 
         /* FONCTION BIDON POUR TESTER DES CHOSES */
         public afficheDifficile(req: Request, res: Response, next: NextFunction): void {

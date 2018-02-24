@@ -3,12 +3,18 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
-import { BasicService } from "./basic.service";
-import { AppRoutingModule } from ".//app-routing.module";
-
 import { GameComponent } from "./carApp/game-component/game.component";
-import { RenderService } from "./carApp/render-service/render.service";
-import {HttpeReqService} from "./crosswords/httpRequest/http-request.service";
+
+import { ServiceDeRendu } from "./carApp/serviceDeRendu/serviceDeRendu";
+import { GestionnaireScene } from "./carApp/scene/GestionnaireScene";
+import { GestionnaireCamera } from "./carApp/camera/GestionnaireCamera";
+import { GestionnaireSkybox } from "./carApp/skybox/gestionnaireSkybox";
+import { GestionnaireVoitures } from "./carApp/voiture/gestionnaireVoitures";
+import { GestionnaireClavier } from "./carApp/clavier/gestionnaireClavier";
+import { GestionnaireEcran } from "./carApp/ecran/gestionnaireEcran";
+
+import { AppRoutingModule } from ".//app-routing.module";
+import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
 
 import { DefinitionHComponent} from "./crosswords/definitionH/definitionH.component";
 import { DefinitionVComponent} from "./crosswords/definitionV/definitionV.component";
@@ -37,8 +43,13 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         AppRoutingModule
     ],
     providers: [
-        RenderService,
-        BasicService,
+        ServiceDeRendu,
+        GestionnaireScene,
+        GestionnaireCamera,
+        GestionnaireSkybox,
+        GestionnaireVoitures,
+        GestionnaireClavier,
+        GestionnaireEcran,
         RequeteDeGrilleService,
         HttpeReqService
     ],

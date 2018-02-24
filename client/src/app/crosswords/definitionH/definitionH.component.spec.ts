@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DefinitioHComponent } from "./definitio-h.component";
+import { DefinitionHComponent } from "./definitionH.component";
 
 describe("DefinitioHComponent", () => {
-  let component: DefinitioHComponent;
-  let fixture: ComponentFixture<DefinitioHComponent>;
+  let component: DefinitionHComponent;
+  let fixture: ComponentFixture<DefinitionHComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DefinitioHComponent ]
+      declarations: [ DefinitionHComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DefinitioHComponent);
+    fixture = TestBed.createComponent(DefinitionHComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

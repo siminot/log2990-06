@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, HostListener } from "@angular/core";
-import { RenderService } from "../render-service/render.service";
-import { Car } from "../car/car";
+import { ServiceDeRendu } from "../serviceDeRendu/serviceDeRendu";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 
 @Component({
     moduleId: module.id,
@@ -14,31 +15,32 @@ export class GameComponent implements AfterViewInit {
     @ViewChild("container")
     private containerRef: ElementRef;
 
-    public constructor(private renderService: RenderService) { }
-
-    @HostListener("window:resize", ["$event"])
-    public onResize(): void {
-        this.renderService.onResize();
-    }
-
-    @HostListener("window:keydown", ["$event"])
-    public onKeyDown(event: KeyboardEvent): void {
-        this.renderService.handleKeyDown(event);
-    }
-
-    @HostListener("window:keyup", ["$event"])
-    public onKeyUp(event: KeyboardEvent): void {
-        this.renderService.handleKeyUp(event);
-    }
+    public constructor(private serviceDeRendu: ServiceDeRendu,
+                       private gestionnaireClavier: GestionnaireClavier,
+                       private gestionnaireEcran: GestionnaireEcran) { }
 
     public ngAfterViewInit(): void {
-        this.renderService
-            .initialize(this.containerRef.nativeElement)
+        this.gestionnaireEcran.initialiserConteneur(this.containerRef.nativeElement);
+        this.serviceDeRendu
+            .initialiser()
             .then(/* do nothing */)
             .catch((err) => console.error(err));
     }
 
-    public get car(): Car {
-        return this.renderService.car;
+    // Gestion des évènements
+
+    @HostListener("window:resize", ["$event"])
+    public redimensionnement(): void {
+        this.serviceDeRendu.redimensionnement();
+    }
+
+    @HostListener("window:keydown", ["$event"])
+    public toucheAppuyee(evenement: KeyboardEvent): void {
+        this.gestionnaireClavier.toucheAppuyee(evenement);
+    }
+
+    @HostListener("window:keyup", ["$event"])
+    public toucheRelevee(evenement: KeyboardEvent): void {
+        this.gestionnaireClavier.toucheRelevee(evenement);
     }
 }

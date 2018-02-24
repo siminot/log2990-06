@@ -1,6 +1,7 @@
 import { VIDE, NOIR, TAILLE_TABLEAU } from "./constantes";
 const NB_MOTS = 15;
 const CENT_POURCENT = 100;
+const DEUX = 2;
 
 export class MotSquelette {
     private _longueur: number;
@@ -98,11 +99,10 @@ export class GenerateurSquelette {
         for ( let i = 0; i < NB_MOTS; i++) {
             this.motSquelette = new MotSquelette();
             if (this.estEmplacementValide()) {
-
+                this.rajouterMotSquelette();
             }
         }
     }
-
 
     private estEmplacementValide(): boolean {
 
@@ -112,7 +112,9 @@ export class GenerateurSquelette {
 
         if ( index === 0 || compteurMotsParalleles[index - 1] === 0) {
             if (this.motSquelette.index === this.tailleGrille - 1 || compteurMotsParalleles[index + 1] === 0) {
-                return true;
+                if (compteurMotsParalleles[index] < DEUX) {
+                    return true;
+                }
             }
         }
 
@@ -158,27 +160,30 @@ export class GenerateurSquelette {
         }
     }
 
-    private rajouterMotSqueletteSurLigneAvecUnMot(): void {
-        if (verticalite) {
+    private rajouterMotSqueletteSurLigneAvecUnMot(): void { // TODO:cette fonction a plein de bugs
+        if (this.motSquelette.verticalite) {
             let i = 0;
-            while (this.grille[i][index] === VIDE) {
+            while (this.grille[i][this.motSquelette.index] === VIDE) {
                 i++;
             }
             // Faire attention on peut depasser la grille
-            while (i < longueurLigne) {
-                this.grille[i][index] = VIDE;
+            i++;
+            while (i < this.motSquelette.longueur) {
+                this.grille[i][this.motSquelette.index] = VIDE;
                 i++;
             }
+            this.compteurMotsParX[this.motSquelette.index]++;
         } else {
             let i = 0;
-            while (this.grille[index][i] === VIDE) {
+            while (this.grille[this.motSquelette.index][i] === VIDE) {
                 i++;
             }
             // Faire attention on peut depasser la grille
-            while (i < longueurLigne) {
-                this.grille[index][i] = VIDE;
+            while (i < this.motSquelette.longueur) {
+                this.grille[this.motSquelette.index][i] = VIDE;
                 i++;
             }
+            this.compteurMotsParY[this.motSquelette.index]++;
         }
     }
 

@@ -48,7 +48,6 @@ export class Mockword {
         return this.estTraite;
     }
 
-
     // setters
     setMot(mot: string){
         this.mot = mot;

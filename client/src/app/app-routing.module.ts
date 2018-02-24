@@ -4,10 +4,12 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { GameComponent } from "./carApp/game-component/game.component";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
+import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 
 const routes: Routes = [
   { path: "CarGame", component: GameComponent },
-  { path: "CrosswordsGame", component: MainGrilleComponent }
+  { path: "CrosswordsGame", component: MainGrilleComponent },
+  { path: "ConfigPartie", component: ConfigPartieComponent}
 ];
 
 @NgModule({

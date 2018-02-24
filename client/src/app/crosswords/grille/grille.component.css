@@ -1,5 +1,6 @@
 .grille {
     margin: 12% 12%;
+    position: sticky;
     overflow: hidden;
     position: relative;
 }

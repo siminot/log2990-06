@@ -226,10 +226,6 @@ module Route {
             res.send(this.listeMot);
         }
 
-        public getMots(req: Request, res: Response, next: NextFunction): void {
-            res.send(this.listeMot);
-        }
-
         // private inverserXYMots(): void {
         //     for (const unMot of this.listeMot) {
         //         unMot.inverserXY();

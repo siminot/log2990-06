@@ -195,7 +195,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.lockLettersFromWord();
       this.miseEvidenceMot("green");
       this.removeFocusFromSelectedWord();
-      this.change.emit(true);
     }
 
     return valid;

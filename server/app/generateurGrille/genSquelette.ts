@@ -7,8 +7,8 @@ export class GenSquelette {
     constructor() {
         this.grille = new Array<Array<string>>();
         this.initGrille();
-        // TEMPORAIRE POUR COMPILATION
-        this.probabiliterDeContinuerMot(0, 0);
+        // Pour Compil serveur
+        this.trouverIndexFinDeMot(0);
     }
 
     private initGrille(): void {
@@ -19,27 +19,25 @@ export class GenSquelette {
     }
 
     // Retourne l'indice ou le mot se termine
-    // private genererEspaceMot(indiceDep: number): number {
+    private trouverIndexFinDeMot(indiceDep: number): number {
+        if (this.indicePasDansGrille(indiceDep)) {
+            return -1;
+        }
+        let indice = 0;
 
-    //     let indice = 0;
+        while (this.probabiliterDeContinuerMot(indice, indiceDep)) {
+            indice++;
+        }
 
-    //     while (this.probabiliterDeContinuerMot(indice, indiceDep)) {
-    //         indice++;
-    //     }
-
-    //     // for (let i = 0; i < (TAILLE_TABLEAU - indiceDep); i++) {
-    //     //     if (this.probabiliterDeContinuerMot(i, indiceDep)) {
-
-    //     //     }
-    //     // }
-
-    //     return 0;
-    // }
+        return indice + indiceDep;
+    }
 
     // TESTER QUAND ON VA AVOIR UNE BONNE HEURISTIQUE
     private probabiliterDeContinuerMot(indice: number, indiceDep: number): boolean {
-        if (this.indicePasDansGrille(indice) || this.indicePasDansGrille(indiceDep)) {
+        if (this.indicePasDansGrille(indice + indiceDep)) {
             return false;
+        } else if (indice <= 2) {
+            return true;
         }
 
         const prob = 1 - indice / (HEURISTIQUE_LNG_MOT * (TAILLE_TABLEAU - indiceDep));
@@ -50,7 +48,7 @@ export class GenSquelette {
     private indicePasDansGrille(indice: number): boolean {
         if (indice < 0) {
             return true;
-        } else if (indice >= TAILLE_TABLEAU) {
+        } else if (indice >= TAILLE_TABLEAU - 1) {
             return true;
         }
 

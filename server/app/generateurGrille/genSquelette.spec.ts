@@ -60,6 +60,42 @@ import * as assert from "assert";
             });
         });
 
+        describe("Test trouverIndexFinDeMot", () => {
+
+            it("Retourne -1 si param est neg", (done) => {
+                assert.equal(-1, monGen["trouverIndexFinDeMot"](-1));
+                done();
+            });
+
+            it("Retourne -1 si param est > TAILLE", (done) => {
+                assert.equal(-1, monGen["trouverIndexFinDeMot"](lesConst.TAILLE_TABLEAU));
+                done();
+            });
+
+            let flagVerif = false;
+            if (monGen["trouverIndexFinDeMot"](0) < lesConst.TAILLE_TABLEAU ||
+                monGen["trouverIndexFinDeMot"](0) >= 0) {
+                flagVerif = true;
+            }
+
+            it("devrait toujours etre entre indice (+2) en param et TAILLE_TABLEAU", (done) => {
+                assert.equal(true, flagVerif);
+                done();
+            });
+
+            flagVerif = false;
+            if (monGen["trouverIndexFinDeMot"](indiceBidon) < lesConst.TAILLE_TABLEAU ||
+                monGen["trouverIndexFinDeMot"](indiceBidon) >= indiceBidon) {
+                flagVerif = true;
+            }
+
+            it("devrait toujours etre entre indice (+2) en param et TAILLE_TABLEAU", (done) => {
+                assert.equal(true, flagVerif);
+                done();
+            });
+
+        });
+
     });
 
 }

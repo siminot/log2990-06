@@ -4,7 +4,6 @@ import * as assert from "assert";
 
 {
     // tslint:disable: no-magic-numbers
-
     const genListeTest: GenerateurListeMots = new GenerateurListeMots();
 
     const uneGrille =  [["_", "_", "_", "_", "_"],
@@ -27,7 +26,6 @@ import * as assert from "assert";
                 assert.ok(genListeTest.donnerUneListe(uneGrille));
                 done();
             });
-
         });
         describe("- Tests pour une grille quelconque", () => {
 
@@ -114,10 +112,7 @@ import * as assert from "assert";
                 assert(compteur === 0);
                 done();
             });
-
-
         });
-
     });
 
 }

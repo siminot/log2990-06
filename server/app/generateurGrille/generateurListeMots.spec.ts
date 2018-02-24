@@ -19,9 +19,9 @@ import * as assert from "assert";
 
         describe("- tests generation des mots", () => {
 
-            const QUATRE = 4;
             it("- Le constructeur du mot devrait fonctionner", (done) => {
-                assert.ok(new Mockword(false, QUATRE, 0, 0), "Le constructeur cause une erreur");
+                const LONGUEUR_MOT = 4;
+                assert.ok(new Mockword(false, LONGUEUR_MOT, 0, 0), "Le constructeur cause une erreur");
                 done();
             });
 

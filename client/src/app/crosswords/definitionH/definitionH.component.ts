@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-// import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
+import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Subscription } from "rxjs/Subscription";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, LettreGrille } from "../mockObject/word";
@@ -9,7 +9,7 @@ import { Word, LettreGrille } from "../mockObject/word";
   templateUrl: "./definitionH.component.html",
   styleUrls: ["./definitionH.component.css"]
 })
-export class DefinitionHComponent implements OnInit {
+export class DefinitionHComponent implements OnInit, OnDestroy {
 
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;

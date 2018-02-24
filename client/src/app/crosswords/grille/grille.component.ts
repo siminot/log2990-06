@@ -52,7 +52,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
         if (!this.motSelectionne.motTrouve) {
           this.remplirLettresSelect();
-          this.miseEnEvidenceMot();
+          this.highlightWord();
           this.focusOnRightLetter();
         }
     });
@@ -105,26 +105,26 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private miseEnEvidenceMot(): void {
+  private highlightWord(): void {
     let uneCase: HTMLElement, idTmp: string, n: number;
 
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
       n = +idTmp[0] * CONST.DIZAINE + +idTmp[1];
       uneCase = document.getElementsByTagName("td")[n];
-      this.miseEnEvidenceLettre(uneCase, i);
+      this.highlightLetter(uneCase, i);
     }
   }
 
-  private miseEnEvidenceLettre(box: HTMLElement, position: number): void {
+  private highlightLetter(box: HTMLElement, position: number): void {
     if (!this.motSelectionne.estVertical) {
-      this.miseEnEvidenceLettreNonVertical(box, position);
+      this.highlightNonVerticalLetter(box, position);
     } else {
-      this.miseEnEvidenceLettreVertical(box, position);
+      this.highlightVerticalLetter(box, position);
     }
   }
 
-  private miseEnEvidenceLettreNonVertical(box: HTMLElement, position: number): void {
+  private highlightNonVerticalLetter(box: HTMLElement, position: number): void {
     if (position === 0) {
       this.applyTopBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
     } else if (position === this.motSelectionne.longeur - 1) {
@@ -134,7 +134,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.applyRightBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
   }
 
-  private miseEnEvidenceLettreVertical(box: HTMLElement, position: number): void {
+  private highlightVerticalLetter(box: HTMLElement, position: number): void {
     if (position === 0) {
       this.applyLeftBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
     } else if (position === this.motSelectionne.longeur - 1) {

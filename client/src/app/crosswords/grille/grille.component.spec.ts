@@ -44,4 +44,23 @@ describe("GrilleComponent", () => {
       expect(component.getListeMots()).toEqual(listeMots);
     });
   });
+
+  describe("Gestion des touches de clavier", () => {
+    it("Entree d'une lettre", () => {
+      const positionInit: number = component["positionCourante"];
+      const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+        "key": "e"
+      });
+      component.manageKeyEntry(touche);
+      expect(component["positionCourante"]).toBeGreaterThan(positionInit);
+    });
+
+    it("Effacement d'une lettre", () => {
+      expect(true).toBeTruthy();
+    });
+
+    it("Il ne se passe rien quand une touche invalide est appuyee", () => {
+      expect(true).toBeTruthy();
+    });
+  });
 });

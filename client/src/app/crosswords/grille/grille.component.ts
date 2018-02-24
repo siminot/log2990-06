@@ -63,12 +63,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
     for (let n: number = 0 ; n < CONST.TAILLE_TABLEAU * CONST.TAILLE_TABLEAU ; n++) {
       uneCase = document.getElementsByTagName("td")[n];
       this.applyTopBorderToBox(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_SIZE);
-      uneCase.style.borderLeftColor = "black";
-      uneCase.style.borderRightColor = "black";
-      uneCase.style.borderBottomWidth = "1px";
-      uneCase.style.borderTopWidth = "1px";
-      uneCase.style.borderLeftWidth = "1px";
-      uneCase.style.borderRightWidth = "1px";
+      this.applyBottomBorderToBox(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_SIZE);
+      this.applyLeftBorderToBox(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_SIZE);
+      this.applyRightBorderToBox(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_SIZE);
     }
   }
 
@@ -109,9 +106,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private miseEnEvidenceMot(couleur: string): void {
-    let uneCase: HTMLElement;
-    let idTmp: string;
-    let n: number;
+    let uneCase: HTMLElement, idTmp: string, n: number;
+    
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
       n = +idTmp[0] * CONST.DIZAINE + +idTmp[1];

@@ -9,7 +9,6 @@ import { FormatteurDeMots } from "./FormatteurDeMots";
 import { MessagerAPI } from "./MessagerAPI";
 
 const NOMBRE_MAX_REQUETE = 1000;
-const MESSAGE_AUCUN_RESULTAT = "Aucun resultat";
 const MESSAGE_ERREUR_API_EXTERNE = "Erreur de l'API externe";
 
 module moduleServiceLexical {
@@ -33,7 +32,7 @@ module moduleServiceLexical {
             if (dictionnaire.length > 0) {
                 res.send(dictionnaire);
             } else {
-                res.send(undefined);
+                res.send(null);
             }
         }
 

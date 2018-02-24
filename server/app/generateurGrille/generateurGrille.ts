@@ -196,7 +196,7 @@ module Route {
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initMatrice();
             // this.initListeMot();
-            this.remplirLaGrilleDeMots();
+            this.remplirLaGrilleDeMots().catch(() => new Error("Erreur de remplissage de la grille"));
             res.send(JSON.stringify(this.grille));
         }
 
@@ -221,7 +221,7 @@ module Route {
 
             this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
             await this.remplirLaGrilleDeMots();
-            //this.inverserXYMots();
+            // this.inverserXYMots();
 
             res.send(this.listeMot);
         }

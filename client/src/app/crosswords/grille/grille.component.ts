@@ -72,14 +72,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private applyTopBorderToBox(box: HTMLElement, color: string, size: string): void {
+  private applyTopBorderToBox(box: HTMLElement, color: string, width: string): void {
     box.style.borderTopColor = color;
-    box.style.borderTopWidth = size;
+    box.style.borderTopWidth = width;
   }
 
-  private applyBottomBorderToBox(box: HTMLElement, color: string, size: string): void {
+  private applyBottomBorderToBox(box: HTMLElement, color: string, width: string): void {
     box.style.borderBottomColor = color;
-    box.style.borderBottomWidth = size;
+    box.style.borderBottomWidth = width;
   }
 
   private remplirLettresSelect(): void {

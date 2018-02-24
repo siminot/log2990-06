@@ -1,4 +1,3 @@
-import * as assert from "assert";
 import { GestionnaireClavier, ACCELERATEUR, DIRECTION_GAUCHE, FREIN, DIRECTION_DROITE, CHANGER_VUE,
          ZOOM_IN, ZOOM_OUT, CHANGER_DECOR, CHANGER_HEURE_JOURNEE} from "./gestionnaireClavier";
 import { GestionnaireCamera } from "../camera/GestionnaireCamera";

@@ -1,4 +1,3 @@
-import * as assert from "assert";
 import { TestBed, async } from "@angular/core/testing";
 
 import { ServiceDeRendu } from "./serviceDeRendu";

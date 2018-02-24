@@ -1,7 +1,7 @@
 .grille {
     margin: 12% 12%;
-    position: relative;
     overflow: hidden;
+    position: relative;
 }
 
 .tuile{
@@ -18,14 +18,13 @@
     position: absolute;
 }
 
-
 .table td {
     width: 40px;
     height: 40px;
     border: 1px solid black;
     overflow: hidden;
-    position: relative;
     border-radius: 3px;
+    position: relative;
 }
 
 .table {

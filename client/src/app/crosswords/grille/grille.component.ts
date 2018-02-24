@@ -48,45 +48,45 @@ export class GrilleComponent implements OnInit, OnDestroy {
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
         this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
-        this.putDefaultStyleGrid();
+        this.appliquerStyleDefautGrille();
 
         if (!this.motSelectionne.motTrouve) {
           this.remplirLettresSelect();
-          this.highlightWord("red");
-          this.focusOnRightLetter();
+          this.miseEvidenceMot("red");
+          this.focusSurBonneLettre();
         }
     });
   }
 
-  private putDefaultStyleGrid(): void {
+  private appliquerStyleDefautGrille(): void {
     let uneCase: HTMLElement;
     for (let n: number = 0 ; n < CONST.TAILLE_TABLEAU * CONST.TAILLE_TABLEAU ; n++) {
       uneCase = document.getElementsByTagName("td")[n];
-      this.applyTopBorderToBox(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
-      this.applyBottomBorderToBox(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
-      this.applyLeftBorderToBox(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
-      this.applyRightBorderToBox(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
+      this.appliquerBordureHaut(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
+      this.appliquerBordureBas(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
+      this.appliquerBordureGauche(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
+      this.appliquerBordureDroite(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
     }
   }
 
-  private applyTopBorderToBox(box: HTMLElement, color: string, width: string): void {
-    box.style.borderTopColor = color;
-    box.style.borderTopWidth = width;
+  private appliquerBordureHaut(uneCase: HTMLElement, couleur: string, width: string): void {
+    uneCase.style.borderTopColor = couleur;
+    uneCase.style.borderTopWidth = width;
   }
 
-  private applyBottomBorderToBox(box: HTMLElement, color: string, width: string): void {
-    box.style.borderBottomColor = color;
-    box.style.borderBottomWidth = width;
+  private appliquerBordureBas(uneCase: HTMLElement, couleur: string, width: string): void {
+    uneCase.style.borderBottomColor = couleur;
+    uneCase.style.borderBottomWidth = width;
   }
 
-  private applyLeftBorderToBox(box: HTMLElement, color: string, width: string): void {
-    box.style.borderLeftColor = color;
-    box.style.borderLeftWidth = width;
+  private appliquerBordureGauche(uneCase: HTMLElement, couleur: string, width: string): void {
+    uneCase.style.borderLeftColor = couleur;
+    uneCase.style.borderLeftWidth = width;
   }
 
-  private applyRightBorderToBox(box: HTMLElement, color: string, width: string): void {
-    box.style.borderRightColor = color;
-    box.style.borderRightWidth = width;
+  private appliquerBordureDroite(uneCase: HTMLElement, couleur: string, width: string): void {
+    uneCase.style.borderRightColor = couleur;
+    uneCase.style.borderRightWidth = width;
   }
 
   private remplirLettresSelect(): void {
@@ -105,46 +105,46 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private highlightWord(color: string): void {
+  private miseEvidenceMot(couleur: string): void {
     let uneCase: HTMLElement, idTmp: string, n: number;
 
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
       n = +idTmp[0] * CONST.DIZAINE + +idTmp[1];
       uneCase = document.getElementsByTagName("td")[n];
-      this.highlightLetter(uneCase, i, color);
+      this.miseEvidenceLettre(uneCase, i, couleur);
     }
   }
 
-  private highlightLetter(box: HTMLElement, position: number, color: string): void {
+  private miseEvidenceLettre(uneCase: HTMLElement, position: number, couleur: string): void {
     if (!this.motSelectionne.estVertical) {
-      this.highlightNonVerticalLetter(box, position, color);
+      this.miseEvidenceLettreNonVerticale(uneCase, position, couleur);
     } else {
-      this.highlightVerticalLetter(box, position, color);
+      this.miseEvidenceLettreVericale(uneCase, position, couleur);
     }
   }
 
-  private highlightNonVerticalLetter(box: HTMLElement, position: number, color: string): void {
+  private miseEvidenceLettreNonVerticale(uneCase: HTMLElement, position: number, couleur: string): void {
     if (position === 0) {
-      this.applyTopBorderToBox(box, color, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.appliquerBordureHaut(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
     } else if (position === this.motSelectionne.longeur - 1) {
-      this.applyBottomBorderToBox(box, color, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.appliquerBordureBas(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
     }
-    this.applyLeftBorderToBox(box, color, CONST.TARGET_BOX_BORDER_WIDTH);
-    this.applyRightBorderToBox(box, color, CONST.TARGET_BOX_BORDER_WIDTH);
+    this.appliquerBordureGauche(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
+    this.appliquerBordureDroite(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
   }
 
-  private highlightVerticalLetter(box: HTMLElement, position: number, color: string): void {
+  private miseEvidenceLettreVericale(uneCase: HTMLElement, position: number, couleur: string): void {
     if (position === 0) {
-      this.applyLeftBorderToBox(box, color, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.appliquerBordureGauche(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
     } else if (position === this.motSelectionne.longeur - 1) {
-      this.applyRightBorderToBox(box, color, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.appliquerBordureDroite(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
     }
-    this.applyTopBorderToBox(box, color, CONST.TARGET_BOX_BORDER_WIDTH);
-    this.applyBottomBorderToBox(box, color, CONST.TARGET_BOX_BORDER_WIDTH);
+    this.appliquerBordureHaut(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
+    this.appliquerBordureBas(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
   }
 
-  private focusOnRightLetter(): void {
+  private focusSurBonneLettre(): void {
     let elemTmp: HTMLInputElement, idTmp: string;
     let i: number;
 
@@ -193,7 +193,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     if (valid) {
       this.motSelectionne.motTrouve = true;
       this.lockLettersFromWord();
-      this.highlightWord("green");
+      this.miseEvidenceMot("green");
       this.removeFocusFromSelectedWord();
     }
 

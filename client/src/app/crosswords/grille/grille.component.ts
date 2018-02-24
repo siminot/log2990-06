@@ -4,7 +4,7 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { TAILLE_TABLEAU, KEYCODE_MAX, KEYCODE_MIN, DIZAINE } from "../constantes";
+import * as CONST from "../constantes";
 
 @Component({
   selector: "app-grille",
@@ -26,9 +26,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   public constructor(private listeMotsService: RequeteDeGrilleService) {
     this.lockedLetter = [];
-    for (let i: number = 0 ; i < TAILLE_TABLEAU ; i++) {
+    for (let i: number = 0 ; i < CONST.TAILLE_TABLEAU ; i++) {
       this.lockedLetter[i] = [];
-      for (let j: number = 0 ; j < TAILLE_TABLEAU ; j++) {
+      for (let j: number = 0 ; j < CONST.TAILLE_TABLEAU ; j++) {
         this.lockedLetter[i][j] = false;
       }
     }
@@ -60,10 +60,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private putDefaultStyleGrid(): void {
     let uneCase: HTMLElement;
-    for (let n: number = 0 ; n < TAILLE_TABLEAU * TAILLE_TABLEAU ; n++) {
+    for (let n: number = 0 ; n < CONST.TAILLE_TABLEAU * CONST.TAILLE_TABLEAU ; n++) {
       uneCase = document.getElementsByTagName("td")[n];
-      uneCase.style.borderBottomColor = "black";
-      uneCase.style.borderTopColor = "black";
+      this.applyTopBorderToBox(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_SIZE);
       uneCase.style.borderLeftColor = "black";
       uneCase.style.borderRightColor = "black";
       uneCase.style.borderBottomWidth = "1px";
@@ -71,6 +70,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
       uneCase.style.borderLeftWidth = "1px";
       uneCase.style.borderRightWidth = "1px";
     }
+  }
+
+  private applyTopBorderToBox(box: HTMLElement, color: string, size: string): void {
+    box.style.borderTopColor = color;
+    box.style.borderTopWidth = size;
   }
 
   private remplirLettresSelect(): void {
@@ -95,7 +99,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let n: number;
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
-      n = +idTmp[0] * DIZAINE + +idTmp[1];
+      n = +idTmp[0] * CONST.DIZAINE + +idTmp[1];
       uneCase = document.getElementsByTagName("td")[n];
 
       if (!this.motSelectionne.estVertical) {   // Wrong side. Horizontal et vertical inversé.
@@ -141,7 +145,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   public manageKeyEntry(event: KeyboardEvent): void {
     if (event.key === "Backspace") {
       this.focusOnPreviousLetter();
-    } else if (event.keyCode >= KEYCODE_MIN && event.keyCode <= KEYCODE_MAX) {
+    } else if (event.keyCode >= CONST.KEYCODE_MIN && event.keyCode <= CONST.KEYCODE_MAX) {
       this.focusOnNextLetter();
     }
   }

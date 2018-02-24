@@ -52,7 +52,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
         if (!this.motSelectionne.motTrouve) {
           this.remplirLettresSelect();
-          this.miseEnEvidenceMot("red");
+          this.miseEnEvidenceMot();
           this.focusOnRightLetter();
         }
     });
@@ -105,34 +105,34 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private miseEnEvidenceMot(couleur: string): void {
+  private miseEnEvidenceMot(): void {
     let uneCase: HTMLElement, idTmp: string, n: number;
 
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
       n = +idTmp[0] * CONST.DIZAINE + +idTmp[1];
       uneCase = document.getElementsByTagName("td")[n];
-      this.miseEnEvidenceLettre(uneCase, i, couleur);
+      this.miseEnEvidenceLettre(uneCase, i);
     }
   }
 
-  private miseEnEvidenceLettre(uneCase: HTMLElement, i: number, color: string): void {
+  private miseEnEvidenceLettre(box: HTMLElement, i: number): void {
     if (!this.motSelectionne.estVertical) {
       if (i === 0) {
-        uneCase.style.borderTopColor = color; uneCase.style.borderTopWidth = "2px";
+        this.applyTopBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
       } else if (i === this.motSelectionne.longeur - 1) {
-        uneCase.style.borderBottomColor = color; uneCase.style.borderBottomWidth = "2px";
+        this.applyBottomBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
       }
-      uneCase.style.borderRightColor = color; uneCase.style.borderRightWidth = "2px";
-      uneCase.style.borderLeftColor = color; uneCase.style.borderLeftWidth = "2px";
+      this.applyLeftBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.applyRightBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
     } else {
       if (i === 0) {
-        uneCase.style.borderLeftColor = color; uneCase.style.borderLeftWidth = "2px";
+        this.applyLeftBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
       } else if (i === this.motSelectionne.longeur - 1) {
-        uneCase.style.borderRightColor = color; uneCase.style.borderRightWidth = "2px";
+        this.applyRightBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
       }
-      uneCase.style.borderTopColor = color; uneCase.style.borderTopWidth = "2px";
-      uneCase.style.borderBottomColor = color; uneCase.style.borderBottomWidth = "2px";
+      this.applyTopBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.applyBottomBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
     }
   }
 

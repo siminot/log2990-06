@@ -1,10 +1,11 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { DefinitionComponent } from "./definition.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, LettreGrille } from "../mockObject/word";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpeReqService } from "../httpRequest/http-request.service";
 
 describe("DefinitionComponent", () => {
-  let service: RequeteDeGrilleService;
   let component: DefinitionComponent;
   let fixture: ComponentFixture<DefinitionComponent>;
 
@@ -33,17 +34,18 @@ describe("DefinitionComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DefinitionComponent ],
-      providers: [ RequeteDeGrilleService ]
+      imports: [ HttpClientTestingModule ],
+      providers: [ RequeteDeGrilleService, HttpeReqService ]
     })
     .compileComponents();
   }));
 
-  beforeEach(() => {
-    service = new RequeteDeGrilleService();
+  beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
     component = new DefinitionComponent(service);
     fixture = TestBed.createComponent(DefinitionComponent);
     fixture.detectChanges();
-  });
+  })
+);
 
   describe("Création d\"objets.", () => {
     it("Création d\"objet Definition.", () => {

@@ -5,12 +5,12 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 import { Word, LettreGrille } from "../mockObject/word";
 
 @Component({
-  selector: "app-definition",
-  templateUrl: "./definition.component.html",
-  styleUrls: ["./definition.component.css"]
+  selector: "app-definitionv",
+  templateUrl: "./definitionV.component.html",
+  styleUrls: ["./definitionV.component.css"]
 })
 
-export class DefinitionComponent implements OnInit, OnDestroy {
+export class DefinitionVComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 
@@ -34,7 +34,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect)=>{
       this.motSelectionne = motSelect;
       this.changementMotSelectionneFF(this.motSelectionne);
-    })
+    });
 
   }
   public ngOnInit(): void { }

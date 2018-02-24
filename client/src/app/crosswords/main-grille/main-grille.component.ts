@@ -12,5 +12,5 @@ export class MainGrilleComponent implements OnInit {
 
   public constructor() { }
 
-  public ngOnInit() { }
+  public ngOnInit(): void { }
 }

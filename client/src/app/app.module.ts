@@ -3,15 +3,21 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
-import { GameComponent } from "./carApp/game-component/game.component";
-
-import { RenderService } from "./carApp/render-service/render.service";
 import { BasicService } from "./basic.service";
 import { AppRoutingModule } from ".//app-routing.module";
+
+import { GameComponent } from "./carApp/game-component/game.component";
+import { RenderService } from "./carApp/render-service/render.service";
+import {HttpeReqService} from "./crosswords/httpRequest/http-request.service";
+
+import { DefinitionHComponent} from "./crosswords/definitionH/definitionH.component";
+import { DefinitionVComponent} from "./crosswords/definitionV/definitionV.component";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
-// import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
-import { DefinitionComponent } from './crosswords/definition/definition.component';
+import { DefinitionComponent } from "./crosswords/definition/definition.component";
+import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
+import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
+import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 
 @NgModule({
     declarations: [
@@ -19,7 +25,11 @@ import { DefinitionComponent } from './crosswords/definition/definition.componen
         GameComponent,
         MainGrilleComponent,
         GrilleComponent,
-        DefinitionComponent
+        DefinitionComponent,
+        ConfigPartieComponent,
+        DirectiveFocusDirective,
+        DefinitionHComponent,
+        DefinitionVComponent
     ],
     imports: [
         BrowserModule,
@@ -29,15 +39,17 @@ import { DefinitionComponent } from './crosswords/definition/definition.componen
     providers: [
         RenderService,
         BasicService,
-        //RequeteDeGrilleService
+        RequeteDeGrilleService,
+        HttpeReqService
     ],
-    bootstrap: [AppComponent],
+    bootstrap: [ AppComponent ],
     exports: [
         AppComponent,
         GameComponent,
         MainGrilleComponent,
         GrilleComponent,
-        DefinitionComponent
+        DefinitionVComponent,
+        DefinitionHComponent
     ]
 })
 export class AppModule { }

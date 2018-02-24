@@ -24,7 +24,7 @@ export class RouteGenGrille {
                    (req: Request, res: Response, next: NextFunction) => this.genGrille.getMots(req, res, next));
 
         router.get("/facile",
-                   (req: Request, res: Response, next: NextFunction) => this.genGrille.prototypeRequete(req, res, next));
+                   async (req: Request, res: Response, next: NextFunction) => this.genGrille.prototypeRequete(req, res, next));
 
         router.get("/normal",
                    (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheDifficile(req, res, next));

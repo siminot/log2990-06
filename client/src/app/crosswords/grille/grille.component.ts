@@ -4,7 +4,7 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { TAILLE_TABLEAU } from "../constantes";
+import { TAILLE_TABLEAU, KEYCODE_MAX, KEYCODE_MIN, DIZAINE } from "../constantes";
 
 @Component({
   selector: "app-grille",
@@ -18,76 +18,203 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private motSelectionne: Word;
   private positionLettresSelectionnees: string[];
   private positionCourante: number;
+  private lockedLetter: boolean[][];
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  public constructor(private listeMotsService: RequeteDeGrilleService) { }
+  public constructor(private listeMotsService: RequeteDeGrilleService) {
+    this.lockedLetter = [];
+    for (let i: number = 0 ; i < TAILLE_TABLEAU ; i++) {
+      this.lockedLetter[i] = [];
+      for (let j: number = 0 ; j < TAILLE_TABLEAU ; j++) {
+        this.lockedLetter[i][j] = false;
+      }
+    }
+  }
 
   public ngOnInit(): void {
     this.mots = this.listeMotsService.getMots();
+
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
-      .subscribe((mots) => this.mots = mots);
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots;});
 
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
-      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres().subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
-        this.motSelectionne = motSelec;
-        this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
+      this.motSelectionne = motSelec;
+      this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
+      this.putDefaultStyleGrid();
 
+      if (!this.motSelectionne.motTrouve) {
         this.remplirLettresSelect();
-
-        this.miseEnEvidence();
-
+        this.miseEnEvidenceMot("red");
         this.focusOnRightLetter();
-      });
-  }
-
-  private miseEnEvidence(): void {
-    this.putDefaultStyleGrid();
-
-    let uneCase: HTMLElement;
-    let idTmp: string;
-    let n: number;
-    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
-      idTmp = this.positionLettresSelectionnees[i];
-      n = 10 * +idTmp[0] + +idTmp[1];
-      uneCase = document.getElementsByTagName('td')[n];
-
-      if(!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
-        if(i === 0) {                                         // Premiere case.
-          uneCase.style.borderTopColor = "red";
-        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderBottomColor = "red";
-        }                                                     // Toutes les cases.
-        uneCase.style.borderRightColor = "red";
-        uneCase.style.borderLeftColor = "red";
-      } else {
-        if (i === 0) {                                        // Premiere case.
-          uneCase.style.borderLeftColor = "red";
-        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderRightColor = "red";
-        }                                                     // Toutes les cases du mot.
-        uneCase.style.borderTopColor = "red";
-        uneCase.style.borderBottomColor = "red";
       }
-    }
+    });
   }
 
   private putDefaultStyleGrid(): void {
     let uneCase: HTMLElement;
     for (let n: number = 0 ; n < TAILLE_TABLEAU * TAILLE_TABLEAU ; n++) {
-      uneCase = document.getElementsByTagName('td')[n];
+      uneCase = document.getElementsByTagName("td")[n];
       uneCase.style.borderBottomColor = "black";
       uneCase.style.borderTopColor = "black";
       uneCase.style.borderLeftColor = "black";
       uneCase.style.borderRightColor = "black";
     }
+  }
+
+  private remplirLettresSelect(): void {
+    this.positionCourante = 0;
+    this.positionLettresSelectionnees = [];
+
+    let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY, "");
+    this.positionLettresSelectionnees[0] = tmp;
+
+    const x: number = this.motSelectionne.premierX;
+    const y: number = this.motSelectionne.premierY;
+
+    for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
+      this.motSelectionne.estVertical ? tmp = this.makeID(x, y + i, "") : tmp = this.makeID(x + i, y, "");
+      this.positionLettresSelectionnees[i] = tmp;
+    }
+  }
+
+  private miseEnEvidenceMot(couleur: string): void {
+    let uneCase: HTMLElement;
+    let idTmp: string;
+    let n: number;
+    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+      idTmp = this.positionLettresSelectionnees[i];
+      n = +idTmp[0] * DIZAINE + +idTmp[1];
+      uneCase = document.getElementsByTagName("td")[n];
+
+      if (!this.motSelectionne.estVertical) {   // Wrong side. Horizontal et vertical inversé.
+        if (i === 0) {                                         // Premiere case.
+          uneCase.style.borderTopColor = couleur;
+        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
+          uneCase.style.borderBottomColor = couleur;
+        }                                                     // Toutes les cases.
+        uneCase.style.borderRightColor = couleur;
+        uneCase.style.borderLeftColor = couleur;
+      } else {
+        if (i === 0) {                                        // Premiere case.
+          uneCase.style.borderLeftColor = couleur;
+        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
+          uneCase.style.borderRightColor = couleur;
+        }                                                     // Toutes les cases du mot.
+        uneCase.style.borderTopColor = couleur;
+        uneCase.style.borderBottomColor = couleur;
+      }
+    }
+  }
+
+  private focusOnRightLetter(): void {
+    let elemTmp: HTMLInputElement, idTmp: string;
+
+    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+      idTmp = this.positionLettresSelectionnees[i];
+      elemTmp = document.getElementById(idTmp) as HTMLInputElement;
+
+      if (elemTmp.value === "") {
+        this.positionCourante = i;
+        elemTmp.focus();
+        break;
+      }
+    }
+  }
+
+  public manageKeyEntry(event: KeyboardEvent): void {
+    if (event.key === "Backspace") {
+      this.focusOnPreviousLetter();
+    } else if (event.keyCode >= KEYCODE_MIN && event.keyCode <= KEYCODE_MAX) {
+      this.focusOnNextLetter();
+    }
+  }
+
+  private focusOnNextLetter(): void {
+    if (this.positionCourante < this.motSelectionne.longeur - 1) {
+      this.positionCourante++;
+      const elem: HTMLInputElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]) as HTMLInputElement;
+      elem.focus();
+
+      if (elem.value !== "") {
+        this.focusOnNextLetter();
+      }
+    } else if (this.positionCourante === this.motSelectionne.longeur - 1) {
+      this.validateWord();
+    }
+  }
+
+  private validateWord(): boolean {
+    const usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
+    const valid: boolean = usersWord === this.motSelectionne.mot;
+
+    if (valid) {
+      this.motSelectionne.motTrouve = true;
+      this.lockLettersFromWord(this.motSelectionne);
+      this.miseEnEvidenceMot("green");
+      this.removeFocusFromSelectedWord();
+    }
+
+    return valid;
+  }
+
+  private removeFocusFromSelectedWord(): void {
+    const elem: HTMLInputElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]) as HTMLInputElement;
+    elem.blur();
+  }
+
+  private lockLettersFromWord(word: Word): void {
+    for (let i: number = 0 ; i < word.longeur ; i++) {
+      if (word.estVertical) {
+        this.lockedLetter[word.premierX][word.premierY + i] = true;
+      } else {
+        this.lockedLetter[word.premierX + i][word.premierY] = true;
+      }
+    }
+  }
+
+  private createWordFromSelectedLetters(): string {
+    let wordCreated: string = "";
+
+    for (const elem of this.positionLettresSelectionnees) {
+      wordCreated += (document.getElementById(elem) as HTMLInputElement).value;
+    }
+
+    return wordCreated;
+  }
+
+  private focusOnPreviousLetter(): void {
+    const idCourant: string = this.positionLettresSelectionnees[this.positionCourante];
+    const elemCourant: HTMLInputElement = document.getElementById(idCourant) as HTMLInputElement;
+    const xCour: number = +this.positionLettresSelectionnees[this.positionCourante][0];
+    const yCour: number = +this.positionLettresSelectionnees[this.positionCourante][1];
+
+    if (this.isLastLetterOfWord(elemCourant) && !this.lockedLetter[xCour][yCour] && elemCourant.value !== "") {
+      elemCourant.value = "";
+    } else if (this.positionCourante > 0 || (this.isLastLetterOfWord(elemCourant) && this.lockedLetter[xCour][yCour])) {
+      this.positionCourante--;
+      const idPrev: string = this.positionLettresSelectionnees[this.positionCourante];
+      const previousElem: HTMLInputElement = document.getElementById(idPrev) as HTMLInputElement;
+      const xPrev: number = +this.positionLettresSelectionnees[this.positionCourante][0];
+      const yPrev: number = +this.positionLettresSelectionnees[this.positionCourante][1];
+
+      if (!this.lockedLetter[xPrev][yPrev]) {
+        previousElem.focus();
+        previousElem.value = "";
+      } else {
+        this.focusOnPreviousLetter();
+      }
+    }
+  }
+
+  private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
+    return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
   }
 
   public getListeMots(): Word[] {
@@ -109,118 +236,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return a + b + k;
   }
 
-  private remplirLettresSelect(): void {
-    this.positionCourante = 0;
-    this.positionLettresSelectionnees = [];
-
-    let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY, "");
-    this.positionLettresSelectionnees[0] = tmp;
-
-    for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
-      if (this.motSelectionne.vertical) {
-        tmp = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY + i, "");
-      } else {
-        tmp = this.makeID(this.motSelectionne.premierX + i, this.motSelectionne.premierY, "");
-      }
-      this.positionLettresSelectionnees[i] = tmp;
-    }
-  }
-
-  private focusOnRightLetter(): void {
-    let elemTmp: HTMLInputElement;
-    let idTmp: string;
-    
-    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
-      idTmp = this.positionLettresSelectionnees[i];
-      elemTmp = <HTMLInputElement>document.getElementById(idTmp);
-
-      if(elemTmp.value === '') {
-        this.positionCourante = i;
-        elemTmp.focus();
-        return;
-      }
-    }
-    this.positionCourante = this.motSelectionne.longeur - 1;
-    elemTmp.focus();
-  }
-
-  private manageKeyEntry(event: any): void {
-    if (event.key === "Backspace") {
-      this.focusOnPreviousLetter();
-    } else if (event.keyCode >= 65 && event.keyCode <= 90) {
-      this.focusOnNextLetter();
-    }
-  }
-
-  private focusOnNextLetter(): void {
-    if (this.positionCourante < this.motSelectionne.longeur - 1) {
-      this.positionCourante++;
-      let elem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-      elem.focus();
-
-      if(elem.value != '') {
-        this.focusOnNextLetter();
-      }
-    } else if (this.positionCourante === this.motSelectionne.longeur - 1) {   // TODO : Vérifier si la condition est réellement nécessaire.
-      this.validateWord();
-    }
-  }
-
-  private validateWord(): boolean {
-    let usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
-    
-    let valid: boolean = usersWord === this.motSelectionne.mot;
-
-    valid ? console.log("VALID WORD") : console.log("INVALID WORD");
-
-    return valid;
-  }
-
-  private createWordFromSelectedLetters(): string {
-    let wordCreated: string = "";
-    for(let i: number = 0 ; i < this.positionLettresSelectionnees.length ; i++) {
-      wordCreated += (<HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[i])).value;
-    }
-    
-    return wordCreated;
-  }
-
-  private focusOnPreviousLetter(): void {
-    let elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-    
-    if(this.isLastLetterOfWord(elemCourant) && elemCourant.value != '') {
-      elemCourant.value = '';
-    } else if (this.positionCourante > 0) {
-      this.positionCourante--;
-      const previousElem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-      previousElem.focus();
-      previousElem.value = '';
-    }
-  }
-
-  private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
-    return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
-  }
-
-  public ngOnDestroy(): void {
-    this.subscriptionMots.unsubscribe();
-    this.subscriptionMatrice.unsubscribe();
-    this.subscriptionMotSelec.unsubscribe();
-  }
-
-  public printID($event: any): void {
-    const target: any = event.target || event.srcElement || event.currentTarget;
-    const idAttr: any = target.attributes.id;
-    const value: any = idAttr.nodeValue;
-    console.log(value);
-  }
-
-  private retrieveWordFromClick(event: any): void {
+  public retrieveWordFromClick(event: KeyboardEvent): void {
 
     // retrieve Id from the event
     const target: any = event.target || event.srcElement || event.currentTarget;
     const idAttr: any = target.attributes.id;
-    const id: any = idAttr.nodeValue;
+    const id: string = idAttr.nodeValue;
     const cordinate: string[] = id.split("");
     // coordonne X et Y de la case selectionne
     const x: number = +cordinate[0];
@@ -228,37 +249,34 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const motSousJacent: Word = this.findWordFromXY(x,y);
     this.motSelectionne = motSousJacent;
 
-    this.envoieMotSelectionne(); 
-    //this.remplirLettresSelect();
+    this.envoieMotSelectionne();
     this.focusOnRightLetter();
 
   }
 
-  private findWordFromXY( X:number, Y:number): Word {
+  private findWordFromXY( X: number, Y: number): Word {
     let motTrouve: Word;
-    for(const mot of  this.mots) {
+    for (const mot of  this.mots) {
       let other: number;
       let max: number;
 
-      if ( !mot.vertical) {
+      if (!mot.estVertical) {
         other = mot.premierY;
         max = mot.premierX + mot.longeur - 1;
-        if( X <= max && Y === other) {
-          console.log(mot.mot);
+        if ( X <= max && Y === other) {
           motTrouve = mot;
           break;
         }
-      }
-      else if ( mot.vertical) {
+      } else if ( mot.estVertical) {
         other = mot.premierX;
         max = mot.premierY + mot.longeur - 1;
         if ( Y <= max && X === other) {
-          console.log(mot.mot);
           motTrouve = mot;
           break;
         }
       }
     }
+
     return motTrouve;
   }
 
@@ -266,18 +284,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
 
-
-}
-
-
-  /*
-  ** Pour une autre carte que celle du sprint 1. **
-  public onKey(event: any): void {
-    const element: any = event.srcElement.nextElementSibling;
-
-    if (element != null) {
-      const elem: HTMLElement = document.getElementById("testFocus");
-      elem.focus();
-    }
+  public ngOnDestroy(): void {
+    this.subscriptionMots.unsubscribe();
+    this.subscriptionMatrice.unsubscribe();
+    this.subscriptionMotSelec.unsubscribe();
   }
-  */
+}

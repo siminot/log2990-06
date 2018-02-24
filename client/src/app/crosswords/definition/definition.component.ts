@@ -97,7 +97,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   public decouvrirCases(mot: Word): void {
     this.cacherCases();
     for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
-      if (mot.vertical) {
+      if (mot.estVertical) {
         this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].caseDecouverte = true;
       } else {
         this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].caseDecouverte = true;
@@ -108,7 +108,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   public decouvrirLettre(mot: Word): void {
     for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
-      if (mot.vertical) {
+      if (mot.estVertical) {
         this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].lettreDecouverte = true;
       } else {
         this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].lettreDecouverte = true;

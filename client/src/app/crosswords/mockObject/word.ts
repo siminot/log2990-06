@@ -1,11 +1,12 @@
 export class Word {
     public mot: string;
     public definition: string;
-    public vertical: boolean;
+    public estVertical: boolean;
     public longeur: number;
     public premierX: number;
     public premierY: number;
     public activer: boolean;
+    public motTrouve: boolean;
 }
 
 export class LettreGrille {

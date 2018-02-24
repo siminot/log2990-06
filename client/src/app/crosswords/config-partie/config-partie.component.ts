@@ -12,8 +12,9 @@ export class ConfigPartieComponent implements OnInit {
 
   private requete: string; // Changer pour une constante
   private lesOptions: OptionPartie = new OptionPartie;
+  private serviceHTTP: HttpeReqService;
 
-  public constructor(private serviceHTTP: HttpeReqService) {
+  public constructor() {
     this.requete = REQUETE_INIT;
   }
 

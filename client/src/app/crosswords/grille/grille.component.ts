@@ -117,20 +117,20 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private miseEnEvidenceLettre(uneCase: HTMLElement, i: number, color: string): void {
-    if (!this.motSelectionne.estVertical) {   // Wrong side. Horizontal et vertical inversé.
-      if (i === 0) {                                         // Premiere case.
+    if (!this.motSelectionne.estVertical) {
+      if (i === 0) {
         uneCase.style.borderTopColor = color; uneCase.style.borderTopWidth = "2px";
-      } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
+      } else if (i === this.motSelectionne.longeur - 1) {
         uneCase.style.borderBottomColor = color; uneCase.style.borderBottomWidth = "2px";
-      }                                                     // Toutes les cases.
+      }
       uneCase.style.borderRightColor = color; uneCase.style.borderRightWidth = "2px";
       uneCase.style.borderLeftColor = color; uneCase.style.borderLeftWidth = "2px";
     } else {
-      if (i === 0) {                                        // Premiere case.
+      if (i === 0) {
         uneCase.style.borderLeftColor = color; uneCase.style.borderLeftWidth = "2px";
-      } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
+      } else if (i === this.motSelectionne.longeur - 1) {
         uneCase.style.borderRightColor = color; uneCase.style.borderRightWidth = "2px";
-      }                                                     // Toutes les cases du mot.
+      }
       uneCase.style.borderTopColor = color; uneCase.style.borderTopWidth = "2px";
       uneCase.style.borderBottomColor = color; uneCase.style.borderBottomWidth = "2px";
     }

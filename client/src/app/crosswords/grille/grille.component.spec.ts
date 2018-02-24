@@ -21,11 +21,11 @@ describe("GrilleComponent", () => {
   }));
 
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
-      component = new GrilleComponent(service);
-      serviceGrille = service;
-      fixture = TestBed.createComponent(GrilleComponent);
-      component = fixture.componentInstance;
-      expect(service).toBeDefined();
+    service["mots"] = listeMots;
+    serviceGrille = service;
+    fixture = TestBed.createComponent(GrilleComponent);
+    component = fixture.componentInstance;
+    component.ngOnInit();
     })
   );
 

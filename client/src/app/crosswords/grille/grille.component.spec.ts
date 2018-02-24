@@ -1,8 +1,10 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 
 import { GrilleComponent } from "./grille.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { listeMots } from "../mockObject/mockListWord";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpeReqService } from "../httpRequest/http-request.service";
 
 describe("GrilleComponent", () => {
   let component: GrilleComponent;
@@ -12,27 +14,28 @@ describe("GrilleComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GrilleComponent ],
-      providers: [ RequeteDeGrilleService ]
+      imports: [ HttpClientTestingModule ],
+      providers: [ RequeteDeGrilleService, HttpeReqService ]
     })
     .compileComponents();
   }));
 
-  beforeEach(() => {
-    serviceGrille = new RequeteDeGrilleService();
-    component = new GrilleComponent(serviceGrille);
-
-    fixture = TestBed.createComponent(GrilleComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
+      component = new GrilleComponent(service);
+      serviceGrille = service;
+      fixture = TestBed.createComponent(GrilleComponent);
+      component = fixture.componentInstance;
+      expect(service).toBeDefined();
+    })
+  );
 
   describe("Construction d\"objet", () => {
     it("Construction du service de requete réussie.", () => {
-      expect(serviceGrille).toBeTruthy();
+      expect(serviceGrille).toBeDefined();
     });
 
     it("Construction du composant Grille réussie.", () => {
-      expect(component).toBeTruthy();
+      expect(component).toBeDefined();
     });
   });
 

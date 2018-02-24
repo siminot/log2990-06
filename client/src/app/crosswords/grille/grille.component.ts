@@ -116,24 +116,32 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private miseEnEvidenceLettre(box: HTMLElement, i: number): void {
+  private miseEnEvidenceLettre(box: HTMLElement, position: number): void {
     if (!this.motSelectionne.estVertical) {
-      if (i === 0) {
-        this.applyTopBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
-      } else if (i === this.motSelectionne.longeur - 1) {
-        this.applyBottomBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
-      }
-      this.applyLeftBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
-      this.applyRightBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.miseEnEvidenceLettreNonVertical(box, position);
     } else {
-      if (i === 0) {
-        this.applyLeftBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
-      } else if (i === this.motSelectionne.longeur - 1) {
-        this.applyRightBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
-      }
+      this.miseEnEvidenceLettreVertical(box, position);
+    }
+  }
+
+  private miseEnEvidenceLettreNonVertical(box: HTMLElement, position: number): void {
+    if (position === 0) {
       this.applyTopBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
+    } else if (position === this.motSelectionne.longeur - 1) {
       this.applyBottomBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
     }
+    this.applyLeftBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
+    this.applyRightBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
+  }
+
+  private miseEnEvidenceLettreVertical(box: HTMLElement, position: number): void {
+    if (position === 0) {
+      this.applyLeftBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
+    } else if (position === this.motSelectionne.longeur - 1) {
+      this.applyRightBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
+    }
+    this.applyTopBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
+    this.applyBottomBorderToBox(box, CONST.TARGET_BOX_BORDER_COLOR, CONST.TARGET_BOX_BORDER_WIDTH);
   }
 
   private focusOnRightLetter(): void {

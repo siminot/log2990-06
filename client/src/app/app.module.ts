@@ -43,7 +43,6 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         AppRoutingModule
     ],
     providers: [
-<<<<<<< HEAD
         ServiceDeRendu,
         GestionnaireScene,
         GestionnaireCamera,
@@ -51,13 +50,8 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         GestionnaireVoitures,
         GestionnaireClavier,
         GestionnaireEcran,
-        RequeteDeGrilleService
-=======
-        RenderService,
-        BasicService,
         RequeteDeGrilleService,
         HttpeReqService
->>>>>>> VueGrilleFix
     ],
     bootstrap: [ AppComponent ],
     exports: [

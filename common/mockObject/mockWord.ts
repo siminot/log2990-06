@@ -7,7 +7,6 @@ export class Mockword {
     private premierX: number;
     private premierY: number;
     private estTraite: boolean;
-    private activer: boolean ;
 
 
     constructor(estVertical : boolean, longueur: number, premierX: number, premierY: number){
@@ -18,7 +17,6 @@ export class Mockword {
         this.premierX = premierX;
         this.premierY = premierY;
         this.estTraite = false;
-        this.activer = false; 
 
     }
     // getters 

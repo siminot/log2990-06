@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-//import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
+// import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Subscription } from "rxjs/Subscription";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, LettreGrille } from "../mockObject/word";
@@ -31,7 +31,7 @@ export class DefinitionHComponent implements OnInit {
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
-    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect)=>{
+    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect) => {
       this.motSelectionne = motSelect;
       this.changementMotSelectionneFF(this.motSelectionne);
     });

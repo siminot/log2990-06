@@ -18,7 +18,10 @@ export class RouteGenGrille {
                    (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheGrille(req, res, next));
 
         router.get("/requeteTemporaire",
-                   (req: Request, res: Response, next: NextFunction) => this.genGrille.prototypeRequete(req, res, next));
+                   async (req: Request, res: Response, next: NextFunction) => this.genGrille.prototypeRequete(req, res, next));
+
+        router.get("/requeteTemporaire/memeGrille",
+                   (req: Request, res: Response, next: NextFunction) => this.genGrille.getMots(req, res, next));
 
         router.get("/facile",
                    (req: Request, res: Response, next: NextFunction) => this.genGrille.prototypeRequete(req, res, next));

@@ -46,15 +46,15 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
-      this.motSelectionne = motSelec;
-      this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
-      this.putDefaultStyleGrid();
+        this.motSelectionne = motSelec;
+        this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
+        this.putDefaultStyleGrid();
 
-      if (!this.motSelectionne.motTrouve) {
-        this.remplirLettresSelect();
-        this.miseEnEvidenceMot("red");
-        this.focusOnRightLetter();
-      }
+        if (!this.motSelectionne.motTrouve) {
+          this.remplirLettresSelect();
+          this.miseEnEvidenceMot("red");
+          this.focusOnRightLetter();
+        }
     });
   }
 
@@ -116,17 +116,22 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private focusOnRightLetter(): void {
     let elemTmp: HTMLInputElement, idTmp: string;
+    let i: number;
 
-    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+    for (i = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
       elemTmp = document.getElementById(idTmp) as HTMLInputElement;
 
       if (elemTmp.value === "") {
         this.positionCourante = i;
         elemTmp.focus();
-        break;
+
+        return;
       }
     }
+
+    this.positionCourante = this.motSelectionne.longeur - 1;
+    elemTmp.focus();
   }
 
   public manageKeyEntry(event: KeyboardEvent): void {
@@ -238,12 +243,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public retrieveWordFromClick(event: KeyboardEvent): void {
-
     // retrieve Id from the event
+    // Erreur de typescript en précisant le type
+    // tslint:disable-next-line:no-any
     const target: any = event.target || event.srcElement || event.currentTarget;
-    const idAttr: any = target.attributes.id;
-    const id: string = idAttr.nodeValue;
-    const cordinate: string[] = id.split("");
+    const cordinate: string[] = target.attributes.id.nodeValue.split("");
     // coordonne X et Y de la case selectionne
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];
@@ -251,8 +255,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.motSelectionne = motSousJacent;
 
     this.envoieMotSelectionne();
-    this.focusOnRightLetter();
-
+    // this.focusOnRightLetter();
   }
 
   private findWordFromXY( X: number, Y: number): Word {

@@ -62,31 +62,31 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let uneCase: HTMLElement;
     for (let n: number = 0 ; n < CONST.TAILLE_TABLEAU * CONST.TAILLE_TABLEAU ; n++) {
       uneCase = document.getElementsByTagName("td")[n];
-      this.appliquerBordureHaut(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
-      this.appliquerBordureBas(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
-      this.appliquerBordureGauche(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
-      this.appliquerBordureDroite(uneCase, CONST.DEFAULT_BOX_BORDER_COLOR, CONST.DEFAULT_BOX_BORDER_WIDTH);
+      this.appliquerBordureHaut(uneCase, CONST.COULEUR_BORDURE_CASE_DEFAUT, CONST.LARGEUR_BORDURE_CASE_DEFAUT);
+      this.appliquerBordureBas(uneCase, CONST.COULEUR_BORDURE_CASE_DEFAUT, CONST.LARGEUR_BORDURE_CASE_DEFAUT);
+      this.appliquerBordureGauche(uneCase, CONST.COULEUR_BORDURE_CASE_DEFAUT, CONST.LARGEUR_BORDURE_CASE_DEFAUT);
+      this.appliquerBordureDroite(uneCase, CONST.COULEUR_BORDURE_CASE_DEFAUT, CONST.LARGEUR_BORDURE_CASE_DEFAUT);
     }
   }
 
-  private appliquerBordureHaut(uneCase: HTMLElement, couleur: string, width: string): void {
+  private appliquerBordureHaut(uneCase: HTMLElement, couleur: string, largeur: string): void {
     uneCase.style.borderTopColor = couleur;
-    uneCase.style.borderTopWidth = width;
+    uneCase.style.borderTopWidth = largeur;
   }
 
-  private appliquerBordureBas(uneCase: HTMLElement, couleur: string, width: string): void {
+  private appliquerBordureBas(uneCase: HTMLElement, couleur: string, largeur: string): void {
     uneCase.style.borderBottomColor = couleur;
-    uneCase.style.borderBottomWidth = width;
+    uneCase.style.borderBottomWidth = largeur;
   }
 
-  private appliquerBordureGauche(uneCase: HTMLElement, couleur: string, width: string): void {
+  private appliquerBordureGauche(uneCase: HTMLElement, couleur: string, largeur: string): void {
     uneCase.style.borderLeftColor = couleur;
-    uneCase.style.borderLeftWidth = width;
+    uneCase.style.borderLeftWidth = largeur;
   }
 
-  private appliquerBordureDroite(uneCase: HTMLElement, couleur: string, width: string): void {
+  private appliquerBordureDroite(uneCase: HTMLElement, couleur: string, largeur: string): void {
     uneCase.style.borderRightColor = couleur;
-    uneCase.style.borderRightWidth = width;
+    uneCase.style.borderRightWidth = largeur;
   }
 
   private remplirLettresSelect(): void {
@@ -126,22 +126,22 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private miseEvidenceLettreNonVerticale(uneCase: HTMLElement, position: number, couleur: string): void {
     if (position === 0) {
-      this.appliquerBordureHaut(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.appliquerBordureHaut(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
     } else if (position === this.motSelectionne.longeur - 1) {
-      this.appliquerBordureBas(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.appliquerBordureBas(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
     }
-    this.appliquerBordureGauche(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
-    this.appliquerBordureDroite(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
+    this.appliquerBordureGauche(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+    this.appliquerBordureDroite(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
   }
 
   private miseEvidenceLettreVericale(uneCase: HTMLElement, position: number, couleur: string): void {
     if (position === 0) {
-      this.appliquerBordureGauche(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.appliquerBordureGauche(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
     } else if (position === this.motSelectionne.longeur - 1) {
-      this.appliquerBordureDroite(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
+      this.appliquerBordureDroite(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
     }
-    this.appliquerBordureHaut(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
-    this.appliquerBordureBas(uneCase, couleur, CONST.TARGET_BOX_BORDER_WIDTH);
+    this.appliquerBordureHaut(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+    this.appliquerBordureBas(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
   }
 
   private focusSurBonneLettre(): void {

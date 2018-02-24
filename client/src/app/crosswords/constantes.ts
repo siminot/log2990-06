@@ -4,8 +4,7 @@ export const KEYCODE_MIN: number = 65;
 export const KEYCODE_MAX: number = 90;
 export const DIZAINE: number = 10;
 
-export const DEFAULT_BOX_BORDER_COLOR: string = "black";
-export const DEFAULT_BOX_BORDER_WIDTH: string = "1px";
+export const COULEUR_BORDURE_CASE_DEFAUT: string = "black";
+export const LARGEUR_BORDURE_CASE_DEFAUT: string = "1px";
 
-export const TARGET_BOX_BORDER_COLOR: string = "red";
-export const TARGET_BOX_BORDER_WIDTH: string = "2px";
+export const LARGEUR_BORDURE_CASE_CIBLE: string = "2px";

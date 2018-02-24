@@ -81,9 +81,7 @@ describe("DefinitionComponent", () => {
         lettre: "P",
         lettreDecouverte: true
       };
-      // Après l'appel a la fonction la caseDecouverte devrait redevenir a false.
       component.cacherCases();
-      console.log(matrice[0][0]);
 
       expect(matrice[0][0].caseDecouverte).toBeFalsy();
 });

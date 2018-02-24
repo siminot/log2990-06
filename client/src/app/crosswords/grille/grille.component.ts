@@ -244,10 +244,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   public retrieveWordFromClick(event: KeyboardEvent): void {
     // retrieve Id from the event
+    // Erreur de typescript en précisant le type
+    // tslint:disable-next-line:no-any
     const target: any = event.target || event.srcElement || event.currentTarget;
-    const idAttr: any = target.attributes.id;
-    const id: string = idAttr.nodeValue;
-    const cordinate: string[] = id.split("");
+    const cordinate: string[] = target.attributes.id.nodeValue.split("");
     // coordonne X et Y de la case selectionne
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];

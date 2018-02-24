@@ -3,7 +3,7 @@ import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import {HttpeReqService} from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
-//import { listeMots } from "../mockObject/mockListWord";
+// import { listeMots } from "../mockObject/mockListWord";
 import { Word, LettreGrille } from "../mockObject/word";
 
 @Injectable()
@@ -17,7 +17,7 @@ export class RequeteDeGrilleService {
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   private motSelectionneObservable$: Observable<Word> = this.motSelectionneSuject.asObservable();
 
-  //public  retourMatrice: = new Rx.BehaviorSubject();
+  // public  retourMatrice: = new Rx.BehaviorSubject();
 
   public constructor( private httpReq: HttpeReqService ) {
     this.matriceDesMotsSurGrille = this.genererGrille();

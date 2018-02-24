@@ -1,20 +1,21 @@
 import { Directive, HostListener, Input } from "@angular/core";
 
-@Directive({ selector: "[appDirectiveFocus]" })
+const LETTRE_A: number = 65; // a
+const LETTRE_Z: number = 90; // z
 
+@Directive({ selector: "[appDirectiveFocus]" })
 export class DirectiveFocusDirective {
 
   public constructor() { }
 
   @Input() public appDirectiveFocus: boolean;
 
-  @HostListener("keydown", ["$event"]) public onKeyDown(event: {}) {
-        const e = event as KeyboardEvent;
-
+  @HostListener("keydown", ["$event"])
+  public onKeyDown(event: KeyboardEvent): void {
         if (this.appDirectiveFocus) {
-            if (e.keyCode < 65 || e.keyCode > 90) {
-              e.preventDefault();
-            } else if ((e.keyCode >= 65 && e.keyCode <= 90)) {
+            if (event.keyCode < LETTRE_A || event.keyCode > LETTRE_Z) {
+              event.preventDefault();
+            } else if ((event.keyCode >= LETTRE_A && event.keyCode <= LETTRE_Z)) {
               return;
             }
         }

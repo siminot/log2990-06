@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { DefinitionComponent } from "./definitionV.component";
+import { DefinitionVComponent } from "./definitionV.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, LettreGrille } from "../mockObject/word";
 
 describe("DefinitionComponent", () => {
   let service: RequeteDeGrilleService;
-  let component: DefinitionComponent;
-  let fixture: ComponentFixture<DefinitionComponent>;
+  let component: DefinitionVComponent;
+  let fixture: ComponentFixture<DefinitionVComponent>;
 
   const fakeWord: Word = {
     mot: "POPO",
@@ -32,7 +32,7 @@ describe("DefinitionComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DefinitionComponent ],
+      declarations: [ DefinitionVComponent ],
       providers: [ RequeteDeGrilleService ]
     })
     .compileComponents();
@@ -40,8 +40,8 @@ describe("DefinitionComponent", () => {
 
   beforeEach(() => {
     service = new RequeteDeGrilleService();
-    component = new DefinitionComponent(service);
-    fixture = TestBed.createComponent(DefinitionComponent);
+    component = new DefinitionVComponent(service);
+    fixture = TestBed.createComponent(DefinitionVComponent);
     fixture.detectChanges();
   });
 
@@ -81,9 +81,7 @@ describe("DefinitionComponent", () => {
         lettre: "P",
         lettreDecouverte: true
       };
-      // Après l'appel a la fonction la caseDecouverte devrait redevenir a false.
       component.cacherCases();
-      console.log(matrice[0][0]);
 
       expect(matrice[0][0].caseDecouverte).toBeFalsy();
 });

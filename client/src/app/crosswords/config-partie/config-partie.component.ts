@@ -9,7 +9,7 @@ export class ConfigPartieComponent implements OnInit {
 
   public constructor() { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }

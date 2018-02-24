@@ -62,7 +62,7 @@ export class CameraJeu2D extends CameraJeu {
     }
 
     public dezoomer(): void {
-        this.zoom - PAS_ZOOM >= ZOOM_MAXIMUM
+        this.zoom - PAS_ZOOM >= ZOOM_MINIMUM
             ? this.zoom -= PAS_ZOOM
             : this.zoom = ZOOM_MINIMUM;
     }

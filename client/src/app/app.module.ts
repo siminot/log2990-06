@@ -14,7 +14,10 @@ import { GestionnaireClavier } from "./carApp/clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "./carApp/ecran/gestionnaireEcran";
 
 import { AppRoutingModule } from ".//app-routing.module";
+import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
 
+import { DefinitionHComponent} from "./crosswords/definitionH/definitionH.component";
+import { DefinitionVComponent} from "./crosswords/definitionV/definitionV.component";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { DefinitionComponent } from "./crosswords/definition/definition.component";
@@ -30,7 +33,9 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         GrilleComponent,
         DefinitionComponent,
         ConfigPartieComponent,
-        DirectiveFocusDirective
+        DirectiveFocusDirective,
+        DefinitionHComponent,
+        DefinitionVComponent
     ],
     imports: [
         BrowserModule,
@@ -38,6 +43,7 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         AppRoutingModule
     ],
     providers: [
+<<<<<<< HEAD
         ServiceDeRendu,
         GestionnaireScene,
         GestionnaireCamera,
@@ -46,6 +52,12 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         GestionnaireClavier,
         GestionnaireEcran,
         RequeteDeGrilleService
+=======
+        RenderService,
+        BasicService,
+        RequeteDeGrilleService,
+        HttpeReqService
+>>>>>>> VueGrilleFix
     ],
     bootstrap: [ AppComponent ],
     exports: [
@@ -53,7 +65,8 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         GameComponent,
         MainGrilleComponent,
         GrilleComponent,
-        DefinitionComponent
+        DefinitionVComponent,
+        DefinitionHComponent
     ]
 })
 export class AppModule { }

@@ -1,16 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
+//import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Subscription } from "rxjs/Subscription";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, LettreGrille } from "../mockObject/word";
 
 @Component({
-  selector: "app-definition",
-  templateUrl: "./definition.component.html",
-  styleUrls: ["./definition.component.css"]
+  selector: "app-definitionh",
+  templateUrl: "./definitionH.component.html",
+  styleUrls: ["./definitionH.component.css"]
 })
+export class DefinitionHComponent implements OnInit {
 
-export class DefinitionComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 
@@ -34,7 +34,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect)=>{
       this.motSelectionne = motSelect;
       this.changementMotSelectionneFF(this.motSelectionne);
-    })
+    });
 
   }
   public ngOnInit(): void { }

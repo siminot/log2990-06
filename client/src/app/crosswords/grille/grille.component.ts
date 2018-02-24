@@ -107,29 +107,32 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   private miseEnEvidenceMot(couleur: string): void {
     let uneCase: HTMLElement, idTmp: string, n: number;
-    
+
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
       n = +idTmp[0] * CONST.DIZAINE + +idTmp[1];
       uneCase = document.getElementsByTagName("td")[n];
+      
+    }
+  }
 
-      if (!this.motSelectionne.estVertical) {   // Wrong side. Horizontal et vertical inversé.
-        if (i === 0) {                                         // Premiere case.
-          uneCase.style.borderTopColor = couleur; uneCase.style.borderTopWidth = "2px";
-        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderBottomColor = couleur; uneCase.style.borderBottomWidth = "2px";
-        }                                                     // Toutes les cases.
-        uneCase.style.borderRightColor = couleur; uneCase.style.borderRightWidth = "2px";
-        uneCase.style.borderLeftColor = couleur; uneCase.style.borderLeftWidth = "2px";
-      } else {
-        if (i === 0) {                                        // Premiere case.
-          uneCase.style.borderLeftColor = couleur; uneCase.style.borderLeftWidth = "2px";
-        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderRightColor = couleur; uneCase.style.borderRightWidth = "2px";
-        }                                                     // Toutes les cases du mot.
-        uneCase.style.borderTopColor = couleur; uneCase.style.borderTopWidth = "2px";
-        uneCase.style.borderBottomColor = couleur; uneCase.style.borderBottomWidth = "2px";
-      }
+  private miseEnEvidenceLettre(uneCase: HTMLElement, i: number, color: string): void {
+    if (!this.motSelectionne.estVertical) {   // Wrong side. Horizontal et vertical inversé.
+      if (i === 0) {                                         // Premiere case.
+        uneCase.style.borderTopColor = color; uneCase.style.borderTopWidth = "2px";
+      } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
+        uneCase.style.borderBottomColor = color; uneCase.style.borderBottomWidth = "2px";
+      }                                                     // Toutes les cases.
+      uneCase.style.borderRightColor = color; uneCase.style.borderRightWidth = "2px";
+      uneCase.style.borderLeftColor = color; uneCase.style.borderLeftWidth = "2px";
+    } else {
+      if (i === 0) {                                        // Premiere case.
+        uneCase.style.borderLeftColor = color; uneCase.style.borderLeftWidth = "2px";
+      } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
+        uneCase.style.borderRightColor = color; uneCase.style.borderRightWidth = "2px";
+      }                                                     // Toutes les cases du mot.
+      uneCase.style.borderTopColor = color; uneCase.style.borderTopWidth = "2px";
+      uneCase.style.borderBottomColor = color; uneCase.style.borderBottomWidth = "2px";
     }
   }
 

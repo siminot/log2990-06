@@ -1,4 +1,5 @@
 const PAS_IMPORTANCE: number = 20;
+const CARACTERE_INCONNU: string = "_";
 
 export class Mockword {
 
@@ -123,7 +124,7 @@ export class Mockword {
     public getImportance(ancienMot: Mockword): number {
         let i: number = 0;
         for (const char of this.mot) {
-            if (char !== "_") {
+            if (char !== CARACTERE_INCONNU) {
                 i++;
             }
         }

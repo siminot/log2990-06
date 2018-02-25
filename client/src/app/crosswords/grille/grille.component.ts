@@ -208,8 +208,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.lockLettersFromWord();
       this.miseEvidenceMot("green");
       this.removeFocusFromSelectedWord();
-      // INSERTION DU .NEXT DU BEHAVIOR SUBJECT ICI.
-      this._servicePointage.serviceEnvoiePointage(10);
+      this._servicePointage.serviceEnvoiePointage(CONST.INCR_POINTAGE_MOT_TROUVE);
     }
 
     return valid;

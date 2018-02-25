@@ -68,7 +68,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this._subscriptionPointage = this._servicePointage.serviceReceptionPointage()
       .subscribe((pointage) => {
         this._pointage = pointage;
-        console.log("GOT VALUE FROM SUBSCRIBE IN GRILLE COMPONENT");
     });
   }
 

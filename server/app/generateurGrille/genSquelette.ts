@@ -8,7 +8,13 @@ export class GenSquelette {
         this.grille = new Array<Array<string>>();
         this.initGrille();
         this.verifMotRentre(0, 0, true);
+    }
+
+    public getSqueletteGrille(): Array<Array<string>> {
+        this.initGrille();
         this.genererSquelette();
+
+        return this.grille;
     }
 
     private genererSquelette(): void {

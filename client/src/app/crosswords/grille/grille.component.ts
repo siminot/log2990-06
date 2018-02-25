@@ -20,12 +20,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private positionLettresSelectionnees: string[];
   private positionCourante: number;
   private lockedLetter: boolean[][];
-  private _pointage: number;
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
-  private _subscriptionPointage: Subscription;
 
   public constructor(private listeMotsService: RequeteDeGrilleService,
                      private _servicePointage: InfojoueurService) {
@@ -36,16 +34,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
         this.lockedLetter[i][j] = false;
       }
     }
-
-    this._pointage = 0;
   }
 
   public ngOnInit(): void {
     this.mots = this.listeMotsService.getMots();
 
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
-
-    this._pointage = this._servicePointage.getPointage();
 
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
       .subscribe((mots) => { this.mots = mots; console.log(this.mots); });
@@ -64,11 +58,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
           this.miseEvidenceMot("red");
           this.focusSurBonneLettre();
         }
-    });
-
-    this._subscriptionPointage = this._servicePointage.serviceReceptionPointage()
-      .subscribe((pointage) => {
-        this._pointage = pointage;
     });
   }
 
@@ -337,6 +326,5 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
-    this._subscriptionPointage.unsubscribe();
   }
 }

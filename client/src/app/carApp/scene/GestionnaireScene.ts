@@ -3,9 +3,14 @@ import { Scene } from "three";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
+import { TempsJournee } from "../skybox/skybox";
+
+export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
 @Injectable()
 export class GestionnaireScene extends Scene {
+
+    private tempsJournee: TempsJournee;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
@@ -14,15 +19,26 @@ export class GestionnaireScene extends Scene {
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures) {
         super();
+        this.tempsJournee = TEMPS_JOURNEE_INITIAL;
     }
 
     // Creation de la scene
 
     public creerScene(): void {
+        this.ajouterElements();
+        this.initialiserTempsJournee();
+    }
+
+    private ajouterElements(): void {
         this.ajouterSkybox();
         this.ajouterPiste();
         this.ajouterVoitureJoueur();
         this.ajouterVoituresAI();
+    }
+
+    private initialiserTempsJournee(): void {
+        this.avancerTemps();
+        this.changerTempsJournee();
     }
 
     private ajouterSkybox(): void {
@@ -54,11 +70,17 @@ export class GestionnaireScene extends Scene {
     }
 
     public changerTempsJournee(): void {
+        this.avancerTemps();
         this.retirerSkybox();
-        this.gestionnaireSkybox.changerTempsJournee();
+        this.gestionnaireSkybox.changerTempsJournee(this.tempsJournee);
         this.ajouterSkybox();
+        this.gestionnaireVoiture.changerTempsJournee(this.tempsJournee);
+    }
 
-        this.gestionnaireVoiture.changerTempsJournee();
+    private avancerTemps(): void {
+        this.tempsJournee === TempsJournee.Jour
+            ? this.tempsJournee = TempsJournee.Nuit
+            : this.tempsJournee = TempsJournee.Jour;
     }
 
     public changerDecor(): void {

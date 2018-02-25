@@ -50,21 +50,21 @@ export class GestionnaireSkybox {
         }
     }
 
-    public changerTempsJournee(): void {
+    public changerTempsJournee(temps: TempsJournee): void {
+        this.tempsJournee = temps;
+
         this.estJour
-            ? this.changerPourNuit()
-            : this.changerPourJour();
+            ? this.changerPourJour()
+            : this.changerPourNuit();
 
         this.changerDecor();
     }
 
     private changerPourJour(): void {
-        this.tempsJournee = TempsJournee.Jour;
         this.skyboxCourante = this.environnementsJour[0];
     }
 
     private changerPourNuit(): void {
-        this.tempsJournee = TempsJournee.Nuit;
         this.skyboxCourante = this.environnementsNuit[0];
     }
 

@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ObjectLoader, Object3D } from "three";
 import { Voiture } from "../voiture/voiture";
+import { TempsJournee } from "../skybox/skybox";
 
 // AI
 const NOMBRE_AI: number = 1;
@@ -15,7 +16,6 @@ export class GestionnaireVoitures {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
-    private _estModeNuit: boolean;
 
     public get voitureJoueur(): Voiture {
         return this._voitureJoueur;
@@ -25,13 +25,8 @@ export class GestionnaireVoitures {
         return this._voituresAI;
     }
 
-    public get estModeNuit(): boolean {
-        return this._estModeNuit;
-    }
-
     public constructor() {
         this._voituresAI = [];
-        this._estModeNuit = false;
         this.initialiser().catch(() => new Error("Erreur lors de l'initialisation"));
     }
 
@@ -40,7 +35,6 @@ export class GestionnaireVoitures {
     private async initialiser(): Promise<void> {
         this.creerVoitureJoueur().catch(() => new Error("Erreur construction de la voiture du joueur"));
         this.creerVoituresAI().catch(() => new Error("Erreur construction des voituresAI"));
-        this.miseAJourPhares();
     }
 
     private async creerVoitureJoueur(): Promise<void> {
@@ -74,24 +68,19 @@ export class GestionnaireVoitures {
             }
     }
 
-    public changerTempsJournee(): void {
-        this._estModeNuit = !this._estModeNuit;
-        this.miseAJourPhares();
-    }
-
-    private miseAJourPhares(): void {
-        if (this._estModeNuit) {
-            this._voitureJoueur.eteindrePhares();
-
-            for (const voiture of this._voituresAI) {
+    public changerTempsJournee(temps: TempsJournee): void {
+        if (temps === TempsJournee.Jour) {
+            for (const voiture of this.voitures) {
                 voiture.eteindrePhares();
             }
         } else {
-            this._voitureJoueur.allumerPhares();
-
-            for (const voiture of this._voituresAI) {
+            for (const voiture of this.voitures) {
                 voiture.allumerPhares();
             }
         }
+    }
+
+    public get voitures(): Voiture[] {
+        return this._voituresAI.concat([this._voitureJoueur]);
     }
 }

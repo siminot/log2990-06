@@ -1,5 +1,13 @@
-.container {
+#container {
     height:100%;
-    width:100%;   
+    width:100%;
+}
+
+table {
+    height:100%;
+    width:100%;
+}
+
+#col1, #col2, #col3 {
     background-color:red;
 }

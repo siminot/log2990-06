@@ -24,6 +24,9 @@ import { DefinitionComponent } from "./crosswords/definition/definition.componen
 import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
+import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
+import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
+import { FileUploadComponent } from './crosswords/file-upload/file-upload.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +38,9 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         ConfigPartieComponent,
         DirectiveFocusDirective,
         DefinitionHComponent,
-        DefinitionVComponent
+        DefinitionVComponent,
+        InfoJoueur1Component,
+        FileUploadComponent
     ],
     imports: [
         BrowserModule,
@@ -51,7 +56,8 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
         GestionnaireClavier,
         GestionnaireEcran,
         RequeteDeGrilleService,
-        HttpeReqService
+        HttpeReqService,
+        InfojoueurService
     ],
     bootstrap: [ AppComponent ],
     exports: [

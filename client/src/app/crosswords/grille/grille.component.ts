@@ -1,10 +1,11 @@
-import { Component, OnInit} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
 import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import * as CONST from "../constantes";
+import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 
 @Component({
   selector: "app-grille",
@@ -24,7 +25,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  public constructor(private listeMotsService: RequeteDeGrilleService) {
+  public constructor(private listeMotsService: RequeteDeGrilleService,
+                     private _servicePointage: InfojoueurService) {
     this.lockedLetter = [];
     for (let i: number = 0 ; i < CONST.TAILLE_TABLEAU ; i++) {
       this.lockedLetter[i] = [];
@@ -39,7 +41,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => { this.mots = mots; console.log(this.mots);});
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
+      .subscribe((mots) => { this.mots = mots; console.log(this.mots); });
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
@@ -195,6 +198,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.lockLettersFromWord();
       this.miseEvidenceMot("green");
       this.removeFocusFromSelectedWord();
+      this._servicePointage.incrementationPointage(CONST.INCR_POINTAGE_MOT_TROUVE);
     }
 
     return valid;

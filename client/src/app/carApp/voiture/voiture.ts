@@ -3,8 +3,6 @@ import { Engine } from "./engine";
 import { MS_TO_SECONDS, GRAVITY, PI_OVER_2 } from "../constants";
 import { Wheel } from "./wheel";
 import { GroupePhares } from "./groupePhares";
-import { TEMPS_JOURNEE_INITIAL } from "../scene/GestionnaireScene";
-import { TempsJournee } from "../skybox/skybox";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -171,10 +169,6 @@ export class Voiture extends Object3D {
     private initialiserPhares(): void {
         this.phares.initialiser();
         this.add(this.phares);
-
-        TEMPS_JOURNEE_INITIAL === TempsJournee.Jour
-            ? this.eteindrePhares()
-            : this.allumerPhares();
     }
 
     private physicsUpdate(deltaTime: number): void {

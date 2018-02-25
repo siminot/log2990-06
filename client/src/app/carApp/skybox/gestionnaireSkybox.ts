@@ -38,6 +38,8 @@ export class GestionnaireSkybox {
     public constructor() {
         this.environnementsJour = [];
         this.environnementsNuit = [];
+        this.indexAncienneSkyboxJour = 0;
+        this.indexAncienneSkyboxNuit = 0;
         this.chargerSkybox();
         this.changerPourNuit();
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 

@@ -22,14 +22,14 @@ describe("Phare", () => {
 
     it("Phare s'allume", () => {
         phare.allumer();
-        expect(phare["materielSphere"].color.getHex()).toBe(COULEUR_ALLUMEE);
+        expect(phare["materielAmpoule"].color.getHex()).toBe(COULEUR_ALLUMEE);
         expect(phare.color.getHex()).toBe(COULEUR_ALLUMEE);
         expect(phare.intensity).toBe(INTENSITE_ALLUME);
     });
 
     it("Phare s'eteint", () => {
         phare.eteindre();
-        expect(phare["materielSphere"].color.getHex()).toBe(COULEUR_ETEINTE);
+        expect(phare["materielAmpoule"].color.getHex()).toBe(COULEUR_ETEINTE);
         expect(phare.intensity).toBeCloseTo(INTENSITE_ETEINT);
     });
 });

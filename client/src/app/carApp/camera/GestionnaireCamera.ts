@@ -6,7 +6,7 @@ import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 
-const CAMERA_INITIALE: number = 1;
+const CAMERA_INITIALE: number = 0;
 
 @Injectable()
 export class GestionnaireCamera {

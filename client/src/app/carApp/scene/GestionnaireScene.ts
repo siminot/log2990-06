@@ -7,8 +7,6 @@ import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 @Injectable()
 export class GestionnaireScene extends Scene {
 
-    private estModeNuit: boolean;
-
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
     }
@@ -16,20 +14,23 @@ export class GestionnaireScene extends Scene {
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures) {
         super();
-        this.estModeNuit = true;
     }
 
     // Creation de la scene
 
     public creerScene(): void {
-        this.initialiserEnvironnement();
+        this.ajouterSkybox();
         this.ajouterPiste();
         this.ajouterVoitureJoueur();
         this.ajouterVoituresAI();
     }
 
-    private initialiserEnvironnement(): void {
+    private ajouterSkybox(): void {
         this.add(this.gestionnaireSkybox.skybox);
+    }
+
+    private retirerSkybox(): void {
+        this.remove(this.gestionnaireSkybox.skybox);
     }
 
     private ajouterPiste(): void {
@@ -41,9 +42,7 @@ export class GestionnaireScene extends Scene {
     }
 
     private ajouterVoituresAI(): void {
-        const VOITURES_AI: Voiture[] = this.gestionnaireVoiture.voituresAI;
-
-        for (const VOITURE of VOITURES_AI) {
+        for (const VOITURE of this.gestionnaireVoiture.voituresAI) {
             this.add(VOITURE);
         }
     }
@@ -55,16 +54,16 @@ export class GestionnaireScene extends Scene {
     }
 
     public changerTempsJournee(): void {
-        this.estModeNuit = !this.estModeNuit;
-        this.remove(this.gestionnaireSkybox.skybox);
+        this.retirerSkybox();
         this.gestionnaireSkybox.changerTempsJournee();
+        this.ajouterSkybox();
+
         this.gestionnaireVoiture.changerTempsJournee();
-        this.add(this.gestionnaireSkybox.skybox);
     }
 
     public changerDecor(): void {
-        this.remove(this.gestionnaireSkybox.skybox);
+        this.retirerSkybox();
         this.gestionnaireSkybox.changerDecor();
-        this.add(this.gestionnaireSkybox.skybox);
+        this.ajouterSkybox();
     }
 }

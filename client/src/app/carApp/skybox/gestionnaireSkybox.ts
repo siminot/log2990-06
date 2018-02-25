@@ -25,7 +25,7 @@ export const SKYBOX: ConstructionSkybox[] = [
 export class GestionnaireSkybox {
 
     private tempsJournee: TempsJournee;
-    private skyboxCourante: Mesh;
+    private skyboxCourante: Skybox;
     private environnementsJour: Skybox[];
     private environnementsNuit: Skybox[];
 
@@ -34,11 +34,10 @@ export class GestionnaireSkybox {
     }
 
     public constructor() {
-        this.tempsJournee = TempsJournee.Nuit;
         this.environnementsJour = [];
         this.environnementsNuit = [];
         this.chargerSkybox();
-        this.skyboxCourante = this.environnementsNuit[0];
+        this.changerPourNuit();
     }
 
     private chargerSkybox(): void {
@@ -51,31 +50,41 @@ export class GestionnaireSkybox {
         }
     }
 
-    private positionCouranteSkybox(): number {
-        return this.obtenirPaysagesSelonTemps().findIndex((paysage) => this.skyboxCourante === paysage );
-    }
-
-    private obtenirPaysagesSelonTemps(): Skybox[] {
-        if (this.tempsJournee === TempsJournee.Nuit) {
-            return this.environnementsNuit;
-        } else {
-            return this.environnementsJour;
-        }
-    }
-
     public changerTempsJournee(): void {
-        if (this.tempsJournee === TempsJournee.Nuit) {
-            this.tempsJournee = TempsJournee.Jour;
-            this.skyboxCourante = this.environnementsJour[0];
-        } else {
-            this.tempsJournee = TempsJournee.Nuit;
-            this.skyboxCourante = this.environnementsNuit[0];
-        }
+        this.estJour
+            ? this.changerPourNuit()
+            : this.changerPourJour();
+
         this.changerDecor();
     }
 
+    private changerPourJour(): void {
+        this.tempsJournee = TempsJournee.Jour;
+        this.skyboxCourante = this.environnementsJour[0];
+    }
+
+    private changerPourNuit(): void {
+        this.tempsJournee = TempsJournee.Nuit;
+        this.skyboxCourante = this.environnementsNuit[0];
+    }
+
     public changerDecor(): void {
-        const tableau: Skybox[] = this.obtenirPaysagesSelonTemps();
-        this.skyboxCourante = tableau[(this.positionCouranteSkybox() + 1) % tableau.length];
+        this.skyboxCourante = this.paysagesSelonTemps[(this.positionCouranteSkybox + 1) % this.paysagesSelonTemps.length];
+    }
+
+    private get positionCouranteSkybox(): number {
+        return this.paysagesSelonTemps.findIndex((paysage: Skybox) => this.skyboxCourante === paysage );
+    }
+
+    private get paysagesSelonTemps(): Skybox[] {
+        if (this.estJour) {
+            return this.environnementsJour;
+        } else {
+            return this.environnementsNuit;
+        }
+    }
+
+    private get estJour(): boolean {
+        return this.tempsJournee === TempsJournee.Jour;
     }
 }

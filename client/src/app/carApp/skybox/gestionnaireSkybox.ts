@@ -26,6 +26,8 @@ export class GestionnaireSkybox {
 
     private tempsJournee: TempsJournee;
     private skyboxCourante: Skybox;
+    private indexAncienneSkyboxJour: number;
+    private indexAncienneSkyboxNuit: number;
     private environnementsJour: Skybox[];
     private environnementsNuit: Skybox[];
 
@@ -61,15 +63,22 @@ export class GestionnaireSkybox {
     }
 
     private changerPourJour(): void {
-        this.skyboxCourante = this.environnementsJour[0];
+        this.skyboxCourante = this.environnementsJour[this.indexAncienneSkyboxJour];
     }
 
     private changerPourNuit(): void {
-        this.skyboxCourante = this.environnementsNuit[0];
+        this.skyboxCourante = this.environnementsNuit[this.indexAncienneSkyboxNuit];
     }
 
     public changerDecor(): void {
+        this.miseAJourAncienIndex();
         this.skyboxCourante = this.paysagesSelonTemps[(this.positionCouranteSkybox + 1) % this.paysagesSelonTemps.length];
+    }
+
+    private miseAJourAncienIndex(): void {
+        this.estJour
+            ? this.indexAncienneSkyboxJour = this.positionCouranteSkybox
+            : this.indexAncienneSkyboxNuit = this.positionCouranteSkybox;
     }
 
     private get positionCouranteSkybox(): number {

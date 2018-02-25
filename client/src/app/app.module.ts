@@ -24,8 +24,9 @@ import { DefinitionComponent } from "./crosswords/definition/definition.componen
 import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
-import { InfoJoueur1Component } from './crosswords/info-joueur1/info-joueur1.component';
+import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
+import { FileUploadComponent } from './crosswords/file-upload/file-upload.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
         DirectiveFocusDirective,
         DefinitionHComponent,
         DefinitionVComponent,
-        InfoJoueur1Component
+        InfoJoueur1Component,
+        FileUploadComponent
     ],
     imports: [
         BrowserModule,

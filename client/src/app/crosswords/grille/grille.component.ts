@@ -5,6 +5,7 @@ import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import * as CONST from "../constantes";
+import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 
 @Component({
   selector: "app-grille",
@@ -19,12 +20,15 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private positionLettresSelectionnees: string[];
   private positionCourante: number;
   private lockedLetter: boolean[][];
+  private _pointage: number;
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
+  private _subscriptionPointage: Subscription;
 
-  public constructor(private listeMotsService: RequeteDeGrilleService) {
+  public constructor(private listeMotsService: RequeteDeGrilleService,
+                      private _servicePointage: InfojoueurService) {
     this.lockedLetter = [];
     for (let i: number = 0 ; i < CONST.TAILLE_TABLEAU ; i++) {
       this.lockedLetter[i] = [];
@@ -32,6 +36,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
         this.lockedLetter[i][j] = false;
       }
     }
+
+    this._pointage = 0;
   }
 
   public ngOnInit(): void {
@@ -56,6 +62,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
           this.focusSurBonneLettre();
         }
     });
+
+    this._subscriptionPointage = this._servicePointage.serviceReceptionPointage()
+      .subscribe((pointage) => {
+        this._pointage = pointage;
+      });
   }
 
   private appliquerStyleDefautGrille(): void {

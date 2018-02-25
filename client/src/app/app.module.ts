@@ -26,7 +26,6 @@ import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
-import { FileUploadComponent } from './crosswords/file-upload/file-upload.component';
 
 @NgModule({
     declarations: [
@@ -39,8 +38,7 @@ import { FileUploadComponent } from './crosswords/file-upload/file-upload.compon
         DirectiveFocusDirective,
         DefinitionHComponent,
         DefinitionVComponent,
-        InfoJoueur1Component,
-        FileUploadComponent
+        InfoJoueur1Component
     ],
     imports: [
         BrowserModule,

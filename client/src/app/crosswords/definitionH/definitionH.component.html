@@ -1,10 +1,10 @@
-<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-<p>Horizontale</p>
-<ul class="heroes" *ngFor="let mot of mots">
-  <li *ngIf="mot.estVertical"  class="badge">
-    <span *ngIf="mot.activer; else elseBlock2" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
-    <ng-template #elseBlock2><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
-  </li>
-</ul>
-
-<!-- <button (click)="afficherRegle()">Règle du jeu</button> -->
+<div id="container">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <p>Horizontale</p>
+  <ul class="heroes" *ngFor="let mot of mots">
+    <li *ngIf="mot.estVertical"  class="badge">
+      <span *ngIf="mot.activer; else elseBlock2" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
+      <ng-template #elseBlock2><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
+    </li>
+  </ul>
+</div>

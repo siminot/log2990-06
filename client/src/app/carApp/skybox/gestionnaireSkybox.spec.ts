@@ -21,22 +21,28 @@ describe ("GestionnaireSkybox", () => {
     });
 
     it ("Changer temps journee pour jour", () => {
-        const temps: TempsJournee = TempsJournee.Jour;
+        gestionnaire.changerTempsJournee(TempsJournee.Nuit);
+        const tempsTest: TempsJournee = TempsJournee.Jour;
         const skyboxAvant: string = gestionnaire["skyboxCourante"]["URL_ENVIRONNEMENT"];
-        gestionnaire.changerTempsJournee(temps);
+        const tempsAvant: TempsJournee = gestionnaire["skyboxCourante"]["tempsJournee"];
+        gestionnaire.changerTempsJournee(tempsTest);
         const skyboxApres: string = gestionnaire["skyboxCourante"]["URL_ENVIRONNEMENT"];
         const tempsApres: TempsJournee = gestionnaire["skyboxCourante"]["tempsJournee"];
         expect(skyboxAvant).not.toEqual(skyboxApres);
-        expect(tempsApres).toEqual(temps);
+        expect(tempsApres).toEqual(tempsTest);
+        expect(tempsApres).not.toEqual(tempsAvant);
     });
 
     it ("Changer temps journee pour nuit", () => {
-        const temps: TempsJournee = TempsJournee.Nuit;
+        gestionnaire.changerTempsJournee(TempsJournee.Jour);
+        const tempsTest: TempsJournee = TempsJournee.Nuit;
         const skyboxAvant: string = gestionnaire["skyboxCourante"]["URL_ENVIRONNEMENT"];
-        gestionnaire.changerTempsJournee(temps);
+        const tempsAvant: TempsJournee = gestionnaire["skyboxCourante"]["tempsJournee"];
+        gestionnaire.changerTempsJournee(tempsTest);
         const skyboxApres: string = gestionnaire["skyboxCourante"]["URL_ENVIRONNEMENT"];
         const tempsApres: TempsJournee = gestionnaire["skyboxCourante"]["tempsJournee"];
         expect(skyboxAvant).not.toEqual(skyboxApres);
-        expect(tempsApres).toEqual(temps);
+        expect(tempsApres).toEqual(tempsTest);
+        expect(tempsApres).not.toEqual(tempsAvant);
     });
 });

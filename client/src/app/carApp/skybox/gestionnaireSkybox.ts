@@ -26,61 +26,43 @@ export class GestionnaireSkybox {
 
     private tempsJournee: TempsJournee;
     private skyboxCourante: Skybox;
-    private indexAncienneSkyboxJour: number;
-    private indexAncienneSkyboxNuit: number;
-    private environnementsJour: Skybox[];
-    private environnementsNuit: Skybox[];
+    private indexAncienneSkybox: number[];
+    private environnements: Skybox[][];
 
     public get skybox(): Mesh {
         return this.skyboxCourante;
     }
 
     public constructor() {
-        this.environnementsJour = [];
-        this.environnementsNuit = [];
-        this.indexAncienneSkyboxJour = 0;
-        this.indexAncienneSkyboxNuit = 0;
+        this.environnements = [[], []];
+        this.indexAncienneSkybox = [0, 0];
+        this.tempsJournee = TempsJournee.Nuit;
         this.chargerSkybox();
-        this.changerPourNuit();
+        this.miseAJourSkybox();
     }
 
     private chargerSkybox(): void {
         for (const liens of SKYBOX) {
-            if (liens.tempsJournee === TempsJournee.Jour) {
-                this.environnementsJour.push(new Skybox(TempsJournee.Jour, liens.paysage, liens.plancher));
-            } else {
-                this.environnementsNuit.push(new Skybox(TempsJournee.Nuit, liens.paysage, liens.plancher));
-            }
+            this.environnements[liens.tempsJournee].push(new Skybox(liens.tempsJournee, liens.paysage, liens.plancher));
         }
     }
 
     public changerTempsJournee(temps: TempsJournee): void {
+        this.miseAJourAncienIndex();
         this.tempsJournee = temps;
-
-        this.estJour
-            ? this.changerPourJour()
-            : this.changerPourNuit();
-
-        this.changerDecor();
+        this.miseAJourSkybox();
     }
 
-    private changerPourJour(): void {
-        this.skyboxCourante = this.environnementsJour[this.indexAncienneSkyboxJour];
-    }
-
-    private changerPourNuit(): void {
-        this.skyboxCourante = this.environnementsNuit[this.indexAncienneSkyboxNuit];
+    private miseAJourSkybox(): void {
+        this.skyboxCourante = this.environnements[this.tempsJournee][this.indexAncienneSkybox[this.tempsJournee]];
     }
 
     public changerDecor(): void {
-        this.miseAJourAncienIndex();
         this.skyboxCourante = this.paysagesSelonTemps[(this.positionCouranteSkybox + 1) % this.paysagesSelonTemps.length];
     }
 
     private miseAJourAncienIndex(): void {
-        this.estJour
-            ? this.indexAncienneSkyboxJour = this.positionCouranteSkybox
-            : this.indexAncienneSkyboxNuit = this.positionCouranteSkybox;
+        this.indexAncienneSkybox[this.tempsJournee] = this.positionCouranteSkybox;
     }
 
     private get positionCouranteSkybox(): number {
@@ -88,14 +70,6 @@ export class GestionnaireSkybox {
     }
 
     private get paysagesSelonTemps(): Skybox[] {
-        if (this.estJour) {
-            return this.environnementsJour;
-        } else {
-            return this.environnementsNuit;
-        }
-    }
-
-    private get estJour(): boolean {
-        return this.tempsJournee === TempsJournee.Jour;
+        return this.environnements[this.tempsJournee];
     }
 }

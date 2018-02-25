@@ -6,5 +6,6 @@ export const DIZAINE: number = 10;
 
 export const COULEUR_BORDURE_CASE_DEFAUT: string = "black";
 export const LARGEUR_BORDURE_CASE_DEFAUT: string = "1px";
-
 export const LARGEUR_BORDURE_CASE_CIBLE: string = "2px";
+
+export const INCR_POINTAGE_MOT_TROUVE: number = 10;

@@ -19,6 +19,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     this._subscriptionPointage = this._servicePointage.serviceReceptionPointage()
       .subscribe((pointage) => {
         this._pointage = pointage;
+        console.log(this._pointage);
       })
   }
 

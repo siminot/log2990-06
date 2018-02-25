@@ -45,6 +45,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
+    this._pointage = this._servicePointage.getPointage();
+
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => { this.mots = mots; console.log(this.mots);});
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
@@ -66,7 +68,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this._subscriptionPointage = this._servicePointage.serviceReceptionPointage()
       .subscribe((pointage) => {
         this._pointage = pointage;
-      });
+        console.log("GOT VALUE FROM SUBSCRIBE IN GRILLE COMPONENT");
+    });
   }
 
   private appliquerStyleDefautGrille(): void {
@@ -207,6 +210,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.miseEvidenceMot("green");
       this.removeFocusFromSelectedWord();
       // INSERTION DU .NEXT DU BEHAVIOR SUBJECT ICI.
+      this._servicePointage.serviceEnvoiePointage(10);
     }
 
     return valid;
@@ -334,5 +338,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
+    this._subscriptionPointage.unsubscribe();
   }
 }

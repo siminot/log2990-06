@@ -25,6 +25,7 @@ import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/r
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 import { InfoJoueur1Component } from './crosswords/info-joueur1/info-joueur1.component';
+import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { InfoJoueur1Component } from './crosswords/info-joueur1/info-joueur1.com
         GestionnaireClavier,
         GestionnaireEcran,
         RequeteDeGrilleService,
-        HttpeReqService
+        HttpeReqService,
+        InfojoueurService
     ],
     bootstrap: [ AppComponent ],
     exports: [

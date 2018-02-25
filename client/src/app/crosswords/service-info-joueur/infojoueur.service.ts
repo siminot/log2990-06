@@ -4,7 +4,6 @@ import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class InfojoueurService {
-
   // Déclaration du sujet et de l'observable ici.
   private _pointage: number;
   private _pointageSujet: Subject<number>;
@@ -13,11 +12,12 @@ export class InfojoueurService {
   public constructor() {
     this._pointage = 0;
     this._pointageSujet = new Subject<number>();
-    this._pointageObservable$ = new Observable<number>();
+    this._pointageObservable$ = this._pointageSujet.asObservable();
   }
 
   public serviceEnvoiePointage(pointage: number): void {
-    this._pointageSujet.next(pointage);
+    this._pointage += pointage;
+    this._pointageSujet.next(this._pointage);
   }
 
   public serviceReceptionPointage(): Observable<number> {

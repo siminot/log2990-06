@@ -8,6 +8,7 @@ import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
   styleUrls: ["./info-joueur1.component.css"]
 })
 export class InfoJoueur1Component implements OnInit, OnDestroy {
+
   private _pointage: number;
   private _subscriptionPointage: Subscription;
 

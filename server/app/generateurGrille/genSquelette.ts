@@ -1,4 +1,4 @@
-import { TAILLE_TABLEAU, NOIR, HEURISTIQUE_LNG_MOT } from "./constantes";
+import { TAILLE_TABLEAU, TAILLE_MINIMUM, HEURISTIQUE_LNG_MOT, PROB_CASE_N, NOIR, CASE_OK } from "./constantes";
 
 export class GenSquelette {
 
@@ -7,14 +7,16 @@ export class GenSquelette {
     constructor() {
         this.grille = new Array<Array<string>>();
         this.initGrille();
-        // Pour Compil serveur
+        this.ecrireLigne(0);
+        this.probaDeContinuerCaseNoire();
         this.trouverIndexFinDeMot(0);
+        this.verifMotRentre(0, 0, true);
     }
 
     private initGrille(): void {
-        this.grille = new Array(TAILLE_TABLEAU).fill(NOIR);
+        this.grille = new Array(TAILLE_TABLEAU).fill(CASE_OK);
         for (let i = 0; i < TAILLE_TABLEAU; i++) {
-            this.grille[i] = new Array(TAILLE_TABLEAU).fill(NOIR);
+            this.grille[i] = new Array(TAILLE_TABLEAU).fill(CASE_OK);
         }
     }
 
@@ -26,23 +28,54 @@ export class GenSquelette {
         let indice = 0;
 
         while (this.probabiliterDeContinuerMot(indice, indiceDep)) {
-            indice++;
+            ++indice;
         }
 
         return indice + indiceDep;
     }
 
-    // TESTER QUAND ON VA AVOIR UNE BONNE HEURISTIQUE
     private probabiliterDeContinuerMot(indice: number, indiceDep: number): boolean {
         if (this.indicePasDansGrille(indice + indiceDep)) {
             return false;
-        } else if (indice <= 2) {
+        } else if (indice <= TAILLE_MINIMUM) {
             return true;
         }
 
         const prob = 1 - indice / (HEURISTIQUE_LNG_MOT * (TAILLE_TABLEAU - indiceDep));
 
         return Math.random() < prob ? true : false;
+    }
+
+    private probaDeContinuerCaseNoire(): boolean {
+        return Math.random() < PROB_CASE_N ? true : false;
+    }
+
+    private ecrireLigne(i: number): void {
+        return;
+    }
+
+    private verifMotRentre(position: number, indiceDep: number, estVertical: boolean): number {
+        if (this.indicePasDansGrille(position) || this.indicePasDansGrille(indiceDep)) {
+            return 0;
+        }
+        let lng = 0;
+        for (let i = indiceDep; i < TAILLE_TABLEAU; i++) {
+            if (estVertical) {
+                if (this.grille[i][position] !== NOIR) {
+                    lng++;
+                } else {
+                    return lng;
+                }
+            } else {
+                if (this.grille[position][i] !== NOIR) {
+                    lng++;
+                } else {
+                    return lng;
+                }
+            }
+        }
+
+        return lng;
     }
 
     private indicePasDansGrille(indice: number): boolean {

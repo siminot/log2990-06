@@ -28,7 +28,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private _subscriptionPointage: Subscription;
 
   public constructor(private listeMotsService: RequeteDeGrilleService,
-                      private _servicePointage: InfojoueurService) {
+                     private _servicePointage: InfojoueurService) {
     this.lockedLetter = [];
     for (let i: number = 0 ; i < CONST.TAILLE_TABLEAU ; i++) {
       this.lockedLetter[i] = [];
@@ -47,7 +47,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
     this._pointage = this._servicePointage.getPointage();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => { this.mots = mots; console.log(this.mots);});
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
+      .subscribe((mots) => { this.mots = mots; console.log(this.mots); });
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
@@ -208,7 +209,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.lockLettersFromWord();
       this.miseEvidenceMot("green");
       this.removeFocusFromSelectedWord();
-      this._servicePointage.serviceEnvoiePointage(CONST.INCR_POINTAGE_MOT_TROUVE);
+      this._servicePointage.incrementationPointage(CONST.INCR_POINTAGE_MOT_TROUVE);
     }
 
     return valid;

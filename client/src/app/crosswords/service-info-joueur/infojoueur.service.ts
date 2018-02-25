@@ -15,7 +15,7 @@ export class InfojoueurService {
     this._pointageObservable$ = this._pointageSujet.asObservable();
   }
 
-  public serviceEnvoiePointage(pointage: number): void {
+  public incrementationPointage(pointage: number): void {
     this._pointage += pointage;
     this._pointageSujet.next(this._pointage);
   }
@@ -27,5 +27,4 @@ export class InfojoueurService {
   public getPointage(): number {
     return this._pointage;
   }
-
 }

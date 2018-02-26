@@ -22,6 +22,8 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   private _timer: number;
   private _formatedTimer: string;
 
+  private _timerObservable$: Observable<number>;
+
   private _subscriptionNbMotsDecouv: Subscription;
   private _subscriptionListeMots: Subscription;
 
@@ -31,19 +33,17 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     this._nbMotsDecouverts = 0;
     this._listeMots = [];
     this._timer = 0;
+    this._timerObservable$ = TimerObservable.create(0, 1000);
    }
 
   public ngOnInit(): void {
     this.initialiserSouscriptions();
     this._barreProgression = document.getElementById("progress-bar");
-
-    const timer: Observable<number> = TimerObservable.create(0, 1000);
-    timer.subscribe((t: number) => { this._timer = t; this.formatterTimer(); });
   }
 
   public formatterTimer(): void {
-    let tmpTimer = this._timer;
-    let heures: number = 0, min: number = 0, sec: number = 0;
+    let tmpTimer: number = this._timer, heures: number = 0, min: number = 0, sec: number = 0;
+
     heures = Math.floor(tmpTimer / 3600) % 24;
     tmpTimer -= heures;
     min = Math.floor(tmpTimer / 60) % 60;
@@ -60,6 +60,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   private initialiserSouscriptions(): void {
     this.souscrireListeDeMots();
     this.souscrireMotsDecouverts();
+    this.souscrireTimer();
   }
 
   private souscrireListeDeMots(): void {
@@ -75,6 +76,13 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
         this._nbMotsDecouverts = pointage;
         this.majBarreProgression();
     });
+  }
+
+  private souscrireTimer(): void {
+    this._timerObservable$
+      .subscribe((t: number) => {
+        this._timer = t; this.formatterTimer();
+      });
   }
 
   private desinscrireSouscriptions(): void {

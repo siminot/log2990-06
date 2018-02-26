@@ -63,7 +63,7 @@
     "no-empty-interface": true,
     "no-eval": true,
     "no-inferrable-types": [
-      true,
+      false,
       "ignore-params",
       "ignore-properties"
     ],
@@ -163,7 +163,7 @@
     "prefer-conditional-expression": [true, "check-else-if"],
     "switch-default": true,
     "typedef": [
-      false, 
+      true, 
       "call-signature", 
       "parameter", 
       "member-variable-declaration",

@@ -8,8 +8,8 @@ import { MotAPI } from "./MotAPI";
 import { FormatteurDeMots } from "./FormatteurDeMots";
 import { MessagerAPI } from "./MessagerAPI";
 
-const NOMBRE_MAX_REQUETE = 1000;
-const MESSAGE_ERREUR_API_EXTERNE = "Erreur de l'API externe";
+const NOMBRE_MAX_REQUETE: number = 1000;
+const MESSAGE_ERREUR_API_EXTERNE: string = "Erreur de l'API externe";
 
 module moduleServiceLexical {
 
@@ -17,13 +17,13 @@ module moduleServiceLexical {
     export class ServiceLexical {
 
         private async obtenirMotsDeLAPI(contrainte: string, nombreDeMots: number): Promise<MotAPI[]> {
-            const messager = new MessagerAPI();
+            const messager: MessagerAPI = new MessagerAPI();
 
             return messager.obtenirMotsDeLAPI(contrainte, nombreDeMots);
         }
 
         private obtenirMotsFormattes(motsAPI: MotAPI[], frequence: Frequence): Mot[] {
-            const formatteur = new FormatteurDeMots(motsAPI);
+            const formatteur: FormatteurDeMots = new FormatteurDeMots(motsAPI);
 
             return formatteur.obtenirMots(frequence);
         }

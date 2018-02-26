@@ -5,46 +5,46 @@ import * as assert from "assert";
 {
     describe("Objet Definition", () => {
         describe("Methode contient(mot)", () => {
-            const MOT = "test";
+            const MOT: string = "test";
             const TYPEMOT: TypeMot = TypeMot.Nom;
 
             it("détection au début de la définition", () => {
-                const DEF = "n\tTest de quelque chose";
+                const DEF: string = "n\tTest de quelque chose";
                 const DEFINITION: Definition = new Definition(TYPEMOT, DEF);
 
                 assert.equal(DEFINITION.contient(MOT), true);
             });
 
             it("détection au milieu de la définition", () => {
-                const DEF = "n\tAction d'effectuer un test ou un essai";
+                const DEF: string = "n\tAction d'effectuer un test ou un essai";
                 const DEFINITION: Definition = new Definition(TYPEMOT, DEF);
 
                 assert.equal(DEFINITION.contient(MOT), true);
             });
 
             it("détection à la fin de la définition", () => {
-                const DEF = "n\tAction de faire un test";
+                const DEF: string = "n\tAction de faire un test";
                 const DEFINITION: Definition = new Definition(TYPEMOT, DEF);
 
                 assert.equal(DEFINITION.contient(MOT), true);
             });
 
             it("détection d'un mot similaire en début de mot", () => {
-                const DEF = "n\tAction de tester une fonction";
+                const DEF: string = "n\tAction de tester une fonction";
                 const DEFINITION: Definition = new Definition(TYPEMOT, DEF);
 
                 assert.equal(DEFINITION.contient(MOT), true);
             });
 
             it("détection d'un mot similaire en milieu de mot", () => {
-                const DEF = "n\tAction d'attester quelqu'un";
+                const DEF: string = "n\tAction d'attester quelqu'un";
                 const DEFINITION: Definition = new Definition(TYPEMOT, DEF);
 
                 assert.equal(DEFINITION.contient(MOT), true);
             });
 
             it("détection d'un mot similaire en fin de mot", () => {
-                const DEF = "n\tJ'attest ce que tu dis avec une faute";
+                const DEF: string = "n\tJ'attest ce que tu dis avec une faute";
                 const DEFINITION: Definition = new Definition(TYPEMOT, DEF);
 
                 assert.equal(DEFINITION.contient(MOT), true);
@@ -52,7 +52,7 @@ import * as assert from "assert";
 
             it("aucun mot détecté", () => {
                 const typeMot: TypeMot = TypeMot.Nom;
-                const DEF = "n\tAction d'essayer quelque chose";
+                const DEF: string = "n\tAction d'essayer quelque chose";
                 const DEFINITION: Definition = new Definition(typeMot, DEF);
 
                 assert.equal(DEFINITION.contient(MOT), false);
@@ -60,7 +60,7 @@ import * as assert from "assert";
         });
 
         describe("Methode estNomOuVerbe()", () => {
-            const DEF = "n\tTest de quelque chose";
+            const DEF: string = "n\tTest de quelque chose";
 
             it("détection pour un nom", () => {
                 const TYPEMOT: TypeMot = TypeMot.Nom;

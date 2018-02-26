@@ -6,38 +6,38 @@ import * as assert from "assert";
     // tslint:disable: no-magic-numbers
     const genListeTest: GenerateurListeMots = new GenerateurListeMots();
 
-    const uneGrille =  [["_", "_", "_", "_", "_"],
-                        ["_", "0", "0", "_", "_"],
-                        ["_", "_", "0", "_", "_"],
-                        ["0", "_", "_", "0", "_"],
-                        ["_", "_", "_", "0", "0"]];
+    const uneGrille: string[][] =  [["_", "_", "_", "_", "_"],
+                                    ["_", "0", "0", "_", "_"],
+                                    ["_", "_", "0", "_", "_"],
+                                    ["0", "_", "_", "0", "_"],
+                                    ["_", "_", "_", "0", "0"]];
 
     describe("Tests GenerateurListeMots", () => {
 
         describe("- Tests generation des mots", () => {
 
-            it("- Le constructeur du mot devrait fonctionner", (done) => {
-                const LONGUEUR_MOT = 4;
+            it("- Le constructeur du mot devrait fonctionner", (done: MochaDone) => {
+                const LONGUEUR_MOT: number = 4;
                 assert.ok(new Mockword(false, LONGUEUR_MOT, 0, 0), "Le constructeur cause une erreur");
                 done();
             });
 
-            it("- Devrait retourner une grille", (done) => {
+            it("- Devrait retourner une grille", (done: MochaDone) => {
                 assert.ok(genListeTest.donnerUneListe(uneGrille));
                 done();
             });
         });
         describe("- Tests pour une grille quelconque", () => {
 
-            const listeMotsTest = genListeTest.donnerUneListe(uneGrille);
+            const listeMotsTest: Mockword[] = genListeTest.donnerUneListe(uneGrille);
 
-            it("- Devrait avoir 11 mots", (done) => {
+            it("- Devrait avoir 11 mots", (done: MochaDone) => {
                 assert(listeMotsTest.length === 11);
                 done();
             });
 
-            it("- Devrait avoir 6 mots horizontaux", (done) => {
-                let compteur = 0;
+            it("- Devrait avoir 6 mots horizontaux", (done: MochaDone) => {
+                let compteur: number = 0;
                 for (const mot of listeMotsTest) {
                     if (!mot.getVertical()) {
                         compteur++;
@@ -47,8 +47,8 @@ import * as assert from "assert";
                 done();
             });
 
-            it("- Devrait avoir 5 mots verticaux", (done) => {
-                let compteur = 0;
+            it("- Devrait avoir 5 mots verticaux", (done: MochaDone) => {
+                let compteur: number = 0;
                 for (const mot of listeMotsTest) {
                     if (mot.getVertical()) {
                         compteur++;
@@ -58,8 +58,8 @@ import * as assert from "assert";
                 done();
             });
 
-            it("- Devrait avoir 0 mots de 1 lettres", (done) => {
-                let compteur = 0;
+            it("- Devrait avoir 0 mots de 1 lettres", (done: MochaDone) => {
+                let compteur: number = 0;
                 for (const mot of listeMotsTest) {
                     if (mot.getLongueur() === 1) {
                         compteur++;
@@ -69,8 +69,8 @@ import * as assert from "assert";
                 done();
             });
 
-            it("- Devrait avoir 5 mots de 2 lettres", (done) => {
-                let compteur = 0;
+            it("- Devrait avoir 5 mots de 2 lettres", (done: MochaDone) => {
+                let compteur: number = 0;
                 for (const mot of listeMotsTest) {
                     if (mot.getLongueur() === 2) {
                         compteur++;
@@ -80,8 +80,8 @@ import * as assert from "assert";
                 done();
             });
 
-            it("- Devrait avoir 4 mots de 3 lettres", (done) => {
-                let compteur = 0;
+            it("- Devrait avoir 4 mots de 3 lettres", (done: MochaDone) => {
+                let compteur: number = 0;
                 for (const mot of listeMotsTest) {
                     if (mot.getLongueur() === 3) {
                         compteur++;
@@ -91,8 +91,8 @@ import * as assert from "assert";
                 done();
             });
 
-            it("- Devrait avoir 1 mot de 4 lettres", (done) => {
-                let compteur = 0;
+            it("- Devrait avoir 1 mot de 4 lettres", (done: MochaDone) => {
+                let compteur: number = 0;
                 for (const mot of listeMotsTest) {
                     if (mot.getLongueur() === 4) {
                         compteur++;
@@ -102,8 +102,8 @@ import * as assert from "assert";
                 done();
             });
 
-            it("- Devrait avoir 0 mot de 6 lettres", (done) => {
-                let compteur = 0;
+            it("- Devrait avoir 0 mot de 6 lettres", (done: MochaDone) => {
+                let compteur: number = 0;
                 for (const mot of listeMotsTest) {
                     if (mot.getLongueur() === 6) {
                         compteur++;

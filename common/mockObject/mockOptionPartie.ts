@@ -1,11 +1,11 @@
-
 // Classe de test pour les options de jeu
+
 export class MockOptionPartie {
 
     private niveauDifficultee: string;
     private nombreDeJoueurs: number;
 
-    constructor(niveau: string, nbJoueurs: number) {
+    public constructor (niveau: string, nbJoueurs: number) {
         this.niveauDifficultee = niveau;
         this.nombreDeJoueurs = nbJoueurs;
     }

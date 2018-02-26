@@ -1,9 +1,0 @@
-<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-<p>Vertical</p>
-<ul class="heroes" *ngFor="let mot of mots">
-  <li *ngIf="!mot.estVertical"  class="badge">
-    <span *ngIf="mot.activer; else elseBlock1" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
-    <ng-template #elseBlock1><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
-  </li>
-</ul>
-

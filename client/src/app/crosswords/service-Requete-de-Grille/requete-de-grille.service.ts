@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
-// import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
-import {HttpeReqService} from "../httpRequest/http-request.service";
+import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
-// import { listeMots } from "../mockObject/mockListWord";
 import { Word, LettreGrille } from "../mockObject/word";
+
+const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
 @Injectable()
 export class RequeteDeGrilleService {
-  private mots: Word[];
+  private _mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 
   private listeMotsSujet: Subject<Word[]> = new Subject<Word[]>();
@@ -19,15 +19,69 @@ export class RequeteDeGrilleService {
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   private motSelectionneObservable$: Observable<Word> = this.motSelectionneSuject.asObservable();
 
-  public constructor( private httpReq: HttpeReqService ) {
-    this.matriceDesMotsSurGrille = this.genererGrille();
-    this.httpReq.getWord().subscribe( (x) => {this.mots = x; this.serviceEnvoieMots(this.mots);
-                                              this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille); this.putWordsInGrid(); });
+  // Accesseurs
+
+  public get mots(): Word[] {
+    return this._mots;
   }
 
-  public serviceEnvoieMots(mots: Word[]): void {
+  public get matrice(): Array<Array<LettreGrille>> {
+    return this.matriceDesMotsSurGrille;
+  }
+
+  public constructor(private httpReq: HttpeReqService) {
+    this.genererGrille();
+    this.souscrireRequeteMots();
+  }
+
+  private genererGrille(): void {
+    this.matriceDesMotsSurGrille = new Array<Array<LettreGrille>>();
+    for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
+      this.matriceDesMotsSurGrille.push(new Array<LettreGrille>(TAILLE_TABLEAU));
+      for (let j: number = 0; j < TAILLE_TABLEAU; j++) {
+        this.matriceDesMotsSurGrille[i][j] = CASE_NOIR;
+      }
+    }
+  }
+
+  // Requetes
+
+  private souscrireRequeteMots(): void {
+    this.httpReq.getWord().subscribe((x) => {
+      this._mots = x;
+      this.serviceEnvoieMots(this.mots);
+      this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
+      this.insererMotsDansGrille();
+    });
+  }
+
+  private serviceEnvoieMots(mots: Word[]): void {
     this.listeMotsSujet.next(mots);
   }
+
+  // Traitement de la grille
+
+  private insererMotsDansGrille(): void {
+    for (const objMot of this.mots) {
+      for (let indice: number = 0; indice < objMot.longeur; indice++) {
+        this.assignerLettre(objMot, indice);
+      }
+    }
+  }
+
+  private assignerLettre(objMot: Word, indice: number): void {
+    objMot.estVertical
+      ? this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY] = this.obtenirLettre(objMot, indice)
+      : this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY] = this.obtenirLettre(objMot, indice);
+  }
+
+  private obtenirLettre(objMot: Word, indice: number): LettreGrille {
+    return { caseDecouverte: false,
+             lettre: objMot.mot[indice],
+             lettreDecouverte: false };
+  }
+
+  // Services publics
 
   public serviceEnvoieMatriceLettres(matriceLettres: Array<Array<LettreGrille>>): void {
     this.matriceDesMotsSurGrilleSujet.next(matriceLettres);
@@ -47,48 +101,5 @@ export class RequeteDeGrilleService {
 
   public serviceReceptionMotSelectionne(): Observable<Word> {
     return this.motSelectionneObservable$;
-  }
-
-  public getMots(): Word[] {
-    return this.mots;
-  }
-
-  public getMatrice(): Array<Array<LettreGrille>> {
-    return this.matriceDesMotsSurGrille;
-  }
-
-  public genererGrille(): Array<Array<LettreGrille>> {
-    const matrice: Array<Array<LettreGrille>> = new Array(TAILLE_TABLEAU);
-    let caseNoir: LettreGrille;
-
-    for (let i: number = 0 ; i < TAILLE_TABLEAU ; i++) {
-      const row: Array<LettreGrille> = new Array(TAILLE_TABLEAU);
-      for (let j: number = 0 ; j < TAILLE_TABLEAU ; j++) {
-        caseNoir = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
-        row[j] = caseNoir;
-      }
-      matrice[i] = row;
-    }
-
-    return matrice;
-  }
-
-  public putWordsInGrid(): void {
-    for (const objMot of this.mots) {
-      let tmpLettreGrille: LettreGrille;
-      for (let indice: number = 0 ; indice < objMot.longeur ; indice++) {
-        tmpLettreGrille = {
-          caseDecouverte: false,
-          lettre: objMot.mot[indice],
-          lettreDecouverte: false
-        };
-
-        if (objMot.estVertical) {
-          this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY] = tmpLettreGrille;
-        } else {
-          this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY] = tmpLettreGrille;
-        }
-      }
-    }
   }
 }

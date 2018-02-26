@@ -8,16 +8,18 @@ export class DirectiveFocusDirective {
 
   public constructor() { }
 
-  @Input() public appDirectiveFocus: boolean;
+  @Input()
+  public appDirectiveFocus: boolean;
 
   @HostListener("keydown", ["$event"])
   public onKeyDown(event: KeyboardEvent): void {
-        if (this.appDirectiveFocus) {
-            if (event.keyCode < LETTRE_A || event.keyCode > LETTRE_Z) {
-              event.preventDefault();
-            } else if ((event.keyCode >= LETTRE_A && event.keyCode <= LETTRE_Z)) {
-              return;
-            }
-        }
-    }
+      if (this.appDirectiveFocus && !this.estUneLettre(event)) {
+        event.preventDefault();
+      }
+  }
+
+  private estUneLettre(event: KeyboardEvent): boolean {
+    return event.keyCode >= LETTRE_A &&
+           event.keyCode <= LETTRE_Z;
+  }
 }

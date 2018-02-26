@@ -1,4 +1,4 @@
-import { Mockword } from "./../../../common/mockObject/mockWord";
+import { MotGenerationGrille } from "./../../../common/mockObject/mockWord";
 import { GenerateurListeMots } from "./generateurListeMots";
 import * as assert from "assert";
 
@@ -18,7 +18,7 @@ import * as assert from "assert";
 
             it("- Le constructeur du mot devrait fonctionner", (done) => {
                 const LONGUEUR_MOT = 4;
-                assert.ok(new Mockword(false, LONGUEUR_MOT, 0, 0), "Le constructeur cause une erreur");
+                assert.ok(new MotGenerationGrille(false, LONGUEUR_MOT, 0, 0), "Le constructeur cause une erreur");
                 done();
             });
 

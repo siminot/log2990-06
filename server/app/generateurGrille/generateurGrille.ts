@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { Mockword } from "./../../../common/mockObject/mockWord";
+import { MotGenerationGrille } from "./../../../common/mockObject/mockWord";
 import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../serviceLexical/Mot";
 
@@ -16,7 +16,7 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
-        private listeMot: Array<Mockword>;
+        private listeMot: Array<MotGenerationGrille>;
         private generateurSquelette: GenSquelette = new GenSquelette();
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
         private motsDejaPlaces: Map<string, number> = new Map();
@@ -29,7 +29,7 @@ module Route {
         }
 
         private initMatrice(): void {
-            this.listeMot = new Array<Mockword>();
+            this.listeMot = new Array<MotGenerationGrille>();
             this.grille = new Array<Array<string>>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
@@ -40,7 +40,7 @@ module Route {
             this.motsDejaPlaces = new Map();
         }
 
-        private lireMotViaGrille(mot: Mockword) {
+        private lireMotViaGrille(mot: MotGenerationGrille) {
             let lecteur = "";
             const x = mot.getPremierX();
             const y = mot.getPremierY();
@@ -55,7 +55,7 @@ module Route {
             mot.setMot(lecteur);
         }
 
-        private ecrireDansLaGrille(mot: Mockword): void {
+        private ecrireDansLaGrille(mot: MotGenerationGrille): void {
             const x = mot.getPremierX();
             const y = mot.getPremierY();
 
@@ -77,7 +77,7 @@ module Route {
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {
 
-            const motActuel: Mockword = this.listeMot[indice];
+            const motActuel: MotGenerationGrille = this.listeMot[indice];
             this.lireMotViaGrille(motActuel);
             let lesMots: Mot[];
             const contrainte = motActuel.getMot();
@@ -128,7 +128,7 @@ module Route {
             return true;
         }
 
-        private obtenirLeMotLePlusImportant(mock: Mockword): number {
+        private obtenirLeMotLePlusImportant(mock: MotGenerationGrille): number {
             let max = 0;
             let indiceDuMax = -1;
             let temp: number;
@@ -145,7 +145,7 @@ module Route {
             return indiceDuMax;
         }
 
-        private async demanderMot(mot: Mockword): Promise<Mot[]> {
+        private async demanderMot(mot: MotGenerationGrille): Promise<Mot[]> {
 
             let url: string;
             switch (this.optionsPartie.niveau) {
@@ -165,7 +165,7 @@ module Route {
             return WebRequest.json<Mot[]>(url);
         }
 
-        private affecterMot(unMot: Mot, motAChanger: Mockword): Mot {
+        private affecterMot(unMot: Mot, motAChanger: MotGenerationGrille): Mot {
             // regarder avec simon si on doit trouver un mot en particulier dans la liste
             let indexDef = 0;
             const nbDef: number = unMot.definitions.length;

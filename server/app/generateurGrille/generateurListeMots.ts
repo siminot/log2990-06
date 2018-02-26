@@ -1,12 +1,12 @@
 import { VIDE, NOIR } from "./constantes";
-import { Mockword } from "./../../../common/mockObject/mockWord";
+import { MotGenerationGrille } from "./../../../common/mockObject/mockWord";
 
 export class GenerateurListeMots {
 
-    private listeMot: Array<Mockword> = new Array<Mockword>();
+    private listeMot: Array<MotGenerationGrille> = new Array<MotGenerationGrille>();
 
-    public donnerUneListe(uneGrille: Array<Array<string>>): Array<Mockword> {
-        this.listeMot = new Array<Mockword>();
+    public donnerUneListe(uneGrille: Array<Array<string>>): Array<MotGenerationGrille> {
+        this.listeMot = new Array<MotGenerationGrille>();
         this.genererListeMot(uneGrille);
         this.nettoyerMots();
 
@@ -21,7 +21,7 @@ export class GenerateurListeMots {
         }
     }
 
-    private genererMot(x: number, y: number, estVertical: boolean, uneGrille: Array<Array<string>>): Mockword {
+    private genererMot(x: number, y: number, estVertical: boolean, uneGrille: Array<Array<string>>): MotGenerationGrille {
 
         if (x < 0 || y < 0) {
             throw new Error("Entree negative interdite");
@@ -40,7 +40,7 @@ export class GenerateurListeMots {
                 break;
             }
         }
-        const nouveauMot: Mockword = new Mockword(estVertical, longMot, x, y);
+        const nouveauMot: MotGenerationGrille = new MotGenerationGrille(estVertical, longMot, x, y);
         nouveauMot.setMot(mot);
 
         return nouveauMot;

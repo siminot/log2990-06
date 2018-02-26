@@ -59,6 +59,28 @@ export class RequeteDeGrilleService {
     this.listeMotsSujet.next(mots);
   }
 
+  // Traitement de la grille
+
+  private insererMotsDansGrille(): void {
+    for (const objMot of this.mots) {
+      for (let indice: number = 0; indice < objMot.longeur; indice++) {
+        this.assignerLettre(objMot, indice);
+      }
+    }
+  }
+
+  private assignerLettre(objMot: Word, indice: number): void {
+    objMot.estVertical
+      ? this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY] = this.obtenirLettre(objMot, indice)
+      : this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY] = this.obtenirLettre(objMot, indice);
+  }
+
+  private obtenirLettre(objMot: Word, indice: number): LettreGrille {
+    return { caseDecouverte: false,
+             lettre: objMot.mot[indice],
+             lettreDecouverte: false };
+  }
+
   // Services publics
 
   public serviceEnvoieMatriceLettres(matriceLettres: Array<Array<LettreGrille>>): void {
@@ -79,24 +101,5 @@ export class RequeteDeGrilleService {
 
   public serviceReceptionMotSelectionne(): Observable<Word> {
     return this.motSelectionneObservable$;
-  }
-
-  private insererMotsDansGrille(): void {
-    for (const objMot of this.mots) {
-      let tmpLettreGrille: LettreGrille;
-      for (let indice: number = 0; indice < objMot.longeur; indice++) {
-        tmpLettreGrille = {
-          caseDecouverte: false,
-          lettre: objMot.mot[indice],
-          lettreDecouverte: false
-        };
-
-        if (objMot.estVertical) {
-          this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY] = tmpLettreGrille;
-        } else {
-          this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY] = tmpLettreGrille;
-        }
-      }
-    }
   }
 }

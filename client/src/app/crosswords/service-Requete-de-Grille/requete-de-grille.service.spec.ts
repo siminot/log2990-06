@@ -5,6 +5,7 @@ import { DefinitionComponent } from "../definition/definition.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
+import { listeMotsLongue } from "../mockObject/mockGrille";
 
 describe("RequeteDeGrilleService", () => {
   let serviceGrille: RequeteDeGrilleService;
@@ -21,6 +22,7 @@ describe("RequeteDeGrilleService", () => {
 
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
     serviceGrille = service;
+    serviceGrille["_mots"] = listeMotsLongue;
     infojoueur = new InfojoueurService();
   })
 );
@@ -49,8 +51,8 @@ describe("RequeteDeGrilleService", () => {
     // });
 
     it("Envoie de la liste de mots au composant de définition.", () => {
-      serviceGrille["serviceEnvoieMots"](serviceGrille["mots"]);
-      expect(definition["mots"]).toEqual(serviceGrille["mots"]);
+      serviceGrille["serviceEnvoieMots"](serviceGrille.mots);
+      expect(definition["mots"]).toEqual(serviceGrille.mots);
     });
   });
 
@@ -62,19 +64,19 @@ describe("RequeteDeGrilleService", () => {
 
     it("Envoie de la matrice au composant de définition.", () => {
       serviceGrille.serviceEnvoieMatriceLettres(serviceGrille.matrice);
-      expect(definition["mots"]).toEqual(serviceGrille["mots"]);
+      expect(definition["mots"]).toEqual(serviceGrille.mots);
     });
   });
 
   describe("Réception d'information de la part des composants.", () => {
     it("Reception d'une liste de mots de la part du composant de définition.", () => {
       definition["envoieMotSelectionne"]();
-      expect(serviceGrille["mots"]).toEqual(definition["mots"]);
+      expect(serviceGrille.mots).toEqual(definition["mots"]);
     });
 
     it("Reception de la matrice de la part du composant de définition.", () => {
       definition["envoieMatrice"]();
-      expect(serviceGrille["mots"]).toEqual(definition["mots"]);
+      expect(serviceGrille.mots).toEqual(definition["mots"]);
     });
   });
 });

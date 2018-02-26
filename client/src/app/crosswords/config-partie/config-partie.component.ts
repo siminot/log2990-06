@@ -29,8 +29,6 @@ export class ConfigPartieComponent implements OnInit {
   }
 
   public modificationDeRequeteHTTP(): void {
-    // this.lesOptions.requete = this.requete;
-    console.log(this.requete);
     this.serviceHTTP.modifierRequete(this.getRequete);
   }
 

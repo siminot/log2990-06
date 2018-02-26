@@ -5,6 +5,7 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 import { listeMots } from "../mockObject/mockListWord";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
+import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 
 describe("GrilleComponent", () => {
   let component: GrilleComponent;
@@ -15,7 +16,7 @@ describe("GrilleComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ GrilleComponent ],
       imports: [ HttpClientTestingModule ],
-      providers: [ RequeteDeGrilleService, HttpeReqService ]
+      providers: [ RequeteDeGrilleService, HttpeReqService, InfojoueurService ]
     })
     .compileComponents();
   }));

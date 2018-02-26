@@ -4,11 +4,13 @@ import { GrilleComponent } from "../grille/grille.component";
 import { DefinitionComponent } from "../definition/definition.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
+import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 
 describe("RequeteDeGrilleService", () => {
   let serviceGrille: RequeteDeGrilleService;
   let grille: GrilleComponent;
   let definition: DefinitionComponent;
+  let infojoueur: InfojoueurService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,12 +21,12 @@ describe("RequeteDeGrilleService", () => {
 
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
     serviceGrille = service;
-    expect(service).toBeDefined();
+    infojoueur = new InfojoueurService();
   })
 );
 
   it("should be created", () => {
-      grille = new GrilleComponent(serviceGrille);
+      grille = new GrilleComponent(serviceGrille, infojoueur);
       definition = new DefinitionComponent(serviceGrille);
       expect(serviceGrille).toBeDefined();
     }

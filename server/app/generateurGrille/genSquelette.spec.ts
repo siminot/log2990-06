@@ -107,14 +107,6 @@ import * as assert from "assert";
             });
         });
 
-        // describe("Test ecrireMotLigne", () => {
-        //     it("devrait ", (done) => {
-        //         assert.equal(true, monGen["grille"]);
-        //         done();
-        //     });
-
-        // });
-
     });
 
 }

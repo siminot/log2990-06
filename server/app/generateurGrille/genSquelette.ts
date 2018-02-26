@@ -107,7 +107,7 @@ export class GenSquelette {
             }
         }
         for (let i = 0; i < TAILLE_TABLEAU; i++) {
-            if (this.grille[i][j] === CASE_OK) {
+            if (this.grille[i][j] !== NOIR) {
                 this.grille[i][j] = VIDE;
             }
         }

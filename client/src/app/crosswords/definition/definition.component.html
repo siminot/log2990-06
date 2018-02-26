@@ -9,12 +9,24 @@
     <p>Horizontal</p>
   </ng-template>
 
-  <ul class="heroes" *ngFor="let mot of mots">
-    <li *ngIf="!mot.estVertical"  class="badge">
-      <span *ngIf="mot.activer; else elseBlock2" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
-      <ng-template #elseBlock2><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
-    </li>
-  </ul>
+  <div *ngIf="estVertical; else motHorizontal">
+    <ul class="heroes" *ngFor="let mot of mots">
+      <li *ngIf="!mot.estVertical"  class="badge">
+        <span *ngIf="mot.activer; else motDesactiver" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
+        <ng-template #motDesactiver><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #motHorizontal> 
+    <ul class="heroes" *ngFor="let mot of mots">
+      <li *ngIf="mot.estVertical"  class="badge">
+        <span *ngIf="mot.activer; else motDesactiver" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
+        <ng-template #motDesactiver><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
+      </li>
+    </ul>
+  </ng-template>
+
 </div>
 
-<button (click)="afficherRegle()">Règle du jeu</button>
+<button *ngIf="estVertical" (click)="afficherRegle()">Règle du jeu</button>

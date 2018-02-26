@@ -8,11 +8,12 @@ import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
   styleUrls: ["./info-joueur1.component.css"]
 })
 export class InfoJoueur1Component implements OnInit, OnDestroy {
-
+  private _nomJoueur: string;
   private _pointage: number;
   private _subscriptionPointage: Subscription;
 
   public constructor(private _servicePointage: InfojoueurService) {
+    this._nomJoueur = "Nom du joueur";
     this._pointage = 0;
    }
 

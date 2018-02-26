@@ -1,10 +1,11 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { DefinitionVComponent } from "./definitionV.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, LettreGrille } from "../mockObject/word";
+import { HttpeReqService } from "../httpRequest/http-request.service";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-describe("DefinitionComponent", () => {
-  let service: RequeteDeGrilleService;
+describe("DefinitionVComponent", () => {
   let component: DefinitionVComponent;
   let fixture: ComponentFixture<DefinitionVComponent>;
 
@@ -33,17 +34,18 @@ describe("DefinitionComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DefinitionVComponent ],
-      providers: [ RequeteDeGrilleService ]
+      imports: [HttpClientTestingModule],
+      providers: [ RequeteDeGrilleService, HttpeReqService ]
     })
     .compileComponents();
   }));
 
-  beforeEach(() => {
-    service = new RequeteDeGrilleService();
+  beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
     component = new DefinitionVComponent(service);
     fixture = TestBed.createComponent(DefinitionVComponent);
     fixture.detectChanges();
-  });
+  })
+);
 
   describe("Création d\"objets.", () => {
     it("Création d\"objet Definition.", () => {

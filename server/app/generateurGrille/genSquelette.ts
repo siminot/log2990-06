@@ -7,7 +7,6 @@ export class GenSquelette {
     constructor() {
         this.grille = new Array<Array<string>>();
         this.initGrille();
-        this.verifMotRentre(0, 0, true);
     }
 
     public getSqueletteGrille(): Array<Array<string>> {
@@ -114,30 +113,6 @@ export class GenSquelette {
         }
 
         return;
-    }
-
-    private verifMotRentre(position: number, indiceDep: number, estVertical: boolean): number {
-        if (this.indicePasDansGrille(position) || this.indicePasDansGrille(indiceDep)) {
-            return 0;
-        }
-        let lng = 0;
-        for (let i = indiceDep; i < TAILLE_TABLEAU; i++) {
-            if (estVertical) {
-                if (this.grille[i][position] !== NOIR) {
-                    lng++;
-                } else {
-                    return lng;
-                }
-            } else {
-                if (this.grille[position][i] !== NOIR) {
-                    lng++;
-                } else {
-                    return lng;
-                }
-            }
-        }
-
-        return lng;
     }
 
     private indicePasDansGrille(indice: number): boolean {

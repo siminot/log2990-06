@@ -107,39 +107,6 @@ import * as assert from "assert";
             });
         });
 
-        describe("Test verifMotRentreLigne", () => {
-            it("devrait donner 10", (done) => {
-                assert.equal(lesConst.TAILLE_TABLEAU, monGen["verifMotRentre"](0, 0, true));
-                done();
-            });
-
-            it("devrait donner 5", (done) => {
-                assert.equal(indiceBidon, monGen["verifMotRentre"](0, indiceBidon, false));
-                done();
-            });
-
-            it("devrait donner 0", (done) => {
-                assert.equal(0, monGen["verifMotRentre"](lesConst.TAILLE_TABLEAU, 0, true));
-                done();
-            });
-
-            it("devrait donner 0", (done) => {
-                assert.equal(0, monGen["verifMotRentre"](-1, 0, false));
-                done();
-            });
-
-            it("devrait donner 0", (done) => {
-                assert.equal(0, monGen["verifMotRentre"](0, lesConst.TAILLE_TABLEAU, true));
-                done();
-            });
-
-            it("devrait donner 0", (done) => {
-                assert.equal(0, monGen["verifMotRentre"](0, -1, false));
-                done();
-            });
-
-        });
-
         // describe("Test ecrireMotLigne", () => {
         //     it("devrait ", (done) => {
         //         assert.equal(true, monGen["grille"]);

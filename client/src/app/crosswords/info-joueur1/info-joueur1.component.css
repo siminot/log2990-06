@@ -67,8 +67,8 @@ table {
     border-radius:5px;
 }
 
-#nbMotsDecouverts,#timerTitre, #timer  {
-    text-align: center;
+#nbMotsDecouverts, #timerTitre, #timer  {
+    text-align: left;
     font-family: 'Press Start 2P', cursive;
     font-size: 10px;
 }

@@ -246,11 +246,13 @@ export class GrilleComponent implements OnInit, OnDestroy {
       const xPrev: number = +this.positionLettresSelectionnees[this.positionCourante][0];
       const yPrev: number = +this.positionLettresSelectionnees[this.positionCourante][1];
 
-      if (!this.lockedLetter[xPrev][yPrev]) {
-        previousElem.focus();
-        previousElem.value = "";
-      } else {
-        this.focusOnPreviousLetter();
+      if (previousElem !== null) {
+        if (!this.lockedLetter[xPrev][yPrev]) {
+          previousElem.focus();
+          previousElem.value = "";
+        } else {
+          this.focusOnPreviousLetter();
+        }
       }
     }
   }

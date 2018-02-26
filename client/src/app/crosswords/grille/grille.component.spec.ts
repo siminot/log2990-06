@@ -18,7 +18,8 @@ describe("GrilleComponent", () => {
       imports: [ HttpClientTestingModule ],
       providers: [ RequeteDeGrilleService, HttpeReqService, InfojoueurService ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch(() => { throw new Error("Erreur de la creation du test"); });
   }));
 
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
@@ -28,6 +29,8 @@ describe("GrilleComponent", () => {
     fixture = TestBed.createComponent(GrilleComponent);
     component = fixture.componentInstance;
     component.ngOnInit();
+    component["motSelectionne"] = listeMotsLongue[0];
+    component["positionLettresSelectionnees"] = [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" ];
     })
   );
 
@@ -52,8 +55,6 @@ describe("GrilleComponent", () => {
 
   describe("Gestion des touches de clavier", () => {
     it("Entree d'une lettre", () => {
-      component["motSelectionne"] = listeMotsLongue[0];
-      component["positionLettresSelectionnees"] = [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" ];
       component["positionCourante"] = 0;
       const positionInit: number = component["positionCourante"];
       const touche: KeyboardEvent = new KeyboardEvent("keydown", {
@@ -64,11 +65,33 @@ describe("GrilleComponent", () => {
     });
 
     it("Effacement d'une lettre", () => {
-      expect(true).toBeTruthy();
+      component["positionCourante"] = 1;
+      const positionInit: number = component["positionCourante"];
+      const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+        "key": "Backspace"
+      });
+      component.manageKeyEntry(touche);
+      expect(component["positionCourante"]).toBeLessThan(positionInit);
     });
 
     it("Il ne se passe rien quand une touche invalide est appuyee", () => {
-      expect(true).toBeTruthy();
+      component["positionCourante"] = 0;
+      const positionInit: number = component["positionCourante"];
+      const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+        "key": "2"
+      });
+      component.manageKeyEntry(touche);
+      expect(component["positionCourante"]).toEqual(positionInit);
+    });
+
+    it("Il ne se passe rien quand le backspace est appuyé si on est déjà au début du mot", () => {
+      component["positionCourante"] = 0;
+      const positionInit: number = component["positionCourante"];
+      const touche: KeyboardEvent = new KeyboardEvent("keydown", {
+        "key": "Backspace"
+      });
+      component.manageKeyEntry(touche);
+      expect(component["positionCourante"]).toEqual(positionInit);
     });
   });
 });

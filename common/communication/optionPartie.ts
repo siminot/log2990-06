@@ -1,3 +1,5 @@
+const DIFFICULTE_DEFAUT: string = "facile";
+
 export class OptionPartie {
     public idPartie: number; // id possiblement pour identifier une partie (en ligne)
     public nombreJoueur: number;
@@ -7,8 +9,8 @@ export class OptionPartie {
     constructor() {
         this.idPartie = 0;
         this.nombreJoueur = 0;
-        this.difficulte = "facile";
-        this.requete = "http://localhost:3000/grille/facile";
+        this.difficulte = DIFFICULTE_DEFAUT;
+        this.requete = "";
     }
 
 }

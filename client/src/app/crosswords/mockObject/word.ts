@@ -1,4 +1,4 @@
-export class Word {
+export class Mot {
     public mot: string;
     public definition: string;
     public estVertical: boolean;

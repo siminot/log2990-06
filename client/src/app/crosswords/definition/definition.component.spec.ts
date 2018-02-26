@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { DefinitionComponent } from "./definition.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Word, LettreGrille } from "../mockObject/word";
+import { Mot, LettreGrille } from "../mockObject/word";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { listeMotsLongue, grilleLettres } from "../mockObject/mockGrille";
@@ -11,31 +11,7 @@ describe("DefinitionComponent", () => {
   let fixture: ComponentFixture<DefinitionComponent>;
 
   const INDICE_MOT: number = 6;
-  const fakeWord: Word = listeMotsLongue[INDICE_MOT];
-
-/*   Word = {
-    mot: "POPO",
-    definition: "ton père en latino",
-    estVertical: true,
-    longeur: 4,
-    premierX: 0,
-    premierY: 0,
-    activer: false,
-    motTrouve: false
-  }; */
-
-/*
-  const realWordFromOurFakeList: Word = {
-    mot: "Tata",
-    definition: "Ni papa, ni  mama",
-    estVertical: true,
-    longeur: 4,
-    premierX: 3,
-    premierY: 0,
-    activer: false,
-    motTrouve: false
-  };
-*/
+  const fakeWord: Mot = listeMotsLongue[INDICE_MOT];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

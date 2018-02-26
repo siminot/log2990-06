@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Word } from "../mockObject/word";
+import { Mot } from "../mockObject/word";
 import { CONVERSION_POURCENTAGE } from "../constantes";
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Observable } from "rxjs/Observable";
@@ -16,7 +16,7 @@ import { Observable } from "rxjs/Observable";
 export class InfoJoueur1Component implements OnInit, OnDestroy {
   private _nomJoueur: string;
   private _nbMotsDecouverts: number;
-  private _listeMots: Word[];
+  private _listeMots: Mot[];
   private _barreProgression: HTMLElement;
 
   private _timer: number;

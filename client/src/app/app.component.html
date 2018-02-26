@@ -1,9 +1,10 @@
-<div style="text-align:center">
+<div style="text-align:center" id="topMenu">
     <a routerLink="/CarGame" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">Car</a>
     <a routerLink="/CrosswordsGame" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">Crossword</a>
     <a routerLink="/ConfigPartie" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">Configuration partie</a>
 
     <a routerLink="/" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">Home</a>
 </div>
-
-<router-outlet></router-outlet>
+<div id="app">
+    <router-outlet></router-outlet>
+</div>

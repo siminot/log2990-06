@@ -14,6 +14,9 @@ const INITIAL_WEIGHT_DISTRIBUTION: number = 0.5;
 const MINIMUM_SPEED: number = 0.2;
 const NUMBER_REAR_WHEELS: number = 2;
 const NUMBER_WHEELS: number = 4;
+const CAR_SURFACE: number = 3;
+const AIR_DENSITY: number = 1.2;
+const TIRE_PRESSURE: number = 1;
 
 export class Voiture extends Object3D {
     private readonly engine: Engine;
@@ -150,8 +153,7 @@ export class Voiture extends Object3D {
 
         // Angular rotation of the car
         const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
-        const omega: number = this._speed.length() / R;
-        this.rotateY(omega);
+        this.rotateY(this._speed.length() / R);
 
         this.boiteCollision.setFromCenterAndSize(this.position, this.boiteCollision.getSize()); // manque orientation de la boite...
     }
@@ -180,10 +182,9 @@ export class Voiture extends Object3D {
     }
 
     private getWeightDistribution(): number {
-        const acceleration: number = this.getAcceleration().length();
         /* tslint:disable:no-magic-numbers */
         const distribution: number =
-            this.mass + (1 / this.wheelbase) * this.mass * acceleration / 2;
+            this.mass + (1 / this.wheelbase) * this.mass * this.getAcceleration().length() / 2;
 
         return Math.min(Math.max(0.25, distribution), 0.75);
         /* tslint:enable:no-magic-numbers */
@@ -193,48 +194,40 @@ export class Voiture extends Object3D {
         const resultingForce: Vector3 = new Vector3();
 
         if (this._speed.length() >= MINIMUM_SPEED) {
-            const dragForce: Vector3 = this.getDragForce();
-            const rollingResistance: Vector3 = this.getRollingResistance();
-            resultingForce.add(dragForce).add(rollingResistance);
+            resultingForce.add(this.getDragForce()).add(this.getRollingResistance());
         }
 
         if (this.isAcceleratorPressed) {
-            const tractionForce: number = this.getTractionForce();
             const accelerationForce: Vector3 = this.direction;
-            accelerationForce.multiplyScalar(tractionForce);
+            accelerationForce.multiplyScalar(this.getTractionForce());
             resultingForce.add(accelerationForce);
         } else if (this.isBraking && this.isGoingForward()) {
-            const brakeForce: Vector3 = this.getBrakeForce();
-            resultingForce.add(brakeForce);
+            resultingForce.add(this.getBrakeForce());
         }
 
         return resultingForce;
     }
 
     private getRollingResistance(): Vector3 {
-        const tirePressure: number = 1;
         // formula taken from: https://www.engineeringtoolbox.com/rolling-friction-resistance-d_1303.html
         // tslint:disable-next-line:no-magic-numbers
-        const rollingCoefficient: number = (1 / tirePressure) * (Math.pow(this.speed.length() * 3.6 / 100, 2) * 0.0095 + 0.01) + 0.005;
+        const rollingCoefficient: number = (1 / TIRE_PRESSURE) * (Math.pow(this.speed.length() * 3.6 / 100, 2) * 0.0095 + 0.01) + 0.005;
 
         return this.direction.multiplyScalar(rollingCoefficient * this.mass * GRAVITY);
     }
 
     private getDragForce(): Vector3 {
-        const carSurface: number = 3;
-        const airDensity: number = 1.2;
         const resistance: Vector3 = this.direction;
-        resistance.multiplyScalar(airDensity * carSurface * -this.dragCoefficient * this.speed.length() * this.speed.length());
+        resistance.multiplyScalar(AIR_DENSITY * CAR_SURFACE * -this.dragCoefficient * this.speed.length() * this.speed.length());
 
         return resistance;
     }
 
     private getTractionForce(): number {
-        const force: number = this.getEngineForce();
         const maxForce: number =
             this.rearWheel.frictionCoefficient * this.mass * GRAVITY * this.weightRear * NUMBER_REAR_WHEELS / NUMBER_WHEELS;
 
-        return -Math.min(force, maxForce);
+        return -Math.min(this.getEngineForce(), maxForce);
     }
 
     private getAngularAcceleration(): number {

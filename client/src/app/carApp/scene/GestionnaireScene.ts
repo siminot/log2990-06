@@ -3,11 +3,14 @@ import { Scene } from "three";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
+import { TempsJournee } from "../skybox/skybox";
+
+export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
 @Injectable()
 export class GestionnaireScene extends Scene {
 
-    private estModeNuit: boolean;
+    private tempsJournee: TempsJournee;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
@@ -16,20 +19,34 @@ export class GestionnaireScene extends Scene {
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures) {
         super();
-        this.estModeNuit = true;
+        this.tempsJournee = TEMPS_JOURNEE_INITIAL;
     }
 
     // Creation de la scene
 
     public creerScene(): void {
-        this.initialiserEnvironnement();
+        this.ajouterElements();
+        this.initialiserTempsJournee();
+    }
+
+    private ajouterElements(): void {
+        this.ajouterSkybox();
         this.ajouterPiste();
         this.ajouterVoitureJoueur();
         this.ajouterVoituresAI();
     }
 
-    private initialiserEnvironnement(): void {
+    private initialiserTempsJournee(): void {
+        this.avancerTemps();
+        this.changerTempsJournee();
+    }
+
+    private ajouterSkybox(): void {
         this.add(this.gestionnaireSkybox.skybox);
+    }
+
+    private retirerSkybox(): void {
+        this.remove(this.gestionnaireSkybox.skybox);
     }
 
     private ajouterPiste(): void {
@@ -41,9 +58,7 @@ export class GestionnaireScene extends Scene {
     }
 
     private ajouterVoituresAI(): void {
-        const VOITURES_AI: Voiture[] = this.gestionnaireVoiture.voituresAI;
-
-        for (const VOITURE of VOITURES_AI) {
+        for (const VOITURE of this.gestionnaireVoiture.voituresAI) {
             this.add(VOITURE);
         }
     }
@@ -55,16 +70,22 @@ export class GestionnaireScene extends Scene {
     }
 
     public changerTempsJournee(): void {
-        this.estModeNuit = !this.estModeNuit;
-        this.remove(this.gestionnaireSkybox.skybox);
-        this.gestionnaireSkybox.changerTempsJournee();
-        this.gestionnaireVoiture.changerTempsJournee();
-        this.add(this.gestionnaireSkybox.skybox);
+        this.avancerTemps();
+        this.retirerSkybox();
+        this.gestionnaireSkybox.changerTempsJournee(this.tempsJournee);
+        this.ajouterSkybox();
+        this.gestionnaireVoiture.changerTempsJournee(this.tempsJournee);
+    }
+
+    private avancerTemps(): void {
+        this.tempsJournee === TempsJournee.Jour
+            ? this.tempsJournee = TempsJournee.Nuit
+            : this.tempsJournee = TempsJournee.Jour;
     }
 
     public changerDecor(): void {
-        this.remove(this.gestionnaireSkybox.skybox);
+        this.retirerSkybox();
         this.gestionnaireSkybox.changerDecor();
-        this.add(this.gestionnaireSkybox.skybox);
+        this.ajouterSkybox();
     }
 }

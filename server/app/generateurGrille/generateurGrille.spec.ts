@@ -3,8 +3,6 @@ import * as assert from "assert";
 import * as WebRequest from "web-request";
 import { Mockword } from "../../../common/mockObject/mockWord";
 
-// const genTest: GenerateurGrille = new GenerateurGrille();
-
 describe("Tests GenerateurGrille", () => {
 
     describe("- tests du constructeur", () => {
@@ -21,12 +19,11 @@ describe("Tests GenerateurGrille", () => {
             done();
         });
 
-        const TEMPS_MAXIMAL = 30000;
-        it("requeteGrille fonctionne (le serveur doit fonctionner)", async (done) => {
+        const TEMPS_MAXIMAL = 30000; // une grille doit etre retournee en moins de 30 secondes
+        it("requeteGrille fonctionne (le serveur doit fonctionner)", async () => {
             const URL_TEST = "http://localhost:3000/grille/facile";
-            const data = await WebRequest.json(URL_TEST);
+            const data: Mockword = await WebRequest.json<Mockword>(URL_TEST);
             assert.ok(data);
-            done();
 
         }).timeout(TEMPS_MAXIMAL);
     });

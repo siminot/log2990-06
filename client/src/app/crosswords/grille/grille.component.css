@@ -18,7 +18,7 @@
     position: absolute;
 }
 
-.table td {
+table td {
     width: 40px;
     height: 40px;
     border: 1px solid black;
@@ -27,7 +27,7 @@
     position: relative;
 }
 
-.table {
+table {
     line-height:0;
     border-spacing:3px;
 }

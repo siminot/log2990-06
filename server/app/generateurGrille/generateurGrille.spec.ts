@@ -1,21 +1,30 @@
-// // import { GenerateurGrille } from "./generateurGrille";
-// import * as assert from "assert";
+import { GenerateurGrille } from "./generateurGrille";
+import * as assert from "assert";
+import * as WebRequest from "web-request";
+import { Mockword } from "../../../common/mockObject/mockWord";
 
-// {
+describe("Tests GenerateurGrille", () => {
 
-//     // const genTest: GenerateurGrille = new GenerateurGrille();
+    describe("- tests du constructeur", () => {
 
-//     describe("Tests GenerateurGrille", () => {
+        it("bon fonctionnement du constructeur", (done) => {
+            assert.ok(new GenerateurGrille);
+            done();
+        });
 
-//         describe("- tests de l'interface", () => {
+        const generateurGrille = new GenerateurGrille();
 
-//             it("- templateTest", (done) => {
-//                 assert(true);
-//                 done();
-//             });
+        it("le constructeur cree bien des options", (done) => {
+            assert.ok(generateurGrille["optionsPartie"]);
+            done();
+        });
 
-//         });
+        const TEMPS_MAXIMAL = 30000; // une grille doit etre retournee en moins de 30 secondes
+        it("requeteGrille fonctionne (le serveur doit fonctionner)", async () => {
+            const URL_TEST = "http://localhost:3000/grille/facile";
+            const data: Mockword = await WebRequest.json<Mockword>(URL_TEST);
+            assert.ok(data);
 
-//     });
-
-// }
+        }).timeout(TEMPS_MAXIMAL);
+    });
+});

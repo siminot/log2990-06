@@ -4,12 +4,15 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 import { Word, LettreGrille } from "../mockObject/word";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
+import { listeMotsLongue, grilleLettres } from "../mockObject/mockGrille";
 
 describe("DefinitionComponent", () => {
   let component: DefinitionComponent;
   let fixture: ComponentFixture<DefinitionComponent>;
 
-  const fakeWord: Word = {
+  const fakeWord: Word = listeMotsLongue[6];
+
+/*   Word = {
     mot: "POPO",
     definition: "ton père en latino",
     estVertical: true,
@@ -18,7 +21,7 @@ describe("DefinitionComponent", () => {
     premierY: 0,
     activer: false,
     motTrouve: false
-  };
+  }; */
 
 /*
   const realWordFromOurFakeList: Word = {
@@ -44,6 +47,7 @@ describe("DefinitionComponent", () => {
 
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
     component = new DefinitionComponent(service);
+    component["matriceDesMotsSurGrille"] = grilleLettres;
     fixture = TestBed.createComponent(DefinitionComponent);
     fixture.detectChanges();
   })
@@ -63,11 +67,12 @@ describe("DefinitionComponent", () => {
       const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
 
       for (let i: number = 0; i < fakeWord.longeur; i++) {
-        result[i] = matrice[0][i].caseDecouverte;
+        result[i] = matrice[fakeWord.premierX][i + fakeWord.premierY].caseDecouverte;
       }
       expect(result).toEqual(expectedValues);
     });
-    it("Decouvrir les lettre dans la grille selon le mot selectionne", () => {
+    // Dédoublement de test...
+/*     it("Decouvrir les lettre dans la grille selon le mot selectionne", () => {
       component["decouvrirCases"](fakeWord);
       const expectedValues: boolean[] = [true, true, true, true];
       const result: boolean[] = [];
@@ -77,7 +82,7 @@ describe("DefinitionComponent", () => {
         result[i] = matrice[0][i].lettreDecouverte;
     }
       expect(result).toEqual(expectedValues);
-  });
+    }); */
     it("remettre toute les caseDecouverte a false", () => {
       const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
       matrice[0][0] = {

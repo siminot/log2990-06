@@ -26,7 +26,10 @@
       </li>
     </ul>
   </ng-template>
-
+  <div class = "regleEtCheat">
+    <a *ngIf="estVertical" class= "menuItem"  (click)="afficherRegle()">Règle du jeu</a>
+    <a *ngIf="estVertical" class= "menuItem">Cheat Mode</a>
+  </div>
 </div>
 
-<button *ngIf="estVertical" (click)="afficherRegle()">Règle du jeu</button>
+

@@ -4,6 +4,8 @@ import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word } from "../mockObject/word";
 import { CONVERSION_POURCENTAGE } from "../constantes";
+import { TimerObservable } from "rxjs/observable/TimerObservable";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: "app-info-joueur1",
@@ -17,6 +19,9 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   private _listeMots: Word[];
   private _barreProgression: HTMLElement;
 
+  private _timer: number;
+  private _formatedTimer: string;
+
   private _subscriptionNbMotsDecouv: Subscription;
   private _subscriptionListeMots: Subscription;
 
@@ -25,11 +30,27 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     this._nomJoueur = "Nom du joueur";
     this._nbMotsDecouverts = 0;
     this._listeMots = [];
+    this._timer = 0;
    }
 
   public ngOnInit(): void {
     this.initialiserSouscriptions();
     this._barreProgression = document.getElementById("progress-bar");
+
+    const timer: Observable<number> = TimerObservable.create(0, 1000);
+    timer.subscribe((t: number) => { this._timer = t; this.formatterTimer(); });
+  }
+
+  public formatterTimer(): void {
+    let tmpTimer = this._timer;
+    let heures: number = 0, min: number = 0, sec: number = 0;
+    heures = Math.floor(tmpTimer / 3600) % 24;
+    tmpTimer -= heures;
+    min = Math.floor(tmpTimer / 60) % 60;
+    tmpTimer -= min;
+    sec = tmpTimer % 60;
+
+    this._formatedTimer = String(heures) + 'h ' + String(min) + 'm ' + String(sec) + 's';
   }
 
   public ngOnDestroy(): void {

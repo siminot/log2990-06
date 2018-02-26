@@ -11,6 +11,7 @@
     position:absolute;
     top:5vh;
     height:95vh;
+    min-height:700px;
     width:100vw;
     margin-top:8px;
     z-index:-1;

@@ -33,6 +33,11 @@ module Route {
             this.grille = new Array<Array<string>>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
+
+            this.requetesInvalides.clear();
+            this.requetesInvalides = new Map();
+            this.motsDejaPlaces.clear();
+            this.motsDejaPlaces = new Map();
         }
 
         private lireMotViaGrille(mot: Mockword) {
@@ -145,12 +150,12 @@ module Route {
             let url: string;
             switch (this.optionsPartie.niveau) {
 
-                case "Facile":
-                case "Normal":
+                case "facile":
+                case "normal":
                 url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
                 break;
 
-                case "Difficile":
+                case "difficile":
                 url = "http://localhost:3000/servicelexical/noncommun/contrainte/" + mot.getMot();
                 break;
 
@@ -191,37 +196,11 @@ module Route {
             return Math.floor(millisecondes * nbMax / MILLE) + 1;
         }
 
-                /* FONCTION BIDON POUR EXAMINER DES CHOSES */
-        public afficheGrille(req: Request, res: Response, next: NextFunction): void {
+        public async requeteDeGrille(req: Request, res: Response, next: NextFunction): Promise<void> {
+            this.optionsPartie.setDifficultee(req.params.difficulte);
             this.initMatrice();
-            res.send(JSON.stringify(this.grille));
-        }
-
-        public async prototypeRequete(req: Request, res: Response, next: NextFunction): Promise<void> {
-
-            this.listeMot = new Array<Mockword>();
-            this.grille = new Array<Array<string>>();
-            this.requetesInvalides.clear();
-            this.requetesInvalides = new Map();
-            this.motsDejaPlaces.clear();
-            this.motsDejaPlaces = new Map();
-            this.initMatrice();
-
             await this.remplirLaGrilleDeMots();
-            // this.inverserXYMots();
-
             res.send(this.listeMot);
-        }
-
-        // private inverserXYMots(): void {
-        //     for (const unMot of this.listeMot) {
-        //         unMot.inverserXY();
-        //     }
-        // }
-
-        /* FONCTION BIDON POUR TESTER DES CHOSES */
-        public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
-            res.send(JSON.stringify(this.listeMot));
         }
 
     }

@@ -1,19 +1,32 @@
-<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-<p>Vertical</p>
-<ul class="heroes" *ngFor="let mot of mots">
-  <li *ngIf="!mot.estVertical"  class="badge">
-    <span *ngIf="mot.activer; else elseBlock1" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
-    <ng-template #elseBlock1><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
-  </li>
-</ul>
+<div id="container">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 
-<p>Horizontale</p>
-<ul class="heroes" *ngFor="let mot of mots">
-  <li *ngIf="mot.estVertical"  class="badge">
-    <span *ngIf="mot.activer; else elseBlock2" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
-    <ng-template #elseBlock2><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
-  </li>
-</ul>
+  <div *ngIf="estVertical; else titreHorizontal"> 
+    <p>Vertical</p>
+  </div>
 
-<button (click)="afficherRegle()">Règle du jeu</button>
+  <ng-template #titreHorizontal> 
+    <p>Horizontal</p>
+  </ng-template>
 
+  <div *ngIf="estVertical; else motHorizontal">
+    <ul *ngFor="let mot of mots">
+      <li *ngIf="!mot.estVertical">
+        <span *ngIf="mot.activer; else motDesactiver" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
+        <ng-template #motDesactiver><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #motHorizontal> 
+    <ul *ngFor="let mot of mots">
+      <li *ngIf="mot.estVertical">
+        <span *ngIf="mot.activer; else motDesactiver" [style.color]="'#DB274E'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
+        <ng-template #motDesactiver><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
+      </li>
+    </ul>
+  </ng-template>
+
+</div>
+
+<button *ngIf="estVertical" (click)="afficherRegle()">Règle du jeu</button>

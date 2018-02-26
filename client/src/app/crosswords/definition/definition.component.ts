@@ -5,11 +5,10 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 import { Word, LettreGrille } from "../mockObject/word";
 
 @Component({
-  selector: "app-definition",
+  selector: "app-definitionv",
   templateUrl: "./definition.component.html",
   styleUrls: ["./definition.component.css"]
 })
-
 export class DefinitionComponent implements OnInit, OnDestroy {
   private mots: Word[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
@@ -74,24 +73,22 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   }
 
   public changementMotSelectionne(mot: Word): void {
-    for (const item of this.mots) {
-      item.activer = false;
-    }
-    this.motSelectionne = mot;
-    mot.activer = !mot.activer;
-
+    this.changementMot(mot);
     this.decouvrirCases(mot);
-
     this.envoieMotSelectionne();
   }
 
   public changementMotSelectionneFF(mot: Word): void {
+    this.changementMot(mot);
+    this.decouvrirCases(mot);
+  }
+
+  private changementMot(mot: Word): void {
     for (const item of this.mots) {
       item.activer = false;
     }
     this.motSelectionne = mot;
     mot.activer = !mot.activer;
-    this.decouvrirCases(mot);
   }
 
   public decouvrirCases(mot: Word): void {

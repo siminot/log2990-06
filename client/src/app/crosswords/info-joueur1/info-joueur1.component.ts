@@ -10,18 +10,32 @@ import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 export class InfoJoueur1Component implements OnInit, OnDestroy {
   private _nomJoueur: string;
   private _pointage: number;
+  private _pourcentagePoint: number;
   private _subscriptionPointage: Subscription;
 
   public constructor(private _servicePointage: InfojoueurService) {
     this._nomJoueur = "Nom du joueur";
     this._pointage = 0;
+    this._pourcentagePoint = 0;
    }
 
   public ngOnInit(): void {
     this._subscriptionPointage = this._servicePointage.serviceReceptionPointage()
       .subscribe((pointage) => {
         this._pointage = pointage;
+        this.calculerPourcentagePoint();
+        this.majBarreProgression();
       });
+  }
+
+  public calculerPourcentagePoint(): void {
+    this._pourcentagePoint = this._pointage;
+  }
+
+  public majBarreProgression(): void {
+    const barreProgression: HTMLElement = document.getElementById("progress-bar");
+    const str: string = String(this._pourcentagePoint) + "%";
+    barreProgression.style.width = str;
   }
 
   public ngOnDestroy(): void {

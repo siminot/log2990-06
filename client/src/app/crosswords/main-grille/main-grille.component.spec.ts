@@ -10,7 +10,8 @@ describe("MainGrilleComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ MainGrilleComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch(() => { throw new Error("Erreur de la creation du test"); });
   }));
 
   beforeEach(() => {

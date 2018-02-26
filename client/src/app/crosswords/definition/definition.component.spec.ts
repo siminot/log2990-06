@@ -43,7 +43,8 @@ describe("DefinitionComponent", () => {
       imports: [ HttpClientTestingModule ],
       providers: [ RequeteDeGrilleService, HttpeReqService ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch(() => { throw new Error("Erreur de la creation du test"); });
   }));
 
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {

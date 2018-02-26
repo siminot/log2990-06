@@ -5,6 +5,8 @@ import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
 import { Word, LettreGrille } from "../mockObject/word";
 
+const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
+
 @Injectable()
 export class RequeteDeGrilleService {
   private _mots: Word[];
@@ -28,8 +30,18 @@ export class RequeteDeGrilleService {
   }
 
   public constructor(private httpReq: HttpeReqService) {
-    this.matriceDesMotsSurGrille = this.genererGrille();
+    this.genererGrille();
     this.souscrireRequeteMots();
+  }
+
+  private genererGrille(): void {
+    this.matriceDesMotsSurGrille = new Array<Array<LettreGrille>>();
+    for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
+      this.matriceDesMotsSurGrille.push(new Array<LettreGrille>(TAILLE_TABLEAU));
+      for (let j: number = 0; j < TAILLE_TABLEAU; j++) {
+        this.matriceDesMotsSurGrille[i][j] = CASE_NOIR;
+      }
+    }
   }
 
   // Requetes
@@ -67,22 +79,6 @@ export class RequeteDeGrilleService {
 
   public serviceReceptionMotSelectionne(): Observable<Word> {
     return this.motSelectionneObservable$;
-  }
-
-  private genererGrille(): Array<Array<LettreGrille>> {
-    const matrice: Array<Array<LettreGrille>> = new Array(TAILLE_TABLEAU);
-    let caseNoir: LettreGrille;
-
-    for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
-      const row: Array<LettreGrille> = new Array(TAILLE_TABLEAU);
-      for (let j: number = 0; j < TAILLE_TABLEAU; j++) {
-        caseNoir = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
-        row[j] = caseNoir;
-      }
-      matrice[i] = row;
-    }
-
-    return matrice;
   }
 
   private insererMotsDansGrille(): void {

@@ -16,3 +16,9 @@ span{
     font-family: 'Press Start 2P', cursive;
     font-size:8px;
 }
+
+
+li{
+    background-color: rgba(55, 55, 224, 0.367);
+    border-radius: 10px;
+}

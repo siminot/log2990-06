@@ -11,12 +11,11 @@ export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 })
 export class ConfigPartieComponent implements OnInit {
 
-  private _requete: string; // Changer pour une constante
+  private requete: string;
   private lesOptions: OptionPartie;
-  private serviceHTTP: HttpeReqService;
 
-  public constructor() {
-    this._requete = REQUETE_INIT;
+  public constructor(private serviceHTTP: HttpeReqService) {
+    this.requete = REQUETE_INIT;
     this.lesOptions = new OptionPartie();
   }
 
@@ -25,13 +24,14 @@ export class ConfigPartieComponent implements OnInit {
     document.getElementById("creerOuJoindre").classList.add("pasVisible");
   }
 
-  public get requete(): string {
-    return this._requete;
+  public get getRequete(): string {
+    return this.requete;
   }
 
   public modificationDeRequeteHTTP(): void {
-    this.lesOptions.requete = this.requete;
-    this.serviceHTTP.modifierRequete(this.lesOptions.requete);
+    // this.lesOptions.requete = this.requete;
+    console.log(this.requete);
+    this.serviceHTTP.modifierRequete(this.getRequete);
   }
 
   public apparaitreSection(laSection: string): void {
@@ -52,7 +52,7 @@ export class ConfigPartieComponent implements OnInit {
   }
 
   private miseAJourRequete(): void {
-    this._requete = REQUETE_INIT + this.lesOptions.difficulte;
+    this.requete = REQUETE_INIT + this.lesOptions.difficulte;
   }
 
 }

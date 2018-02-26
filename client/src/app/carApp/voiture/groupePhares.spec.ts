@@ -13,17 +13,18 @@ describe("GroupePhares", () => {
 
     it("Initialisation se fait bien", () => {
         groupePhares.initialiser();
-        expect(groupePhares["sontAllumes"]).toBeTruthy();
         expect(groupePhares.children.length).toBe(NOMBRE_ENFANTS);
     });
 
     it("Phares s'eteignent", () => {
-       groupePhares.eteindre();
-       expect(groupePhares["sontAllumes"]).toBeFalsy();
+        spyOn(groupePhares, "eteindre");
+        groupePhares.eteindre();
+        expect(groupePhares.eteindre).toHaveBeenCalled();
     });
 
     it("Phares s'allument", () => {
+        spyOn(groupePhares, "allumer");
         groupePhares.allumer();
-        expect(groupePhares["sontAllumes"]).toBeTruthy();
+        expect(groupePhares.allumer).toHaveBeenCalled();
     });
 });

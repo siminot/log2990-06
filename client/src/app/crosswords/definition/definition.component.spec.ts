@@ -20,6 +20,7 @@ describe("DefinitionComponent", () => {
     motTrouve: false
   };
 
+/*
   const realWordFromOurFakeList: Word = {
     mot: "Tata",
     definition: "Ni papa, ni  mama",
@@ -30,6 +31,7 @@ describe("DefinitionComponent", () => {
     activer: false,
     motTrouve: false
   };
+*/
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -55,10 +57,10 @@ describe("DefinitionComponent", () => {
 
   describe("Modification de la grille.", () => {
     it("Découvrir les cases dans la grille selon le mot selectionné.", () => {
-      component.decouvrirCases(fakeWord);
+      component["decouvrirCases"](fakeWord);
       const expectedValues: boolean[] = [true, true, true, true];
       const result: boolean[] = [];
-      const matrice: Array<Array<LettreGrille>> = component.getMatrice();
+      const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
 
       for (let i: number = 0; i < fakeWord.longeur; i++) {
         result[i] = matrice[0][i].caseDecouverte;
@@ -66,10 +68,10 @@ describe("DefinitionComponent", () => {
       expect(result).toEqual(expectedValues);
     });
     it("Decouvrir les lettre dans la grille selon le mot selectionne", () => {
-      component.decouvrirLettre(fakeWord);
+      component["decouvrirCases"](fakeWord);
       const expectedValues: boolean[] = [true, true, true, true];
       const result: boolean[] = [];
-      const matrice: Array<Array<LettreGrille>> = component.getMatrice();
+      const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
 
       for (let i: number = 0; i < fakeWord.longeur; i++) {
         result[i] = matrice[0][i].lettreDecouverte;
@@ -77,23 +79,15 @@ describe("DefinitionComponent", () => {
       expect(result).toEqual(expectedValues);
   });
     it("remettre toute les caseDecouverte a false", () => {
-      const matrice: Array<Array<LettreGrille>> = component.getMatrice();
+      const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
       matrice[0][0] = {
         caseDecouverte: true,
         lettre: "P",
         lettreDecouverte: true
       };
-      component.cacherCases();
+      component["cacherCases"]();
 
       expect(matrice[0][0].caseDecouverte).toBeFalsy();
-});
-
-    it("Verifier le input de l/utilisateur", () => {
-      component.setMotSelectionne(realWordFromOurFakeList);
-      component.verifierTentative(realWordFromOurFakeList.mot);
-      const aVerifier: String = component.getReponse();
-      const verification: String = "Bonne Reponse !";
-      expect(aVerifier).toEqual(verification);
 });
 });
 });

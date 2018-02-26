@@ -143,7 +143,7 @@ export const listeMotsLongue: Word[] = [
         activer: false,
         motTrouve: false
     }
-]
+];
 
 export const grilleLettres: LettreGrille[][] = [
     [

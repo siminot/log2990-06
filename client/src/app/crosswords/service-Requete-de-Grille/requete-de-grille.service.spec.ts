@@ -49,8 +49,8 @@ describe("RequeteDeGrilleService", () => {
     // });
 
     it("Envoie de la liste de mots au composant de définition.", () => {
-      serviceGrille.serviceEnvoieMots(serviceGrille.getMots());
-      expect(definition.getMots()).toEqual(serviceGrille.getMots());
+      serviceGrille["serviceEnvoieMots"](serviceGrille["mots"]);
+      expect(definition["mots"]).toEqual(serviceGrille["mots"]);
     });
   });
 
@@ -61,20 +61,20 @@ describe("RequeteDeGrilleService", () => {
     // });
 
     it("Envoie de la matrice au composant de définition.", () => {
-      serviceGrille.serviceEnvoieMatriceLettres(serviceGrille.getMatrice());
-      expect(definition.getMatrice()).toEqual(serviceGrille.getMatrice());
+      serviceGrille.serviceEnvoieMatriceLettres(serviceGrille.matrice);
+      expect(definition["mots"]).toEqual(serviceGrille["mots"]);
     });
   });
 
-  describe("Réception d\"information de la part des composants.", () => {
-    it("Reception d\"une liste de mots de la part du composant de définition.", () => {
-      definition.envoieMots();
-      expect(serviceGrille.getMots()).toEqual(definition.getMots());
+  describe("Réception d'information de la part des composants.", () => {
+    it("Reception d'une liste de mots de la part du composant de définition.", () => {
+      definition["envoieMotSelectionne"]();
+      expect(serviceGrille["mots"]).toEqual(definition["mots"]);
     });
 
     it("Reception de la matrice de la part du composant de définition.", () => {
-      definition.envoieMatrice();
-      expect(serviceGrille.getMatrice()).toEqual(definition.getMatrice());
+      definition["envoieMatrice"]();
+      expect(serviceGrille["mots"]).toEqual(definition["mots"]);
     });
   });
 });

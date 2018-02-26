@@ -14,26 +14,29 @@ const AJUSTEMENT_FAISCEAU_DISTANCE_VOITURE: number = 0.75;
 
 export class Phare extends SpotLight {
 
-    private ampoule: Mesh;
-    private materielSphere: MeshBasicMaterial;
+    private materielAmpoule: MeshBasicMaterial;
 
     public constructor(positionRelative: Vector3) {
         super(COULEUR_ALLUMEE, INTENSITE_ALLUME, DISTANCE, ANGLE, PENOMBRE);
         this.position.set(positionRelative.x, positionRelative.y, positionRelative.z + AJUSTEMENT_FAISCEAU_DISTANCE_VOITURE);
-
-        this.materielSphere = new MeshBasicMaterial( {color: COULEUR_ALLUMEE} );
-        this.ampoule = new Mesh(new SphereGeometry(RAYON_AMPOULE), this.materielSphere);
-        this.ampoule.position.set(0, 0, -AJUSTEMENT_FAISCEAU_DISTANCE_VOITURE);
+        this.materielAmpoule = new MeshBasicMaterial( {color: COULEUR_ALLUMEE} );
         this.add(this.ampoule);
     }
 
     public allumer(): void {
         this.intensity = INTENSITE_ALLUME;
-        this.materielSphere.color = new Color(COULEUR_ALLUMEE);
+        this.materielAmpoule.color = new Color(COULEUR_ALLUMEE);
     }
 
     public eteindre(): void {
         this.intensity = INTENSITE_ETEINT;
-        this.materielSphere.color = new Color(COULEUR_ETEINTE);
+        this.materielAmpoule.color = new Color(COULEUR_ETEINTE);
+    }
+
+    private get ampoule(): Mesh {
+        const ampoule: Mesh = new Mesh(new SphereGeometry(RAYON_AMPOULE), this.materielAmpoule);
+        ampoule.position.set(0, 0, -AJUSTEMENT_FAISCEAU_DISTANCE_VOITURE);
+
+        return ampoule;
     }
 }

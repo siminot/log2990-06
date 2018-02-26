@@ -4,14 +4,14 @@ import { AudioListener } from "three";
 @Injectable()
 export class EcouteurJoueur {
 
-  private audioListener: AudioListener;
+  private _audioListener: AudioListener;
 
   private constructor() {
-    this.audioListener = new AudioListener;
+    this._audioListener = new AudioListener();
   }
 
-  public getInstance(): AudioListener {
-    return this.audioListener;
+  public get audioListener(): AudioListener {
+    return this._audioListener;
   }
 
 }

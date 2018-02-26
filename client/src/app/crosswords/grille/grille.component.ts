@@ -37,15 +37,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.mots = this.listeMotsService.getMots();
+    this.mots = this.listeMotsService.mots;
 
-    this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
+    this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
-      .subscribe((mots) => { this.mots = mots; console.log(this.mots); });
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots; });
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
-      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
@@ -201,7 +200,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.lockLettersFromWord();
       this.miseEvidenceMot("green");
       this.removeFocusFromSelectedWord();
-      this._servicePointage.incrementationPointage(CONST.INCR_POINTAGE_MOT_TROUVE);
+      this._servicePointage.incrementationNbMotDecouv(CONST.INCR_UN_MOT_DECOUVERT);
     }
 
     return valid;
@@ -304,14 +303,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
       if (!mot.estVertical) {
         other = mot.premierY;
         max = mot.premierX + mot.longeur - 1;
-        if ( X <= max && Y === other) {
+        if ( X <= max && Y === other && mot.premierX <= X) {
           motTrouve = mot;
           break;
         }
       } else if ( mot.estVertical) {
         other = mot.premierX;
         max = mot.premierY + mot.longeur - 1;
-        if ( Y <= max && X === other) {
+        if ( Y <= max && X === other && mot.premierY <= Y) {
           motTrouve = mot;
           break;
         }

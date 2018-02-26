@@ -37,15 +37,9 @@ table {
     font-size: 12px;
 }
 
-#pointage {
-    text-align:center;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 10px;
-}
-
 #progress {
     width: 80%;
-    height:10%;
+    height:12%;
     background-color: black;
     margin-left:auto;
     margin-right:auto;
@@ -55,20 +49,27 @@ table {
     width:0%;
     height:100%;
     background-color: white;
+    
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
 }
 
 #point-progress-bar {
     text-align:center;
     width:100%;
+    height:100%;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
 }
 
 #progress, #progress-bar {
     border-radius:5px;
 }
 
-#infoSupp {
+#nbMotsDecouverts {
     text-align: center;
     font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
+    font-size: 10px;
 }
 

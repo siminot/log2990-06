@@ -6,7 +6,7 @@ import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import * as CONST from "../constantes";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
-
+const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
 @Component({
   selector: "app-grille",
   templateUrl: "./grille.component.html",
@@ -332,13 +332,23 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return motTrouve;
   }
 
-  public envoieMotSelectionne(): void {
+  private envoieMotSelectionne(): void {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
+  }
+  // never reasign ? On change un attribut juste en dessous, du calme TSlint
+  private switchCheatMode(): void {
+    for(let mot of this.mots){
+      mot.cheat = !mot.cheat;
+    }
+    this.listeMotsService.serviceEnvoieMots(this.mots);
   }
 
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
+  }
+  private afficherRegle(): void {
+    alert(REGLE_JEU);
   }
 }

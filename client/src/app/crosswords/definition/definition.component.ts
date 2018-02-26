@@ -5,9 +5,6 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 import { Word, LettreGrille } from "../mockObject/word";
 
 @Component({
-  selector: "app-definition",
-  templateUrl: "./definition.component.html",
-  styleUrls: ["./definition.component.css"]
 })
 
 export class DefinitionComponent implements OnInit, OnDestroy {

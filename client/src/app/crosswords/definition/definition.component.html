@@ -12,7 +12,7 @@
   <div *ngIf="estVertical; else motHorizontal">
     <ul *ngFor="let mot of mots">
       <li *ngIf="!mot.estVertical" (click)="changementMotSelectionne(mot)">
-        <span *ngIf="mot.activer; else motDesactiver" [style.color]="'white'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
+        <span *ngIf="mot.activer; else motDesactiver" [style.color]="'white'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
         <ng-template #motDesactiver><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition}}  ({{mot.premierX+1}},{{mot.premierY+1}})</span></ng-template>
       </li>
     </ul>
@@ -21,7 +21,7 @@
   <ng-template #motHorizontal> 
     <ul *ngFor="let mot of mots">
       <li *ngIf="mot.estVertical" (click)="changementMotSelectionne(mot)">
-        <span *ngIf="mot.activer; else motDesactiver" [style.color]="'white'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
+        <span *ngIf="mot.activer; else motDesactiver" [style.color]="'white'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
         <ng-template #motDesactiver><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}   ({{mot.premierX+1}},{{mot.premierY+1}})</span></ng-template>
       </li>
     </ul>

@@ -10,7 +10,8 @@ describe("DefinitionComponent", () => {
   let component: DefinitionComponent;
   let fixture: ComponentFixture<DefinitionComponent>;
 
-  const fakeWord: Word = listeMotsLongue[6];
+  const INDICE_MOT: number = 6;
+  const fakeWord: Word = listeMotsLongue[INDICE_MOT];
 
 /*   Word = {
     mot: "POPO",

@@ -2,12 +2,13 @@
     top:0;
     left:0;
     height:100%;
+    min-height: 650px;
     width:100%;
-    overflow:auto;
 }
 
-span {
-    cursor: pointer;
+#vertCont, #horizCont {
+    height:100%;
+    overflow:auto;
 }
 
 p {
@@ -20,6 +21,7 @@ p {
 span{
     font-family: 'Press Start 2P', cursive;
     font-size:8px;
+    cursor: pointer;
 }
 
 

@@ -5,8 +5,6 @@ import { Word} from "../mockObject/word";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
-const URL: string = "http://localhost:3000/grille/requeteTemporaire";
-
 @Injectable()
 export class HttpeReqService {
   private url: string = "http://localhost:3000/grille/requeteTemporaire";
@@ -14,7 +12,7 @@ export class HttpeReqService {
 
   public getWord(): Observable<Word[] > {
 
-    return this.http.get<Word[]>(URL);
+    return this.http.get<Word[]>(this.url);
   }
 
   public modifierRequete(nouvelleRequete: string): void {

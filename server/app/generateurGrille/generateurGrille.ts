@@ -3,12 +3,11 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { TAILLE_TEST, POURCENTAGE_NOIR } from "./constantes";
 import { Mockword } from "./../../../common/mockObject/mockWord";
 import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../serviceLexical/Mot";
 
-import { GenerateurSquelette } from "./generateurSquelette";
+import { GenSquelette } from "./genSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";
 
 module Route {
@@ -18,7 +17,7 @@ module Route {
 
         private grille: Array<Array<string>>;
         private listeMot: Array<Mockword>;
-        private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_NOIR);
+        private generateurSquelette: GenSquelette = new GenSquelette();
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
         private motsDejaPlaces: Map<string, number> = new Map();
         private requetesInvalides: Map<string, number> = new Map();
@@ -195,8 +194,8 @@ module Route {
                 /* FONCTION BIDON POUR EXAMINER DES CHOSES */
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initMatrice();
-            // this.initListeMot();
-            this.remplirLaGrilleDeMots().catch(() => new Error("Erreur de remplissage de la grille"));
+            console.log(this.grille);
+            console.log(this.listeMot);
             res.send(JSON.stringify(this.grille));
         }
 
@@ -208,18 +207,8 @@ module Route {
             this.requetesInvalides = new Map();
             this.motsDejaPlaces.clear();
             this.motsDejaPlaces = new Map();
-            this.grille = [["_", "_", "_", "_", "_", "_" , "_", "_", "_", "_"],
-                           ["_", "0", "_", "0", "0", "0" , "0", "0", "0", "_"],
-                           ["_", "0", "_", "_", "_", "_" , "_", "_", "_", "_"],
-                           ["_", "_", "_", "0", "0", "_" , "0", "0", "0", "_"],
-                           ["_", "0", "_", "0", "0", "_" , "0", "_", "_", "_"],
-                           ["0", "0", "_", "0", "_", "_" , "_", "0", "0", "_"],
-                           ["_", "0", "_", "0", "_", "0" , "0", "_", "_", "_"],
-                           ["_", "0", "_", "0", "_", "0" , "0", "0", "0", "0"],
-                           ["_", "_", "_", "0", "_", "0" , "0", "0", "0", "0"],
-                           ["_", "0", "0", "0", "0", "_" , "_", "_", "_", "_"]];
+            this.initMatrice();
 
-            this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
             await this.remplirLaGrilleDeMots();
             // this.inverserXYMots();
 

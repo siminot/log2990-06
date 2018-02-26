@@ -4,8 +4,12 @@ import { Subscription } from "rxjs/Subscription";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, LettreGrille } from "../mockObject/word";
 
+const MESSAGE_BONNE_REPONSE: string = "Bonne réponse !";
+const MESSAGE_MAUVAISE_REPONSE: string = "Mauvaise réponse !";
+const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
+
 @Component({
-  selector: "app-definitionv",
+  selector: "app-definition",
   templateUrl: "./definition.component.html",
   styleUrls: ["./definition.component.css"]
 })
@@ -24,18 +28,32 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     this.mots = this.listeMotsService.getMots();
     this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
-      .subscribe((mots) => this.mots = mots);
+    this.initialiserSouscriptions();
+  }
 
+  private initialiserSouscriptions(): void {
+    this.souscrireReceptionMots();
+    this.souscrireReceptionMatrice();
+    this.souscrireSelectionMots();
+  }
+
+  private souscrireReceptionMots(): void {
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
+    .subscribe((mots) => this.mots = mots);
+  }
+
+  private souscrireReceptionMatrice(): void {
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+  }
 
+  private souscrireSelectionMots(): void {
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect) => {
       this.motSelectionne = motSelect;
-      this.changementMotSelectionneFF(this.motSelectionne);
+      this.miseAJourMotSelectionne(this.motSelectionne);
     });
-
   }
+
   public ngOnInit(): void { }
 
   public envoieMots(): void {
@@ -53,6 +71,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   public getMatrice(): Array<Array<LettreGrille>> {
     return this.matriceDesMotsSurGrille;
   }
+
   public getMots(): Word[] {
     return this.mots;
   }
@@ -60,6 +79,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   public setMotSelectionne(motSelectione: Word): void {
     this.motSelectionne = motSelectione;
   }
+
   public getMotselectionne(): Word {
     return this.motSelectionne;
   }
@@ -73,53 +93,52 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   }
 
   public changementMotSelectionne(mot: Word): void {
-    this.changementMot(mot);
-    this.decouvrirCases(mot);
+    this.miseAJourMotSelectionne(mot);
     this.envoieMotSelectionne();
   }
 
-  public changementMotSelectionneFF(mot: Word): void {
+  private miseAJourMotSelectionne(mot: Word): void {
     this.changementMot(mot);
     this.decouvrirCases(mot);
   }
 
   private changementMot(mot: Word): void {
-    for (const item of this.mots) {
-      item.activer = false;
-    }
+    this.mots.forEach((element: Word) => element.activer = false);
     this.motSelectionne = mot;
     mot.activer = !mot.activer;
   }
 
-  public decouvrirCases(mot: Word): void {
+  private decouvrirCases(mot: Word): void {
     this.cacherCases();
     for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
-      if (mot.estVertical) {
-        this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].caseDecouverte = true;
-      } else {
-        this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].caseDecouverte = true;
-      }
+      mot.estVertical
+        ? this.obtenirLettreGrilleMotVertical(mot, indice).caseDecouverte = true
+        : this.obtenirLettreGrilleMotHorizontal(mot, indice).caseDecouverte = true;
     }
     this.envoieMatrice();
   }
 
-  public decouvrirLettre(mot: Word): void {
+  private decouvrirLettre(mot: Word): void {
     for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
-      if (mot.estVertical) {
-        this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].lettreDecouverte = true;
-      } else {
-        this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].lettreDecouverte = true;
-      }
+      mot.estVertical
+        ? this.obtenirLettreGrilleMotVertical(mot, indice).lettreDecouverte = true
+        : this.obtenirLettreGrilleMotHorizontal(mot, indice).lettreDecouverte = true;
     }
     this.envoieMatrice();
   }
 
-  public cacherCases(): void {
+  private obtenirLettreGrilleMotVertical(mot: Word, indice: number): LettreGrille {
+    return this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY];
+  }
+
+  private obtenirLettreGrilleMotHorizontal(mot: Word, indice: number): LettreGrille {
+    return this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY];
+  }
+
+  private cacherCases(): void {
     for (const ligne of this.matriceDesMotsSurGrille) {
       for (const lettre of ligne) {
-        // if (lettre.lettreDecouverte == true) {
           lettre.caseDecouverte = false;
-        // }
       }
     }
   }
@@ -127,9 +146,9 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   public verifierTentative(tentative: String): void {
     if (tentative === this.motSelectionne.mot) {
       this.decouvrirLettre(this.motSelectionne);
-      this.reponse = "Bonne Reponse !";
+      this.reponse = MESSAGE_BONNE_REPONSE;
     } else {
-      this.reponse = "Mauvaise Reponse !";
+      this.reponse = MESSAGE_MAUVAISE_REPONSE;
     }
   }
 
@@ -139,6 +158,6 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   }
 
   public afficherRegle(): void {
-    alert("Cliquez sur une définition afin d\"effectuer une tentative.");
+    alert(REGLE_JEU);
   }
 }

@@ -4,6 +4,23 @@
     width:100vw;
 }
 
+.menuItem {
+    font-family: 'Press Start 2P', cursive;
+    font-size:10px;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration:none;
+    color:purple;
+    background-color: white;
+    border-radius:5px;
+    border: 2px solid rgba(0, 0, 0, 0.747);
+}
+
+.menuItem:hover {
+    color:white !important;
+    background-color:blue !important;
+}
+
 #app {
     height:96vh;
     width: 100vw;

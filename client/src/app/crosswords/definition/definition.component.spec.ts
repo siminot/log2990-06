@@ -19,7 +19,7 @@ describe("DefinitionComponent", () => {
     activer: false,
     motTrouve: false
   };
-  
+
 /*
   const realWordFromOurFakeList: Word = {
     mot: "Tata",

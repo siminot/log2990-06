@@ -18,4 +18,8 @@ export class MockOptionPartie {
         return this.nombreDeJoueurs;
     }
 
+    public setDifficultee(nouvelleDiff: string): void {
+        this.niveauDifficultee = nouvelleDiff;
+    }
+
 }

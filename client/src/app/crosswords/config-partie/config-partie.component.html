@@ -1,3 +1,41 @@
-<p>
-  config-partie works!
-</p>
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+<p>Configuration de la partie</p>
+<div>
+
+  <div id="soloOuMulti">
+    <button (click)="apparaitreSection('difficulte')"
+            (click)="disparaitreSection('soloOuMulti')">
+      Partie solo</button>
+    <button (click)="apparaitreSection('creerOuJoindre')"
+            (click)="disparaitreSection('soloOuMulti')">
+      Partie en ligne</button>
+  </div>
+
+  <div id="difficulte">
+    <button (click)="ajouterDansRequete('facile')"
+    (click)="modificationDeRequeteHTTP()"
+    routerLink="/CrosswordsGame"
+    >
+      Facile</button>
+    <button (click)="ajouterDansRequete('normal')"
+    (click)="modificationDeRequeteHTTP()"
+    routerLink="/CrosswordsGame"
+    >
+      Normal</button>
+    <button (click)="ajouterDansRequete('difficile')"
+    (click)="modificationDeRequeteHTTP()"
+    routerLink="/CrosswordsGame"
+    >
+      Difficile</button>
+  </div>
+
+  <div id="creerOuJoindre">
+    <button (click)="apparaitreSection('difficulte')"
+            (click)="disparaitreSection('creerOuJoindre')">
+      Créer une partie</button>
+    <button (click)="apparaitreSection('difficulte')"
+            (click)="disparaitreSection('creerOuJoindre')"> <!-- Pas encore sur si on choisi une difficulte ici -->
+      Rejoindre une partie</button>
+  </div>
+
+</div>

@@ -19,8 +19,8 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   private _subscriptionNbMotsDecouv: Subscription;
   private _subscriptionListeMots: Subscription;
 
-  public constructor(private _servicePointage: InfojoueurService,
-                     private _requeteGrille: RequeteDeGrilleService) {
+  public constructor(private _servicePointage: InfojoueurService /*,
+  private _requeteGrille: RequeteDeGrilleService */) {
     this._nomJoueur = "Nom du joueur";
     this._nbMotsDecouverts = 0;
     this._pourcentagePoint = 0;

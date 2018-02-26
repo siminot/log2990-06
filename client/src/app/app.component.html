@@ -1,10 +1,10 @@
 <div style="text-align:center" id="topMenu">
-    <a routerLink="/CarGame" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">Car</a>
-    <a routerLink="/CrosswordsGame" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">Crossword</a>
-    <a routerLink="/ConfigPartie" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">Configuration partie</a>
-
-    <a routerLink="/" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }">Home</a>
+    <a routerLink="/CarGame" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" class="menuItem">Car</a>
+    <a routerLink="/CrosswordsGame" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" class="menuItem">Crossword</a>
+    <a routerLink="/ConfigPartie" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" class="menuItem">Configuration partie</a>
+    <a routerLink="/" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }" class="menuItem">Home</a>
 </div>
+
 <div id="app">
     <router-outlet></router-outlet>
 </div>

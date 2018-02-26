@@ -6,7 +6,7 @@ import { Word, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import * as CONST from "../constantes";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
-
+const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
 @Component({
   selector: "app-grille",
   templateUrl: "./grille.component.html",
@@ -330,5 +330,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
+  }
+  private afficherRegle(): void {
+    alert(REGLE_JEU);
   }
 }

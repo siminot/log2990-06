@@ -7,6 +7,7 @@ export class Word {
     public premierY: number;
     public activer: boolean;
     public motTrouve: boolean;
+    public cheat: boolean;
 }
 
 export class LettreGrille {

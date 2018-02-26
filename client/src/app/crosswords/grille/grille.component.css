@@ -61,3 +61,29 @@ input {
     font-size:12px;
     font-family: 'Press Start 2P', cursive;
 }
+
+
+.regleEtCheat
+{
+    position: absolute; 
+    top:98%;
+    background-color: rgba(55, 55, 224, 0.367);
+}
+
+.menuItem {
+    position:relative;
+    padding:8px;
+    font-family: 'Press Start 2P', cursive;
+    font-size:10px;
+    cursor: pointer;
+    text-decoration:none;
+    color:purple;
+    background-color: white;
+    border-radius:5px;
+    border: 2px solid rgba(0, 0, 0, 0.747);
+}
+
+.menuItem:hover {
+    color:white !important;
+    background-color:blue !important;
+}

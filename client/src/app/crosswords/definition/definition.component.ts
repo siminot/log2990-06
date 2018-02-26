@@ -4,7 +4,7 @@ import { Subscription } from "rxjs/Subscription";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Word, LettreGrille } from "../mockObject/word";
 
-const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
+
 
 @Component({
   selector: "app-definition",
@@ -35,10 +35,6 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
-  }
-
-  public afficherRegle(): void {
-    alert(REGLE_JEU);
   }
 
   // Souscriptions

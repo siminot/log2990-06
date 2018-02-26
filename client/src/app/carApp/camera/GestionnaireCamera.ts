@@ -6,6 +6,8 @@ import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 
+const CAMERA_INITIALE: number = 0;
+
 @Injectable()
 export class GestionnaireCamera {
 
@@ -29,7 +31,7 @@ export class GestionnaireCamera {
         this.ajouterNouvelleCamera3D();
         this.ajouterNouvelleCamera2D();
         this.suivre(this.gestionnaireVoitures.voitureJoueur);
-        this.cameraCourante = this.cameras[0];
+        this.choisirCameraCouranteInitiale();
     }
 
     private ajouterNouvelleCamera2D(): void {
@@ -38,6 +40,10 @@ export class GestionnaireCamera {
 
     private ajouterNouvelleCamera3D(): void {
         this.cameras.push(new CameraJeu3D());
+    }
+
+    private choisirCameraCouranteInitiale(): void {
+        this.cameraCourante = this.cameras[CAMERA_INITIALE];
     }
 
     // Modifications des cameras
@@ -53,8 +59,11 @@ export class GestionnaireCamera {
     }
 
     public changerCamera(): void {
-        const POSITION_COURANTE_CAMERA: number = this.cameras.findIndex((cameraJeu) => this.cameraCourante === cameraJeu );
-        this.cameraCourante = this.cameras[(POSITION_COURANTE_CAMERA + 1) % this.cameras.length];
+        this.cameraCourante = this.cameras[(this.indexCameraCourante() + 1) % this.cameras.length];
+    }
+
+    private indexCameraCourante(): number {
+        return this.cameras.findIndex((cameraJeu) => this.cameraCourante === cameraJeu);
     }
 
     public zoomer(): void {

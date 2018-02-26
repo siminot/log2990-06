@@ -22,7 +22,7 @@ describe("GrilleComponent", () => {
   }));
 
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
-    service["mots"] = listeMots;
+    service["_mots"] = listeMots;
     serviceGrille = service;
     fixture = TestBed.createComponent(GrilleComponent);
     component = fixture.componentInstance;

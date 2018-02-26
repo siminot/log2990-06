@@ -2,11 +2,13 @@ import { Group, Object3D, Vector3 } from "three";
 import { Phare } from "./phare";
 
 const POSITION_CIBLE_Z: number = -10;
+const HAUTEUR: number = 0.5;
+const LARGEUR: number = 0.5;
+const PROFONDEUR: number = -1.65;
 
 export class GroupePhares extends Group {
     private phares: Phare[];
     private ciblePhares: Object3D;
-    private sontAllumes: boolean;
 
     public constructor() {
         super();
@@ -17,20 +19,12 @@ export class GroupePhares extends Group {
     public initialiser(): void {
         this.initialiserCible();
         this.initialiserPhares();
-        this.sontAllumes = true;
+        this.ajouterPhares();
     }
 
     private initialiserPhares(): void {
-        const HAUTEUR: number = 0.5;
-        const LARGEUR: number = 0.5;
-        const PROFONDEUR: number = -1.65;
-
-        const PHARE_GAUCHE_POSITION_RELATIVE: Vector3 = new Vector3(LARGEUR, HAUTEUR, PROFONDEUR);
-        const PHARE_DROITE_POSITION_RELATIVE: Vector3 = new Vector3(-LARGEUR, HAUTEUR, PROFONDEUR);
-        this.phares.push(new Phare(PHARE_GAUCHE_POSITION_RELATIVE));
-        this.phares.push(new Phare(PHARE_DROITE_POSITION_RELATIVE));
-
-        this.ajouterPhares();
+        this.phares.push(new Phare(new Vector3(LARGEUR, HAUTEUR, PROFONDEUR)));
+        this.phares.push(new Phare(new Vector3(-LARGEUR, HAUTEUR, PROFONDEUR)));
     }
 
     private initialiserCible(): void {
@@ -49,13 +43,11 @@ export class GroupePhares extends Group {
         for (const PHARE of this.phares) {
             PHARE.eteindre();
         }
-        this.sontAllumes = false;
     }
 
     public allumer(): void {
         for (const PHARE of this.phares) {
             PHARE.allumer();
         }
-        this.sontAllumes = true;
     }
 }

@@ -29,9 +29,7 @@ export class CameraJeu3D extends CameraJeu {
     }
 
     protected obtenirPositionRelative(): Vector3 {
-        const POSITION_PLAN_XZ: Vector3 = this.voitureSuivie.direction.negate();
-
-        return new Vector3(POSITION_PLAN_XZ.x, POSITION_Y, POSITION_PLAN_XZ.z);
+        return new Vector3(this.positionPlanXZ.x, POSITION_Y, this.positionPlanXZ.z);
     }
 
     protected reglerPositionnement(POSITION_ABSOLUE: Vector3): void {
@@ -42,24 +40,28 @@ export class CameraJeu3D extends CameraJeu {
 
     protected calculerNouvellePositionAbsolue(position: Vector3): Vector3 {
         return position.normalize()
-            .multiplyScalar(this.distance)
-            .add(this.voitureSuivie.position);
+                       .multiplyScalar(this.distance)
+                       .add(this.voitureSuivie.position);
     }
 
     public zoomer(): void {
-        if (this.distance > DISTANCE_MINIMUM) {
-            this.distance -= PAS_DISTANCE;
-        }
+        this.distance - PAS_DISTANCE >= DISTANCE_MINIMUM
+            ? this.distance -= PAS_DISTANCE
+            : this.distance = DISTANCE_MINIMUM;
     }
 
     public dezoomer(): void {
-        if (this.distance < DISTANCE_MAXIMUM) {
-            this.distance += PAS_DISTANCE;
-        }
+        this.distance + PAS_DISTANCE <= DISTANCE_MAXIMUM
+            ? this.distance += PAS_DISTANCE
+            : this.distance = DISTANCE_MAXIMUM;
     }
 
     public redimensionnement(largeur: number, hauteur: number): void {
         this.camera.aspect = largeur / hauteur;
         this.camera.updateProjectionMatrix();
+    }
+
+    private get positionPlanXZ(): Vector3 {
+        return this.voitureSuivie.direction.negate();
     }
 }

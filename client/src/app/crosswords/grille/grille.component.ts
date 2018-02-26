@@ -55,9 +55,11 @@ export class GrilleComponent implements OnInit, OnDestroy {
         if (!this.motSelectionne.motTrouve) {
           this.remplirLettresSelect();
           this.miseEvidenceMot("red");
-          this.focusSurBonneLettre();
+          if (document.getElementById("00") !== null) {
+            this.focusSurBonneLettre();
+          }
         }
-    });
+      });
   }
 
   private appliquerStyleDefautGrille(): void {
@@ -72,23 +74,31 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private appliquerBordureHaut(uneCase: HTMLElement, couleur: string, largeur: string): void {
-    uneCase.style.borderTopColor = couleur;
-    uneCase.style.borderTopWidth = largeur;
+    if (uneCase !== undefined) {
+      uneCase.style.borderTopColor = couleur;
+      uneCase.style.borderTopWidth = largeur;
+    }
   }
 
   private appliquerBordureBas(uneCase: HTMLElement, couleur: string, largeur: string): void {
-    uneCase.style.borderBottomColor = couleur;
-    uneCase.style.borderBottomWidth = largeur;
+    if (uneCase !== undefined) {
+      uneCase.style.borderBottomColor = couleur;
+      uneCase.style.borderBottomWidth = largeur;
+    }
   }
 
   private appliquerBordureGauche(uneCase: HTMLElement, couleur: string, largeur: string): void {
-    uneCase.style.borderLeftColor = couleur;
-    uneCase.style.borderLeftWidth = largeur;
+    if (uneCase !== undefined) {
+      uneCase.style.borderLeftColor = couleur;
+      uneCase.style.borderLeftWidth = largeur;
+    }
   }
 
   private appliquerBordureDroite(uneCase: HTMLElement, couleur: string, largeur: string): void {
-    uneCase.style.borderRightColor = couleur;
-    uneCase.style.borderRightWidth = largeur;
+    if (uneCase !== undefined) {
+      uneCase.style.borderRightColor = couleur;
+      uneCase.style.borderRightWidth = largeur;
+    }
   }
 
   private remplirLettresSelect(): void {

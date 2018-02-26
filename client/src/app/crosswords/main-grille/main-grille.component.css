@@ -3,7 +3,6 @@
     width:100%;
     margin:0;
     
-
     display:grid;
     
     grid-template-columns: [C1] 20% [C2] 20% [C3] 60% [C4];
@@ -12,8 +11,8 @@
 
 #bgImage {
     position:absolute;
-    top:4vh;
-    height:96vh;
+    top:5vh;
+    height:95vh;
     width:100vw;
     margin-top:8px;
     z-index:-1;

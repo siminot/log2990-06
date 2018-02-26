@@ -1,13 +1,15 @@
 
 #topMenu {
-    height:4vh;
+    height:5vh;
     width:100vw;
+    display:block;
 }
 
 .menuItem {
+    position:relative;
+    padding:8px;
     font-family: 'Press Start 2P', cursive;
     font-size:10px;
-    padding: 10px;
     cursor: pointer;
     text-decoration:none;
     color:purple;
@@ -21,7 +23,9 @@
     background-color:blue !important;
 }
 
+
+
 #app {
-    height:96vh;
+    height:95vh;
     width: 100vw;
 }

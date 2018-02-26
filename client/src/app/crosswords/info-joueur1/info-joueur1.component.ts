@@ -62,7 +62,11 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   }
 
   public get pourcentagePoint(): number {
-    return Math.round(this._nbMotsDecouverts / this._listeMots.length * CONVERSION_POURCENTAGE);
+    if (this._listeMots.length === 0) {
+      return 0;
+    } else {
+        return Math.round(this._nbMotsDecouverts / this._listeMots.length * CONVERSION_POURCENTAGE);
+    }
   }
 
   public majBarreProgression(): void {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { OptionPartie } from "./../../../../../common/communication/optionPartie";
-const REQUETE_INIT: string = "http://localhost:3000/grille/";
+
+export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 
 @Component({
   selector: "app-config-partie",
@@ -10,12 +11,13 @@ const REQUETE_INIT: string = "http://localhost:3000/grille/";
 })
 export class ConfigPartieComponent implements OnInit {
 
-  private requete: string; // Changer pour une constante
-  private lesOptions: OptionPartie = new OptionPartie;
+  private _requete: string; // Changer pour une constante
+  private lesOptions: OptionPartie;
   private serviceHTTP: HttpeReqService;
 
   public constructor() {
-    this.requete = REQUETE_INIT;
+    this._requete = REQUETE_INIT;
+    this.lesOptions = new OptionPartie();
   }
 
   public ngOnInit(): void {
@@ -23,8 +25,8 @@ export class ConfigPartieComponent implements OnInit {
     document.getElementById("creerOuJoindre").classList.add("pasVisible");
   }
 
-  public get getRequete(): string {
-    return this.requete;
+  public get requete(): string {
+    return this._requete;
   }
 
   public modificationDeRequeteHTTP(): void {
@@ -42,12 +44,15 @@ export class ConfigPartieComponent implements OnInit {
     document.getElementById(laSection).classList.add("pasVisible");
   }
 
-  public ajouterDansRequete(ajout: string): void {
-    if (ajout.length === 0) {
-      return;
+  public ajouterDifficulte(ajout: string): void {
+    if (ajout !== "") {
+      this.lesOptions.difficulte = ajout;
+      this.miseAJourRequete();
     }
-    this.lesOptions.difficulte = ajout;
-    this.requete += ajout;
+  }
+
+  private miseAJourRequete(): void {
+    this._requete = REQUETE_INIT + this.lesOptions.difficulte;
   }
 
 }

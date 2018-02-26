@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ConfigPartieComponent } from "./config-partie.component";
+import { ConfigPartieComponent, REQUETE_INIT } from "./config-partie.component";
 
 describe("ConfigPartieComponent", () => {
   let component: ConfigPartieComponent;
@@ -27,22 +27,23 @@ describe("ConfigPartieComponent", () => {
   describe("test ajoutDansRequete", () => {
 
     component = new ConfigPartieComponent();
-
-    it("devrait modifier la requete", () => {
-      component.ajouterDansRequete("/ajout");
-      expect(component.getRequete).toEqual("localhost:3000/grille/ajout");
-    });
+    const AJOUT: string = "ajout";
+    const REQUETE_FINALE: string = REQUETE_INIT + AJOUT;
 
     it("devrait rien ajouter a la requete", () => {
-      component.ajouterDansRequete("");
-      expect(component.getRequete).toEqual("localhost:3000/grille");
+      const REQUETE_AVANT: string = component.requete;
+      component.ajouterDifficulte("");
+      expect(component.requete).toEqual(REQUETE_AVANT);
+    });
+
+    it("devrait modifier la requete", () => {
+      component.ajouterDifficulte(AJOUT);
+      expect(component.requete).toEqual(REQUETE_FINALE);
     });
 
     it("ne devrait pas accepter cette entree", () => {
-      component.ajouterDansRequete("ajout");
-      expect(component.getRequete).toEqual("localhost:3000/grille");
+      component.ajouterDifficulte("ajout");
+      expect(component.requete).toEqual(REQUETE_FINALE);
     });
-
   });
-
 });

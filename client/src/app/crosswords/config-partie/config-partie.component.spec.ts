@@ -10,7 +10,8 @@ describe("ConfigPartieComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ ConfigPartieComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch();
   }));
 
   beforeEach(() => {
@@ -22,4 +23,26 @@ describe("ConfigPartieComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  describe("test ajoutDansRequete", () => {
+
+    component = new ConfigPartieComponent();
+
+    it("devrait modifier la requete", () => {
+      component.ajouterDansRequete("/ajout");
+      expect(component.getRequete).toEqual("localhost:3000/grille/ajout");
+    });
+
+    it("devrait rien ajouter a la requete", () => {
+      component.ajouterDansRequete("");
+      expect(component.getRequete).toEqual("localhost:3000/grille");
+    });
+
+    it("ne devrait pas accepter cette entree", () => {
+      component.ajouterDansRequete("ajout");
+      expect(component.getRequete).toEqual("localhost:3000/grille");
+    });
+
+  });
+
 });

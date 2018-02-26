@@ -46,8 +46,8 @@ describe("RequeteDeGrilleService", () => {
 
   describe("Envoie de la liste de mots aux différents composants.", () => {
     // it("Envoie de la liste de mots au composant de la grille.", () => {
-    //   service.serviceEnvoieMots(service.getMots());
-    //   expect(grille.getListeMots()).toEqual(service.getMots());
+    //  serviceGrille["serviceEnvoieMots"](serviceGrille.mots);
+    //  expect(grille.getListeMots()).toEqual(serviceGrille.mots);
     // });
 
     it("Envoie de la liste de mots au composant de définition.", () => {
@@ -58,8 +58,8 @@ describe("RequeteDeGrilleService", () => {
 
   describe("Envoie de la matrice aux différents composants.", () => {
     // it("Envoie de la matrice au composant de la grille.", () => {
-    //   service.serviceEnvoieMatriceLettres(service.getMatrice());
-    //   expect(grille.getMatrice()).toEqual(service.getMatrice());
+    //  serviceGrille.serviceEnvoieMatriceLettres(serviceGrille.matrice);
+    //  expect(grille.getMatrice()).toEqual(serviceGrille.matrice);
     // });
 
     it("Envoie de la matrice au composant de définition.", () => {

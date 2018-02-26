@@ -1,14 +1,17 @@
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 <div id="container">
   <table>
     <tr>
       <td id="col1">
-        <p>NOM</p>
+        <p id="nomJoueur">{{ _nomJoueur }}</p>
+        <img src="../../assets/crosswords/profilPicture/defaultProfilPicture.jpg" id="profilPicture" alt="Profil Picture">
       </td>
       <td id="col2">
-        <p>Pointage : {{ _pointage }}</p>
+        <p id="pointageTitre">Pointage</p>
+        <p id="pointage">{{ _pointage }}</p>
       </td>
       <td id="col3">
-        <p>INFO JEU</p>
+        <p id="infoSupp">INFO JEU</p>
       </td>
     </tr>
   </table>

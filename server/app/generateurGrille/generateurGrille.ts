@@ -194,8 +194,6 @@ module Route {
                 /* FONCTION BIDON POUR EXAMINER DES CHOSES */
         public afficheGrille(req: Request, res: Response, next: NextFunction): void {
             this.initMatrice();
-            console.log(this.grille);
-            console.log(this.listeMot);
             res.send(JSON.stringify(this.grille));
         }
 

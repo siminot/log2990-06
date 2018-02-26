@@ -300,14 +300,16 @@ export class GrilleComponent implements OnInit, OnDestroy {
       if (!mot.estVertical) {
         other = mot.premierY;
         max = mot.premierX + mot.longeur - 1;
-        if ( X <= max && Y === other) {
+        console.log(X,Y, other,max);
+        if ( X <= max && Y === other && mot.premierX <= X) {
           motTrouve = mot;
           break;
         }
       } else if ( mot.estVertical) {
         other = mot.premierX;
         max = mot.premierY + mot.longeur - 1;
-        if ( Y <= max && X === other) {
+        console.log(X,Y, other,max);
+        if ( Y <= max && X === other && mot.premierY <= Y) {
           motTrouve = mot;
           break;
         }

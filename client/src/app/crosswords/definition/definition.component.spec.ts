@@ -19,7 +19,8 @@ describe("DefinitionComponent", () => {
     activer: false,
     motTrouve: false
   };
-
+  
+/*
   const realWordFromOurFakeList: Word = {
     mot: "Tata",
     definition: "Ni papa, ni  mama",
@@ -30,6 +31,7 @@ describe("DefinitionComponent", () => {
     activer: false,
     motTrouve: false
   };
+*/
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

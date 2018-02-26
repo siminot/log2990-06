@@ -1,5 +1,5 @@
 import { VIDE, NOIR } from "./constantes";
-import { MotGenerationGrille } from "./../../../common/mockObject/mockWord";
+import { MotGenerationGrille } from "./motGenerateurGrille";
 
 export class GenerateurListeMots {
 

@@ -1,4 +1,4 @@
-import { MotGenerationGrille } from "./../../../common/mockObject/mockWord";
+import { MotGenerationGrille } from "./motGenerateurGrille";
 import { GenerateurListeMots } from "./generateurListeMots";
 import * as assert from "assert";
 

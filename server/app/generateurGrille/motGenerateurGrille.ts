@@ -10,7 +10,7 @@ export class MotGenerationGrille {
     private premierX: number;
     private premierY: number;
     private estTraite: boolean;
-    private cheat:boolean;
+    private cheat: boolean;
 
     public constructor(estVertical: boolean, longueur: number, premierX: number, premierY: number) {
         this.mot = "";
@@ -20,7 +20,7 @@ export class MotGenerationGrille {
         this.premierX = premierX;
         this.premierY = premierY;
         this.estTraite = false;
-        this.cheat = false; 
+        this.cheat = false;
 
     }
     // getters

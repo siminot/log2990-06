@@ -170,7 +170,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   public manageKeyEntry(event: KeyboardEvent): void {
     if (event.key === "Backspace") {
       this.focusOnPreviousLetter();
-    } else if (event.keyCode >= CONST.KEYCODE_MIN && event.keyCode <= CONST.KEYCODE_MAX) {
+    } else if (event.key.toUpperCase().charCodeAt(0) >= CONST.KEYCODE_MIN && event.key.toUpperCase().charCodeAt(0) <= CONST.KEYCODE_MAX) {
       this.focusOnNextLetter();
     }
   }
@@ -179,11 +179,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
     if (this.positionCourante < this.motSelectionne.longeur - 1) {
       this.positionCourante++;
       const elem: HTMLInputElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]) as HTMLInputElement;
-      elem.focus();
+      if (elem !== null) {
+        elem.focus();
 
-      if (elem.value !== "") {
-        this.focusOnNextLetter();
+        if (elem.value !== "") {
+          this.focusOnNextLetter();
+        }
       }
+
     } else if (this.positionCourante === this.motSelectionne.longeur - 1) {
       this.validateWord();
     }

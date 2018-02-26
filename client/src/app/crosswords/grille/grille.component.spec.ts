@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing"
 
 import { GrilleComponent } from "./grille.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { listeMots } from "../mockObject/mockListWord";
+import { listeMotsLongue, grilleLettres } from "../mockObject/mockGrille";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
@@ -22,7 +22,8 @@ describe("GrilleComponent", () => {
   }));
 
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
-    service["mots"] = listeMots;
+    service["mots"] = listeMotsLongue;
+    service["matriceDesMotsSurGrille"] = grilleLettres;
     serviceGrille = service;
     fixture = TestBed.createComponent(GrilleComponent);
     component = fixture.componentInstance;
@@ -42,15 +43,21 @@ describe("GrilleComponent", () => {
 
   describe("Accesseurs fonctionnels.", () => {
     it("Accesseur liste de mots.", () => {
-      expect(component.getListeMots()).toEqual(listeMots);
+      expect(component.getListeMots()).toEqual(listeMotsLongue);
+    });
+    it("Accesseur matrice de lettres.", () => {
+      expect(component.getMatrice()).toEqual(grilleLettres);
     });
   });
 
   describe("Gestion des touches de clavier", () => {
     it("Entree d'une lettre", () => {
+      component["motSelectionne"] = listeMotsLongue[0];
+      component["positionLettresSelectionnees"] = [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" ];
+      component["positionCourante"] = 0;
       const positionInit: number = component["positionCourante"];
       const touche: KeyboardEvent = new KeyboardEvent("keydown", {
-        "key": "e"
+        "key": "E"
       });
       component.manageKeyEntry(touche);
       expect(component["positionCourante"]).toBeGreaterThan(positionInit);

@@ -55,9 +55,6 @@ export class RequeteDeGrilleService {
     });
   }
 
-  private serviceEnvoieMots(mots: Word[]): void {
-    this.listeMotsSujet.next(mots);
-  }
 
   // Traitement de la grille
 
@@ -82,6 +79,9 @@ export class RequeteDeGrilleService {
   }
 
   // Services publics
+  public serviceEnvoieMots(mots: Word[]): void {
+    this.listeMotsSujet.next(mots);
+  }
 
   public serviceEnvoieMatriceLettres(matriceLettres: Array<Array<LettreGrille>>): void {
     this.matriceDesMotsSurGrilleSujet.next(matriceLettres);

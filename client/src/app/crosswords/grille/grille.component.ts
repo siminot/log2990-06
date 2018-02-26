@@ -322,8 +322,15 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return motTrouve;
   }
 
-  public envoieMotSelectionne(): void {
+  private envoieMotSelectionne(): void {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
+  }
+  // never reasign ? On change un attribut juste en dessous, du calme TSlint
+  private switchCheatMode(): void {
+    for(let mot of this.mots){
+      mot.cheat = !mot.cheat;
+    }
+    this.listeMotsService.serviceEnvoieMots(this.mots);
   }
 
   public ngOnDestroy(): void {

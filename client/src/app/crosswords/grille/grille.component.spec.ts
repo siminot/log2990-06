@@ -22,12 +22,8 @@ describe("GrilleComponent", () => {
   }));
 
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
-<<<<<<< HEAD
-    service["mots"] = listeMotsLongue;
+    service["_mots"] = listeMotsLongue;
     service["matriceDesMotsSurGrille"] = grilleLettres;
-=======
-    service["_mots"] = listeMots;
->>>>>>> 3231b59f86bc1e7db5782fbfc479054f309d27d1
     serviceGrille = service;
     fixture = TestBed.createComponent(GrilleComponent);
     component = fixture.componentInstance;

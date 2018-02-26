@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
+import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 
 @Component({
   selector: "app-info-joueur1",
@@ -11,9 +12,12 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   private _nomJoueur: string;
   private _pointage: number;
   private _pourcentagePoint: number;
-  private _subscriptionPointage: Subscription;
 
-  public constructor(private _servicePointage: InfojoueurService) {
+  private _subscriptionPointage: Subscription;
+  private _subscriptionListeMots: Subscription;
+
+  public constructor(private _servicePointage: InfojoueurService,
+                     private _requeteGrille: RequeteDeGrilleService) {
     this._nomJoueur = "Nom du joueur";
     this._pointage = 0;
     this._pourcentagePoint = 0;

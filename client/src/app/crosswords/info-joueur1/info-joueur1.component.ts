@@ -24,6 +24,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     this._nomJoueur = "Nom du joueur";
     this._nbMotsDecouverts = 0;
     this._pourcentagePoint = 0;
+    this._listeMots = [];
    }
 
   public ngOnInit(): void {

@@ -23,8 +23,8 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   private motSelectionne: Word;
 
   public constructor (private listeMotsService: RequeteDeGrilleService) {
-    this.mots = this.listeMotsService.getMots();
-    this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
+    this.mots = this.listeMotsService.mots;
+    this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
 
     this.initialiserSouscriptions();
   }

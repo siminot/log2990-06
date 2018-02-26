@@ -37,9 +37,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.mots = this.listeMotsService.getMots();
+    this.mots = this.listeMotsService.mots;
 
-    this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
+    this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
 
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots; });
 

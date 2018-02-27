@@ -6,7 +6,7 @@ import * as WebRequest from "web-request";
 import { MotGenerationGrille } from "./motGenerateurGrille";
 import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../serviceLexical/Mot";
-import { Difficultees } from "./constantes";
+import { Difficultees, REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
 
 import { GenSquelette } from "./genSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";
@@ -153,11 +153,11 @@ module Route {
 
                 case Difficultees.Facile:
                 case Difficultees.Normal:
-                url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
+                url = REQUETE_COMMUN + mot.getMot();
                 break;
 
                 case Difficultees.Difficile:
-                url = "http://localhost:3000/servicelexical/noncommun/contrainte/" + mot.getMot();
+                url = REQUETE_NONCOMMUN + mot.getMot();
                 break;
 
                 default: /*devrait jamais arriver?*/ break;

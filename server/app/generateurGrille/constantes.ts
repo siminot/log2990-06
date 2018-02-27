@@ -10,7 +10,7 @@ export const PROB_CASE_N = 0.25;
 export const HEURISTIQUE_LNG_MOT = 1.75;
 
 export enum Difficultees {
-    Facile = "Facile",
-    Normal = "Normal",
-    Difficile = "Difficile"
+    Facile = "facile",
+    Normal = "normal",
+    Difficile = "difficile"
 }

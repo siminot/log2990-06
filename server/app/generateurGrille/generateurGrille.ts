@@ -6,6 +6,7 @@ import * as WebRequest from "web-request";
 import { Mockword } from "./../../../common/mockObject/mockWord";
 import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../serviceLexical/Mot";
+import { Difficultees } from "./constantes";
 
 import { GenSquelette } from "./genSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";
@@ -150,12 +151,12 @@ module Route {
             let url: string;
             switch (this.optionsPartie.niveau) {
 
-                case "facile":
-                case "normal":
+                case Difficultees.Facile:
+                case Difficultees.Normal:
                 url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
                 break;
 
-                case "difficile":
+                case Difficultees.Difficile:
                 url = "http://localhost:3000/servicelexical/noncommun/contrainte/" + mot.getMot();
                 break;
 
@@ -171,8 +172,8 @@ module Route {
             const nbDef: number = unMot.definitions.length;
             switch (this.optionsPartie.niveau) {
 
-                case "Normal":
-                case "Difficile":
+                case Difficultees.Normal:
+                case Difficultees.Difficile:
                 if (unMot.definitions.length > 0) {    // S'il n'y a aucune autre def
                     indexDef = this.nombreAleatoire(nbDef) - 1;
                 }

@@ -6,6 +6,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { listeMotsLongue, grilleLettres } from "../mockObject/mockGrille";
 
+
 describe("DefinitionComponent", () => {
   let component: DefinitionComponent;
   let fixture: ComponentFixture<DefinitionComponent>;
@@ -50,6 +51,7 @@ describe("DefinitionComponent", () => {
   beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
     component = new DefinitionComponent(service);
     component["matriceDesMotsSurGrille"] = grilleLettres;
+    component["mots"] = listeMotsLongue;
     fixture = TestBed.createComponent(DefinitionComponent);
     fixture.detectChanges();
   })
@@ -96,5 +98,13 @@ describe("DefinitionComponent", () => {
 
       expect(matrice[0][0].caseDecouverte).toBeFalsy();
 });
+
+    it("Permet de changer le mot selectionné", () => {
+    const wordTest: Word = component["mots"][0];
+    component.changementMotSelectionne(wordTest);
+    const wordVerif: Word = component["motSelectionne"];
+    expect(matrice[0][0].caseDecouverte).toBeFalsy();
+  });
+
 });
-});
+})

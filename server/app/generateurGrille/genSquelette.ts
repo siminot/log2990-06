@@ -17,7 +17,7 @@ export class GenSquelette {
     }
 
     private genererSquelette(): void {
-        for (let i = 0; i < TAILLE_TABLEAU; i += TAILLE_MINIMUM) {
+        for (let i: number = 0; i < TAILLE_TABLEAU; i += TAILLE_MINIMUM) {
             this.ecrireLigne(i);
             this.ecrireCol(i + 1);
         }
@@ -25,8 +25,8 @@ export class GenSquelette {
     }
 
     private nettoyerCases(): void {
-        for (let i = 0; i < TAILLE_TABLEAU; i++) {
-            for (let j = 0; j < TAILLE_TABLEAU; j++) {
+        for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
+            for (let j: number = 0; j < TAILLE_TABLEAU; j++) {
                 if (this.grille[i][j] === CASE_OK) {
                     this.grille[i][j] = NOIR;
                 }
@@ -36,7 +36,7 @@ export class GenSquelette {
 
     private initGrille(): void {
         this.grille = new Array(TAILLE_TABLEAU).fill(CASE_OK);
-        for (let i = 0; i < TAILLE_TABLEAU; i++) {
+        for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
             this.grille[i] = new Array(TAILLE_TABLEAU).fill(CASE_OK);
         }
     }
@@ -46,7 +46,7 @@ export class GenSquelette {
         if (this.indicePasDansGrille(indiceDep)) {
             return -1;
         }
-        let indice = 0;
+        let indice: number = 0;
 
         while (this.probabiliterDeContinuerMot(indice, indiceDep)) {
             ++indice;
@@ -62,7 +62,7 @@ export class GenSquelette {
             return true;
         }
 
-        const prob = 1 - indice / (HEURISTIQUE_LNG_MOT * (TAILLE_TABLEAU - indiceDep));
+        const prob: number = 1 - indice / (HEURISTIQUE_LNG_MOT * (TAILLE_TABLEAU - indiceDep));
 
         return Math.random() < prob ? true : false;
     }
@@ -72,7 +72,7 @@ export class GenSquelette {
     }
 
     private ecrireLigne(i: number): void {
-        for (let j = 0; j < TAILLE_TABLEAU; j++) {
+        for (let j: number = 0; j < TAILLE_TABLEAU; j++) {
             if (this.grille[i][j] === CASE_OK) {
                 if (this.probaDeContinuerCaseNoire()) {
                     this.grille[i][j] = NOIR;
@@ -84,7 +84,7 @@ export class GenSquelette {
                 }
             }
         }
-        for (let j = 0; j < TAILLE_TABLEAU; j++) {
+        for (let j: number = 0; j < TAILLE_TABLEAU; j++) {
             if (this.grille[i][j] === CASE_OK) {
                 this.grille[i][j] = VIDE;
             }
@@ -94,7 +94,7 @@ export class GenSquelette {
     }
 
     private ecrireCol(j: number): void {
-        for (let i = 0; i < TAILLE_TABLEAU; i++) {
+        for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
             if (this.grille[i][j] === CASE_OK) {
                 if (this.probaDeContinuerCaseNoire()) {
                     this.grille[i][j] = NOIR;
@@ -106,7 +106,7 @@ export class GenSquelette {
                 }
             }
         }
-        for (let i = 0; i < TAILLE_TABLEAU; i++) {
+        for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
             if (this.grille[i][j] !== NOIR) {
                 this.grille[i][j] = VIDE;
             }

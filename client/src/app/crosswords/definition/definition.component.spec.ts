@@ -1,11 +1,10 @@
 import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { DefinitionComponent } from "./definition.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Mot, LettreGrille } from "../mockObject/word";
+import { Mot, LettreGrille } from "../objetsTest/mot";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
-import { listeMotsLongue, grilleLettres } from "../mockObject/mockGrille";
-
+import { listeMotsLongue, grilleLettres } from "../objetsTest/objetsTest";
 
 describe("DefinitionComponent", () => {
   let component: DefinitionComponent;
@@ -51,18 +50,7 @@ describe("DefinitionComponent", () => {
       }
       expect(result).toEqual(expectedValues);
     });
-    // Dédoublement de test...
-/*     it("Decouvrir les lettre dans la grille selon le mot selectionne", () => {
-      component["decouvrirCases"](fakeWord);
-      const expectedValues: boolean[] = [true, true, true, true];
-      const result: boolean[] = [];
-      const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
 
-      for (let i: number = 0; i < fakeWord.longeur; i++) {
-        result[i] = matrice[0][i].lettreDecouverte;
-    }
-      expect(result).toEqual(expectedValues);
-    }); */
     it("remettre toute les caseDecouverte a false", () => {
       const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
       matrice[0][0] = {
@@ -73,14 +61,6 @@ describe("DefinitionComponent", () => {
       component["cacherCases"]();
 
       expect(matrice[0][0].caseDecouverte).toBeFalsy();
-});
-
-    it("Permet de changer le mot selectionné", () => {
-    const wordTest: Mot = component["mots"][0];
-    component.changementMotSelectionne(wordTest);
-    const wordVerif: Mot = component["motSelectionne"];
-    expect(wordTest).toEqual(wordVerif);
+    });
   });
-
 });
-})

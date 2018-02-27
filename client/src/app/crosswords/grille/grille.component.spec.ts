@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing"
 
 import { GrilleComponent } from "./grille.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { listeMotsLongue, grilleLettres } from "../mockObject/mockGrille";
+import { listeMotsLongue, grilleLettres } from "../objetsTest/objetsTest";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";

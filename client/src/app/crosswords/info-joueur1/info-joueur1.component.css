@@ -30,10 +30,15 @@ table {
     margin-left: auto;
     margin-right: auto;
 }
+#difficulte{
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    font-size: 10px;
+    
+}
 
 #pointageTitre {
     text-align: center;
-    font-family: 'Press Start 2P', cursive;
     font-size: 12px;
 }
 

@@ -1,4 +1,4 @@
-import { Mot, LettreGrille } from "./word";
+import { Mot, LettreGrille } from "./mot";
 
 export const listeMotsLongue: Mot[] = [
     {

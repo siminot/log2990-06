@@ -13,6 +13,7 @@ describe("InfoJoueur1Component", () => {
   let fixture: ComponentFixture<InfoJoueur1Component>;
   let infojoueur: InfojoueurService;
   let serviceGrille: RequeteDeGrilleService;
+  let serviceHttp: HttpeReqService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,17 +25,15 @@ describe("InfoJoueur1Component", () => {
     .catch(() => { throw new Error("Erreur de la creation du test"); });
   }));
 
-  beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
-    serviceGrille = service;
-  }));
-
-  beforeEach(() => {
+  beforeEach(inject([HttpeReqService], (service: HttpeReqService) => {
+    serviceHttp = service;
+    serviceGrille = new RequeteDeGrilleService(serviceHttp);
     fixture = TestBed.createComponent(InfoJoueur1Component);
     component = fixture.componentInstance;
     infojoueur = new InfojoueurService();
-    component = new InfoJoueur1Component(infojoueur, serviceGrille);
+    component = new InfoJoueur1Component(infojoueur, serviceGrille, serviceHttp);
     fixture.detectChanges();
-  });
+  }));
 
   it("should create", () => {
     expect(component).toBeTruthy();

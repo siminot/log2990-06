@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
-
-import { Mot, LettreGrille } from "../mockObject/word";
+import { Mot, LettreGrille } from "../objetsTest/mot";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import * as CONST from "../constantes";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";

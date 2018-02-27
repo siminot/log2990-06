@@ -348,7 +348,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
   }
-
   public afficherRegle(): void {
     alert(REGLE_JEU);
   }

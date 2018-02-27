@@ -3,9 +3,10 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { Mockword } from "./../../../common/mockObject/mockWord";
+import { MotGenerationGrille } from "./motGenerateurGrille";
 import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../serviceLexical/Mot";
+import { Difficultees } from "./constantes";
 
 import { GenSquelette } from "./genSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";
@@ -16,7 +17,7 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
-        private listeMot: Array<Mockword>;
+        private listeMot: Array<MotGenerationGrille>;
         private generateurSquelette: GenSquelette = new GenSquelette();
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
         private motsDejaPlaces: Map<string, number> = new Map();
@@ -29,7 +30,7 @@ module Route {
         }
 
         private initMatrice(): void {
-            this.listeMot = new Array<Mockword>();
+            this.listeMot = new Array<MotGenerationGrille>();
             this.grille = new Array<Array<string>>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
@@ -40,12 +41,12 @@ module Route {
             this.motsDejaPlaces = new Map();
         }
 
-        private lireMotViaGrille(mot: Mockword) {
-            let lecteur = "";
-            const x = mot.getPremierX();
-            const y = mot.getPremierY();
+        private lireMotViaGrille(mot: MotGenerationGrille): void {
+            let lecteur: string = "";
+            const x: number = mot.getPremierX();
+            const y: number = mot.getPremierY();
 
-            for (let i = 0; i < mot.getLongueur(); i++) {
+            for (let i: number = 0; i < mot.getLongueur(); i++) {
                 if (mot.getVertical()) {
                     lecteur += this.grille[y + i][x];
                 } else {
@@ -55,11 +56,11 @@ module Route {
             mot.setMot(lecteur);
         }
 
-        private ecrireDansLaGrille(mot: Mockword): void {
-            const x = mot.getPremierX();
-            const y = mot.getPremierY();
+        private ecrireDansLaGrille(mot: MotGenerationGrille): void {
+            const x: number = mot.getPremierX();
+            const y: number = mot.getPremierY();
 
-            for (let i = 0; i < mot.getLongueur(); i++) {
+            for (let i: number = 0; i < mot.getLongueur(); i++) {
                 if (mot.getVertical()) {
                     this.grille[y + i][x] = mot.getMot()[i];
                 } else {
@@ -77,10 +78,10 @@ module Route {
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {
 
-            const motActuel: Mockword = this.listeMot[indice];
+            const motActuel: MotGenerationGrille = this.listeMot[indice];
             this.lireMotViaGrille(motActuel);
             let lesMots: Mot[];
-            const contrainte = motActuel.getMot();
+            const contrainte: string = motActuel.getMot();
 
             if (motActuel.getMot() in this.requetesInvalides) {
                 return false;
@@ -93,10 +94,10 @@ module Route {
                 return false;
             }
             let prochainIndice: number;
-            let ctr = 0;
-            const DIX = 2; // A rajouter dans les constantes quand on va avoir un bon chiffre
-            let prochainMotTrouve = false;
-            let indiceAleatoire = 0;
+            let ctr: number = 0;
+            const DIX: number = 2; // A rajouter dans les constantes quand on va avoir un bon chiffre
+            let prochainMotTrouve: boolean = false;
+            let indiceAleatoire: number = 0;
             do {
                 indiceAleatoire = this.nombreAleatoire(lesMots.length) - 1;
                 // limiter le nombre d'essai pour chaque mot
@@ -128,11 +129,11 @@ module Route {
             return true;
         }
 
-        private obtenirLeMotLePlusImportant(mock: Mockword): number {
-            let max = 0;
-            let indiceDuMax = -1;
+        private obtenirLeMotLePlusImportant(mock: MotGenerationGrille): number {
+            let max: number = 0;
+            let indiceDuMax: number = -1;
             let temp: number;
-            for (let i = 0; i < this.listeMot.length; i++) {
+            for (let i: number = 0; i < this.listeMot.length; i++) {
                 if (!this.listeMot[i].getEstTraite()) {
                     temp = this.listeMot[i].getImportance(mock);
                     if (max < temp) {
@@ -145,17 +146,17 @@ module Route {
             return indiceDuMax;
         }
 
-        private async demanderMot(mot: Mockword): Promise<Mot[]> {
+        private async demanderMot(mot: MotGenerationGrille): Promise<Mot[]> {
 
             let url: string;
             switch (this.optionsPartie.niveau) {
 
-                case "facile":
-                case "normal":
+                case Difficultees.Facile:
+                case Difficultees.Normal:
                 url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
                 break;
 
-                case "difficile":
+                case Difficultees.Difficile:
                 url = "http://localhost:3000/servicelexical/noncommun/contrainte/" + mot.getMot();
                 break;
 
@@ -165,14 +166,14 @@ module Route {
             return WebRequest.json<Mot[]>(url);
         }
 
-        private affecterMot(unMot: Mot, motAChanger: Mockword): Mot {
+        private affecterMot(unMot: Mot, motAChanger: MotGenerationGrille): Mot {
             // regarder avec simon si on doit trouver un mot en particulier dans la liste
-            let indexDef = 0;
+            let indexDef: number = 0;
             const nbDef: number = unMot.definitions.length;
             switch (this.optionsPartie.niveau) {
 
-                case "Normal":
-                case "Difficile":
+                case Difficultees.Normal:
+                case Difficultees.Difficile:
                 if (unMot.definitions.length > 0) {    // S'il n'y a aucune autre def
                     indexDef = this.nombreAleatoire(nbDef) - 1;
                 }
@@ -190,8 +191,8 @@ module Route {
 
         // retourne un nombre entre 1 et nbMax
         private nombreAleatoire(nbMax: number): number {
-            const millisecondes = new Date().getMilliseconds();
-            const MILLE = 1000;
+            const millisecondes: number = new Date().getMilliseconds();
+            const MILLE: number = 1000;
 
             return Math.floor(millisecondes * nbMax / MILLE) + 1;
         }

@@ -32,7 +32,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     this._nbMotsDecouverts = 0;
     this._listeMots = [];
     this._timer = 0;
-    this._timerObservable$ = TimerObservable.create(0, 1000);
+    this._timerObservable$ = TimerObservable.create(0, CONST.UNE_SECONDE_EN_MILISECONDES);
    }
 
   public ngOnInit(): void {
@@ -43,13 +43,15 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   public formatterTimer(): void {
     let tmpTimer: number = this._timer, heures: number = 0, min: number = 0, sec: number = 0;
 
-    heures = Math.floor(tmpTimer / 3600) % 24;
+    heures = Math.floor(tmpTimer / CONST.SECONDES_PAR_HEURE) % CONST.HEURES_PAR_JOUR;
     tmpTimer -= heures;
-    min = Math.floor(tmpTimer / 60) % 60;
+    min = Math.floor(tmpTimer / CONST.SECONDES_PAR_MINUTE) % CONST.SECONDES_PAR_MINUTE;
     tmpTimer -= min;
-    sec = tmpTimer % 60;
+    sec = tmpTimer % CONST.SECONDES_PAR_MINUTE;
 
-    this._formatedTimer = String(heures) + 'h ' + String(min) + 'm ' + String(sec) + 's';
+    this._formatedTimer = String(heures) + CONST.ABREVIATION_HEURES +
+                          String(min) + CONST.ABREVIATION_MINUTES +
+                          String(sec) + CONST.ABREVIATION_SECONDES;
   }
 
   public ngOnDestroy(): void {

@@ -15,8 +15,8 @@ export class InfojoueurService {
     this._nbMotsDecouvObservable$ = this._nbMotsDecouvSujet.asObservable();
   }
 
-  public incrementationNbMotDecouv(pointage: number): void {
-    this._nbMotsDecouverts += pointage;
+  public incrementationNbMotDecouv(incrMotDecouvert: number): void {
+    this._nbMotsDecouverts += incrMotDecouvert;
     this._nbMotsDecouvSujet.next(this._nbMotsDecouverts);
   }
 

@@ -34,7 +34,7 @@ describe("GrilleComponent", () => {
     })
   );
 
-  describe("Construction d\"objet", () => {
+  describe("Construction d'objet", () => {
     it("Construction du service de requete réussie.", () => {
       expect(serviceGrille).toBeDefined();
     });

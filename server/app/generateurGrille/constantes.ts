@@ -9,6 +9,9 @@ export const POURCENTAGE_NOIR: number = 0.45;
 export const PROB_CASE_N: number = 0.25;
 export const HEURISTIQUE_LNG_MOT: number = 1.75;
 
+export const REQUETE_COMMUN: string = "http://localhost:3000/servicelexical/commun/contrainte/";
+export const REQUETE_NONCOMMUN: string = "http://localhost:3000/servicelexical/noncommun/contrainte/";
+
 export enum Difficultees {
     Facile = "facile",
     Normal = "normal",

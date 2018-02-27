@@ -76,10 +76,10 @@ describe("DefinitionComponent", () => {
 });
 
     it("Permet de changer le mot selectionné", () => {
-    const wordTest: Word = component["mots"][0];
+    const wordTest: Mot = component["mots"][0];
     component.changementMotSelectionne(wordTest);
-    const wordVerif: Word = component["motSelectionne"];
-    expect(matrice[0][0].caseDecouverte).toBeFalsy();
+    const wordVerif: Mot = component["motSelectionne"];
+    expect(wordTest).toEqual(wordVerif);
   });
 
 });

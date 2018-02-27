@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Word } from "../mockObject/word";
-import { CONVERSION_POURCENTAGE } from "../constantes";
+import { Mot } from "../mockObject/word";
+import * as CONST from "../constantes";
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Observable } from "rxjs/Observable";
 
@@ -16,11 +16,12 @@ import { Observable } from "rxjs/Observable";
 export class InfoJoueur1Component implements OnInit, OnDestroy {
   private _nomJoueur: string;
   private _nbMotsDecouverts: number;
-  private _listeMots: Word[];
+  private _listeMots: Mot[];
   private _barreProgression: HTMLElement;
-
   private _timer: number;
   private _formatedTimer: string;
+
+  private _timerObservable$: Observable<number>;
 
   private _subscriptionNbMotsDecouv: Subscription;
   private _subscriptionListeMots: Subscription;
@@ -31,19 +32,17 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     this._nbMotsDecouverts = 0;
     this._listeMots = [];
     this._timer = 0;
+    this._timerObservable$ = TimerObservable.create(0, 1000);
    }
 
   public ngOnInit(): void {
     this.initialiserSouscriptions();
     this._barreProgression = document.getElementById("progress-bar");
-
-    const timer: Observable<number> = TimerObservable.create(0, 1000);
-    timer.subscribe((t: number) => { this._timer = t; this.formatterTimer(); });
   }
 
   public formatterTimer(): void {
-    let tmpTimer = this._timer;
-    let heures: number = 0, min: number = 0, sec: number = 0;
+    let tmpTimer: number = this._timer, heures: number = 0, min: number = 0, sec: number = 0;
+
     heures = Math.floor(tmpTimer / 3600) % 24;
     tmpTimer -= heures;
     min = Math.floor(tmpTimer / 60) % 60;
@@ -60,6 +59,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   private initialiserSouscriptions(): void {
     this.souscrireListeDeMots();
     this.souscrireMotsDecouverts();
+    this.souscrireTimer();
   }
 
   private souscrireListeDeMots(): void {
@@ -77,6 +77,13 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     });
   }
 
+  private souscrireTimer(): void {
+    this._timerObservable$
+      .subscribe((t: number) => {
+        this._timer = t; this.formatterTimer();
+      });
+  }
+
   private desinscrireSouscriptions(): void {
     this._subscriptionListeMots.unsubscribe();
     this._subscriptionNbMotsDecouv.unsubscribe();
@@ -86,7 +93,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     if (this._listeMots.length === 0) {
       return 0;
     } else {
-        return Math.round(this._nbMotsDecouverts / this._listeMots.length * CONVERSION_POURCENTAGE);
+        return Math.round(this._nbMotsDecouverts / this._listeMots.length * CONST.CONVERSION_POURCENTAGE);
     }
   }
 

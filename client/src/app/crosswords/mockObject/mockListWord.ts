@@ -1,6 +1,6 @@
-import { Word } from "./word";
+import { Mot } from "./word";
 
-export const listeMots: Word[] = [
+export const listeMots: Mot[] = [
     { mot: "Pout", definition: "Qui aime la poutine", estVertical: false, longeur: 4,
       premierX: 0, premierY: 0, activer: false, motTrouve: false, cheat: false },
 

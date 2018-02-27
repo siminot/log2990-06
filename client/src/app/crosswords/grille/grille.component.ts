@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 
-import { Word, LettreGrille } from "../mockObject/word";
+import { Mot, LettreGrille } from "../mockObject/word";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import * as CONST from "../constantes";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
@@ -14,9 +14,9 @@ const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tent
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {
-  private mots: Word[];
+  private mots: Mot[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
-  private motSelectionne: Word;
+  private motSelectionne: Mot;
   private positionLettresSelectionnees: string[];
   private positionCourante: number;
   private lockedLetter: boolean[][];
@@ -271,7 +271,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
   }
 
-  public getListeMots(): Word[] {
+  public getListeMots(): Mot[] {
     return this.mots;
   }
 
@@ -296,18 +296,18 @@ export class GrilleComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:no-any
     const target: any = event.target || event.srcElement || event.currentTarget;
     const cordinate: string[] = target.attributes.id.nodeValue.split("");
-    // coordonne X et Y de la case selectionne
+    // coordonne X et Y de la case selectionneMot
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];
-    const motSousJacent: Word = this.findWordFromXY(x, y);
+    const motSousJacent: Mot = this.findWordFromXY(x, y);
     this.motSelectionne = motSousJacent;
 
     this.envoieMotSelectionne();
     // this.focusOnRightLetter();
   }
 
-  private findWordFromXY( X: number, Y: number): Word {
-    let motTrouve: Word;
+  private findWordFromXY( X: number, Y: number): Mot {
+    let motTrouve: Mot;
     for (const mot of  this.mots) {
       let other: number;
       let max: number;
@@ -337,7 +337,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
   // never reasign ? On change un attribut juste en dessous, du calme TSlint
   public switchCheatMode(): void {
-    for(let mot of this.mots){
+    for (const mot of this.mots) {
       mot.cheat = !mot.cheat;
     }
     this.listeMotsService.serviceEnvoieMots(this.mots);

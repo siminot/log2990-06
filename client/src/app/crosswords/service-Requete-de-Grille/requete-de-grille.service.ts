@@ -3,25 +3,25 @@ import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
-import { Word, LettreGrille } from "../mockObject/word";
+import { Mot, LettreGrille } from "../mockObject/word";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
 @Injectable()
 export class RequeteDeGrilleService {
-  private _mots: Word[];
+  private _mots: Mot[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 
-  private listeMotsSujet: Subject<Word[]> = new Subject<Word[]>();
+  private listeMotsSujet: Subject<Mot[]> = new Subject<Mot[]>();
   private matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();
-  private motSelectionneSuject: Subject<Word> = new Subject<Word>();
-  private listeMotsObservable$: Observable<Word[]> = this.listeMotsSujet.asObservable();
+  private motSelectionneSuject: Subject<Mot> = new Subject<Mot>();
+  private listeMotsObservable$: Observable<Mot[]> = this.listeMotsSujet.asObservable();
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
-  private motSelectionneObservable$: Observable<Word> = this.motSelectionneSuject.asObservable();
+  private motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
 
   // Accesseurs
 
-  public get mots(): Word[] {
+  public get mots(): Mot[] {
     return this._mots;
   }
 
@@ -54,8 +54,6 @@ export class RequeteDeGrilleService {
       this.insererMotsDansGrille();
     });
   }
-
-
   // Traitement de la grille
 
   private insererMotsDansGrille(): void {
@@ -66,20 +64,20 @@ export class RequeteDeGrilleService {
     }
   }
 
-  private assignerLettre(objMot: Word, indice: number): void {
+  private assignerLettre(objMot: Mot, indice: number): void {
     objMot.estVertical
       ? this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY] = this.obtenirLettre(objMot, indice)
       : this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY] = this.obtenirLettre(objMot, indice);
   }
 
-  private obtenirLettre(objMot: Word, indice: number): LettreGrille {
+  private obtenirLettre(objMot: Mot, indice: number): LettreGrille {
     return { caseDecouverte: false,
              lettre: objMot.mot[indice],
              lettreDecouverte: false };
   }
 
   // Services publics
-  public serviceEnvoieMots(mots: Word[]): void {
+  public serviceEnvoieMots(mots: Mot[]): void {
     this.listeMotsSujet.next(mots);
   }
 
@@ -87,11 +85,11 @@ export class RequeteDeGrilleService {
     this.matriceDesMotsSurGrilleSujet.next(matriceLettres);
   }
 
-  public serviceEnvoieMotSelectionne(motSelec: Word): void {
+  public serviceEnvoieMotSelectionne(motSelec: Mot): void {
     this.motSelectionneSuject.next(motSelec);
   }
 
-  public serviceReceptionMots(): Observable<Word[]> {
+  public serviceReceptionMots(): Observable<Mot[]> {
     return this.listeMotsObservable$;
   }
 
@@ -99,7 +97,7 @@ export class RequeteDeGrilleService {
     return this.matriceDesMotsSurGrilleObservable$;
   }
 
-  public serviceReceptionMotSelectionne(): Observable<Word> {
+  public serviceReceptionMotSelectionne(): Observable<Mot> {
     return this.motSelectionneObservable$;
   }
 }

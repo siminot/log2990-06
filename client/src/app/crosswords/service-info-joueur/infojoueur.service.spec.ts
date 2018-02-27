@@ -18,9 +18,9 @@ describe("InfojoueurService", () => {
     expect(service).toBeTruthy();
   }));
 
-  it("Incrémentation du nombre de mot découvert", () => {
-    const incrementationPointage: number = 10;
-    serviceInfoJoueur.incrementationNbMotDecouv(incrementationPointage);
-    expect(serviceInfoJoueur["_nbMotsDecouverts"]).toEqual(incrementationPointage);
+  it("Incrémentation du nombre de mots découverts", () => {
+    const incrementationMotDecouvert: number = 1;
+    serviceInfoJoueur.incrementationNbMotDecouv(incrementationMotDecouvert);
+    expect(serviceInfoJoueur["_nbMotsDecouverts"]).toEqual(incrementationMotDecouvert);
   });
 });

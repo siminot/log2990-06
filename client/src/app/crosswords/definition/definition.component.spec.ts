@@ -6,7 +6,6 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { listeMotsLongue, grilleLettres } from "../objetsTest/objetsTest";
 
-
 describe("DefinitionComponent", () => {
   let component: DefinitionComponent;
   let fixture: ComponentFixture<DefinitionComponent>;
@@ -51,7 +50,7 @@ describe("DefinitionComponent", () => {
       }
       expect(result).toEqual(expectedValues);
     });
-   
+
     it("remettre toute les caseDecouverte a false", () => {
       const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
       matrice[0][0] = {
@@ -62,14 +61,6 @@ describe("DefinitionComponent", () => {
       component["cacherCases"]();
 
       expect(matrice[0][0].caseDecouverte).toBeFalsy();
-});
-
-    it("Permet de changer le mot selectionné", () => {
-    const wordTest: Mot = component["mots"][0];
-    component.changementMotSelectionne(wordTest);
-    const wordVerif: Mot = component["motSelectionne"];
-    expect(wordTest).toEqual(wordVerif);
+    });
   });
-
 });
-})

@@ -84,13 +84,11 @@ module Route {
 
             const motActuel: MotGenerationGrille = this.listeMot[indice];
             this.lireMotViaGrille(motActuel);
-            let lesMotsRecus: Mot[];
             const contrainteDuMot: string = motActuel.getMot();
-
-            if (motActuel.getMot() in this.requetesInvalides) {
+            if (contrainteDuMot in this.requetesInvalides) {
                 return false;
             }
-            lesMotsRecus = await this.demanderMot(motActuel);
+            const lesMotsRecus: Mot[] = await this.demanderMot(motActuel);
             if (lesMotsRecus === undefined) {
                 this.requetesInvalides[motActuel.getMot()] = 1;
 
@@ -111,14 +109,13 @@ module Route {
                     this.affecterMot(lesMotsRecus[indiceAleatoire], motActuel);
                     this.ecrireDansLaGrille(motActuel);
                     prochainIndice = this.obtenirIndiceMotPlusImportant(motActuel);
-                }
+                } else { nbEssaisPourMemeMot--; }
 
                 if (prochainIndice === -1) { // Detection de la fin!
                     this.motsDejaPlaces[motActuel.getMot()] = 1;
 
                     return true;
                 }
-
             } while (!(await this.remplirGrilleRecursif(prochainIndice)));
             this.motsDejaPlaces[motActuel.getMot()] = 1;
 

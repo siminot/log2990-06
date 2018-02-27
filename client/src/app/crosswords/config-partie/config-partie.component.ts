@@ -46,6 +46,7 @@ export class ConfigPartieComponent implements OnInit {
     if (ajout !== "") {
       this.lesOptions.difficulte = ajout;
       this.miseAJourRequete();
+      this.serviceHTTP.difficulte = this.lesOptions.difficulte;
     }
   }
 

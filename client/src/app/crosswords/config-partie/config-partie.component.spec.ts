@@ -27,6 +27,8 @@ describe("ConfigPartieComponent", () => {
       // component = fixture.componentInstance;
       reqService = service;
       fixture.detectChanges();
+      component = new ConfigPartieComponent(reqService);
+
   }));
 
   it("should create", () => {
@@ -35,7 +37,6 @@ describe("ConfigPartieComponent", () => {
 
   describe("test ajoutDansRequete", () => {
 
-    component = new ConfigPartieComponent(reqService);
     const AJOUT: string = "ajout";
     const REQUETE_FINALE: string = REQUETE_INIT + AJOUT;
 

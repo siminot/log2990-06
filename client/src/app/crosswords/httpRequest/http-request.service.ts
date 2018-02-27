@@ -8,6 +8,7 @@ import "rxjs/add/operator/catch";
 @Injectable()
 export class HttpeReqService {
   private url: string = "http://localhost:3000/grille/facile";
+  public difficulte: string;
 
   public constructor(private http: HttpClient) { }
 

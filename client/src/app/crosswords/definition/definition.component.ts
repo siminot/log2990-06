@@ -2,9 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Subscription } from "rxjs/Subscription";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Word, LettreGrille } from "../mockObject/word";
-
-
+import { Mot, LettreGrille } from "../mockObject/word";
 
 @Component({
   selector: "app-definition",
@@ -13,14 +11,14 @@ import { Word, LettreGrille } from "../mockObject/word";
 })
 
 export class DefinitionComponent implements OnInit, OnDestroy {
-  private mots: Word[];
+  private mots: Mot[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  private motSelectionne: Word;
+  private motSelectionne: Mot;
 
   public constructor (private listeMotsService: RequeteDeGrilleService) {
     this.mots = this.listeMotsService.mots;
@@ -64,7 +62,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   // Changement d'un mot
 
-  public changementMotSelectionne(mot: Word): void {
+  public changementMotSelectionne(mot: Mot): void {
     this.miseAJourMotSelectionne(mot);
     this.envoieMotSelectionne();
   }
@@ -73,18 +71,18 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
 
-  private miseAJourMotSelectionne(mot: Word): void {
+  private miseAJourMotSelectionne(mot: Mot): void {
     this.changementMot(mot);
     this.decouvrirCases(mot);
   }
 
-  private changementMot(mot: Word): void {
-    this.mots.forEach((element: Word) => element.activer = false);
+  private changementMot(mot: Mot): void {
+    this.mots.forEach((element: Mot) => element.activer = false);
     this.motSelectionne = mot;
     mot.activer = !mot.activer;
   }
 
-  private decouvrirCases(mot: Word): void {
+  private decouvrirCases(mot: Mot): void {
     this.cacherCases();
     for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
       mot.estVertical
@@ -102,11 +100,11 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     }
   }
 
-  private obtenirLettreGrilleMotVertical(mot: Word, indice: number): LettreGrille {
+  private obtenirLettreGrilleMotVertical(mot: Mot, indice: number): LettreGrille {
     return this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY];
   }
 
-  private obtenirLettreGrilleMotHorizontal(mot: Word, indice: number): LettreGrille {
+  private obtenirLettreGrilleMotHorizontal(mot: Mot, indice: number): LettreGrille {
     return this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY];
   }
 

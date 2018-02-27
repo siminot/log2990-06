@@ -1,6 +1,6 @@
-import { Word, LettreGrille } from "./word";
+import { Mot, LettreGrille } from "./word";
 
-export const listeMotsLongue: Word[] = [
+export const listeMotsLongue: Mot[] = [
     {
         definition: "beneath the surface of the water",
         estVertical: false,

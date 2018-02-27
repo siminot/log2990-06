@@ -6,6 +6,8 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
+import * as CONST from "../constantes";
+
 describe("InfoJoueur1Component", () => {
   let component: InfoJoueur1Component;
   let fixture: ComponentFixture<InfoJoueur1Component>;
@@ -36,5 +38,14 @@ describe("InfoJoueur1Component", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("Formatage du timer", () => {
+    const formatedTimer: string = "0" + CONST.ABREVIATION_HEURES +
+                                  "0" + CONST.ABREVIATION_MINUTES +
+                                  "0" + CONST.ABREVIATION_SECONDES;
+    component["_timer"] = 0;
+    component.formatterTimer();
+    expect(component["_formatedTimer"]).toEqual(formatedTimer);
   });
 });

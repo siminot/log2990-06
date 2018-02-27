@@ -25,6 +25,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
 
   private _subscriptionNbMotsDecouv: Subscription;
   private _subscriptionListeMots: Subscription;
+  private _subscriptionTimer: Subscription;
 
   public constructor(private _servicePointage: InfojoueurService,
                      private _requeteGrille: RequeteDeGrilleService) {
@@ -80,7 +81,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   }
 
   private souscrireTimer(): void {
-    this._timerObservable$
+    this._subscriptionTimer = this._timerObservable$
       .subscribe((t: number) => {
         this._timer = t; this.formatterTimer();
       });
@@ -89,6 +90,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   private desinscrireSouscriptions(): void {
     this._subscriptionListeMots.unsubscribe();
     this._subscriptionNbMotsDecouv.unsubscribe();
+    this._subscriptionTimer.unsubscribe();
   }
 
   public get pourcentagePoint(): number {

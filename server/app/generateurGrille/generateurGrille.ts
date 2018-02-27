@@ -172,8 +172,8 @@ module Route {
             const nbDef: number = unMot.definitions.length;
             switch (this.optionsPartie.niveau) {
 
-                case "Normal":
-                case "Difficile":
+                case Difficultees.Normal:
+                case Difficultees.Difficile:
                 if (unMot.definitions.length > 0) {    // S'il n'y a aucune autre def
                     indexDef = this.nombreAleatoire(nbDef) - 1;
                 }

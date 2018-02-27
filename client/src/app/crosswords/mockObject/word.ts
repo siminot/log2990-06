@@ -1,4 +1,4 @@
-export class Word {
+export class Mot {
     public mot: string;
     public definition: string;
     public estVertical: boolean;
@@ -7,6 +7,7 @@ export class Word {
     public premierY: number;
     public activer: boolean;
     public motTrouve: boolean;
+    public cheat: boolean;
 }
 
 export class LettreGrille {

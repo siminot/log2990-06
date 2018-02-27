@@ -1,6 +1,6 @@
-import { Word, LettreGrille } from "./word";
+import { Mot, LettreGrille } from "./word";
 
-export const listeMotsLongue: Word[] = [
+export const listeMotsLongue: Mot[] = [
     {
         definition: "beneath the surface of the water",
         estVertical: false,
@@ -9,7 +9,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 0,
         premierY: 0,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "destroyed physically or morally",
@@ -19,7 +20,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 2,
         premierY: 0,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "a person employed to watch for something to happen",
@@ -29,7 +31,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 2,
         premierY: 2,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "the act of robbing a helpless person",
@@ -39,7 +42,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 9,
         premierY: 0,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "anew",
@@ -49,7 +53,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 5,
         premierY: 9,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "a strong restless desire",
@@ -59,7 +64,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 0,
         premierY: 0,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "a branch of the Tai languages",
@@ -69,7 +75,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 5,
         premierY: 2,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "a way especially designed for a particular use",
@@ -79,7 +86,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 4,
         premierY: 5,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "the act of rolling something (as the ball in bowling)",
@@ -89,7 +97,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 0,
         premierY: 6,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "eat a meal; take a meal",
@@ -99,7 +108,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 0,
         premierY: 3,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "a surface excavation for extracting stone or slate",
@@ -109,7 +119,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 4,
         premierY: 5,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "(nautical) the distance traveled by a sailing vessel on a single tack",
@@ -119,7 +130,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 7,
         premierY: 6,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         definition: "a movable top or cover (hinged or separate) for closing the opening of a container",
@@ -129,7 +141,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 0,
         premierY: 8,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     },
     {
         // On ne peut pas separer un string sur plusieurs lignes
@@ -141,7 +154,8 @@ export const listeMotsLongue: Word[] = [
         premierX: 7,
         premierY: 4,
         activer: false,
-        motTrouve: false
+        motTrouve: false,
+        cheat: false,
     }
 ];
 

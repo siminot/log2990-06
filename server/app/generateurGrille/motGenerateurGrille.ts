@@ -1,7 +1,7 @@
 const PAS_IMPORTANCE: number = 20;
 const CARACTERE_INCONNU: string = "_";
 
-export class Mockword {
+export class MotGenerationGrille {
 
     private mot: string;
     private definition: string;
@@ -10,6 +10,7 @@ export class Mockword {
     private premierX: number;
     private premierY: number;
     private estTraite: boolean;
+    private cheat: boolean;
 
     public constructor(estVertical: boolean, longueur: number, premierX: number, premierY: number) {
         this.mot = "";
@@ -19,6 +20,7 @@ export class Mockword {
         this.premierX = premierX;
         this.premierY = premierY;
         this.estTraite = false;
+        this.cheat = false;
 
     }
     // getters
@@ -70,26 +72,26 @@ export class Mockword {
 
     // autre
 
-    public estLieAvecAutreMot(autreMot: Mockword): boolean {
+    public estLieAvecAutreMot(autreMot: MotGenerationGrille): boolean {
         return !this.estMemeSens(autreMot) && this.coordonneeConcordent(autreMot);
     }
 
-    private coordonneeConcordent(autreMot: Mockword): boolean {
+    private coordonneeConcordent(autreMot: MotGenerationGrille): boolean {
         return this.coordonneeFixeValide(autreMot) &&
                autreMot.coordonneeVariableValide(this);
     }
 
-    private coordonneeVariableValide(autreMot: Mockword): boolean {
+    private coordonneeVariableValide(autreMot: MotGenerationGrille): boolean {
         return this.coordonneeVariableMinAutreMot(autreMot) >= autreMot.coordonneeVariableMin  &&
                this.coordonneeVariableMinAutreMot(autreMot) <= autreMot.coordonneeVariableMax;
     }
 
-    private coordonneeFixeValide(autreMot: Mockword): boolean {
+    private coordonneeFixeValide(autreMot: MotGenerationGrille): boolean {
         return this.coordonneeFixe >= autreMot.coordonneeVariableMin  &&
                this.coordonneeFixe <= autreMot.coordonneeVariableMax;
     }
 
-    private estMemeSens(autreMot: Mockword): boolean {
+    private estMemeSens(autreMot: MotGenerationGrille): boolean {
         return this.getVertical() === autreMot.getVertical();
     }
 
@@ -113,7 +115,7 @@ export class Mockword {
         }
     }
 
-    private coordonneeVariableMinAutreMot(autre: Mockword): number {
+    private coordonneeVariableMinAutreMot(autre: MotGenerationGrille): number {
         if (autre.estVertical) {
             return this.getPremierY();
         } else {
@@ -121,7 +123,7 @@ export class Mockword {
         }
     }
 
-    public getImportance(ancienMot: Mockword): number {
+    public getImportance(ancienMot: MotGenerationGrille): number {
         let i: number = 0;
         for (const char of this.mot) {
             if (char !== CARACTERE_INCONNU) {

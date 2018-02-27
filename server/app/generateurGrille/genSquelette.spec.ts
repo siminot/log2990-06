@@ -12,65 +12,55 @@ import * as assert from "assert";
 
         describe("Tests initialisation", () => {
 
-            it("test taille premier tab", (done: MochaDone) => {
+            it("test taille premier tab", () => {
                 assert.equal(lesConst.TAILLE_TABLEAU, monGen["grille"].length);
-                done();
             });
 
             for (let i: number = 0; i < lesConst.TAILLE_TABLEAU; i++) {
-                it("test taille col " + i, (done: MochaDone) => {
+                it("test taille col " + i, () => {
                     assert.equal(lesConst.TAILLE_TABLEAU, monGen["grille"][i].length);
-                    done();
                 });
             }
 
         });
 
         describe("Test prob", () => {
-            it("devrait etre faux", (done: MochaDone) => {
+            it("devrait etre faux", () => {
                 assert.equal(false, monGen["probabiliterDeContinuerMot"](0, -1));
-                done();
             });
 
-            it("devrait etre faux", (done: MochaDone) => {
+            it("devrait etre faux", () => {
                 assert.equal(false, monGen["probabiliterDeContinuerMot"](0, lesConst.TAILLE_TABLEAU));
-                done();
             });
 
-            it("devrait toujours etre vrai si premier indice est 0", (done: MochaDone) => {
+            it("devrait toujours etre vrai si premier indice est 0", () => {
                 assert.equal(true, monGen["probabiliterDeContinuerMot"](0, indiceBidon));
-                done();
             });
 
         });
 
         describe("Test indicePasDansGrille", () => {
-            it("devrait etre Vrai", (done: MochaDone) => {
+            it("devrait etre Vrai", () => {
                 assert.equal(true, monGen["indicePasDansGrille"](-1));
-                done();
             });
 
-            it("devrait etre Vrai", (done: MochaDone) => {
+            it("devrait etre Vrai", () => {
                 assert.equal(true, monGen["indicePasDansGrille"](lesConst.TAILLE_TABLEAU));
-                done();
             });
 
-            it("devrait etre Faux", (done: MochaDone) => {
+            it("devrait etre Faux", () => {
                 assert.equal(false, monGen["indicePasDansGrille"](indiceBidon));
-                done();
             });
         });
 
         describe("Test trouverIndexFinDeMot", () => {
 
-            it("Retourne -1 si param est neg", (done: MochaDone) => {
+            it("Retourne -1 si param est neg", () => {
                 assert.equal(-1, monGen["trouverIndexFinDeMot"](-1));
-                done();
             });
 
-            it("Retourne -1 si param est > TAILLE", (done: MochaDone) => {
+            it("Retourne -1 si param est > TAILLE", () => {
                 assert.equal(-1, monGen["trouverIndexFinDeMot"](lesConst.TAILLE_TABLEAU));
-                done();
             });
 
             let flagVerif: boolean = false;
@@ -79,9 +69,8 @@ import * as assert from "assert";
                 flagVerif = true;
             }
 
-            it("devrait toujours etre entre indice (+2) en param et TAILLE_TABLEAU", (done: MochaDone) => {
+            it("devrait toujours etre entre indice (+2) en param et TAILLE_TABLEAU", () => {
                 assert.equal(true, flagVerif);
-                done();
             });
 
             flagVerif = false;
@@ -90,9 +79,8 @@ import * as assert from "assert";
                 flagVerif = true;
             }
 
-            it("devrait toujours etre entre indice (+2) en param et TAILLE_TABLEAU", (done: MochaDone) => {
+            it("devrait toujours etre entre indice (+2) en param et TAILLE_TABLEAU", () => {
                 assert.equal(true, flagVerif);
-                done();
             });
 
             flagVerif = false;
@@ -101,9 +89,8 @@ import * as assert from "assert";
                 flagVerif = true;
             }
 
-            it("sePasseQuoiIci", (done: MochaDone) => {
+            it("sePasseQuoiIci", () => {
                 assert.equal(true, flagVerif);
-                done();
             });
         });
 

@@ -3,9 +3,10 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { Mockword } from "./../../../common/mockObject/mockWord";
+import { MotGenerationGrille } from "./motGenerateurGrille";
 import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../serviceLexical/Mot";
+import { Difficultees, REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
 
 import { GenSquelette } from "./genSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";
@@ -16,7 +17,7 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
-        private listeMot: Array<Mockword>;
+        private listeMot: Array<MotGenerationGrille>;
         private generateurSquelette: GenSquelette = new GenSquelette();
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
         private motsDejaPlaces: Map<string, number> = new Map();
@@ -29,7 +30,7 @@ module Route {
         }
 
         private initMatrice(): void {
-            this.listeMot = new Array<Mockword>();
+            this.listeMot = new Array<MotGenerationGrille>();
             this.grille = new Array<Array<string>>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
@@ -40,7 +41,7 @@ module Route {
             this.motsDejaPlaces = new Map();
         }
 
-        private lireMotViaGrille(mot: Mockword): void {
+        private lireMotViaGrille(mot: MotGenerationGrille): void {
             let lecteur: string = "";
             const x: number = mot.getPremierX();
             const y: number = mot.getPremierY();
@@ -55,7 +56,7 @@ module Route {
             mot.setMot(lecteur);
         }
 
-        private ecrireDansLaGrille(mot: Mockword): void {
+        private ecrireDansLaGrille(mot: MotGenerationGrille): void {
             const x: number = mot.getPremierX();
             const y: number = mot.getPremierY();
 
@@ -77,7 +78,7 @@ module Route {
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {
 
-            const motActuel: Mockword = this.listeMot[indice];
+            const motActuel: MotGenerationGrille = this.listeMot[indice];
             this.lireMotViaGrille(motActuel);
             let lesMots: Mot[];
             const contrainte: string = motActuel.getMot();
@@ -128,7 +129,7 @@ module Route {
             return true;
         }
 
-        private obtenirLeMotLePlusImportant(mock: Mockword): number {
+        private obtenirLeMotLePlusImportant(mock: MotGenerationGrille): number {
             let max: number = 0;
             let indiceDuMax: number = -1;
             let temp: number;
@@ -145,18 +146,18 @@ module Route {
             return indiceDuMax;
         }
 
-        private async demanderMot(mot: Mockword): Promise<Mot[]> {
+        private async demanderMot(mot: MotGenerationGrille): Promise<Mot[]> {
 
             let url: string;
             switch (this.optionsPartie.niveau) {
 
-                case "facile":
-                case "normal":
-                url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
+                case Difficultees.Facile:
+                case Difficultees.Normal:
+                url = REQUETE_COMMUN + mot.getMot();
                 break;
 
-                case "difficile":
-                url = "http://localhost:3000/servicelexical/noncommun/contrainte/" + mot.getMot();
+                case Difficultees.Difficile:
+                url = REQUETE_NONCOMMUN + mot.getMot();
                 break;
 
                 default: /*devrait jamais arriver?*/ break;
@@ -165,14 +166,14 @@ module Route {
             return WebRequest.json<Mot[]>(url);
         }
 
-        private affecterMot(unMot: Mot, motAChanger: Mockword): Mot {
+        private affecterMot(unMot: Mot, motAChanger: MotGenerationGrille): Mot {
             // regarder avec simon si on doit trouver un mot en particulier dans la liste
             let indexDef: number = 0;
             const nbDef: number = unMot.definitions.length;
             switch (this.optionsPartie.niveau) {
 
-                case "Normal":
-                case "Difficile":
+                case Difficultees.Normal:
+                case Difficultees.Difficile:
                 if (unMot.definitions.length > 0) {    // S'il n'y a aucune autre def
                     indexDef = this.nombreAleatoire(nbDef) - 1;
                 }

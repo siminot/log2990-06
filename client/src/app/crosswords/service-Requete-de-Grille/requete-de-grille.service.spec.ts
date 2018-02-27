@@ -5,7 +5,7 @@ import { DefinitionComponent } from "../definition/definition.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
-import { listeMotsLongue } from "../mockObject/mockGrille";
+import { listeMotsLongue, grilleLettres } from "../mockObject/mockGrille";
 
 describe("RequeteDeGrilleService", () => {
   let serviceGrille: RequeteDeGrilleService;
@@ -20,63 +20,73 @@ describe("RequeteDeGrilleService", () => {
     });
   });
 
-  beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
-    serviceGrille = service;
+  beforeEach(inject([HttpeReqService], (service: HttpeReqService) => {
+    serviceGrille = new RequeteDeGrilleService(service);
     serviceGrille["_mots"] = listeMotsLongue;
+    serviceGrille["matriceDesMotsSurGrille"] = grilleLettres;
     infojoueur = new InfojoueurService();
+    definition = new DefinitionComponent(serviceGrille);
+    definition["motSelectionne"] = listeMotsLongue[1];
+    grille = new GrilleComponent(serviceGrille, infojoueur);
+    grille.ngOnInit();
+    grille["motSelectionne"] = listeMotsLongue[1];
+
   })
 );
 
-  it("should be created", () => {
-      grille = new GrilleComponent(serviceGrille, infojoueur);
-      definition = new DefinitionComponent(serviceGrille);
-      expect(serviceGrille).toBeDefined();
-    }
-  );
-
   describe("Construction des objets.", () => {
     it("Construction du service réussie.", () => {
-      expect(serviceGrille).toBeTruthy();
+      expect(serviceGrille).toBeDefined();
     });
 
     it("Construction du composant grille réussie.", () => {
-      expect(grille).toBeTruthy();
+      expect(grille).toBeDefined();
+    });
+
+    it("Construction du composant définition réussie.", () => {
+      expect(definition).toBeDefined();
     });
   });
 
-  describe("Envoie de la liste de mots aux différents composants.", () => {
-    // it("Envoie de la liste de mots au composant de la grille.", () => {
-    //  serviceGrille["serviceEnvoieMots"](serviceGrille.mots);
-    //  expect(grille.getListeMots()).toEqual(serviceGrille.mots);
-    // });
+  describe("Envoi de la liste de mots aux différents composants.", () => {
+    it("Envoi de la liste de mots au composant de la grille.", () => {
+      serviceGrille["_mots"][0].motTrouve = true;
+      serviceGrille["serviceEnvoieMots"](serviceGrille.mots);
+      expect(grille.getListeMots()).toEqual(serviceGrille.mots);
+      expect(grille.getMatrice()).toEqual(serviceGrille.matrice);
+    });
 
-    it("Envoie de la liste de mots au composant de définition.", () => {
+    it("Envoi de la liste de mots au composant de définition.", () => {
+      serviceGrille["_mots"][0].motTrouve = true;
       serviceGrille["serviceEnvoieMots"](serviceGrille.mots);
       expect(definition["mots"]).toEqual(serviceGrille.mots);
-    });
-  });
-
-  describe("Envoie de la matrice aux différents composants.", () => {
-    // it("Envoie de la matrice au composant de la grille.", () => {
-    //  serviceGrille.serviceEnvoieMatriceLettres(serviceGrille.matrice);
-    //  expect(grille.getMatrice()).toEqual(serviceGrille.matrice);
-    // });
-
-    it("Envoie de la matrice au composant de définition.", () => {
-      serviceGrille.serviceEnvoieMatriceLettres(serviceGrille.matrice);
-      expect(definition["mots"]).toEqual(serviceGrille.mots);
+      expect(definition["matriceDesMotsSurGrille"]).toEqual(serviceGrille.matrice);
     });
   });
 
   describe("Réception d'information de la part des composants.", () => {
-    it("Reception d'une liste de mots de la part du composant de définition.", () => {
+    it("Reception du mot sélectionné de la part du composant de grille.", () => {
+      definition["motSelectionne"] = listeMotsLongue[0];
       definition["envoieMotSelectionne"]();
-      expect(serviceGrille.mots).toEqual(definition["mots"]);
+      expect(grille["motSelectionne"]).toEqual(listeMotsLongue[0]);
+    });
+
+    it("Reception du mot sélectionné de la part du composant de définition.", () => {
+      grille["motSelectionne"] = listeMotsLongue[0];
+      grille["envoieMotSelectionne"]();
+      expect(definition["motSelectionne"]).toEqual(listeMotsLongue[0]);
+    });
+
+    it("Reception de la matrice de la part du composant de grille.", () => {
+      definition["matriceDesMotsSurGrille"].fill(grilleLettres[0]);
+      definition["envoieMatrice"]();
+      expect(grille["matriceDesMotsSurGrille"]).toEqual(definition["matriceDesMotsSurGrille"]);
     });
 
     it("Reception de la matrice de la part du composant de définition.", () => {
+      grille["matriceDesMotsSurGrille"].fill(grilleLettres[0]);
       definition["envoieMatrice"]();
-      expect(serviceGrille.mots).toEqual(definition["mots"]);
+      expect(definition["matriceDesMotsSurGrille"]).toEqual(grille["matriceDesMotsSurGrille"]);
     });
   });
 });

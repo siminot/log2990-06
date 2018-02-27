@@ -336,7 +336,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
   // never reasign ? On change un attribut juste en dessous, du calme TSlint
-  private switchCheatMode(): void {
+  public switchCheatMode(): void {
     for(let mot of this.mots){
       mot.cheat = !mot.cheat;
     }
@@ -348,7 +348,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
   }
-  private afficherRegle(): void {
+  public afficherRegle(): void {
     alert(REGLE_JEU);
   }
 }

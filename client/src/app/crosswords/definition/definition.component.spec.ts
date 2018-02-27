@@ -4,7 +4,7 @@ import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-
 import { Mot, LettreGrille } from "../objetsTest/mot";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
-import { listeMotsLongue, grilleLettres } from "../mockObject/mockGrille";
+import { listeMotsLongue, grilleLettres } from "../objetsTest/objetsTest";
 
 
 describe("DefinitionComponent", () => {

@@ -10,3 +10,5 @@ export const LARGEUR_BORDURE_CASE_DEFAUT: string = "1px";
 export const LARGEUR_BORDURE_CASE_CIBLE: string = "2px";
 
 export const INCR_UN_MOT_DECOUVERT: number = 1;
+
+export const UNE_SECONDE_EN_MILISECONDES = 1000;

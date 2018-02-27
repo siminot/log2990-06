@@ -3,7 +3,7 @@ import { Subscription } from "rxjs/Subscription";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import { Mot } from "../mockObject/word";
-import { CONVERSION_POURCENTAGE } from "../constantes";
+import * as CONST from "../constantes";
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Observable } from "rxjs/Observable";
 
@@ -18,7 +18,6 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   private _nbMotsDecouverts: number;
   private _listeMots: Mot[];
   private _barreProgression: HTMLElement;
-
   private _timer: number;
   private _formatedTimer: string;
 
@@ -94,7 +93,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     if (this._listeMots.length === 0) {
       return 0;
     } else {
-        return Math.round(this._nbMotsDecouverts / this._listeMots.length * CONVERSION_POURCENTAGE);
+        return Math.round(this._nbMotsDecouverts / this._listeMots.length * CONST.CONVERSION_POURCENTAGE);
     }
   }
 

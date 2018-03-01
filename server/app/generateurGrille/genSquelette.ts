@@ -95,7 +95,7 @@ export class GenSquelette {
 
     private ecrireCol(j: number): void {
         for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
-            if (this.grille[i][j] === CASE_OK) {
+            if (this.grille[i][j] !== CASE_OK) {
                 if (this.probaDeContinuerCaseNoire()) {
                     this.grille[i][j] = NOIR;
                 } else {
@@ -106,13 +106,17 @@ export class GenSquelette {
                 }
             }
         }
+        this.remplirEspaceMot(j);
+
+        return;
+    }
+
+    private remplirEspaceMot(j: number): void {
         for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
             if (this.grille[i][j] !== NOIR) {
                 this.grille[i][j] = VIDE;
             }
         }
-
-        return;
     }
 
     private indicePasDansGrille(indice: number): boolean {

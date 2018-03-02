@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpeReqService } from "../httpRequest/http-request.service";
-import { OptionPartie } from "./OptionPartie";
+import { ConfigurationPartie } from "./configurationPartie";
 
 export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 
@@ -12,11 +12,11 @@ export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 export class ConfigPartieComponent implements OnInit {
 
   private requete: string;
-  private lesOptions: OptionPartie;
+  private lesOptions: ConfigurationPartie;
 
   public constructor(private serviceHTTP: HttpeReqService) {
     this.requete = REQUETE_INIT;
-    this.lesOptions = new OptionPartie();
+    this.lesOptions = new ConfigurationPartie();
   }
 
   public ngOnInit(): void {
@@ -44,14 +44,14 @@ export class ConfigPartieComponent implements OnInit {
 
   public ajouterDifficulte(ajout: string): void {
     if (ajout !== "") {
-      this.lesOptions.difficulte = ajout;
+      this.lesOptions.niveauDeDifficulte = ajout;
       this.miseAJourRequete();
-      this.serviceHTTP.difficulte = this.lesOptions.difficulte;
+      this.serviceHTTP.difficulte = this.lesOptions.niveauDeDifficulte;
     }
   }
 
   private miseAJourRequete(): void {
-    this.requete = REQUETE_INIT + this.lesOptions.difficulte;
+    this.requete = REQUETE_INIT + this.lesOptions.niveauDeDifficulte;
   }
 
 }

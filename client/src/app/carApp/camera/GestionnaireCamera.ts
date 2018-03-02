@@ -6,7 +6,7 @@ import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
-import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
 const CAMERA_INITIALE: number = 0;
@@ -39,9 +39,9 @@ export class GestionnaireCamera extends UtilisateurClavier  {
     // Initialisation
 
     protected creationTouches(): void {
-        this.touchesEnregistrees.push(new FonctionTouche(this.zoomer.bind(this), ZOOM));
-        this.touchesEnregistrees.push(new FonctionTouche(this.dezoomer.bind(this), DEZOOM));
-        this.touchesEnregistrees.push(new FonctionTouche(this.changerCamera.bind(this), CHANGER_CAMERA));
+        this.ajouterTouche(this.zoomer.bind(this), ZOOM);
+        this.ajouterTouche(this.dezoomer.bind(this), DEZOOM);
+        this.ajouterTouche(this.changerCamera.bind(this), CHANGER_CAMERA);
     }
 
     private initialiserCameras(): void {

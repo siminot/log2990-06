@@ -34,13 +34,12 @@ export class GestionnaireScene extends UtilisateurClavier {
         super(gestionnaireClavier);
         this._scene = new Scene;
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
-        this.touchesEnregistrees = [];
         this.initialisationTouches();
     }
 
     protected creationTouches(): void {
-        this.touchesEnregistrees.push(new FonctionTouche(this.changerDecor.bind(this), CHANGER_DECOR));
-        this.touchesEnregistrees.push(new FonctionTouche(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE));
+        this.ajouterTouche(this.changerDecor.bind(this), CHANGER_DECOR);
+        this.ajouterTouche(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE);
     }
 
     // Creation de la scene

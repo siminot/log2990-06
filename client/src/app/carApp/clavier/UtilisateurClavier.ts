@@ -1,9 +1,9 @@
 import { OnDestroy } from "@angular/core";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
-import { FonctionTouche } from "../clavier/evenementClavier";
+import { FonctionTouche, EvenementClavier } from "../clavier/evenementClavier";
 
 export abstract class UtilisateurClavier implements OnDestroy {
-    protected touchesEnregistrees: FonctionTouche[];
+    private touchesEnregistrees: FonctionTouche[];
 
     protected constructor(private gestionnaireClavier: GestionnaireClavier) {
         this.touchesEnregistrees = [];
@@ -25,7 +25,11 @@ export abstract class UtilisateurClavier implements OnDestroy {
         }
     }
 
-    public desinscriptionTouches(): void {
+    protected ajouterTouche(fonction: Function, evenementClavier: EvenementClavier): void {
+        this.touchesEnregistrees.push(new FonctionTouche(fonction, evenementClavier));
+    }
+
+    protected desinscriptionTouches(): void {
         for (const touche of this.touchesEnregistrees) {
             this.gestionnaireClavier.desinscrire(touche);
         }

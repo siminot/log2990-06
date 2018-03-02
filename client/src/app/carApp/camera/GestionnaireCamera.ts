@@ -1,18 +1,26 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { Camera } from "three";
 import { Voiture } from "../voiture/voiture";
 import { CameraJeu } from "./CameraJeu";
 import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
 
 const CAMERA_INITIALE: number = 0;
 
+// Touches clavier
+const ZOOM: EvenementClavier = new EvenementClavier("=", TypeEvenementClavier.TOUCHE_RELEVEE);
+const DEZOOM: EvenementClavier = new EvenementClavier("-", TypeEvenementClavier.TOUCHE_RELEVEE);
+const CHANGER_VUE: EvenementClavier = new EvenementClavier("v", TypeEvenementClavier.TOUCHE_RELEVEE);
+
 @Injectable()
-export class GestionnaireCamera {
+export class GestionnaireCamera implements OnDestroy {
 
     private cameras: CameraJeu[];
     private cameraCourante: CameraJeu;
+    private touchesEnregistrees: FonctionTouche[];
 
     public get camera(): Camera {
         this.miseAJourCameraCourante();
@@ -20,9 +28,16 @@ export class GestionnaireCamera {
         return this.cameraCourante.camera;
     }
 
-    public constructor(private gestionnaireVoitures: GestionnaireVoitures) {
+    public constructor(private gestionnaireVoitures: GestionnaireVoitures,
+                       private gestionnaireClavier: GestionnaireClavier) {
         this.cameras = [];
+        this.touchesEnregistrees = [];
         this.initialiserCameras();
+        this.initialisationTouches();
+    }
+
+    public ngOnDestroy(): void {
+        this.desinscriptionTouches();
     }
 
     // Initialisation
@@ -44,6 +59,29 @@ export class GestionnaireCamera {
 
     private choisirCameraCouranteInitiale(): void {
         this.cameraCourante = this.cameras[CAMERA_INITIALE];
+    }
+
+    private initialisationTouches(): void {
+        this.creationTouches();
+        this.inscriptionTouches();
+    }
+
+    private inscriptionTouches(): void {
+        for (const touche of this.touchesEnregistrees) {
+            this.gestionnaireClavier.inscrire(touche);
+        }
+    }
+
+    private creationTouches(): void {
+        this.touchesEnregistrees.push(new FonctionTouche(this.zoomer.bind(this), ZOOM));
+        this.touchesEnregistrees.push(new FonctionTouche(this.dezoomer.bind(this), DEZOOM));
+        this.touchesEnregistrees.push(new FonctionTouche(this.changerCamera.bind(this), CHANGER_VUE));
+    }
+
+    private desinscriptionTouches(): void {
+        for (const touche of this.touchesEnregistrees) {
+            this.gestionnaireClavier.desinscrire(touche);
+        }
     }
 
     // Modifications des cameras

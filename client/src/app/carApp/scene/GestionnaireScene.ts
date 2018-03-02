@@ -1,25 +1,63 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { Scene } from "three";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
+import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
+// Touches clavier
+const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementClavier.TOUCHE_RELEVEE);
+const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("y", TypeEvenementClavier.TOUCHE_RELEVEE);
+
 @Injectable()
-export class GestionnaireScene extends Scene {
+export class GestionnaireScene extends Scene implements OnDestroy {
 
     private tempsJournee: TempsJournee;
+    private touchesEnregistrees: FonctionTouche[];
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
     }
 
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
-                       private gestionnaireVoiture: GestionnaireVoitures) {
+                       private gestionnaireVoiture: GestionnaireVoitures,
+                       private gestionnaireClavier: GestionnaireClavier) {
         super();
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
+        this.touchesEnregistrees = [];
+        this.initialisationTouches();
+    }
+
+    public ngOnDestroy(): void {
+        this.desinscriptionTouches();
+    }
+
+    // Touches
+
+    private initialisationTouches(): void {
+        this.creationTouches();
+        this.inscriptionTouches();
+    }
+
+    private inscriptionTouches(): void {
+        for (const touche of this.touchesEnregistrees) {
+            this.gestionnaireClavier.inscrire(touche);
+        }
+    }
+
+    private creationTouches(): void {
+        this.touchesEnregistrees.push(new FonctionTouche(this.changerDecor.bind(this), CHANGER_DECOR));
+        this.touchesEnregistrees.push(new FonctionTouche(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE));
+    }
+
+    private desinscriptionTouches(): void {
+        for (const touche of this.touchesEnregistrees) {
+            this.gestionnaireClavier.desinscrire(touche);
+        }
     }
 
     // Creation de la scene

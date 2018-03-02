@@ -2,22 +2,22 @@ const CARACTERE_INCONNU: string = "_";
 
 export class MotGenerationGrille {
 
-    private _mot: string;
-    private _definition: string;
+    public mot: string;
+    public definition: string;
     private _estVertical: boolean;
     private _longueur: number;
     private _premierX: number;
     private _premierY: number;
-    private _estTraite: boolean;
+    public estTraite: boolean;
 
     public constructor(estVertical: boolean, longueur: number, premierX: number, premierY: number) {
-        this._mot = "";
-        this._definition = "";
+        this.mot = "";
+        this.definition = "";
         this._estVertical = estVertical;
         this._longueur = longueur;
         this._premierX = premierX;
         this._premierY = premierY;
-        this._estTraite = false;
+        this.estTraite = false;
 
     }
     // getters
@@ -35,30 +35,6 @@ export class MotGenerationGrille {
 
     public get premierY(): number {
         return this._premierY;
-    }
-
-    public get mot(): string {
-        return this._mot;
-    }
-
-    public set mot(mot: string) {
-        this._mot = mot;
-    }
-
-    public get definition(): string {
-        return this._definition;
-    }
-
-    public set definition(definition: string) {
-        this.definition = definition;
-    }
-
-    public get estTraite(): boolean {
-        return this._estTraite;
-    }
-
-    public set estTraite(etat: boolean) {
-        this._estTraite = etat;
     }
 
     public inverserXY(): void {

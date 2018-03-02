@@ -17,10 +17,11 @@ const DEZOOM: EvenementClavier = new EvenementClavier("-", TypeEvenementClavier.
 const CHANGER_CAMERA: EvenementClavier = new EvenementClavier("v", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireCamera extends UtilisateurClavier  {
+export class GestionnaireCamera {
 
     private cameras: CameraJeu[];
     private cameraCourante: CameraJeu;
+    private clavier: UtilisateurClavier;
 
     public get camera(): Camera {
         this.miseAJourCameraCourante();
@@ -30,18 +31,18 @@ export class GestionnaireCamera extends UtilisateurClavier  {
 
     public constructor(private gestionnaireVoitures: GestionnaireVoitures,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
-        super(gestionnaireClavier);
         this.cameras = [];
+        this.clavier = new UtilisateurClavier(gestionnaireClavier);
         this.initialiserCameras();
         this.initialisationTouches();
     }
 
     // Initialisation
 
-    protected creationTouches(): void {
-        this.ajouterTouche(this.zoomer.bind(this), ZOOM);
-        this.ajouterTouche(this.dezoomer.bind(this), DEZOOM);
-        this.ajouterTouche(this.changerCamera.bind(this), CHANGER_CAMERA);
+    protected initialisationTouches(): void {
+        this.clavier.ajouterTouche(this.zoomer.bind(this), ZOOM);
+        this.clavier.ajouterTouche(this.dezoomer.bind(this), DEZOOM);
+        this.clavier.ajouterTouche(this.changerCamera.bind(this), CHANGER_CAMERA);
     }
 
     private initialiserCameras(): void {

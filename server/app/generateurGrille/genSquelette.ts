@@ -113,7 +113,7 @@ export class GenSquelette {
 
     private remplirEspaceMot(j: number): void {
         for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
-            if (this.grille[i][j] !== NOIR) {
+            if (this.grille[i][j] === CASE_OK) {
                 this.grille[i][j] = VIDE;
             }
         }
@@ -126,7 +126,6 @@ export class GenSquelette {
             return true;
         }
 
-        // Sinon dans grille
         return false;
     }
 

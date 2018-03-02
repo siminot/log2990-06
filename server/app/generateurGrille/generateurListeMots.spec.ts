@@ -36,7 +36,7 @@ import * as assert from "assert";
             it("- Devrait avoir 6 mots horizontaux", () => {
                 let compteur: number = 0;
                 for (const mot of listeMotsTest) {
-                    if (!mot.getVertical()) {
+                    if (!mot.estVertical) {
                         compteur++;
                     }
                 }
@@ -46,7 +46,7 @@ import * as assert from "assert";
             it("- Devrait avoir 5 mots verticaux", () => {
                 let compteur: number = 0;
                 for (const mot of listeMotsTest) {
-                    if (mot.getVertical()) {
+                    if (mot.estVertical) {
                         compteur++;
                     }
                 }
@@ -56,7 +56,7 @@ import * as assert from "assert";
             it("- Devrait avoir 0 mots de 1 lettres", () => {
                 let compteur: number = 0;
                 for (const mot of listeMotsTest) {
-                    if (mot.getLongueur() === 1) {
+                    if (mot.longueur === 1) {
                         compteur++;
                     }
                 }
@@ -66,7 +66,7 @@ import * as assert from "assert";
             it("- Devrait avoir 5 mots de 2 lettres", () => {
                 let compteur: number = 0;
                 for (const mot of listeMotsTest) {
-                    if (mot.getLongueur() === 2) {
+                    if (mot.longueur === 2) {
                         compteur++;
                     }
                 }
@@ -76,7 +76,7 @@ import * as assert from "assert";
             it("- Devrait avoir 4 mots de 3 lettres", () => {
                 let compteur: number = 0;
                 for (const mot of listeMotsTest) {
-                    if (mot.getLongueur() === 3) {
+                    if (mot.longueur === 3) {
                         compteur++;
                     }
                 }
@@ -86,7 +86,7 @@ import * as assert from "assert";
             it("- Devrait avoir 1 mot de 4 lettres", () => {
                 let compteur: number = 0;
                 for (const mot of listeMotsTest) {
-                    if (mot.getLongueur() === 4) {
+                    if (mot.longueur === 4) {
                         compteur++;
                     }
                 }
@@ -96,7 +96,7 @@ import * as assert from "assert";
             it("- Devrait avoir 0 mot de 6 lettres", () => {
                 let compteur: number = 0;
                 for (const mot of listeMotsTest) {
-                    if (mot.getLongueur() === 6) {
+                    if (mot.longueur === 6) {
                         compteur++;
                     }
                 }

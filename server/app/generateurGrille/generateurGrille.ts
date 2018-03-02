@@ -43,28 +43,28 @@ module Route {
 
         private lireMotViaGrille(mot: MotGenerationGrille): void {
             let lecteur: string = "";
-            const x: number = mot.getPremierX();
-            const y: number = mot.getPremierY();
+            const x: number = mot.premierX;
+            const y: number = mot.premierY;
 
-            for (let i: number = 0; i < mot.getLongueur(); i++) {
-                if (mot.getVertical()) {
+            for (let i: number = 0; i < mot.longueur; i++) {
+                if (mot.estVertical) {
                     lecteur += this.grille[y + i][x];
                 } else {
                     lecteur += this.grille[y][x + i];
                 }
             }
-            mot.setMot(lecteur);
+            mot.mot = lecteur;
         }
 
         private ecrireDansLaGrille(mot: MotGenerationGrille): void {
-            const x: number = mot.getPremierX();
-            const y: number = mot.getPremierY();
+            const x: number = mot.premierX;
+            const y: number = mot.premierY;
 
-            for (let i: number = 0; i < mot.getLongueur(); i++) {
-                if (mot.getVertical()) {
-                    this.grille[y + i][x] = mot.getMot()[i];
+            for (let i: number = 0; i < mot.longueur; i++) {
+                if (mot.estVertical) {
+                    this.grille[y + i][x] = mot.mot[i];
                 } else {
-                    this.grille[y][x + i] = mot.getMot()[i];
+                    this.grille[y][x + i] = mot.mot[i];
                 }
             }
         }
@@ -81,15 +81,15 @@ module Route {
             const motActuel: MotGenerationGrille = this.listeMot[indice];
             this.lireMotViaGrille(motActuel);
             let lesMots: Mot[];
-            const contrainte: string = motActuel.getMot();
+            const contrainte: string = motActuel.mot;
 
-            if (motActuel.getMot() in this.requetesInvalides) {
+            if (motActuel.mot in this.requetesInvalides) {
                 return false;
             }
             lesMots = await this.demanderMot(motActuel);
             // Pas de mots trouve
             if (lesMots === undefined) {
-                this.requetesInvalides[motActuel.getMot()] = 1;
+                this.requetesInvalides[motActuel.mot] = 1;
 
                 return false;
             }
@@ -102,10 +102,10 @@ module Route {
                 indiceAleatoire = this.nombreAleatoire(lesMots.length) - 1;
                 // limiter le nombre d'essai pour chaque mot
                 if (ctr++ === DIX || ctr >= lesMots.length) {
-                    this.motsDejaPlaces.delete(motActuel.getMot());
-                    motActuel.setMot(contrainte);
+                    this.motsDejaPlaces.delete(motActuel.mot);
+                    motActuel.mot = contrainte;
                     this.ecrireDansLaGrille(motActuel);
-                    motActuel.setEstTraite(false);
+                    motActuel.estTraite = false;
 
                     return false;
                 }
@@ -115,7 +115,7 @@ module Route {
                     this.ecrireDansLaGrille(motActuel);
                     prochainIndice = this.obtenirLeMotLePlusImportant(motActuel);
                     if (prochainIndice === -1) {
-                        this.motsDejaPlaces[motActuel.getMot()] = 1;
+                        this.motsDejaPlaces[motActuel.mot] = 1;
 
                         return true;
                     }
@@ -124,7 +124,7 @@ module Route {
                 prochainMotTrouve = await this.remplirGrilleRecursif(prochainIndice);
 
             } while (!prochainMotTrouve);
-            this.motsDejaPlaces[motActuel.getMot()] = 1;
+            this.motsDejaPlaces[motActuel.mot] = 1;
 
             return true;
         }
@@ -134,7 +134,7 @@ module Route {
             let indiceDuMax: number = -1;
             let temp: number;
             for (let i: number = 0; i < this.listeMot.length; i++) {
-                if (!this.listeMot[i].getEstTraite()) {
+                if (!this.listeMot[i].estTraite) {
                     temp = this.listeMot[i].getImportance(mock);
                     if (max < temp) {
                         max = temp;
@@ -153,11 +153,11 @@ module Route {
 
                 case Difficultees.Facile:
                 case Difficultees.Normal:
-                url = REQUETE_COMMUN + mot.getMot();
+                url = REQUETE_COMMUN + mot.mot;
                 break;
 
                 case Difficultees.Difficile:
-                url = REQUETE_NONCOMMUN + mot.getMot();
+                url = REQUETE_NONCOMMUN + mot.mot;
                 break;
 
                 default: /*devrait jamais arriver?*/ break;
@@ -182,9 +182,9 @@ module Route {
                 default: /*devrait jamais arriver?*/ break;
             }
 
-            motAChanger.setMot(unMot.mot);
-            motAChanger.setDefinition(unMot.definitions[indexDef].definition);
-            motAChanger.setEstTraite(true);
+            motAChanger.mot = unMot.mot;
+            motAChanger.definition = unMot.definitions[indexDef].definition;
+            motAChanger.estTraite = true;
 
             return unMot;
         }

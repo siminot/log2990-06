@@ -3,7 +3,7 @@ import { ObjectLoader, Object3D } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
-import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
 
 // AI

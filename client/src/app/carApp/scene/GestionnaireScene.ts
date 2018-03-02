@@ -4,7 +4,7 @@ import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
-import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
 

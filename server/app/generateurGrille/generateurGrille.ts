@@ -55,11 +55,9 @@ module Route {
         private lireMotViaGrille(mot: MotGenerationGrille): void {
             let lecteur: string = "";
             for (let i: number = 0; i < mot.getLongueur(); i++) {
-                if (mot.getVertical()) {
-                    lecteur += this.grille[mot.getPremierY() + i][mot.getPremierX()];
-                } else {
-                    lecteur += this.grille[mot.getPremierY()][mot.getPremierX() + i];
-                }
+                mot.getVertical() ?
+                lecteur += this.grille[mot.getPremierY() + i][mot.getPremierX()] :
+                lecteur += this.grille[mot.getPremierY()][mot.getPremierX() + i];
             }
             mot.setMot(lecteur);
         }

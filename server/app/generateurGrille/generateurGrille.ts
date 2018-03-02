@@ -3,9 +3,8 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { MotGenerationGrille } from "./motGenerateurGrille";
-import { OptionPartie } from "./optionPartie";
-import { Mot } from "./../serviceLexical/Mot";
+import { Mot } from "./mot";
+import { ConfigurationPartie } from "./configurationPartie";
 import { Difficultees, REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
 
 import { GenSquelette } from "./genSquelette";
@@ -19,18 +18,18 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
-        private listeMot: Array<MotGenerationGrille>;
+        private listeMot: Array<Mot>;
         private generateurSquelette: GenSquelette;
         private generateurListeMots: GenerateurListeMots;
         private motsDejaPlaces: Map<string, number> ;
         private requetesInvalides: Map<string, number>;
-        private optionsPartie: OptionPartie;
+        private optionsPartie: ConfigurationPartie;
 
         constructor() {
             this.generateurListeMots = new GenerateurListeMots();
             this.generateurSquelette = new GenSquelette();
             this.initGrille();
-            this.optionsPartie = new OptionPartie("Facile", 1);
+            this.optionsPartie = new ConfigurationPartie("Facile", 1);
         }
 
         private initGrille(): void {
@@ -40,7 +39,7 @@ module Route {
 
         private initListeDeMots(): void {
             this.grille = new Array<Array<string>>();
-            this.listeMot = new Array<MotGenerationGrille>();
+            this.listeMot = new Array<Mot>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
         }
@@ -52,7 +51,7 @@ module Route {
             this.motsDejaPlaces.clear();
         }
 
-        private lireMotViaGrille(mot: MotGenerationGrille): void {
+        private lireMotViaGrille(mot: Mot): void {
             let lecteur: string = "";
             for (let i: number = 0; i < mot.getLongueur(); i++) {
                 mot.getVertical() ?
@@ -62,7 +61,7 @@ module Route {
             mot.setMot(lecteur);
         }
 
-        private ecrireDansLaGrille(mot: MotGenerationGrille): void {
+        private ecrireDansLaGrille(mot: Mot): void {
             for (let i: number = 0; i < mot.getLongueur(); i++) {
                 if (mot.getVertical()) {
                     this.grille[mot.getPremierY() + i][mot.getPremierX()] = mot.getMot()[i];
@@ -80,7 +79,7 @@ module Route {
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {
 
-            const motActuel: MotGenerationGrille = this.listeMot[indice];
+            const motActuel: Mot = this.listeMot[indice];
             this.lireMotViaGrille(motActuel);
             const contrainteDuMot: string = motActuel.getMot();
             if (contrainteDuMot in this.requetesInvalides) {
@@ -120,14 +119,14 @@ module Route {
             return true;
         }
 
-        private retourEtatAvantMot(motActuel: MotGenerationGrille, contrainteDuMot: string): void {
+        private retourEtatAvantMot(motActuel: Mot, contrainteDuMot: string): void {
             this.motsDejaPlaces.delete(motActuel.getMot());
             motActuel.setMot(contrainteDuMot);
             this.ecrireDansLaGrille(motActuel);
             motActuel.setEstTraite(false);
         }
 
-        private obtenirIndiceMotPlusImportant(leMot: MotGenerationGrille): number {
+        private obtenirIndiceMotPlusImportant(leMot: Mot): number {
             let max: number = 0;
             let indiceDuMax: number = -1;
             for (const mot of this.listeMot) {
@@ -142,17 +141,17 @@ module Route {
             return indiceDuMax;
         }
 
-        private async demanderMot(mot: MotGenerationGrille): Promise<Mot[]> {
+        private async demanderMot(mot: Mot): Promise<Mot[]> {
             let url: string;
-            this.optionsPartie.niveau === Difficultees.Difficile ? url = REQUETE_NONCOMMUN : url = REQUETE_COMMUN;
+            this.optionsPartie.niveauDeDifficulte === Difficultees.Difficile ? url = REQUETE_NONCOMMUN : url = REQUETE_COMMUN;
             url += mot.getMot();
 
             return WebRequest.json<Mot[]>(url);
         }
 
-        private affecterMot(unMot: Mot, motAChanger: MotGenerationGrille): Mot {
+        private affecterMot(unMot: Mot, motAChanger: Mot): Mot {
             let indexDef: number = 0;
-            if (this.optionsPartie.niveau !== Difficultees.Facile) {
+            if (this.optionsPartie.niveauDeDifficulte !== Difficultees.Facile) {
                 if (unMot.definitions.length > 0) {
                     indexDef = this.nombreAleatoire(unMot.definitions.length) - 1;
                 }
@@ -162,7 +161,7 @@ module Route {
             return unMot;
         }
 
-        private modofierLeMot(motAChanger: MotGenerationGrille, unMot: Mot, indexDef: number): void {
+        private modofierLeMot(motAChanger: Mot, unMot: Mot, indexDef: number): void {
             motAChanger.setMot(unMot.mot);
             motAChanger.setDefinition(unMot.definitions[indexDef].definition);
             motAChanger.setEstTraite(true);
@@ -176,7 +175,7 @@ module Route {
         }
 
         public async requeteDeGrille(req: Request, res: Response, next: NextFunction): Promise<void> {
-            this.optionsPartie.setDifficultee(req.params.difficulte);
+            this.optionsPartie.niveauDeDifficulte = (req.params.difficulte);
             this.initGrille();
             await this.remplirLaGrilleDeMots();
             res.send(this.listeMot);

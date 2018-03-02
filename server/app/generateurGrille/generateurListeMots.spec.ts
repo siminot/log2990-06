@@ -1,4 +1,4 @@
-import { MotGenerationGrille } from "./motGenerateurGrille";
+import { Mot } from "./mot";
 import { GenerateurListeMots } from "./generateurListeMots";
 import * as assert from "assert";
 
@@ -18,7 +18,7 @@ import * as assert from "assert";
 
             it("- Le constructeur du mot devrait fonctionner", () => {
                 const LONGUEUR_MOT: number = 4;
-                assert.ok(new MotGenerationGrille(false, LONGUEUR_MOT, 0, 0), "Le constructeur cause une erreur");
+                assert.ok(new Mot(false, LONGUEUR_MOT, 0, 0), "Le constructeur cause une erreur");
             });
 
             it("- Devrait retourner une grille", () => {
@@ -27,7 +27,7 @@ import * as assert from "assert";
         });
         describe("- Tests pour une grille quelconque", () => {
 
-            const listeMotsTest: MotGenerationGrille[] = genListeTest.donnerUneListe(uneGrille);
+            const listeMotsTest: Mot[] = genListeTest.donnerUneListe(uneGrille);
 
             it("- Devrait avoir 11 mots", () => {
                 assert(listeMotsTest.length === 11);

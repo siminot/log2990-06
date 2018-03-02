@@ -4,7 +4,7 @@ import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
 import { MotGenerationGrille } from "./motGenerateurGrille";
-import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
+import { OptionPartie } from "./optionPartie";
 import { Mot } from "./../serviceLexical/Mot";
 import { Difficultees, REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
 
@@ -24,13 +24,13 @@ module Route {
         private generateurListeMots: GenerateurListeMots;
         private motsDejaPlaces: Map<string, number> ;
         private requetesInvalides: Map<string, number>;
-        private optionsPartie: MockOptionPartie;
+        private optionsPartie: OptionPartie;
 
         constructor() {
             this.generateurListeMots = new GenerateurListeMots();
             this.generateurSquelette = new GenSquelette();
             this.initGrille();
-            this.optionsPartie = new MockOptionPartie("Facile", 1);
+            this.optionsPartie = new OptionPartie("Facile", 1);
         }
 
         private initGrille(): void {

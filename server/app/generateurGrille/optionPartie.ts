@@ -1,9 +1,9 @@
-// Classe de test pour les options de jeu
+import { ConfigurationPartie } from "../../../common/Partie/ConfigurationPartie";
 
-export class MockOptionPartie {
+export class OptionPartie implements ConfigurationPartie {
 
-    private niveauDifficultee: string;
-    private nombreDeJoueurs: number;
+    public niveauDifficultee: string;
+    public nombreDeJoueurs: number;
 
     public constructor (niveau: string, nbJoueurs: number) {
         this.niveauDifficultee = niveau;

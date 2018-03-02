@@ -1,0 +1,24 @@
+
+<div id="container">
+  <table>
+    <tr>
+      <td id="col1">
+        <p id="nomJoueur">{{ _nomJoueur }}{{_difficulte}}</p>
+        <img src="../../assets/crosswords/profilPicture/defaultProfilPicture.jpg" id="profilPicture" alt="Profil Picture">
+      </td>
+      <td id="col2">
+        <p id="pointageTitre">Progression</p>
+        <div id="progress">
+          <div id="progress-bar">
+            <p id="point-progress-bar">{{ pourcentagePoint }}%</p>
+          </div>
+        </div>
+      </td>
+      <td id="col3">
+        <p id="nbMotsDecouverts">Nombre de mots trouvés : {{ _nbMotsDecouverts }}</p>
+        <p id="timerTitre">Temps écoulé : {{ _formatedTimer }}</p>
+        <p id="difficulte"> Difficulté : {{_difficulte}}</p>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -14,19 +14,8 @@ export class RouteGenGrille {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/",
-                   (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheGrille(req, res, next));
-
-        router.get("/requeteTemporaire",
-                   (req: Request, res: Response, next: NextFunction) => this.genGrille.prototypeRequete(req, res, next));
-
-        router.get("/requeteTemporaire/memeGrille",
-                   (req: Request, res: Response, next: NextFunction) => this.genGrille.getMots(req, res, next));
-
-        router.get("/normal",
-                   (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheDifficile(req, res, next));
-        router.get("/difficile",
-                   (req: Request, res: Response, next: NextFunction) => this.genGrille.afficheDifficile(req, res, next));
+        router.get("/:difficulte",
+                   async (req: Request, res: Response, next: NextFunction) => this.genGrille.requeteDeGrille(req, res, next));
 
         return router;
     }

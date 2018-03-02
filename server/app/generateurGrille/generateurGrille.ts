@@ -3,12 +3,12 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { TAILLE_TEST, POURCENTAGE_NOIR } from "./constantes";
-import { Mockword } from "./../../../common/mockObject/mockWord";
+import { MotGenerationGrille } from "./motGenerateurGrille";
 import { MockOptionPartie } from "./../../../common/mockObject/mockOptionPartie";
 import { Mot } from "./../serviceLexical/Mot";
+import { Difficultees, REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
 
-import { GenerateurSquelette } from "./generateurSquelette";
+import { GenSquelette } from "./genSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";
 
 module Route {
@@ -17,8 +17,8 @@ module Route {
     export class GenerateurGrille {
 
         private grille: Array<Array<string>>;
-        private listeMot: Array<Mockword>;
-        private generateurSquelette: GenerateurSquelette = new GenerateurSquelette(TAILLE_TEST, POURCENTAGE_NOIR);
+        private listeMot: Array<MotGenerationGrille>;
+        private generateurSquelette: GenSquelette = new GenSquelette();
         private generateurListeMots: GenerateurListeMots = new GenerateurListeMots();
         private motsDejaPlaces: Map<string, number> = new Map();
         private requetesInvalides: Map<string, number> = new Map();
@@ -30,18 +30,23 @@ module Route {
         }
 
         private initMatrice(): void {
-            this.listeMot = new Array<Mockword>();
+            this.listeMot = new Array<MotGenerationGrille>();
             this.grille = new Array<Array<string>>();
             this.grille = this.generateurSquelette.getSqueletteGrille();
             this.listeMot = this.generateurListeMots.donnerUneListe(this.grille);
+
+            this.requetesInvalides.clear();
+            this.requetesInvalides = new Map();
+            this.motsDejaPlaces.clear();
+            this.motsDejaPlaces = new Map();
         }
 
-        private lireMotViaGrille(mot: Mockword) {
-            let lecteur = "";
-            const x = mot.getPremierX();
-            const y = mot.getPremierY();
+        private lireMotViaGrille(mot: MotGenerationGrille): void {
+            let lecteur: string = "";
+            const x: number = mot.getPremierX();
+            const y: number = mot.getPremierY();
 
-            for (let i = 0; i < mot.getLongueur(); i++) {
+            for (let i: number = 0; i < mot.getLongueur(); i++) {
                 if (mot.getVertical()) {
                     lecteur += this.grille[y + i][x];
                 } else {
@@ -51,11 +56,11 @@ module Route {
             mot.setMot(lecteur);
         }
 
-        private ecrireDansLaGrille(mot: Mockword): void {
-            const x = mot.getPremierX();
-            const y = mot.getPremierY();
+        private ecrireDansLaGrille(mot: MotGenerationGrille): void {
+            const x: number = mot.getPremierX();
+            const y: number = mot.getPremierY();
 
-            for (let i = 0; i < mot.getLongueur(); i++) {
+            for (let i: number = 0; i < mot.getLongueur(); i++) {
                 if (mot.getVertical()) {
                     this.grille[y + i][x] = mot.getMot()[i];
                 } else {
@@ -73,10 +78,10 @@ module Route {
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {
 
-            const motActuel: Mockword = this.listeMot[indice];
+            const motActuel: MotGenerationGrille = this.listeMot[indice];
             this.lireMotViaGrille(motActuel);
             let lesMots: Mot[];
-            const contrainte = motActuel.getMot();
+            const contrainte: string = motActuel.getMot();
 
             if (motActuel.getMot() in this.requetesInvalides) {
                 return false;
@@ -89,10 +94,10 @@ module Route {
                 return false;
             }
             let prochainIndice: number;
-            let ctr = 0;
-            const DIX = 2; // A rajouter dans les constantes quand on va avoir un bon chiffre
-            let prochainMotTrouve = false;
-            let indiceAleatoire = 0;
+            let ctr: number = 0;
+            const DIX: number = 2; // A rajouter dans les constantes quand on va avoir un bon chiffre
+            let prochainMotTrouve: boolean = false;
+            let indiceAleatoire: number = 0;
             do {
                 indiceAleatoire = this.nombreAleatoire(lesMots.length) - 1;
                 // limiter le nombre d'essai pour chaque mot
@@ -124,11 +129,11 @@ module Route {
             return true;
         }
 
-        private obtenirLeMotLePlusImportant(mock: Mockword): number {
-            let max = 0;
-            let indiceDuMax = -1;
+        private obtenirLeMotLePlusImportant(mock: MotGenerationGrille): number {
+            let max: number = 0;
+            let indiceDuMax: number = -1;
             let temp: number;
-            for (let i = 0; i < this.listeMot.length; i++) {
+            for (let i: number = 0; i < this.listeMot.length; i++) {
                 if (!this.listeMot[i].getEstTraite()) {
                     temp = this.listeMot[i].getImportance(mock);
                     if (max < temp) {
@@ -141,18 +146,18 @@ module Route {
             return indiceDuMax;
         }
 
-        private async demanderMot(mot: Mockword): Promise<Mot[]> {
+        private async demanderMot(mot: MotGenerationGrille): Promise<Mot[]> {
 
             let url: string;
             switch (this.optionsPartie.niveau) {
 
-                case "Facile":
-                case "Normal":
-                url = "http://localhost:3000/servicelexical/commun/contrainte/" + mot.getMot();
+                case Difficultees.Facile:
+                case Difficultees.Normal:
+                url = REQUETE_COMMUN + mot.getMot();
                 break;
 
-                case "Difficile":
-                url = "http://localhost:3000/servicelexical/noncommun/contrainte/" + mot.getMot();
+                case Difficultees.Difficile:
+                url = REQUETE_NONCOMMUN + mot.getMot();
                 break;
 
                 default: /*devrait jamais arriver?*/ break;
@@ -161,14 +166,14 @@ module Route {
             return WebRequest.json<Mot[]>(url);
         }
 
-        private affecterMot(unMot: Mot, motAChanger: Mockword): Mot {
+        private affecterMot(unMot: Mot, motAChanger: MotGenerationGrille): Mot {
             // regarder avec simon si on doit trouver un mot en particulier dans la liste
-            let indexDef = 0;
+            let indexDef: number = 0;
             const nbDef: number = unMot.definitions.length;
             switch (this.optionsPartie.niveau) {
 
-                case "Normal":
-                case "Difficile":
+                case Difficultees.Normal:
+                case Difficultees.Difficile:
                 if (unMot.definitions.length > 0) {    // S'il n'y a aucune autre def
                     indexDef = this.nombreAleatoire(nbDef) - 1;
                 }
@@ -186,52 +191,17 @@ module Route {
 
         // retourne un nombre entre 1 et nbMax
         private nombreAleatoire(nbMax: number): number {
-            const millisecondes = new Date().getMilliseconds();
-            const MILLE = 1000;
+            const millisecondes: number = new Date().getMilliseconds();
+            const MILLE: number = 1000;
 
             return Math.floor(millisecondes * nbMax / MILLE) + 1;
         }
 
-                /* FONCTION BIDON POUR EXAMINER DES CHOSES */
-        public afficheGrille(req: Request, res: Response, next: NextFunction): void {
+        public async requeteDeGrille(req: Request, res: Response, next: NextFunction): Promise<void> {
+            this.optionsPartie.setDifficultee(req.params.difficulte);
             this.initMatrice();
-            // this.initListeMot();
-            this.remplirLaGrilleDeMots();
-            res.send(JSON.stringify(this.grille));
-        }
-
-        public async prototypeRequete(req: Request, res: Response, next: NextFunction): Promise<void> {
-
-            this.listeMot = new Array<Mockword>();
-            this.grille = new Array<Array<string>>();
-            this.requetesInvalides.clear();
-            this.requetesInvalides = new Map();
-            this.motsDejaPlaces.clear();
-            this.motsDejaPlaces = new Map();
-            this.grille = [["_", "_", "_", "_", "_", "_" , "_", "_", "_", "_"],
-                           ["_", "0", "_", "0", "0", "0" , "0", "0", "0", "_"],
-                           ["_", "0", "_", "_", "_", "_" , "_", "_", "_", "_"],
-                           ["_", "_", "_", "0", "0", "_" , "0", "0", "0", "_"],
-                           ["_", "0", "_", "0", "0", "_" , "0", "_", "_", "_"],
-                           ["0", "0", "_", "0", "_", "_" , "_", "0", "0", "_"],
-                           ["_", "0", "_", "0", "_", "0" , "0", "_", "_", "_"],
-                           ["_", "0", "_", "0", "_", "0" , "0", "0", "0", "0"],
-                           ["_", "_", "_", "0", "_", "0" , "0", "0", "0", "0"],
-                           ["_", "0", "0", "0", "0", "_" , "_", "_", "_", "_"]];
-
-            this .listeMot = this.generateurListeMots.donnerUneListe(this.grille);
             await this.remplirLaGrilleDeMots();
-
             res.send(this.listeMot);
-        }
-
-        public getMots(req: Request, res: Response, next: NextFunction): void {
-            res.send(this.listeMot);
-        }
-
-        /* FONCTION BIDON POUR TESTER DES CHOSES */
-        public afficheDifficile(req: Request, res: Response, next: NextFunction): void {
-            res.send(JSON.stringify(this.listeMot));
         }
 
     }

@@ -1,9 +1,31 @@
 .wrapper {
-    height:100vh;
-    width:100vw;
+    height:100%;
+    width:100%;
+    margin:0;
     display:grid;
-    grid-template-columns: [C1] 20% [C2] 60% [C3] 20% [C4];
-    grid-template-rows: [R1] 50% [R2] 50% [R3];
+    grid-template-columns: [C1] 20% [C2] 20% [C3] 60% [C4];
+    grid-template-rows: [R1] 20% [R2] 80% [R3];
+}
+
+#bgImage {
+    position:absolute;
+    top:5vh;
+    height:95vh;
+    min-height:700px;
+    width:100vw;
+    margin-top:8px;
+    z-index:-1;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.747);
+}
+
+.body {
+    height:100%;
+    width:100%;
+    margin:0;
+    padding: 0;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.747);
 }
 
 .indiceVertical {
@@ -15,7 +37,7 @@
     grid-row-end: R3;
 }
 
-.Grille {
+.indiceHorizontal {
     grid-column-start: C2;
     /* autoprefixer: off */
     grid-column-end: C3;
@@ -24,7 +46,16 @@
     grid-row-end: R3;
 }
 
-.Player1 {
+.Grille {
+    grid-column-start: C3;
+    /* autoprefixer: off */
+    grid-column-end: C4;
+    grid-row-start: R2;
+    /* autoprefixer: off */
+    grid-row-end: R3;
+}
+
+.PlayerInfo {
     grid-column-start: C3;
     /* autoprefixer: off */
     grid-column-end: C4;
@@ -34,16 +65,7 @@
 }
 
 
-.Player2 {
-    grid-column-start: C3;
-    /* autoprefixer: off */
-    grid-column-end: C4;
-    grid-row-start: R2;
-    /* autoprefixer: off */
-    grid-row-end: R3;
-}
-
-.item {
+/* .item {
     border: dashed 2px;
     margin:1px;
-}
+} */

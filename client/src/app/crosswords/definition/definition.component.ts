@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Subscription } from "rxjs/Subscription";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Word, LettreGrille } from "../mockObject/word";
+import { Mot, LettreGrille } from "../objetsTest/mot";
 
 @Component({
   selector: "app-definition",
@@ -11,137 +11,104 @@ import { Word, LettreGrille } from "../mockObject/word";
 })
 
 export class DefinitionComponent implements OnInit, OnDestroy {
-  private mots: Word[];
+  private mots: Mot[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  private reponse: String;
-  private motSelectionne: Word;
+  private motSelectionne: Mot;
 
   public constructor (private listeMotsService: RequeteDeGrilleService) {
-    this.mots = this.listeMotsService.getMots();
-    this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
+    this.mots = this.listeMotsService.mots;
+    this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
-      .subscribe((mots) => this.mots = mots);
-
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
-      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
-
-    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect)=>{
-      this.motSelectionne = motSelect;
-      this.changementMotSelectionneFF(this.motSelectionne);
-    })
-
+    this.initialiserSouscriptions();
   }
+
   public ngOnInit(): void { }
-
-  public envoieMots(): void {
-    this.listeMotsService.serviceEnvoieMots(this.mots);
-  }
-
-  public envoieMatrice(): void {
-    this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
-  }
-
-  public envoieMotSelectionne(): void {
-    this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
-  }
-
-  public getMatrice(): Array<Array<LettreGrille>> {
-    return this.matriceDesMotsSurGrille;
-  }
-  public getMots(): Word[] {
-    return this.mots;
-  }
-
-  public setMotSelectionne(motSelectione: Word): void {
-    this.motSelectionne = motSelectione;
-  }
-  public getMotselectionne(): Word {
-    return this.motSelectionne;
-  }
-
-  public getReponse(): String {
-    return this.reponse;
-  }
-
-  public setMot(indice: number, nouveauMot: string): void {
-    this.mots[indice].mot = nouveauMot;
-  }
-
-  public changementMotSelectionne(mot: Word): void {
-    for (const item of this.mots) {
-      item.activer = false;
-    }
-    this.motSelectionne = mot;
-    mot.activer = !mot.activer;
-
-    this.decouvrirCases(mot);
-
-    this.envoieMotSelectionne();
-  }
-
-  public changementMotSelectionneFF(mot: Word): void {
-    for (const item of this.mots) {
-      item.activer = false;
-    }
-    this.motSelectionne = mot;
-    mot.activer = !mot.activer;
-    this.decouvrirCases(mot);
-  }
-
-  public decouvrirCases(mot: Word): void {
-    this.cacherCases();
-    for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
-      if (mot.vertical) {
-        this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].caseDecouverte = true;
-      } else {
-        this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].caseDecouverte = true;
-      }
-    }
-    this.envoieMatrice();
-  }
-
-  public decouvrirLettre(mot: Word): void {
-    for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
-      if (mot.vertical) {
-        this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY].lettreDecouverte = true;
-      } else {
-        this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY].lettreDecouverte = true;
-      }
-    }
-    this.envoieMatrice();
-  }
-
-  public cacherCases(): void {
-    for (const ligne of this.matriceDesMotsSurGrille) {
-      for (const lettre of ligne) {
-        // if (lettre.lettreDecouverte == true) {
-          lettre.caseDecouverte = false;
-        // }
-      }
-    }
-  }
-
-  public verifierTentative(tentative: String): void {
-    if (tentative === this.motSelectionne.mot) {
-      this.decouvrirLettre(this.motSelectionne);
-      this.reponse = "Bonne Reponse !";
-    } else {
-      this.reponse = "Mauvaise Reponse !";
-    }
-  }
 
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
+    this.subscriptionMotSelec.unsubscribe();
   }
 
-  public afficherRegle(): void {
-    alert("Cliquez sur une définition afin d\"effectuer une tentative.");
+  // Souscriptions
+
+  private initialiserSouscriptions(): void {
+    this.souscrireReceptionMots();
+    this.souscrireSelectionMots();
+    this.souscrireReceptionMatrice();
+  }
+
+  private souscrireReceptionMots(): void {
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
+    .subscribe((mots) => this.mots = mots);
+  }
+
+  private souscrireSelectionMots(): void {
+    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne().subscribe((motSelect) => {
+      this.motSelectionne = motSelect;
+      this.miseAJourMotSelectionne(this.motSelectionne);
+    });
+  }
+
+  private souscrireReceptionMatrice(): void {
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
+      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+  }
+
+  // Changement d'un mot
+
+  public changementMotSelectionne(mot: Mot): void {
+    this.miseAJourMotSelectionne(mot);
+    this.envoieMotSelectionne();
+  }
+
+  private envoieMotSelectionne(): void {
+    this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
+  }
+
+  private miseAJourMotSelectionne(mot: Mot): void {
+    this.changementMot(mot);
+    this.decouvrirCases(mot);
+  }
+
+  private changementMot(mot: Mot): void {
+    this.mots.forEach((element: Mot) => element.activer = false);
+    this.motSelectionne = mot;
+    mot.activer = !mot.activer;
+  }
+
+  private decouvrirCases(mot: Mot): void {
+    this.cacherCases();
+    for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
+      mot.estVertical
+        ? this.obtenirLettreGrilleMotVertical(mot, indice).caseDecouverte = true
+        : this.obtenirLettreGrilleMotHorizontal(mot, indice).caseDecouverte = true;
+    }
+    this.envoieMatrice();
+  }
+
+  private cacherCases(): void {
+    for (const ligne of this.matriceDesMotsSurGrille) {
+      for (const lettre of ligne) {
+          lettre.caseDecouverte = false;
+      }
+    }
+  }
+
+  private obtenirLettreGrilleMotVertical(mot: Mot, indice: number): LettreGrille {
+    return this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY];
+  }
+
+  private obtenirLettreGrilleMotHorizontal(mot: Mot, indice: number): LettreGrille {
+    return this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY];
+  }
+
+  private envoieMatrice(): void {
+    this.listeMotsService.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
   }
 }

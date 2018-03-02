@@ -1,22 +1,25 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input } from "@angular/core";
+
+const LETTRE_A: number = 65; // a
+const LETTRE_Z: number = 90; // z
 
 @Directive({ selector: "[appDirectiveFocus]" })
-
 export class DirectiveFocusDirective {
 
-  constructor() { }
+  public constructor() { }
 
-    @Input() appDirectiveFocus: boolean;
+  @Input()
+  public appDirectiveFocus: boolean;
 
-    @HostListener('keydown', ['$event']) onKeyDown(event: any) {
-        let e = <KeyboardEvent> event;
+  @HostListener("keydown", ["$event"])
+  public onKeyDown(event: KeyboardEvent): void {
+      if (this.appDirectiveFocus && !this.estUneLettre(event)) {
+        event.preventDefault();
+      }
+  }
 
-        if (this.appDirectiveFocus) {
-            if (e.keyCode < 65 || e.keyCode > 90) {
-              e.preventDefault();
-            } else if ((e.keyCode >= 65 && e.keyCode <= 90)) {
-              return;
-            }
-        }
-    }
+  private estUneLettre(event: KeyboardEvent): boolean {
+    return event.keyCode >= LETTRE_A &&
+           event.keyCode <= LETTRE_Z;
+  }
 }

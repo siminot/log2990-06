@@ -1,13 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterModule, Routes } from "@angular/router";
 
-import { GameComponent } from './carApp/game-component/game.component';
-import { MainGrilleComponent } from './crosswords/main-grille/main-grille.component';
+import { GameComponent } from "./carApp/game-component/game.component";
+import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
+import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 
 const routes: Routes = [
-  { path: 'CarGame', component: GameComponent },
-  { path: 'CrosswordsGame', component: MainGrilleComponent }
+  { path: "CarGame", component: GameComponent },
+  { path: "CrosswordsGame", component: MainGrilleComponent },
+  { path: "ConfigPartie", component: ConfigPartieComponent}
 ];
 
 @NgModule({

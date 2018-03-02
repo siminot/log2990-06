@@ -1,19 +1,35 @@
-<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-<p>Vertical</p>
-<ul class="heroes" *ngFor="let mot of mots">
-  <li *ngIf="!mot.vertical"  class="badge">
-    <span *ngIf="mot.activer; else elseBlock1" [style.color]="'blue'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
-    <ng-template #elseBlock1><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
-  </li>
-</ul>
+<div id="container">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 
-<p>Horizontale</p>
-<ul class="heroes" *ngFor="let mot of mots">
-  <li *ngIf="mot.vertical"  class="badge">
-    <span *ngIf="mot.activer; else elseBlock2" [style.color]="'blue'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span>
-    <ng-template #elseBlock2><span [style.color]="'black'" (click)="changementMotSelectionne(mot)">{{ mot.definition }}</span></ng-template>
-  </li>
-</ul>
+  <div *ngIf="estVertical; else titreHorizontal"> 
+    <p>Vertical</p>
+  </div>
 
-<button (click)="afficherRegle()">Règle du jeu</button>
+  <ng-template #titreHorizontal> 
+    <p>Horizontal</p>
+  </ng-template>
+
+  <div *ngIf="estVertical; else motHorizontal" id="vertCont">
+    <ul *ngFor="let mot of mots">
+      <li *ngIf="!mot.estVertical" (click)="changementMotSelectionne(mot)">
+        <span *ngIf="!mot.activer && !mot.cheat" [style.color]="'black'" >{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="!mot.activer && mot.cheat" [style.color]="'black'" >{{ mot.mot }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="mot.activer && !mot.cheat" [style.color]="'white'" >{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="mot.activer && mot.cheat" [style.color]="'white'" >{{mot.mot}}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #motHorizontal id="horizCont"> 
+    <ul *ngFor="let mot of mots">
+      <li *ngIf="mot.estVertical" (click)="changementMotSelectionne(mot)">
+        <span *ngIf="!mot.activer && !mot.cheat" [style.color]="'black'" >{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="!mot.activer && mot.cheat" [style.color]="'black'" >{{ mot.mot }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="mot.activer && !mot.cheat" [style.color]="'white'" >{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="mot.activer && mot.cheat" [style.color]="'white'" >{{mot.mot}}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+      </li>
+    </ul>
+  </ng-template>
+</div>
+
 

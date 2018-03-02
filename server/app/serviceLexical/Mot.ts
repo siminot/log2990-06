@@ -7,10 +7,10 @@ export enum TypeMot { Nom, Verbe, Adjectif, Adverbe }
 
 // tslint:disable-next-line:no-magic-numbers
 const MEDIANE_FREQUENCE: number[] = [0, 0, 10, 10, 10, 10, 10, 5, 2, 2, 2];
-const MEDIANE_FREQUENCE_DEFAUT = 80;
+const MEDIANE_FREQUENCE_DEFAUT: number = 80;
 
 // Pour détecter ce qui n'est pas un lettre majuscule/minuscule/accentuée
-const CARACTERES_INVALIDES = "[^A-Z|^a-z]";
+const CARACTERES_INVALIDES: string = "[^A-Z|^a-z]";
 
 export class Mot {
 
@@ -50,7 +50,7 @@ export class Mot {
     }
 
     private creerDefinition(definition: String): Definition {
-        const NOMBRE_DIVISION = 2;
+        const NOMBRE_DIVISION: number = 2;
         const DEFINITION: Array<string> = definition.split(MotAPI.SEPARATEUR_DEFINITION, NOMBRE_DIVISION);
         let type: TypeMot;
         switch (DEFINITION[0]) {

@@ -3,18 +3,28 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
-import { BasicService } from "./basic.service";
-import { AppRoutingModule } from ".//app-routing.module";
-
 import { GameComponent } from "./carApp/game-component/game.component";
-import { RenderService } from "./carApp/render-service/render.service";
 
+import { ServiceDeRendu } from "./carApp/serviceDeRendu/serviceDeRendu";
+import { GestionnaireScene } from "./carApp/scene/GestionnaireScene";
+import { GestionnaireCamera } from "./carApp/camera/GestionnaireCamera";
+import { GestionnaireSkybox } from "./carApp/skybox/gestionnaireSkybox";
+import { GestionnaireVoitures } from "./carApp/voiture/gestionnaireVoitures";
+import { GestionnaireClavier } from "./carApp/clavier/gestionnaireClavier";
+import { GestionnaireEcran } from "./carApp/ecran/gestionnaireEcran";
+
+import { AppRoutingModule } from ".//app-routing.module";
+import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
+
+import { DefinitionHComponent} from "./crosswords/definition/definitionH.component";
+import { DefinitionVComponent} from "./crosswords/definition/definitionV.component";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
-import { DefinitionComponent } from "./crosswords/definition/definition.component";
 import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
-import { ConfigPartieComponent } from './crosswords/config-partie/config-partie.component';
-import { DirectiveFocusDirective } from './crosswords/directive-focus/directive-focus.directive';
+import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
+import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
+import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
+import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
 
 @NgModule({
     declarations: [
@@ -22,9 +32,11 @@ import { DirectiveFocusDirective } from './crosswords/directive-focus/directive-
         GameComponent,
         MainGrilleComponent,
         GrilleComponent,
-        DefinitionComponent,
         ConfigPartieComponent,
-        DirectiveFocusDirective
+        DirectiveFocusDirective,
+        DefinitionHComponent,
+        DefinitionVComponent,
+        InfoJoueur1Component
     ],
     imports: [
         BrowserModule,
@@ -32,9 +44,16 @@ import { DirectiveFocusDirective } from './crosswords/directive-focus/directive-
         AppRoutingModule
     ],
     providers: [
-        RenderService,
-        BasicService,
-        RequeteDeGrilleService
+        ServiceDeRendu,
+        GestionnaireScene,
+        GestionnaireCamera,
+        GestionnaireSkybox,
+        GestionnaireVoitures,
+        GestionnaireClavier,
+        GestionnaireEcran,
+        RequeteDeGrilleService,
+        HttpeReqService,
+        InfojoueurService
     ],
     bootstrap: [ AppComponent ],
     exports: [
@@ -42,7 +61,8 @@ import { DirectiveFocusDirective } from './crosswords/directive-focus/directive-
         GameComponent,
         MainGrilleComponent,
         GrilleComponent,
-        DefinitionComponent
+        DefinitionVComponent,
+        DefinitionHComponent
     ]
 })
 export class AppModule { }

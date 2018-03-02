@@ -1,47 +1,36 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { DefinitionComponent } from "./definition.component";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Word, LettreGrille } from "../mockObject/word";
+import { Mot, LettreGrille } from "../objetsTest/mot";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpeReqService } from "../httpRequest/http-request.service";
+import { listeMotsLongue, grilleLettres } from "../objetsTest/objetsTest";
 
 describe("DefinitionComponent", () => {
-  let service: RequeteDeGrilleService;
   let component: DefinitionComponent;
   let fixture: ComponentFixture<DefinitionComponent>;
 
-  const fakeWord: Word = {
-    mot: "POPO",
-    definition: "ton père en latino",
-    vertical: true,
-    longeur: 4,
-    premierX: 0,
-    premierY: 0,
-    activer: false
-  };
-
-  const realWordFromOurFakeList: Word = {
-    mot: "Tata",
-    definition: "Ni papa, ni  mama",
-    vertical: true,
-    longeur: 4,
-    premierX: 3,
-    premierY: 0,
-    activer: false
-  };
+  const INDICE_MOT: number = 6;
+  const fakeWord: Mot = listeMotsLongue[INDICE_MOT];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DefinitionComponent ],
-      providers: [ RequeteDeGrilleService ]
+      imports: [ HttpClientTestingModule ],
+      providers: [ RequeteDeGrilleService, HttpeReqService ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch(() => { throw new Error("Erreur de la creation du test"); });
   }));
 
-  beforeEach(() => {
-    service = new RequeteDeGrilleService();
+  beforeEach(inject([RequeteDeGrilleService], (service: RequeteDeGrilleService) => {
     component = new DefinitionComponent(service);
+    component["matriceDesMotsSurGrille"] = grilleLettres;
+    component["mots"] = listeMotsLongue;
     fixture = TestBed.createComponent(DefinitionComponent);
     fixture.detectChanges();
-  });
+  })
+);
 
   describe("Création d\"objets.", () => {
     it("Création d\"objet Definition.", () => {
@@ -51,47 +40,27 @@ describe("DefinitionComponent", () => {
 
   describe("Modification de la grille.", () => {
     it("Découvrir les cases dans la grille selon le mot selectionné.", () => {
-      component.decouvrirCases(fakeWord);
+      component["decouvrirCases"](fakeWord);
       const expectedValues: boolean[] = [true, true, true, true];
       const result: boolean[] = [];
-      const matrice: Array<Array<LettreGrille>> = component.getMatrice();
+      const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
 
       for (let i: number = 0; i < fakeWord.longeur; i++) {
-        result[i] = matrice[0][i].caseDecouverte;
+        result[i] = matrice[fakeWord.premierX][i + fakeWord.premierY].caseDecouverte;
       }
       expect(result).toEqual(expectedValues);
     });
-    it("Decouvrir les lettre dans la grille selon le mot selectionne", () => { 
-      component.decouvrirLettre(fakeWord);
-      const expectedValues: boolean[] = [true, true, true, true];
-      const result: boolean[] = [];
-      const matrice: Array<Array<LettreGrille>> = component.getMatrice();
 
-      for (let i: number = 0; i < fakeWord.longeur; i++) {
-        result[i] = matrice[0][i].lettreDecouverte;
-    }
-      expect(result).toEqual(expectedValues);
-  });
-    it('remettre toute les caseDecouverte a false', () => {
-      let matrice: Array<Array<LettreGrille>> = component.getMatrice();
+    it("remettre toute les caseDecouverte a false", () => {
+      const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
       matrice[0][0] = {
         caseDecouverte: true,
-        lettre: 'P',
+        lettre: "P",
         lettreDecouverte: true
       };
-      // Après l'appel a la fonction la caseDecouverte devrait redevenir a false.
-      component.cacherCases();
-      console.log(matrice[0][0])
+      component["cacherCases"]();
 
       expect(matrice[0][0].caseDecouverte).toBeFalsy();
-});
-
-    it('Verifier le input de l/utilisateur', () => {
-      component.setMotSelectionne(realWordFromOurFakeList);
-      component.verifierTentative(realWordFromOurFakeList.mot);
-      const aVerifier: String = component.getReponse();
-      const verification: String = 'Bonne Reponse !';
-      expect(aVerifier).toEqual(verification);
-});
-});
+    });
+  });
 });

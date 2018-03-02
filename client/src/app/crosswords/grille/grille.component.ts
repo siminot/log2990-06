@@ -1,11 +1,11 @@
-import { Component, OnInit} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
-
-import { Word, LettreGrille } from "../mockObject/word";
+import { Mot, LettreGrille } from "../objetsTest/mot";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { TAILLE_TABLEAU } from "../constantes";
-
+import * as CONST from "../constantes";
+import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
+const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
 @Component({
   selector: "app-grille",
   templateUrl: "./grille.component.html",
@@ -13,84 +13,264 @@ import { TAILLE_TABLEAU } from "../constantes";
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {
-  private mots: Word[];
+  private mots: Mot[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
-  private motSelectionne: Word;
+  private motSelectionne: Mot;
   private positionLettresSelectionnees: string[];
   private positionCourante: number;
+  private lockedLetter: boolean[][];
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
 
-  public constructor(private listeMotsService: RequeteDeGrilleService) { }
+  public constructor(private listeMotsService: RequeteDeGrilleService,
+                     private _servicePointage: InfojoueurService) {
+    this.lockedLetter = [];
+    for (let i: number = 0 ; i < CONST.TAILLE_TABLEAU ; i++) {
+      this.lockedLetter[i] = [];
+      for (let j: number = 0 ; j < CONST.TAILLE_TABLEAU ; j++) {
+        this.lockedLetter[i][j] = false;
+      }
+    }
+  }
 
   public ngOnInit(): void {
-    this.mots = this.listeMotsService.getMots();
-    this.matriceDesMotsSurGrille = this.listeMotsService.getMatrice();
+    this.mots = this.listeMotsService.mots;
 
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
-      .subscribe((mots) => this.mots = mots);
+    this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
+
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots; });
 
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
-      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
         this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
+        this.appliquerStyleDefautGrille();
 
-        this.remplirLettresSelect();
-
-        this.miseEnEvidence();
-
-        this.focusOnRightLetter();
+        if (!this.motSelectionne.motTrouve) {
+          this.remplirLettresSelect();
+          this.miseEvidenceMot("red");
+          if (document.getElementById("00") !== null) {
+            this.focusSurBonneLettre();
+          }
+        }
       });
   }
 
-  private miseEnEvidence(): void {
-    this.putDefaultStyleGrid();
-
+  private appliquerStyleDefautGrille(): void {
     let uneCase: HTMLElement;
-    let idTmp: string;
-    let n: number;
+    for (let n: number = 0 ; n < CONST.TAILLE_TABLEAU * CONST.TAILLE_TABLEAU ; n++) {
+      uneCase = document.getElementsByTagName("td")[n];
+      this.appliquerBordureHaut(uneCase, CONST.COULEUR_BORDURE_CASE_DEFAUT, CONST.LARGEUR_BORDURE_CASE_DEFAUT);
+      this.appliquerBordureBas(uneCase, CONST.COULEUR_BORDURE_CASE_DEFAUT, CONST.LARGEUR_BORDURE_CASE_DEFAUT);
+      this.appliquerBordureGauche(uneCase, CONST.COULEUR_BORDURE_CASE_DEFAUT, CONST.LARGEUR_BORDURE_CASE_DEFAUT);
+      this.appliquerBordureDroite(uneCase, CONST.COULEUR_BORDURE_CASE_DEFAUT, CONST.LARGEUR_BORDURE_CASE_DEFAUT);
+    }
+  }
+
+  private appliquerBordureHaut(uneCase: HTMLElement, couleur: string, largeur: string): void {
+    if (uneCase !== undefined) {
+      uneCase.style.borderTopColor = couleur;
+      uneCase.style.borderTopWidth = largeur;
+    }
+  }
+
+  private appliquerBordureBas(uneCase: HTMLElement, couleur: string, largeur: string): void {
+    if (uneCase !== undefined) {
+      uneCase.style.borderBottomColor = couleur;
+      uneCase.style.borderBottomWidth = largeur;
+    }
+  }
+
+  private appliquerBordureGauche(uneCase: HTMLElement, couleur: string, largeur: string): void {
+    if (uneCase !== undefined) {
+      uneCase.style.borderLeftColor = couleur;
+      uneCase.style.borderLeftWidth = largeur;
+    }
+  }
+
+  private appliquerBordureDroite(uneCase: HTMLElement, couleur: string, largeur: string): void {
+    if (uneCase !== undefined) {
+      uneCase.style.borderRightColor = couleur;
+      uneCase.style.borderRightWidth = largeur;
+    }
+  }
+
+  private remplirLettresSelect(): void {
+    this.positionCourante = 0;
+    this.positionLettresSelectionnees = [];
+
+    let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY, "");
+    this.positionLettresSelectionnees[0] = tmp;
+
+    const x: number = this.motSelectionne.premierX;
+    const y: number = this.motSelectionne.premierY;
+
+    for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
+      this.motSelectionne.estVertical ? tmp = this.makeID(x, y + i, "") : tmp = this.makeID(x + i, y, "");
+      this.positionLettresSelectionnees[i] = tmp;
+    }
+  }
+
+  private miseEvidenceMot(couleur: string): void {
+    let uneCase: HTMLElement, idTmp: string, n: number;
+
     for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
-      n = 10 * +idTmp[0] + +idTmp[1];
-      uneCase = document.getElementsByTagName('td')[n];
+      n = +idTmp[0] * CONST.DIZAINE + +idTmp[1];
+      uneCase = document.getElementsByTagName("td")[n];
+      this.miseEvidenceLettre(uneCase, i, couleur);
+    }
+  }
 
-      if(!this.motSelectionne.vertical) {   // Wrong side. Horizontal et vertical inversé.
-        if(i === 0) {                                         // Premiere case.
-          uneCase.style.borderTopColor = "red";
-        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderBottomColor = "red";
-        }                                                     // Toutes les cases.
-        uneCase.style.borderRightColor = "red";
-        uneCase.style.borderLeftColor = "red";
+  private miseEvidenceLettre(uneCase: HTMLElement, position: number, couleur: string): void {
+    if (!this.motSelectionne.estVertical) {
+      this.miseEvidenceLettreNonVerticale(uneCase, position, couleur);
+    } else {
+      this.miseEvidenceLettreVericale(uneCase, position, couleur);
+    }
+  }
+
+  private miseEvidenceLettreNonVerticale(uneCase: HTMLElement, position: number, couleur: string): void {
+    if (position === 0) {
+      this.appliquerBordureHaut(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+    } else if (position === this.motSelectionne.longeur - 1) {
+      this.appliquerBordureBas(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+    }
+    this.appliquerBordureGauche(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+    this.appliquerBordureDroite(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+  }
+
+  private miseEvidenceLettreVericale(uneCase: HTMLElement, position: number, couleur: string): void {
+    if (position === 0) {
+      this.appliquerBordureGauche(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+    } else if (position === this.motSelectionne.longeur - 1) {
+      this.appliquerBordureDroite(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+    }
+    this.appliquerBordureHaut(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+    this.appliquerBordureBas(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
+  }
+
+  private focusSurBonneLettre(): void {
+    let elemTmp: HTMLInputElement, idTmp: string;
+    let i: number;
+
+    for (i = 0 ; i < this.motSelectionne.longeur ; i++) {
+      idTmp = this.positionLettresSelectionnees[i];
+      elemTmp = document.getElementById(idTmp) as HTMLInputElement;
+
+      if (elemTmp.value === "") {
+        this.positionCourante = i;
+        elemTmp.focus();
+
+        return;
+      }
+    }
+
+    this.positionCourante = this.motSelectionne.longeur - 1;
+    elemTmp.focus();
+  }
+
+  public manageKeyEntry(event: KeyboardEvent): void {
+    if (event.key === "Backspace") {
+      this.focusOnPreviousLetter();
+    } else if (event.key.toUpperCase().charCodeAt(0) >= CONST.KEYCODE_MIN && event.key.toUpperCase().charCodeAt(0) <= CONST.KEYCODE_MAX) {
+      this.focusOnNextLetter();
+    }
+  }
+
+  private focusOnNextLetter(): void {
+    if (this.positionCourante < this.motSelectionne.longeur - 1) {
+      this.positionCourante++;
+      const elem: HTMLInputElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]) as HTMLInputElement;
+      if (elem !== null) {
+        elem.focus();
+
+        if (elem.value !== "") {
+          this.focusOnNextLetter();
+        }
+      }
+
+    } else if (this.positionCourante === this.motSelectionne.longeur - 1) {
+      this.validateWord();
+    }
+  }
+
+  private validateWord(): boolean {
+    const usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
+    const valid: boolean = usersWord === this.motSelectionne.mot;
+
+    if (valid) {
+      this.motSelectionne.motTrouve = true;
+      this.lockLettersFromWord();
+      this.miseEvidenceMot("green");
+      this.removeFocusFromSelectedWord();
+      this._servicePointage.incrementationNbMotDecouv(CONST.INCR_UN_MOT_DECOUVERT);
+    }
+
+    return valid;
+  }
+
+  private removeFocusFromSelectedWord(): void {
+    const elem: HTMLInputElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]) as HTMLInputElement;
+    elem.blur();
+  }
+
+  private lockLettersFromWord(): void {
+    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+      if (this.motSelectionne.estVertical) {
+        this.lockedLetter[this.motSelectionne.premierX][this.motSelectionne.premierY + i] = true;
       } else {
-        if (i === 0) {                                        // Premiere case.
-          uneCase.style.borderLeftColor = "red";
-        } else if (i === this.motSelectionne.longeur - 1) {   // Derniere case.
-          uneCase.style.borderRightColor = "red";
-        }                                                     // Toutes les cases du mot.
-        uneCase.style.borderTopColor = "red";
-        uneCase.style.borderBottomColor = "red";
+        this.lockedLetter[this.motSelectionne.premierX + i][this.motSelectionne.premierY] = true;
       }
     }
   }
 
-  private putDefaultStyleGrid(): void {
-    let uneCase: HTMLElement;
-    for (let n: number = 0 ; n < TAILLE_TABLEAU * TAILLE_TABLEAU ; n++) {
-      uneCase = document.getElementsByTagName('td')[n];
-      uneCase.style.borderBottomColor = "black";
-      uneCase.style.borderTopColor = "black";
-      uneCase.style.borderLeftColor = "black";
-      uneCase.style.borderRightColor = "black";
+  private createWordFromSelectedLetters(): string {
+    let wordCreated: string = "";
+
+    for (const elem of this.positionLettresSelectionnees) {
+      wordCreated += (document.getElementById(elem) as HTMLInputElement).value;
+    }
+
+    return wordCreated;
+  }
+
+  private focusOnPreviousLetter(): void {
+    const idCourant: string = this.positionLettresSelectionnees[this.positionCourante];
+    const elemCourant: HTMLInputElement = document.getElementById(idCourant) as HTMLInputElement;
+    const xCour: number = +this.positionLettresSelectionnees[this.positionCourante][0];
+    const yCour: number = +this.positionLettresSelectionnees[this.positionCourante][1];
+
+    if (this.isLastLetterOfWord(elemCourant) && !this.lockedLetter[xCour][yCour] && elemCourant.value !== "") {
+      elemCourant.value = "";
+    } else if (this.positionCourante > 0 || (this.isLastLetterOfWord(elemCourant) && this.lockedLetter[xCour][yCour])) {
+      this.positionCourante--;
+      const idPrev: string = this.positionLettresSelectionnees[this.positionCourante];
+      const previousElem: HTMLInputElement = document.getElementById(idPrev) as HTMLInputElement;
+      const xPrev: number = +this.positionLettresSelectionnees[this.positionCourante][0];
+      const yPrev: number = +this.positionLettresSelectionnees[this.positionCourante][1];
+
+      if (previousElem !== null) {
+        if (!this.lockedLetter[xPrev][yPrev]) {
+          previousElem.focus();
+          previousElem.value = "";
+        } else {
+          this.focusOnPreviousLetter();
+        }
+      }
     }
   }
 
-  public getListeMots(): Word[] {
+  private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
+    return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
+  }
+
+  public getListeMots(): Mot[] {
     return this.mots;
   }
 
@@ -109,97 +289,57 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return a + b + k;
   }
 
-  private remplirLettresSelect(): void {
-    this.positionCourante = 0;
-    this.positionLettresSelectionnees = [];
+  public retrieveWordFromClick(event: KeyboardEvent): void {
+    // retrieve Id from the event
+    // Erreur de typescript en précisant le type
+    // tslint:disable-next-line:no-any
+    const target: any = event.target || event.srcElement || event.currentTarget;
+    const cordinate: string[] = target.attributes.id.nodeValue.split("");
+    // coordonne X et Y de la case selectionneMot
+    const x: number = +cordinate[0];
+    const y: number = +cordinate[1];
+    const motSousJacent: Mot = this.findWordFromXY(x, y);
+    this.motSelectionne = motSousJacent;
 
-    let tmp: string = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY, "");
-    this.positionLettresSelectionnees[0] = tmp;
+    this.envoieMotSelectionne();
+    // this.focusOnRightLetter();
+  }
 
-    for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
-      if (this.motSelectionne.vertical) {
-        tmp = this.makeID(this.motSelectionne.premierX, this.motSelectionne.premierY + i, "");
-      } else {
-        tmp = this.makeID(this.motSelectionne.premierX + i, this.motSelectionne.premierY, "");
+  private findWordFromXY( X: number, Y: number): Mot {
+    let motTrouve: Mot;
+    for (const mot of  this.mots) {
+      let other: number;
+      let max: number;
+
+      if (!mot.estVertical) {
+        other = mot.premierY;
+        max = mot.premierX + mot.longeur - 1;
+        if ( X <= max && Y === other && mot.premierX <= X) {
+          motTrouve = mot;
+          break;
+        }
+      } else if ( mot.estVertical) {
+        other = mot.premierX;
+        max = mot.premierY + mot.longeur - 1;
+        if ( Y <= max && X === other && mot.premierY <= Y) {
+          motTrouve = mot;
+          break;
+        }
       }
-      this.positionLettresSelectionnees[i] = tmp;
     }
+
+    return motTrouve;
   }
 
-  private focusOnRightLetter(): void {
-    let elemTmp: HTMLInputElement;
-    let idTmp: string;
-    
-    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
-      idTmp = this.positionLettresSelectionnees[i];
-      elemTmp = <HTMLInputElement>document.getElementById(idTmp);
-
-      if(elemTmp.value === '') {
-        this.positionCourante = i;
-        elemTmp.focus();
-        return;
-      }
+  private envoieMotSelectionne(): void {
+    this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
+  }
+  // never reasign ? On change un attribut juste en dessous, du calme TSlint
+  public switchCheatMode(): void {
+    for (const mot of this.mots) {
+      mot.cheat = !mot.cheat;
     }
-    this.positionCourante = this.motSelectionne.longeur - 1;
-    elemTmp.focus();
-  }
-
-  private manageKeyEntry(event: any): void {
-    if (event.key === "Backspace") {
-      this.focusOnPreviousLetter();
-    } else if (event.keyCode >= 65 && event.keyCode <= 90) {
-      this.focusOnNextLetter();
-    }
-  }
-
-  private focusOnNextLetter(): void {
-    if (this.positionCourante < this.motSelectionne.longeur - 1) {
-      this.positionCourante++;
-      let elem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-      elem.focus();
-
-      if(elem.value != '') {
-        this.focusOnNextLetter();
-      }
-    } else if (this.positionCourante === this.motSelectionne.longeur - 1) {   // TODO : Vérifier si la condition est réellement nécessaire.
-      this.validateWord();
-    }
-  }
-
-  private validateWord(): boolean {
-    let usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
-    
-    let valid: boolean = usersWord === this.motSelectionne.mot;
-
-    valid ? console.log("VALID WORD") : console.log("INVALID WORD");
-
-    return valid;
-  }
-
-  private createWordFromSelectedLetters(): string {
-    let wordCreated: string = "";
-    for(let i: number = 0 ; i < this.positionLettresSelectionnees.length ; i++) {
-      wordCreated += (<HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[i])).value;
-    }
-    
-    return wordCreated;
-  }
-
-  private focusOnPreviousLetter(): void {
-    let elemCourant: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-    
-    if(this.isLastLetterOfWord(elemCourant) && elemCourant.value != '') {
-      elemCourant.value = '';
-    } else if (this.positionCourante > 0) {
-      this.positionCourante--;
-      const previousElem: HTMLInputElement = <HTMLInputElement>document.getElementById(this.positionLettresSelectionnees[this.positionCourante]);
-      previousElem.focus();
-      previousElem.value = '';
-    }
-  }
-
-  private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
-    return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
+    this.listeMotsService.serviceEnvoieMots(this.mots);
   }
 
   public ngOnDestroy(): void {
@@ -207,77 +347,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
   }
-
-  public printID($event: any): void {
-    const target: any = event.target || event.srcElement || event.currentTarget;
-    const idAttr: any = target.attributes.id;
-    const value: any = idAttr.nodeValue;
-    console.log(value);
+  public afficherRegle(): void {
+    alert(REGLE_JEU);
   }
-
-  private retrieveWordFromClick(event: any): void {
-
-    // retrieve Id from the event
-    const target: any = event.target || event.srcElement || event.currentTarget;
-    const idAttr: any = target.attributes.id;
-    const id: any = idAttr.nodeValue;
-    const cordinate: string[] = id.split("");
-    // coordonne X et Y de la case selectionne
-    const x: number = +cordinate[0];
-    const y: number = +cordinate[1];
-    const motSousJacent: Word = this.findWordFromXY(x,y);
-    this.motSelectionne = motSousJacent;
-
-    this.envoieMotSelectionne(); 
-    //this.remplirLettresSelect();
-    this.focusOnRightLetter();
-
-  }
-
-  private findWordFromXY( X:number, Y:number): Word {
-    let motTrouve: Word;
-    for(const mot of  this.mots) {
-      let other: number;
-      let max: number;
-
-      if ( !mot.vertical) {
-        other = mot.premierY;
-        max = mot.premierX + mot.longeur - 1;
-        if( X <= max && Y === other) {
-          console.log(mot.mot);
-          motTrouve = mot;
-          break;
-        }
-      }
-      else if ( mot.vertical) {
-        other = mot.premierX;
-        max = mot.premierY + mot.longeur - 1;
-        if ( Y <= max && X === other) {
-          console.log(mot.mot);
-          motTrouve = mot;
-          break;
-        }
-      }
-    }
-    return motTrouve;
-  }
-
-  public envoieMotSelectionne(): void {
-    this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
-  }
-
-
 }
-
-
-  /*
-  ** Pour une autre carte que celle du sprint 1. **
-  public onKey(event: any): void {
-    const element: any = event.srcElement.nextElementSibling;
-
-    if (element != null) {
-      const elem: HTMLElement = document.getElementById("testFocus");
-      elem.focus();
-    }
-  }
-  */

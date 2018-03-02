@@ -57,7 +57,7 @@ export class MotGenerationGrille {
         return this._estTraite;
     }
 
-    public setEstTraite(etat: boolean): void {
+    public set estTraite(etat: boolean) {
         this._estTraite = etat;
     }
 

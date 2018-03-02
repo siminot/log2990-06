@@ -3,7 +3,7 @@ import { ObjectLoader, Object3D } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
-import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
 
 // AI
@@ -25,10 +25,11 @@ const FREIN_APPUYE: EvenementClavier = new EvenementClavier("s", TypeEvenementCl
 const FREIN_RELEVE: EvenementClavier = new EvenementClavier("s", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireVoitures extends UtilisateurClavier {
+export class GestionnaireVoitures {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
+    private clavier: UtilisateurClavier;
 
     public get voitureJoueur(): Voiture {
         return this._voitureJoueur;
@@ -39,31 +40,20 @@ export class GestionnaireVoitures extends UtilisateurClavier {
     }
 
     public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
-        super(gestionnaireClavier);
         this._voituresAI = [];
-        this.touchesEnregistrees = [];
+        this.clavier = new UtilisateurClavier(gestionnaireClavier);
         this.initialiser().catch(() => new Error("Erreur lors de l'initialisation"));
     }
 
-    protected creationTouches(): void {
-        this.touchesEnregistrees.push(
-            new FonctionTouche(this._voitureJoueur.accelerer.bind(this._voitureJoueur), ACCELERATEUR_APPUYE));
-        this.touchesEnregistrees.push(
-            new FonctionTouche(this._voitureJoueur.accelerer.bind(this._voitureJoueur), ACCELERATEUR_APPUYE));
-        this.touchesEnregistrees.push(
-            new FonctionTouche(this._voitureJoueur.relacherAccelerateur.bind(this._voitureJoueur), ACCELERATEUR_RELEVE));
-        this.touchesEnregistrees.push(
-            new FonctionTouche(this._voitureJoueur.virerGauche.bind(this._voitureJoueur), DIRECTION_GAUCHE_APPUYEE));
-        this.touchesEnregistrees.push(
-            new FonctionTouche(this._voitureJoueur.relacherVolant.bind(this._voitureJoueur), DIRECTION_GAUCHE_RELEVE));
-        this.touchesEnregistrees.push(
-            new FonctionTouche(this._voitureJoueur.virerDroite.bind(this._voitureJoueur), DIRECTION_DROITE_APPUYE));
-        this.touchesEnregistrees.push(
-            new FonctionTouche(this._voitureJoueur.relacherVolant.bind(this._voitureJoueur), DIRECTION_DROITE_RELEVE));
-        this.touchesEnregistrees.push(
-            new FonctionTouche(this._voitureJoueur.freiner.bind(this._voitureJoueur), FREIN_APPUYE));
-        this.touchesEnregistrees.push(
-            new FonctionTouche(this._voitureJoueur.relacherFreins.bind(this._voitureJoueur), FREIN_RELEVE));
+    protected initialisationTouches(): void {
+        this.clavier.ajouterTouche(this._voitureJoueur.accelerer.bind(this._voitureJoueur), ACCELERATEUR_APPUYE);
+        this.clavier.ajouterTouche(this._voitureJoueur.relacherAccelerateur.bind(this._voitureJoueur), ACCELERATEUR_RELEVE);
+        this.clavier.ajouterTouche(this._voitureJoueur.virerGauche.bind(this._voitureJoueur), DIRECTION_GAUCHE_APPUYEE);
+        this.clavier.ajouterTouche(this._voitureJoueur.relacherVolant.bind(this._voitureJoueur), DIRECTION_GAUCHE_RELEVE);
+        this.clavier.ajouterTouche(this._voitureJoueur.virerDroite.bind(this._voitureJoueur), DIRECTION_DROITE_APPUYE);
+        this.clavier.ajouterTouche(this._voitureJoueur.relacherVolant.bind(this._voitureJoueur), DIRECTION_DROITE_RELEVE);
+        this.clavier.ajouterTouche(this._voitureJoueur.freiner.bind(this._voitureJoueur), FREIN_APPUYE);
+        this.clavier.ajouterTouche(this._voitureJoueur.relacherFreins.bind(this._voitureJoueur), FREIN_RELEVE);
     }
 
     // Creation des voitures

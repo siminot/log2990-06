@@ -4,7 +4,7 @@ import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
-import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
 
@@ -15,10 +15,11 @@ const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementC
 const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("y", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireScene extends UtilisateurClavier {
+export class GestionnaireScene {
 
     private _scene: Scene;
     private tempsJournee: TempsJournee;
+    private clavier: UtilisateurClavier;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
@@ -31,16 +32,15 @@ export class GestionnaireScene extends UtilisateurClavier {
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
-        super(gestionnaireClavier);
         this._scene = new Scene;
+        this.clavier = new UtilisateurClavier(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
-        this.touchesEnregistrees = [];
         this.initialisationTouches();
     }
 
-    protected creationTouches(): void {
-        this.touchesEnregistrees.push(new FonctionTouche(this.changerDecor.bind(this), CHANGER_DECOR));
-        this.touchesEnregistrees.push(new FonctionTouche(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE));
+    protected initialisationTouches(): void {
+        this.clavier.ajouterTouche(this.changerDecor.bind(this), CHANGER_DECOR);
+        this.clavier.ajouterTouche(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE);
     }
 
     // Creation de la scene

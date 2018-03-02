@@ -6,6 +6,7 @@ import { GestionnaireCamera } from "../camera/GestionnaireCamera";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
 describe("Service de rendu", () => {
   let serviceDeRendu: ServiceDeRendu;
@@ -15,6 +16,7 @@ describe("Service de rendu", () => {
   let gestionnaireScene: GestionnaireScene;
   let gestionnaireEcran: GestionnaireEcran;
   let gestionnaireCamera: GestionnaireCamera;
+  let gestionnaireClavier: GestionnaireClavier;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,11 +24,12 @@ describe("Service de rendu", () => {
       providers: [ GestionnaireVoitures ]
     });
 
-    gestionnaireVoitures = new GestionnaireVoitures();
+    gestionnaireClavier = new GestionnaireClavier();
+    gestionnaireVoitures = new GestionnaireVoitures(gestionnaireClavier);
     gestionnaireSkybox = new GestionnaireSkybox();
-    gestionnaireScene = new GestionnaireScene(gestionnaireSkybox, gestionnaireVoitures);
+    gestionnaireScene = new GestionnaireScene(gestionnaireSkybox, gestionnaireVoitures, gestionnaireClavier);
     gestionnaireEcran = new GestionnaireEcran();
-    gestionnaireCamera = new GestionnaireCamera(gestionnaireVoitures);
+    gestionnaireCamera = new GestionnaireCamera(gestionnaireVoitures, gestionnaireClavier);
 
     serviceDeRendu = new ServiceDeRendu(gestionnaireScene, gestionnaireCamera, gestionnaireEcran);
   }));

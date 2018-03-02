@@ -1,26 +1,26 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { Camera } from "three";
 import { Voiture } from "../voiture/voiture";
 import { CameraJeu } from "./CameraJeu";
 import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
-import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
 import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
 const CAMERA_INITIALE: number = 0;
 
-// Touches clavier
+// Touches
 const ZOOM: EvenementClavier = new EvenementClavier("=", TypeEvenementClavier.TOUCHE_RELEVEE);
 const DEZOOM: EvenementClavier = new EvenementClavier("-", TypeEvenementClavier.TOUCHE_RELEVEE);
-const CHANGER_VUE: EvenementClavier = new EvenementClavier("v", TypeEvenementClavier.TOUCHE_RELEVEE);
+const CHANGER_CAMERA: EvenementClavier = new EvenementClavier("v", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireCamera implements OnDestroy {
+export class GestionnaireCamera extends UtilisateurClavier  {
 
     private cameras: CameraJeu[];
     private cameraCourante: CameraJeu;
-    private touchesEnregistrees: FonctionTouche[];
 
     public get camera(): Camera {
         this.miseAJourCameraCourante();
@@ -29,18 +29,20 @@ export class GestionnaireCamera implements OnDestroy {
     }
 
     public constructor(private gestionnaireVoitures: GestionnaireVoitures,
-                       private gestionnaireClavier: GestionnaireClavier) {
+                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
+        super(gestionnaireClavier);
         this.cameras = [];
-        this.touchesEnregistrees = [];
         this.initialiserCameras();
         this.initialisationTouches();
     }
 
-    public ngOnDestroy(): void {
-        this.desinscriptionTouches();
-    }
-
     // Initialisation
+
+    protected creationTouches(): void {
+        this.touchesEnregistrees.push(new FonctionTouche(this.zoomer.bind(this), ZOOM));
+        this.touchesEnregistrees.push(new FonctionTouche(this.dezoomer.bind(this), DEZOOM));
+        this.touchesEnregistrees.push(new FonctionTouche(this.changerCamera.bind(this), CHANGER_CAMERA));
+    }
 
     private initialiserCameras(): void {
         this.ajouterNouvelleCamera3D();
@@ -59,29 +61,6 @@ export class GestionnaireCamera implements OnDestroy {
 
     private choisirCameraCouranteInitiale(): void {
         this.cameraCourante = this.cameras[CAMERA_INITIALE];
-    }
-
-    private initialisationTouches(): void {
-        this.creationTouches();
-        this.inscriptionTouches();
-    }
-
-    private inscriptionTouches(): void {
-        for (const touche of this.touchesEnregistrees) {
-            this.gestionnaireClavier.inscrire(touche);
-        }
-    }
-
-    private creationTouches(): void {
-        this.touchesEnregistrees.push(new FonctionTouche(this.zoomer.bind(this), ZOOM));
-        this.touchesEnregistrees.push(new FonctionTouche(this.dezoomer.bind(this), DEZOOM));
-        this.touchesEnregistrees.push(new FonctionTouche(this.changerCamera.bind(this), CHANGER_VUE));
-    }
-
-    private desinscriptionTouches(): void {
-        for (const touche of this.touchesEnregistrees) {
-            this.gestionnaireClavier.desinscrire(touche);
-        }
     }
 
     // Modifications des cameras

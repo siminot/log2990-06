@@ -1,11 +1,12 @@
 import { GestionnaireVoitures } from "./gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
 describe("GestionnaireVoitures", () => {
     let gestionnaire: GestionnaireVoitures;
 
     it("Constructeur initialise un gestionnaire", () => {
-        gestionnaire = new GestionnaireVoitures();
+        gestionnaire = new GestionnaireVoitures(new GestionnaireClavier());
         expect(gestionnaire).toBeDefined();
     });
 

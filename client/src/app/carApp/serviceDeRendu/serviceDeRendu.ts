@@ -50,7 +50,7 @@ export class ServiceDeRendu {
     private rendu(): void {
         requestAnimationFrame(() => this.rendu());
         this.miseAJour();
-        this.renderer.render(this.gestionnaireScene, this.gestionnaireCamera.camera);
+        this.renderer.render(this.gestionnaireScene.scene, this.gestionnaireCamera.camera);
         this.stats.update();
     }
 

@@ -6,19 +6,22 @@ import { CameraJeu } from "./CameraJeu";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { CameraJeu2D } from "./CameraJeu2D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
 describe("Gestionnaire camera", () => {
   let gestionnaireCamera: GestionnaireCamera;
   let gestionnaireVoitures: GestionnaireVoitures;
+  let gestionnaireClavier: GestionnaireClavier;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GestionnaireCamera ],
-      providers: [ GestionnaireVoitures ]
+      providers: [ GestionnaireVoitures, GestionnaireClavier ]
     });
 
-    gestionnaireVoitures = new GestionnaireVoitures();
-    gestionnaireCamera = new GestionnaireCamera(gestionnaireVoitures);
+    gestionnaireClavier = new GestionnaireClavier();
+    gestionnaireVoitures = new GestionnaireVoitures(gestionnaireClavier);
+    gestionnaireCamera = new GestionnaireCamera(gestionnaireVoitures, gestionnaireClavier);
   }));
 
   beforeEach(() => {

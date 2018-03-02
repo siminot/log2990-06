@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { Scene } from "three";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
@@ -6,6 +6,7 @@ import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
 import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
 
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
@@ -14,50 +15,32 @@ const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementC
 const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("y", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireScene extends Scene implements OnDestroy {
+export class GestionnaireScene extends UtilisateurClavier {
 
+    private _scene: Scene;
     private tempsJournee: TempsJournee;
-    private touchesEnregistrees: FonctionTouche[];
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
     }
 
+    public get scene(): Scene {
+        return this._scene;
+    }
+
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures,
-                       private gestionnaireClavier: GestionnaireClavier) {
-        super();
+                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
+        super(gestionnaireClavier);
+        this._scene = new Scene;
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.touchesEnregistrees = [];
         this.initialisationTouches();
     }
 
-    public ngOnDestroy(): void {
-        this.desinscriptionTouches();
-    }
-
-    // Touches
-
-    private initialisationTouches(): void {
-        this.creationTouches();
-        this.inscriptionTouches();
-    }
-
-    private inscriptionTouches(): void {
-        for (const touche of this.touchesEnregistrees) {
-            this.gestionnaireClavier.inscrire(touche);
-        }
-    }
-
-    private creationTouches(): void {
+    protected creationTouches(): void {
         this.touchesEnregistrees.push(new FonctionTouche(this.changerDecor.bind(this), CHANGER_DECOR));
         this.touchesEnregistrees.push(new FonctionTouche(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE));
-    }
-
-    private desinscriptionTouches(): void {
-        for (const touche of this.touchesEnregistrees) {
-            this.gestionnaireClavier.desinscrire(touche);
-        }
     }
 
     // Creation de la scene
@@ -80,11 +63,11 @@ export class GestionnaireScene extends Scene implements OnDestroy {
     }
 
     private ajouterSkybox(): void {
-        this.add(this.gestionnaireSkybox.skybox);
+        this._scene.add(this.gestionnaireSkybox.skybox);
     }
 
     private retirerSkybox(): void {
-        this.remove(this.gestionnaireSkybox.skybox);
+        this._scene.remove(this.gestionnaireSkybox.skybox);
     }
 
     private ajouterPiste(): void {
@@ -92,12 +75,12 @@ export class GestionnaireScene extends Scene implements OnDestroy {
     }
 
     private ajouterVoitureJoueur(): void {
-        this.add(this.gestionnaireVoiture.voitureJoueur);
+        this._scene.add(this.gestionnaireVoiture.voitureJoueur);
     }
 
     private ajouterVoituresAI(): void {
         for (const VOITURE of this.gestionnaireVoiture.voituresAI) {
-            this.add(VOITURE);
+            this._scene.add(VOITURE);
         }
     }
 

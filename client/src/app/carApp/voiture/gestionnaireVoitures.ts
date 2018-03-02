@@ -1,9 +1,10 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { ObjectLoader, Object3D } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "../clavier/evenementClavier";
+import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
 
 // AI
 const NOMBRE_AI: number = 1;
@@ -24,11 +25,10 @@ const FREIN_APPUYE: EvenementClavier = new EvenementClavier("s", TypeEvenementCl
 const FREIN_RELEVE: EvenementClavier = new EvenementClavier("s", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireVoitures implements OnDestroy {
+export class GestionnaireVoitures extends UtilisateurClavier {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
-    private touchesEnregistrees: FonctionTouche[];
 
     public get voitureJoueur(): Voiture {
         return this._voitureJoueur;
@@ -38,23 +38,14 @@ export class GestionnaireVoitures implements OnDestroy {
         return this._voituresAI;
     }
 
-    public constructor(private gestionnaireClavier: GestionnaireClavier) {
+    public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
+        super(gestionnaireClavier);
         this._voituresAI = [];
         this.touchesEnregistrees = [];
         this.initialiser().catch(() => new Error("Erreur lors de l'initialisation"));
-        this.initialisationTouches();
     }
 
-    public ngOnDestroy(): void {
-        this.desinscriptionTouches();
-    }
-
-    private initialisationTouches(): void {
-        this.creationTouches();
-        this.inscriptionTouches();
-    }
-
-    private creationTouches(): void {
+    protected creationTouches(): void {
         this.touchesEnregistrees.push(
             new FonctionTouche(this._voitureJoueur.accelerer.bind(this._voitureJoueur), ACCELERATEUR_APPUYE));
         this.touchesEnregistrees.push(
@@ -75,23 +66,12 @@ export class GestionnaireVoitures implements OnDestroy {
             new FonctionTouche(this._voitureJoueur.relacherFreins.bind(this._voitureJoueur), FREIN_RELEVE));
     }
 
-    private inscriptionTouches(): void {
-        for (const touche of this.touchesEnregistrees) {
-            this.gestionnaireClavier.inscrire(touche);
-        }
-    }
-
-    private desinscriptionTouches(): void {
-        for (const touche of this.touchesEnregistrees) {
-            this.gestionnaireClavier.desinscrire(touche);
-        }
-    }
-
     // Creation des voitures
 
     private async initialiser(): Promise<void> {
         this.creerVoitureJoueur().catch(() => new Error("Erreur construction de la voiture du joueur"));
         this.creerVoituresAI().catch(() => new Error("Erreur construction des voituresAI"));
+        this.initialisationTouches();
     }
 
     private async creerVoitureJoueur(): Promise<void> {

@@ -73,7 +73,6 @@ module Route {
             while (!await this.remplirGrilleRecursif(0)) {
                 this.motsDejaPlaces.clear();
             }
-            // .catch((error) => console.log("wtf esti"));
         }
 
         private async remplirGrilleRecursif(indice: number): Promise<boolean> {

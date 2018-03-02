@@ -45,7 +45,7 @@ describe("DefinitionComponent", () => {
       const result: boolean[] = [];
       const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
 
-      for (let i: number = 0; i < fakeWord.longeur; i++) {
+      for (let i: number = 0; i < fakeWord.longueur; i++) {
         result[i] = matrice[fakeWord.premierX][i + fakeWord.premierY].caseDecouverte;
       }
       expect(result).toEqual(expectedValues);

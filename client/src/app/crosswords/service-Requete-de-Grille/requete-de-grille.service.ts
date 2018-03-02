@@ -58,7 +58,7 @@ export class RequeteDeGrilleService {
 
   private insererMotsDansGrille(): void {
     for (const objMot of this.mots) {
-      for (let indice: number = 0; indice < objMot.longeur; indice++) {
+      for (let indice: number = 0; indice < objMot.longueur; indice++) {
         this.assignerLettre(objMot, indice);
       }
     }

@@ -4,43 +4,27 @@ export class MotGenerationGrille {
 
     public mot: string;
     public definition: string;
-    private _estVertical: boolean;
-    private _longueur: number;
-    private _premierX: number;
-    private _premierY: number;
+    public estVertical: boolean;
+    public longueur: number;
+    public premierX: number;
+    public premierY: number;
     public estTraite: boolean;
 
     public constructor(estVertical: boolean, longueur: number, premierX: number, premierY: number) {
         this.mot = "";
         this.definition = "";
-        this._estVertical = estVertical;
-        this._longueur = longueur;
-        this._premierX = premierX;
-        this._premierY = premierY;
+        this.estVertical = estVertical;
+        this.longueur = longueur;
+        this.premierX = premierX;
+        this.premierY = premierY;
         this.estTraite = false;
 
-    }
-    // getters
-    public get estVertical(): boolean {
-        return this._estVertical;
-    }
-
-    public get longueur(): number {
-        return this._longueur;
-    }
-
-    public get premierX(): number {
-        return this._premierX;
-    }
-
-    public get premierY(): number {
-        return this._premierY;
     }
 
     public inverserXY(): void {
         const temp: number = this.premierX;
-        this._premierX = this .premierY;
-        this._premierY = temp;
+        this.premierX = this .premierY;
+        this.premierY = temp;
     }
 
     // autre

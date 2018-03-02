@@ -4,7 +4,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "beneath the surface of the water",
         estVertical: false,
-        longeur: 10,
+        longueur: 10,
         mot: "underwater",
         premierX: 0,
         premierY: 0,
@@ -15,7 +15,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "destroyed physically or morally",
         estVertical: true,
-        longeur: 9,
+        longueur: 9,
         mot: "destroyed",
         premierX: 2,
         premierY: 0,
@@ -26,7 +26,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "a person employed to watch for something to happen",
         estVertical: false,
-        longeur: 8,
+        longueur: 8,
         mot: "sentinel",
         premierX: 2,
         premierY: 2,
@@ -37,7 +37,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "the act of robbing a helpless person",
         estVertical: true,
-        longeur: 7,
+        longueur: 7,
         mot: "rolling",
         premierX: 9,
         premierY: 0,
@@ -48,7 +48,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "anew",
         estVertical: false,
-        longeur: 5,
+        longueur: 5,
         mot: "again",
         premierX: 5,
         premierY: 9,
@@ -59,7 +59,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "a strong restless desire",
         estVertical: true,
-        longeur: 5,
+        longueur: 5,
         mot: "urged",
         premierX: 0,
         premierY: 0,
@@ -70,7 +70,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "a branch of the Tai languages",
         estVertical: true,
-        longeur: 4,
+        longueur: 4,
         mot: "thai",
         premierX: 5,
         premierY: 2,
@@ -81,7 +81,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "a way especially designed for a particular use",
         estVertical: true,
-        longeur: 4,
+        longueur: 4,
         mot: "path",
         premierX: 4,
         premierY: 5,
@@ -92,7 +92,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "the act of rolling something (as the ball in bowling)",
         estVertical: true,
-        longeur: 4,
+        longueur: 4,
         mot: "roll",
         premierX: 0,
         premierY: 6,
@@ -103,7 +103,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "eat a meal; take a meal",
         estVertical: false,
-        longeur: 3,
+        longueur: 3,
         mot: "eat",
         premierX: 0,
         premierY: 3,
@@ -114,7 +114,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "a surface excavation for extracting stone or slate",
         estVertical: false,
-        longeur: 3,
+        longueur: 3,
         mot: "pit",
         premierX: 4,
         premierY: 5,
@@ -125,7 +125,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "(nautical) the distance traveled by a sailing vessel on a single tack",
         estVertical: false,
-        longeur: 3,
+        longueur: 3,
         mot: "leg",
         premierX: 7,
         premierY: 6,
@@ -136,7 +136,7 @@ export const listeMotsLongue: Mot[] = [
     {
         definition: "a movable top or cover (hinged or separate) for closing the opening of a container",
         estVertical: false,
-        longeur: 3,
+        longueur: 3,
         mot: "lid",
         premierX: 0,
         premierY: 8,
@@ -149,7 +149,7 @@ export const listeMotsLongue: Mot[] = [
         // tslint:disable-next-line:max-line-length
         definition: "the fourth caliph of Islam who is considered to be the first caliph by Shiites; he was a cousin and son-in-law of Muhammad; after his assination Islam was divided into Shiite and Sunnite sects",
         estVertical: false,
-        longeur: 3,
+        longueur: 3,
         mot: "ali",
         premierX: 7,
         premierY: 4,

@@ -8,6 +8,7 @@ export class Mot {
     public activer: boolean;
     public motTrouve: boolean;
     public cheat: boolean;
+    public positionsLettres: string[];
 }
 
 export class LettreGrille {

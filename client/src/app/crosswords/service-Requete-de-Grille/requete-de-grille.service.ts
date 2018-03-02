@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
-import { HttpeReqService } from "../httpRequest/http-request.service";
+// import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
 import { Mot, LettreGrille } from "../objetsTest/mot";
+import { listeMotsLongue } from "./../objetsTest/objetsTest";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
@@ -19,6 +20,11 @@ export class RequeteDeGrilleService {
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   private motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
 
+  public constructor(/*private httpReq: HttpeReqService*/) {
+    this.genererGrille();
+    // this.souscrireRequeteMots();
+    this.grilleDeTest();
+  }
   // Accesseurs
 
   public get mots(): Mot[] {
@@ -27,11 +33,6 @@ export class RequeteDeGrilleService {
 
   public get matrice(): Array<Array<LettreGrille>> {
     return this.matriceDesMotsSurGrille;
-  }
-
-  public constructor(private httpReq: HttpeReqService) {
-    this.genererGrille();
-    this.souscrireRequeteMots();
   }
 
   private genererGrille(): void {
@@ -46,13 +47,20 @@ export class RequeteDeGrilleService {
 
   // Requetes
 
-  private souscrireRequeteMots(): void {
-    this.httpReq.getWord().subscribe((x) => {
-      this._mots = x;
-      this.serviceEnvoieMots(this.mots);
-      this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
-      this.insererMotsDansGrille();
-    });
+  // private souscrireRequeteMots(): void {
+  //   this.httpReq.getWord().subscribe((x) => {
+  //     this._mots = x;
+  //     this.serviceEnvoieMots(this.mots);
+  //     this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
+  //     this.insererMotsDansGrille();
+  //   });
+  // }
+
+  private grilleDeTest(): void {
+    this._mots = listeMotsLongue;
+    this.serviceEnvoieMots(this.mots);
+    this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
+    this.insererMotsDansGrille();
   }
   // Traitement de la grille
 
@@ -71,9 +79,11 @@ export class RequeteDeGrilleService {
   }
 
   private obtenirLettre(objMot: Mot, indice: number): LettreGrille {
-    return { caseDecouverte: false,
-             lettre: objMot.mot[indice],
-             lettreDecouverte: false };
+    return {
+      caseDecouverte: false,
+      lettre: objMot.mot[indice],
+      lettreDecouverte: false
+    };
   }
 
   // Services publics

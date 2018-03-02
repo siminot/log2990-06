@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpeReqService } from "../httpRequest/http-request.service";
-import { OptionPartie } from "./../../../../../common/communication/optionPartie";
+import { OptionPartie } from "./OptionPartie";
 
 export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 

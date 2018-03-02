@@ -1,25 +1,25 @@
-import { ConfigurationPartie } from "../../../common/Partie/ConfigurationPartie";
+import { ConfigurationPartie } from "../../../common/communication/ConfigurationPartie";
 
 export class OptionPartie implements ConfigurationPartie {
 
-    public niveauDifficultee: string;
-    public nombreDeJoueurs: number;
+    public difficulte: string;
+    public nombreJoueur: number;
 
     public constructor (niveau: string, nbJoueurs: number) {
-        this.niveauDifficultee = niveau;
-        this.nombreDeJoueurs = nbJoueurs;
+        this.difficulte = niveau;
+        this.nombreJoueur = nbJoueurs;
     }
 
     public get niveau(): string {
-        return this.niveauDifficultee;
+        return this.difficulte;
     }
 
     public get nbJoueurs(): number {
-        return this.nombreDeJoueurs;
+        return this.nombreJoueur;
     }
 
     public setDifficultee(nouvelleDiff: string): void {
-        this.niveauDifficultee = nouvelleDiff;
+        this.difficulte = nouvelleDiff;
     }
 
 }

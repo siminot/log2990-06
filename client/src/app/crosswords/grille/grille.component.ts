@@ -72,6 +72,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let tmp: string = this.makeID(leMot.premierX, leMot.premierY, "");
     leMot.positionsLettres[0] = tmp;
 
+    console.log("LIGNE BIDON");
+
     const x: number = leMot.premierX;
     const y: number = leMot.premierY;
 

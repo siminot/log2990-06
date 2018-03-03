@@ -1,52 +1,39 @@
 import { IMot } from "../../../common/communication/IMot";
 import { IDefinition } from "../../../common/communication/IDefinition";
+import { IMotGrille } from "../../../common/communication/IMotGrille";
 
 const PAS_IMPORTANCE: number = 20;
 const CARACTERE_INCONNU: string = "_";
 
-export class Mot implements IMot {
-
+export class MotBase implements IMot {
     public mot: string;
     public definitions: IDefinition[];
+}
+
+export class Mot extends MotBase implements IMotGrille {
+
     public estTraite: boolean;
-    private _estVertical: boolean;
-    private _longueur: number;
-    private _premierX: number;
-    private _premierY: number;
+    public estVertical: boolean;
+    public longueur: number;
+    public premierX: number;
+    public premierY: number;
 
     public constructor(estVertical: boolean, longueur: number, premierX: number, premierY: number) {
+        super();
         this.mot = "";
         this.definitions = [{definition: ""}];
-        this._estVertical = estVertical;
-        this._longueur = longueur;
-        this._premierX = premierX;
-        this._premierY = premierY;
+        this.estVertical = estVertical;
+        this.longueur = longueur;
+        this.premierX = premierX;
+        this.premierY = premierY;
         this.estTraite = false;
 
     }
-    // getters
-    public get estVertical(): boolean {
-        return this._estVertical;
-    }
-
-    public get longueur(): number {
-        return this._longueur;
-    }
-
-    public get premierX(): number {
-        return this._premierX;
-    }
-
-    public get premierY(): number {
-        return this._premierY;
-    }
-
-    // autre
 
     public inverserXY(): void {
         const temp: number = this.premierX;
-        this._premierX = this .premierY;
-        this._premierY = temp;
+        this.premierX = this .premierY;
+        this.premierY = temp;
     }
 
     public estLieAvecAutreMot(autreMot: Mot): boolean {

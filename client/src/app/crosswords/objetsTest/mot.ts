@@ -1,6 +1,9 @@
-export class Mot {
+// import { IMotGrille } from "../../../../../common/communication/IMotGrille";
+// import { IDefinition } from "../../../../../common/communication/IDefinition";
+
+export class Mot /* implements IMotGrille */ {
     public mot: string;
-    public definition: string;
+    public definitions: string; // IDefinition[];
     public estVertical: boolean;
     public longueur: number;
     public premierX: number;
@@ -8,6 +11,11 @@ export class Mot {
     public activer: boolean;
     public motTrouve: boolean;
     public cheat: boolean;
+    /*
+    public get definition(): string {
+        return this.definitions[0].definition;
+    }
+    */
 }
 
 export class LettreGrille {

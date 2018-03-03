@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
 
-import { Mot } from "./mot";
+import { Mot, MotBase } from "./mot";
 import { ConfigurationPartie } from "./configurationPartie";
 import { Difficultees, REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
 
@@ -85,7 +85,7 @@ module Route {
             if (contrainteDuMot in this.requetesInvalides) {
                 return false;
             }
-            const lesMotsRecus: Mot[] = await this.demanderMot(motActuel);
+            const lesMotsRecus: MotBase[] = await this.demanderMot(motActuel);
             if (lesMotsRecus === undefined) {
                 this.requetesInvalides[motActuel.mot] = 1;
 
@@ -141,7 +141,7 @@ module Route {
             return indiceDuMax;
         }
 
-        private async demanderMot(mot: Mot): Promise<Mot[]> {
+        private async demanderMot(mot: Mot): Promise<MotBase[]> {
             let url: string;
             this.optionsPartie.niveauDeDifficulte === Difficultees.Difficile ? url = REQUETE_NONCOMMUN : url = REQUETE_COMMUN;
             url += mot.mot;
@@ -149,7 +149,7 @@ module Route {
             return WebRequest.json<Mot[]>(url);
         }
 
-        private affecterMot(unMot: Mot, motAChanger: Mot): Mot {
+        private affecterMot(unMot: MotBase, motAChanger: Mot): MotBase {
             let indexDef: number = 0;
             if (this.optionsPartie.niveauDeDifficulte !== Difficultees.Facile) {
                 if (unMot.definitions.length > 0) {
@@ -161,9 +161,9 @@ module Route {
             return unMot;
         }
 
-        private modifierLeMot(motAChanger: Mot, unMot: Mot, indexDef: number): void {
+        private modifierLeMot(motAChanger: Mot, unMot: MotBase, indexDef: number): void {
             motAChanger.mot = unMot.mot;
-            motAChanger.definitions[indexDef].definition = unMot.definitions[indexDef].definition;
+            motAChanger.definitions[0] = unMot.definitions[indexDef];
             motAChanger.estTraite = true;
         }
 

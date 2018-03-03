@@ -1,7 +1,7 @@
 import { Directive, HostListener, Input } from "@angular/core";
 
-const LETTRE_A: number = 65; // a
-const LETTRE_Z: number = 90; // z
+const LETTRE_A: string = "a";
+const LETTRE_Z: string = "z";
 
 @Directive({ selector: "[appDirectiveFocus]" })
 export class DirectiveFocusDirective {
@@ -19,7 +19,7 @@ export class DirectiveFocusDirective {
   }
 
   private estUneLettre(event: KeyboardEvent): boolean {
-    return event.keyCode >= LETTRE_A &&
-           event.keyCode <= LETTRE_Z;
+    return event.key >= LETTRE_A &&
+           event.key <= LETTRE_Z;
   }
 }

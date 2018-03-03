@@ -3,5 +3,4 @@ export class PointControle {
   public y: number;
   public z: number;
   public rayon: number;
-
 }

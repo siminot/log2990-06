@@ -2,23 +2,26 @@ import { Injectable } from "@angular/core";
 import { HttpClient} from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import { Mot } from "../objetsTest/mot";
+import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
-const REQUETE_DEFAUT: string = "http://localhost:3000/grille/facile";
+const URL_REQUETE: string = "http://localhost:3000/grille/";
+const DIFFICULTE_DEFAUT: Difficulte = Difficulte.facile;
 
 @Injectable()
 export class HttpeReqService {
-  private url: string = REQUETE_DEFAUT;
-  public difficulte: string;
+  public difficulte: Difficulte;
 
-  public constructor(private http: HttpClient) { }
+  public constructor(private http: HttpClient) {
+    this.difficulte = DIFFICULTE_DEFAUT;
+  }
 
   public obtenirMots(): Observable<Mot[] > {
     return this.http.get<Mot[]>(this.url);
   }
 
-  public modifierRequete(nouvelleRequete: string): void {
-    this.url = nouvelleRequete;
+  private get url(): string {
+    return URL_REQUETE + this.difficulte.toString();
   }
 }

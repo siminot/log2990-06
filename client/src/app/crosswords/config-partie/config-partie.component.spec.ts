@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { HttpeReqService } from "../httpRequest/http-request.service";
-import { ConfigPartieComponent, REQUETE_INIT } from "./config-partie.component";
+import { ConfigPartieComponent } from "./config-partie.component";
 // import { ProviderAstType } from "@angular/compiler";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
 
 describe("ConfigPartieComponent", () => {
   let component: ConfigPartieComponent;
@@ -35,25 +36,22 @@ describe("ConfigPartieComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  describe("test ajoutDansRequete", () => {
+  describe("ajouterDifficulte()", () => {
 
-    const AJOUT: string = "ajout";
-    const REQUETE_FINALE: string = REQUETE_INIT + AJOUT;
-
-    it("devrait rien ajouter a la requete", () => {
-      const REQUETE_AVANT: string = component["requete"];
-      component.ajouterDifficulte("");
-      expect(component["requete"]).toEqual(REQUETE_AVANT);
+    it("devrait mettre a jour la requete", () => {
+      component.ajouterDifficulte(Difficulte.facile);
+      expect(component["serviceHTTP"].difficulte).toEqual(Difficulte.facile);
+      component.ajouterDifficulte(Difficulte.normal);
+      expect(component["serviceHTTP"].difficulte).toEqual(Difficulte.normal);
+      component.ajouterDifficulte(Difficulte.difficile);
+      expect(component["serviceHTTP"].difficulte).toEqual(Difficulte.difficile);
     });
 
-    it("devrait modifier la requete", () => {
-      component.ajouterDifficulte(AJOUT);
-      expect(component["requete"]).toEqual(REQUETE_FINALE);
+    it("ne devrait pas mettre a jour la requete", () => {
+      const DIFFICULTE_AVANT: Difficulte = component["serviceHTTP"].difficulte;
+      component.ajouterDifficulte(undefined);
+      expect(component["serviceHTTP"].difficulte).toEqual(DIFFICULTE_AVANT);
     });
 
-    it("ne devrait pas accepter cette entree", () => {
-      component.ajouterDifficulte("ajout");
-      expect(component["requete"]).toEqual(REQUETE_FINALE);
-    });
   });
 });

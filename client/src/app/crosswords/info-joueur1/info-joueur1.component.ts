@@ -36,7 +36,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
     this._listeMots = [];
     this._timer = 0;
     this._timerObservable$ = TimerObservable.create(0, CONST.UNE_SECONDE_EN_MILISECONDES);
-    this._difficulte = this.httpReq.difficulte;
+    this._difficulte = this.httpReq.difficulte.toString();
    }
 
   public ngOnInit(): void {

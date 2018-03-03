@@ -1,8 +1,8 @@
-import { IConfigurationPartie } from "../../../../../common/communication/IConfigurationPartie";
+import { IConfigurationPartie, Difficulte } from "../../../../../common/communication/IConfigurationPartie";
 
 export class ConfigurationPartie implements IConfigurationPartie {
     public nombreDeJoueurs: number;
-    public niveauDeDifficulte: string;
+    public niveauDeDifficulte: Difficulte;
 
     public idPartie: number; // id possiblement pour identifier une partie (en ligne)
     public requete: string;

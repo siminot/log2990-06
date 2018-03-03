@@ -82,16 +82,22 @@ export class Mot extends MotBase implements IMotGrille {
     }
 
     public getImportance(ancienMot: Mot): number {
-        let i: number = 0;
-        for (const char of this.mot) {
-            if (char !== CARACTERE_INCONNU) {
-                i++;
-            }
-        }
+        let importance: number = this.nombreLettresConnues() + this.mot.length;
         if (this.estLieAvecAutreMot(ancienMot)) {
-            i += PAS_IMPORTANCE;
+            importance += PAS_IMPORTANCE;
         }
 
-        return i + this.mot.length;
+        return importance;
+    }
+
+    private nombreLettresConnues(): number {
+        let compteur: number = 0;
+        for (const char of this.mot) {
+            if (char !== CARACTERE_INCONNU) {
+                compteur++;
+            }
+        }
+
+        return compteur;
     }
 }

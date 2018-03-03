@@ -3,7 +3,8 @@ import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
-import { Mot, LettreGrille } from "../objetsTest/mot";
+import { Mot } from "../objetsTest/mot";
+import { LettreGrille } from "../objetsTest/lettreGrille";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 

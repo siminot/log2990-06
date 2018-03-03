@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Subscription } from "rxjs/Subscription";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { Mot, LettreGrille } from "../objetsTest/mot";
+import { Mot } from "../objetsTest/mot";
+import { LettreGrille } from "../objetsTest/lettreGrille";
 
 @Component({
   selector: "app-definition",

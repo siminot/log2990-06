@@ -53,20 +53,20 @@ module Route {
 
         private lireMotViaGrille(mot: Mot): void {
             let lecteur: string = "";
-            for (let i: number = 0; i < mot.getLongueur(); i++) {
-                mot.getVertical() ?
-                lecteur += this.grille[mot.getPremierY() + i][mot.getPremierX()] :
-                lecteur += this.grille[mot.getPremierY()][mot.getPremierX() + i];
+            for (let i: number = 0; i < mot.longueur; i++) {
+                mot.estVertical ?
+                lecteur += this.grille[mot.premierY + i][mot.premierX] :
+                lecteur += this.grille[mot.premierY][mot.premierX + i];
             }
-            mot.setMot(lecteur);
+            mot.mot = lecteur;
         }
 
         private ecrireDansLaGrille(mot: Mot): void {
-            for (let i: number = 0; i < mot.getLongueur(); i++) {
-                if (mot.getVertical()) {
-                    this.grille[mot.getPremierY() + i][mot.getPremierX()] = mot.getMot()[i];
+            for (let i: number = 0; i < mot.longueur; i++) {
+                if (mot.estVertical) {
+                    this.grille[mot.premierY + i][mot.premierX] = mot.mot[i];
                 } else {
-                    this.grille[mot.getPremierY()][mot.getPremierX() + i] = mot.getMot()[i];
+                    this.grille[mot.premierY][mot.premierX + i] = mot.mot[i];
                 }
             }
         }
@@ -81,13 +81,13 @@ module Route {
 
             const motActuel: Mot = this.listeMot[indice];
             this.lireMotViaGrille(motActuel);
-            const contrainteDuMot: string = motActuel.getMot();
+            const contrainteDuMot: string = motActuel.mot;
             if (contrainteDuMot in this.requetesInvalides) {
                 return false;
             }
             const lesMotsRecus: Mot[] = await this.demanderMot(motActuel);
             if (lesMotsRecus === undefined) {
-                this.requetesInvalides[motActuel.getMot()] = 1;
+                this.requetesInvalides[motActuel.mot] = 1;
 
                 return false;
             }
@@ -109,28 +109,28 @@ module Route {
                 } else { nbEssaisPourMemeMot--; }
 
                 if (prochainIndice === -1) { // Detection de la fin!
-                    this.motsDejaPlaces[motActuel.getMot()] = 1;
+                    this.motsDejaPlaces[motActuel.mot] = 1;
 
                     return true;
                 }
             } while (!(await this.remplirGrilleRecursif(prochainIndice)));
-            this.motsDejaPlaces[motActuel.getMot()] = 1;
+            this.motsDejaPlaces[motActuel.mot] = 1;
 
             return true;
         }
 
         private retourEtatAvantMot(motActuel: Mot, contrainteDuMot: string): void {
-            this.motsDejaPlaces.delete(motActuel.getMot());
-            motActuel.setMot(contrainteDuMot);
+            this.motsDejaPlaces.delete(motActuel.mot);
+            motActuel.mot = contrainteDuMot;
             this.ecrireDansLaGrille(motActuel);
-            motActuel.setEstTraite(false);
+            motActuel.estTraite = false;
         }
 
         private obtenirIndiceMotPlusImportant(leMot: Mot): number {
             let max: number = 0;
             let indiceDuMax: number = -1;
             for (const mot of this.listeMot) {
-                if (!mot.getEstTraite()) {
+                if (!mot.estTraite) {
                     if (max < mot.getImportance(leMot)) {
                         max = mot.getImportance(leMot);
                         indiceDuMax = this.listeMot.indexOf(mot);
@@ -144,7 +144,7 @@ module Route {
         private async demanderMot(mot: Mot): Promise<Mot[]> {
             let url: string;
             this.optionsPartie.niveauDeDifficulte === Difficultees.Difficile ? url = REQUETE_NONCOMMUN : url = REQUETE_COMMUN;
-            url += mot.getMot();
+            url += mot.mot;
 
             return WebRequest.json<Mot[]>(url);
         }
@@ -156,15 +156,15 @@ module Route {
                     indexDef = this.nombreAleatoire(unMot.definitions.length) - 1;
                 }
             }
-            this.modofierLeMot(motAChanger, unMot, indexDef);
+            this.modifierLeMot(motAChanger, unMot, indexDef);
 
             return unMot;
         }
 
-        private modofierLeMot(motAChanger: Mot, unMot: Mot, indexDef: number): void {
-            motAChanger.setMot(unMot.mot);
-            motAChanger.setDefinition(unMot.definitions[indexDef].definition);
-            motAChanger.setEstTraite(true);
+        private modifierLeMot(motAChanger: Mot, unMot: Mot, indexDef: number): void {
+            motAChanger.mot = unMot.mot;
+            motAChanger.definitions[indexDef].definition = unMot.definitions[indexDef].definition;
+            motAChanger.estTraite = true;
         }
 
         private nombreAleatoire(nbMax: number): number {

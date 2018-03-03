@@ -110,7 +110,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const x: number = this.motSelectionne.premierX;
     const y: number = this.motSelectionne.premierY;
 
-    for (let i: number = 1 ; i < this.motSelectionne.longeur ; i++) {
+    for (let i: number = 1 ; i < this.motSelectionne.longueur ; i++) {
       this.motSelectionne.estVertical ? tmp = this.makeID(x, y + i, "") : tmp = this.makeID(x + i, y, "");
       this.positionLettresSelectionnees[i] = tmp;
     }
@@ -119,7 +119,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private miseEvidenceMot(couleur: string): void {
     let uneCase: HTMLElement, idTmp: string, n: number;
 
-    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+    for (let i: number = 0 ; i < this.motSelectionne.longueur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
       n = +idTmp[0] * CONST.DIZAINE + +idTmp[1];
       uneCase = document.getElementsByTagName("td")[n];
@@ -138,7 +138,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private miseEvidenceLettreNonVerticale(uneCase: HTMLElement, position: number, couleur: string): void {
     if (position === 0) {
       this.appliquerBordureHaut(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
-    } else if (position === this.motSelectionne.longeur - 1) {
+    } else if (position === this.motSelectionne.longueur - 1) {
       this.appliquerBordureBas(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
     }
     this.appliquerBordureGauche(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
@@ -148,7 +148,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private miseEvidenceLettreVericale(uneCase: HTMLElement, position: number, couleur: string): void {
     if (position === 0) {
       this.appliquerBordureGauche(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
-    } else if (position === this.motSelectionne.longeur - 1) {
+    } else if (position === this.motSelectionne.longueur - 1) {
       this.appliquerBordureDroite(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
     }
     this.appliquerBordureHaut(uneCase, couleur, CONST.LARGEUR_BORDURE_CASE_CIBLE);
@@ -159,7 +159,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     let elemTmp: HTMLInputElement, idTmp: string;
     let i: number;
 
-    for (i = 0 ; i < this.motSelectionne.longeur ; i++) {
+    for (i = 0 ; i < this.motSelectionne.longueur ; i++) {
       idTmp = this.positionLettresSelectionnees[i];
       elemTmp = document.getElementById(idTmp) as HTMLInputElement;
 
@@ -171,7 +171,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.positionCourante = this.motSelectionne.longeur - 1;
+    this.positionCourante = this.motSelectionne.longueur - 1;
     elemTmp.focus();
   }
 
@@ -184,7 +184,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusOnNextLetter(): void {
-    if (this.positionCourante < this.motSelectionne.longeur - 1) {
+    if (this.positionCourante < this.motSelectionne.longueur - 1) {
       this.positionCourante++;
       const elem: HTMLInputElement = document.getElementById(this.positionLettresSelectionnees[this.positionCourante]) as HTMLInputElement;
       if (elem !== null) {
@@ -195,7 +195,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
         }
       }
 
-    } else if (this.positionCourante === this.motSelectionne.longeur - 1) {
+    } else if (this.positionCourante === this.motSelectionne.longueur - 1) {
       this.validateWord();
     }
   }
@@ -221,7 +221,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private lockLettersFromWord(): void {
-    for (let i: number = 0 ; i < this.motSelectionne.longeur ; i++) {
+    for (let i: number = 0 ; i < this.motSelectionne.longueur ; i++) {
       if (this.motSelectionne.estVertical) {
         this.lockedLetter[this.motSelectionne.premierX][this.motSelectionne.premierY + i] = true;
       } else {
@@ -267,7 +267,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
-    return this.positionCourante === this.motSelectionne.longeur - 1 ? true : false;
+    return this.positionCourante === this.motSelectionne.longueur - 1 ? true : false;
   }
 
   public getListeMots(): Mot[] {
@@ -313,14 +313,14 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
       if (!mot.estVertical) {
         other = mot.premierY;
-        max = mot.premierX + mot.longeur - 1;
+        max = mot.premierX + mot.longueur - 1;
         if ( X <= max && Y === other && mot.premierX <= X) {
           motTrouve = mot;
           break;
         }
       } else if ( mot.estVertical) {
         other = mot.premierX;
-        max = mot.premierY + mot.longeur - 1;
+        max = mot.premierY + mot.longueur - 1;
         if ( Y <= max && X === other && mot.premierY <= Y) {
           motTrouve = mot;
           break;

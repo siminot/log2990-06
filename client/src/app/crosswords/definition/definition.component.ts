@@ -84,7 +84,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   private decouvrirCases(mot: Mot): void {
     this.cacherCases();
-    for (let indice: number = 0 ; indice < mot.longeur ; indice++) {
+    for (let indice: number = 0 ; indice < mot.longueur ; indice++) {
       mot.estVertical
         ? this.obtenirLettreGrilleMotVertical(mot, indice).caseDecouverte = true
         : this.obtenirLettreGrilleMotHorizontal(mot, indice).caseDecouverte = true;

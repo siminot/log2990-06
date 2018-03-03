@@ -15,8 +15,8 @@ export class GenerateurListeMots {
 
     // Sort la liste en ordre decroissant et retire les mots de 1 lettres
     private nettoyerMots(): void {
-        this.listeMot.sort((n1: Mot, n2: Mot) => n2.getLongueur() - n1.getLongueur());
-        while (this.listeMot[this.listeMot.length - 1].getLongueur() === 1) {
+        this.listeMot.sort((n1: Mot, n2: Mot) => n2.longueur - n1.longueur);
+        while (this.listeMot[this.listeMot.length - 1].longueur === 1) {
             this.listeMot.pop();
         }
     }
@@ -41,7 +41,7 @@ export class GenerateurListeMots {
             }
         }
         const nouveauMot: Mot = new Mot(estVertical, longMot, x, y);
-        nouveauMot.setMot(mot);
+        nouveauMot.mot = mot;
 
         return nouveauMot;
     }

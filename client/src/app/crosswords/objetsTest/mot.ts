@@ -2,7 +2,7 @@ export class Mot {
     public mot: string;
     public definition: string;
     public estVertical: boolean;
-    public longeur: number;
+    public longueur: number;
     public premierX: number;
     public premierY: number;
     public activer: boolean;

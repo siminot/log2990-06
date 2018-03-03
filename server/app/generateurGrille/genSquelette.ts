@@ -41,7 +41,6 @@ export class GenSquelette {
         }
     }
 
-    // Retourne l'indice ou le mot se termine
     private trouverIndexFinDeMot(indiceDep: number): number {
         if (this.indicePasDansGrille(indiceDep)) {
             return -1;

@@ -60,11 +60,9 @@ export class Mot extends MotBase implements IMotGrille {
     }
 
     private get coordonneeVariableMin(): number {
-        if (this.estVertical) {
-            return this.premierY;
-        } else {
-            return this.premierX;
-        }
+        return this.estVertical
+            ? this.premierY
+            : this.premierX;
     }
 
     private get coordonneeVariableMax(): number {
@@ -72,19 +70,15 @@ export class Mot extends MotBase implements IMotGrille {
     }
 
     private get coordonneeFixe(): number {
-        if (this.estVertical) {
-            return this.premierX;
-        } else {
-            return this.premierY;
-        }
+        return this.estVertical
+            ? this.premierX
+            : this.premierY;
     }
 
     private coordonneeVariableMinAutreMot(autre: Mot): number {
-        if (autre.estVertical) {
-            return this.premierY;
-        } else {
-            return this.premierX;
-        }
+        return autre.estVertical
+            ? this.premierY
+            : this.premierX;
     }
 
     public getImportance(ancienMot: Mot): number {

@@ -48,7 +48,7 @@ export class RequeteDeGrilleService {
   // Requetes
 
   private souscrireRequeteMots(): void {
-    this.httpReq.getWord().subscribe((x) => {
+    this.httpReq.obtenirMots().subscribe((x) => {
       this._mots = x;
       this.serviceEnvoieMots(this.mots);
       this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);

@@ -5,14 +5,16 @@ import { Mot } from "../objetsTest/mot";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
+const REQUETE_DEFAUT: string = "http://localhost:3000/grille/facile";
+
 @Injectable()
 export class HttpeReqService {
-  private url: string = "http://localhost:3000/grille/facile";
+  private url: string = REQUETE_DEFAUT;
   public difficulte: string;
 
   public constructor(private http: HttpClient) { }
 
-  public getWord(): Observable<Mot[] > {
+  public obtenirMots(): Observable<Mot[] > {
     return this.http.get<Mot[]>(this.url);
   }
 

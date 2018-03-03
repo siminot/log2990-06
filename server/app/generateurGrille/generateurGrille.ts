@@ -5,12 +5,14 @@ import * as WebRequest from "web-request";
 
 import { Mot, MotBase } from "./mot";
 import { ConfigurationPartie } from "./configurationPartie";
-import { Difficultees, REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
+import { REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
+import { Difficulte } from "../../../common/communication/IConfigurationPartie";
 
 import { GenSquelette } from "./genSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";
 
 const NB_ESSAIS_MAX: number = 2;
+const DIFFICULTE_DEFAUT: Difficulte = Difficulte.Facile;
 
 module Route {
 
@@ -29,7 +31,7 @@ module Route {
             this.generateurListeMots = new GenerateurListeMots();
             this.generateurSquelette = new GenSquelette();
             this.initGrille();
-            this.optionsPartie = new ConfigurationPartie("Facile", 1);
+            this.optionsPartie = new ConfigurationPartie(DIFFICULTE_DEFAUT, 1);
         }
 
         private initGrille(): void {
@@ -143,7 +145,7 @@ module Route {
 
         private async demanderMot(mot: Mot): Promise<MotBase[]> {
             let url: string;
-            this.optionsPartie.niveauDeDifficulte === Difficultees.Difficile ? url = REQUETE_NONCOMMUN : url = REQUETE_COMMUN;
+            this.optionsPartie.niveauDeDifficulte === Difficulte.Difficile ? url = REQUETE_NONCOMMUN : url = REQUETE_COMMUN;
             url += mot.mot;
 
             return WebRequest.json<Mot[]>(url);
@@ -151,7 +153,7 @@ module Route {
 
         private affecterMot(unMot: MotBase, motAChanger: Mot): MotBase {
             let indexDef: number = 0;
-            if (this.optionsPartie.niveauDeDifficulte !== Difficultees.Facile) {
+            if (this.optionsPartie.niveauDeDifficulte !== Difficulte.Facile) {
                 if (unMot.definitions.length > 0) {
                     indexDef = this.nombreAleatoire(unMot.definitions.length) - 1;
                 }

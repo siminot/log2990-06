@@ -6,8 +6,8 @@ import { Difficulte } from "../../../../../common/communication/IConfigurationPa
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
+export const DIFFICULTE_DEFAUT: Difficulte = Difficulte.Facile;
 const URL_REQUETE: string = "http://localhost:3000/grille/";
-const DIFFICULTE_DEFAUT: Difficulte = Difficulte.facile;
 
 @Injectable()
 export class HttpeReqService {

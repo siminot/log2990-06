@@ -39,12 +39,12 @@ describe("ConfigPartieComponent", () => {
   describe("ajouterDifficulte()", () => {
 
     it("devrait mettre a jour la requete", () => {
-      component.ajouterDifficulte(Difficulte.facile);
-      expect(component["serviceHTTP"].difficulte).toEqual(Difficulte.facile);
-      component.ajouterDifficulte(Difficulte.normal);
-      expect(component["serviceHTTP"].difficulte).toEqual(Difficulte.normal);
-      component.ajouterDifficulte(Difficulte.difficile);
-      expect(component["serviceHTTP"].difficulte).toEqual(Difficulte.difficile);
+      component.ajouterDifficulte(Difficulte.Facile);
+      expect(component["serviceHTTP"].difficulte).toEqual(Difficulte.Facile);
+      component.ajouterDifficulte(Difficulte.Normal);
+      expect(component["serviceHTTP"].difficulte).toEqual(Difficulte.Normal);
+      component.ajouterDifficulte(Difficulte.Difficile);
+      expect(component["serviceHTTP"].difficulte).toEqual(Difficulte.Difficile);
     });
 
     it("ne devrait pas mettre a jour la requete", () => {

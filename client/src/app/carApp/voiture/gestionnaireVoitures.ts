@@ -1,7 +1,10 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { ObjectLoader, Object3D } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
+import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
 
 // AI
 const NOMBRE_AI: number = 1;
@@ -11,11 +14,22 @@ const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
 const NOMS_TEXTURES: string[] = ["camero-2010-low-poly.json", "voiture-2010-low-poly.json"];
 const TEXTURE_DEFAUT_JOUEUR: number = 1;
 
+// Touches clavier
+const ACCELERATEUR_APPUYE: EvenementClavier = new EvenementClavier("w", TypeEvenementClavier.TOUCHE_APPUYEE);
+const ACCELERATEUR_RELEVE: EvenementClavier = new EvenementClavier("w", TypeEvenementClavier.TOUCHE_RELEVEE);
+const DIRECTION_GAUCHE_APPUYEE: EvenementClavier = new EvenementClavier("a", TypeEvenementClavier.TOUCHE_APPUYEE);
+const DIRECTION_GAUCHE_RELEVE: EvenementClavier = new EvenementClavier("a", TypeEvenementClavier.TOUCHE_RELEVEE);
+const DIRECTION_DROITE_APPUYE: EvenementClavier = new EvenementClavier("d", TypeEvenementClavier.TOUCHE_APPUYEE);
+const DIRECTION_DROITE_RELEVE: EvenementClavier = new EvenementClavier("d", TypeEvenementClavier.TOUCHE_RELEVEE);
+const FREIN_APPUYE: EvenementClavier = new EvenementClavier("s", TypeEvenementClavier.TOUCHE_APPUYEE);
+const FREIN_RELEVE: EvenementClavier = new EvenementClavier("s", TypeEvenementClavier.TOUCHE_RELEVEE);
+
 @Injectable()
 export class GestionnaireVoitures {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
+    private clavier: UtilisateurClavier;
 
     public get voitureJoueur(): Voiture {
         return this._voitureJoueur;
@@ -25,9 +39,21 @@ export class GestionnaireVoitures {
         return this._voituresAI;
     }
 
-    public constructor() {
+    public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._voituresAI = [];
+        this.clavier = new UtilisateurClavier(gestionnaireClavier);
         this.initialiser().catch(() => new Error("Erreur lors de l'initialisation"));
+    }
+
+    protected initialisationTouches(): void {
+        this.clavier.ajouterTouche(this._voitureJoueur.accelerer.bind(this._voitureJoueur), ACCELERATEUR_APPUYE);
+        this.clavier.ajouterTouche(this._voitureJoueur.relacherAccelerateur.bind(this._voitureJoueur), ACCELERATEUR_RELEVE);
+        this.clavier.ajouterTouche(this._voitureJoueur.virerGauche.bind(this._voitureJoueur), DIRECTION_GAUCHE_APPUYEE);
+        this.clavier.ajouterTouche(this._voitureJoueur.relacherVolant.bind(this._voitureJoueur), DIRECTION_GAUCHE_RELEVE);
+        this.clavier.ajouterTouche(this._voitureJoueur.virerDroite.bind(this._voitureJoueur), DIRECTION_DROITE_APPUYE);
+        this.clavier.ajouterTouche(this._voitureJoueur.relacherVolant.bind(this._voitureJoueur), DIRECTION_DROITE_RELEVE);
+        this.clavier.ajouterTouche(this._voitureJoueur.freiner.bind(this._voitureJoueur), FREIN_APPUYE);
+        this.clavier.ajouterTouche(this._voitureJoueur.relacherFreins.bind(this._voitureJoueur), FREIN_RELEVE);
     }
 
     // Creation des voitures
@@ -35,6 +61,7 @@ export class GestionnaireVoitures {
     private async initialiser(): Promise<void> {
         this.creerVoitureJoueur().catch(() => new Error("Erreur construction de la voiture du joueur"));
         this.creerVoituresAI().catch(() => new Error("Erreur construction des voituresAI"));
+        this.initialisationTouches();
     }
 
     private async creerVoitureJoueur(): Promise<void> {

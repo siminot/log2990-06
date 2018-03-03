@@ -1,6 +1,7 @@
+import { IDefinition } from "../../../common/communication/IDefinition";
 import { TypeMot } from "./Mot";
 
-export class Definition {
+export class Definition implements IDefinition {
 
     private static readonly PATRON_RECHERCHE: string = "[\b]?";
 

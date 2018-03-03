@@ -1,18 +1,27 @@
+import { IMot } from "../../../common/communication/IMot";
+import { IDefinition } from "../../../common/communication/IDefinition";
+import { IMotGrille } from "../../../common/communication/IMotGrille";
+
+const PAS_IMPORTANCE: number = 20;
 const CARACTERE_INCONNU: string = "_";
 
-export class MotGenerationGrille {
-
+export class MotBase implements IMot {
     public mot: string;
-    public definition: string;
+    public definitions: IDefinition[];
+}
+
+export class Mot extends MotBase implements IMotGrille {
+
+    public estTraite: boolean;
     public estVertical: boolean;
     public longueur: number;
     public premierX: number;
     public premierY: number;
-    public estTraite: boolean;
 
     public constructor(estVertical: boolean, longueur: number, premierX: number, premierY: number) {
+        super();
         this.mot = "";
-        this.definition = "";
+        this.definitions = [{definition: ""}];
         this.estVertical = estVertical;
         this.longueur = longueur;
         this.premierX = premierX;
@@ -27,28 +36,26 @@ export class MotGenerationGrille {
         this.premierY = temp;
     }
 
-    // autre
-
-    public estLieAvecAutreMot(autreMot: MotGenerationGrille): boolean {
+    public estLieAvecAutreMot(autreMot: Mot): boolean {
         return !this.estMemeSens(autreMot) && this.coordonneeConcordent(autreMot);
     }
 
-    private coordonneeConcordent(autreMot: MotGenerationGrille): boolean {
+    private coordonneeConcordent(autreMot: Mot): boolean {
         return this.coordonneeFixeValide(autreMot) &&
                autreMot.coordonneeVariableValide(this);
     }
 
-    private coordonneeVariableValide(autreMot: MotGenerationGrille): boolean {
-        return this.coordonneeVariableMinAutreMot(autreMot) >= autreMot.coordonneeVariableMin  &&
+    private coordonneeVariableValide(autreMot: Mot): boolean {
+        return this.coordonneeVariableMinAutreMot(autreMot) >= autreMot.coordonneeVariableMin &&
                this.coordonneeVariableMinAutreMot(autreMot) <= autreMot.coordonneeVariableMax;
     }
 
-    private coordonneeFixeValide(autreMot: MotGenerationGrille): boolean {
-        return this.coordonneeFixe >= autreMot.coordonneeVariableMin  &&
+    private coordonneeFixeValide(autreMot: Mot): boolean {
+        return this.coordonneeFixe >= autreMot.coordonneeVariableMin &&
                this.coordonneeFixe <= autreMot.coordonneeVariableMax;
     }
 
-    private estMemeSens(autreMot: MotGenerationGrille): boolean {
+    private estMemeSens(autreMot: Mot): boolean {
         return this.estVertical === autreMot.estVertical;
     }
 
@@ -72,7 +79,7 @@ export class MotGenerationGrille {
         }
     }
 
-    private coordonneeVariableMinAutreMot(autre: MotGenerationGrille): number {
+    private coordonneeVariableMinAutreMot(autre: Mot): number {
         if (autre.estVertical) {
             return this.premierY;
         } else {
@@ -80,7 +87,7 @@ export class MotGenerationGrille {
         }
     }
 
-    public getImportance(ancienMot: MotGenerationGrille): number {
+    public getImportance(ancienMot: Mot): number {
         let i: number = 0;
         for (const char of this.mot) {
             if (char !== CARACTERE_INCONNU) {
@@ -88,7 +95,6 @@ export class MotGenerationGrille {
             }
         }
         if (this.estLieAvecAutreMot(ancienMot)) {
-            const PAS_IMPORTANCE: number = 20;
             i += PAS_IMPORTANCE;
         }
 

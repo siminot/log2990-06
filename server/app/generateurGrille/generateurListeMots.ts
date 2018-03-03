@@ -1,12 +1,12 @@
 import { VIDE, NOIR } from "./constantes";
-import { MotGenerationGrille } from "./motGenerateurGrille";
+import { Mot } from "./mot";
 
 export class GenerateurListeMots {
 
-    private listeMot: Array<MotGenerationGrille> = new Array<MotGenerationGrille>();
+    private listeMot: Array<Mot> = new Array<Mot>();
 
-    public donnerUneListe(uneGrille: Array<Array<string>>): Array<MotGenerationGrille> {
-        this.listeMot = new Array<MotGenerationGrille>();
+    public donnerUneListe(uneGrille: Array<Array<string>>): Array<Mot> {
+        this.listeMot = new Array<Mot>();
         this.genererListeMot(uneGrille);
         this.nettoyerMots();
 
@@ -15,13 +15,13 @@ export class GenerateurListeMots {
 
     // Sort la liste en ordre decroissant et retire les mots de 1 lettres
     private nettoyerMots(): void {
-        this.listeMot.sort((n1: MotGenerationGrille, n2: MotGenerationGrille) => n2.longueur - n1.longueur);
+        this.listeMot.sort((n1: Mot, n2: Mot) => n2.longueur - n1.longueur);
         while (this.listeMot[this.listeMot.length - 1].longueur === 1) {
             this.listeMot.pop();
         }
     }
 
-    private genererMot(x: number, y: number, estVertical: boolean, uneGrille: Array<Array<string>>): MotGenerationGrille {
+    private genererMot(x: number, y: number, estVertical: boolean, uneGrille: Array<Array<string>>): Mot {
 
         if (x < 0 || y < 0) {
             throw new Error("Entree negative interdite");
@@ -40,7 +40,7 @@ export class GenerateurListeMots {
                 break;
             }
         }
-        const nouveauMot: MotGenerationGrille = new MotGenerationGrille(estVertical, longMot, x, y);
+        const nouveauMot: Mot = new Mot(estVertical, longMot, x, y);
         nouveauMot.mot = mot;
 
         return nouveauMot;

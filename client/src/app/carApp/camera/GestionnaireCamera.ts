@@ -1,18 +1,27 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { Camera } from "three";
 import { Voiture } from "../voiture/voiture";
 import { CameraJeu } from "./CameraJeu";
 import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
+import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
 const CAMERA_INITIALE: number = 0;
+
+// Touches
+const ZOOM: EvenementClavier = new EvenementClavier("=", TypeEvenementClavier.TOUCHE_RELEVEE);
+const DEZOOM: EvenementClavier = new EvenementClavier("-", TypeEvenementClavier.TOUCHE_RELEVEE);
+const CHANGER_CAMERA: EvenementClavier = new EvenementClavier("v", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
 export class GestionnaireCamera {
 
     private cameras: CameraJeu[];
     private cameraCourante: CameraJeu;
+    private clavier: UtilisateurClavier;
 
     public get camera(): Camera {
         this.miseAJourCameraCourante();
@@ -20,12 +29,21 @@ export class GestionnaireCamera {
         return this.cameraCourante.camera;
     }
 
-    public constructor(private gestionnaireVoitures: GestionnaireVoitures) {
+    public constructor(private gestionnaireVoitures: GestionnaireVoitures,
+                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this.cameras = [];
+        this.clavier = new UtilisateurClavier(gestionnaireClavier);
         this.initialiserCameras();
+        this.initialisationTouches();
     }
 
     // Initialisation
+
+    protected initialisationTouches(): void {
+        this.clavier.ajouterTouche(this.zoomer.bind(this), ZOOM);
+        this.clavier.ajouterTouche(this.dezoomer.bind(this), DEZOOM);
+        this.clavier.ajouterTouche(this.changerCamera.bind(this), CHANGER_CAMERA);
+    }
 
     private initialiserCameras(): void {
         this.ajouterNouvelleCamera3D();

@@ -12,9 +12,9 @@
   <div *ngIf="estVertical; else motHorizontal" id="vertCont">
     <ul *ngFor="let mot of mots">
       <li *ngIf="!mot.estVertical" (click)="changementMotSelectionne(mot)">
-        <span *ngIf="!mot.activer && !mot.cheat" [style.color]="'black'" >{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="!mot.activer && !mot.cheat" [style.color]="'black'" >{{ mot.definitions[0].definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
         <span *ngIf="!mot.activer && mot.cheat" [style.color]="'black'" >{{ mot.mot }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
-        <span *ngIf="mot.activer && !mot.cheat" [style.color]="'white'" >{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="mot.activer && !mot.cheat" [style.color]="'white'" >{{ mot.definitions[0].definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
         <span *ngIf="mot.activer && mot.cheat" [style.color]="'white'" >{{mot.mot}}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
       </li>
     </ul>
@@ -23,9 +23,9 @@
   <ng-template #motHorizontal id="horizCont"> 
     <ul *ngFor="let mot of mots">
       <li *ngIf="mot.estVertical" (click)="changementMotSelectionne(mot)">
-        <span *ngIf="!mot.activer && !mot.cheat" [style.color]="'black'" >{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="!mot.activer && !mot.cheat" [style.color]="'black'" >{{ mot.definitions[0].definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
         <span *ngIf="!mot.activer && mot.cheat" [style.color]="'black'" >{{ mot.mot }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
-        <span *ngIf="mot.activer && !mot.cheat" [style.color]="'white'" >{{ mot.definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
+        <span *ngIf="mot.activer && !mot.cheat" [style.color]="'white'" >{{ mot.definitions[0].definition }}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
         <span *ngIf="mot.activer && mot.cheat" [style.color]="'white'" >{{mot.mot}}  ({{mot.premierX+1}},{{mot.premierY+1}})</span>
       </li>
     </ul>

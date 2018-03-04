@@ -12,7 +12,7 @@ export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
 // Touches clavier
 const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementClavier.TOUCHE_RELEVEE);
-const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("y", TypeEvenementClavier.TOUCHE_RELEVEE);
+const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("n", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
 export class GestionnaireScene {

@@ -166,6 +166,12 @@ export class Voiture extends Object3D {
         this.phares.allumer();
     }
 
+    public changerEtatPhares(): void {
+        this.phares.fonctionnent
+            ? this.phares.eteindre()
+            : this.phares.allumer();
+    }
+
     private initialiserPhares(): void {
         this.phares.initialiser();
         this.add(this.phares);

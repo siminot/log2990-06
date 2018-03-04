@@ -23,6 +23,7 @@ const DIRECTION_DROITE_APPUYE: EvenementClavier = new EvenementClavier("d", Type
 const DIRECTION_DROITE_RELEVE: EvenementClavier = new EvenementClavier("d", TypeEvenementClavier.TOUCHE_RELEVEE);
 const FREIN_APPUYE: EvenementClavier = new EvenementClavier("s", TypeEvenementClavier.TOUCHE_APPUYEE);
 const FREIN_RELEVE: EvenementClavier = new EvenementClavier("s", TypeEvenementClavier.TOUCHE_RELEVEE);
+const INTERRUPTEUR_LUMIERE: EvenementClavier = new EvenementClavier("l", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
 export class GestionnaireVoitures {
@@ -54,6 +55,7 @@ export class GestionnaireVoitures {
         this.clavier.ajouterTouche(this._voitureJoueur.relacherVolant.bind(this._voitureJoueur), DIRECTION_DROITE_RELEVE);
         this.clavier.ajouterTouche(this._voitureJoueur.freiner.bind(this._voitureJoueur), FREIN_APPUYE);
         this.clavier.ajouterTouche(this._voitureJoueur.relacherFreins.bind(this._voitureJoueur), FREIN_RELEVE);
+        this.clavier.ajouterTouche(this._voitureJoueur.changerEtatPhares.bind(this._voitureJoueur), INTERRUPTEUR_LUMIERE);
     }
 
     // Creation des voitures
@@ -96,14 +98,20 @@ export class GestionnaireVoitures {
     }
 
     public changerTempsJournee(temps: TempsJournee): void {
-        if (temps === TempsJournee.Jour) {
-            for (const voiture of this.voitures) {
-                voiture.eteindrePhares();
-            }
-        } else {
-            for (const voiture of this.voitures) {
-                voiture.allumerPhares();
-            }
+        temps === TempsJournee.Jour
+            ? this.eteindrePhares()
+            : this.allumerPhares();
+    }
+
+    private eteindrePhares(): void {
+        for (const voiture of this.voitures) {
+            voiture.eteindrePhares();
+        }
+    }
+
+    private allumerPhares(): void {
+        for (const voiture of this.voitures) {
+            voiture.allumerPhares();
         }
     }
 

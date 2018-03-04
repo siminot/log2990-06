@@ -14,7 +14,7 @@ const CAMERA_INITIALE: number = 0;
 // Touches
 const ZOOM: EvenementClavier = new EvenementClavier("=", TypeEvenementClavier.TOUCHE_RELEVEE);
 const DEZOOM: EvenementClavier = new EvenementClavier("-", TypeEvenementClavier.TOUCHE_RELEVEE);
-const CHANGER_CAMERA: EvenementClavier = new EvenementClavier("v", TypeEvenementClavier.TOUCHE_RELEVEE);
+const CHANGER_CAMERA: EvenementClavier = new EvenementClavier("c", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
 export class GestionnaireCamera {

@@ -9,11 +9,13 @@ const PROFONDEUR: number = -1.65;
 export class GroupePhares extends Group {
     private phares: Phare[];
     private ciblePhares: Object3D;
+    private _fonctionnent: boolean;
 
     public constructor() {
         super();
         this.phares = [];
         this.ciblePhares = new Object3D();
+        this._fonctionnent = true;
     }
 
     public initialiser(): void {
@@ -43,11 +45,17 @@ export class GroupePhares extends Group {
         for (const PHARE of this.phares) {
             PHARE.eteindre();
         }
+        this._fonctionnent = false;
     }
 
     public allumer(): void {
         for (const PHARE of this.phares) {
             PHARE.allumer();
         }
+        this._fonctionnent = true;
+    }
+
+    public get fonctionnent(): boolean {
+        return this._fonctionnent;
     }
 }

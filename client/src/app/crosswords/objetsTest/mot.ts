@@ -19,4 +19,5 @@ export class Mot implements IMotGrille {
     public activer: boolean;
     public motTrouve: boolean;
     public cheat: boolean;
+    public positionsLettres: string[];
 }

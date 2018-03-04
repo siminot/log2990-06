@@ -12,6 +12,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "destroyed physically or morally"}],
@@ -23,6 +24,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "a person employed to watch for something to happen"}],
@@ -34,6 +36,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "the act of robbing a helpless person"}],
@@ -45,6 +48,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "anew"}],
@@ -56,6 +60,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "a strong restless desire"}],
@@ -67,6 +72,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "a branch of the Tai languages"}],
@@ -78,6 +84,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "a way especially designed for a particular use"}],
@@ -89,6 +96,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "the act of rolling something (as the ball in bowling)"}],
@@ -100,6 +108,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "eat a meal; take a meal"}],
@@ -111,6 +120,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "a surface excavation for extracting stone or slate"}],
@@ -122,6 +132,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "(nautical) the distance traveled by a sailing vessel on a single tack"}],
@@ -133,6 +144,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         definitions: [{definition: "a movable top or cover (hinged or separate) for closing the opening of a container"}],
@@ -144,6 +156,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     },
     {
         // On ne peut pas separer un string sur plusieurs lignes
@@ -158,6 +171,7 @@ export const listeMotsLongue: Mot[] = [
         activer: false,
         motTrouve: false,
         cheat: false,
+        positionsLettres: []
     }
 ];
 

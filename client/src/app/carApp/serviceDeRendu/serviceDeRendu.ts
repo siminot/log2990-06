@@ -14,6 +14,7 @@ export class ServiceDeRendu {
     public constructor(private gestionnaireScene: GestionnaireScene,
                        private gestionnaireCamera: GestionnaireCamera,
                        private gestionnaireEcran: GestionnaireEcran) {
+        this.renderer = new WebGLRenderer();
     }
 
     // Initialisation
@@ -37,7 +38,6 @@ export class ServiceDeRendu {
     // Rendu
 
     private commencerBoucleDeRendu(): void {
-        this.renderer = new WebGLRenderer();
         this.renderer.setPixelRatio(devicePixelRatio);
         this.gestionnaireEcran.ajouterElementConteneur(this.renderer.domElement);
         this.redimensionnement();

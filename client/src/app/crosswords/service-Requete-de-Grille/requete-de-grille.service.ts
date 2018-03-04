@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
-// import { HttpeReqService } from "../httpRequest/http-request.service";
+import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
@@ -21,9 +21,9 @@ export class RequeteDeGrilleService {
   private matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   private motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
 
-  public constructor(/*private httpReq: HttpeReqService*/) {
+  public constructor(private httpReq: HttpeReqService) {
     this.genererGrille();
-    // this.souscrireRequeteMots();
+    this.souscrireRequeteMots();
     this.grilleDeTest();
   }
   // Accesseurs
@@ -47,7 +47,7 @@ export class RequeteDeGrilleService {
   }
 
   // Requetes
-/*
+
   private souscrireRequeteMots(): void {
     this.httpReq.obtenirMots().subscribe((x) => {
       this._mots = x;
@@ -56,7 +56,7 @@ export class RequeteDeGrilleService {
       this.insererMotsDansGrille();
     });
   }
-*/
+
   private grilleDeTest(): void {
     this._mots = listeMotsLongue;
     this.serviceEnvoieMots(this.mots);

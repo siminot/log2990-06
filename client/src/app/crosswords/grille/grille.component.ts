@@ -19,7 +19,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Mot[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private motSelectionne: Mot;
-  // private positionLettresSelectionnees: string[];
+  private positionLettresSelectionnees: string[];
   private positionCourante: number;
   private lockedLetter: boolean[][];
 
@@ -68,12 +68,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private remplirPositionLettresMot(leMot: Mot): void {
-    // this.positionLettresSelectionnees = [];
+    this.positionLettresSelectionnees = [];
 
     let tmp: string = this.makeID(leMot.premierX, leMot.premierY, "");
     leMot.positionsLettres[0] = tmp;
-
-    console.log("LIGNE BIDON");
 
     const x: number = leMot.premierX;
     const y: number = leMot.premierY;

@@ -6,7 +6,7 @@ export class GestionnaireEcran {
     private conteneur: HTMLDivElement;
 
     public constructor() {
-        this.conteneur = null;
+        this.conteneur = document.createElement("div");
     }
 
     public get largeur(): number {

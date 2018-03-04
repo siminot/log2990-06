@@ -4,6 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
 import { GameComponent } from "./carApp/game-component/game.component";
+import { PisteComponent } from "./carApp/piste-component/piste.component";
 
 import { ServiceDeRendu } from "./carApp/serviceDeRendu/serviceDeRendu";
 import { GestionnaireScene } from "./carApp/scene/GestionnaireScene";
@@ -30,6 +31,7 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
     declarations: [
         AppComponent,
         GameComponent,
+        PisteComponent,
         MainGrilleComponent,
         GrilleComponent,
         ConfigPartieComponent,

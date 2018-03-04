@@ -5,9 +5,11 @@ import { RouterModule, Routes } from "@angular/router";
 import { GameComponent } from "./carApp/game-component/game.component";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
+import { PisteComponent } from "./carApp/piste-component/piste.component";
 
 const routes: Routes = [
   { path: "CarGame", component: GameComponent },
+  { path: "editeurPistes", component: PisteComponent },
   { path: "CrosswordsGame", component: MainGrilleComponent },
   { path: "ConfigPartie", component: ConfigPartieComponent}
 ];

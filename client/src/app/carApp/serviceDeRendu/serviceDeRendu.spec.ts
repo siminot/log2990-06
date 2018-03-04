@@ -48,25 +48,23 @@ describe("Service de rendu", () => {
 
   describe("Initialisation", () => {
     it("Boucle de rendue partie", async () => {
-      await serviceDeRendu.initialiser();
       spyOn(serviceDeRendu["renderer"], "render");
+      await serviceDeRendu.initialiser();
       expect(serviceDeRendu["renderer"].render).toHaveBeenCalled();
     });
   });
 
   describe("Redimensionnement", () => {
     it("Renderer mis à jour", async () => {
-      await serviceDeRendu.initialiser();
-      const fonctionSetSize: Function = serviceDeRendu["renderer"].setSize;
+      spyOn(serviceDeRendu["renderer"], "setSize");
       serviceDeRendu.redimensionnement();
-      expect(fonctionSetSize).toHaveBeenCalled();
+      expect(serviceDeRendu["renderer"].setSize).toHaveBeenCalled();
     });
 
     it("Cameras mises à jour", async () => {
-      await serviceDeRendu.initialiser();
-      const redimensionnementCameras: Function = serviceDeRendu["gestionnaireCamera"].redimensionnement;
+      spyOn(serviceDeRendu["gestionnaireCamera"], "redimensionnement");
       serviceDeRendu.redimensionnement();
-      expect(redimensionnementCameras).toHaveBeenCalled();
+      expect(serviceDeRendu["gestionnaireCamera"].redimensionnement).toHaveBeenCalled();
     });
   });
 });

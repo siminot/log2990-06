@@ -1,7 +1,7 @@
 import { IEvenement } from "../peripheriques/IEvenement";
 import { IFonctionPeripherique } from "../peripheriques/IFonctionPeripherique";
 
-export enum TypeEvenementClavier { TOUCHE_APPUYEE, TOUCHE_RELEVEE }
+export enum TypeEvenementClavier { TOUCHE_APPUYEE, TOUCHE_RELEVEE, TOUCHE_PRESSEE }
 
 export class EvenementClavier implements IEvenement {
     public touche: string;

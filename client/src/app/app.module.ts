@@ -3,10 +3,10 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
-import { GameComponent } from "./carApp/game-component/game.component";
+import { CarGameComponent } from "./carApp/game-component/carGame.component";
 import { PisteComponent } from "./carApp/piste-component/piste.component";
 
-import { ServiceDeRendu } from "./carApp/serviceDeRendu/serviceDeRendu";
+import { ServiceDeRenduJeu } from "./carApp/serviceDeRendu/serviceDeRenduJeu";
 import { GestionnaireScene } from "./carApp/scene/GestionnaireScene";
 import { GestionnaireCamera } from "./carApp/camera/GestionnaireCamera";
 import { GestionnaireSkybox } from "./carApp/skybox/gestionnaireSkybox";
@@ -30,7 +30,7 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
 @NgModule({
     declarations: [
         AppComponent,
-        GameComponent,
+        CarGameComponent,
         PisteComponent,
         MainGrilleComponent,
         GrilleComponent,
@@ -46,7 +46,7 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
         AppRoutingModule
     ],
     providers: [
-        ServiceDeRendu,
+        ServiceDeRenduJeu,
         GestionnaireScene,
         GestionnaireCamera,
         GestionnaireSkybox,
@@ -60,7 +60,8 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
     bootstrap: [ AppComponent ],
     exports: [
         AppComponent,
-        GameComponent,
+        CarGameComponent,
+        PisteComponent,
         MainGrilleComponent,
         GrilleComponent,
         DefinitionVComponent,

@@ -5,12 +5,12 @@ import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 
 @Component({
     moduleId: module.id,
-    selector: "app-piste-component",
-    templateUrl: "./piste.component.html",
-    styleUrls: ["./piste.component.css"]
+    selector: "app-game-component",
+    templateUrl: "./game.component.html",
+    styleUrls: ["./game.component.css"]
 })
 
-export class PisteComponent implements AfterViewInit {
+export class CarGameComponent implements AfterViewInit {
 
     @ViewChild("container")
     private containerRef: ElementRef;

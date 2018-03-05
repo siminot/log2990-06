@@ -1,38 +1,30 @@
-import { Injectable } from "@angular/core";
 import Stats = require("stats.js");
-import { WebGLRenderer } from "three";
-import { GestionnaireScene } from "../scene/GestionnaireScene";
-import { GestionnaireCamera } from "../camera/GestionnaireCamera";
+import { WebGLRenderer, Scene, Camera } from "three";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 
-@Injectable()
-export class ServiceDeRendu {
-    private renderer: WebGLRenderer;
+export abstract class ServiceDeRenduAbstrait {
     private stats: Stats;
-    private tempsDerniereMiseAJour: number;
+    protected renderer: WebGLRenderer;
+    protected tempsDerniereMiseAJour: number;
 
-    public constructor(private gestionnaireScene: GestionnaireScene,
-                       private gestionnaireCamera: GestionnaireCamera,
-                       private gestionnaireEcran: GestionnaireEcran) {
+    public constructor(protected gestionnaireEcran: GestionnaireEcran) {
         this.renderer = new WebGLRenderer();
     }
 
     // Initialisation
 
     public async initialiser(): Promise<void> {
-        await this.initialiserScene();
+        await this.initialisation();
         this.initialiserStats();
         this.commencerBoucleDeRendu();
     }
+
+    protected abstract initialisation(): Promise<void>;
 
     private initialiserStats(): void {
         this.stats = new Stats();
         this.stats.dom.style.position = "absolute";
         this.gestionnaireEcran.ajouterElementConteneur(this.stats.dom);
-    }
-
-    private async initialiserScene(): Promise<void> {
-        this.gestionnaireScene.creerScene();
     }
 
     // Rendu
@@ -50,20 +42,20 @@ export class ServiceDeRendu {
     private rendu(): void {
         requestAnimationFrame(() => this.rendu());
         this.miseAJour();
-        this.renderer.render(this.gestionnaireScene.scene, this.gestionnaireCamera.camera);
+        this.renderer.render(this.scene, this.camera);
         this.stats.update();
     }
 
-    private miseAJour(): void {
-        const tempsDepuisDerniereTrame: number = Date.now() - this.tempsDerniereMiseAJour;
-        this.gestionnaireScene.miseAJour(tempsDepuisDerniereTrame);
-        this.tempsDerniereMiseAJour = Date.now();
-    }
+    protected abstract miseAJour(): void;
 
     // Mise à jour de la taille de la fenetre
 
     public redimensionnement(): void {
         this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
-        this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
     }
+
+    // Obtenir la scene et la camera
+
+    protected abstract get scene(): Scene;
+    protected abstract get camera(): Camera;
 }

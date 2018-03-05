@@ -12,12 +12,4 @@ export class ServiceDeRenduPistes extends ServiceDeRenduAbstrait {
                        @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste) {
     super(gestionnaireEcran, gestionnaireCamera, gestionnaireScene);
     }
-
-    // Initialisation
-
-    protected async initialisation(): Promise<void> { }
-
-    // Rendu
-
-    protected miseAJour(): void { }
 }

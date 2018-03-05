@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Scene, GridHelper } from "three";
+import { Scene, GridHelper, PlaneGeometry, MeshBasicMaterial, DoubleSide, Mesh, AxisHelper } from "three";
 import { IScene } from "../scene/IScene";
+import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
+import { PI_OVER_2 } from "../constants";
 
 @Injectable()
 export class GestionnaireScenePiste implements IScene {
@@ -11,19 +13,37 @@ export class GestionnaireScenePiste implements IScene {
         return this._scene;
     }
 
-    public constructor() {
+    public constructor(private gestionnaireEcran: GestionnaireEcran) {
         this._scene = new Scene;
+        this.creerScene();
     }
 
     // Creation de la scene
 
     public creerScene(): void {
         this.ajouterGrille();
+        this.ajouterCouleurDeFond();
+        this.ajouterAxes();
     }
 
     private ajouterGrille(): void {
-        const GRANDEUR: number = 10;
-        const DIVISIONS: number = 5;
-        this._scene.add(new GridHelper(GRANDEUR, DIVISIONS));
+        const GRANDEUR: number = 100;
+        const DIVISIONS: number = 4;
+        this._scene.add(new GridHelper(GRANDEUR, GRANDEUR / DIVISIONS));
+    }
+
+    private ajouterCouleurDeFond(): void {
+        const COULEUR: number = 0x66CCFF;
+        const DIMENSIONS: number = 50000;
+        const MATERIEL: MeshBasicMaterial = new MeshBasicMaterial({ color: COULEUR, side: DoubleSide });
+        const geometrie: PlaneGeometry = new PlaneGeometry(DIMENSIONS, DIMENSIONS);
+        geometrie.rotateX(PI_OVER_2);
+        geometrie.translate(0, 1, 0);
+        this._scene.add(new Mesh(geometrie, MATERIEL));
+    }
+
+    private ajouterAxes(): void {
+        const TAILLE: number = 5000;
+        this._scene.add(new AxisHelper(TAILLE));
     }
 }

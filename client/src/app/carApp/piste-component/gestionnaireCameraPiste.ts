@@ -1,13 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Camera, OrthographicCamera, Vector3 } from "three";
 import { ICamera } from "../camera/ICamera";
+import { PI_OVER_2 } from "../constants";
 
 const PLAN_RAPPROCHE: number = 0;
 const PLAN_ELOIGNE: number = 10;
-const ZOOM_DEFAUT: number = 1;
-const ORIGINE: Vector3 = new Vector3(0, 0, 0);
-const HAUTEUR: number = 10;
-const POSITION: Vector3 = new Vector3(0, HAUTEUR, 0);
+const ZOOM_DEFAUT: number = 30;
 
 @Injectable()
 export class GestionnaireCameraPiste implements ICamera {
@@ -23,8 +21,8 @@ export class GestionnaireCameraPiste implements ICamera {
     public constructor() {
         this._camera = new OrthographicCamera(null, null, null, null, PLAN_RAPPROCHE, PLAN_ELOIGNE);
         this._camera.zoom = ZOOM_DEFAUT;
-        this._camera.lookAt(ORIGINE);
-        this.camera.position.set(POSITION.x, POSITION.y, POSITION.z);
+        this._camera.rotateX(PI_OVER_2);
+        this._camera.updateProjectionMatrix();
     }
 
     public redimensionnement(largeur: number, hauteur: number): void {

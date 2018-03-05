@@ -1,4 +1,5 @@
 import Stats = require("stats.js");
+import { Inject } from "@angular/core";
 import { WebGLRenderer, Scene, Camera } from "three";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { ICamera } from "../camera/ICamera";
@@ -18,12 +19,9 @@ export abstract class ServiceDeRenduAbstrait {
     // Initialisation
 
     public async initialiser(): Promise<void> {
-        await this.initialisation();
         this.initialiserStats();
         this.commencerBoucleDeRendu();
     }
-
-    protected abstract initialisation(): Promise<void>;
 
     private initialiserStats(): void {
         this.stats = new Stats();
@@ -50,7 +48,7 @@ export abstract class ServiceDeRenduAbstrait {
         this.stats.update();
     }
 
-    protected abstract miseAJour(): void;
+    protected miseAJour(): void { }
 
     // Mise à jour de la taille de la fenetre
 

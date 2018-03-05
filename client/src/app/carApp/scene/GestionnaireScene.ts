@@ -37,6 +37,7 @@ export class GestionnaireScene implements IScene {
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.initialisationTouches();
+        this.creerScene();
     }
 
     protected initialisationTouches(): void {

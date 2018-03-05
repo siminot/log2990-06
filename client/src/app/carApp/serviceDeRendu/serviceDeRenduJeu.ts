@@ -13,12 +13,6 @@ export class ServiceDeRenduJeu extends ServiceDeRenduAbstrait {
         super(gestionnaireEcran, gestionnaireCamera, gestionnaireScene);
     }
 
-    // Initialisation
-
-    protected async initialisation(): Promise<void> {
-        await  this.gestionnaireScene.creerScene();
-    }
-
     // Rendu
 
     protected miseAJour(): void {

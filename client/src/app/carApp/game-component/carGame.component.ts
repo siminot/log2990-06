@@ -5,7 +5,7 @@ import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 
 @Component({
     moduleId: module.id,
-    selector: "app-game-component",
+    selector: "app-cargame-component",
     templateUrl: "./game.component.html",
     styleUrls: ["./game.component.css"]
 })

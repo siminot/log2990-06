@@ -7,6 +7,7 @@ import { CarGameComponent } from "./carApp/game-component/carGame.component";
 import { PisteComponent } from "./carApp/piste-component/piste.component";
 
 import { ServiceDeRenduJeu } from "./carApp/serviceDeRendu/serviceDeRenduJeu";
+import { ServiceDeRenduPistes } from "./carApp/serviceDeRendu/serviceDeRenduPistes";
 import { GestionnaireScene } from "./carApp/scene/GestionnaireScene";
 import { GestionnaireCamera } from "./carApp/camera/GestionnaireCamera";
 import { GestionnaireSkybox } from "./carApp/skybox/gestionnaireSkybox";
@@ -14,6 +15,8 @@ import { GestionnaireVoitures } from "./carApp/voiture/gestionnaireVoitures";
 import { GestionnaireClavier } from "./carApp/clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "./carApp/ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "./carApp/souris/gestionnaireSouris";
+import { GestionnaireScenePiste } from "./carApp/piste-component/gestionnaireScenePiste";
+import { GestionnaireCameraPiste } from "./carApp/piste-component/gestionnaireCameraPiste";
 
 import { AppRoutingModule } from ".//app-routing.module";
 import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
@@ -48,8 +51,11 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
     ],
     providers: [
         ServiceDeRenduJeu,
+        ServiceDeRenduPistes,
         GestionnaireScene,
+        GestionnaireScenePiste,
         GestionnaireCamera,
+        GestionnaireCameraPiste,
         GestionnaireSkybox,
         GestionnaireVoitures,
         GestionnaireClavier,

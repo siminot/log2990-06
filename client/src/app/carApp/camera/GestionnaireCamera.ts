@@ -8,6 +8,7 @@ import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { ICamera } from "./ICamera";
 
 const CAMERA_INITIALE: number = 0;
 
@@ -17,7 +18,7 @@ const DEZOOM: EvenementClavier = new EvenementClavier("-", TypeEvenementClavier.
 const CHANGER_CAMERA: EvenementClavier = new EvenementClavier("c", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireCamera {
+export class GestionnaireCamera implements ICamera {
 
     private cameras: CameraJeu[];
     private cameraCourante: CameraJeu;

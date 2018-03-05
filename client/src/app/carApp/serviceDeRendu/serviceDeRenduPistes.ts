@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
-import { Scene, Camera, OrthographicCamera } from "three";
+import { Injectable, Inject } from "@angular/core";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { ServiceDeRenduAbstrait } from "./servideDeRenduAbstrait";
+import { GestionnaireCameraPiste } from "../piste-component/gestionnaireCameraPiste";
+import { GestionnaireScenePiste } from "../piste-component/gestionnaireScenePiste";
 
 @Injectable()
 export class ServiceDeRenduPistes extends ServiceDeRenduAbstrait {
 
-    private _scene: Scene;
-    private _camera: OrthographicCamera;
-
-    public constructor(protected gestionnaireEcran: GestionnaireEcran) {
-        super(gestionnaireEcran);
+    public constructor(protected gestionnaireScene: GestionnaireScenePiste,
+                       @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
+                       @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste) {
+    super(gestionnaireEcran, gestionnaireCamera, gestionnaireScene);
     }
 
     // Initialisation
@@ -20,13 +20,4 @@ export class ServiceDeRenduPistes extends ServiceDeRenduAbstrait {
     // Rendu
 
     protected miseAJour(): void { }
-
-    // Obtenir la scene et la camera
-
-    protected get scene(): Scene {
-        return this._scene;
-    }
-    protected get camera(): Camera {
-        return this._camera;
-    }
 }

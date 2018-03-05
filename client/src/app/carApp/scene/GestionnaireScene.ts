@@ -1,5 +1,6 @@
 import { Injectable, Inject } from "@angular/core";
 import { Scene } from "three";
+import { IScene } from "./IScene";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
@@ -15,7 +16,7 @@ const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementC
 const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("n", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireScene {
+export class GestionnaireScene implements IScene {
 
     private _scene: Scene;
     private tempsJournee: TempsJournee;

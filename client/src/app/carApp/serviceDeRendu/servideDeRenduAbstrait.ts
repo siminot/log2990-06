@@ -1,13 +1,17 @@
 import Stats = require("stats.js");
 import { WebGLRenderer, Scene, Camera } from "three";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
+import { ICamera } from "../camera/ICamera";
+import { IScene } from "../scene/IScene";
 
 export abstract class ServiceDeRenduAbstrait {
     private stats: Stats;
     protected renderer: WebGLRenderer;
     protected tempsDerniereMiseAJour: number;
 
-    public constructor(protected gestionnaireEcran: GestionnaireEcran) {
+    public constructor(protected gestionnaireEcran: GestionnaireEcran,
+                       protected gestionnaireCamera: ICamera,
+                       protected gestionnaireScene: IScene) {
         this.renderer = new WebGLRenderer();
     }
 
@@ -52,10 +56,16 @@ export abstract class ServiceDeRenduAbstrait {
 
     public redimensionnement(): void {
         this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
+        this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
     }
 
     // Obtenir la scene et la camera
 
-    protected abstract get scene(): Scene;
-    protected abstract get camera(): Camera;
+    protected get scene(): Scene {
+        return this.gestionnaireScene.scene;
+    }
+
+    protected get camera(): Camera {
+        return this.gestionnaireCamera.camera;
+    }
 }

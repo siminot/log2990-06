@@ -1,12 +1,8 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, HostListener } from "@angular/core";
+import { AfterViewInit, ElementRef, ViewChild, HostListener } from "@angular/core";
 import { ServiceDeRenduAbstrait } from "../serviceDeRendu/servideDeRenduAbstrait";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
-
-@Component({
-    moduleId: module.id,
-})
 
 export abstract class AbstractGameComponent implements AfterViewInit {
 

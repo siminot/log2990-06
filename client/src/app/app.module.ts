@@ -13,6 +13,7 @@ import { GestionnaireSkybox } from "./carApp/skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "./carApp/voiture/gestionnaireVoitures";
 import { GestionnaireClavier } from "./carApp/clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "./carApp/ecran/gestionnaireEcran";
+import { GestionnaireSouris } from "./carApp/souris/gestionnaireSouris";
 
 import { AppRoutingModule } from ".//app-routing.module";
 import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
@@ -53,6 +54,7 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
         GestionnaireVoitures,
         GestionnaireClavier,
         GestionnaireEcran,
+        GestionnaireSouris,
         RequeteDeGrilleService,
         HttpeReqService,
         InfojoueurService

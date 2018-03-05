@@ -52,7 +52,7 @@ export class GestionnaireSouris extends GestionnairePeripherique {
 
     protected notifier(evenement: EvenementSouris): void {
         for (const fonction of this.listeRappel.obtenirFonctions(evenement)) {
-            fonction();
+            fonction(this.evenementRecu);
         }
     }
 }

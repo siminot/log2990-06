@@ -41,9 +41,9 @@ export class GestionnaireCamera implements ICamera {
     // Initialisation
 
     protected initialisationTouches(): void {
-        this.clavier.ajouterTouche(this.zoomer.bind(this), ZOOM);
-        this.clavier.ajouterTouche(this.dezoomer.bind(this), DEZOOM);
-        this.clavier.ajouterTouche(this.changerCamera.bind(this), CHANGER_CAMERA);
+        this.clavier.ajouter(this.zoomer.bind(this), ZOOM);
+        this.clavier.ajouter(this.dezoomer.bind(this), DEZOOM);
+        this.clavier.ajouter(this.changerCamera.bind(this), CHANGER_CAMERA);
     }
 
     private initialiserCameras(): void {

@@ -73,12 +73,12 @@ export abstract class AbstractGameComponent implements AfterViewInit {
         this.gestionnaireSouris.sourisDeplacementSur(evenement);
     }
 
-    @HostListener("window:onclick", ["$event"])
+    @HostListener("window:click", ["$event"])
     public sourisCliquee(evenement: MouseEvent): void {
         this.gestionnaireSouris.sourisCliquee(evenement);
     }
 
-    @HostListener("window:ondblclick", ["$event"])
+    @HostListener("window:dblclick", ["$event"])
     public sourisDoubleCliquee(evenement: MouseEvent): void {
         this.gestionnaireSouris.sourisDoubleCliquee(evenement);
     }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Camera, OrthographicCamera, Vector3 } from "three";
+import { Camera, OrthographicCamera } from "three";
 import { ICamera } from "../camera/ICamera";
 import { PI_OVER_2 } from "../constants";
 

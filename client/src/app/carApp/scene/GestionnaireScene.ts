@@ -41,8 +41,8 @@ export class GestionnaireScene implements IScene {
     }
 
     protected initialisationTouches(): void {
-        this.clavier.ajouterTouche(this.changerDecor.bind(this), CHANGER_DECOR);
-        this.clavier.ajouterTouche(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE);
+        this.clavier.ajouter(this.changerDecor.bind(this), CHANGER_DECOR);
+        this.clavier.ajouter(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE);
     }
 
     // Creation de la scene

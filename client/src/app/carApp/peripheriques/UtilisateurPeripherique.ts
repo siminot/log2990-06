@@ -14,7 +14,7 @@ export class UtilisateurPeripherique implements OnDestroy {
         this.desinscription();
     }
 
-    public ajouterTouche(fonction: Function, evenement: IEvenement): void {
+    public ajouter(fonction: Function, evenement: IEvenement): void {
         const fonctionTouche: IFonctionPeripherique = {fonction, evenement};
         this.fonctionsEnregistrees.push(fonctionTouche);
         this.inscription(fonctionTouche);

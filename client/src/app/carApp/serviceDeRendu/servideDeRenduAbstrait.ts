@@ -1,5 +1,4 @@
 import Stats = require("stats.js");
-import { Inject } from "@angular/core";
 import { WebGLRenderer, Scene, Camera } from "three";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { ICamera } from "../camera/ICamera";

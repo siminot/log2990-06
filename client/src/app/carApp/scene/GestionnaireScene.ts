@@ -6,7 +6,7 @@ import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
-import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
+import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
@@ -19,7 +19,7 @@ export class GestionnaireScene {
 
     private _scene: Scene;
     private tempsJournee: TempsJournee;
-    private clavier: UtilisateurClavier;
+    private clavier: UtilisateurPeripherique;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
@@ -33,7 +33,7 @@ export class GestionnaireScene {
                        private gestionnaireVoiture: GestionnaireVoitures,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._scene = new Scene;
-        this.clavier = new UtilisateurClavier(gestionnaireClavier);
+        this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.initialisationTouches();
     }

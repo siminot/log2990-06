@@ -5,7 +5,7 @@ import { CameraJeu } from "./CameraJeu";
 import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
-import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
+import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
@@ -21,7 +21,7 @@ export class GestionnaireCamera {
 
     private cameras: CameraJeu[];
     private cameraCourante: CameraJeu;
-    private clavier: UtilisateurClavier;
+    private clavier: UtilisateurPeripherique;
 
     public get camera(): Camera {
         this.miseAJourCameraCourante();
@@ -32,7 +32,7 @@ export class GestionnaireCamera {
     public constructor(private gestionnaireVoitures: GestionnaireVoitures,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this.cameras = [];
-        this.clavier = new UtilisateurClavier(gestionnaireClavier);
+        this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.initialiserCameras();
         this.initialisationTouches();
     }

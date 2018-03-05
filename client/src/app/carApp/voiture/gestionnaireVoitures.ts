@@ -4,7 +4,7 @@ import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
-import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
+import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 
 // AI
 const NOMBRE_AI: number = 1;
@@ -30,7 +30,7 @@ export class GestionnaireVoitures {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
-    private clavier: UtilisateurClavier;
+    private clavier: UtilisateurPeripherique;
 
     public get voitureJoueur(): Voiture {
         return this._voitureJoueur;
@@ -42,7 +42,7 @@ export class GestionnaireVoitures {
 
     public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._voituresAI = [];
-        this.clavier = new UtilisateurClavier(gestionnaireClavier);
+        this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.initialiser().catch(() => new Error("Erreur lors de l'initialisation"));
     }
 

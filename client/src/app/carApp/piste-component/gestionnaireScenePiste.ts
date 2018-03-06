@@ -8,6 +8,7 @@ import { EvenementSouris, TypeEvenementSouris } from "../souris/evenementSouris"
 import { GestionnaireCameraPiste } from "./gestionnaireCameraPiste";
 import { TransformateurCoordonnees } from "./elementsGeometrie/TransformateurCoordonnees";
 import { Point } from "./elementsGeometrie/Point";
+import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 
 const RAYON_POINT: number = 0.5;
 const NOMBRE_SEGMENTS: number = 25;
@@ -26,10 +27,11 @@ export class GestionnaireScenePiste implements IScene {
     }
 
     public constructor(@Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
-                       @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste) {
+                       @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste,
+                       @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran) {
         this._scene = new Scene;
         this.souris = new UtilisateurPeripherique(gestionnaireSouris);
-        this.transformateur = new TransformateurCoordonnees(gestionnaireCamera);
+        this.transformateur = new TransformateurCoordonnees(gestionnaireCamera, gestionnaireEcran);
         this.creerScene();
     }
 

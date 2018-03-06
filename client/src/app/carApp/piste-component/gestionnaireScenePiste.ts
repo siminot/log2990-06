@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { Scene, GridHelper, PlaneGeometry, MeshBasicMaterial, DoubleSide, Mesh, AxisHelper, SphereGeometry } from "three";
+import { Scene, GridHelper, PlaneGeometry, MeshBasicMaterial, DoubleSide, Mesh, AxisHelper, CircleGeometry } from "three";
 import { IScene } from "../scene/IScene";
 import { PI_OVER_2 } from "../constants";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
@@ -7,6 +7,7 @@ import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { EvenementSouris, TypeEvenementSouris } from "../souris/evenementSouris";
 
 const RAYON_POINT: number = 0.5;
+const NOMBRE_SEGMENTS: number = 25;
 const COULEUR_POINT: number = 0xFFFF00;
 
 @Injectable()
@@ -58,14 +59,16 @@ export class GestionnaireScenePiste implements IScene {
     }
 
     private ajouterPoint(): void {
-        this.point = new Mesh(new SphereGeometry(RAYON_POINT), new MeshBasicMaterial( {color: COULEUR_POINT}));
+        this.point = new Mesh(new CircleGeometry(RAYON_POINT, NOMBRE_SEGMENTS), new MeshBasicMaterial( {color: COULEUR_POINT}));
         this.point.position.set(0, 1, 0);
+        this.point.rotateX(PI_OVER_2);
         this._scene.add(this.point);
     }
 
     public insererPointSouris(evenementSouris: MouseEvent): void {
-        const point: Mesh = new Mesh(new SphereGeometry(RAYON_POINT), new MeshBasicMaterial( {color: COULEUR_POINT}));
+        const point: Mesh = new Mesh(new CircleGeometry(RAYON_POINT, NOMBRE_SEGMENTS), new MeshBasicMaterial( {color: COULEUR_POINT}));
         point.position.set(1, 1, 1);
+        point.rotateX(PI_OVER_2);
         this._scene.add(point);
     }
 

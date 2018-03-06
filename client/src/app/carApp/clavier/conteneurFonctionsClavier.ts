@@ -1,5 +1,5 @@
 import { ConteneurFonctions } from "../peripheriques/ConteneurFonctions";
-import { EvenementClavier, TypeEvenementClavier } from "./evenementClavier";
+import { EvenementClavier, TypeEvenementClavier, FonctionTouche } from "./evenementClavier";
 
 export class ConteneurFonctionsClavier extends ConteneurFonctions {
 
@@ -12,7 +12,21 @@ export class ConteneurFonctionsClavier extends ConteneurFonctions {
         this.evenement = null;
     }
 
-    public trouverFonctions(): Function[] {
+    // Redefinition pour seulement prendre les Evenements associes au clavier
+
+    public obtenirFonctions(evenement: EvenementClavier): Function[] {
+        return super.obtenirFonctions(evenement);
+    }
+
+    public ajouter(fonctionPeripherique: FonctionTouche ): void {
+        super.ajouter(fonctionPeripherique);
+    }
+
+    public retirer(fonctionPeripherique: FonctionTouche): void {
+        super.retirer(fonctionPeripherique);
+    }
+
+    protected trouverFonctions(): Function[] {
         return this.obtenirListeSelonTouche(this.obtenirListeSelonTypeEvenement());
     }
 

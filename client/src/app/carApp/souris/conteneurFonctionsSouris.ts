@@ -12,7 +12,7 @@ export class ConteneurFonctionSouris extends ConteneurFonctions {
         this.evenement = null;
     }
 
-    public trouverFonctions(): Function[] {
+    protected trouverFonctions(): Function[] {
         if (this.conteneur.get(this.evenement.type) === undefined) {
             this.conteneur.set(this.evenement.type, new Array<Function>());
         }

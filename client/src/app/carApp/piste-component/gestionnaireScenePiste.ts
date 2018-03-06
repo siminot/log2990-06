@@ -5,7 +5,6 @@ import { PI_OVER_2 } from "../constants";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { EvenementSouris, TypeEvenementSouris } from "../souris/evenementSouris";
-import { GestionnaireCamera } from "../camera/GestionnaireCamera";
 
 const RAYON_POINT: number = 0.5;
 const COULEUR_POINT: number = 0xFFFF00;

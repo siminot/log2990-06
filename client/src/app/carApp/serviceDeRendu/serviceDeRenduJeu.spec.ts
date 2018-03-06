@@ -31,7 +31,7 @@ describe("Service de rendu", () => {
     gestionnaireEcran = new GestionnaireEcran();
     gestionnaireCamera = new GestionnaireCamera(gestionnaireVoitures, gestionnaireClavier);
 
-    serviceDeRendu = new ServiceDeRenduJeu(gestionnaireEcran, gestionnaireScene, gestionnaireCamera);
+    serviceDeRendu = new ServiceDeRenduJeu(gestionnaireScene, gestionnaireEcran, gestionnaireCamera);
   }));
 
   describe("Constructeur", () => {

@@ -29,10 +29,4 @@ export class GestionnaireClavier extends GestionnairePeripherique {
         this.evenementRecu = evenement;
         this.notifier(new EvenementClavier(evenement.key, TypeEvenementClavier.TOUCHE_PRESSEE));
     }
-
-    protected notifier(evenement: EvenementClavier): void {
-        for (const fonction of this.listeRappel.obtenirFonctions(evenement)) {
-            fonction();
-        }
-    }
 }

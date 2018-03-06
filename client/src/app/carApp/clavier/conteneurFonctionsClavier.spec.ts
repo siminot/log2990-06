@@ -1,7 +1,7 @@
 import { ConteneurFonctionsClavier } from "./conteneurFonctionsClavier";
 import { FonctionTouche, EvenementClavier, TypeEvenementClavier } from "./evenementClavier";
 
-describe("conteneurFonctionsClavier", () => {
+describe("ConteneurFonctionsClavier", () => {
 
     let conteneur: ConteneurFonctionsClavier;
 
@@ -9,14 +9,15 @@ describe("conteneurFonctionsClavier", () => {
         conteneur = new ConteneurFonctionsClavier();
     });
 
-    it("constructeur", () => {
+    it("Constructeur", () => {
         expect(conteneur).toBeDefined();
     });
 
     const FONCTION: Function = ConteneurFonctionsClavier.prototype.ajouter;
-    const FONCTION2: Function = ConteneurFonctionsClavier.prototype.retirer;
     const EVENEMENT_CLAVIER: EvenementClavier = new EvenementClavier("c", TypeEvenementClavier.TOUCHE_APPUYEE);
     const FONCTION_TOUCHE: FonctionTouche = new FonctionTouche(FONCTION, EVENEMENT_CLAVIER);
+
+    const FONCTION2: Function = ConteneurFonctionsClavier.prototype.retirer;
     const FONCTION_TOUCHE2: FonctionTouche = new FonctionTouche(FONCTION2, EVENEMENT_CLAVIER);
 
     it("Devrait retourner les fonctions", () => {

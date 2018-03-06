@@ -28,5 +28,7 @@ export class UtilisateurPeripherique implements OnDestroy {
         for (const touche of this.fonctionsEnregistrees) {
             this.gestionnaire.desinscrire(touche);
         }
+
+        this.fonctionsEnregistrees = null;
     }
 }

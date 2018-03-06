@@ -17,5 +17,9 @@ export abstract class GestionnairePeripherique {
         this.listeRappel.retirer(desinscription);
     }
 
-    protected abstract notifier(evenement: IEvenement): void;
+    protected notifier(evenement: IEvenement): void {
+        for (const fonction of this.listeRappel.obtenirFonctions(evenement)) {
+            fonction();
+        }
+    }
 }

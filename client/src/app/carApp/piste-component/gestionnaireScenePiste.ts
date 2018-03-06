@@ -5,6 +5,9 @@ import { PI_OVER_2 } from "../constants";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { EvenementSouris, TypeEvenementSouris } from "../souris/evenementSouris";
+import { GestionnaireCameraPiste } from "./gestionnaireCameraPiste";
+import { TransformateurCoordonnees } from "./elementsGeometrie/TransformateurCoordonnees";
+import { Point } from "./elementsGeometrie/Point";
 
 const RAYON_POINT: number = 0.5;
 const NOMBRE_SEGMENTS: number = 25;
@@ -16,14 +19,17 @@ export class GestionnaireScenePiste implements IScene {
     private _scene: Scene;
     private point: Mesh;
     private souris: UtilisateurPeripherique;
+    private transformateur: TransformateurCoordonnees;
 
     public get scene(): Scene {
         return this._scene;
     }
 
-    public constructor(@Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris) {
+    public constructor(@Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
+                       @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste) {
         this._scene = new Scene;
         this.souris = new UtilisateurPeripherique(gestionnaireSouris);
+        this.transformateur = new TransformateurCoordonnees(gestionnaireCamera);
         this.creerScene();
     }
 
@@ -33,7 +39,6 @@ export class GestionnaireScenePiste implements IScene {
         this.ajouterGrille();
         this.ajouterCouleurDeFond();
         this.ajouterAxes();
-        this.ajouterPoint();
         this.inscriptionSouris();
     }
 
@@ -58,21 +63,23 @@ export class GestionnaireScenePiste implements IScene {
         this._scene.add(new AxisHelper(TAILLE));
     }
 
-    private ajouterPoint(): void {
+    private creerPoint(): void {
         this.point = new Mesh(new CircleGeometry(RAYON_POINT, NOMBRE_SEGMENTS), new MeshBasicMaterial( {color: COULEUR_POINT}));
-        this.point.position.set(0, 1, 0);
         this.point.rotateX(PI_OVER_2);
         this._scene.add(this.point);
     }
 
-    public insererPointSouris(evenementSouris: MouseEvent): void {
-        const point: Mesh = new Mesh(new CircleGeometry(RAYON_POINT, NOMBRE_SEGMENTS), new MeshBasicMaterial( {color: COULEUR_POINT}));
-        point.position.set(1, 1, 1);
-        point.rotateX(PI_OVER_2);
-        this._scene.add(point);
+    public miseAJourPoint(evenementSouris: MouseEvent): void {
+        if (this.point === undefined) {
+            this.creerPoint();
+        }
+
+        const souris: Point = this.transformateur.positionEcranVersScene(evenementSouris);
+        this.point.position.set(souris.x, 1, souris.y);
+        console.log(this.point.position);
     }
 
     private inscriptionSouris(): void {
-        this.souris.ajouter(this.insererPointSouris.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
+        this.souris.ajouter(this.miseAJourPoint.bind(this), new EvenementSouris(TypeEvenementSouris.DRAG));
     }
 }

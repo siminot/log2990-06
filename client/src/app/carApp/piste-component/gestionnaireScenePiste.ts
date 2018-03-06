@@ -1,37 +1,20 @@
-import { Injectable, Inject } from "@angular/core";
-import { Scene, GridHelper, PlaneGeometry, MeshBasicMaterial, DoubleSide, Mesh, AxisHelper, CircleGeometry } from "three";
+import { Injectable } from "@angular/core";
+import { Scene, GridHelper, PlaneGeometry, MeshBasicMaterial, DoubleSide, Mesh, AxisHelper } from "three";
 import { IScene } from "../scene/IScene";
 import { PI_OVER_2 } from "../constants";
-import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
-import { GestionnaireSouris } from "../souris/gestionnaireSouris";
-import { EvenementSouris, TypeEvenementSouris } from "../souris/evenementSouris";
-import { GestionnaireCameraPiste } from "./gestionnaireCameraPiste";
-import { TransformateurCoordonnees } from "./elementsGeometrie/TransformateurCoordonnees";
-import { Point } from "./elementsGeometrie/Point";
-import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
-
-const RAYON_POINT: number = 0.5;
-const NOMBRE_SEGMENTS: number = 25;
-const COULEUR_POINT: number = 0xFFFF00;
+import { GestionnairePiste } from "./GestionnairePiste";
 
 @Injectable()
 export class GestionnaireScenePiste implements IScene {
 
     private _scene: Scene;
-    private point: Mesh;
-    private souris: UtilisateurPeripherique;
-    private transformateur: TransformateurCoordonnees;
 
     public get scene(): Scene {
         return this._scene;
     }
 
-    public constructor(@Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
-                       @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste,
-                       @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran) {
-        this._scene = new Scene;
-        this.souris = new UtilisateurPeripherique(gestionnaireSouris);
-        this.transformateur = new TransformateurCoordonnees(gestionnaireCamera, gestionnaireEcran);
+    public constructor(private gestionnairePiste: GestionnairePiste) {
+        this._scene = new Scene();
         this.creerScene();
     }
 
@@ -41,7 +24,7 @@ export class GestionnaireScenePiste implements IScene {
         this.ajouterGrille();
         this.ajouterCouleurDeFond();
         this.ajouterAxes();
-        this.inscriptionSouris();
+        this.ajouterPiste();
     }
 
     private ajouterGrille(): void {
@@ -65,23 +48,7 @@ export class GestionnaireScenePiste implements IScene {
         this._scene.add(new AxisHelper(TAILLE));
     }
 
-    private creerPoint(): void {
-        this.point = new Mesh(new CircleGeometry(RAYON_POINT, NOMBRE_SEGMENTS), new MeshBasicMaterial( {color: COULEUR_POINT}));
-        this.point.rotateX(PI_OVER_2);
-        this._scene.add(this.point);
-    }
-
-    public miseAJourPoint(evenementSouris: MouseEvent): void {
-        if (this.point === undefined) {
-            this.creerPoint();
-        }
-
-        const souris: Point = this.transformateur.positionEcranVersScene(evenementSouris);
-        this.point.position.set(souris.x, 1, souris.y);
-        console.log(this.point.position);
-    }
-
-    private inscriptionSouris(): void {
-        this.souris.ajouter(this.miseAJourPoint.bind(this), new EvenementSouris(TypeEvenementSouris.DRAG));
+    private ajouterPiste(): void {
+        this._scene.add(this.gestionnairePiste.piste);
     }
 }

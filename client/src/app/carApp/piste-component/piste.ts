@@ -1,17 +1,21 @@
-import { Group } from "three";
+import { Group, Raycaster, Vector3, Object3D } from "three";
 import { IntersectionPiste } from "./elementsGeometrie/intersectionPiste";
 import { Point } from "./elementsGeometrie/Point";
 import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
+
+const DANS_LE_PLAN: Vector3 = new Vector3(0, 1, 0);
 
 export class Piste extends Group {
 
     private elements: IntersectionPiste[];
     private circuitBoucle: boolean;
+    private intersectionSelectionnee: IntersectionPiste;
 
     public constructor() {
         super();
         this.elements = [];
         this.circuitBoucle = false;
+        this.intersectionSelectionnee = null;
     }
 
     public ajouterPoint(point: Point): void {
@@ -100,5 +104,16 @@ export class Piste extends Group {
 
     private get premierPoint(): Point {
         return this.premiereIntersection.point.point;
+    }
+
+    public selectionnerIntersection(souris: Point): void {
+        const objets: Object3D[] = [];
+        new Raycaster(souris.vecteurPlanXZ, DANS_LE_PLAN).intersectObjects(objets);
+
+        for (const objet of objets) {
+            if (objet instanceof IntersectionPiste) {
+                this.intersectionSelectionnee = objet;
+            }
+        }
     }
 }

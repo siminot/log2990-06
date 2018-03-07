@@ -7,6 +7,7 @@ import { TransformateurCoordonnees } from "./elementsGeometrie/TransformateurCoo
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { Piste } from "./piste";
 import { Group } from "three";
+import { Point } from "./elementsGeometrie/Point";
 
 @Injectable()
 export class GestionnairePiste {
@@ -35,20 +36,28 @@ export class GestionnairePiste {
     }
 
     private miseAJourPoint(evenementSouris: MouseEvent): void {
-        if (this.transformateur.estSurScene(evenementSouris)) {
-            this._piste.miseAJourElementCourant(this.transformateur.positionEcranVersScene(evenementSouris));
+        if (this.positionSourisValide(evenementSouris)) {
+            this._piste.miseAJourElementCourant(this.positionSouris(evenementSouris));
         }
     }
 
     private ajouterPoint(evenementSouris: MouseEvent): void {
-        if (this.transformateur.estSurScene(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
-            this._piste.ajouterPoint(this.transformateur.positionEcranVersScene(evenementSouris));
+        if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
+            this._piste.ajouterPoint(this.positionSouris(evenementSouris));
         }
     }
 
     private effacerPoint(evenementSouris: MouseEvent): void {
-        if (this.transformateur.estSurScene(evenementSouris) && evenementSouris.button === BoutonSouris.DROIT) {
-            this._piste.effacerPoint(this.transformateur.positionEcranVersScene(evenementSouris));
+        if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.DROIT) {
+            this._piste.effacerPoint(this.positionSouris(evenementSouris));
         }
+    }
+
+    private positionSourisValide(evenementSouris: MouseEvent): boolean {
+        return this.transformateur.estSurScene(evenementSouris);
+    }
+
+    private positionSouris(evenementSouris: MouseEvent): Point {
+        return this.transformateur.positionEcranVersScene(evenementSouris);
     }
 }

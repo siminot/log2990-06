@@ -35,7 +35,9 @@ export class Piste extends Group {
     }
 
     public miseAJourElementCourant(point: Point): void {
-        this.dernierElement.deplacementPoint(point);
+        this.premierPoint
+            ? this.dernierElement.deplacementPoint(point)
+            : this.dernierElement.miseAJourPoint(point);
     }
 
     private get dernierElement(): IntersectionPiste {
@@ -54,5 +56,9 @@ export class Piste extends Group {
         return this.avantDernierElement !== null
          ? this.avantDernierElement.droiteDebut
          : null;
+    }
+
+    private get premierPoint(): boolean {
+        return this.elements.length === 1;
     }
 }

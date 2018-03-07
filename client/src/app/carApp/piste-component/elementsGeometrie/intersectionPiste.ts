@@ -18,6 +18,7 @@ export class IntersectionPiste extends Group {
     }
 
     private ajouterElements(): void {
+        this.add(this.droiteArrivee);
         this.add(this.point);
         this.add(this.droiteDebut);
     }

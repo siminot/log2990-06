@@ -1,6 +1,6 @@
 import { TestBed, async } from "@angular/core/testing";
 
-import { ServiceDeRendu } from "./serviceDeRendu";
+import { ServiceDeRenduJeu } from "./serviceDeRenduJeu";
 import { GestionnaireScene } from "../scene/GestionnaireScene";
 import { GestionnaireCamera } from "../camera/GestionnaireCamera";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
@@ -9,7 +9,7 @@ import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
 describe("Service de rendu", () => {
-  let serviceDeRendu: ServiceDeRendu;
+  let serviceDeRendu: ServiceDeRenduJeu;
 
   let gestionnaireVoitures: GestionnaireVoitures;
   let gestionnaireSkybox: GestionnaireSkybox;
@@ -31,7 +31,7 @@ describe("Service de rendu", () => {
     gestionnaireEcran = new GestionnaireEcran();
     gestionnaireCamera = new GestionnaireCamera(gestionnaireVoitures, gestionnaireClavier);
 
-    serviceDeRendu = new ServiceDeRendu(gestionnaireScene, gestionnaireCamera, gestionnaireEcran);
+    serviceDeRendu = new ServiceDeRenduJeu(gestionnaireScene, gestionnaireEcran, gestionnaireCamera);
   }));
 
   describe("Constructeur", () => {

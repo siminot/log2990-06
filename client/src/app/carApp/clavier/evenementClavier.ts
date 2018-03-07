@@ -1,6 +1,9 @@
-export enum TypeEvenementClavier { TOUCHE_APPUYEE, TOUCHE_RELEVEE }
+import { IEvenement } from "../peripheriques/IEvenement";
+import { IFonctionPeripherique } from "../peripheriques/IFonctionPeripherique";
 
-export class EvenementClavier {
+export enum TypeEvenementClavier { TOUCHE_APPUYEE, TOUCHE_RELEVEE, TOUCHE_PRESSEE }
+
+export class EvenementClavier implements IEvenement {
     public touche: string;
     public type: TypeEvenementClavier;
 
@@ -10,12 +13,12 @@ export class EvenementClavier {
     }
 }
 
-export class FonctionTouche {
+export class FonctionTouche implements IFonctionPeripherique {
     public fonction: Function;
-    public evenementClavier: EvenementClavier;
+    public evenement: EvenementClavier;
 
     public constructor(fonction: Function, evenement: EvenementClavier) {
         this.fonction = fonction;
-        this.evenementClavier = evenement;
+        this.evenement = evenement;
     }
 }

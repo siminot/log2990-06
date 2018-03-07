@@ -1,12 +1,13 @@
 import { Injectable, Inject } from "@angular/core";
 import { Scene } from "three";
+import { IScene } from "./IScene";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
-import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
+import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
@@ -15,11 +16,11 @@ const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementC
 const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("n", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireScene {
+export class GestionnaireScene implements IScene {
 
     private _scene: Scene;
     private tempsJournee: TempsJournee;
-    private clavier: UtilisateurClavier;
+    private clavier: UtilisateurPeripherique;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
@@ -33,14 +34,15 @@ export class GestionnaireScene {
                        private gestionnaireVoiture: GestionnaireVoitures,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._scene = new Scene;
-        this.clavier = new UtilisateurClavier(gestionnaireClavier);
+        this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.initialisationTouches();
+        this.creerScene();
     }
 
     protected initialisationTouches(): void {
-        this.clavier.ajouterTouche(this.changerDecor.bind(this), CHANGER_DECOR);
-        this.clavier.ajouterTouche(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE);
+        this.clavier.ajouter(this.changerDecor.bind(this), CHANGER_DECOR);
+        this.clavier.ajouter(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE);
     }
 
     // Creation de la scene

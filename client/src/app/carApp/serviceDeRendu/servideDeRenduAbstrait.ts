@@ -1,26 +1,23 @@
-import { Injectable } from "@angular/core";
 import Stats = require("stats.js");
-import { WebGLRenderer } from "three";
-import { GestionnaireScene } from "../scene/GestionnaireScene";
-import { GestionnaireCamera } from "../camera/GestionnaireCamera";
+import { WebGLRenderer, Scene, Camera } from "three";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
+import { ICamera } from "../camera/ICamera";
+import { IScene } from "../scene/IScene";
 
-@Injectable()
-export class ServiceDeRendu {
-    private renderer: WebGLRenderer;
+export abstract class ServiceDeRenduAbstrait {
     private stats: Stats;
-    private tempsDerniereMiseAJour: number;
+    protected renderer: WebGLRenderer;
+    protected tempsDerniereMiseAJour: number;
 
-    public constructor(private gestionnaireScene: GestionnaireScene,
-                       private gestionnaireCamera: GestionnaireCamera,
-                       private gestionnaireEcran: GestionnaireEcran) {
+    public constructor(protected gestionnaireEcran: GestionnaireEcran,
+                       protected gestionnaireCamera: ICamera,
+                       protected gestionnaireScene: IScene) {
         this.renderer = new WebGLRenderer();
     }
 
     // Initialisation
 
     public async initialiser(): Promise<void> {
-        await this.initialiserScene();
         this.initialiserStats();
         this.commencerBoucleDeRendu();
     }
@@ -29,10 +26,6 @@ export class ServiceDeRendu {
         this.stats = new Stats();
         this.stats.dom.style.position = "absolute";
         this.gestionnaireEcran.ajouterElementConteneur(this.stats.dom);
-    }
-
-    private async initialiserScene(): Promise<void> {
-        this.gestionnaireScene.creerScene();
     }
 
     // Rendu
@@ -50,20 +43,26 @@ export class ServiceDeRendu {
     private rendu(): void {
         requestAnimationFrame(() => this.rendu());
         this.miseAJour();
-        this.renderer.render(this.gestionnaireScene.scene, this.gestionnaireCamera.camera);
+        this.renderer.render(this.scene, this.camera);
         this.stats.update();
     }
 
-    private miseAJour(): void {
-        const tempsDepuisDerniereTrame: number = Date.now() - this.tempsDerniereMiseAJour;
-        this.gestionnaireScene.miseAJour(tempsDepuisDerniereTrame);
-        this.tempsDerniereMiseAJour = Date.now();
-    }
+    protected miseAJour(): void { }
 
     // Mise à jour de la taille de la fenetre
 
     public redimensionnement(): void {
         this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
         this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
+    }
+
+    // Obtenir la scene et la camera
+
+    protected get scene(): Scene {
+        return this.gestionnaireScene.scene;
+    }
+
+    protected get camera(): Camera {
+        return this.gestionnaireCamera.camera;
     }
 }

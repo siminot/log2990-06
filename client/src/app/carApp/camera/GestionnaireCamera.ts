@@ -5,9 +5,10 @@ import { CameraJeu } from "./CameraJeu";
 import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
-import { UtilisateurClavier } from "../clavier/UtilisateurClavier";
+import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { ICamera } from "./ICamera";
 
 const CAMERA_INITIALE: number = 0;
 
@@ -17,11 +18,11 @@ const DEZOOM: EvenementClavier = new EvenementClavier("-", TypeEvenementClavier.
 const CHANGER_CAMERA: EvenementClavier = new EvenementClavier("c", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
-export class GestionnaireCamera {
+export class GestionnaireCamera implements ICamera {
 
     private cameras: CameraJeu[];
     private cameraCourante: CameraJeu;
-    private clavier: UtilisateurClavier;
+    private clavier: UtilisateurPeripherique;
 
     public get camera(): Camera {
         this.miseAJourCameraCourante();
@@ -32,7 +33,7 @@ export class GestionnaireCamera {
     public constructor(private gestionnaireVoitures: GestionnaireVoitures,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this.cameras = [];
-        this.clavier = new UtilisateurClavier(gestionnaireClavier);
+        this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.initialiserCameras();
         this.initialisationTouches();
     }
@@ -40,9 +41,9 @@ export class GestionnaireCamera {
     // Initialisation
 
     protected initialisationTouches(): void {
-        this.clavier.ajouterTouche(this.zoomer.bind(this), ZOOM);
-        this.clavier.ajouterTouche(this.dezoomer.bind(this), DEZOOM);
-        this.clavier.ajouterTouche(this.changerCamera.bind(this), CHANGER_CAMERA);
+        this.clavier.ajouter(this.zoomer.bind(this), ZOOM);
+        this.clavier.ajouter(this.dezoomer.bind(this), DEZOOM);
+        this.clavier.ajouter(this.changerCamera.bind(this), CHANGER_CAMERA);
     }
 
     private initialiserCameras(): void {

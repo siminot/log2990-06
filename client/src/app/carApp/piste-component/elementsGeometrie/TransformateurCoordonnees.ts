@@ -7,6 +7,8 @@ const PROFONDEUR_DEFAUT: number = 0.5;
 
 export class TransformateurCoordonnees {
 
+    private souris: MouseEvent;
+
     public constructor(private gestionnaireCamera: ICamera,
                        private gestionnaireEcran: GestionnaireEcran) { }
 
@@ -20,6 +22,14 @@ export class TransformateurCoordonnees {
         return new Point(souris3D.x, souris3D.z);
     }
 
+    // TODO: Verifier que la souris est dans la scene
+    public estSurScene(souris: MouseEvent): boolean {
+        this.souris = souris;
+
+        return true;
+        // return this.hauteurDansScene && this.largeurDansScene;
+    }
+
     private get camera(): Camera {
         return this.gestionnaireCamera.camera;
     }
@@ -30,6 +40,16 @@ export class TransformateurCoordonnees {
 
     private get hauteur(): number {
         return this.gestionnaireEcran.hauteur;
+    }
+
+    private get hauteurDansScene(): boolean {
+        return this.souris.offsetX >= 0 &&
+               this.souris.offsetX <= this.hauteur;
+    }
+
+    private get largeurDansScene(): boolean {
+        return this.souris.offsetY >= 0 &&
+               this.souris.offsetY <= this.largeur;
     }
 
 }

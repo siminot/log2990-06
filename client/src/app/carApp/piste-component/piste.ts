@@ -6,18 +6,38 @@ import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
 export class Piste extends Group {
 
     private elements: IntersectionPiste[];
+    private circuitBoucle: boolean;
 
     public constructor() {
         super();
         this.elements = [];
+        this.circuitBoucle = false;
     }
 
     public ajouterPoint(point: Point): void {
-        if (!this.creationPremierPoint && this.premierPoint.estEnContactAvec(point)) {
-            this.dernierElement.droiteDebut.miseAJourArrivee(point);
+        if (this.circuitBoucle) {
+            return;
+        } else if (this.doitFermerCircuit(point)) {
+            this.bouclerCircuit();
         } else {
             this.creerNouvelleIntersection(point);
         }
+    }
+
+    private doitFermerCircuit(point: Point): boolean {
+        return !this.creationPremierPoint && this.premiereIntersection.estEnContactAvec(point);
+    }
+
+    private bouclerCircuit(): void {
+        this.circuitBoucle = true;
+        this.premiereIntersection.droiteArrivee = this.derniereIntersection.droiteDebut;
+        this.premiereIntersection.droiteArrivee.miseAJourDepart(this.premierPoint);
+    }
+
+    private debouclerCircuit(): void {
+        this.circuitBoucle = false;
+        this.premiereIntersection.ramenerDroiteArrivee();
+        this.derniereIntersection.ramenerDroiteDebut();
     }
 
     private creerNouvelleIntersection(point: Point): void {
@@ -45,26 +65,32 @@ export class Piste extends Group {
 
     public miseAJourElementCourant(point: Point): void {
         this.creationPremierPoint
-            ? this.dernierElement.deplacementPoint(point)
-            : this.dernierElement.miseAJourPoint(point);
+            ? this.derniereIntersection.deplacementPoint(point)
+            : this.derniereIntersection.miseAJourPoint(point);
     }
 
     public effacerPoint(point: Point): void {
-        if (!this.creationPremierPoint) {
-            this.remove(this.dernierElement);
+        if (this.circuitBoucle) {
+            this.debouclerCircuit();
+        } else if (!this.creationPremierPoint) {
+            this.remove(this.derniereIntersection);
             this.elements.splice(-1);
         }
     }
 
-    private get dernierElement(): IntersectionPiste {
+    private get premiereIntersection(): IntersectionPiste {
+        return this.elements[0];
+    }
+
+    private get derniereIntersection(): IntersectionPiste {
         return this.elements.length - 1 >= 0
             ? this.elements[this.elements.length - 1]
             : null;
     }
 
     private get droiteArriveeCourante(): DroiteAffichage {
-        return this.dernierElement !== null
-         ? this.dernierElement.droiteDebut
+        return this.derniereIntersection !== null
+         ? this.derniereIntersection.droiteDebut
          : null;
     }
 
@@ -72,7 +98,7 @@ export class Piste extends Group {
         return this.elements.length === 0;
     }
 
-    private get premierPoint(): IntersectionPiste {
-        return this.elements[0];
+    private get premierPoint(): Point {
+        return this.premiereIntersection.point.point;
     }
 }

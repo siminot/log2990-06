@@ -6,7 +6,7 @@ import { Point } from "./Point";
 export class IntersectionPiste extends Group {
 
     public droiteArrivee: DroiteAffichage;
-    private point: PointAffichage;
+    public point: PointAffichage;
     public droiteDebut: DroiteAffichage;
 
     public constructor(droiteArrivee: DroiteAffichage, point: Point, estPremier: boolean) {
@@ -36,9 +36,19 @@ export class IntersectionPiste extends Group {
     }
 
     public estEnContactAvec(autrePoint: Point): boolean {
-        console.log(this.point.point, autrePoint);
         const droiteEntreCentre: Vector3 = this.point.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ);
-        console.log(droiteEntreCentre.length() <= RAYON_POINT);
-        return droiteEntreCentre.length() <= RAYON_POINT;
+        const DEUX: number = 2;
+
+        return droiteEntreCentre.length() <= DEUX * RAYON_POINT;
+    }
+
+    public ramenerDroiteArrivee(): void {
+        this.remove(this.droiteArrivee);
+        this.droiteArrivee = new DroiteAffichage(this.point.point, this.point.point);
+    }
+
+    public ramenerDroiteDebut(): void {
+        this.remove(this.droiteDebut);
+        this.droiteDebut = new DroiteAffichage(this.point.point, this.point.point);
     }
 }

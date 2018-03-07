@@ -3,6 +3,8 @@ import { IntersectionPiste } from "./elementsGeometrie/intersectionPiste";
 import { Point } from "./elementsGeometrie/Point";
 import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
 
+const ORIGINE: Point = new Point(0, 0);
+
 export class Piste extends Group {
 
     private elements: IntersectionPiste[];
@@ -10,11 +12,19 @@ export class Piste extends Group {
     public constructor() {
         super();
         this.elements = [];
+        this.ajouterElement(ORIGINE);
     }
 
-    public ajouterElement(point: Point): void {
-        const droiteArrivee: DroiteAffichage = new DroiteAffichage(this.avantDernierPoint, this.dernierPoint);
-        const intersection: IntersectionPiste = new IntersectionPiste(droiteArrivee, point, null);
+    private ajouterElement(point: Point): void {
+        let droiteArrivee: DroiteAffichage;
+        if (this.droiteArriveeCourante !== null) {
+            droiteArrivee = this.droiteArriveeCourante;
+            droiteArrivee.miseAJourArrivee(point);
+        } else {
+            droiteArrivee = new DroiteAffichage(point, point);
+         }
+
+        const intersection: IntersectionPiste = new IntersectionPiste(droiteArrivee, point);
         this.elements.push(intersection);
         this.add(intersection);
     }
@@ -25,24 +35,24 @@ export class Piste extends Group {
     }
 
     public miseAJourElementCourant(point: Point): void {
-        this.dernierElement.miseAJourPoint(point);
-    }
-
-    private get dernierPoint(): Point {
-        return this.elements.length - 1 >= 0
-            ? this.elements[this.elements.length - 1].point.point
-            : null;
-    }
-
-    private get avantDernierPoint(): Point {
-        return this.elements.length - 1 - 1 >= 0
-            ? this.elements[this.elements.length - 1 - 1].point.point
-            : null;
+        this.dernierElement.deplacementPoint(point);
     }
 
     private get dernierElement(): IntersectionPiste {
-        return this.elements.length >= 0
+        return this.elements.length - 1 >= 0
             ? this.elements[this.elements.length - 1]
             : null;
+    }
+
+    private get avantDernierElement(): IntersectionPiste {
+        return this.elements.length - 1 >= 1
+        ? this.elements[this.elements.length - 1 - 1]
+        : null;
+    }
+
+    private get droiteArriveeCourante(): DroiteAffichage {
+        return this.avantDernierElement !== null
+         ? this.avantDernierElement.droiteDebut
+         : null;
     }
 }

@@ -5,69 +5,32 @@ import { Point } from "./Point";
 
 export class IntersectionPiste extends Group {
 
-    private _point: PointAffichage;
-    private _droiteArrivee: DroiteAffichage;
-    private _droiteDebut: DroiteAffichage;
+    private droiteArrivee: DroiteAffichage;
+    private point: PointAffichage;
+    public droiteDebut: DroiteAffichage;
 
-    public constructor(droiteArrivee: DroiteAffichage, point: Point, droiteDebut: DroiteAffichage) {
+    public constructor(droiteArrivee: DroiteAffichage, point: Point) {
         super();
         this.point = new PointAffichage(point);
         this.droiteArrivee = droiteArrivee;
-        this.droiteDebut = droiteDebut;
+        this.droiteDebut = new DroiteAffichage(point, point);
         this.ajouterElements();
     }
 
-    public set droiteArrivee(droite: DroiteAffichage) {
-        this.remove(this._droiteArrivee);
-        this.droiteArrivee = droite;
-        this.ajouterDroiteArrivee();
-    }
-
-    public set point(point: PointAffichage) {
-        this.remove(this._point);
-        this._point = point;
-        this.ajouterPoint();
-    }
-
-    public set droiteDebut(droite: DroiteAffichage) {
-        this.remove(this._droiteDebut);
-        this._droiteDebut = droite;
-        this.ajouterDroiteArrivee();
-    }
-
     private ajouterElements(): void {
-        this.ajouterDroiteArrivee();
-        this.ajouterPoint();
-        this.ajouterDroiteDebut();
-    }
-
-    private ajouterDroiteArrivee(): void {
-        if (this.droiteArrivee !== null) {
-            this.add(this.droiteArrivee);
-        }
-    }
-
-    private ajouterPoint(): void {
-        this.add(this._point);
-    }
-
-    private ajouterDroiteDebut(): void {
-        if (this.droiteDebut !== null) {
-            this.add(this.droiteDebut);
-        }
+        this.add(this.point);
+        this.add(this.droiteDebut);
     }
 
     public miseAJourPoint(point: Point): void {
-        if (this.point !== null) {
-            this.point.point = point;
-        }
+        this.point.point = point;
+        this.droiteDebut.miseAJourDepart(point);
+        this.droiteArrivee.miseAJourArrivee(point);
+    }
 
-        if (this.droiteDebut !== null) {
-            this.droiteDebut.miseAJourDepart(point);
-        }
-
-        if (this.droiteArrivee !== null) {
-            this.droiteArrivee.miseAJourArrivee(point);
-        }
+    public deplacementPoint(point: Point): void {
+        this.point.point = point;
+        this.droiteDebut.miseAJourPoint(point);
+        this.droiteArrivee.miseAJourPoint(point);
     }
 }

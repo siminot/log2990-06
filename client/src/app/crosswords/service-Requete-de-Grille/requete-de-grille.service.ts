@@ -56,14 +56,14 @@ export class RequeteDeGrilleService {
       this.insererMotsDansGrille();
     });
   }
-/*
-  private grilleDeTest(): void {
-    this._mots = listeMotsLongue;
-    this.serviceEnvoieMots(this.mots);
-    this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
-    this.insererMotsDansGrille();
-  }
-*/
+
+  // private grilleDeTest(): void {
+  //   this._mots = listeMotsLongue;
+  //   this.serviceEnvoieMots(this.mots);
+  //   this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
+  //   this.insererMotsDansGrille();
+  // }
+
   // Traitement de la grille
 
   private insererMotsDansGrille(): void {

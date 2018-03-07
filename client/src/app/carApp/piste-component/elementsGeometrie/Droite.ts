@@ -1,4 +1,4 @@
-import { Point } from "./point";
+import { Point } from "./Point";
 import { Line3 } from "three";
 
 export class Droite extends Line3 {

@@ -2,7 +2,7 @@ import { Point } from "./Point";
 import { Mesh, CircleGeometry, MeshBasicMaterial, Group, RingGeometry } from "three";
 import { PI_OVER_2 } from "../../constants";
 
-const RAYON_POINT: number = 0.25;
+export const RAYON_POINT: number = 0.25;
 const RAYON_INTERNE: number = 0.15;
 const NOMBRE_SEGMENTS: number = 25;
 const COULEUR_POINT: number = 0xFF8C1A;
@@ -50,5 +50,4 @@ export class PointAffichage extends Group {
     private miseAJourMesh(): void {
         this.position.set(this._point.vecteurPlanXZ.x, this._point.vecteurPlanXZ.y + DIFFERENCE_PROFONDEUR, this._point.vecteurPlanXZ.z);
     }
-
 }

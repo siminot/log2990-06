@@ -1,11 +1,11 @@
-import { Group } from "three";
-import { PointAffichage } from "./pointAffichage";
+import { Group, Vector3 } from "three";
+import { PointAffichage, RAYON_POINT } from "./pointAffichage";
 import { DroiteAffichage } from "./droiteAffichage";
 import { Point } from "./Point";
 
 export class IntersectionPiste extends Group {
 
-    private droiteArrivee: DroiteAffichage;
+    public droiteArrivee: DroiteAffichage;
     private point: PointAffichage;
     public droiteDebut: DroiteAffichage;
 
@@ -33,5 +33,12 @@ export class IntersectionPiste extends Group {
         this.point.point = point;
         this.droiteDebut.miseAJourPoint(point);
         this.droiteArrivee.miseAJourPoint(point);
+    }
+
+    public estEnContactAvec(autrePoint: Point): boolean {
+        console.log(this.point.point, autrePoint);
+        const droiteEntreCentre: Vector3 = this.point.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ);
+        console.log(droiteEntreCentre.length() <= RAYON_POINT);
+        return droiteEntreCentre.length() <= RAYON_POINT;
     }
 }

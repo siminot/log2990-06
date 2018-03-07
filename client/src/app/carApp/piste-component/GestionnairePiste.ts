@@ -29,8 +29,8 @@ export class GestionnairePiste {
     }
 
     private inscriptionSouris(): void {
-        this.souris.ajouter(this.miseAJourPoint.bind(this), new EvenementSouris(TypeEvenementSouris.DRAG));
-        this.souris.ajouter(this.fixerPointCourant.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
+        // this.souris.ajouter(this.miseAJourPoint.bind(this), new EvenementSouris(TypeEvenementSouris.DRAG));
+        this.souris.ajouter(this.ajouterPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
         this.souris.ajouter(this.effacerPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
     }
 
@@ -40,9 +40,9 @@ export class GestionnairePiste {
         }
     }
 
-    private fixerPointCourant(evenementSouris: MouseEvent): void {
+    private ajouterPoint(evenementSouris: MouseEvent): void {
         if (this.transformateur.estSurScene(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
-            this._piste.fixerElement(this.transformateur.positionEcranVersScene(evenementSouris));
+            this._piste.ajouterPoint(this.transformateur.positionEcranVersScene(evenementSouris));
         }
     }
 

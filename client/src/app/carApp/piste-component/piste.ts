@@ -40,6 +40,13 @@ export class Piste extends Group {
             : this.dernierElement.miseAJourPoint(point);
     }
 
+    public effacerPoint(): void {
+        if (this.elements.length > 1) {
+            this.remove(this.dernierElement);
+            this.elements.splice(-1);
+        }
+    }
+
     private get dernierElement(): IntersectionPiste {
         return this.elements.length - 1 >= 0
             ? this.elements[this.elements.length - 1]

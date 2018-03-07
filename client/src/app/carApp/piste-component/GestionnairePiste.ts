@@ -50,7 +50,7 @@ export class GestionnairePiste {
         this.pointCourant.position.set(souris.x, 1, souris.y);
     }
 
-    private fixerPointCourant(): void {
+    private fixerPointCourant(evenementSouris: MouseEvent): void {
         this.creerPoint();
     }
 

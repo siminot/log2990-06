@@ -30,6 +30,7 @@ describe("GrilleComponent", () => {
     component = fixture.componentInstance;
     component.ngOnInit();
     component["motSelectionne"] = listeMotsLongue[0];
+    component["remplirPositionLettres"]();
     })
   );
 
@@ -54,43 +55,43 @@ describe("GrilleComponent", () => {
 
   describe("Gestion des touches de clavier", () => {
     it("Entree d'une lettre", () => {
-      component["positionCourante"] = 0;
-      const positionInit: number = component["positionCourante"];
+      component["focus"]["positionCourante"] = 0;
+      const positionInit: number = component["focus"]["positionCourante"];
       const touche: KeyboardEvent = new KeyboardEvent("keydown", {
         "key": "E"
       });
       component.manageKeyEntry(touche);
-      expect(component["positionCourante"]).toBeGreaterThan(positionInit);
+      expect(component["focus"]["positionCourante"]).toBeGreaterThan(positionInit);
     });
 
     it("Effacement d'une lettre", () => {
-      component["positionCourante"] = 1;
-      const positionInit: number = component["positionCourante"];
+      component["focus"]["positionCourante"] = 1;
+      const positionInit: number = component["focus"]["positionCourante"];
       const touche: KeyboardEvent = new KeyboardEvent("keydown", {
         "key": "Backspace"
       });
       component.manageKeyEntry(touche);
-      expect(component["positionCourante"]).toBeLessThan(positionInit);
+      expect(component["focus"]["positionCourante"]).toBeLessThan(positionInit);
     });
 
     it("Il ne se passe rien quand une touche invalide est appuyee", () => {
-      component["positionCourante"] = 0;
-      const positionInit: number = component["positionCourante"];
+      component["focus"]["positionCourante"] = 0;
+      const positionInit: number = component["focus"]["positionCourante"];
       const touche: KeyboardEvent = new KeyboardEvent("keydown", {
         "key": "2"
       });
       component.manageKeyEntry(touche);
-      expect(component["positionCourante"]).toEqual(positionInit);
+      expect(component["focus"]["positionCourante"]).toEqual(positionInit);
     });
 
     it("Il ne se passe rien quand le backspace est appuyé si on est déjà au début du mot", () => {
-      component["positionCourante"] = 0;
-      const positionInit: number = component["positionCourante"];
+      component["focus"]["positionCourante"] = 0;
+      const positionInit: number = component["focus"]["positionCourante"];
       const touche: KeyboardEvent = new KeyboardEvent("keydown", {
         "key": "Backspace"
       });
       component.manageKeyEntry(touche);
-      expect(component["positionCourante"]).toEqual(positionInit);
+      expect(component["focus"]["positionCourante"]).toEqual(positionInit);
     });
   });
 });

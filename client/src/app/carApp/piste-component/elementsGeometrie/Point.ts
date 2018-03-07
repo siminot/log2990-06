@@ -1,12 +1,9 @@
-import { Vector3 } from "three";
+import { Vector3, Vector2 } from "three";
 
-export class Point {
-    public x: number;
-    public y: number;
+export class Point extends Vector2 {
 
     public constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
 
     public get vecteurPlanXZ(): Vector3 {

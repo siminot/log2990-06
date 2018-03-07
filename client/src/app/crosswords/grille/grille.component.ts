@@ -19,7 +19,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Mot[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private motSelectionne: Mot;
-  private positionLettresSelectionnees: string[];
   private positionCourante: number;
   private lockedLetter: boolean[][];
 
@@ -41,9 +40,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.mots = this.listeMotsService.mots;
-    this.remplirPositionLettres();
     this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {this.mots = mots; });
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {
+        this.mots = mots;
+        this.remplirPositionLettres(); });
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
     .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
@@ -68,9 +68,8 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private remplirPositionLettresMot(leMot: Mot): void {
-    this.positionLettresSelectionnees = [];
-
     let tmp: string = this.makeID(leMot.premierX, leMot.premierY, "");
+    leMot.positionsLettres = [];
     leMot.positionsLettres[0] = tmp;
 
     const x: number = leMot.premierX;

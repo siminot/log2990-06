@@ -24,7 +24,7 @@ export class RequeteDeGrilleService {
   public constructor(private httpReq: HttpeReqService) {
     this.genererGrille();
     this.souscrireRequeteMots();
-    this.grilleDeTest();
+    // this.grilleDeTest();
   }
   // Accesseurs
 

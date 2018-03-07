@@ -5,7 +5,7 @@ import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
-import { listeMotsLongue } from "./../objetsTest/objetsTest";
+// import { listeMotsLongue } from "./../objetsTest/objetsTest";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
@@ -56,14 +56,14 @@ export class RequeteDeGrilleService {
       this.insererMotsDansGrille();
     });
   }
-
+/*
   private grilleDeTest(): void {
     this._mots = listeMotsLongue;
     this.serviceEnvoieMots(this.mots);
     this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
     this.insererMotsDansGrille();
   }
-
+*/
   // Traitement de la grille
 
   private insererMotsDansGrille(): void {

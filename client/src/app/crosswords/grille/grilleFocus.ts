@@ -16,6 +16,8 @@ export class GrilleFocus {
       if (elemTmp.value === "") {
         this.positionCourante = i;
         elemTmp.focus();
+
+        return;
       }
     }
 

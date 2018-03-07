@@ -40,7 +40,7 @@ export class Piste extends Group {
             : this.dernierElement.miseAJourPoint(point);
     }
 
-    public effacerPoint(): void {
+    public effacerPoint(point: Point): void {
         if (this.elements.length > 1) {
             this.remove(this.dernierElement);
             this.elements.splice(-1);

@@ -5,6 +5,7 @@ import { PI_OVER_2 } from "../constants";
 import { GestionnairePiste } from "./GestionnairePiste";
 
 const PROFONDEUR: number = 10;
+const COULEUR_FOND: number = 0xB3ECFF;
 
 @Injectable()
 export class GestionnaireScenePiste implements IScene {
@@ -30,9 +31,8 @@ export class GestionnaireScenePiste implements IScene {
     }
 
     private ajouterCouleurDeFond(): void {
-        const COULEUR: number = 0x66CCFF;
         const DIMENSIONS: number = 50000;
-        const MATERIEL: MeshBasicMaterial = new MeshBasicMaterial({ color: COULEUR, side: DoubleSide });
+        const MATERIEL: MeshBasicMaterial = new MeshBasicMaterial({ color: COULEUR_FOND, side: DoubleSide });
         const geometrie: PlaneGeometry = new PlaneGeometry(DIMENSIONS, DIMENSIONS);
         geometrie.rotateX(PI_OVER_2);
         geometrie.translate(0, PROFONDEUR, 0);

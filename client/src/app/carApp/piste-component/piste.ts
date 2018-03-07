@@ -24,7 +24,7 @@ export class Piste extends Group {
             droiteArrivee = new DroiteAffichage(point, point);
          }
 
-        const intersection: IntersectionPiste = new IntersectionPiste(droiteArrivee, point);
+        const intersection: IntersectionPiste = new IntersectionPiste(droiteArrivee, point, this.creationPremierPoint);
         this.elements.push(intersection);
         this.add(intersection);
     }
@@ -35,7 +35,7 @@ export class Piste extends Group {
     }
 
     public miseAJourElementCourant(point: Point): void {
-        this.premierPoint
+        this.placementPremierPoint
             ? this.dernierElement.deplacementPoint(point)
             : this.dernierElement.miseAJourPoint(point);
     }
@@ -59,7 +59,11 @@ export class Piste extends Group {
          : null;
     }
 
-    private get premierPoint(): boolean {
+    private get creationPremierPoint(): boolean {
+        return this.elements.length === 0;
+    }
+
+    private get placementPremierPoint(): boolean {
         return this.elements.length === 1;
     }
 }

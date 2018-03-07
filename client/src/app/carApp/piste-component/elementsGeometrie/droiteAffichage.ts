@@ -2,7 +2,7 @@ import { Line, LineBasicMaterial, Geometry } from "three";
 import { Droite } from "./droite";
 import { Point } from "./Point";
 
-const COULEUR_DROITE: number = 0xFF00FF;
+const COULEUR_DROITE: number = 0x3333CC;
 
 export class DroiteAffichage extends Line {
 

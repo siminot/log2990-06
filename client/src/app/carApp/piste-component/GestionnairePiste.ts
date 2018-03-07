@@ -48,7 +48,7 @@ export class GestionnairePiste {
 
     private effacerPoint(evenementSouris: MouseEvent): void {
         if (this.transformateur.estSurScene(evenementSouris) && evenementSouris.button === BoutonSouris.DROIT) {
-            this._piste.effacerPoint();
+            this._piste.effacerPoint(this.transformateur.positionEcranVersScene(evenementSouris));
         }
     }
 }

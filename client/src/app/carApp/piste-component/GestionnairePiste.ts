@@ -6,9 +6,9 @@ import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { EvenementSouris, TypeEvenementSouris } from "../souris/evenementSouris";
 import { GestionnaireCameraPiste } from "./gestionnaireCameraPiste";
 import { TransformateurCoordonnees } from "./elementsGeometrie/TransformateurCoordonnees";
-import { Point } from "./elementsGeometrie/point";
+import { Point } from "./elementsGeometrie/Point";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
-import { Droite } from "./elementsGeometrie/droite";
+import { Droite } from "./elementsGeometrie/Droite";
 
 const RAYON_POINT: number = 0.5;
 const NOMBRE_SEGMENTS: number = 25;

@@ -3,6 +3,8 @@ import { IEvenement } from "../peripheriques/IEvenement";
 
 export enum TypeEvenementSouris { CLICK, MOUSEOVER, MOUSEDOWN, MOUSEUP, DOUBLECLICK, DRAG, DRAGOVER }
 
+export enum BoutonSouris { GAUCHE, MILIEU, DROIT }
+
 export class EvenementSouris implements IEvenement {
     public type: TypeEvenementSouris;
 

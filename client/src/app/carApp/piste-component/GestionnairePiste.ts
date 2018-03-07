@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
-import { EvenementSouris, TypeEvenementSouris } from "../souris/evenementSouris";
+import { EvenementSouris, TypeEvenementSouris, BoutonSouris } from "../souris/evenementSouris";
 import { GestionnaireCameraPiste } from "./gestionnaireCameraPiste";
 import { TransformateurCoordonnees } from "./elementsGeometrie/TransformateurCoordonnees";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
@@ -40,7 +40,7 @@ export class GestionnairePiste {
     }
 
     private fixerPointCourant(evenementSouris: MouseEvent): void {
-        if (this.transformateur.estSurScene(evenementSouris)) {
+        if (this.transformateur.estSurScene(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
             this._piste.fixerElement(this.transformateur.positionEcranVersScene(evenementSouris));
         }
     }

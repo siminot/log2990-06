@@ -46,15 +46,9 @@ export class Piste extends Group {
             : null;
     }
 
-    private get avantDernierElement(): IntersectionPiste {
-        return this.elements.length - 1 >= 1
-        ? this.elements[this.elements.length - 1 - 1]
-        : null;
-    }
-
     private get droiteArriveeCourante(): DroiteAffichage {
-        return this.avantDernierElement !== null
-         ? this.avantDernierElement.droiteDebut
+        return this.dernierElement !== null
+         ? this.dernierElement.droiteDebut
          : null;
     }
 

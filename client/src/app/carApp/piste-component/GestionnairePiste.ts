@@ -34,10 +34,14 @@ export class GestionnairePiste {
     }
 
     private miseAJourPoint(evenementSouris: MouseEvent): void {
-        this._piste.miseAJourElementCourant(this.transformateur.positionEcranVersScene(evenementSouris));
+        if (this.transformateur.estSurScene(evenementSouris)) {
+            this._piste.miseAJourElementCourant(this.transformateur.positionEcranVersScene(evenementSouris));
+        }
     }
 
     private fixerPointCourant(evenementSouris: MouseEvent): void {
-        this._piste.fixerElement(this.transformateur.positionEcranVersScene(evenementSouris));
+        if (this.transformateur.estSurScene(evenementSouris)) {
+            this._piste.fixerElement(this.transformateur.positionEcranVersScene(evenementSouris));
+        }
     }
 }

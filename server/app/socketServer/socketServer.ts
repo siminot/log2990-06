@@ -5,9 +5,13 @@ export class SocketServer {
 
     private io: SocketIO.Server;
 
-    public constructor() {
-        this.io = socket(Server);
+    public constructor(leServeur: Server) {
+        this.io = socket(leServeur);
+    }
+
+    public init(): void {
         this.ecoute();
+        console.log("J'ecoute");
     }
 
     private ecoute(): void {
@@ -22,7 +26,7 @@ export class SocketServer {
     }
 
     private connection(unSocket: SocketIO.Socket): void {
-        console.log("salut je suis la" + unSocket.id);
+        console.log("salut je suis la " + unSocket.id);
     }
 
     private deconnection(): void {

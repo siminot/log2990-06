@@ -108,8 +108,8 @@ export class Piste extends Group {
 
     public selectionnerIntersection(souris: Point): void {
         const objets: Object3D[] = [];
-        new Raycaster(souris.vecteurPlanXZ, DANS_LE_PLAN).intersectObjects(objets);
-
+        const raycaster: Raycaster = new Raycaster(souris.vecteurPlanXZ.normalize(), DANS_LE_PLAN.normalize());
+        raycaster.intersectObjects(objets);
         for (const objet of objets) {
             if (objet instanceof IntersectionPiste) {
                 this.intersectionSelectionnee = objet;

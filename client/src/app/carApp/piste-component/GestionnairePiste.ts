@@ -30,14 +30,15 @@ export class GestionnairePiste {
     }
 
     private inscriptionSouris(): void {
-        // this.souris.ajouter(this.miseAJourPoint.bind(this), new EvenementSouris(TypeEvenementSouris.DRAG));
+        this.souris.ajouter(this.miseAJourPoint.bind(this), new EvenementSouris(TypeEvenementSouris.MOUSEUP));
         this.souris.ajouter(this.ajouterPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
         this.souris.ajouter(this.effacerPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
     }
 
     private miseAJourPoint(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris)) {
-            this._piste.miseAJourElementCourant(this.positionSouris(evenementSouris));
+            this._piste.selectionnerIntersection(this.positionSouris(evenementSouris));
+            // this._piste.miseAJourElementCourant(this.positionSouris(evenementSouris));
         }
     }
 

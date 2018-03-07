@@ -8,6 +8,7 @@ import * as CONST from "../constantes";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { EncadrementCase } from "./encadrementCase";
 import { MiseEnEvidence } from "./miseEnEvidence";
+import { GrilleFocus } from "./grilleFocus";
 
 const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
 @Component({
@@ -20,18 +21,18 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private mots: Mot[];
   private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   private motSelectionne: Mot;
-  private positionCourante: number;
   private lockedLetter: boolean[][];
 
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
   private miseEnEvidence: MiseEnEvidence;
-  // private focusTest: GrilleFocus;
+  private focus: GrilleFocus;
 
   public constructor(private listeMotsService: RequeteDeGrilleService,
                      private _servicePointage: InfojoueurService) {
     this.miseEnEvidence = new MiseEnEvidence();
+    this.focus = new GrilleFocus(document, 0);
     this.lockedLetter = [];
     for (let i: number = 0 ; i < CONST.TAILLE_TABLEAU ; i++) {
       this.lockedLetter[i] = [];
@@ -86,52 +87,24 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   private focusSurBonneLettre(): void {
-    let elemTmp: HTMLInputElement, idTmp: string;
-    let i: number;
-
-    for (i = 0 ; i < this.motSelectionne.longueur ; i++) {
-      idTmp = this.motSelectionne.positionsLettres[i];
-      elemTmp = document.getElementById(idTmp) as HTMLInputElement;
-
-      if (elemTmp.value === "") {
-        this.positionCourante = i;
-        elemTmp.focus();
-
-        return;
-      }
-    }
-
-    this.positionCourante = this.motSelectionne.longueur - 1;
-    elemTmp.focus();
+    this.focus.focusSurBonneLettre(this.motSelectionne);
   }
 
   public manageKeyEntry(event: KeyboardEvent): void {
     if (event.key === "Backspace") {
-      this.focusOnPreviousLetter();
+      this.focus.focusOnPreviousLetter(this.motSelectionne, this.lockedLetter);
     } else if (event.key.toUpperCase().charCodeAt(0) >= CONST.KEYCODE_MIN && event.key.toUpperCase().charCodeAt(0) <= CONST.KEYCODE_MAX) {
       this.focusOnNextLetter();
     }
   }
 
   private focusOnNextLetter(): void {
-    if (this.positionCourante < this.motSelectionne.longueur - 1) {
-      this.positionCourante++;
-      const elem: HTMLInputElement =
-      document.getElementById(this.motSelectionne.positionsLettres[this.positionCourante]) as HTMLInputElement;
-      if (elem !== null) {
-        elem.focus();
-
-        if (elem.value !== "") {
-          this.focusOnNextLetter();
-        }
-      }
-
-    } else if (this.positionCourante === this.motSelectionne.longueur - 1) {
+    if (this.focus.focusOnNextLetter(this.motSelectionne)) {
       this.validateWord();
     }
   }
 
-  private validateWord(): boolean {
+  private validateWord(): void {
     const usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
     const valid: boolean = usersWord === this.motSelectionne.mot;
 
@@ -139,16 +112,9 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.motSelectionne.motTrouve = true;
       this.lockLettersFromWord();
       this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "green");
-      this.removeFocusFromSelectedWord();
+      this.focus.removeFocusFromSelectedWord(this.motSelectionne);
       this._servicePointage.incrementationNbMotDecouv(CONST.INCR_UN_MOT_DECOUVERT);
     }
-
-    return valid;
-  }
-
-  private removeFocusFromSelectedWord(): void {
-    const elem: HTMLInputElement = document.getElementById(this.motSelectionne.positionsLettres[this.positionCourante]) as HTMLInputElement;
-    elem.blur();
   }
 
   private lockLettersFromWord(): void {
@@ -171,36 +137,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return wordCreated;
   }
 
-  private focusOnPreviousLetter(): void {
-    const idCourant: string = this.motSelectionne.positionsLettres[this.positionCourante];
-    const elemCourant: HTMLInputElement = document.getElementById(idCourant) as HTMLInputElement;
-    const xCour: number = +this.motSelectionne.positionsLettres[this.positionCourante][0];
-    const yCour: number = +this.motSelectionne.positionsLettres[this.positionCourante][1];
-
-    if (this.isLastLetterOfWord(elemCourant) && !this.lockedLetter[xCour][yCour] && elemCourant.value !== "") {
-      elemCourant.value = "";
-    } else if (this.positionCourante > 0 || (this.isLastLetterOfWord(elemCourant) && this.lockedLetter[xCour][yCour])) {
-      this.positionCourante--;
-      const idPrev: string = this.motSelectionne.positionsLettres[this.positionCourante];
-      const previousElem: HTMLInputElement = document.getElementById(idPrev) as HTMLInputElement;
-      const xPrev: number = +this.motSelectionne.positionsLettres[this.positionCourante][0];
-      const yPrev: number = +this.motSelectionne.positionsLettres[this.positionCourante][1];
-
-      if (previousElem !== null) {
-        if (!this.lockedLetter[xPrev][yPrev]) {
-          previousElem.focus();
-          previousElem.value = "";
-        } else {
-          this.focusOnPreviousLetter();
-        }
-      }
-    }
-  }
-
-  private isLastLetterOfWord(elemCourant: HTMLInputElement): boolean {
-    return this.positionCourante === this.motSelectionne.longueur - 1 ? true : false;
-  }
-
   public getListeMots(): Mot[] {
     return this.mots;
   }
@@ -221,19 +157,16 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public retrieveWordFromClick(event: KeyboardEvent): void {
-    // retrieve Id from the event
     // Erreur de typescript en précisant le type
     // tslint:disable-next-line:no-any
     const target: any = event.target || event.srcElement || event.currentTarget;
     const cordinate: string[] = target.attributes.id.nodeValue.split("");
-    // coordonne X et Y de la case selectionneMot
     const x: number = +cordinate[0];
     const y: number = +cordinate[1];
     const motSousJacent: Mot = this.findWordFromXY(x, y);
     this.motSelectionne = motSousJacent;
 
     this.envoieMotSelectionne();
-    // this.focusOnRightLetter();
   }
 
   private findWordFromXY( X: number, Y: number): Mot {
@@ -265,7 +198,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
   private envoieMotSelectionne(): void {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
-  // never reasign ? On change un attribut juste en dessous, du calme TSlint
   public switchCheatMode(): void {
     for (const mot of this.mots) {
       mot.cheat = !mot.cheat;

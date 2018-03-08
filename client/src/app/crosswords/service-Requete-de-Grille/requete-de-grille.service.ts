@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpeReqService } from "../httpRequest/http-request.service";
-import { Mot } from "../objetsTest/mot";
-import { LettreGrille } from "../objetsTest/lettreGrille";
+// import { Mot } from "../objetsTest/mot";
+// import { LettreGrille } from "../objetsTest/lettreGrille";
 import { RequeteDeGrilleAbs } from "./requete-de-grilleAbs";
 
-const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
+// const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
 @Injectable()
 export class RequeteDeGrilleService extends RequeteDeGrilleAbs {

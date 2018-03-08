@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
+// import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
-import { HttpeReqService } from "../httpRequest/http-request.service";
+// import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";

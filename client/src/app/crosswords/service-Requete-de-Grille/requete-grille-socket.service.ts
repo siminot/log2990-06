@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
-import { HttpeReqService } from "../httpRequest/http-request.service";
 import { RequeteDeGrilleAbs } from "./requete-de-grilleAbs";
 
 @Injectable()
-export class RequeteDeGrilleService extends RequeteDeGrilleAbs {
+export class RequeteGrilleSocketService extends RequeteDeGrilleAbs {
 
-  public constructor(private httpReq: HttpeReqService) {
+  public constructor(private socket: number /* type a modifier */) {
     super();
     this.souscrireRequeteMots();
     // this.grilleDeTest();
@@ -14,11 +13,11 @@ export class RequeteDeGrilleService extends RequeteDeGrilleAbs {
   // Requetes
 
   private souscrireRequeteMots(): void {
-    this.httpReq.obtenirMots().subscribe((x) => {
+/*     this.socket.obtenirMots().subscribe((x) => {
       this._mots = x;
       this.serviceEnvoieMots(this.mots);
       this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
       this.insererMotsDansGrille();
-    });
+    }); */
   }
 }

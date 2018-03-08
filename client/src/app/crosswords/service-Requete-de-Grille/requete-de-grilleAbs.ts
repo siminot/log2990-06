@@ -1,14 +1,14 @@
-// import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
-// import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
-export class RequeteDeGrilleAbs {
+// Classe sans HttpReq: pourrait être réutilisée pour le service de socket..?
+
+export abstract class RequeteDeGrilleAbs {
   protected _mots: Mot[];
   protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 

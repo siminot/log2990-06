@@ -72,9 +72,9 @@ export class SocketServer {
         unSocket.to(unSocket.id).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
     }
 
-    private jouerPartie(nomRoom: string, unSocket: SocketIO.Socket): void {
-        //
-    }
+    // private jouerPartie(nomRoom: string, unSocket: SocketIO.Socket): void {
+    //     //
+    // }
 
     private deconnection(): void {
         // console.log("un dude est parti");

@@ -20,8 +20,6 @@ export class SocketServer {
     private ecoute(): void {
         this.io.on(event.CONNECTION, (unSocket: SocketIO.Socket) => {
             this.connection(unSocket);
-            unSocket.emit("message", "salut");
-
             unSocket.on(event.DECO, () => {
                 this.deconnection();
             });
@@ -31,15 +29,17 @@ export class SocketServer {
     private connection(unSocket: SocketIO.Socket): void {
         // demande au client s'il cree ou joindre la partie;
         unSocket.emit(event.ID);
-        // Si le client est un createur
         unSocket.on(event.CREATEUR, (nomRoom: string) => {
             this.creerUnePartie(nomRoom, unSocket);
+        });
+        unSocket.on(event.REJOINDRE, (nomRoom: string) => {
+            this.rejoindrePatrie(nomRoom, unSocket);
         });
     }
 
     private creerUnePartie(nomRoom: string, unSocket: SocketIO.Socket): void {
         if (nomRoom in this.rooms) {
-            unSocket.emit(event.NOM_EXISTANT);
+            this.mauvaisNomRoom(event.NOM_EXISTANT, unSocket);
         } else {
             this.rooms.push(nomRoom);
             unSocket.emit(event.ROOM_CREEE);
@@ -48,10 +48,32 @@ export class SocketServer {
         }
     }
 
+    private rejoindrePatrie(nomRoom: string, unSocket: SocketIO.Socket): void {
+        if (nomRoom in this.rooms) {
+            unSocket.join(nomRoom);
+            this.envoyerGrille(unSocket);
+        } else {
+            this.mauvaisNomRoom(event.NOM_NON_EXISTANT, unSocket);
+        }
+    }
+
+    private mauvaisNomRoom(evenement: string, unSocket: SocketIO.Socket): void {
+        unSocket.to(unSocket.id).emit(evenement);
+        unSocket.disconnect();
+    }
+
     private recevoirGrille(unSocket: SocketIO.Socket): void {
         unSocket.on(event.ENVOYER_GRILLE, (laGrille: Mot[]) => {
             this.grilleDeJeu = laGrille;
         });
+    }
+
+    private envoyerGrille(unSocket: SocketIO.Socket): void {
+        unSocket.to(unSocket.id).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
+    }
+
+    private jouerPartie(nomRoom: string, unSocket: SocketIO.Socket): void {
+        //
     }
 
     private deconnection(): void {

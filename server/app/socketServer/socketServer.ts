@@ -67,6 +67,7 @@ export class SocketServer {
     }
 
     private recevoirGrille(unSocket: SocketIO.Socket): void {
+        unSocket.to(unSocket.id).emit(event.DEMANDER_GRILLE);
         unSocket.on(event.ENVOYER_GRILLE, (laGrille: Mot[]) => {
             this.grilleDeJeu = laGrille;
         });

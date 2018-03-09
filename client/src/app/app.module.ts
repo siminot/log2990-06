@@ -31,6 +31,7 @@ import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
+import { JoueurSoloComponent} from "./crosswords/joueur-solo/joueur-solo.component";
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
         DirectiveFocusDirective,
         DefinitionHComponent,
         DefinitionVComponent,
-        InfoJoueur1Component
+        InfoJoueur1Component,
+        JoueurSoloComponent
     ],
     imports: [
         BrowserModule,
@@ -75,7 +77,8 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
         MainGrilleComponent,
         GrilleComponent,
         DefinitionVComponent,
-        DefinitionHComponent
+        DefinitionHComponent,
+        JoueurSoloComponent
     ]
 })
 export class AppModule { }

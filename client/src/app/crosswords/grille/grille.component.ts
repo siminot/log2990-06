@@ -5,8 +5,8 @@ import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
 import * as CONST from "../constantes";
-import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
-import { EncadrementCase } from "./encadrementCase";
+// import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
+
 import { MiseEnEvidence } from "./miseEnEvidence";
 import { GrilleFocus } from "./grilleFocus";
 
@@ -18,61 +18,30 @@ const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tent
 })
 
 export class GrilleComponent implements OnInit, OnDestroy {
-  private mots: Mot[];
-  private matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
-  private motSelectionne: Mot;
-  private lockedLetter: boolean[][];
+  protected mots: Mot[];
+  protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
+  protected motSelectionne: Mot;
+  protected lockedLetter: boolean[][];
 
-  private subscriptionMots: Subscription;
-  private subscriptionMatrice: Subscription;
-  private subscriptionMotSelec: Subscription;
-  private miseEnEvidence: MiseEnEvidence;
-  private focus: GrilleFocus;
+  protected subscriptionMots: Subscription;
+  protected subscriptionMatrice: Subscription;
+  protected subscriptionMotSelec: Subscription;
+  protected miseEnEvidence: MiseEnEvidence;
+  protected focus: GrilleFocus;
 
-  public constructor(private listeMotsService: RequeteDeGrilleService,
-                     private _servicePointage: InfojoueurService) {
-    this.miseEnEvidence = new MiseEnEvidence();
-    this.focus = new GrilleFocus(document, 0);
-    this.lockedLetter = [];
-    for (let i: number = 0 ; i < CONST.TAILLE_TABLEAU ; i++) {
-      this.lockedLetter[i] = [];
-      for (let j: number = 0 ; j < CONST.TAILLE_TABLEAU ; j++) {
-        this.lockedLetter[i][j] = false;
-      }
-    }
+  public constructor(protected listeMotsService: RequeteDeGrilleService) {
   }
 
   public ngOnInit(): void {
-    this.mots = this.listeMotsService.mots;
-    this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
-    // this.remplirPositionLettres(); // JUSTE POUR LA GRILLE DE TEST
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {
-        this.mots = mots;
-        this.remplirPositionLettres(); });
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
-    .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
-    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
-      .subscribe((motSelec) => {
-        this.motSelectionne = motSelec;
-        this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
-        EncadrementCase.appliquerStyleDefautGrille(document);
-
-        if (!this.motSelectionne.motTrouve) {
-          this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
-          if (document.getElementById("00") !== null) {
-            this.focusSurBonneLettre();
-          }
-        }
-      });
   }
 
-  private remplirPositionLettres(): void {
+  protected remplirPositionLettres(): void {
     for (const mot of this.mots) {
       this.remplirPositionLettresMot(mot);
     }
   }
 
-  private remplirPositionLettresMot(leMot: Mot): void {
+  protected remplirPositionLettresMot(leMot: Mot): void {
     let tmp: string = this.makeID(leMot.premierX, leMot.premierY, "");
     leMot.positionsLettres = [];
     leMot.positionsLettres[0] = tmp;
@@ -80,17 +49,17 @@ export class GrilleComponent implements OnInit, OnDestroy {
     const x: number = leMot.premierX;
     const y: number = leMot.premierY;
 
-    for (let i: number = 1 ; i < leMot.longueur ; i++) {
+    for (let i: number = 1; i < leMot.longueur; i++) {
       leMot.estVertical ? tmp = this.makeID(x, y + i, "") : tmp = this.makeID(x + i, y, "");
       leMot.positionsLettres[i] = tmp;
     }
   }
 
-  private focusSurBonneLettre(): void {
+  protected focusSurBonneLettre(): void {
     this.focus.focusSurBonneLettre(this.motSelectionne);
   }
 
-  public manageKeyEntry(event: KeyboardEvent): void {
+  protected manageKeyEntry(event: KeyboardEvent): void {
     if (event.key === "Backspace") {
       this.focus.focusOnPreviousLetter(this.motSelectionne, this.lockedLetter);
     } else if (event.key.toUpperCase().charCodeAt(0) >= CONST.KEYCODE_MIN && event.key.toUpperCase().charCodeAt(0) <= CONST.KEYCODE_MAX) {
@@ -98,13 +67,13 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private focusOnNextLetter(): void {
+  protected focusOnNextLetter(): void {
     if (this.focus.focusOnNextLetter(this.motSelectionne)) {
       this.validateWord();
     }
   }
 
-  private validateWord(): void {
+  protected validateWord(): void {
     const usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
     const valid: boolean = usersWord === this.motSelectionne.mot;
 
@@ -113,12 +82,12 @@ export class GrilleComponent implements OnInit, OnDestroy {
       this.lockLettersFromWord();
       this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "green");
       this.focus.removeFocusFromSelectedWord(this.motSelectionne);
-      this._servicePointage.incrementationNbMotDecouv(CONST.INCR_UN_MOT_DECOUVERT);
+      // this._servicePointage.incrementationNbMotDecouv(CONST.INCR_UN_MOT_DECOUVERT);
     }
   }
 
-  private lockLettersFromWord(): void {
-    for (let i: number = 0 ; i < this.motSelectionne.longueur ; i++) {
+  protected lockLettersFromWord(): void {
+    for (let i: number = 0; i < this.motSelectionne.longueur; i++) {
       if (this.motSelectionne.estVertical) {
         this.lockedLetter[this.motSelectionne.premierX][this.motSelectionne.premierY + i] = true;
       } else {
@@ -127,7 +96,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private createWordFromSelectedLetters(): string {
+  protected createWordFromSelectedLetters(): string {
     let wordCreated: string = "";
 
     for (const elem of this.motSelectionne.positionsLettres) {
@@ -137,26 +106,26 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return wordCreated;
   }
 
-  public getListeMots(): Mot[] {
+  protected getListeMots(): Mot[] {
     return this.mots;
   }
 
-  public getMatrice(): Array<Array<LettreGrille>> {
+  protected getMatrice(): Array<Array<LettreGrille>> {
     return this.matriceDesMotsSurGrille;
   }
 
-  public opacite(etat: boolean): String {
-    return(etat ? "0" : ".3");
+  protected opacite(etat: boolean): String {
+    return (etat ? "0" : ".3");
   }
 
-  private makeID(i: number, j: number, k: string): string {
+  protected makeID(i: number, j: number, k: string): string {
     const a: string = String(i);
     const b: string = String(j);
 
     return a + b + k;
   }
 
-  public retrieveWordFromClick(event: KeyboardEvent): void {
+  protected retrieveWordFromClick(event: KeyboardEvent): void {
     // Erreur de typescript en précisant le type
     // tslint:disable-next-line:no-any
     const target: any = event.target || event.srcElement || event.currentTarget;
@@ -169,23 +138,23 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.envoieMotSelectionne();
   }
 
-  private findWordFromXY( X: number, Y: number): Mot {
+  protected findWordFromXY(X: number, Y: number): Mot {
     let motTrouve: Mot;
-    for (const mot of  this.mots) {
+    for (const mot of this.mots) {
       let other: number;
       let max: number;
 
       if (!mot.estVertical) {
         other = mot.premierY;
         max = mot.premierX + mot.longueur - 1;
-        if ( X <= max && Y === other && mot.premierX <= X) {
+        if (X <= max && Y === other && mot.premierX <= X) {
           motTrouve = mot;
           break;
         }
-      } else if ( mot.estVertical) {
+      } else if (mot.estVertical) {
         other = mot.premierX;
         max = mot.premierY + mot.longueur - 1;
-        if ( Y <= max && X === other && mot.premierY <= Y) {
+        if (Y <= max && X === other && mot.premierY <= Y) {
           motTrouve = mot;
           break;
         }
@@ -195,10 +164,10 @@ export class GrilleComponent implements OnInit, OnDestroy {
     return motTrouve;
   }
 
-  private envoieMotSelectionne(): void {
+  protected envoieMotSelectionne(): void {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
-  public switchCheatMode(): void {
+  protected switchCheatMode(): void {
     for (const mot of this.mots) {
       mot.cheat = !mot.cheat;
     }
@@ -210,7 +179,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
   }
-  public afficherRegle(): void {
+  protected afficherRegle(): void {
     alert(REGLE_JEU);
   }
 }

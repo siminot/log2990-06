@@ -32,6 +32,7 @@ export class SocketServer {
     private connection(unSocket: SocketIO.Socket): void {
         // demande au client s'il cree ou joindre la partie;
         unSocket.emit(event.ID);
+        console.log("client connecte");
         unSocket.on(event.CREATEUR, (nomRoom: string) => {
             this.creerUnePartie(nomRoom, unSocket);
         });

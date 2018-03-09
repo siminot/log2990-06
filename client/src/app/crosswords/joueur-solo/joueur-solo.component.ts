@@ -19,7 +19,7 @@ import { EncadrementCase } from "../grille/encadrementCase";
 export class JoueurSoloComponent extends GrilleComponent implements OnInit {
   // private _servicePointage: InfojoueurService
   public constructor(protected listeMotsService: RequeteDeGrilleService,
-    ) {
+  ) {
     super(listeMotsService);
     this.miseEnEvidence = new MiseEnEvidence();
     this.focus = new GrilleFocus(document, 0);

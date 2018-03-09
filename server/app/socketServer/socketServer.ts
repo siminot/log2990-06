@@ -12,8 +12,6 @@ export class SocketServer {
 
     public constructor(private leServeur: http.Server) {
         this.io = socket(this.leServeur);
-
-        console.log(" Socket serveur etabli");
     }
 
     public init(): void {
@@ -30,9 +28,8 @@ export class SocketServer {
     }
 
     private connection(unSocket: SocketIO.Socket): void {
-        // demande au client s'il cree ou joindre la partie;
         unSocket.emit(event.ID);
-        console.log("client connecte");
+        // console.log("client connecte: " + unSocket.id);
         unSocket.on(event.CREATEUR, (nomRoom: string) => {
             this.creerUnePartie(nomRoom, unSocket);
         });
@@ -77,7 +74,7 @@ export class SocketServer {
         unSocket.to(unSocket.id).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
     }
 
-    // private jouerPartie(nomRoom: string, unSocket: SocketIO.Socket): void {
+    // private attenteAutreJoueur(nomRoom: string, unSocket: SocketIO.Socket): void {
     //     //
     // }
 

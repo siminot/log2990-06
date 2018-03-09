@@ -9,5 +9,5 @@ const server: Server = container.get<Server>(Types.Server);
 
 server.init();
 
-const socketServer: SocketServer = new SocketServer();
+const socketServer: SocketServer = new SocketServer(server.server);
 socketServer.init();

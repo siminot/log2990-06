@@ -22,7 +22,6 @@ export class TransformateurCoordonnees {
         return new Point(souris3D.x, souris3D.z);
     }
 
-    // TODO: Verifier que la souris est dans la scene
     public estSurScene(souris: MouseEvent): boolean {
         return this.gestionnaireEcran.estLaBonneCible(souris.target);
     }

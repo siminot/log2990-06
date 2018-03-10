@@ -1,9 +1,7 @@
-import { Group, Raycaster, Vector3, Object3D } from "three";
+import { Group } from "three";
 import { IntersectionPiste } from "./elementsGeometrie/intersectionPiste";
 import { Point } from "./elementsGeometrie/Point";
 import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
-
-const DANS_LE_PLAN: Vector3 = new Vector3(0, 1, 0);
 
 export class Piste extends Group {
 
@@ -63,14 +61,10 @@ export class Piste extends Group {
         return droiteArrivee;
     }
 
-    public fixerElement(point: Point): void {
-        this.miseAJourElementCourant(point);
-    }
-
-    public miseAJourElementCourant(point: Point): void {
-        this.creationPremierPoint
-            ? this.derniereIntersection.deplacementPoint(point)
-            : this.derniereIntersection.miseAJourPoint(point);
+    public miseAJourElementSelectionne(point: Point): void {
+        if (this.intersectionSelectionnee !== null) {
+            this.derniereIntersection.miseAJourPoint(point);
+        }
     }
 
     public effacerPoint(point: Point): void {
@@ -106,14 +100,15 @@ export class Piste extends Group {
         return this.premiereIntersection.point.point;
     }
 
-    public selectionnerIntersection(souris: Point): void {
-        const objets: Object3D[] = [];
-        const raycaster: Raycaster = new Raycaster(souris.vecteurPlanXZ.normalize(), DANS_LE_PLAN.normalize());
-        raycaster.intersectObjects(objets);
-        for (const objet of objets) {
-            if (objet instanceof IntersectionPiste) {
-                this.intersectionSelectionnee = objet;
+    public selectionnerIntersection(point: Point): void {
+        for (const intersection of this.elements) {
+            if (intersection.estEnContactAvec(point)) {
+                this.intersectionSelectionnee = intersection;
+
+                return;
             }
         }
+
+        this.intersectionSelectionnee = null;
     }
 }

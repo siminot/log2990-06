@@ -8,6 +8,10 @@ export class DroiteAffichage extends Line {
 
     private _droite: Droite;
 
+    public get droite(): Droite {
+        return this._droite;
+    }
+
     public constructor(depart: Point, arrivee: Point) {
         super();
         this._droite = new Droite(depart, arrivee);

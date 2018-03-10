@@ -25,14 +25,11 @@ export class IntersectionPiste extends Group {
 
     public miseAJourPoint(point: Point): void {
         this.point.point = point;
-        this.droiteDebut.miseAJourDepart(point);
         this.droiteArrivee.miseAJourArrivee(point);
-    }
 
-    public deplacementPoint(point: Point): void {
-        this.point.point = point;
-        this.droiteDebut.miseAJourPoint(point);
-        this.droiteArrivee.miseAJourPoint(point);
+        this.estDernierPointPlace
+        ? this.droiteDebut.miseAJourPoint(point)
+        : this.droiteDebut.miseAJourDepart(point);
     }
 
     public estEnContactAvec(autrePoint: Point): boolean {
@@ -50,5 +47,9 @@ export class IntersectionPiste extends Group {
     public ramenerDroiteDebut(): void {
         this.remove(this.droiteDebut);
         this.droiteDebut = new DroiteAffichage(this.point.point, this.point.point);
+    }
+
+    private get estDernierPointPlace(): boolean {
+        return this.droiteDebut.droite.start === this.point.point.vecteurPlanXZ;
     }
 }

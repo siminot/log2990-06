@@ -30,16 +30,10 @@ export class GestionnairePiste {
     }
 
     private inscriptionSouris(): void {
-        this.souris.ajouter(this.miseAJourPoint.bind(this), new EvenementSouris(TypeEvenementSouris.MOUSEUP));
         this.souris.ajouter(this.ajouterPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
         this.souris.ajouter(this.effacerPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
-    }
-
-    private miseAJourPoint(evenementSouris: MouseEvent): void {
-        if (this.positionSourisValide(evenementSouris)) {
-            this._piste.selectionnerIntersection(this.positionSouris(evenementSouris));
-            // this._piste.miseAJourElementCourant(this.positionSouris(evenementSouris));
-        }
+        this.souris.ajouter(this.deplacementPoint.bind(this), new EvenementSouris(TypeEvenementSouris.DRAG));
+        this.souris.ajouter(this.miseAJourSelection.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
     }
 
     private ajouterPoint(evenementSouris: MouseEvent): void {
@@ -51,6 +45,18 @@ export class GestionnairePiste {
     private effacerPoint(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.DROIT) {
             this._piste.effacerPoint(this.positionSouris(evenementSouris));
+        }
+    }
+
+    private deplacementPoint(evenementSouris: MouseEvent): void {
+        if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.DROIT) {
+            this._piste.miseAJourElementSelectionne(this.positionSouris(evenementSouris));
+        }
+    }
+
+    private miseAJourSelection(evenementSouris: MouseEvent): void {
+        if (this.positionSourisValide(evenementSouris)) {
+            this._piste.selectionnerIntersection(this.positionSouris(evenementSouris));
         }
     }
 

@@ -4,6 +4,19 @@ p {
     font-family: 'Press Start 2P', cursive;
 }
 
+input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #3900FF;
+    outline: none;
+    padding-bottom: 15px;
+    text-align: center;
+    width: 40%;
+
+    font-size: 20px;
+    font-family: 'Press Start 2P', cursive;
+  }
+
 /* div {
     border: solid 1px black;
 } */

@@ -5,11 +5,11 @@ const SERVER_URL: string = "http://localhost:3000/";
 @Injectable()
 export class ServiceSocketService {
 
-  private socket: any;
+  private socketClient: any;
 
   public constructor() {
-    this.socket = socketIo(SERVER_URL);
-    console.log("bonjour");
+    this.socketClient = socketIo(SERVER_URL);
+    // console.log("bonjour");
   }
 
 }

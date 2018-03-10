@@ -11,7 +11,7 @@
       Partie en ligne</button>
   </div>
 
-  <div id="difficulte">
+  <div id="difficulte" class="pasVisible">
     <button (click)="ajouterDifficulte('facile')"
     routerLink="/CrosswordsGame"
     >
@@ -26,13 +26,28 @@
       Difficile</button>
   </div>
 
-  <div id="creerOuJoindre">
-    <button (click)="apparaitreSection('difficulte')"
-            (click)="disparaitreSection('creerOuJoindre')">
+  <div id="creerOuJoindre" class="pasVisible">
+    <button (click)="apparaitreSection('inputNomPartie')"
+            (click)="disparaitreSection('creerOuJoindre')"
+            (click)="definirEstCreateur(true)">
       Créer une partie</button>
-    <button (click)="apparaitreSection('difficulte')"
-            (click)="disparaitreSection('creerOuJoindre')"> <!-- Pas encore sur si on choisi une difficulte ici -->
+    <button (click)="apparaitreSection('inputNomPartie')"
+            (click)="disparaitreSection('creerOuJoindre')"
+            (click)="definirEstCreateur(false)">
       Rejoindre une partie</button>
   </div>
+  
+  <div id="inputNomPartie" class="pasVisible">
+      <input placeholder="Entrez un nom de partie" (keyup)="enterKeyPress($event, 'difficulteMultijoueur')">
+  </div>
+
+  <div id="difficulteMultijoueur" class="pasVisible">
+      <button (click)="ajouterDifficulte('facile')"> <!-- un nouveau routeur icc-->
+        Facile</button>
+      <button (click)="ajouterDifficulte('normal')"> <!-- un nouveau routeur icc-->
+        Normal</button>
+      <button (click)="ajouterDifficulte('difficile')"> <!-- un nouveau routeur icc-->
+        Difficile</button>
+    </div>
 
 </div>

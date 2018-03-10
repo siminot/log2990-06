@@ -33,7 +33,7 @@ export class Piste extends Group {
     private bouclerCircuit(): void {
         this.circuitBoucle = true;
         this.premiereIntersection.droiteArrivee = this.derniereIntersection.droiteDebut;
-        this.premiereIntersection.droiteArrivee.miseAJourDepart(this.premierPoint);
+        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.premierPoint);
     }
 
     private debouclerCircuit(): void {
@@ -50,15 +50,9 @@ export class Piste extends Group {
     }
 
     private obtenirDroiteArriveeNouveauPoint(point: Point): DroiteAffichage {
-        let droiteArrivee: DroiteAffichage;
-        if (this.droiteArriveeCourante !== null) {
-            droiteArrivee = this.droiteArriveeCourante;
-            droiteArrivee.miseAJourArrivee(point);
-        } else {
-            droiteArrivee = new DroiteAffichage(point, point);
-        }
-
-        return droiteArrivee;
+        return this.droiteArriveeCourante !== null
+            ? this.droiteArriveeCourante
+            : new DroiteAffichage(point, point);
     }
 
     public miseAJourElementSelectionne(point: Point): void {

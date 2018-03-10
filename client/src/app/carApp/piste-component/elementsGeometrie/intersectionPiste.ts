@@ -14,6 +14,7 @@ export class IntersectionPiste extends Group {
         this.point = new PointAffichage(point, estPremier);
         this.droiteArrivee = droiteArrivee;
         this.droiteDebut = new DroiteAffichage(point, point);
+        this.miseAJourPoint(point);
         this.ajouterElements();
     }
 
@@ -25,9 +26,9 @@ export class IntersectionPiste extends Group {
 
     public miseAJourPoint(point: Point): void {
         this.droiteArrivee.miseAJourArrivee(point);
-        console.log(this.estDernierPointPlace);
+        console.log(this.estPointDuBout);
 
-        this.estDernierPointPlace
+        this.estPointDuBout
         ? this.droiteDebut.miseAJourPoint(point)
         : this.droiteDebut.miseAJourDepart(point);
 
@@ -51,7 +52,7 @@ export class IntersectionPiste extends Group {
         this.droiteDebut = new DroiteAffichage(this.point.point, this.point.point);
     }
 
-    private get estDernierPointPlace(): boolean {
+    private get estPointDuBout(): boolean {
         return this.droiteDebut.droite.end.clone().sub(this.point.point.vecteurPlanXZ).length() === 0;
     }
 }

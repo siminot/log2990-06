@@ -24,10 +24,7 @@ export class TransformateurCoordonnees {
 
     // TODO: Verifier que la souris est dans la scene
     public estSurScene(souris: MouseEvent): boolean {
-        this.souris = souris;
-
-        return true;
-        // return this.hauteurDansScene && this.largeurDansScene;
+        return this.gestionnaireEcran.estLaBonneCible(souris.target);
     }
 
     private get camera(): Camera {

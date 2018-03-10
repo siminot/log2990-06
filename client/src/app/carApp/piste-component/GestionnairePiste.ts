@@ -55,7 +55,7 @@ export class GestionnairePiste {
     }
 
     private miseAJourSelection(evenementSouris: MouseEvent): void {
-        if (this.positionSourisValide(evenementSouris)) {
+        if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
             this._piste.selectionnerIntersection(this.positionSouris(evenementSouris));
         }
     }

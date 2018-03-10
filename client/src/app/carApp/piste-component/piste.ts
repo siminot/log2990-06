@@ -63,7 +63,7 @@ export class Piste extends Group {
 
     public miseAJourElementSelectionne(point: Point): void {
         if (this.intersectionSelectionnee !== null) {
-            this.derniereIntersection.miseAJourPoint(point);
+            this.intersectionSelectionnee.miseAJourPoint(point);
         }
     }
 

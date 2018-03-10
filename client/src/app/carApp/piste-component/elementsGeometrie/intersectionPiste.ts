@@ -52,6 +52,6 @@ export class IntersectionPiste extends Group {
     }
 
     private get estDernierPointPlace(): boolean {
-        return this.droiteDebut.droite.start.clone().sub(this.point.point.vecteurPlanXZ).length() === 0;
+        return this.droiteDebut.droite.end.clone().sub(this.point.point.vecteurPlanXZ).length() === 0;
     }
 }

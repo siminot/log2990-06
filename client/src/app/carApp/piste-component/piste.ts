@@ -104,11 +104,12 @@ export class Piste extends Group {
         for (const intersection of this.elements) {
             if (intersection.estEnContactAvec(point)) {
                 this.intersectionSelectionnee = intersection;
-
+                console.log(this.intersectionSelectionnee);
                 return;
             }
         }
 
         this.intersectionSelectionnee = null;
+        console.log(this.intersectionSelectionnee);
     }
 }

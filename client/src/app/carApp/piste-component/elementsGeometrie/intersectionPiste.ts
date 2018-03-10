@@ -24,12 +24,14 @@ export class IntersectionPiste extends Group {
     }
 
     public miseAJourPoint(point: Point): void {
-        this.point.point = point;
         this.droiteArrivee.miseAJourArrivee(point);
+        console.log(this.estDernierPointPlace);
 
         this.estDernierPointPlace
         ? this.droiteDebut.miseAJourPoint(point)
         : this.droiteDebut.miseAJourDepart(point);
+
+        this.point.point = point;
     }
 
     public estEnContactAvec(autrePoint: Point): boolean {
@@ -50,6 +52,6 @@ export class IntersectionPiste extends Group {
     }
 
     private get estDernierPointPlace(): boolean {
-        return this.droiteDebut.droite.start === this.point.point.vecteurPlanXZ;
+        return this.droiteDebut.droite.start.clone().sub(this.point.point.vecteurPlanXZ).length() === 0;
     }
 }

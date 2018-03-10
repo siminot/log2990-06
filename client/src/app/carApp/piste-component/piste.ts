@@ -43,10 +43,12 @@ export class Piste extends Group {
     }
 
     private creerNouvelleIntersection(point: Point): void {
-        const intersection: IntersectionPiste = new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point),
-                                                                      point, this.creationPremierPoint);
-        this.elements.push(intersection);
-        this.add(intersection);
+        if (this.derniereIntersection === null || !this.estEnContactAvecAutresPoints(point)) {
+            const intersection: IntersectionPiste = new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point),
+                                                                          point, this.creationPremierPoint);
+            this.elements.push(intersection);
+            this.add(intersection);
+        }
     }
 
     private obtenirDroiteArriveeNouveauPoint(point: Point): DroiteAffichage {
@@ -105,5 +107,15 @@ export class Piste extends Group {
 
         this.intersectionSelectionnee = null;
         console.log(this.intersectionSelectionnee);
+    }
+
+    private estEnContactAvecAutresPoints(point: Point): boolean {
+        for (const intertsection of this.elements) {
+            if (intertsection.estEnContactAvec(point)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

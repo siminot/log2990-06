@@ -26,7 +26,6 @@ export class IntersectionPiste extends Group {
 
     public miseAJourPoint(point: Point): void {
         this.droiteArrivee.miseAJourArrivee(point);
-        console.log(this.estPointDuBout);
 
         this.estPointDuBout
         ? this.droiteDebut.miseAJourPoint(point)

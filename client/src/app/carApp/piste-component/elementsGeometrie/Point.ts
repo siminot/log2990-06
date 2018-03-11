@@ -1,6 +1,6 @@
 import { Vector3, Vector2 } from "three";
 
-const PROFONDEUR: number = 0;
+const PROFONDEUR: number = 5;
 
 export class Point extends Vector2 {
 

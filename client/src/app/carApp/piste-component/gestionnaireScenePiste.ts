@@ -4,7 +4,7 @@ import { IScene } from "../scene/IScene";
 import { PI_OVER_2 } from "../constants";
 import { GestionnairePiste } from "./GestionnairePiste";
 
-const PROFONDEUR: number = 10;
+export const PROFONDEUR_SCENE: number = 50;
 const COULEUR_FOND: number = 0xB3ECFF;
 
 @Injectable()
@@ -35,7 +35,7 @@ export class GestionnaireScenePiste implements IScene {
         const MATERIEL: MeshBasicMaterial = new MeshBasicMaterial({ color: COULEUR_FOND, side: DoubleSide });
         const geometrie: PlaneGeometry = new PlaneGeometry(DIMENSIONS, DIMENSIONS);
         geometrie.rotateX(PI_OVER_2);
-        geometrie.translate(0, PROFONDEUR, 0);
+        geometrie.translate(0, PROFONDEUR_SCENE, 0);
         this._scene.add(new Mesh(geometrie, MATERIEL));
     }
 /*

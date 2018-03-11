@@ -1,5 +1,5 @@
 import { Point } from "./Point";
-import { Line3 } from "three";
+import { Line3, Vector3 } from "three";
 
 export class Droite extends Line3 {
 
@@ -13,5 +13,13 @@ export class Droite extends Line3 {
 
     public modifierArrivee(point: Point): void {
         this.end = point.vecteurPlanXZ;
+    }
+
+    public get direction(): Vector3 {
+        return this.end.clone().sub(this.start);
+    }
+
+    public angleAvecDroite(droite: Droite): number {
+        return Math.acos(this.direction.dot(droite.direction) / (this.direction.length() * droite.direction.length()));
     }
 }

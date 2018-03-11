@@ -2,18 +2,21 @@ import { Group } from "three";
 import { IntersectionPiste } from "./elementsGeometrie/intersectionPiste";
 import { Point } from "./elementsGeometrie/Point";
 import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
+import { VerificateurContraintesPiste } from "./elementsGeometrie/verificateurContraintesPiste";
 
 export class Piste extends Group {
 
-    private elements: IntersectionPiste[];
+    private intersections: IntersectionPiste[];
     private circuitBoucle: boolean;
     private intersectionSelectionnee: IntersectionPiste;
+    private verificateurPiste: VerificateurContraintesPiste;
 
     public constructor() {
         super();
-        this.elements = [];
+        this.intersections = [];
         this.circuitBoucle = false;
         this.intersectionSelectionnee = null;
+        this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
     }
 
     public ajouterPoint(point: Point): void {
@@ -46,8 +49,9 @@ export class Piste extends Group {
         if (this.derniereIntersection === null || !this.estEnContactAvecAutresPoints(point)) {
             const intersection: IntersectionPiste = new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point),
                                                                           point, this.creationPremierPoint);
-            this.elements.push(intersection);
+            this.intersections.push(intersection);
             this.add(intersection);
+            this.verificateurPiste.verifierContraintes(intersection);
         }
     }
 
@@ -60,6 +64,7 @@ export class Piste extends Group {
     public miseAJourElementSelectionne(point: Point): void {
         if (this.intersectionSelectionnee !== null) {
             this.intersectionSelectionnee.miseAJourPoint(point);
+            this.verificateurPiste.verifierContraintes(this.intersectionSelectionnee);
         }
     }
 
@@ -68,17 +73,17 @@ export class Piste extends Group {
             this.debouclerCircuit();
         } else if (!this.creationPremierPoint) {
             this.remove(this.derniereIntersection);
-            this.elements.splice(-1);
+            this.intersections.splice(-1);
         }
     }
 
     private get premiereIntersection(): IntersectionPiste {
-        return this.elements[0];
+        return this.intersections[0];
     }
 
     private get derniereIntersection(): IntersectionPiste {
-        return this.elements.length - 1 >= 0
-            ? this.elements[this.elements.length - 1]
+        return this.intersections.length - 1 >= 0
+            ? this.intersections[this.intersections.length - 1]
             : null;
     }
 
@@ -89,7 +94,7 @@ export class Piste extends Group {
     }
 
     private get creationPremierPoint(): boolean {
-        return this.elements.length === 0;
+        return this.intersections.length === 0;
     }
 
     private get premierPoint(): Point {
@@ -97,20 +102,19 @@ export class Piste extends Group {
     }
 
     public selectionnerIntersection(point: Point): void {
-        for (const intersection of this.elements) {
+        for (const intersection of this.intersections) {
             if (intersection.estEnContactAvec(point)) {
                 this.intersectionSelectionnee = intersection;
-                console.log(this.intersectionSelectionnee);
+
                 return;
             }
         }
 
         this.intersectionSelectionnee = null;
-        console.log(this.intersectionSelectionnee);
     }
 
     private estEnContactAvecAutresPoints(point: Point): boolean {
-        for (const intertsection of this.elements) {
+        for (const intertsection of this.intersections) {
             if (intertsection.estEnContactAvec(point)) {
                 return true;
             }

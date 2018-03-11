@@ -7,7 +7,7 @@ const RAYON_INTERNE: number = 0.15;
 const NOMBRE_SEGMENTS: number = 25;
 const COULEUR_POINT: number = 0xFF8C1A;
 const COULEUR_CONTOUR: number = 0x804000;
-const DIFFERENCE_PROFONDEUR: number = 0;
+const DIFFERENCE_PROFONDEUR: number = -1;
 
 export class PointAffichage extends Group {
 

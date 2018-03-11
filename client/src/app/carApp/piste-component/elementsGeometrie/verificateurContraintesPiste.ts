@@ -48,11 +48,7 @@ export class VerificateurContraintesPiste {
     }
 
     private verifierAngleAdjacent(offset: number): void {
-        let index: number  = (this.indexIntersectionCourante + offset) % this.intersections.length;
-
-        if (index === -1) {
-           index += this.intersections.length;
-        }
+        const index: number  = (this.indexIntersectionCourante + offset + this.intersections.length) % this.intersections.length;
 
         if (this.indexEstValide(index)) {
             this.verifierAngle(this.intersections[index]);

@@ -50,6 +50,13 @@ export class IntersectionPiste extends Group {
     public ramenerDroiteArrivee(): void {
         this.remove(this.droiteArrivee);
         this.droiteArrivee = new DroiteAffichage(this.point.point, this.point.point);
+        this.add(this.droiteArrivee);
+    }
+
+    public ramenerDroiteDepart(): void {
+        this.remove(this.droiteDebut);
+        this.droiteDebut = new DroiteAffichage(this.point.point, this.point.point);
+        this.add(this.droiteDebut);
     }
 
     private get estPointDuBout(): boolean {

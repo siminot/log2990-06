@@ -106,6 +106,7 @@ export class Piste extends Group {
         } else if (!this.creationPremierPoint) {
             this.remove(this.derniereIntersection);
             this.intersections.splice(-1);
+            this.derniereIntersection.ramenerDroiteDepart();
             this.verifierContraintesExtremites();
         }
     }

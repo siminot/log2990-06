@@ -24,7 +24,7 @@ export class VerificateurContraintesPiste {
 
     public verifierContraintes(intersection: IntersectionPiste): void {
         this.intersectionEnCours = intersection;
-        // this.verifierCroisement();
+        this.verifierCroisement();
         this.verifierLongueurs();
         this.verifierAngleIntersectionCourante();
         this.miseAJourCouleur(this.intersectionEnCours);
@@ -79,14 +79,14 @@ export class VerificateurContraintesPiste {
     private verifierCroisementIntersection(intersection: IntersectionPiste): void {
         for (const droiteAnalyse of intersection.droites) {
             for (const droiteEnCours of this.intersectionEnCours.droites) {
-                if (droiteAnalyse !== droiteEnCours) {
+                if (droiteAnalyse !== droiteEnCours) { /*
                     if (droiteAnalyse.droite.croiseDroite(droiteEnCours.droite)) {
                         this.rapport(droiteAnalyse).ajouterCroisement(droiteEnCours);
                         this.rapport(droiteAnalyse).ajouterCroisement(droiteEnCours);
                     } else {
                         this.rapport(droiteAnalyse).retirerCroisement(droiteEnCours);
                         this.rapport(droiteAnalyse).retirerCroisement(droiteEnCours);
-                    }
+                    }*/
                 }
             }
         }

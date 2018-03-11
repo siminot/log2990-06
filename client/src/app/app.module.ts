@@ -33,6 +33,7 @@ import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.com
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
 import { ServiceSocketService } from "./crosswords/service-socket/service-socket.service";
 import { GrilleRejointeComponent } from "./crosswords/grille/multijoueurs/grilleRejointe.component";
+import { GrilleCreeeComponent } from "./crosswords/grille/multijoueurs/grilleCreee.component";
 import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
 
 @NgModule({
@@ -47,7 +48,8 @@ import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/reque
         DefinitionHComponent,
         DefinitionVComponent,
         InfoJoueur1Component,
-        GrilleRejointeComponent
+        GrilleRejointeComponent,
+        GrilleCreeeComponent
     ],
     imports: [
         BrowserModule,
@@ -82,7 +84,8 @@ import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/reque
         GrilleComponent,
         DefinitionVComponent,
         DefinitionHComponent,
-        GrilleRejointeComponent
+        GrilleRejointeComponent,
+        GrilleCreeeComponent
     ]
 })
 export class AppModule { }

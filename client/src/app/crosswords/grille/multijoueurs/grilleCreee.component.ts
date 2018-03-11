@@ -6,14 +6,14 @@ import { GrilleMultijoueurs } from "./grilleMultijoueurs";
 
 @Component({
   selector: "app-grille-creee",
-  templateUrl: "./grilleCreee.component.html",
-  styleUrls: ["./grilleCreee.component.css"]
+  templateUrl: "../grille.component.html",
+  styleUrls: ["../grille.component.css"]
 })
 
 export class GrilleCreeeComponent extends GrilleMultijoueurs implements OnInit {
 
   public constructor(_servicePointage: InfojoueurService,
-                     serviceSocket: number /*type à modifier*/,
+                     /*serviceSocket: number type à modifier,*/
                      private listeMotsService: RequeteDeGrilleService) {
     super(_servicePointage/*, serviceSocket*/);
   }

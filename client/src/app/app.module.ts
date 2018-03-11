@@ -35,6 +35,8 @@ import { ServiceSocketService } from "./crosswords/service-socket/service-socket
 import { GrilleRejointeComponent } from "./crosswords/grille/multijoueurs/grilleRejointe.component";
 import { GrilleCreeeComponent } from "./crosswords/grille/multijoueurs/grilleCreee.component";
 import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
+import { MainGrilleRejoindreComponent } from "./crosswords/main-grille-rejoindre/main-grille-rejoindre.component";
+import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-grille-creer.component";
 
 @NgModule({
     declarations: [
@@ -49,7 +51,9 @@ import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/reque
         DefinitionVComponent,
         InfoJoueur1Component,
         GrilleRejointeComponent,
-        GrilleCreeeComponent
+        GrilleCreeeComponent,
+        MainGrilleRejoindreComponent,
+        MainGrilleCreerComponent
     ],
     imports: [
         BrowserModule,

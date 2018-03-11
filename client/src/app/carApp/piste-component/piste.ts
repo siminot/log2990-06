@@ -1,4 +1,4 @@
-import { Group } from "three";
+import { Group, Vector3 } from "three";
 import { IntersectionPiste } from "./elementsGeometrie/intersectionPiste";
 import { Point } from "./elementsGeometrie/Point";
 import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
@@ -145,5 +145,13 @@ export class Piste extends Group {
         }
 
         return somme > 0;
+    }
+
+    public get zoneDeDepart(): Vector3 {
+        const DEUX: number = 2;
+
+        return this.intersections.length >= DEUX
+            ? this.premiereIntersection.droiteDebut.droite.getCenter()
+            : null;
     }
 }

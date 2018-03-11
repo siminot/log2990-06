@@ -25,11 +25,11 @@ export class GrilleRejointeComponent extends GrilleAbs implements OnInit {
     this.mots = this.listeMotsService.mots;
     this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {
-        this.mots = mots;
-        this.remplirPositionLettres();
-      });
+      this.mots = mots;
+      this.remplirPositionLettres();
+    });
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
-    .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
@@ -48,6 +48,10 @@ export class GrilleRejointeComponent extends GrilleAbs implements OnInit {
 
   protected envoieMotSelectionne(): void {
     return;
+  }
+
+  private demandeDeMoit(): void {
+    
   }
 
   public switchCheatMode(): void {

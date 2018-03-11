@@ -25,4 +25,8 @@ export class Droite extends Line3 {
             : null;
 
     }
+
+    public croiseDroite(droite: Droite): boolean {
+        return true;
+    }
 }

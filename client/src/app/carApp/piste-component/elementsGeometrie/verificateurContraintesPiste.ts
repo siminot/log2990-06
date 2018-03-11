@@ -71,7 +71,27 @@ export class VerificateurContraintesPiste {
     }
 
     private verifierCroisement(): void {
-        return;
+        for (const intersection of this.intersections) {
+            this.verifierCroisementIntersection(intersection);
+        }
+    }
+
+    private verifierCroisementIntersection(intersection: IntersectionPiste): void {
+        for (const droiteAnalyse of intersection.droites) {
+            for (const droiteEnCours of this.intersectionEnCours.droites) {
+                if (droiteAnalyse !== droiteEnCours) {
+                    if (droiteAnalyse.droite.croiseDroite(droiteEnCours.droite)) {
+                        this.rapport(droiteAnalyse).ajouterCroisement(droiteEnCours);
+                        this.rapport(droiteAnalyse).ajouterCroisement(droiteEnCours);
+                    } else {
+                        this.rapport(droiteAnalyse).retirerCroisement(droiteEnCours);
+                        this.rapport(droiteAnalyse).retirerCroisement(droiteEnCours);
+                    }
+                }
+            }
+        }
+
+        this.miseAJourCouleur(intersection);
     }
 
     private miseAJourCouleur(intersection: IntersectionPiste): void {

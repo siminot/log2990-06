@@ -9,6 +9,10 @@ export class IntersectionPiste extends Group {
     public point: PointAffichage;
     public droiteDebut: DroiteAffichage;
 
+    public get droites(): DroiteAffichage[] {
+        return [this.droiteArrivee, this.droiteDebut];
+    }
+
     public constructor(droiteArrivee: DroiteAffichage, point: Point, estPremier: boolean) {
         super();
         this.point = new PointAffichage(point, estPremier);

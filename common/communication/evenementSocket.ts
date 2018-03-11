@@ -10,3 +10,4 @@ export const NOM_NON_EXISTANT = "nomNonExistant";
 export const ROOM_CREEE = "roomCreee";
 
 export const REJOINDRE = "rejoindrePartie";         // 2
+export const ENVOYER_LISTE_PARTIES = "envoyerListeParties";

@@ -9,7 +9,7 @@ export class ServiceSocketService {
 
   public constructor() {
     this.socketClient = socketIo(SERVER_URL);
-    // console.log("bonjour");
+    console.log("bonjour");
   }
 
 }

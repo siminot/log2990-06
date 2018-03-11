@@ -1,4 +1,3 @@
-import { OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { Mot } from "../objetsTest/mot";
@@ -6,32 +5,21 @@ import * as CONST from "../constantes";
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Observable } from "rxjs/Observable";
 
-export abstract class InfoPartieAbs implements OnInit, OnDestroy {
-  private _nomJoueur: string;
-  private _nbMotsDecouverts: number;
+export abstract class InfoPartieAbs {
   protected _listeMots: Mot[];
-  private _barreProgression: HTMLElement;
   private _timer: number;
   private _formatedTimer: string;
   protected _difficulte: string;
 
   private _timerObservable$: Observable<number>;
 
-  private _subscriptionNbMotsDecouv: Subscription;
   protected _subscriptionListeMots: Subscription;
-  private _subscriptionTimer: Subscription;
+  protected _subscriptionTimer: Subscription;
 
-  public constructor(private _servicePointage: InfojoueurService) {
-    this._nomJoueur = "Nom du joueur";
-    this._nbMotsDecouverts = 0;
+  public constructor(protected _servicePointage: InfojoueurService) {
     this._listeMots = [];
     this._timer = 0;
     this._timerObservable$ = TimerObservable.create(0, CONST.UNE_SECONDE_EN_MILISECONDES);
-  }
-
-  public ngOnInit(): void {
-    this.initialiserSouscriptions();
-    this._barreProgression = document.getElementById("progress-bar");
   }
 
   public formatterTimer(): void {
@@ -48,11 +36,7 @@ export abstract class InfoPartieAbs implements OnInit, OnDestroy {
                           String(sec) + CONST.ABREVIATION_SECONDES;
   }
 
-  public ngOnDestroy(): void {
-    this.desinscrireSouscriptions();
-  }
-
-  private initialiserSouscriptions(): void {
+  protected initialiserSouscriptions(): void {
     this.souscrireListeDeMots();
     this.souscrireMotsDecouverts();
     this.souscrireTimer();
@@ -60,36 +44,12 @@ export abstract class InfoPartieAbs implements OnInit, OnDestroy {
 
   protected abstract souscrireListeDeMots(): void;
 
-  private souscrireMotsDecouverts(): void {
-    this._subscriptionNbMotsDecouv = this._servicePointage.serviceReceptionPointage()
-      .subscribe((pointage) => {
-        this._nbMotsDecouverts = pointage;
-        this.majBarreProgression();
-    });
-  }
+  protected abstract souscrireMotsDecouverts(): void;
 
   private souscrireTimer(): void {
     this._subscriptionTimer = this._timerObservable$
       .subscribe((t: number) => {
         this._timer = t; this.formatterTimer();
       });
-  }
-
-  private desinscrireSouscriptions(): void {
-    this._subscriptionListeMots.unsubscribe();
-    this._subscriptionNbMotsDecouv.unsubscribe();
-    this._subscriptionTimer.unsubscribe();
-  }
-
-  public get pourcentagePoint(): number {
-    if (this._listeMots.length === 0) {
-      return 0;
-    } else {
-        return Math.round(this._nbMotsDecouverts / this._listeMots.length * CONST.CONVERSION_POURCENTAGE);
-    }
-  }
-
-  public majBarreProgression(): void {
-    this._barreProgression.style.width = String(this.pourcentagePoint) + "%";
   }
 }

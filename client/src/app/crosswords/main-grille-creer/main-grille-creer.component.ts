@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 @Component({
   selector: "app-main-grille-creer",
   templateUrl: "./main-grille-creer.component.html",
-  styleUrls: ["../main-grille/main-grille.component.css"]
+  styleUrls: ["../main-grille/main-grille.component.ts"]
 })
 export class MainGrilleCreerComponent implements OnInit {
 

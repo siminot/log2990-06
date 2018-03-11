@@ -31,9 +31,10 @@ export class GestionnairePiste {
 
     private inscriptionSouris(): void {
         this.souris.ajouter(this.ajouterPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
-        // this.souris.ajouter(this.effacerPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
-        this.souris.ajouter(this.deplacementPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
-        this.souris.ajouter(this.miseAJourSelection.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
+        this.souris.ajouter(this.effacerPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
+        this.souris.ajouter(this.deplacementPoint.bind(this), new EvenementSouris(TypeEvenementSouris.DRAG));
+        this.souris.ajouter(this.selectionner.bind(this), new EvenementSouris(TypeEvenementSouris.MOUSEDOWN));
+        this.souris.ajouter(this.deselectionner.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
     }
 
     private ajouterPoint(evenementSouris: MouseEvent): void {
@@ -49,14 +50,20 @@ export class GestionnairePiste {
     }
 
     private deplacementPoint(evenementSouris: MouseEvent): void {
-        if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.DROIT) {
+        if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
             this._piste.miseAJourElementSelectionne(this.positionSouris(evenementSouris));
         }
     }
 
-    private miseAJourSelection(evenementSouris: MouseEvent): void {
+    private selectionner(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
             this._piste.selectionnerIntersection(this.positionSouris(evenementSouris));
+        }
+    }
+
+    private deselectionner(evenementSouris: MouseEvent): void {
+        if (this.positionSourisValide(evenementSouris) && evenementSouris.buttons === 0) {
+            this._piste.deselectionnerElement();
         }
     }
 

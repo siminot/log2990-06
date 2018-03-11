@@ -115,6 +115,10 @@ export class Piste extends Group {
         this.intersectionSelectionnee = null;
     }
 
+    public deselectionnerElement(): void {
+        this.intersectionSelectionnee = null;
+    }
+
     private estEnContactAvecAutresPoints(point: Point): boolean {
         for (const intertsection of this.intersections) {
             if (intertsection.estEnContactAvec(point)) {

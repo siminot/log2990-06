@@ -51,29 +51,40 @@ export class Piste extends Group {
     private doitFermerCircuit(point: Point): boolean {
         const DEUX: number = 2;
 
-        return !this.creationPremierPoint && this.premiereIntersection.estEnContactAvec(point) && this.intersections.length > DEUX;
+        return this.intersections.length > DEUX &&
+               this.premiereIntersection.estEnContactAvec(point);
     }
 
     private bouclerCircuit(): void {
         this.premiereIntersection.droiteArrivee = this.derniereIntersection.droiteDebut;
         this.derniereIntersection.droiteDebut.miseAJourArrivee(this.premiereIntersection.point.point);
-        this.verificateurPiste.verifierContraintes(this.premiereIntersection);
-        this.verificateurPiste.verifierContraintes(this.derniereIntersection);
+        this.verifierContraintesExtremites();
     }
 
     private debouclerCircuit(): void {
         this.premiereIntersection.ramenerDroiteArrivee();
         this.derniereIntersection.ramenerDroiteDebut();
+        this.verifierContraintesExtremites();
+    }
+
+    private verifierContraintesExtremites(): void {
+        if (!this.creationPremierPoint) {
+            this.verificateurPiste.verifierContraintes(this.premiereIntersection);
+            this.verificateurPiste.verifierContraintes(this.derniereIntersection);
+        }
     }
 
     private creerNouvelleIntersection(point: Point): void {
-        if (this.derniereIntersection === null || !this.estEnContactAvecAutresPoints(point)) {
-            const intersection: IntersectionPiste = new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point),
-                                                                          point, this.creationPremierPoint);
-            this.intersections.push(intersection);
-            this.add(intersection);
-            this.verificateurPiste.verifierContraintes(intersection);
+        if (!this.estEnContactAvecAutresPoints(point)) {
+            this.ajouterIntersection(
+                new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point), point, this.creationPremierPoint));
         }
+    }
+
+    private ajouterIntersection(intersection: IntersectionPiste): void {
+        this.intersections.push(intersection);
+        this.add(intersection);
+        this.verificateurPiste.verifierContraintes(intersection);
     }
 
     private obtenirDroiteArriveeNouveauPoint(point: Point): DroiteAffichage {
@@ -95,17 +106,18 @@ export class Piste extends Group {
         } else if (!this.creationPremierPoint) {
             this.remove(this.derniereIntersection);
             this.intersections.splice(-1);
+            this.verifierContraintesExtremites();
         }
     }
 
     private get premiereIntersection(): IntersectionPiste {
-        return this.intersections.length - 1 >= 0
+        return !this.creationPremierPoint
             ? this.intersections[0]
             : null;
     }
 
     private get derniereIntersection(): IntersectionPiste {
-        return this.intersections.length - 1 >= 0
+        return this.intersections.length  >= 1
             ? this.intersections[this.intersections.length - 1]
             : null;
     }

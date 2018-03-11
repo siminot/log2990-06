@@ -18,6 +18,27 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.mots = this.listeMotsService.mots;
+    this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
+    // this.remplirPositionLettres(); // JUSTE POUR LA GRILLE DE TEST
+    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {
+        this.mots = mots;
+        this.remplirPositionLettres(); });
+    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
+    .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
+      .subscribe((motSelec) => {
+        this.motSelectionne = motSelec;
+        this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
+        EncadrementCase.appliquerStyleDefautGrille(document);
+
+        if (!this.motSelectionne.motTrouve) {
+          this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
+          if (document.getElementById("00") !== null) {
+            this.focusSurBonneLettre();
+          }
+        }
+      });
   }
 
   protected envoieMotSelectionne(): void {

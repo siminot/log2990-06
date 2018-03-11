@@ -130,4 +130,20 @@ export class Piste extends Group {
 
         return false;
     }
+
+    // Source : https://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order
+    public get estSensHoraire(): boolean {
+        if (!this.circuitBoucle) {
+            return null;
+        }
+
+        let somme: number = 0;
+        for (let i: number = 0 ; i < this.intersections.length ; i++) {
+            const pointActuel: Point = this.intersections[i].point.point;
+            const pointSuivant: Point = this.intersections[(i + 1) % this.intersections.length].point.point;
+            somme += (pointSuivant.x - pointActuel.x) * (pointSuivant.y + pointActuel.y);
+        }
+
+        return somme > 0;
+    }
 }

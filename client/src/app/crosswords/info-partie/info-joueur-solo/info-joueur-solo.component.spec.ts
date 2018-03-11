@@ -1,25 +1,25 @@
 import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 
-import { InfoJoueur1Component } from "./info-joueur1.component";
-import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
-import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
-import { HttpeReqService } from "../httpRequest/http-request.service";
+import { InfoJoueurSoloComponent } from "./info-joueur-solo.component";
+import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
+import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
+import { HttpeReqService } from "../../httpRequest/http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-import * as CONST from "../constantes";
+import * as CONST from "../../constantes";
 
 describe("InfoJoueur1Component", () => {
-  let component: InfoJoueur1Component;
-  let fixture: ComponentFixture<InfoJoueur1Component>;
+  let component: InfoJoueurSoloComponent;
+  let fixture: ComponentFixture<InfoJoueurSoloComponent>;
   let infojoueur: InfojoueurService;
-  let serviceGrille: RequeteDeGrilleService;
+  let serviceGrille: RequeteDeGrilleAbs;
   let serviceHttp: HttpeReqService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ InfojoueurService, RequeteDeGrilleService, HttpeReqService ],
-      declarations: [ InfoJoueur1Component ]
+      providers: [ InfojoueurService, RequeteDeGrilleAbs, HttpeReqService ],
+      declarations: [ InfoJoueurSoloComponent ]
     })
     .compileComponents()
     .catch(() => { throw new Error("Erreur de la creation du test"); });
@@ -27,11 +27,11 @@ describe("InfoJoueur1Component", () => {
 
   beforeEach(inject([HttpeReqService], (service: HttpeReqService) => {
     serviceHttp = service;
-    serviceGrille = new RequeteDeGrilleService(serviceHttp);
-    fixture = TestBed.createComponent(InfoJoueur1Component);
+    serviceGrille = new RequeteDeGrilleAbs(serviceHttp);
+    fixture = TestBed.createComponent(InfoJoueurSoloComponent);
     component = fixture.componentInstance;
     infojoueur = new InfojoueurService();
-    component = new InfoJoueur1Component(infojoueur, serviceGrille, serviceHttp);
+    component = new InfoJoueurSoloComponent(infojoueur, serviceGrille, serviceHttp);
     fixture.detectChanges();
   }));
 

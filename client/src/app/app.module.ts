@@ -29,7 +29,8 @@ import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
-import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
+import { InfoJoueurSoloComponent } from "./crosswords/info-partie/info-joueur-solo/info-joueur-solo.component";
+import { InfoPartieMultijoueurComponent } from "./crosswords/info-partie/info-partie-multijoueur/info-partie-multijoueur.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
 import { ServiceSocketService } from "./crosswords/service-socket/service-socket.service";
 import { GrilleRejointeComponent } from "./crosswords/grille/multijoueurs/grilleRejointe.component";
@@ -48,7 +49,8 @@ import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-gr
         DirectiveFocusDirective,
         DefinitionHComponent,
         DefinitionVComponent,
-        InfoJoueur1Component,
+        InfoJoueurSoloComponent,
+        InfoPartieMultijoueurComponent,
         GrilleRejointeComponent,
         GrilleCreeeComponent,
         MainGrilleRejoindreComponent,

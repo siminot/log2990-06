@@ -42,12 +42,20 @@
   </div>
 
   <div id="difficulteMultijoueur" class="pasVisible">
-      <button (click)="ajouterDifficulte('facile')"> <!-- un nouveau routeur icc-->
+      <button (click)="ajouterDifficulte('facile')"> <!-- un nouveau routeur ici-->
         Facile</button>
-      <button (click)="ajouterDifficulte('normal')"> <!-- un nouveau routeur icc-->
+      <button (click)="ajouterDifficulte('normal')"> <!-- un nouveau routeur ici-->
         Normal</button>
-      <button (click)="ajouterDifficulte('difficile')"> <!-- un nouveau routeur icc-->
+      <button (click)="ajouterDifficulte('difficile')"> <!-- un nouveau routeur ici-->
         Difficile</button>
-    </div>
+  </div>
+
+  <div id="listePartie" class="pasVisible">
+
+      <ul id="laListe">
+          <li *ngFor="let partie of listePartie"> <span>taco</span> </li>
+      </ul>
+
+  </div>
 
 </div>

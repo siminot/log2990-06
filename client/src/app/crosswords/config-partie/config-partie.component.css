@@ -17,9 +17,12 @@ input {
     font-family: 'Press Start 2P', cursive;
   }
 
-/* div {
+.laListe li {
     border: solid 1px black;
-} */
+    padding: 10px;
+    height: 10%;
+    width: 50%;
+}
 
 div div {
     position: absolute;

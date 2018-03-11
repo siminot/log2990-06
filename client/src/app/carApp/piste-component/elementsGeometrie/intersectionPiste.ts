@@ -25,11 +25,13 @@ export class IntersectionPiste extends Group {
     }
 
     public miseAJourPoint(point: Point): void {
-        this.droiteArrivee.miseAJourArrivee(point);
-
         this.estPointDuBout
-        ? this.droiteDebut.miseAJourPoint(point)
-        : this.droiteDebut.miseAJourDepart(point);
+            ? this.droiteDebut.miseAJourPoint(point)
+            : this.droiteDebut.miseAJourDepart(point);
+
+        this.estPremierPointPlace
+            ? this.droiteArrivee.miseAJourPoint(point)
+            : this.droiteArrivee.miseAJourArrivee(point);
 
         this.point.point = point;
     }
@@ -53,5 +55,9 @@ export class IntersectionPiste extends Group {
 
     private get estPointDuBout(): boolean {
         return this.droiteDebut.droite.end.clone().sub(this.point.point.vecteurPlanXZ).length() === 0;
+    }
+
+    private get estPremierPointPlace(): boolean {
+        return this.droiteArrivee.droite.start.clone().sub(this.point.point.vecteurPlanXZ).length() === 0;
     }
 }

@@ -20,6 +20,9 @@ export class Droite extends Line3 {
     }
 
     public angleAvecDroite(droite: Droite): number {
-        return Math.acos(this.direction.dot(droite.direction) / (this.direction.length() * droite.direction.length()));
+        return this.direction.length() * droite.direction.length() !== 0
+            ? Math.acos(this.direction.dot(droite.direction.negate()) / (this.direction.length() * droite.direction.length()))
+            : null;
+
     }
 }

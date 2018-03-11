@@ -1,12 +1,14 @@
 import { IntersectionPiste } from "./intersectionPiste";
 import { DroiteAffichage } from "./droiteAffichage";
 import { RapportContraintes } from "../rapportContraintes";
-import { PI_OVER_2 } from "../../constants";
 
 const LARGEUR_PISTE: number = 3;
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;
 const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
-const ANGLE_MINIMAL: number = PI_OVER_2;
+const RATIO_ANGLE: number = 4;
+const ANGLE_MINIMAL: number = Math.PI / RATIO_ANGLE;
+const ANGLE_AVANT: number = -1;
+const ANGLE_APRES: number = 1;
 
 export class VerificateurContraintesPiste {
 
@@ -22,9 +24,10 @@ export class VerificateurContraintesPiste {
 
     public verifierContraintes(intersection: IntersectionPiste): void {
         this.intersectionEnCours = intersection;
-        // this.verifierAngle();
+        // this.verifierCroisement();
         this.verifierLongueurs();
-        this.miseAJourCouleur();
+        this.verifierAngleIntersectionCourante();
+        this.miseAJourCouleur(this.intersectionEnCours);
     }
 
     private verifierLongueurs(): void {
@@ -34,27 +37,45 @@ export class VerificateurContraintesPiste {
 
     private verifierLongueur(droite: DroiteAffichage): void {
         droite.droite.distance() >= LONGUEUR_MINIMALE
-            ? this.rapport(droite).angleRespectee = true
-            : this.rapport(droite).angleRespectee = false;
+            ? this.rapport(droite).longueurRespectee = true
+            : this.rapport(droite).longueurRespectee = false;
     }
 
-    private verifierAngle(): void {
-        if (this.angleDroitesEnCours < ANGLE_MINIMAL) {
-            this.rapport(this.intersectionEnCours.droiteArrivee).angleRespectee = false;
-            this.rapport(this.intersectionEnCours.droiteDebut).angleRespectee = false;
-        } else {
-            this.rapport(this.intersectionEnCours.droiteArrivee).angleRespectee = true;
-            this.rapport(this.intersectionEnCours.droiteDebut).angleRespectee = true;
+    private verifierAngleIntersectionCourante(): void {
+        for (let i: number = ANGLE_AVANT ; i <= ANGLE_APRES ; i++) {
+            this.verifierAngleAdjacent(i);
         }
     }
 
-    private get angleDroitesEnCours(): number {
-        return this.intersectionEnCours.droiteArrivee.droite.angleAvecDroite(this.intersectionEnCours.droiteDebut.droite);
+    private verifierAngleAdjacent(offset: number): void {
+        const index: number  = (this.indexIntersectionCourante + offset) % this.intersections.length;
+        if (this.indexEstValide(index)) {
+            this.verifierAngle(this.intersections[index]);
+            this.miseAJourCouleur(this.intersections[index]);
+        }
     }
 
-    private miseAJourCouleur(): void {
-        this.miseAJourCouleurDroite(this.intersectionEnCours.droiteArrivee);
-        this.miseAJourCouleurDroite(this.intersectionEnCours.droiteDebut);
+    private verifierAngle(intersection: IntersectionPiste): void {
+        if (this.angleDroitesEnCours(intersection) === null || this.angleDroitesEnCours(intersection) >= ANGLE_MINIMAL) {
+            this.rapport(intersection.droiteArrivee).angleArriveeRespectee = true;
+            this.rapport(intersection.droiteDebut).angleDebutRespectee = true;
+        } else {
+            this.rapport(intersection.droiteArrivee).angleArriveeRespectee = false;
+            this.rapport(intersection.droiteDebut).angleDebutRespectee = false;
+        }
+    }
+
+    private angleDroitesEnCours(intersection: IntersectionPiste): number {
+        return intersection.droiteArrivee.droite.angleAvecDroite(intersection.droiteDebut.droite);
+    }
+
+    private verifierCroisement(): void {
+        return;
+    }
+
+    private miseAJourCouleur(intersection: IntersectionPiste): void {
+        this.miseAJourCouleurDroite(intersection.droiteArrivee);
+        this.miseAJourCouleurDroite(intersection.droiteDebut);
     }
 
     private miseAJourCouleurDroite(droite: DroiteAffichage): void {
@@ -79,6 +100,14 @@ export class VerificateurContraintesPiste {
         }
 
         return this.rapports.get(droite);
+    }
+
+    private get indexIntersectionCourante(): number {
+        return this.intersections.indexOf(this.intersectionEnCours);
+    }
+
+    private indexEstValide(index: number): boolean {
+        return index >= 0 && index < this.intersections.length;
     }
 
 }

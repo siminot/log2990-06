@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { HttpeReqService } from "../../httpRequest/http-request.service";
-import { RequeteDeGrilleService } from "../../service-Requete-de-Grille/requete-de-grille.service";
+import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import * as CONST from "../../constantes";
 import { Subscription } from "rxjs/Subscription";
@@ -20,7 +20,7 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   private _subscriptionNbMotsDecouv: Subscription;
 
   public constructor(_servicePointage: InfojoueurService,
-                     private _requeteGrille: RequeteDeGrilleService, private httpReq: HttpeReqService) {
+                     private _requeteGrille: RequeteDeGrilleAbs, private httpReq: HttpeReqService) {
     super(_servicePointage);
     this._nomJoueur = "Nom du joueur";
     this._nbMotsDecouverts = 0;

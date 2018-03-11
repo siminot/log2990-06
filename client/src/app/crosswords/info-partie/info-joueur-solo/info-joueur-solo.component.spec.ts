@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing"
 
 import { InfoJoueurSoloComponent } from "./info-joueur-solo.component";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
-import { RequeteDeGrilleService } from "../../service-Requete-de-Grille/requete-de-grille.service";
+import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
 import { HttpeReqService } from "../../httpRequest/http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
@@ -12,13 +12,13 @@ describe("InfoJoueur1Component", () => {
   let component: InfoJoueurSoloComponent;
   let fixture: ComponentFixture<InfoJoueurSoloComponent>;
   let infojoueur: InfojoueurService;
-  let serviceGrille: RequeteDeGrilleService;
+  let serviceGrille: RequeteDeGrilleAbs;
   let serviceHttp: HttpeReqService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ InfojoueurService, RequeteDeGrilleService, HttpeReqService ],
+      providers: [ InfojoueurService, RequeteDeGrilleAbs, HttpeReqService ],
       declarations: [ InfoJoueurSoloComponent ]
     })
     .compileComponents()
@@ -27,7 +27,7 @@ describe("InfoJoueur1Component", () => {
 
   beforeEach(inject([HttpeReqService], (service: HttpeReqService) => {
     serviceHttp = service;
-    serviceGrille = new RequeteDeGrilleService(serviceHttp);
+    serviceGrille = new RequeteDeGrilleAbs(serviceHttp);
     fixture = TestBed.createComponent(InfoJoueurSoloComponent);
     component = fixture.componentInstance;
     infojoueur = new InfojoueurService();

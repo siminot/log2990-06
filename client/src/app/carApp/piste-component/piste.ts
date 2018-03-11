@@ -30,7 +30,9 @@ export class Piste extends Group {
     }
 
     private doitFermerCircuit(point: Point): boolean {
-        return !this.creationPremierPoint && this.premiereIntersection.estEnContactAvec(point);
+        const DEUX: number = 2;
+
+        return !this.creationPremierPoint && this.premiereIntersection.estEnContactAvec(point) && this.intersections.length > DEUX;
     }
 
     private bouclerCircuit(): void {

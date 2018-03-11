@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { RequeteDeGrilleAbs } from "../service-Requete-de-Grille/requete-de-grilleAbs";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { EncadrementCase } from "./encadrementCase";
 import { GrilleAbs } from "./grilleAbs";
@@ -12,9 +12,10 @@ import { GrilleAbs } from "./grilleAbs";
 
 export class GrilleComponent extends GrilleAbs implements OnInit {
 
-  public constructor(private listeMotsService: RequeteDeGrilleService,
+  public constructor(private listeMotsService: RequeteDeGrilleAbs,
                      _servicePointage: InfojoueurService) {
     super(_servicePointage);
+    this.listeMotsService.souscrireRequeteGrille();
   }
 
   public ngOnInit(): void {

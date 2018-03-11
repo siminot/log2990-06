@@ -50,9 +50,9 @@ export class GrilleRejointeComponent extends GrilleAbs implements OnInit {
     return;
   }
 
-  private demandeDeMoit(): void {
-    
-  }
+  // private demandeDeMot(): void {
+  //   //
+  // }
 
   public switchCheatMode(): void {
     for (const mot of this.mots) {

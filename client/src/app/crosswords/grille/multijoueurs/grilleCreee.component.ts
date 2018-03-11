@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { RequeteDeGrilleService } from "../../service-Requete-de-Grille/requete-de-grille.service";
+import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { EncadrementCase } from "../encadrementCase";
-import { GrilleMultijoueurs } from "./grilleMultijoueurs";
+// import { GrilleMultijoueurs } from "./grilleMultijoueurs";
+import { GrilleAbs } from "../grilleAbs";
 
 @Component({
   selector: "app-grille-creee",
@@ -10,12 +11,13 @@ import { GrilleMultijoueurs } from "./grilleMultijoueurs";
   styleUrls: ["../grille.component.css"]
 })
 
-export class GrilleCreeeComponent extends GrilleMultijoueurs implements OnInit {
+export class GrilleCreeeComponent extends GrilleAbs implements OnInit {
 
   public constructor(_servicePointage: InfojoueurService,
                      /*serviceSocket: number type à modifier,*/
-                     private listeMotsService: RequeteDeGrilleService) {
+                     private listeMotsService: RequeteDeGrilleAbs) {
     super(_servicePointage/*, serviceSocket*/);
+    this.listeMotsService.souscrireRequeteGrille();
   }
 
   public ngOnInit(): void {

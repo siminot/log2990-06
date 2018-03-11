@@ -4,6 +4,7 @@ import { TAILLE_TABLEAU } from "../constantes";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
 import { Injectable } from "@angular/core";
+import { HttpeReqService } from "../httpRequest/http-request.service";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
@@ -21,10 +22,14 @@ export class RequeteDeGrilleAbs {
   protected matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   protected motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
 
-  public constructor() {
+  public constructor(private httpReq: HttpeReqService) {
     this.genererGrille();
   }
   // Accesseurs
+
+  public nettoyage(): void {
+    this._mots = [];
+  }
 
   public get mots(): Mot[] {
     return this._mots;
@@ -42,6 +47,19 @@ export class RequeteDeGrilleAbs {
         this.matriceDesMotsSurGrille[i][j] = CASE_NOIR;
       }
     }
+  }
+
+  public souscrireServiceSocket(): void {
+    //
+  }
+
+  public souscrireRequeteGrille(): void {
+    this.httpReq.obtenirMots().subscribe((x) => {
+      this._mots = x;
+      this.serviceEnvoieMots(this.mots);
+      this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
+      this.insererMotsDansGrille();
+    });
   }
 
   // Traitement de la grille

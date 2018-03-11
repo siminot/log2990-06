@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { HttpeReqService } from "../httpRequest/http-request.service";
-import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { RequeteDeGrilleAbs } from "../service-Requete-de-Grille/requete-de-grilleAbs";
 import { Mot } from "../objetsTest/mot";
 import * as CONST from "../constantes";
 import { TimerObservable } from "rxjs/observable/TimerObservable";
@@ -30,7 +30,7 @@ export class InfoJoueur1Component implements OnInit, OnDestroy {
   private _subscriptionTimer: Subscription;
 
   public constructor(private _servicePointage: InfojoueurService,
-                     private _requeteGrille: RequeteDeGrilleService, private httpReq: HttpeReqService) {
+                     private _requeteGrille: RequeteDeGrilleAbs, private httpReq: HttpeReqService) {
     this._nomJoueur = "Nom du joueur";
     this._nbMotsDecouverts = 0;
     this._listeMots = [];

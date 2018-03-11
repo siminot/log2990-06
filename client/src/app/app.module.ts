@@ -26,7 +26,7 @@ import { DefinitionHComponent } from "./crosswords/definition/definitionH.compon
 import { DefinitionVComponent } from "./crosswords/definition/definitionV.component";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
-import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
+import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
@@ -34,7 +34,6 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
 import { ServiceSocketService } from "./crosswords/service-socket/service-socket.service";
 import { GrilleRejointeComponent } from "./crosswords/grille/multijoueurs/grilleRejointe.component";
 import { GrilleCreeeComponent } from "./crosswords/grille/multijoueurs/grilleCreee.component";
-import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
 import { MainGrilleRejoindreComponent } from "./crosswords/main-grille-rejoindre/main-grille-rejoindre.component";
 import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-grille-creer.component";
 
@@ -73,7 +72,6 @@ import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-gr
         GestionnaireEcran,
         GestionnaireSouris,
         GestionnairePiste,
-        RequeteDeGrilleService,
         HttpeReqService,
         InfojoueurService,
         ServiceSocketService,

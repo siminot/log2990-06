@@ -33,6 +33,73 @@ export abstract class GrilleAbs implements OnDestroy {
     }
   }
 
+  public afficherRegle(): void {
+    alert(REGLE_JEU);
+  }
+
+  public getListeMots(): Mot[] {
+    return this.mots;
+  }
+
+  public getMatrice(): Array<Array<LettreGrille>> {
+    return this.matriceDesMotsSurGrille;
+  }
+
+  public opacite(etat: boolean): String {
+    return (etat ? "0" : ".3");
+  }
+
+  public manageKeyEntry(event: KeyboardEvent): void {
+    if (event.key === "Backspace") {
+      this.focus.focusOnPreviousLetter(this.motSelectionne, this.lockedLetter);
+    } else if (event.key.toUpperCase().charCodeAt(0) >= CONST.KEYCODE_MIN && event.key.toUpperCase().charCodeAt(0) <= CONST.KEYCODE_MAX) {
+      if (this.focus.focusOnNextLetter(this.motSelectionne)) {
+        this.validateWord();
+      }
+    }
+  }
+
+  protected retrieveWordFromClick(event: KeyboardEvent): void {
+    // Erreur de typescript en précisant le type
+    // tslint:disable-next-line:no-any
+    const target: any = event.target || event.srcElement || event.currentTarget;
+    const cordinate: string[] = target.attributes.id.nodeValue.split("");
+    const x: number = +cordinate[0];
+    const y: number = +cordinate[1];
+    const motSousJacent: Mot = this.findWordFromXY(x, y);
+    this.motSelectionne = motSousJacent;
+
+    this.envoieMotSelectionne();
+  }
+
+  protected abstract envoieMotSelectionne(): void;
+
+  private findWordFromXY(X: number, Y: number): Mot {
+    let motTrouve: Mot;
+    for (const mot of this.mots) {
+      let other: number;
+      let max: number;
+
+      if (!mot.estVertical) {
+        other = mot.premierY;
+        max = mot.premierX + mot.longueur - 1;
+        if (X <= max && Y === other && mot.premierX <= X) {
+          motTrouve = mot;
+          break;
+        }
+      } else if (mot.estVertical) {
+        other = mot.premierX;
+        max = mot.premierY + mot.longueur - 1;
+        if (Y <= max && X === other && mot.premierY <= Y) {
+          motTrouve = mot;
+          break;
+        }
+      }
+    }
+
+    return motTrouve;
+  }
+
   protected remplirPositionLettres(): void {
     for (const mot of this.mots) {
       this.remplirPositionLettresMot(mot);
@@ -53,22 +120,15 @@ export abstract class GrilleAbs implements OnDestroy {
     }
   }
 
+  private makeID(i: number, j: number, k: string): string {
+    const a: string = String(i);
+    const b: string = String(j);
+
+    return a + b + k;
+  }
+
   protected focusSurBonneLettre(): void {
     this.focus.focusSurBonneLettre(this.motSelectionne);
-  }
-
-  public manageKeyEntry(event: KeyboardEvent): void {
-    if (event.key === "Backspace") {
-      this.focus.focusOnPreviousLetter(this.motSelectionne, this.lockedLetter);
-    } else if (event.key.toUpperCase().charCodeAt(0) >= CONST.KEYCODE_MIN && event.key.toUpperCase().charCodeAt(0) <= CONST.KEYCODE_MAX) {
-      this.focusOnNextLetter();
-    }
-  }
-
-  private focusOnNextLetter(): void {
-    if (this.focus.focusOnNextLetter(this.motSelectionne)) {
-      this.validateWord();
-    }
   }
 
   private validateWord(): void {
@@ -104,68 +164,9 @@ export abstract class GrilleAbs implements OnDestroy {
     return wordCreated;
   }
 
-  public getListeMots(): Mot[] {
-    return this.mots;
-  }
-
-  public getMatrice(): Array<Array<LettreGrille>> {
-    return this.matriceDesMotsSurGrille;
-  }
-
-  public opacite(etat: boolean): String {
-    return (etat ? "0" : ".3");
-  }
-
-  private makeID(i: number, j: number, k: string): string {
-    const a: string = String(i);
-    const b: string = String(j);
-
-    return a + b + k;
-  }
-
-  protected retrieveWordFromClickAbs(event: KeyboardEvent): void {
-    // Erreur de typescript en précisant le type
-    // tslint:disable-next-line:no-any
-    const target: any = event.target || event.srcElement || event.currentTarget;
-    const cordinate: string[] = target.attributes.id.nodeValue.split("");
-    const x: number = +cordinate[0];
-    const y: number = +cordinate[1];
-    const motSousJacent: Mot = this.findWordFromXY(x, y);
-    this.motSelectionne = motSousJacent;
-  }
-
-  private findWordFromXY(X: number, Y: number): Mot {
-    let motTrouve: Mot;
-    for (const mot of this.mots) {
-      let other: number;
-      let max: number;
-
-      if (!mot.estVertical) {
-        other = mot.premierY;
-        max = mot.premierX + mot.longueur - 1;
-        if (X <= max && Y === other && mot.premierX <= X) {
-          motTrouve = mot;
-          break;
-        }
-      } else if (mot.estVertical) {
-        other = mot.premierX;
-        max = mot.premierY + mot.longueur - 1;
-        if (Y <= max && X === other && mot.premierY <= Y) {
-          motTrouve = mot;
-          break;
-        }
-      }
-    }
-
-    return motTrouve;
-  }
-
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
-  }
-  public afficherRegle(): void {
-    alert(REGLE_JEU);
   }
 }

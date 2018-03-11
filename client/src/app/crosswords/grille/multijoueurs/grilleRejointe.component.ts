@@ -12,7 +12,7 @@ import { GrilleMultijoueurs } from "./grilleMultijoueurs";
 export class GrilleRejointeComponent extends GrilleMultijoueurs implements OnInit {
 
   public constructor(_servicePointage: InfojoueurService,
-                     serviceSocket: number /*type à modifier*/) {
+                     /*serviceSocket: type à déterminer*/) {
     super(_servicePointage/*, serviceSocket*/);
   }
 
@@ -41,13 +41,8 @@ export class GrilleRejointeComponent extends GrilleMultijoueurs implements OnIni
       }); */
   }
 
-  public retrieveWordFromClick(event: KeyboardEvent): void {
-    this.retrieveWordFromClickAbs(event);
-    this.envoieMotSelectionne();
-  }
-
-  private envoieMotSelectionne(): void {
-    // this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
+  protected envoieMotSelectionne(): void {
+    return;
   }
 
   public switchCheatMode(): void {

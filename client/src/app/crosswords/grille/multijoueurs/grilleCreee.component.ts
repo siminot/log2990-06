@@ -42,12 +42,7 @@ export class GrilleCreeeComponent extends GrilleMultijoueurs implements OnInit {
       });
   }
 
-  public retrieveWordFromClick(event: KeyboardEvent): void {
-    this.retrieveWordFromClickAbs(event);
-    this.envoieMotSelectionne();
-  }
-
-  private envoieMotSelectionne(): void {
+  protected envoieMotSelectionne(): void {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
 

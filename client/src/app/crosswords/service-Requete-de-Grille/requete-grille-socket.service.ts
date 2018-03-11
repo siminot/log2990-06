@@ -4,7 +4,7 @@ import { RequeteDeGrilleAbs } from "./requete-de-grilleAbs";
 @Injectable()
 export class RequeteGrilleSocketService extends RequeteDeGrilleAbs {
 
-  public constructor(private socket: number /* type a modifier */) {
+  public constructor(/*private socket a modifier */) {
     super();
     this.souscrireRequeteMots();
     // this.grilleDeTest();

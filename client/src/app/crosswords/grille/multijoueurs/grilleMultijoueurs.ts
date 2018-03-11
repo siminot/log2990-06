@@ -5,10 +5,10 @@ export class GrilleMultijoueurs extends GrilleAbs {
 
   public constructor(_servicePointage: InfojoueurService,
                      /*private serviceSocket*/) {
-    super(_servicePointage);
+    super(_servicePointage/*, serviceSocket */);
   }
 
-  public envoyerMotSelec(): void {
+  protected envoieMotSelectionne(): void {
     return;
   }
 

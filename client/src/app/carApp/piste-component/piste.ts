@@ -19,6 +19,27 @@ export class Piste extends Group {
         this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
     }
 
+    public importerPiste(points: Point[]): void {
+        this.intersections.splice(0, this.intersections.length);
+
+        for (const point of points) {
+            this.ajouterPoint(point);
+        }
+    }
+
+    public exporterPiste(): Point[] {
+        if (this.verificateurPiste.pisteRespecteContraintes) {
+            const points: Point[] = [];
+            for (const intersection of this.intersections) {
+                points.push(intersection.point.point);
+            }
+
+            return points;
+        } else {
+            return null;
+        }
+    }
+
     public ajouterPoint(point: Point): void {
         if (this.circuitBoucle) {
             return;
@@ -38,7 +59,7 @@ export class Piste extends Group {
     private bouclerCircuit(): void {
         this.circuitBoucle = true;
         this.premiereIntersection.droiteArrivee = this.derniereIntersection.droiteDebut;
-        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.premierPoint);
+        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.premiereIntersection.point.point);
         this.verificateurPiste.verifierContraintes(this.premiereIntersection);
         this.verificateurPiste.verifierContraintes(this.derniereIntersection);
     }
@@ -101,10 +122,6 @@ export class Piste extends Group {
         return this.intersections.length === 0;
     }
 
-    private get premierPoint(): Point {
-        return this.premiereIntersection.point.point;
-    }
-
     public selectionnerIntersection(point: Point): void {
         for (const intersection of this.intersections) {
             if (intersection.estEnContactAvec(point)) {
@@ -122,8 +139,8 @@ export class Piste extends Group {
     }
 
     private estEnContactAvecAutresPoints(point: Point): boolean {
-        for (const intertsection of this.intersections) {
-            if (intertsection.estEnContactAvec(point)) {
+        for (const intersection of this.intersections) {
+            if (intersection.estEnContactAvec(point)) {
                 return true;
             }
         }

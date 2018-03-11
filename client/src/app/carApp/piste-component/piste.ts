@@ -37,6 +37,8 @@ export class Piste extends Group {
         this.circuitBoucle = true;
         this.premiereIntersection.droiteArrivee = this.derniereIntersection.droiteDebut;
         this.derniereIntersection.droiteDebut.miseAJourArrivee(this.premierPoint);
+        this.verificateurPiste.verifierContraintes(this.premiereIntersection);
+        this.verificateurPiste.verifierContraintes(this.derniereIntersection);
     }
 
     private debouclerCircuit(): void {

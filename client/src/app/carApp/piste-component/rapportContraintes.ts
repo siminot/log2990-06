@@ -6,8 +6,8 @@ export class RapportContraintes {
     public nombreDeCroisement: number;
 
     public constructor() {
-        this.longueurRespectee = false;
-        this.angleRespectee = false;
+        this.longueurRespectee = true;
+        this.angleRespectee = true;
         this.nombreDeCroisement = 0; // -1;
     }
 

@@ -31,8 +31,8 @@ export class GestionnairePiste {
 
     private inscriptionSouris(): void {
         this.souris.ajouter(this.ajouterPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
-        this.souris.ajouter(this.effacerPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
-        // this.souris.ajouter(this.deplacementPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
+        // this.souris.ajouter(this.effacerPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
+        this.souris.ajouter(this.deplacementPoint.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
         this.souris.ajouter(this.miseAJourSelection.bind(this), new EvenementSouris(TypeEvenementSouris.CLICK));
     }
 

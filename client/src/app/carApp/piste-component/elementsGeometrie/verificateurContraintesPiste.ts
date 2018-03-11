@@ -3,7 +3,7 @@ import { DroiteAffichage } from "./droiteAffichage";
 import { RapportContraintes } from "../rapportContraintes";
 import { PI_OVER_2 } from "../../constants";
 
-const LARGEUR_PISTE: number = 5;
+const LARGEUR_PISTE: number = 3;
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;
 const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
 const ANGLE_MINIMAL: number = PI_OVER_2;
@@ -22,7 +22,7 @@ export class VerificateurContraintesPiste {
 
     public verifierContraintes(intersection: IntersectionPiste): void {
         this.intersectionEnCours = intersection;
-        this.verifierAngle();
+        // this.verifierAngle();
         this.verifierLongueurs();
         this.miseAJourCouleur();
     }
@@ -43,8 +43,8 @@ export class VerificateurContraintesPiste {
             this.rapport(this.intersectionEnCours.droiteArrivee).angleRespectee = false;
             this.rapport(this.intersectionEnCours.droiteDebut).angleRespectee = false;
         } else {
-            this.rapport(this.intersectionEnCours.droiteArrivee).angleRespectee = false;
-            this.rapport(this.intersectionEnCours.droiteDebut).angleRespectee = false;
+            this.rapport(this.intersectionEnCours.droiteArrivee).angleRespectee = true;
+            this.rapport(this.intersectionEnCours.droiteDebut).angleRespectee = true;
         }
     }
 

@@ -17,11 +17,27 @@ input {
     font-family: 'Press Start 2P', cursive;
   }
 
-.laListe li {
-    border: solid 1px black;
-    padding: 10px;
-    height: 10%;
-    width: 50%;
+ul {
+    width: 75%;
+}
+
+li {
+    color: transparent;
+    background-color: #3900FF;
+    width: 100%;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 8px;
+}
+
+span {
+    color: white;
+    font-size: 15px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+li:hover {
+    background-color: rgb(29, 10, 95);
 }
 
 div div {
@@ -46,6 +62,7 @@ button {
     background-color: #3900FF;
     font-family: 'Press Start 2P', cursive;
     font-size: 20px;
+    margin: 5px;
 }
 
 button:hover {

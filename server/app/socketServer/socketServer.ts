@@ -29,7 +29,7 @@ export class SocketServer {
 
     private connection(unSocket: SocketIO.Socket): void {
         unSocket.emit(event.ID);
-        // console.log("client connecte: " + unSocket.id);
+        console.log("client connecte: " + unSocket.id);
         unSocket.on(event.CREATEUR, (nomRoom: string) => {
             this.creerUnePartie(nomRoom, unSocket);
         });

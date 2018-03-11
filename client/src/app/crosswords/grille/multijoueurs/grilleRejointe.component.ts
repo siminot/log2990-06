@@ -1,31 +1,34 @@
 import { Component, OnInit } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
-// import { EncadrementCase } from "../encadrementCase";
+import { EncadrementCase } from "../encadrementCase";
 import { GrilleMultijoueurs } from "./grilleMultijoueurs";
+import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
 
 @Component({
   selector: "app-grille-rejointe",
-  templateUrl: "./grilleRejointe.component.html",
-  styleUrls: ["./grilleRejointe.component.css"]
+  templateUrl: "../grille.component.html",
+  styleUrls: ["../grille.component.css"]
 })
 
 export class GrilleRejointeComponent extends GrilleMultijoueurs implements OnInit {
 
   public constructor(_servicePointage: InfojoueurService,
+                     private listeMotsService: RequeteDeGrilleAbs
                      /*serviceSocket: type à déterminer*/) {
     super(_servicePointage/*, serviceSocket*/);
   }
 
   public ngOnInit(): void { // Va falloir trouver le moyen de souscrirs aux modifs sans utiliser requete-de-grille
 
-    /* this.mots = this.listeMotsService.mots;
+    this.mots = this.listeMotsService.mots;
     this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
-    // this.remplirPositionLettres(); // JUSTE POUR LA GRILLE DE TEST
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {
         this.mots = mots;
-        this.remplirPositionLettres(); });
+        this.remplirPositionLettres();
+      });
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
     .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
@@ -38,7 +41,7 @@ export class GrilleRejointeComponent extends GrilleMultijoueurs implements OnIni
             this.focusSurBonneLettre();
           }
         }
-      }); */
+      });
   }
 
   protected envoieMotSelectionne(): void {

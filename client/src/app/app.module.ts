@@ -31,8 +31,9 @@ import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
-import { JoueurSoloComponent } from "./crosswords/joueur-solo/joueur-solo.component";
-import { ServiceSocketService } from "./crosswords/service-socket/service-socket.service"
+import { ServiceSocketService } from "./crosswords/service-socket/service-socket.service";
+import { GrilleRejointeComponent } from "./crosswords/grille/multijoueurs/grilleRejointe.component";
+import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
 
 @NgModule({
     declarations: [
@@ -46,7 +47,7 @@ import { ServiceSocketService } from "./crosswords/service-socket/service-socket
         DefinitionHComponent,
         DefinitionVComponent,
         InfoJoueur1Component,
-        JoueurSoloComponent
+        GrilleRejointeComponent
     ],
     imports: [
         BrowserModule,
@@ -69,7 +70,8 @@ import { ServiceSocketService } from "./crosswords/service-socket/service-socket
         RequeteDeGrilleService,
         HttpeReqService,
         InfojoueurService,
-        ServiceSocketService
+        ServiceSocketService,
+        RequeteDeGrilleAbs
     ],
     bootstrap: [AppComponent],
     exports: [
@@ -80,7 +82,7 @@ import { ServiceSocketService } from "./crosswords/service-socket/service-socket
         GrilleComponent,
         DefinitionVComponent,
         DefinitionHComponent,
-        JoueurSoloComponent
+        GrilleRejointeComponent
     ]
 })
 export class AppModule { }

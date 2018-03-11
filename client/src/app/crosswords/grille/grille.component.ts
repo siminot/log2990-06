@@ -1,22 +1,24 @@
 import { Component, OnInit } from "@angular/core";
-import { Subscription } from "rxjs/Subscription";
-import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
-import { Mot } from "../objetsTest/mot";
-import { LettreGrille } from "../objetsTest/lettreGrille";
 import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+<<<<<<< HEAD
 import * as CONST from "../constantes";
 // import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 
 import { MiseEnEvidence } from "./miseEnEvidence";
 import { GrilleFocus } from "./grilleFocus";
+=======
+import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
+import { EncadrementCase } from "./encadrementCase";
+import { GrilleAbs } from "./grilleAbs";
+>>>>>>> abstractionGrille
 
-const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
 @Component({
   selector: "app-grille",
   templateUrl: "./grille.component.html",
   styleUrls: ["./grille.component.css"]
 })
 
+<<<<<<< HEAD
 export class GrilleComponent implements OnInit, OnDestroy {
   protected mots: Mot[];
   protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
@@ -30,11 +32,19 @@ export class GrilleComponent implements OnInit, OnDestroy {
   protected focus: GrilleFocus;
 
   public constructor(protected listeMotsService: RequeteDeGrilleService) {
+=======
+export class GrilleComponent extends GrilleAbs implements OnInit {
+
+  public constructor(private listeMotsService: RequeteDeGrilleService,
+                     _servicePointage: InfojoueurService) {
+    super(_servicePointage);
+>>>>>>> abstractionGrille
   }
 
   public ngOnInit(): void {
   }
 
+<<<<<<< HEAD
   protected remplirPositionLettres(): void {
     for (const mot of this.mots) {
       this.remplirPositionLettresMot(mot);
@@ -168,11 +178,19 @@ export class GrilleComponent implements OnInit, OnDestroy {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
   protected switchCheatMode(): void {
+=======
+  protected envoieMotSelectionne(): void {
+    this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
+  }
+
+  public switchCheatMode(): void {
+>>>>>>> abstractionGrille
     for (const mot of this.mots) {
       mot.cheat = !mot.cheat;
     }
     this.listeMotsService.serviceEnvoieMots(this.mots);
   }
+<<<<<<< HEAD
 
   public ngOnDestroy(): void {
     this.subscriptionMots.unsubscribe();
@@ -182,4 +200,6 @@ export class GrilleComponent implements OnInit, OnDestroy {
   protected afficherRegle(): void {
     alert(REGLE_JEU);
   }
+=======
+>>>>>>> abstractionGrille
 }

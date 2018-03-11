@@ -1,58 +1,50 @@
-import { Injectable } from "@angular/core";
-<<<<<<< HEAD
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
-// import { HttpeReqService } from "../httpRequest/http-request.service";
 import { TAILLE_TABLEAU } from "../constantes";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
-import { listeMotsLongue } from "./../objetsTest/objetsTest";
-import { ServiceSocketService} from "../service-socket/service-socket.service"
+
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
-=======
-import { HttpeReqService } from "../httpRequest/http-request.service";
-import { RequeteDeGrilleAbs } from "./requete-de-grilleAbs";
->>>>>>> abstractionGrille
 
-@Injectable()
-export class RequeteDeGrilleService extends RequeteDeGrilleAbs {
+// Classe sans HttpReq: pourrait être réutilisée pour le service de socket..?
 
-<<<<<<< HEAD
-  public constructor(public socket: ServiceSocketService/*private httpReq: HttpeReqService*/) {
+export abstract class RequeteDeGrilleAbs {
+  protected _mots: Mot[];
+  protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
+
+  protected listeMotsSujet: Subject<Mot[]> = new Subject<Mot[]>();
+  protected matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();
+  protected motSelectionneSuject: Subject<Mot> = new Subject<Mot>();
+  protected listeMotsObservable$: Observable<Mot[]> = this.listeMotsSujet.asObservable();
+  protected matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
+  protected motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
+
+  public constructor() {
     this.genererGrille();
-    // this.souscrireRequeteMots();
-    this.grilleDeTest();
-=======
-  public constructor(private httpReq: HttpeReqService) {
-    super();
-    this.souscrireRequeteMots();
-    // this.grilleDeTest();
->>>>>>> abstractionGrille
+  }
+  // Accesseurs
+
+  public get mots(): Mot[] {
+    return this._mots;
   }
 
-  // Requetes
+  public get matrice(): Array<Array<LettreGrille>> {
+    return this.matriceDesMotsSurGrille;
+  }
 
-<<<<<<< HEAD
-
-  // private souscrireRequeteMots(): void {
-  //   this.httpReq.obtenirMots().subscribe((x) => {
-  //     this._mots = x;
-  //     this.serviceEnvoieMots(this.mots);
-  //     this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
-  //     this.insererMotsDansGrille();
-  //   });
-  // }
-
-  private grilleDeTest(): void {
-    this._mots = listeMotsLongue;
-    this.serviceEnvoieMots(this.mots);
-    this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
-    this.insererMotsDansGrille();
+  private genererGrille(): void {
+    this.matriceDesMotsSurGrille = new Array<Array<LettreGrille>>();
+    for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
+      this.matriceDesMotsSurGrille.push(new Array<LettreGrille>(TAILLE_TABLEAU));
+      for (let j: number = 0; j < TAILLE_TABLEAU; j++) {
+        this.matriceDesMotsSurGrille[i][j] = CASE_NOIR;
+      }
+    }
   }
 
   // Traitement de la grille
 
-  private insererMotsDansGrille(): void {
+  protected insererMotsDansGrille(): void {
     for (const objMot of this.mots) {
       for (let indice: number = 0; indice < objMot.longueur; indice++) {
         this.assignerLettre(objMot, indice);
@@ -97,14 +89,5 @@ export class RequeteDeGrilleService extends RequeteDeGrilleAbs {
 
   public serviceReceptionMotSelectionne(): Observable<Mot> {
     return this.motSelectionneObservable$;
-=======
-  private souscrireRequeteMots(): void {
-    this.httpReq.obtenirMots().subscribe((x) => {
-      this._mots = x;
-      this.serviceEnvoieMots(this.mots);
-      this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
-      this.insererMotsDansGrille();
-    });
->>>>>>> abstractionGrille
   }
 }

@@ -52,11 +52,6 @@ export class IntersectionPiste extends Group {
         this.droiteArrivee = new DroiteAffichage(this.point.point, this.point.point);
     }
 
-    public ramenerDroiteDebut(): void {
-        this.remove(this.droiteDebut);
-        this.droiteDebut = new DroiteAffichage(this.point.point, this.point.point);
-    }
-
     private get estPointDuBout(): boolean {
         return this.droiteDebut.droite.end.clone().sub(this.point.point.vecteurPlanXZ).length() === 0;
     }

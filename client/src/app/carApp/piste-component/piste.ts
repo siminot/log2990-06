@@ -63,7 +63,7 @@ export class Piste extends Group {
 
     private debouclerCircuit(): void {
         this.premiereIntersection.ramenerDroiteArrivee();
-        this.derniereIntersection.ramenerDroiteDebut();
+        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.derniereIntersection.point.point);
         this.verifierContraintesExtremites();
     }
 

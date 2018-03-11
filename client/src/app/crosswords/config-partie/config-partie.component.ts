@@ -12,8 +12,21 @@ export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 export class ConfigPartieComponent implements OnInit {
 
     private estCreateurPartie: boolean;
+    private listePartie: string[];
 
-    public constructor(private serviceHTTP: HttpeReqService) { }
+    public constructor(private serviceHTTP: HttpeReqService) {
+        this.listePartie = [
+            "partie 1", // TEST
+            "partie 2",
+            "partie 3",
+            "partie 4",
+            "partie 5",
+            "partie 6",
+            "partie 7",
+            "partie 8",
+            "partie 9"
+        ];
+    }
 
     public ngOnInit(): void { }
 

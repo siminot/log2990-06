@@ -60,4 +60,5 @@ export class GrilleRejointeComponent extends GrilleAbs implements OnInit {
     }
     // this.listeMotsService.serviceEnvoieMots(this.mots);
   }
+
 }

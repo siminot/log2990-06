@@ -54,8 +54,8 @@
 
       <ul id="laListe">
           <li *ngFor="let nomPartie of listePartie"
-          routerLink="/CrosswordsGameRejoindre"
-          >
+          (click)="rejoindreSalle(nomPartie)"
+          routerLink="/CrosswordsGameRejoindre">
             <span>Nom de partie: {{nomPartie}} - Difficultée: Facile</span> </li>
       </ul>
 

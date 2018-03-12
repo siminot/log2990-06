@@ -37,7 +37,9 @@ export class SocketServer {
             this.envoyerListePartie(unSocket);
         });
         unSocket.on(event.REJOINDRE, (nomRoom: string) => {
-            this.rejoindrePatrie(nomRoom, unSocket);
+            console.log("Client veut rejoindre une salle");
+            console.log(nomRoom);
+            //this.rejoindrePatrie(nomRoom, unSocket);
         });
     }
 
@@ -55,20 +57,20 @@ export class SocketServer {
         // }
     }
 
-    private rejoindrePatrie(nomRoom: string, unSocket: SocketIO.Socket): void {
+    // private rejoindrePatrie(nomRoom: string, unSocket: SocketIO.Socket): void {
 
-        for (const partie of this.parties) {
-            if (partie.obtenirNomPartie() === nomRoom) {
-                partie.ajouterJoueur(unSocket);
-            }
-        }
-        // if (nomRoom in this.rooms) {
-        //     unSocket.join(nomRoom);
-        //     this.envoyerGrille(unSocket);
-        // } else {
-        //     this.mauvaisNomRoom(event.NOM_NON_EXISTANT, unSocket);
-        // }
-    }
+    //     for (const partie of this.parties) {
+    //         if (partie.obtenirNomPartie() === nomRoom) {
+    //             partie.ajouterJoueur(unSocket);
+    //         }
+    //     }
+    //     // if (nomRoom in this.rooms) {
+    //     //     unSocket.join(nomRoom);
+    //     //     this.envoyerGrille(unSocket);
+    //     // } else {
+    //     //     this.mauvaisNomRoom(event.NOM_NON_EXISTANT, unSocket);
+    //     // }
+    // }
 
     private envoyerListePartie(unSocket: SocketIO.Socket): void {
         const listePartie: string[] = [];

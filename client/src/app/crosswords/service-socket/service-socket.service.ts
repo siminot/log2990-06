@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import * as socketIo from "socket.io-client";
+import * as event from "../../../../../common/communication/evenementSocket";
+
 
 const SERVER_URL: string = "http://localhost:3000/";
 @Injectable()
@@ -12,5 +14,12 @@ export class ServiceSocketService {
     console.log("bonjour");
   }
 
-}
+  // public socketRejoindrePartie(): void {
 
+  // }
+
+  public joueurVeutJoindre( nomSalle: string): void {
+    this.socketClient.emit(event.REJOINDRE, nomSalle);
+  }
+
+}

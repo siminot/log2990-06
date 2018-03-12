@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpeReqService } from "../httpRequest/http-request.service";
+import { ServiceSocketService } from "../service-socket/service-socket.service";
 import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
 
 export const REQUETE_INIT: string = "http://localhost:3000/grille/";
@@ -14,13 +15,11 @@ export class ConfigPartieComponent implements OnInit {
     private estCreateurPartie: boolean;
     private listePartie: string[];
 
-    public constructor(private serviceHTTP: HttpeReqService) {
+    public constructor(private serviceHTTP: HttpeReqService, private serviceSocket: ServiceSocketService) {
         this.listePartie = [
-            "Ici jf", // TEST
-            "proDesMos",
-            "lol",
-            "mais pourquoi",
-            "hihi"
+            "Salle_1", // TEST
+            "Salle_2",
+            "Salle_3"
         ];
     }
 
@@ -49,11 +48,14 @@ export class ConfigPartieComponent implements OnInit {
     public enterKeyPress(touche: KeyboardEvent, section: string): void {
         if (touche.key === "Enter") {
             if (this.estCreateurPartie) {
-            this.apparaitreSection(section);
+                this.apparaitreSection(section);
             } else {
                 //
             }
             this.disparaitreSection("inputNomPartie");
         }
+    }
+    public rejoindreSalle(nomSalle: string): void {
+        this.serviceSocket.joueurVeutJoindre(nomSalle);
     }
 }

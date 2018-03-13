@@ -1,5 +1,5 @@
 import { Line, LineBasicMaterial, Geometry } from "three";
-import { Droite } from "./droite";
+import { Droite } from "./Droite";
 import { Point } from "./Point";
 
 const COULEUR_DEFAUT: number = 0x0000FF;

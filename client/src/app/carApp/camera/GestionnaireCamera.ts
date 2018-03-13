@@ -38,8 +38,6 @@ export class GestionnaireCamera implements ICamera {
         this.initialisationTouches();
     }
 
-    // Initialisation
-
     protected initialisationTouches(): void {
         this.clavier.ajouter(this.zoomer.bind(this), ZOOM);
         this.clavier.ajouter(this.dezoomer.bind(this), DEZOOM);
@@ -47,25 +45,11 @@ export class GestionnaireCamera implements ICamera {
     }
 
     private initialiserCameras(): void {
-        this.ajouterNouvelleCamera3D();
-        this.ajouterNouvelleCamera2D();
-        this.suivre(this.gestionnaireVoitures.voitureJoueur);
-        this.choisirCameraCouranteInitiale();
-    }
-
-    private ajouterNouvelleCamera2D(): void {
-        this.cameras.push(new CameraJeu2D());
-    }
-
-    private ajouterNouvelleCamera3D(): void {
         this.cameras.push(new CameraJeu3D());
-    }
-
-    private choisirCameraCouranteInitiale(): void {
+        this.cameras.push(new CameraJeu2D());
+        this.suivre(this.gestionnaireVoitures.voitureJoueur);
         this.cameraCourante = this.cameras[CAMERA_INITIALE];
     }
-
-    // Modifications des cameras
 
     private suivre(voiture: Voiture): void {
         for (const camera of this.cameras) {

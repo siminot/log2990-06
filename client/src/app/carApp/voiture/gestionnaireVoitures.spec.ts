@@ -5,8 +5,13 @@ import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 describe("GestionnaireVoitures", () => {
     let gestionnaire: GestionnaireVoitures;
 
-    it("Constructeur initialise un gestionnaire", () => {
+    beforeEach(() => {
         gestionnaire = new GestionnaireVoitures(new GestionnaireClavier());
+        gestionnaire.initialiser();
+
+    });
+
+    it("Constructeur initialise un gestionnaire", () => {
         expect(gestionnaire).toBeDefined();
     });
 

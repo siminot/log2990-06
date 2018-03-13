@@ -5,6 +5,7 @@ import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
+import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 
 // AI
 const NOMBRE_AI: number = 1;
@@ -43,7 +44,6 @@ export class GestionnaireVoitures {
     public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._voituresAI = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
-        this.initialiser().catch(() => new Error("Erreur lors de l'initialisation"));
     }
 
     protected initialisationTouches(): void {
@@ -60,21 +60,25 @@ export class GestionnaireVoitures {
 
     // Creation des voitures
 
-    private async initialiser(): Promise<void> {
-        this.creerVoitureJoueur().catch(() => new Error("Erreur construction de la voiture du joueur"));
-        this.creerVoituresAI().catch(() => new Error("Erreur construction des voituresAI"));
+    public initialiser(): void {
+        this.creerVoitureJoueur();
+        this.creerVoituresAI();
         this.initialisationTouches();
     }
 
-    private async creerVoitureJoueur(): Promise<void> {
+    private creerVoitureJoueur(): void {
         this._voitureJoueur = new Voiture();
-        this._voitureJoueur.initialiser(await this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR]));
+        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
+            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
+            .catch(() => { throw new ErreurChargementTexture(); });
     }
 
-    private async creerVoituresAI(): Promise<void> {
+    private creerVoituresAI(): void {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-            this._voituresAI[i].initialiser(await this.chargerTexture(NOMS_TEXTURES[i % NOMS_TEXTURES.length]));
+            this.chargerTexture(NOMS_TEXTURES[i % NOMS_TEXTURES.length])
+            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
+            .catch(() => { throw new ErreurChargementTexture(); });
         }
     }
 

@@ -1,7 +1,6 @@
 import { CameraJeu } from "./CameraJeu";
 import { Vector3, PerspectiveCamera } from "three";
 
-// Attributs camera
 export const CHAMP_DE_VISION: number = 70;
 export const PLAN_RAPPROCHE: number = 0.1;
 export const PLAN_ELOIGNE: number = 10000;
@@ -45,15 +44,11 @@ export class CameraJeu3D extends CameraJeu {
     }
 
     public zoomer(): void {
-        this.distance - PAS_DISTANCE >= DISTANCE_MINIMUM
-            ? this.distance -= PAS_DISTANCE
-            : this.distance = DISTANCE_MINIMUM;
+        this.distance = Math.max(DISTANCE_MINIMUM, this.distance -= PAS_DISTANCE);
     }
 
     public dezoomer(): void {
-        this.distance + PAS_DISTANCE <= DISTANCE_MAXIMUM
-            ? this.distance += PAS_DISTANCE
-            : this.distance = DISTANCE_MAXIMUM;
+        this.distance = Math.min(DISTANCE_MAXIMUM, this.distance += PAS_DISTANCE);
     }
 
     public redimensionnement(largeur: number, hauteur: number): void {

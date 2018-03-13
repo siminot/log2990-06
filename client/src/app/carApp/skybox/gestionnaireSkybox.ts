@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Mesh } from "three";
 import { Skybox, TempsJournee } from "./skybox";
 
-export class ConstructionSkybox {
+export class ElementsInitialisationSkybox {
     public tempsJournee: TempsJournee;
     public paysage: string;
     public plancher: string;
@@ -14,11 +14,11 @@ export class ConstructionSkybox {
     }
 }
 
-export const SKYBOX: ConstructionSkybox[] = [
-    new ConstructionSkybox(TempsJournee.Nuit, "nuit1", "grass4"),
-    new ConstructionSkybox(TempsJournee.Nuit, "nuit2", "pave1"),
-    new ConstructionSkybox(TempsJournee.Jour, "jour1", "grass2"),
-    new ConstructionSkybox(TempsJournee.Jour, "jour2", "roche1"),
+export const SKYBOX: ElementsInitialisationSkybox[] = [
+    new ElementsInitialisationSkybox(TempsJournee.Nuit, "nuit1", "grass4"),
+    new ElementsInitialisationSkybox(TempsJournee.Nuit, "nuit2", "pave1"),
+    new ElementsInitialisationSkybox(TempsJournee.Jour, "jour1", "grass2"),
+    new ElementsInitialisationSkybox(TempsJournee.Jour, "jour2", "roche1"),
 ];
 
 @Injectable()
@@ -62,9 +62,9 @@ export class GestionnaireSkybox {
     }
 
     private chargerSkybox(): void {
-        for (const liens of SKYBOX) {
-            this.tempsJournee = liens.tempsJournee;
-            this.skyboxSelonTemps.push(new Skybox(liens.tempsJournee, liens.paysage, liens.plancher));
+        for (const elementInitialisation of SKYBOX) {
+            this.tempsJournee = elementInitialisation.tempsJournee;
+            this.skyboxSelonTemps.push(new Skybox(elementInitialisation));
         }
     }
 

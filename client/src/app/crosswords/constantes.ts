@@ -18,3 +18,5 @@ export const SECONDES_PAR_MINUTE: number = 60;
 export const ABREVIATION_HEURES: string = "h ";
 export const ABREVIATION_MINUTES: string = "m ";
 export const ABREVIATION_SECONDES: string = "s ";
+
+export const BACKSPACE_KEY_EVENT: string = "Backspace";

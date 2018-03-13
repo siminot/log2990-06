@@ -5,6 +5,7 @@ export const CREATEUR = "creerPartie";              // 2
 export const DEMANDER_GRILLE = "demanderGrille";    // 3
 export const ENVOYER_GRILLE = "envoyerGrille";      // 4
 
+export const NOM_SALLE = "nomDeLasalle";
 export const NOM_EXISTANT = "nomExistant";
 export const NOM_NON_EXISTANT = "nomNonExistant";
 export const ROOM_CREEE = "roomCreee";

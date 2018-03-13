@@ -38,15 +38,19 @@
   </div>
   
   <div id="inputNomPartie" class="pasVisible">
-      <input placeholder="Entrez un nom de partie" (keyup)="enterKeyPress($event, 'difficulteMultijoueur')">
+      <input placeholder="Entrez un nom de partie" (keyup)="enterKeyPress($event, 'difficulteMultijoueur')"
+           
+            (kekup)="serviceSocket.envoieNomPartie()">  
+                                                   
+                                                    
   </div>
 
   <div id="difficulteMultijoueur" class="pasVisible">
-      <button (click)="ajouterDifficulte('facile')" routerLink="/CrosswordsGameCreer" >
+      <button (click)="ajouterDifficulte('facile')"     routerLink="/CrosswordsGameCreer" >
         Facile</button>
-      <button (click)="ajouterDifficulte('normal')" routerLink="/CrosswordsGameCreer">
+      <button (click)="ajouterDifficulte('normal')"     routerLink="/CrosswordsGameCreer">
         Normal</button>
-      <button (click)="ajouterDifficulte('difficile')" routerLink="/CrosswordsGameCreer">
+      <button (click)="ajouterDifficulte('difficile')"  routerLink="/CrosswordsGameCreer">
         Difficile</button>
   </div>
 
@@ -54,7 +58,7 @@
 
       <ul id="laListe">
           <li *ngFor="let nomPartie of listePartie"
-          (click)="rejoindreSalle(nomPartie)"
+          (click)="serviceSocket.joueurVeutJoindre(nomPartie)"
           routerLink="/CrosswordsGameRejoindre">
             <span>Nom de partie: {{nomPartie}} - Difficultée: Facile</span> </li>
       </ul>

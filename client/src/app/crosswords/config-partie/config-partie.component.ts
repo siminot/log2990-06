@@ -47,6 +47,9 @@ export class ConfigPartieComponent implements OnInit {
 
     public enterKeyPress(touche: KeyboardEvent, section: string): void {
         if (touche.key === "Enter") {
+            // Encore une fois ici, tslint dit que value existe pas.. pourtant
+            // c'est une propriété angular
+            this.serviceSocket.envoieNomSalle(touche.target.value);
             if (this.estCreateurPartie) {
                 this.apparaitreSection(section);
             } else {
@@ -55,7 +58,5 @@ export class ConfigPartieComponent implements OnInit {
             this.disparaitreSection("inputNomPartie");
         }
     }
-    public rejoindreSalle(nomSalle: string): void {
-        this.serviceSocket.joueurVeutJoindre(nomSalle);
-    }
+
 }

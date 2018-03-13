@@ -14,12 +14,20 @@ export class ServiceSocketService {
     console.log("bonjour");
   }
 
-  // public socketRejoindrePartie(): void {
+  public socketRejoindrePartie(): void {
+    //
+  }
 
-  // }
+  public socketCreerPartie(): void {
+    //
+  }
 
-  public joueurVeutJoindre( nomSalle: string): void {
+  public joueurVeutJoindre(nomSalle: string): void {
     this.socketClient.emit(event.REJOINDRE, nomSalle);
+  }
+
+  public envoieNomSalle(nomSalle: string): void {
+    this.socketClient.emit(event.NOM_SALLE);
   }
 
 }

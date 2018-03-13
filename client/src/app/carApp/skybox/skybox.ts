@@ -2,6 +2,7 @@ import { BoxGeometry, BackSide, Mesh, MeshBasicMaterial, TextureLoader,
          PlaneGeometry, MeshPhongMaterial, Texture, RepeatWrapping, MultiMaterial,
          AmbientLight, DirectionalLight } from "three";
 import { RAD_TO_DEG } from "../constants";
+import { ElementsInitialisationSkybox } from "./gestionnaireSkybox";
 
 export enum TempsJournee { Jour, Nuit }
 
@@ -33,11 +34,11 @@ export class Skybox extends Mesh {
     private readonly URL_PLANCHER: string;
     private readonly tempsJournee: TempsJournee;
 
-    public constructor(tempsJournee: TempsJournee, urlPaysage: string, urlPlancher: string) {
+    public constructor(initialisation: ElementsInitialisationSkybox) {
         super();
-        this.tempsJournee = tempsJournee;
-        this.URL_ENVIRONNEMENT = CHEMIN_PAYSAGE + urlPaysage + "/";
-        this.URL_PLANCHER = urlPlancher;
+        this.tempsJournee = initialisation.tempsJournee;
+        this.URL_ENVIRONNEMENT = CHEMIN_PAYSAGE + initialisation.paysage + "/";
+        this.URL_PLANCHER = initialisation.plancher;
         this.charger();
     }
 

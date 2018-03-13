@@ -1,8 +1,6 @@
 import { CameraJeu } from "./CameraJeu";
 import { Vector3, OrthographicCamera } from "three";
 
-// Attributs camera
-
 export const PLAN_RAPPROCHE: number = 0;
 export const PLAN_ELOIGNE: number = 10;
 

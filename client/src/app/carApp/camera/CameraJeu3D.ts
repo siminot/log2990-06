@@ -1,7 +1,6 @@
 import { CameraJeu } from "./CameraJeu";
 import { Vector3, PerspectiveCamera } from "three";
 
-// Attributs camera
 export const CHAMP_DE_VISION: number = 70;
 export const PLAN_RAPPROCHE: number = 0.1;
 export const PLAN_ELOIGNE: number = 10000;

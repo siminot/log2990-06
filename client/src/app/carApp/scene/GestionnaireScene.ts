@@ -46,8 +46,6 @@ export class GestionnaireScene implements IScene {
         this.clavier.ajouter(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE);
     }
 
-    // Creation de la scene
-
     public creerScene(): void {
         this.ajouterElements();
         this.initialiserTempsJournee();
@@ -75,8 +73,6 @@ export class GestionnaireScene implements IScene {
             this._scene.add(VOITURE);
         }
     }
-
-    // Changement dans la scene
 
     public miseAJour(tempsDepuisDerniereTrame: number): void {
             this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);

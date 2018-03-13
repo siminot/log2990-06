@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { AppComponent } from "./app.component";
 import { CarGameComponent } from "./carApp/game-component/carGame.component";
@@ -37,6 +38,8 @@ import { GrilleRejointeComponent } from "./crosswords/grille/multijoueurs/grille
 import { GrilleCreeeComponent } from "./crosswords/grille/multijoueurs/grilleCreee.component";
 import { MainGrilleRejoindreComponent } from "./crosswords/main-grille-rejoindre/main-grille-rejoindre.component";
 import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-grille-creer.component";
+import { DialogComponent } from "./crosswords/dialog/dialog.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -54,12 +57,15 @@ import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-gr
         GrilleRejointeComponent,
         GrilleCreeeComponent,
         MainGrilleRejoindreComponent,
-        MainGrilleCreerComponent
+        MainGrilleCreerComponent,
+        DialogComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MatDialogModule,
+        BrowserAnimationsModule
     ],
     providers: [
         ServiceDeRenduJeu,
@@ -89,7 +95,9 @@ import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-gr
         DefinitionVComponent,
         DefinitionHComponent,
         GrilleRejointeComponent,
-        GrilleCreeeComponent
-    ]
+        GrilleCreeeComponent,
+        DialogComponent
+    ],
+    entryComponents: [ DialogComponent ]
 })
 export class AppModule { }

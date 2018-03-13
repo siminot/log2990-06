@@ -5,6 +5,8 @@ import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-g
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import * as CONST from "../../constantes";
 import { Subscription } from "rxjs/Subscription";
+import { MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { DialogComponent } from "../../dialog/dialog.component";
 
 @Component({
   selector: "app-info-joueur-solo",
@@ -19,8 +21,12 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   private _barreProgression: HTMLElement;
   private _subscriptionNbMotsDecouv: Subscription;
 
+  private dialogRef: MatDialogRef<DialogComponent>;
+
   public constructor(_servicePointage: InfojoueurService,
-                     private _requeteGrille: RequeteDeGrilleAbs, private httpReq: HttpeReqService) {
+                     private _requeteGrille: RequeteDeGrilleAbs,
+                     private httpReq: HttpeReqService,
+                     private dialog: MatDialog) {
     super(_servicePointage);
     this._nomJoueur = "Nom du joueur";
     this._nbMotsDecouverts = 0;
@@ -30,6 +36,10 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   public ngOnInit(): void {
     this.initialiserSouscriptions();
     this._barreProgression = document.getElementById("progress-bar");
+  }
+
+  public openDialog(): void {
+    this.dialogRef = this.dialog.open(DialogComponent);
   }
 
   protected souscrireListeDeMots(): void {
@@ -57,6 +67,10 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
 
   public majBarreProgression(): void {
     this._barreProgression.style.width = String(this.pourcentagePoint) + "%";
+    if (this.pourcentagePoint == 100) {
+      this._subscriptionTimer.unsubscribe();
+      this.openDialog();
+    }
   }
 
   public ngOnDestroy(): void {

@@ -13,7 +13,7 @@ import { GrilleAbs } from "./grilleAbs";
 export class GrilleComponent extends GrilleAbs implements OnInit {
 
   public constructor(private listeMotsService: RequeteDeGrilleAbs,
-                     _servicePointage: InfojoueurService) {
+    _servicePointage: InfojoueurService) {
     super(_servicePointage);
     this.listeMotsService.souscrireRequeteGrille();
   }
@@ -21,12 +21,15 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
   public ngOnInit(): void {
     this.mots = this.listeMotsService.mots;
     this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
-    // this.remplirPositionLettres(); // JUSTE POUR LA GRILLE DE TEST
+
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {
-        this.mots = mots;
-        this.remplirPositionLettres(); });
+      this.mots = mots;
+      this.remplirPositionLettres();
+    });
+
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
-    .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+
     this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
@@ -44,6 +47,10 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
 
   protected envoieMotSelectionne(): void {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
+  }
+  public enleverSelection(): void {
+    EncadrementCase.appliquerStyleDefautGrille(document);
+    console.log("style enlever");
   }
 
   public switchCheatMode(): void {

@@ -20,6 +20,7 @@ export abstract class GrilleAbs implements OnDestroy {
   protected subscriptionMotSelec: Subscription;
   protected miseEnEvidence: MiseEnEvidence;
   protected focus: GrilleFocus;
+  protected focusSurPage: boolean;
 
   public constructor(protected _servicePointage: InfojoueurService) {
     this.miseEnEvidence = new MiseEnEvidence();

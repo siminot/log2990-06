@@ -56,15 +56,12 @@ export class CameraJeu2D extends CameraJeu {
     }
 
     public zoomer(): void {
-        this.zoom + PAS_ZOOM <= ZOOM_MAXIMUM
-            ? this.zoom += PAS_ZOOM
-            : this.zoom = ZOOM_MAXIMUM;
+        this.zoom = Math.min(ZOOM_MAXIMUM, this.zoom += PAS_ZOOM);
     }
 
     public dezoomer(): void {
-        this.zoom - PAS_ZOOM >= ZOOM_MINIMUM
-            ? this.zoom -= PAS_ZOOM
-            : this.zoom = ZOOM_MINIMUM;
+        this.zoom = Math.max(ZOOM_MINIMUM, this.zoom -= PAS_ZOOM);
+
     }
 
     public redimensionnement(largeur: number, hauteur: number): void {

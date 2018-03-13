@@ -91,7 +91,7 @@ export class GrilleComponent implements OnInit, OnDestroy {
   }
 
   public manageKeyEntry(event: KeyboardEvent): void {
-    if (event.key === "Backspace") {
+    if (event.key === CONST.BACKSPACE_KEY_EVENT) {
       this.focus.focusOnPreviousLetter(this.motSelectionne, this.lockedLetter);
     } else if (event.key.toUpperCase().charCodeAt(0) >= CONST.KEYCODE_MIN && event.key.toUpperCase().charCodeAt(0) <= CONST.KEYCODE_MAX) {
       this.focusOnNextLetter();

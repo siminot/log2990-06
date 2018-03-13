@@ -12,7 +12,8 @@ export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 })
 export class ConfigPartieComponent implements OnInit {
 
-    private estCreateurPartie: boolean;
+    // private estCreateurPartie: boolean;
+    private difficultee: string;
     private listePartie: string[];
 
     public constructor(private serviceHTTP: HttpeReqService, private serviceSocket: ServiceSocketService) {
@@ -25,10 +26,6 @@ export class ConfigPartieComponent implements OnInit {
 
     public ngOnInit(): void { }
 
-    public definirEstCreateur(estCreateur: boolean): void {
-        this.estCreateurPartie = estCreateur;
-    }
-
     public apparaitreSection(laSection: string): void {
         document.getElementById(laSection).classList.remove("pasVisible");
         document.getElementById(laSection).classList.add("visible");
@@ -40,21 +37,27 @@ export class ConfigPartieComponent implements OnInit {
     }
 
     public ajouterDifficulte(difficulte: Difficulte): void {
+        this.difficultee = difficulte;
+        this.serviceSocket.modifierDifficultee(difficulte);
         if (difficulte !== undefined) {
             this.serviceHTTP.difficulte = difficulte;
         }
     }
 
+    public creerPartie(): void {
+        this.serviceSocket.creerPartie();
+    }
+
+    // public envoyerDiffServeur(): void {
+    //     this.serviceSocket.envoyerDiff(this.difficultee);
+    // }
+
     public enterKeyPress(touche: KeyboardEvent, section: string): void {
         if (touche.key === "Enter") {
             // Encore une fois ici, tslint dit que value existe pas.. pourtant
             // c'est une propriété angular
-            this.serviceSocket.envoieNomSalle(touche.target.value);
-            if (this.estCreateurPartie) {
-                this.apparaitreSection(section);
-            } else {
-                //
-            }
+            this.serviceSocket.modifierNom(touche.target.value);
+            this.apparaitreSection(section);
             this.disparaitreSection("inputNomPartie");
         }
     }

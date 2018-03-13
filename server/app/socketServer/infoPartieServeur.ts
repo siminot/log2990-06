@@ -1,28 +1,43 @@
 // import * as socket from "socket.io";
 import { Mot } from "./mot";
 import * as event from "./../../../common/communication/evenementSocket";
+// import { Socket } from "net";
 
 const NB_JOUEUR_MAX: number = 2;
 
 export class InfoPartieServeur {
 
     private nomPartie: string;
-    private joueurs: SocketIO.Socket[];
+    private difficultee: string;
+    private joueurs: Array<SocketIO.Socket>;
     private grilleDeJeu: Mot[];
 
-    public constructor(nomPartie: string, socketCreateur: SocketIO.Socket) {
+    public constructor(nomPartie: string,
+                       difficultee: string,
+                       socketCreateur: SocketIO.Socket) {
+        this.joueurs = new Array<SocketIO.Socket>();
         this.joueurs.push(socketCreateur);
+        // this.demanderDiff(/*socketCreateur*/);
         this.nomPartie = nomPartie;
+        this.difficultee = difficultee;
         this.init();
     }
 
+    // private demanderDiff(/*socketCreateur: SocketIO.Socket*/): void {
+    //         this.joueurs[0].on(event.ENVOYER_DIFF, (difficultee: string) => {
+    //         this.difficultee = difficultee;
+    //         console.log("Difficultee " + this.difficultee);
+    //         this.demanderGrille();
+    //     });
+    // }
+
     private init(): void {
-        this.joueurs = [];
         this.grilleDeJeu = [];
         for (const elem of this.joueurs) {
             this.ajouterJoueur(elem);
-            this.demanderGrille(elem);
         }
+        console.log("Nom de la partie " + this.nomPartie);
+        console.log("Difficultee partie " + this.difficultee);
     }
 
     public ajouterJoueur(nouveauJoueur: SocketIO.Socket): void {
@@ -52,9 +67,10 @@ export class InfoPartieServeur {
         //
     }
 
-    public demanderGrille(unSocket: SocketIO.Socket): void {
-        unSocket.to(this.nomPartie).emit(event.DEMANDER_GRILLE);
-        unSocket.on(event.ENVOYER_GRILLE, (laGrille: Mot[]) => {
+    public demanderGrille(): void {
+        console.log("Emmit de la demande de grille");
+        this.joueurs[0].emit(event.DEMANDER_GRILLE);
+        this.joueurs[0].on(event.ENVOYER_GRILLE, (laGrille: Mot[]) => {
             this.recevoirGrille(laGrille);
         });
     }

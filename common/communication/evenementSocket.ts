@@ -3,6 +3,7 @@ export const DECO = "disconnect";
 export const ID = "identification";                 // 1
 export const CREATEUR = "creerPartie";              // 2
 export const DEMANDER_GRILLE = "demanderGrille";    // 3
+export const ENVOYER_DIFF = "envoyerDiff";
 export const ENVOYER_GRILLE = "envoyerGrille";      // 4
 
 export const NOM_SALLE = "nomDeLasalle";

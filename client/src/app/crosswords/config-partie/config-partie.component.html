@@ -28,12 +28,10 @@
 
   <div id="creerOuJoindre" class="pasVisible">
     <button (click)="apparaitreSection('inputNomPartie')"
-            (click)="disparaitreSection('creerOuJoindre')"
-            (click)="definirEstCreateur(true)">
+            (click)="disparaitreSection('creerOuJoindre')">
       Créer une partie</button>
     <button (click)="apparaitreSection('listePartie')"
-            (click)="disparaitreSection('creerOuJoindre')"
-            (click)="definirEstCreateur(false)">
+            (click)="disparaitreSection('creerOuJoindre')">
       Rejoindre une partie</button>
   </div>
   
@@ -46,11 +44,17 @@
   </div>
 
   <div id="difficulteMultijoueur" class="pasVisible">
-      <button (click)="ajouterDifficulte('facile')"     routerLink="/CrosswordsGameCreer" >
+      <button (click)="ajouterDifficulte('facile')"
+      (click)="creerPartie()"
+      routerLink="/CrosswordsGameCreer" >
         Facile</button>
-      <button (click)="ajouterDifficulte('normal')"     routerLink="/CrosswordsGameCreer">
+      <button (click)="ajouterDifficulte('normal')"
+      (click)="creerPartie()"
+      routerLink="/CrosswordsGameCreer">
         Normal</button>
-      <button (click)="ajouterDifficulte('difficile')"  routerLink="/CrosswordsGameCreer">
+      <button (click)="ajouterDifficulte('difficile')"
+      (click)="creerPartie()"
+      routerLink="/CrosswordsGameCreer">
         Difficile</button>
   </div>
 

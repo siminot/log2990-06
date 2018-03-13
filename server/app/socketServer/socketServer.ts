@@ -11,7 +11,7 @@ export class SocketServer {
 
     public constructor(private leServeur: http.Server) {
         this.io = socket(this.leServeur);
-        this.parties = [];
+        this.parties = new Array<InfoPartieServeur>();
     }
 
     public init(): void {
@@ -28,24 +28,21 @@ export class SocketServer {
     }
 
     private connection(unSocket: SocketIO.Socket): void {
-        unSocket.emit(event.ID);
         console.log("client connecte: " + unSocket.id);
-        unSocket.on(event.CREATEUR, (nomRoom: string) => {
-            this.creerUnePartie(nomRoom, unSocket);
+        unSocket.on(event.CREATEUR, (nomRoom: string, difficultee: string) => {
+            this.creerUnePartie(nomRoom, difficultee, unSocket);
+            // unSocket.to(unSocket.id).emit();
         });
         unSocket.on(event.ENVOYER_LISTE_PARTIES, () => {
             this.envoyerListePartie(unSocket);
         });
         unSocket.on(event.REJOINDRE, (nomRoom: string) => {
-            console.log("Client veut rejoindre une salle");
-            console.log(nomRoom);
-            //this.rejoindrePatrie(nomRoom, unSocket);
+            // this.rejoindrePatrie(nomRoom, unSocket);
         });
     }
 
-    private creerUnePartie(nomRoom: string, unSocket: SocketIO.Socket): void {
-
-        this.parties.push(new InfoPartieServeur(nomRoom, unSocket));
+    private creerUnePartie(nomRoom: string, difficultee: string, unSocket: SocketIO.Socket): void {
+        this.parties.push(new InfoPartieServeur(nomRoom, difficultee, unSocket));
         // unSocket.emit(event.ROOM_CREEE);
         // if (nomRoom in this.rooms) {
         //     this.mauvaisNomRoom(event.NOM_EXISTANT, unSocket);

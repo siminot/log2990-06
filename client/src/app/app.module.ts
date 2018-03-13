@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { AppComponent } from "./app.component";
 import { CarGameComponent } from "./carApp/game-component/carGame.component";
@@ -27,7 +28,7 @@ import { DefinitionVComponent } from "./crosswords/definition/definitionV.compon
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
-import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
+// import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 import { InfoJoueurSoloComponent } from "./crosswords/info-partie/info-joueur-solo/info-joueur-solo.component";
 import { InfoPartieMultijoueurComponent } from "./crosswords/info-partie/info-partie-multijoueur/info-partie-multijoueur.component";
@@ -37,6 +38,8 @@ import { GrilleRejointeComponent } from "./crosswords/grille/multijoueurs/grille
 import { GrilleCreeeComponent } from "./crosswords/grille/multijoueurs/grilleCreee.component";
 import { MainGrilleRejoindreComponent } from "./crosswords/main-grille-rejoindre/main-grille-rejoindre.component";
 import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-grille-creer.component";
+import { DialogComponent } from "./crosswords/dialog/dialog.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -45,7 +48,7 @@ import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-gr
         PisteComponent,
         MainGrilleComponent,
         GrilleComponent,
-        ConfigPartieComponent,
+        // ConfigPartieComponent,
         DirectiveFocusDirective,
         DefinitionHComponent,
         DefinitionVComponent,
@@ -54,12 +57,15 @@ import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-gr
         GrilleRejointeComponent,
         GrilleCreeeComponent,
         MainGrilleRejoindreComponent,
-        MainGrilleCreerComponent
+        MainGrilleCreerComponent,
+        DialogComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MatDialogModule,
+        BrowserAnimationsModule
     ],
     providers: [
         ServiceDeRenduJeu,
@@ -89,7 +95,9 @@ import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-gr
         DefinitionVComponent,
         DefinitionHComponent,
         GrilleRejointeComponent,
-        GrilleCreeeComponent
-    ]
+        GrilleCreeeComponent,
+        DialogComponent
+    ],
+    entryComponents: [ DialogComponent ]
 })
 export class AppModule { }

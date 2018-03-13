@@ -54,4 +54,9 @@ export class GrilleCreeeComponent extends GrilleAbs implements OnInit {
     }
     this.listeMotsService.serviceEnvoieMots(this.mots);
   }
+  public enleverSelection(x: string, y: string): void {
+    EncadrementCase.appliquerStyleDefautGrille(document);
+    super.remettreCasseOpaque();
+
+  }
 }

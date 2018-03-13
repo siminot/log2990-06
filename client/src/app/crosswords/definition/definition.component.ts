@@ -21,7 +21,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   private motSelectionne: Mot;
 
-  public constructor (private listeMotsService: RequeteDeGrilleAbs) {
+  public constructor(private listeMotsService: RequeteDeGrilleAbs) {
     this.mots = this.listeMotsService.mots;
     this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
 
@@ -46,7 +46,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   private souscrireReceptionMots(): void {
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
-    .subscribe((mots) => this.mots = mots);
+      .subscribe((mots) => this.mots = mots);
   }
 
   private souscrireSelectionMots(): void {
@@ -64,8 +64,10 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   // Changement d'un mot
 
   public changementMotSelectionne(mot: Mot): void {
-    this.miseAJourMotSelectionne(mot);
-    this.envoieMotSelectionne();
+    if (!mot.motTrouve) {
+      this.miseAJourMotSelectionne(mot);
+      this.envoieMotSelectionne();
+    }
   }
 
   private envoieMotSelectionne(): void {
@@ -85,7 +87,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   private decouvrirCases(mot: Mot): void {
     this.cacherCases();
-    for (let indice: number = 0 ; indice < mot.longueur ; indice++) {
+    for (let indice: number = 0; indice < mot.longueur; indice++) {
       mot.estVertical
         ? this.obtenirLettreGrilleMotVertical(mot, indice).caseDecouverte = true
         : this.obtenirLettreGrilleMotHorizontal(mot, indice).caseDecouverte = true;
@@ -96,7 +98,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   private cacherCases(): void {
     for (const ligne of this.matriceDesMotsSurGrille) {
       for (const lettre of ligne) {
-          lettre.caseDecouverte = false;
+        lettre.caseDecouverte = false;
       }
     }
   }

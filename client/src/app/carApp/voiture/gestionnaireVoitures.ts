@@ -90,11 +90,11 @@ export class GestionnaireVoitures {
     // Changements affectant les voitures
 
     public miseAJourVoitures(tempsDepuisDerniereTrame: number): void {
-            this.voitureJoueur.update(tempsDepuisDerniereTrame);
+        this.voitureJoueur.update(tempsDepuisDerniereTrame);
 
-            for (const voiture of this._voituresAI) {
-                voiture.update(tempsDepuisDerniereTrame);
-            }
+        for (const voiture of this._voituresAI) {
+            voiture.update(tempsDepuisDerniereTrame);
+        }
     }
 
     public changerTempsJournee(temps: TempsJournee): void {

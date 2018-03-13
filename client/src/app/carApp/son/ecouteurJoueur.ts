@@ -13,5 +13,4 @@ export class EcouteurJoueur {
   public get audioListener(): AudioListener {
     return this._audioListener;
   }
-
 }

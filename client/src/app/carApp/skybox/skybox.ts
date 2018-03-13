@@ -1,6 +1,8 @@
-import { BoxGeometry, BackSide, Mesh, MeshBasicMaterial, TextureLoader,
-         PlaneGeometry, MeshPhongMaterial, Texture, RepeatWrapping, MultiMaterial,
-         AmbientLight, DirectionalLight } from "three";
+import {
+    BoxGeometry, BackSide, Mesh, MeshBasicMaterial, TextureLoader,
+    PlaneGeometry, MeshPhongMaterial, Texture, RepeatWrapping, MultiMaterial,
+    AmbientLight, DirectionalLight
+} from "three";
 import { RAD_TO_DEG } from "../constants";
 
 export enum TempsJournee { Jour, Nuit }
@@ -62,7 +64,7 @@ export class Skybox extends Mesh {
     }
 
     private chargerPlancher(): void {
-        const plancher: Mesh = new Mesh( this.geometriePlancher, this.materielPlancher );
+        const plancher: Mesh = new Mesh(this.geometriePlancher, this.materielPlancher);
         const ANGLE: number = 90;
         plancher.receiveShadow = true;
         plancher.rotation.x = ANGLE / RAD_TO_DEG;
@@ -97,19 +99,19 @@ export class Skybox extends Mesh {
     private get materiauxBoite(): MeshBasicMaterial[] {
         const materiaux: MeshBasicMaterial[] = [];
 
-        for (let i: number = 0 ; i < NOMBRE_FACE_CUBE ; i++) {
-            materiaux.push(new MeshBasicMaterial({map: new TextureLoader().load(this.urlMateriaux[i]), side: BackSide}));
+        for (let i: number = 0; i < NOMBRE_FACE_CUBE; i++) {
+            materiaux.push(new MeshBasicMaterial({ map: new TextureLoader().load(this.urlMateriaux[i]), side: BackSide }));
         }
 
         return materiaux;
     }
 
     private get materielPlancher(): MeshPhongMaterial {
-        return new MeshPhongMaterial( { side: BackSide, map: this.texturePlancher } );
+        return new MeshPhongMaterial({ side: BackSide, map: this.texturePlancher });
     }
 
     private get geometriePlancher(): PlaneGeometry {
-        return new PlaneGeometry( TAILLE_SKYBOX, TAILLE_SKYBOX, 1, 1 );
+        return new PlaneGeometry(TAILLE_SKYBOX, TAILLE_SKYBOX, 1, 1);
     }
 
     private get boite(): BoxGeometry {

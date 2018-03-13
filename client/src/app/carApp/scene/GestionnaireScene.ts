@@ -53,10 +53,10 @@ export class GestionnaireScene implements IScene {
     }
 
     private ajouterElements(): void {
-        this.ajouterSkybox();
-        this.ajouterPiste();
-        this.ajouterVoitureJoueur();
+        this._scene.add(this.gestionnaireSkybox.skybox);
+        this._scene.add(this.gestionnaireVoiture.voitureJoueur);
         this.ajouterVoituresAI();
+        this.ajouterPiste();
     }
 
     private initialiserTempsJournee(): void {
@@ -64,20 +64,9 @@ export class GestionnaireScene implements IScene {
         this.changerTempsJournee();
     }
 
-    private ajouterSkybox(): void {
-        this._scene.add(this.gestionnaireSkybox.skybox);
-    }
-
-    private retirerSkybox(): void {
-        this._scene.remove(this.gestionnaireSkybox.skybox);
-    }
-
+    // TODO : Remplir lorsque la classe PisteJeu sera construite
     private ajouterPiste(): void {
         return;
-    }
-
-    private ajouterVoitureJoueur(): void {
-        this._scene.add(this.gestionnaireVoiture.voitureJoueur);
     }
 
     private ajouterVoituresAI(): void {
@@ -94,9 +83,9 @@ export class GestionnaireScene implements IScene {
 
     public changerTempsJournee(): void {
         this.avancerTemps();
-        this.retirerSkybox();
+        this._scene.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerTempsJournee(this.tempsJournee);
-        this.ajouterSkybox();
+        this._scene.add(this.gestionnaireSkybox.skybox);
         this.gestionnaireVoiture.changerTempsJournee(this.tempsJournee);
     }
 
@@ -107,8 +96,8 @@ export class GestionnaireScene implements IScene {
     }
 
     public changerDecor(): void {
-        this.retirerSkybox();
+        this._scene.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerDecor();
-        this.ajouterSkybox();
+        this._scene.add(this.gestionnaireSkybox.skybox);
     }
 }

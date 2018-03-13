@@ -35,22 +35,22 @@ export class GroupePhares extends Group {
     }
 
     private ajouterPhares(): void {
-        for (const PHARE of this.phares) {
-            this.add(PHARE);
-            PHARE.target = this.ciblePhares;
+        for (const phare of this.phares) {
+            this.add(phare);
+            phare.target = this.ciblePhares;
         }
     }
 
     public eteindre(): void {
-        for (const PHARE of this.phares) {
-            PHARE.eteindre();
+        for (const phare of this.phares) {
+            phare.eteindre();
         }
         this._fonctionnent = false;
     }
 
     public allumer(): void {
-        for (const PHARE of this.phares) {
-            PHARE.allumer();
+        for (const phare of this.phares) {
+            phare.allumer();
         }
         this._fonctionnent = true;
     }

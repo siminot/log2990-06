@@ -4,12 +4,10 @@
 */
 import * as assert from "assert";
 import { RouteServiceLexical } from "./routeServiceLexical";
-// import { ServiceLexical } from "./ServiceLexical";
 import { Mot } from "./Mot";
 import * as WebRequest from "web-request";
 import { ServiceWeb } from "../serviceweb";
 
-// const SERVICE: ServiceLexical = new ServiceLexical();
 const ROUTE: ServiceWeb = new RouteServiceLexical();
 
 const URL_SERVICE_LEXICAL: string = "http://localhost:3000" + ROUTE.mainRoute;

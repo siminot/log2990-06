@@ -44,7 +44,7 @@ export class MessagerAPI {
 
             return contrainteAPI;
         } else {
-            throw new Error(MESSAGE_REQUETE_INVALIDE);
+            throw new RangeError(MESSAGE_REQUETE_INVALIDE);
         }
     }
 }

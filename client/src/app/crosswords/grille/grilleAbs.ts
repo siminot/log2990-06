@@ -6,10 +6,12 @@ import * as CONST from "../constantes";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { MiseEnEvidence } from "./miseEnEvidence";
 import { GrilleFocus } from "./grilleFocus";
-
+import { HostListener } from '@angular/core';
 const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
 
 export abstract class GrilleAbs implements OnDestroy {
+
+
   protected mots: Mot[];
   protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   protected motSelectionne: Mot;
@@ -32,6 +34,16 @@ export abstract class GrilleAbs implements OnDestroy {
         this.lockedLetter[i][j] = false;
       }
     }
+  }
+  @HostListener("window: mouseup")
+  protected remettreCasseOpaque(): void {
+    for (const mot of this.mots) {
+      mot.activer = false;
+    }
+    for (const ligne of this.matriceDesMotsSurGrille){
+      for (const lettre of ligne) {
+        lettre.caseDecouverte = false;
+      }
   }
 
   public afficherRegle(): void {
@@ -58,6 +70,11 @@ export abstract class GrilleAbs implements OnDestroy {
         this.validateWord();
       }
     }
+    // for(const ligne of this.matriceDesMotsSurGrille){
+    //   for(const lettre of ligne){
+    //     lettre.caseDecouverte = true;
+    //   }
+    // }
   }
 
   protected retrieveWordFromClick(event: KeyboardEvent): void {
@@ -171,14 +188,5 @@ export abstract class GrilleAbs implements OnDestroy {
     this.subscriptionMotSelec.unsubscribe();
   }
 
-  protected remettreCasseOpaque(): void {
-    for (const mot of this.mots) {
-      mot.activer = false;
-    }
-    for (const ligne of this.matriceDesMotsSurGrille){
-      for(const lettre of ligne){
-        lettre.caseDecouverte = false;
-      }
-    }
-  }
+}
 }

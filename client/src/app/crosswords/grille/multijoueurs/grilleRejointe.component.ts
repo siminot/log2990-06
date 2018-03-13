@@ -61,6 +61,7 @@ export class GrilleRejointeComponent extends GrilleAbs implements OnInit {
     // this.listeMotsService.serviceEnvoieMots(this.mots);
   }
   public enleverSelection(x: string, y: string): void {
+    console.log("focusEnlever");
     EncadrementCase.appliquerStyleDefautGrille(document);
     super.remettreCasseOpaque();
 

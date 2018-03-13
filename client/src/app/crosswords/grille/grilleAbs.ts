@@ -170,4 +170,15 @@ export abstract class GrilleAbs implements OnDestroy {
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
   }
+
+  protected remettreCasseOpaque(): void {
+    for (const mot of this.mots) {
+      mot.activer = false;
+    }
+    for (const ligne of this.matriceDesMotsSurGrille){
+      for(const lettre of ligne){
+        lettre.caseDecouverte = false;
+      }
+    }
+  }
 }

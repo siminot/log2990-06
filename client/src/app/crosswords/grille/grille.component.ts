@@ -16,6 +16,7 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
     _servicePointage: InfojoueurService) {
     super(_servicePointage);
     this.listeMotsService.souscrireRequeteGrille();
+
   }
 
   public ngOnInit(): void {
@@ -48,9 +49,10 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
   protected envoieMotSelectionne(): void {
     this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
-  public enleverSelection(): void {
+  public enleverSelection(x: string, y: string): void {
     EncadrementCase.appliquerStyleDefautGrille(document);
-    console.log("style enlever");
+    super.remettreCasseOpaque();
+
   }
 
   public switchCheatMode(): void {

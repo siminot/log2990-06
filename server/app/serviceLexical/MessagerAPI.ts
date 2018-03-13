@@ -11,15 +11,15 @@ const MESSAGE_REQUETE_INVALIDE: string = "Erreur : requete invalide";
 
 export class MessagerAPI {
 
-    public async obtenirMotsDeLAPI(contrainte: string, nombreDeMots: number): Promise<MotAPI[]> {
-        const CONTRAINTE_API: string = this.modifierContraintePourAPI(contrainte);
+    public static async obtenirMots(contrainte: string, nombreDeMots: number): Promise<MotAPI[]> {
+        const CONTRAINTE_API: string = MessagerAPI.adapterContrainte(contrainte);
         const URL_API: string = URL + CONTRAINTE_API + FLAG + String(nombreDeMots);
         const mots: Promise<MotAPI[]> = WebRequest.json<MotAPI[]>(URL_API);
 
         return mots;
     }
 
-    private requeteEstValide(contrainte: string): boolean {
+    private static requeteEstValide(contrainte: string): boolean {
         for (let i: number = 0; i < contrainte.length; i++) {
             if (!contrainte.toLowerCase().charAt(i).match("[a-z" + LETTRE_INCONNUE + "]")) {
                 return false;
@@ -29,8 +29,8 @@ export class MessagerAPI {
         return true;
     }
 
-    private modifierContraintePourAPI(contrainte: string): string {
-        if (this.requeteEstValide(contrainte)) {
+    private static adapterContrainte(contrainte: string): string {
+        if (MessagerAPI.requeteEstValide(contrainte)) {
 
             let contrainteAPI: string = "";
 

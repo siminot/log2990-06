@@ -16,19 +16,18 @@ module moduleServiceLexical {
     @injectable()
     export class ServiceLexical {
 
-        private async obtenirMotsDeLAPI(contrainte: string, nombreDeMots: number): Promise<MotAPI[]> {
-            const messager: MessagerAPI = new MessagerAPI();
+        private static async obtenirMotsDeLAPI(contrainte: string, nombreDeMots: number): Promise<MotAPI[]> {
 
-            return messager.obtenirMotsDeLAPI(contrainte, nombreDeMots);
+            return MessagerAPI.obtenirMots(contrainte, nombreDeMots);
         }
 
-        private obtenirMotsFormattes(motsAPI: MotAPI[], frequence: Frequence): Mot[] {
+        private static obtenirMotsFormattes(motsAPI: MotAPI[], frequence: Frequence): Mot[] {
             const formatteur: FormatteurDeMots = new FormatteurDeMots(motsAPI);
 
             return formatteur.obtenirMots(frequence);
         }
 
-        private renvoyerResultat(dictionnaire: Mot[], res: Response): void {
+        private static renvoyerResultat(dictionnaire: Mot[], res: Response): void {
             if (dictionnaire.length > 0) {
                 res.send(dictionnaire);
             } else {
@@ -36,7 +35,7 @@ module moduleServiceLexical {
             }
         }
 
-        public servirMotsSelonContrainte(contrainte: string, frequence: Frequence, res: Response): void {
+        public static servirMotsSelonContrainte(contrainte: string, frequence: Frequence, res: Response): void {
             this.obtenirMotsDeLAPI(contrainte, NOMBRE_MAX_REQUETE)
             .then((motsAPI: MotAPI[]) => this.renvoyerResultat(this.obtenirMotsFormattes(motsAPI, frequence), res))
             .catch(() => res.send(new Error(MESSAGE_ERREUR_API_EXTERNE)));

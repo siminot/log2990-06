@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing"
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { ConfigPartieComponent } from "./config-partie.component";
 // import { ProviderAstType } from "@angular/compiler";
+import { ServiceSocketService } from "../service-socket/service-socket.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
 
@@ -9,6 +10,7 @@ describe("ConfigPartieComponent", () => {
   let component: ConfigPartieComponent;
   let fixture: ComponentFixture<ConfigPartieComponent>;
   let reqService: HttpeReqService;
+  let serviceSocket: ServiceSocketService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -23,12 +25,14 @@ describe("ConfigPartieComponent", () => {
     .catch();
   }));
 
-  beforeEach(inject([HttpeReqService], (service: HttpeReqService) => {
+  beforeEach(inject([HttpeReqService, ServiceSocketService],
+                    (service: HttpeReqService, servSock: ServiceSocketService) => {
       fixture = TestBed.createComponent(ConfigPartieComponent);
       // component = fixture.componentInstance;
       reqService = service;
+      serviceSocket = servSock;
       fixture.detectChanges();
-      component = new ConfigPartieComponent(reqService);
+      component = new ConfigPartieComponent(reqService, serviceSocket);
 
   }));
 

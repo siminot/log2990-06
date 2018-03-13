@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { Skybox, TempsJournee, TAILLE_REPETITION, TAILLE_SKYBOX } from "./skybox";
-import { SKYBOX, ElementsInitialisationSkybox } from "./gestionnaireSkybox";
+import { ElementsInitialisationSkybox } from "./gestionnaireSkybox";
 
 const NBR_ELEMENTS_NUIT: number = 2;
 const NBR_ELEMENTS_JOUR: number = NBR_ELEMENTS_NUIT + 1;

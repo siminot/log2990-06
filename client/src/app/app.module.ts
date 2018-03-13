@@ -28,7 +28,7 @@ import { DefinitionVComponent } from "./crosswords/definition/definitionV.compon
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/grille.component";
 import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
-// import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
+import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 import { InfoJoueurSoloComponent } from "./crosswords/info-partie/info-joueur-solo/info-joueur-solo.component";
 import { InfoPartieMultijoueurComponent } from "./crosswords/info-partie/info-partie-multijoueur/info-partie-multijoueur.component";
@@ -48,7 +48,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         PisteComponent,
         MainGrilleComponent,
         GrilleComponent,
-        // ConfigPartieComponent,
+        ConfigPartieComponent,
         DirectiveFocusDirective,
         DefinitionHComponent,
         DefinitionVComponent,

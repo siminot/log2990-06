@@ -45,6 +45,7 @@ export abstract class GrilleAbs implements OnDestroy {
         lettre.caseDecouverte = false;
       }
   }
+}
 
   public afficherRegle(): void {
     alert(REGLE_JEU);

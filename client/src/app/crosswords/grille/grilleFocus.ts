@@ -3,7 +3,7 @@ import { Mot } from "../objetsTest/mot";
 export class GrilleFocus {
 
   public constructor(private document: Document,
-                     private positionCourante: number) { }
+    private positionCourante: number) { }
 
   public focusSurBonneLettre(motSelectionne: Mot): void {
     let elemTmp: HTMLInputElement, idTmp: string;
@@ -75,6 +75,15 @@ export class GrilleFocus {
       }
     }
   }
+
+  // public enleverLeFocusGrille(): void {
+  //   const elem: HTMLInputElement =
+  //     this.document.getElementById("01") as HTMLInputElement;
+  //   elem.focus();
+  //   console.log("Changement focus!");
+
+  //   //
+  // }
 
   private isLastLetterOfWord(motSelectionne: Mot): boolean {
     return this.positionCourante === motSelectionne.longueur - 1 ? true : false;

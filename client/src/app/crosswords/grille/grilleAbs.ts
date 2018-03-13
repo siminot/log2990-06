@@ -20,6 +20,7 @@ export abstract class GrilleAbs implements OnDestroy {
   protected subscriptionMotSelec: Subscription;
   protected miseEnEvidence: MiseEnEvidence;
   protected focus: GrilleFocus;
+  protected focusSurPage: boolean;
 
   public constructor(protected _servicePointage: InfojoueurService) {
     this.miseEnEvidence = new MiseEnEvidence();
@@ -168,5 +169,16 @@ export abstract class GrilleAbs implements OnDestroy {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
+  }
+
+  protected remettreCasseOpaque(): void {
+    for (const mot of this.mots) {
+      mot.activer = false;
+    }
+    for (const ligne of this.matriceDesMotsSurGrille){
+      for(const lettre of ligne){
+        lettre.caseDecouverte = false;
+      }
+    }
   }
 }

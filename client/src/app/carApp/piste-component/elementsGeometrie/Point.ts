@@ -11,4 +11,8 @@ export class Point extends Vector2 {
     public get vecteurPlanXZ(): Vector3 {
         return new Vector3(this.x, PROFONDEUR, this.y);
     }
+
+    public produitVectoriel(autrePoint: Point): number {
+      return this.x * autrePoint.y - autrePoint.x * this.y;
+    }
 }

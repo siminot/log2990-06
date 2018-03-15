@@ -42,32 +42,19 @@ export class Droite extends Line3 {
 
     }
 
-    public croiseDroite(autreDroite: Droite): boolean {
-
-      return true;
-    }
-
-    private get boite(): Droite {
+    public get boite(): Droite {
       return new Droite(new Point(this.plusPetitX, this.plusPetitY),
                         new Point(this.plusGrandX, this.plusGrandY));
-    }
-
-    private boitesDroitesSeRecourbent(autreDroite: Droite): boolean {
-      return this.boite.start.x <= autreDroite.boite.end.x
-          && this.boite.end.x >= autreDroite.boite.start.x
-          && this.boite.start.y <= autreDroite.boite.end.y
-          && this.boite.end.y >= autreDroite.boite.start.y;
     }
 
     private get pointFinalDroiteCentree(): Point {
       return new Point(this.end.x - this.start.x, this.end.y - this.start.y);
     }
 
-    private pointEstSurLigne(point: Point): boolean {
-      const pointTemp: Point = new Point(point.x - this.plusPetitX, point.y -  this.plusPetitY);
-      const DEGREE_ERREUR: number = 0.000001;
+    private locationPointParRapportADroite(point: Point): number {
+      const pointTemp: Point = new Point(point.x - this.plusPetitX, point.y - this.plusPetitY);
 
-      return Math.abs(this.pointFinalDroiteCentree.produitVectoriel(pointTemp)) < DEGREE_ERREUR;
+      return this.pointFinalDroiteCentree.produitVectoriel(pointTemp);
     }
 
 }

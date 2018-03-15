@@ -47,14 +47,7 @@ export class Droite extends Line3 {
                         new Point(this.plusGrandX, this.plusGrandY));
     }
 
-    private get pointFinalDroiteCentree(): Point {
+    public get pointFinalDroiteCentree(): Point {
       return new Point(this.end.x - this.start.x, this.end.y - this.start.y);
     }
-
-    private locationPointParRapportADroite(point: Point): number {
-      const pointTemp: Point = new Point(point.x - this.plusPetitX, point.y - this.plusPetitY);
-
-      return this.pointFinalDroiteCentree.produitVectoriel(pointTemp);
-    }
-
 }

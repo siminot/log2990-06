@@ -2,10 +2,12 @@ import { Droite } from "./Droite";
 import { Point } from "./Point";
 
 export class ContrainteCroitesementDroite {
-// a partir de la je change de fichier ?
+
   public droitesSeCroisent(droite1: Droite, droite2: Droite): boolean {
 
-    return true;
+    return this.boitesDroitesSeRecourbent(droite1.boite, droite2.boite)
+        && this.droiteCroiseOuToucheDroiteInfinie(droite1, droite2)
+        && this.droiteCroiseOuToucheDroiteInfinie(droite2, droite1);
   }
 
   private boitesDroitesSeRecourbent(droite1: Droite, droite2: Droite): boolean {

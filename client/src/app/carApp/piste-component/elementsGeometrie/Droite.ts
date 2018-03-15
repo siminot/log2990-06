@@ -23,7 +23,6 @@ export class Droite extends Line3 {
       return Math.min(this.start.y, this.end.y);
     }
 
-
     public modifierDepart(point: Point): void {
         this.start = point.vecteurPlanXZ;
     }
@@ -48,10 +47,27 @@ export class Droite extends Line3 {
       return true;
     }
 
-    private cadresDroitesSeRecourbent(autreDroite: Droite): boolean {
-      return this.plusPetitX <= autreDroite.plusGrandX
-          && this.plusGrandX >= autreDroite.plusPetitX
-          && this.plusPetitY <= autreDroite.plusGrandY
-          && this.plusGrandY >= autreDroite.plusPetitY;
+    private get boite(): Droite {
+      return new Droite(new Point(this.plusPetitX, this.plusPetitY),
+                        new Point(this.plusGrandX, this.plusGrandY));
     }
+
+    private boitesDroitesSeRecourbent(autreDroite: Droite): boolean {
+      return this.boite.start.x <= autreDroite.boite.end.x
+          && this.boite.end.x >= autreDroite.boite.start.x
+          && this.boite.start.y <= autreDroite.boite.end.y
+          && this.boite.end.y >= autreDroite.boite.start.y;
+    }
+
+    private get pointFinalDroiteCentree(): Point {
+      return new Point(this.end.x - this.start.x, this.end.y - this.start.y);
+    }
+
+    private pointEstSurLigne(point: Point): boolean {
+      const pointTemp: Point = new Point(point.x - this.plusPetitX, point.y -  this.plusPetitY);
+      const DEGREE_ERREUR: number = 0.000001;
+
+      return Math.abs(this.pointFinalDroiteCentree.produitVectoriel(pointTemp)) < DEGREE_ERREUR;
+    }
+
 }

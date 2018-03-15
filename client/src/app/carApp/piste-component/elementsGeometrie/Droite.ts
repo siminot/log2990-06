@@ -7,6 +7,23 @@ export class Droite extends Line3 {
         super(depart.vecteurPlanXZ, arrivee.vecteurPlanXZ);
     }
 
+    public get plusPetitX(): number {
+      return Math.min(this.start.x, this.end.x);
+    }
+
+    public get plusGrandX(): number {
+      return Math.max(this.start.x, this.end.x);
+    }
+
+    public get plusPetitY(): number {
+      return Math.min(this.start.y, this.end.y);
+    }
+
+    public get plusGrandY(): number {
+      return Math.min(this.start.y, this.end.y);
+    }
+
+
     public modifierDepart(point: Point): void {
         this.start = point.vecteurPlanXZ;
     }
@@ -26,7 +43,15 @@ export class Droite extends Line3 {
 
     }
 
-    public croiseDroite(droite: Droite): boolean {
-        return true;
+    public croiseDroite(autreDroite: Droite): boolean {
+
+      return true;
+    }
+
+    private cadresDroitesSeRecourbent(autreDroite: Droite): boolean {
+      return this.plusPetitX <= autreDroite.plusGrandX
+          && this.plusGrandX >= autreDroite.plusPetitX
+          && this.plusPetitY <= autreDroite.plusGrandY
+          && this.plusGrandY >= autreDroite.plusPetitY;
     }
 }

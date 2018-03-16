@@ -13,8 +13,8 @@ export class ContrainteCroitesementDroite {
   private boitesDroitesSeRecourbent(droite1: Droite, droite2: Droite): boolean {
     return droite1.boite.start.x <= droite2.boite.end.x
         && droite1.boite.end.x >= droite2.boite.start.x
-        && droite1.boite.start.y <= droite2.boite.end.y
-        && droite1.boite.end.y >= droite2.boite.start.y;
+        && droite1.boite.start.z <= droite2.boite.end.z
+        && droite1.boite.end.z >= droite2.boite.start.z;
   }
 
   private locationPointParRapportADroite(droite: Droite, point: Point): number {

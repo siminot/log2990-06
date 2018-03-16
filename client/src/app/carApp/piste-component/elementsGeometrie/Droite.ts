@@ -16,11 +16,11 @@ export class Droite extends Line3 {
     }
 
     public get plusPetitY(): number {
-      return Math.min(this.start.y, this.end.y);
+      return Math.min(this.start.z, this.end.z);
     }
 
     public get plusGrandY(): number {
-      return Math.min(this.start.y, this.end.y);
+      return Math.min(this.start.z, this.end.z);
     }
 
     public modifierDepart(point: Point): void {
@@ -48,6 +48,6 @@ export class Droite extends Line3 {
     }
 
     public get pointFinalDroiteCentree(): Point {
-      return new Point(this.end.x - this.start.x, this.end.y - this.start.y);
+      return new Point(this.end.x - this.start.x, this.end.z - this.start.z);
     }
 }

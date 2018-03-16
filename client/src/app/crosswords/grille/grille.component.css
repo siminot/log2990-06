@@ -67,7 +67,8 @@ input {
 .regleEtCheat
 {
     bottom:0;
-    background-color: rgba(55, 55, 224, 0.367);
+    margin-left: 25%;
+    position: relative;
 }
 
 .menuItem {

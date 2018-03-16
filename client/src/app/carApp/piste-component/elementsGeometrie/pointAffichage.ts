@@ -1,6 +1,7 @@
 import { Point } from "./Point";
 import { Mesh, CircleGeometry, MeshBasicMaterial, Group, RingGeometry } from "three";
 import { PI_OVER_2 } from "../../constants";
+import { IPoint } from "./IPoint";
 
 export const RAYON_POINT: number = 0.25;
 const RAYON_INTERNE: number = 0.15;
@@ -9,11 +10,20 @@ const COULEUR_POINT: number = 0xFF8C1A;
 const COULEUR_CONTOUR: number = 0x804000;
 const DIFFERENCE_PROFONDEUR: number = -1;
 
-export class PointAffichage extends Group {
+export class PointAffichage extends Group implements IPoint {
 
     private _point: Point;
     private cercle: Mesh;
     private contour: Mesh;
+
+    public get point(): Point {
+        return this._point;
+    }
+
+    public set point(point: Point) {
+        this._point = point;
+        this.miseAJourMesh();
+    }
 
     public constructor(point: Point, estPremier: boolean) {
         super();
@@ -36,15 +46,6 @@ export class PointAffichage extends Group {
                                 new MeshBasicMaterial( {color: COULEUR_CONTOUR}));
         this.contour.rotateX(PI_OVER_2);
         this.add(this.contour);
-    }
-
-    public get point(): Point {
-        return this._point;
-    }
-
-    public set point(point: Point) {
-        this._point = point;
-        this.miseAJourMesh();
     }
 
     private miseAJourMesh(): void {

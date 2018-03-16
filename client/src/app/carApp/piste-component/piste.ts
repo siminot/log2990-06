@@ -29,7 +29,7 @@ export class Piste extends Group {
         if (this.verificateurPiste.pisteRespecteContraintes) {
             const points: Point[] = [];
             for (const intersection of this.intersections) {
-                points.push(intersection.point.point);
+                points.push(intersection.point);
             }
 
             return points;
@@ -57,13 +57,13 @@ export class Piste extends Group {
 
     private bouclerCircuit(): void {
         this.premiereIntersection.droiteArrivee = this.derniereIntersection.droiteDebut;
-        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.premiereIntersection.point.point);
+        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.premiereIntersection.point);
         this.verifierContraintesExtremites();
     }
 
     private debouclerCircuit(): void {
         this.premiereIntersection.ramenerDroiteArrivee();
-        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.derniereIntersection.point.point);
+        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.derniereIntersection.point);
         this.verifierContraintesExtremites();
     }
 
@@ -167,8 +167,8 @@ export class Piste extends Group {
 
         let somme: number = 0;
         for (let i: number = 0 ; i < this.intersections.length ; i++) {
-            const pointActuel: Point = this.intersections[i].point.point;
-            const pointSuivant: Point = this.intersections[(i + 1) % this.intersections.length].point.point;
+            const pointActuel: Point = this.intersections[i].point;
+            const pointSuivant: Point = this.intersections[(i + 1) % this.intersections.length].point;
             somme += (pointSuivant.x - pointActuel.x) * (pointSuivant.y + pointActuel.y);
         }
 

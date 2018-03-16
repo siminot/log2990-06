@@ -44,13 +44,15 @@ export class ConfigPartieComponent implements OnInit {
         }
     }
 
+
     public creerPartie(): void {
         this.serviceSocket.creerPartie();
+        // this.serviceSocket.creerPartie();
     }
 
-    // public envoyerDiffServeur(): void {
-    //     this.serviceSocket.envoyerDiff(this.difficultee);
-    // }
+    public demmanderListe(): void {
+        this.serviceSocket.rejoindrePartie();
+    }
 
     public enterKeyPress(touche: KeyboardEvent, section: string): void {
         if (touche.key === "Enter") {

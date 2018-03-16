@@ -11,21 +11,26 @@ export class ServiceSocketService {
   private diffPartie: string;
 
   public constructor() {
+  }
+
+  private connectionServeur(): void {
     this.socketClient = socketIo(SERVER_URL);
   }
 
-  public socketRejoindrePartie(): void {
-    //
-  }
-
-  public socketCreerPartie(): void {
+  public rejoindrePartie(): void {
+    this.connectionServeur();
     //
   }
 
   public creerPartie(): void {
-      console.log("nom " + this.nomPartie + " diff " + this.diffPartie);
-      this.socketClient.emit(event.CREATEUR, this.nomPartie, this.diffPartie);
+    this.connectionServeur();
+    this.socketClient.emit(event.CREATEUR, this.nomPartie, this.diffPartie);
+    //
   }
+
+  // public creerPartie(): void {
+  //     this.socketClient.emit(event.CREATEUR, this.nomPartie, this.diffPartie);
+  // }
 
   public modifierNom(nouveauNomPartie: string): void {
     this.nomPartie = nouveauNomPartie;

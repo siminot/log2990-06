@@ -27,9 +27,6 @@ export class RequeteDeGrilleAbs {
   }
   // Accesseurs
 
-  public nettoyage(): void {
-    this._mots = [];
-  }
 
   public get mots(): Mot[] {
     return this._mots;

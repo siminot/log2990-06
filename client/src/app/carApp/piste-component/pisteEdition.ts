@@ -1,12 +1,13 @@
-import { Group, Vector3 } from "three";
 import { IntersectionPiste } from "./elementsGeometrie/intersectionPiste";
 import { Point } from "./elementsGeometrie/Point";
 import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
 import { VerificateurContraintesPiste } from "./elementsGeometrie/verificateurContraintesPiste";
+import { Piste } from "./IPiste";
+import { IPoint } from "./elementsGeometrie/IPoint";
 
-export class Piste extends Group {
+export class PisteEdition extends Piste {
 
-    private intersections: IntersectionPiste[];
+    protected intersections: IntersectionPiste[];
     private intersectionSelectionnee: IntersectionPiste;
     private verificateurPiste: VerificateurContraintesPiste;
 
@@ -17,29 +18,14 @@ export class Piste extends Group {
         this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
     }
 
-    public importerPiste(points: Point[]): void {
-        this.intersections.splice(0, this.intersections.length);
-
-        for (const point of points) {
-            this.ajouterPoint(point);
-        }
-    }
-
-    public exporterPiste(): Point[] {
-        if (this.verificateurPiste.pisteRespecteContraintes) {
-            const points: Point[] = [];
-            for (const intersection of this.intersections) {
-                points.push(intersection.point);
-            }
-
-            return points;
-        } else {
-            return null;
-        }
+    public exporterPiste(): IPoint[] {
+      return this.verificateurPiste.pisteRespecteContraintes
+            ? this.intersections
+            : null;
     }
 
     public ajouterPoint(point: Point): void {
-        if (this.circuitEstBoucle) {
+        if (this.estBoucle) {
             return;
         } else if (this.doitFermerCircuit(point)) {
             this.bouclerCircuit();
@@ -68,7 +54,7 @@ export class Piste extends Group {
     }
 
     private verifierContraintesExtremites(): void {
-        if (!this.creationPremierPoint) {
+        if (this.contientPoints) {
             this.verificateurPiste.verifierContraintes(this.premiereIntersection);
             this.verificateurPiste.verifierContraintes(this.derniereIntersection);
         }
@@ -77,7 +63,7 @@ export class Piste extends Group {
     private creerNouvelleIntersection(point: Point): void {
         if (!this.estEnContactAvecAutresPoints(point)) {
             this.ajouterIntersection(
-                new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point), point, this.creationPremierPoint));
+                new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point), point, !this.contientPoints));
         }
     }
 
@@ -101,9 +87,9 @@ export class Piste extends Group {
     }
 
     public effacerPoint(point: Point): void {
-        if (this.circuitEstBoucle) {
+        if (this.estBoucle) {
             this.debouclerCircuit();
-        } else if (!this.creationPremierPoint) {
+        } else if (this.contientPoints) {
             this.remove(this.derniereIntersection);
             this.intersections.splice(-1);
             this.derniereIntersection.ramenerDroiteDepart();
@@ -111,14 +97,14 @@ export class Piste extends Group {
         }
     }
 
-    private get premiereIntersection(): IntersectionPiste {
-        return !this.creationPremierPoint
+    protected get premiereIntersection(): IntersectionPiste {
+        return this.contientPoints
             ? this.intersections[0]
             : null;
     }
 
-    private get derniereIntersection(): IntersectionPiste {
-        return this.intersections.length  >= 1
+    protected get derniereIntersection(): IntersectionPiste {
+        return this.contientPoints
             ? this.intersections[this.intersections.length - 1]
             : null;
     }
@@ -127,10 +113,6 @@ export class Piste extends Group {
         return this.derniereIntersection !== null
          ? this.derniereIntersection.droiteDebut
          : null;
-    }
-
-    private get creationPremierPoint(): boolean {
-        return this.intersections.length === 0;
     }
 
     public selectionnerIntersection(point: Point): void {
@@ -159,34 +141,9 @@ export class Piste extends Group {
         return false;
     }
 
-    // Source : https://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order
-    public get estSensHoraire(): boolean {
-        if (!this.circuitEstBoucle) {
-            return null;
-        }
-
-        let somme: number = 0;
-        for (let i: number = 0 ; i < this.intersections.length ; i++) {
-            const pointActuel: Point = this.intersections[i].point;
-            const pointSuivant: Point = this.intersections[(i + 1) % this.intersections.length].point;
-            somme += (pointSuivant.x - pointActuel.x) * (pointSuivant.y + pointActuel.y);
-        }
-
-        return somme > 0;
-    }
-
-    public get zoneDeDepart(): Vector3 {
-        const DEUX: number = 2;
-
-        return this.intersections.length >= DEUX
-            ? this.premiereIntersection.droiteDebut.droite.getCenter()
-            : null;
-    }
-
-    private get circuitEstBoucle(): boolean {
+    public get estBoucle(): boolean {
         return this.premiereIntersection !== null && this.derniereIntersection !== null
             ? this.premiereIntersection.droiteArrivee === this.derniereIntersection.droiteDebut
             : false;
-
     }
 }

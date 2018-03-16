@@ -5,7 +5,7 @@ import { EvenementSouris, TypeEvenementSouris, BoutonSouris } from "../souris/ev
 import { GestionnaireCameraPiste } from "./gestionnaireCameraPiste";
 import { TransformateurCoordonnees } from "./elementsGeometrie/TransformateurCoordonnees";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
-import { Piste } from "./piste";
+import { PisteEdition } from "./pisteEdition";
 import { Group } from "three";
 import { Point } from "./elementsGeometrie/Point";
 
@@ -14,7 +14,7 @@ export class GestionnairePiste {
 
     private souris: UtilisateurPeripherique;
     private transformateur: TransformateurCoordonnees;
-    private _piste: Piste;
+    private _piste: PisteEdition;
 
     public get piste(): Group {
         return this._piste;
@@ -23,7 +23,7 @@ export class GestionnairePiste {
     public constructor(@Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
                        @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste,
                        @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran) {
-        this._piste = new Piste();
+        this._piste = new PisteEdition();
         this.souris = new UtilisateurPeripherique(gestionnaireSouris);
         this.transformateur = new TransformateurCoordonnees(gestionnaireCamera, gestionnaireEcran);
         this.inscriptionSouris();
@@ -40,18 +40,21 @@ export class GestionnairePiste {
     private ajouterPoint(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
             this._piste.ajouterPoint(this.positionSouris(evenementSouris));
+            console.log(this._piste.estBoucle);
         }
     }
 
     private effacerPoint(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.DROIT) {
             this._piste.effacerPoint(this.positionSouris(evenementSouris));
+            console.log(this._piste.estBoucle);
         }
     }
 
     private deplacementPoint(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
             this._piste.miseAJourElementSelectionne(this.positionSouris(evenementSouris));
+            console.log(this._piste.estBoucle);
         }
     }
 

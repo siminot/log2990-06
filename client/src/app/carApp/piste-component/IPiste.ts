@@ -11,7 +11,7 @@ export abstract class Piste extends Group {
         this.intersections = [];
     }
 
-    public importerPiste(points: IPoint[]): void {
+    public importerPiste(points: Point[]): void {
         this.intersections.splice(0, this.intersections.length);
 
         for (const point of points) {

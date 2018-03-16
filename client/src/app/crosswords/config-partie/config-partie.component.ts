@@ -13,6 +13,7 @@ export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 export class ConfigPartieComponent implements OnInit {
 
     // private estCreateurPartie: boolean;
+    private nomPartie: string;
     private difficultee: string;
     private listePartie: string[];
 
@@ -38,7 +39,6 @@ export class ConfigPartieComponent implements OnInit {
 
     public ajouterDifficulte(difficulte: Difficulte): void {
         this.difficultee = difficulte;
-        this.serviceSocket.modifierDifficultee(difficulte);
         if (difficulte !== undefined) {
             this.serviceHTTP.difficulte = difficulte;
         }
@@ -46,8 +46,7 @@ export class ConfigPartieComponent implements OnInit {
 
 
     public creerPartie(): void {
-        this.serviceSocket.creerPartie();
-        // this.serviceSocket.creerPartie();
+        this.serviceSocket.creerPartie(this.nomPartie, this.difficultee);
     }
 
     public demmanderListe(): void {
@@ -58,7 +57,7 @@ export class ConfigPartieComponent implements OnInit {
         if (touche.key === "Enter") {
             // Encore une fois ici, tslint dit que value existe pas.. pourtant
             // c'est une propriété angular
-            this.serviceSocket.modifierNom(touche.target.value);
+            this.nomPartie = touche.target.value;
             this.apparaitreSection(section);
             this.disparaitreSection("inputNomPartie");
         }

@@ -7,8 +7,8 @@ const SERVER_URL: string = "http://localhost:3000/";
 export class ServiceSocketService {
 
   private socketClient: SocketIOClient.Socket;
-  private nomPartie: string;
-  private diffPartie: string;
+  // private nomPartie: string;
+  // private diffPartie: string;
 
   public constructor() {
   }
@@ -22,22 +22,21 @@ export class ServiceSocketService {
     //
   }
 
-  public creerPartie(): void {
+  public creerPartie(nomPartie: string, difficultee: string): void {
     this.connectionServeur();
-    this.socketClient.emit(event.CREATEUR, this.nomPartie, this.diffPartie);
+    this.socketClient.on(event.CONNECTION, () => {
+      this.socketClient.emit(event.CREATEUR, nomPartie, difficultee);
+      // TODO: requete grille
+      // generer la grille
+      // quand la grille est faite
+      // this.socketClient.emit(event.ENVOYER_GRILLE, laGrille);
+    });
+
+    this.socketClient.on("connect_error", () => {
+      // TODO: Afficher au client que la conneciton n'a pas marchee
+      this.socketClient.disconnect();
+    });
     //
-  }
-
-  // public creerPartie(): void {
-  //     this.socketClient.emit(event.CREATEUR, this.nomPartie, this.diffPartie);
-  // }
-
-  public modifierNom(nouveauNomPartie: string): void {
-    this.nomPartie = nouveauNomPartie;
-  }
-
-  public modifierDifficultee(nouvelleDiff: string): void {
-    this.diffPartie = nouvelleDiff;
   }
 
   public envoyerDiff(difficultee: string): void {

@@ -20,6 +20,7 @@ export class SocketServer {
 
     private ecoute(): void {
         this.io.on(event.CONNECTION, (unSocket: SocketIO.Socket) => {
+            unSocket.emit(event.CONNECTION);
             this.connection(unSocket);
             unSocket.on(event.DECO, () => {
                 this.deconnection();

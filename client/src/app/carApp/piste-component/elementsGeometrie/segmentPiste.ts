@@ -14,6 +14,7 @@ export class SegmentPiste extends Group {
     public constructor(point1: Point, point2: Point) {
         super();
         this.droite = new Droite(point1, point2);
+        this.position.set(point1.x, 0, point1.y);
         this.ajouterCercle();
         this.ajouterSegment();
     }
@@ -27,9 +28,8 @@ export class SegmentPiste extends Group {
     }
 
     private ajouterSegment(): void {
-        const DIMENSIONS: number = 50000;
         const MATERIEL: MeshBasicMaterial = new MeshBasicMaterial({ color: COULEUR_PISTE });
-        const geometrie: PlaneGeometry = new PlaneGeometry(DIMENSIONS, DIMENSIONS);
+        const geometrie: PlaneGeometry = new PlaneGeometry(LARGEUR_PISTE, this.longueur);
         geometrie.rotateX(PI_OVER_2);
         geometrie.translate(this.centre.x, 0, this.centre.z);
         this.add(new Mesh(geometrie, MATERIEL));
@@ -37,6 +37,10 @@ export class SegmentPiste extends Group {
 
     private get centre(): Vector3 {
         return this.droite.getCenter();
+    }
+
+    private get longueur(): number {
+        return this.droite.distance();
     }
 
 }

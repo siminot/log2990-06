@@ -1,8 +1,8 @@
 import { IntersectionPiste } from "./intersectionPiste";
 import { DroiteAffichage } from "./droiteAffichage";
 import { RapportContraintes } from "../rapportContraintes";
+import { LARGEUR_PISTE } from "./segmentPiste";
 
-const LARGEUR_PISTE: number = 3;
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;
 const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
 const RATIO_ANGLE: number = 4;

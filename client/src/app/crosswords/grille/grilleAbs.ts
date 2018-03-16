@@ -7,6 +7,7 @@ import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { MiseEnEvidence } from "./miseEnEvidence";
 import { GrilleFocus } from "./grilleFocus";
 import { HostListener } from '@angular/core';
+import { EncadrementCase } from "./encadrementCase";
 const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
 
 export abstract class GrilleAbs implements OnDestroy {
@@ -40,12 +41,13 @@ export abstract class GrilleAbs implements OnDestroy {
     for (const mot of this.mots) {
       mot.activer = false;
     }
-    for (const ligne of this.matriceDesMotsSurGrille){
+    for (const ligne of this.matriceDesMotsSurGrille) {
       for (const lettre of ligne) {
         lettre.caseDecouverte = false;
       }
+    }
+    EncadrementCase.appliquerStyleDefautGrille(document);
   }
-}
 
   public afficherRegle(): void {
     alert(REGLE_JEU);

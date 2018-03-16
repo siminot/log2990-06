@@ -1,5 +1,9 @@
 
 <div class="grille" #macro>
+        <div class ="regleEtCheat">
+                <a class= "menuItem" (click)="afficherRegle()">Règle du jeu</a>
+                <a class= "menuItem" id="cheat" (click)="switchCheatMode()">Cheat Mode</a>
+            </div>
     <table >
         <br>
         <tr *ngFor="let item of matriceDesMotsSurGrille; let i = index">
@@ -18,8 +22,5 @@
         </tr>
     </table>
 
-    <div class ="regleEtCheat">
-        <a class= "menuItem" (click)="afficherRegle()">Règle du jeu</a>
-        <a class= "menuItem" id="cheat" (click)="switchCheatMode()">Cheat Mode</a>
-    </div>
+ 
 </div>

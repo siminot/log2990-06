@@ -3,7 +3,7 @@ import { Camera, OrthographicCamera } from "three";
 import { ICamera } from "../camera/ICamera";
 import { PI_OVER_2 } from "../constants";
 
-const PLAN_RAPPROCHE: number = 0;
+const PLAN_RAPPROCHE: number = -10;
 const PLAN_ELOIGNE: number = 50;
 const ZOOM_DEFAUT: number = 30;
 

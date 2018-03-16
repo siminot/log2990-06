@@ -153,4 +153,10 @@ export class PisteEdition extends Piste {
             ? this.premiereIntersection.droiteArrivee === this.derniereIntersection.droiteDebut
             : false;
     }
+
+    public estSensHoraire(): boolean {
+        return this.estBoucle
+            ? super.estSensHoraire()
+            : null;
+    }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { HttpeReqService } from "../httpRequest/http-request.service";
 import { ServiceSocketService } from "../service-socket/service-socket.service";
 import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
+import { Router } from "@angular/router";
 
 export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 
@@ -17,7 +18,7 @@ export class ConfigPartieComponent implements OnInit {
     private difficultee: string;
     private listePartie: string[];
 
-    public constructor(private serviceHTTP: HttpeReqService, private serviceSocket: ServiceSocketService) {
+    public constructor(private serviceHTTP: HttpeReqService, private serviceSocket: ServiceSocketService, private router: Router) {
         this.listePartie = [
             "Salle_1", // TEST
             "Salle_2",
@@ -43,9 +44,16 @@ export class ConfigPartieComponent implements OnInit {
             this.serviceHTTP.difficulte = difficulte;
         }
     }
-    
+
+    private commencerPartie(): void {
+        this.serviceSocket.chargementComplete().subscribe(() => {
+            this.router.navigateByUrl("/CrosswordsGame");
+        });
+    }
+
     public creerPartie(): void {
         this.serviceSocket.creerPartie(this.nomPartie, this.difficultee);
+        this.commencerPartie();
     }
 
     public demmanderListe(): void {

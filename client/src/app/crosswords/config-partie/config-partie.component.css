@@ -73,13 +73,13 @@ button:hover {
     visibility: visible;
     display: flex;
     opacity: 1;
-    -webkit-transition:  opacity 1s linear;
-    transition: opacity 1s linear;
+    -webkit-transition:  opacity 0.05s linear;
+    transition: opacity 0.05s linear;
 }
 
 .pasVisible {
     visibility: hidden;
     display: flex;
     opacity: 0;
-    transition: visibility 0s 0.5s, opacity 1s linear;
+    transition: visibility 0s 0.05s, opacity 1s linear;
 }

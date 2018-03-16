@@ -33,8 +33,9 @@ export class InfoPartieServeur {
 
     private init(): void {
         this.grilleDeJeu = [];
-        for (const elem of this.joueurs) {
-            this.ajouterJoueur(elem);
+        for (const joueur of this.joueurs) {
+            this.ajouterJoueur(joueur);
+            joueur.emit(event.COMMENCER_PARTIE);
         }
         console.log("Nom de la partie " + this.nomPartie);
         console.log("Difficultee partie " + this.difficultee);

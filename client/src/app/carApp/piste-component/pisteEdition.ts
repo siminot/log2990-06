@@ -86,12 +86,19 @@ export class PisteEdition extends Piste {
         }
     }
 
-    public effacerPoint(point: Point): void {
+    public effacerPoint(): void {
         if (this.estBoucle) {
             this.debouclerCircuit();
         } else if (this.contientPoints) {
-            this.remove(this.derniereIntersection);
-            this.intersections.splice(-1);
+            this.retirerDernierPoint();
+        }
+    }
+
+    private retirerDernierPoint(): void {
+        this.remove(this.derniereIntersection);
+        this.intersections.splice(-1);
+
+        if (this.contientPoints) {
             this.derniereIntersection.ramenerDroiteDepart();
             this.verifierContraintesExtremites();
         }

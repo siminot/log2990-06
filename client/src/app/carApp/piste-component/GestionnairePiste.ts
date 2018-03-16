@@ -40,21 +40,18 @@ export class GestionnairePiste {
     private ajouterPoint(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
             this._piste.ajouterPoint(this.positionSouris(evenementSouris));
-            console.log(this._piste.estBoucle);
         }
     }
 
     private effacerPoint(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.DROIT) {
-            this._piste.effacerPoint(this.positionSouris(evenementSouris));
-            console.log(this._piste.estBoucle);
+            this._piste.effacerPoint();
         }
     }
 
     private deplacementPoint(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris) && evenementSouris.button === BoutonSouris.GAUCHE) {
             this._piste.miseAJourElementSelectionne(this.positionSouris(evenementSouris));
-            console.log(this._piste.estBoucle);
         }
     }
 

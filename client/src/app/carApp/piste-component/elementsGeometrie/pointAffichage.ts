@@ -22,7 +22,7 @@ export class PointAffichage extends Group implements IPoint {
 
     public set point(point: Point) {
         this._point = point;
-        this.miseAJourMesh();
+        this.position.set(this._point.vecteurPlanXZ.x, this._point.vecteurPlanXZ.y + DIFFERENCE_PROFONDEUR, this._point.vecteurPlanXZ.z);
     }
 
     public constructor(point: Point, estPremier: boolean) {
@@ -46,9 +46,5 @@ export class PointAffichage extends Group implements IPoint {
                                 new MeshBasicMaterial( {color: COULEUR_CONTOUR}));
         this.contour.rotateX(PI_OVER_2);
         this.add(this.contour);
-    }
-
-    private miseAJourMesh(): void {
-        this.position.set(this._point.vecteurPlanXZ.x, this._point.vecteurPlanXZ.y + DIFFERENCE_PROFONDEUR, this._point.vecteurPlanXZ.z);
     }
 }

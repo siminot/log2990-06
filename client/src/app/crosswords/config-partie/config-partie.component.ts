@@ -50,6 +50,7 @@ export class ConfigPartieComponent implements OnInit {
             this.router.navigateByUrl("/CrosswordsGame");
         });
     }
+    
 
     public creerPartie(): void {
         this.serviceSocket.creerPartie(this.nomPartie, this.difficultee);

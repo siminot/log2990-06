@@ -7,8 +7,6 @@ const SERVER_URL: string = "http://localhost:3000/";
 export class ServiceSocketService {
 
   private socketClient: SocketIOClient.Socket;
-  // private nomPartie: string;
-  // private diffPartie: string;
 
   public constructor() {
   }
@@ -48,15 +46,19 @@ export class ServiceSocketService {
     this.socketClient.on(event.DEMANDER_GRILLE, () => {
       console.log("Le serveur attend la grille");
     });
-    //
   }
 
   public joueurVeutJoindre(nomSalle: string): void {
     this.socketClient.emit(event.REJOINDRE, nomSalle);
   }
 
-  // public envoieNomSalle(nomSalle: string): void {
-  //   this.socketClient.emit(event.NOM_SALLE);
+  // public chargementComplete(): boolean {
+
+  //   this.socketClient.on(event.COMMENCER_PARTIE, () => {
+  //     return true;
+  //   });
+
+  //   return false;
   // }
 
 }

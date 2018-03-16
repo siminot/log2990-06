@@ -43,8 +43,7 @@ export class ConfigPartieComponent implements OnInit {
             this.serviceHTTP.difficulte = difficulte;
         }
     }
-
-
+    
     public creerPartie(): void {
         this.serviceSocket.creerPartie(this.nomPartie, this.difficultee);
     }

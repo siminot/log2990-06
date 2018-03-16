@@ -190,4 +190,3 @@ export abstract class GrilleAbs implements OnDestroy {
   }
 
 }
-}

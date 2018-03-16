@@ -2,7 +2,7 @@
 <p>Configuration de la partie</p>
 <div>
 
-  <div id="soloOuMulti">
+  <div id="soloOuMulti"> <!-- Selection partie solo ou en ligne (multjoueur) -->
     <button (click)="apparaitreSection('difficulte')"
             (click)="disparaitreSection('soloOuMulti')">
       Partie solo</button>
@@ -11,7 +11,7 @@
       Partie en ligne</button>
   </div>
 
-  <div id="difficulte" class="pasVisible">
+  <div id="difficulte" class="pasVisible"> <!-- Selection de la dif pour une partie solo -->
     <button (click)="ajouterDifficulte('facile')"
     routerLink="/CrosswordsGame"
     >
@@ -26,7 +26,7 @@
       Difficile</button>
   </div>
 
-  <div id="creerOuJoindre" class="pasVisible">
+  <div id="creerOuJoindre" class="pasVisible"> <!-- Selection de creer une partie ou joindre -->
     <button (click)="apparaitreSection('inputNomPartie')"
             (click)="disparaitreSection('creerOuJoindre')">
       Créer une partie</button>
@@ -35,7 +35,7 @@
       Rejoindre une partie</button>
   </div>
   
-  <div id="inputNomPartie" class="pasVisible">
+  <div id="inputNomPartie" class="pasVisible"> <!-- Entree pour nom de la partie -->
       <input placeholder="Entrez un nom de partie" (keyup)="enterKeyPress($event, 'difficulteMultijoueur')"
            
             (kekup)="serviceSocket.envoieNomPartie()">  
@@ -43,14 +43,18 @@
                                                     
   </div>
 
-  <div id="difficulteMultijoueur" class="pasVisible">
+  <div id="difficulteMultijoueur" class="pasVisible"> <!-- Selection de la dif multijoueur -->
       <button (click)="ajouterDifficulte('facile')"
       (click)="creerPartie()"
-      routerLink="/CrosswordsGameCreer" >
+      (click)="apparaitreSection('pageChargement')"
+      (click)="disparaitreSection('difficulteMultijoueur')"
+      >
         Facile</button>
       <button (click)="ajouterDifficulte('normal')"
       (click)="creerPartie()"
-      routerLink="/CrosswordsGameCreer">
+      (click)="apparaitreSection('pageChargement')"
+      (click)="disparaitreSection('difficulteMultijoueur')"
+      >
         Normal</button>
       <button (click)="ajouterDifficulte('difficile')"
       (click)="creerPartie()"
@@ -58,8 +62,7 @@
         Difficile</button>
   </div>
 
-  <div id="listePartie" class="pasVisible">
-
+  <div id="listePartie" class="pasVisible"> <!-- Affichage de la liste des parties en ligne -->
       <ul id="laListe">
           <li *ngFor="let nomPartie of listePartie"
           (click)="serviceSocket.joueurVeutJoindre(nomPartie)"
@@ -67,6 +70,10 @@
             <span>Nom de partie: {{nomPartie}} - Difficultée: Facile</span> </li>
       </ul>
 
+  </div>
+
+  <div id="pageChargement" class="pasVisible">
+    <p>CHARGEMENT PARTIE</p>
   </div>
 
 </div>

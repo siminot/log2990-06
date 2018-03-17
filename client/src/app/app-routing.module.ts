@@ -6,12 +6,14 @@ import { CarGameComponent } from "./carApp/game-component/carGame.component";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { PisteComponent } from "./carApp/piste-component/piste.component";
+import { AdministrateurComponent } from "./carApp/administrateur-component/administrateur.component";
 
 const routes: Routes = [
   { path: "CarGame", component: CarGameComponent },
   { path: "editeurPistes", component: PisteComponent },
   { path: "CrosswordsGame", component: MainGrilleComponent },
-  { path: "ConfigPartie", component: ConfigPartieComponent}
+  { path: "ConfigPartie", component: ConfigPartieComponent},
+  { path: "admin", component: AdministrateurComponent}
 ];
 
 @NgModule({

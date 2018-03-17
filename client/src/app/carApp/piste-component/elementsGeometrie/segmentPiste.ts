@@ -7,7 +7,7 @@ export const LARGEUR_PISTE: number = 10;
 const NOMBRE_SEGMENTS: number = 25;
 const COULEUR_PISTE: number = 0x000000;
 const DROITE_REFERENCE: Droite = new Droite(new Point(0, 0), new Point(0, 1));
-const HAUTEUR_PISTE: number = 0;
+const HAUTEUR_PISTE: number = 0.01;
 
 export class SegmentPiste extends Group {
 
@@ -25,11 +25,14 @@ export class SegmentPiste extends Group {
         const DEUX: number = 2;
         const cercle: Mesh = new Mesh(new CircleGeometry(LARGEUR_PISTE / DEUX, NOMBRE_SEGMENTS), this.materiel);
         cercle.rotateX(PI_OVER_2);
+        cercle.receiveShadow = true;
         this.add(cercle);
     }
 
     private ajouterSegment(): void {
-        this.add(new Mesh(this.geometrieSegment, this.materiel));
+        const segment: Mesh = new Mesh(this.geometrieSegment, this.materiel);
+        segment.receiveShadow = true;
+        this.add(segment);
     }
 
     private get materiel(): MeshBasicMaterial {

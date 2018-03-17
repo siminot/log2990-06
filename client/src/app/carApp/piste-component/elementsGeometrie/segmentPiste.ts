@@ -1,42 +1,75 @@
-import { Group, Mesh, CircleGeometry, MeshBasicMaterial, PlaneGeometry, Vector3, DoubleSide } from "three";
+import { Group, Mesh, CircleGeometry, PlaneGeometry, Vector3, Texture,
+         RepeatWrapping, MeshPhongMaterial, TextureLoader, BackSide } from "three";
 import { Droite } from "./Droite";
 import { Point } from "./Point";
 import { PI_OVER_2 } from "../../constants";
 
 export const LARGEUR_PISTE: number = 10;
 const NOMBRE_SEGMENTS: number = 25;
-const COULEUR_PISTE: number = 0x000000;
 const DROITE_REFERENCE: Droite = new Droite(new Point(0, 0), new Point(0, 1));
-const HAUTEUR_PISTE: number = 0.01;
+const HAUTEUR_PISTE: number = 0.025;
+const AXE_Y: Vector3 = new Vector3(0, 1, 0);
+const AXE_Z: Vector3 = new Vector3(0, 0, 1);
+
+// tslint:disable-next-line
+export enum Hauteur { BASSE = 0.01 * HAUTEUR_PISTE, MOYENNE = 2 * BASSE, ELEVEE = 3 * BASSE, TRES_ELEVEE = 4 * BASSE}
+
+// Texture
+const CHEMIN: string = "./../../../../assets/skybox/textures/";
+const NOM_TEXTURE: string = "roche1";
+const FORMAT: string = ".jpg";
+const URL_TEXTURE: string = CHEMIN + NOM_TEXTURE + FORMAT;
+export const TAILLE_REPETITION: number = 1;
 
 export class SegmentPiste extends Group {
 
-    private droite: Droite;
+    private readonly droite: Droite;
 
-    public constructor(point1: Point, point2: Point) {
+    public constructor(point1: Point, point2: Point, hauteur: Hauteur) {
         super();
         this.droite = new Droite(point1, point2);
         this.position.set(point1.x, HAUTEUR_PISTE, point1.y);
         this.ajouterCercle();
-        this.ajouterSegment();
+        this.ajouterSegment(hauteur);
     }
 
     private ajouterCercle(): void {
+        const texture: Texture = this.texture;
+        texture.repeat.set(LARGEUR_PISTE, LARGEUR_PISTE);
+
         const DEUX: number = 2;
-        const cercle: Mesh = new Mesh(new CircleGeometry(LARGEUR_PISTE / DEUX, NOMBRE_SEGMENTS), this.materiel);
+        const cercle: Mesh = new Mesh(new CircleGeometry(LARGEUR_PISTE / DEUX, NOMBRE_SEGMENTS), this.materielCercle);
         cercle.rotateX(PI_OVER_2);
+        cercle.translate(-Hauteur.TRES_ELEVEE, AXE_Z);
         cercle.receiveShadow = true;
         this.add(cercle);
     }
 
-    private ajouterSegment(): void {
-        const segment: Mesh = new Mesh(this.geometrieSegment, this.materiel);
-        segment.receiveShadow = true;
+    private ajouterSegment(hauteur: Hauteur): void {
+        const segment: Mesh = new Mesh(this.geometrieSegment, this.materielSegment);
+        segment.translate(hauteur, AXE_Y);
         this.add(segment);
     }
 
-    private get materiel(): MeshBasicMaterial {
-        return new MeshBasicMaterial( {color: COULEUR_PISTE, side: DoubleSide});
+    private get materielSegment(): MeshPhongMaterial {
+        const texture: Texture = this.texture;
+        texture.repeat.set(LARGEUR_PISTE, this.longueur);
+
+        return new MeshPhongMaterial( {side: BackSide, map: texture});
+    }
+
+    private get materielCercle(): MeshPhongMaterial {
+        const texture: Texture = this.texture;
+        texture.repeat.set(LARGEUR_PISTE, LARGEUR_PISTE);
+
+        return new MeshPhongMaterial( {side: BackSide, map: texture});
+    }
+
+    private get texture(): Texture {
+        const texture: Texture = new TextureLoader().load(URL_TEXTURE);
+        texture.wrapS = texture.wrapT = RepeatWrapping;
+
+        return texture;
     }
 
     private get geometrieSegment(): PlaneGeometry {
@@ -60,5 +93,9 @@ export class SegmentPiste extends Group {
         return this.droite.direction.cross(DROITE_REFERENCE.direction).y < 0
             ? this.droite.angleAvecDroite(DROITE_REFERENCE)
             : Math.PI - this.droite.angleAvecDroite(DROITE_REFERENCE);
+    }
+
+    private get longueur(): number {
+        return this.droite.direction.length();
     }
 }

@@ -1,4 +1,5 @@
 import { AfterViewInit, Component } from "@angular/core";
+import { UtilisateurBD } from "../baseDeDonnee/utilisateurBD";
 
 @Component({
     selector: "app-admin",
@@ -7,7 +8,11 @@ import { AfterViewInit, Component } from "@angular/core";
 })
 export class AdministrateurComponent implements AfterViewInit {
 
-    public constructor() { }
+    public baseDonnees: UtilisateurBD;
+
+    public constructor() {
+        this.baseDonnees = new UtilisateurBD();
+    }
 
     public ngAfterViewInit(): void { }
 }

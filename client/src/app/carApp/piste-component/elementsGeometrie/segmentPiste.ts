@@ -3,9 +3,10 @@ import { Droite } from "./Droite";
 import { Point } from "./Point";
 import { PI_OVER_2 } from "../../constants";
 
-export const LARGEUR_PISTE: number = 3;
+export const LARGEUR_PISTE: number = 1;
 const NOMBRE_SEGMENTS: number = 25;
 const COULEUR_PISTE: number = 0x000000;
+const DROITE_REFERENCE: Droite = new Droite(new Point(0, 0), new Point(0, 1));
 
 export class SegmentPiste extends Group {
 
@@ -28,19 +29,29 @@ export class SegmentPiste extends Group {
     }
 
     private ajouterSegment(): void {
-        const MATERIEL: MeshBasicMaterial = new MeshBasicMaterial({ color: COULEUR_PISTE });
-        const geometrie: PlaneGeometry = new PlaneGeometry(LARGEUR_PISTE, this.longueur);
+        this.add(new Mesh(this.geometrieSegment, new MeshBasicMaterial({ color: COULEUR_PISTE })));
+    }
+
+    private get geometrieSegment(): PlaneGeometry {
+        const geometrie: PlaneGeometry = new PlaneGeometry(LARGEUR_PISTE, this.droite.distance());
         geometrie.rotateX(PI_OVER_2);
-        geometrie.translate(this.centre.x, 0, this.centre.z);
-        this.add(new Mesh(geometrie, MATERIEL));
+        geometrie.rotateY(this.angle);
+        geometrie.translate(this.deplacementSegment.x, this.deplacementSegment.y, this.deplacementSegment.z);
+
+        return geometrie;
     }
 
     private get centre(): Vector3 {
         return this.droite.getCenter();
     }
 
-    private get longueur(): number {
-        return this.droite.distance();
+    private get deplacementSegment(): Vector3 {
+        return this.centre.sub(this.droite.start);
     }
 
+    private get angle(): number {
+        return this.droite.direction.cross(DROITE_REFERENCE.direction).y < 0
+            ? this.droite.angleAvecDroite(DROITE_REFERENCE)
+            : Math.PI - this.droite.angleAvecDroite(DROITE_REFERENCE);
+    }
 }

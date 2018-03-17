@@ -11,14 +11,6 @@ export abstract class Piste extends Group {
         this.intersections = [];
     }
 
-    public importerPiste(points: Point[]): void {
-        this.intersections.splice(0, this.intersections.length);
-
-        for (const point of points) {
-            this.ajouterPoint(point);
-        }
-    }
-
     // Source : https://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order
     public estSensHoraire(): boolean {
         let somme: number = 0;

@@ -9,15 +9,27 @@ export class PisteJeu extends Piste {
 
     protected intersections: IPoint[];
 
-    public constructor(points: Point[]) {
+    public constructor() {
         super();
         this.intersections = [];
-        this.importerPiste(points);
+    }
 
+    public importerPiste(points: Point[]): void {
+        this.intersections.splice(0, this.intersections.length);
+
+        for (const point of points) {
+            this.ajouterPoint(point);
+        }
+
+        this.add(new SegmentPiste(this.intersections[this.intersections.length - 1].point, this.intersections[0].point));
     }
 
     public ajouterPoint(point: Point): void {
-        this.add(new SegmentPiste(this.pointPrecedent(point), point));
+        this.intersections.push(point);
+
+        if (this.intersections.length > 1) {
+            this.add(new SegmentPiste(this.pointPrecedent(point), point));
+        }
     }
 
     public get zoneDeDepart(): Vector3 {
@@ -28,9 +40,9 @@ export class PisteJeu extends Piste {
             : null;
     }
 
-    private pointPrecedent(point: IPoint): IPoint {
-        return this.intersections.indexOf(point) >= 0
-            ? this.intersections[(this.intersections.indexOf(point) - 1) % this.intersections.length]
+    private pointPrecedent(point: Point): Point {
+        return this.intersections.indexOf(point) >= 1
+            ? this.intersections[(this.intersections.indexOf(point) - 1) % this.intersections.length].point
             : null;
     }
 }

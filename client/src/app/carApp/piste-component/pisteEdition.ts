@@ -3,7 +3,6 @@ import { Point } from "./elementsGeometrie/Point";
 import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
 import { VerificateurContraintesPiste } from "./elementsGeometrie/verificateurContraintesPiste";
 import { Piste } from "./IPiste";
-import { IPoint } from "./elementsGeometrie/IPoint";
 
 export class PisteEdition extends Piste {
 
@@ -18,10 +17,14 @@ export class PisteEdition extends Piste {
         this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
     }
 
-    public exporterPiste(): IPoint[] {
-      return this.verificateurPiste.pisteRespecteContraintes
-            ? this.intersections
-            : null;
+    public exporterPiste(): Point[] {
+      const points: Point[] = [];
+
+      for (const intersection of this.intersections) {
+           points.push(intersection.point);
+      }
+
+      return points;
     }
 
     public ajouterPoint(point: Point): void {

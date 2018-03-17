@@ -2,9 +2,12 @@ import { Point } from "./Point";
 import { Mesh, CircleGeometry, MeshBasicMaterial, Group, RingGeometry } from "three";
 import { PI_OVER_2 } from "../../constants";
 import { IPoint } from "./IPoint";
+import { ZOOM_DEFAUT } from "../gestionnaireCameraPiste";
 
-export const RAYON_POINT: number = 0.25;
-const RAYON_INTERNE: number = 0.15;
+const RAYON: number = 10;
+export const RAYON_POINT: number = RAYON / ZOOM_DEFAUT;
+const RAPPORT_RAYON_INTERNE: number = 0.75;
+const RAYON_INTERNE: number = RAYON_POINT * RAPPORT_RAYON_INTERNE;
 const NOMBRE_SEGMENTS: number = 25;
 const COULEUR_POINT: number = 0xFF8C1A;
 const COULEUR_CONTOUR: number = 0x804000;

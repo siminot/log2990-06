@@ -57,7 +57,7 @@ export class VerificateurContraintesPiste {
     }
 
     private verifierAngle(intersection: IntersectionPiste): void {
-        if (this.angleDroitesEnCours(intersection) === null || this.angleDroitesEnCours(intersection) >= ANGLE_MINIMAL) {
+        if (this.angleDroitesEnCours(intersection) === null || (Math.PI - this.angleDroitesEnCours(intersection)) >= ANGLE_MINIMAL) {
             this.rapport(intersection.droiteArrivee).angleArriveeRespectee = true;
             this.rapport(intersection.droiteDebut).angleDebutRespectee = true;
         } else {

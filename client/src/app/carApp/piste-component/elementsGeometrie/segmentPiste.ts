@@ -1,12 +1,13 @@
-import { Group, Mesh, CircleGeometry, MeshBasicMaterial, PlaneGeometry, Vector3 } from "three";
+import { Group, Mesh, CircleGeometry, MeshBasicMaterial, PlaneGeometry, Vector3, DoubleSide } from "three";
 import { Droite } from "./Droite";
 import { Point } from "./Point";
 import { PI_OVER_2 } from "../../constants";
 
-export const LARGEUR_PISTE: number = 1;
+export const LARGEUR_PISTE: number = 10;
 const NOMBRE_SEGMENTS: number = 25;
 const COULEUR_PISTE: number = 0x000000;
 const DROITE_REFERENCE: Droite = new Droite(new Point(0, 0), new Point(0, 1));
+const HAUTEUR_PISTE: number = 0;
 
 export class SegmentPiste extends Group {
 
@@ -15,21 +16,24 @@ export class SegmentPiste extends Group {
     public constructor(point1: Point, point2: Point) {
         super();
         this.droite = new Droite(point1, point2);
-        this.position.set(point1.x, 0, point1.y);
+        this.position.set(point1.x, HAUTEUR_PISTE, point1.y);
         this.ajouterCercle();
         this.ajouterSegment();
     }
 
     private ajouterCercle(): void {
         const DEUX: number = 2;
-        const cercle: Mesh = new Mesh(new CircleGeometry(LARGEUR_PISTE / DEUX, NOMBRE_SEGMENTS),
-                                      new MeshBasicMaterial( {color: COULEUR_PISTE}));
+        const cercle: Mesh = new Mesh(new CircleGeometry(LARGEUR_PISTE / DEUX, NOMBRE_SEGMENTS), this.materiel);
         cercle.rotateX(PI_OVER_2);
         this.add(cercle);
     }
 
     private ajouterSegment(): void {
-        this.add(new Mesh(this.geometrieSegment, new MeshBasicMaterial({ color: COULEUR_PISTE })));
+        this.add(new Mesh(this.geometrieSegment, this.materiel));
+    }
+
+    private get materiel(): MeshBasicMaterial {
+        return new MeshBasicMaterial( {color: COULEUR_PISTE, side: DoubleSide});
     }
 
     private get geometrieSegment(): PlaneGeometry {

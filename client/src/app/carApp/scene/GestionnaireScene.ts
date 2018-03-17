@@ -8,6 +8,8 @@ import { TempsJournee } from "../skybox/skybox";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
+import { PisteJeu } from "../piste-component/pisteJeu";
+import { PISTE_TEST } from "../piste-component/PisteTest";
 
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
@@ -65,7 +67,9 @@ export class GestionnaireScene implements IScene {
 
     // TODO : Remplir lorsque la classe PisteJeu sera construite
     private ajouterPiste(): void {
-        return;
+        const piste: PisteJeu = new PisteJeu();
+        piste.importerPiste(PISTE_TEST);
+        this._scene.add(piste);
     }
 
     private ajouterVoituresAI(): void {

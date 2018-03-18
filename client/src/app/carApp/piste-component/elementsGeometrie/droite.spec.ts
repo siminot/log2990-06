@@ -1,7 +1,7 @@
 import { Droite } from "./Droite";
 import { Point } from "./Point";
 import { Vector3 } from "three";
-// import * as assert from "assert";
+import * as assert from "assert";
 
 // tslint:disable: no-magic-numbers
 describe("test de Droite: ", () => {
@@ -36,14 +36,14 @@ describe("test de Droite: ", () => {
         it("le depart devrait etre modifie", () => {
             const departInitial: Vector3 = droite.start;
             droite.modifierDepart(new Point(5, 1));
-            expect(!departInitial).toEqual(droite.start);
+            assert(departInitial !== droite.start);
         });
     });
     describe("modifierArrivee", () => {
         it("l'arrivee devrait etre modifiee", () => {
             const arriveetInitiale: Vector3 = droite.end;
             droite.modifierArrivee(new Point(1, 6));
-            expect(!arriveetInitiale).toEqual(droite.end);
+            assert(arriveetInitiale !== droite.end);
       });
   });
 });

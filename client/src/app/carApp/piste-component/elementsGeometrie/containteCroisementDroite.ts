@@ -18,13 +18,13 @@ export class ContrainteCroisementDroite {
     }
 
     private static locationPointParRapportADroite(droite: Droite, point: Point): number {
-        const pointTemp: Point = new Point(point.x - droite.plusPetitX, point.y - droite.plusPetitY);
+        const pointTemp: Point = new Point(point.x - droite.start.x, point.y - droite.start.z);
 
         return droite.pointFinalDroiteCentree.produitVectoriel(pointTemp);
     }
 
     private static pointEstSurDroite(droite: Droite, point: Point): boolean {
-        const DEGREE_ERREUR: number = 0.000001;
+        const DEGREE_ERREUR: number = 0.000001; // necessaire?
 
         return Math.abs(this.locationPointParRapportADroite(droite, point)) < DEGREE_ERREUR;
     }

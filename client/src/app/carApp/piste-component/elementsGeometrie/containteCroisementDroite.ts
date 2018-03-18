@@ -34,13 +34,13 @@ export class ContrainteCroisementDroite {
     }
 
     private static droiteCroiseOuToucheDroiteInfinie(droite1: Droite, droite2: Droite): boolean {
-        const pointDebutdroite2: Point = new Point(droite2.start.x, droite2.start.z);
+        const pointDebutDroite2: Point = new Point(droite2.start.x, droite2.start.z);
         const pointFinDroite2: Point = new Point(droite2.end.x, droite2.end.z);
 
-        return this.pointEstSurDroite(droite1, pointDebutdroite2)
+        return this.pointEstSurDroite(droite1, pointDebutDroite2)
                 || this.pointEstSurDroite(droite1, pointFinDroite2)
-                || (this.pointEstADroiteDeLaDroite(droite1, pointDebutdroite2)
-                !== this.pointEstADroiteDeLaDroite(droite1, pointFinDroite2));
+                || (this.pointEstADroiteDeLaDroite(droite1, pointDebutDroite2)
+                    !== this.pointEstADroiteDeLaDroite(droite1, pointFinDroite2));
     }
 
 }

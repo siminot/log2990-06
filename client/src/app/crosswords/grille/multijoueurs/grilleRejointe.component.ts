@@ -1,14 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
-import { EncadrementCase } from "../encadrementCase";
+import { EncadrementCase } from "../librairieGrille/encadrementCase";
 // import { GrilleMultijoueurs } from "./grilleMultijoueurs";
 import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
 import { GrilleAbs } from "../grilleAbs";
 
 @Component({
   selector: "app-grille-rejointe",
-  templateUrl: "../grille.component.html",
-  styleUrls: ["../grille.component.css"]
+  templateUrl: "../solo/grille.component.html",
+  styleUrls: ["../solo/grille.component.css"]
 })
 
 export class GrilleRejointeComponent extends GrilleAbs implements OnInit {

@@ -3,3 +3,5 @@ export class LettreGrille {
     public lettre: String;
     public lettreDecouverte: boolean;
 }
+
+

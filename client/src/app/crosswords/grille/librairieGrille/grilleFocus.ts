@@ -1,4 +1,4 @@
-import { Mot } from "../objetsTest/mot";
+import { Mot } from "../../objetsTest/mot";
 
 export class GrilleFocus {
 

@@ -1,5 +1,5 @@
-import * as CONST from "../constantes";
-import { Mot } from "../objetsTest/mot";
+import * as CONST from "../../constantes";
+import { Mot } from "../../objetsTest/mot";
 import { EncadrementCase } from "./encadrementCase";
 
 export class MiseEnEvidence {

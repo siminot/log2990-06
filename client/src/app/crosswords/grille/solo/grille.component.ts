@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { RequeteDeGrilleAbs } from "../service-Requete-de-Grille/requete-de-grilleAbs";
-import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
-import { EncadrementCase } from "./encadrementCase";
-import { GrilleAbs } from "./grilleAbs";
+import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
+import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
+import { EncadrementCase } from "../librairieGrille/encadrementCase";
+import { GrilleAbs } from "../grilleAbs";
 
 @Component({
   selector: "app-grille",

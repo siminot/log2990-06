@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 
-import { GrilleComponent } from "./grille.component";
-import { RequeteDeGrilleAbs } from "../service-Requete-de-Grille/requete-de-grilleAbs";
-import { listeMotsLongue, grilleLettres } from "../objetsTest/objetsTest";
+import { GrilleComponent } from ".././grille.component";
+import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
+import { listeMotsLongue, grilleLettres } from "../../objetsTest/objetsTest";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { HttpeReqService } from "../httpRequest/http-request.service";
-import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
+import { HttpeReqService } from "../../httpRequest/http-request.service";
+import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 
 describe("GrilleComponent", () => {
   let component: GrilleComponent;

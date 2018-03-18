@@ -1,4 +1,4 @@
-import * as CONST from "../constantes";
+import * as CONST from "../../constantes";
 
 export class EncadrementCase {
 

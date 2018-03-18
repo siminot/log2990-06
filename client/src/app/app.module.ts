@@ -26,7 +26,7 @@ import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
 import { DefinitionHComponent } from "./crosswords/definition/definitionH.component";
 import { DefinitionVComponent } from "./crosswords/definition/definitionV.component";
 import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
-import { GrilleComponent } from "./crosswords/grille/grille.component";
+import { GrilleComponent } from "./crosswords/grille/solo/grille.component";
 import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
@@ -39,7 +39,7 @@ import { GrilleCreeeComponent } from "./crosswords/grille/multijoueurs/grilleCre
 import { MainGrilleRejoindreComponent } from "./crosswords/main-grille-rejoindre/main-grille-rejoindre.component";
 import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-grille-creer.component";
 import { DialogComponent } from "./crosswords/dialog/dialog.component";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
     declarations: [

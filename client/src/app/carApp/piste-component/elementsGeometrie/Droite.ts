@@ -20,7 +20,7 @@ export class Droite extends Line3 {
     }
 
     public get plusGrandY(): number {
-      return Math.min(this.start.z, this.end.z);
+      return Math.max(this.start.z, this.end.z);
     }
 
     public modifierDepart(point: Point): void {

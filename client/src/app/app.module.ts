@@ -21,7 +21,7 @@ import { GestionnaireCameraPiste } from "./carApp/piste-component/gestionnaireCa
 import { GestionnairePiste } from "./carApp/piste-component/GestionnairePiste";
 
 import { AppRoutingModule } from ".//app-routing.module";
-import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
+import { ServiceHttp } from "./crosswords/serviceHttp/http-request.service";
 
 import { DefinitionHComponent } from "./crosswords/definition/definitionH.component";
 import { DefinitionVComponent } from "./crosswords/definition/definitionV.component";
@@ -80,7 +80,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         GestionnaireEcran,
         GestionnaireSouris,
         GestionnairePiste,
-        HttpeReqService,
+        ServiceHttp,
         InfojoueurService,
         ServiceSocketService,
         RequeteDeGrilleAbs

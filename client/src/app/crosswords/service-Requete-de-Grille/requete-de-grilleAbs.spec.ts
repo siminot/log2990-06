@@ -1,9 +1,9 @@
 import { TestBed, inject } from "@angular/core/testing";
 import { RequeteDeGrilleAbs } from "./requete-de-grilleAbs";
-import { GrilleComponent } from "../grille/grille.component";
+import { GrilleComponent } from "../grille/solo/grille.component";
 import { DefinitionComponent } from "../definition/definition.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { HttpeReqService } from "../httpRequest/http-request.service";
+import { ServiceHttp } from "../serviceHttp/http-request.service";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { listeMotsLongue, grilleLettres } from "../objetsTest/objetsTest";
 
@@ -16,11 +16,11 @@ describe("RequeteDeGrilleService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ RequeteDeGrilleAbs, HttpeReqService ]
+      providers: [ RequeteDeGrilleAbs, ServiceHttp ]
     });
   });
 
-  beforeEach(inject([HttpeReqService], (service: HttpeReqService) => {
+  beforeEach(inject([ServiceHttp], (service: ServiceHttp) => {
     serviceGrille = new RequeteDeGrilleAbs(service);
     serviceGrille["_mots"] = listeMotsLongue;
     serviceGrille["matriceDesMotsSurGrille"] = grilleLettres;

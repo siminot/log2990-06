@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
-import { HttpeReqService } from "../../httpRequest/http-request.service";
+import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import * as CONST from "../../constantes";
@@ -25,7 +25,7 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
 
   public constructor(_servicePointage: InfojoueurService,
                      private _requeteGrille: RequeteDeGrilleAbs,
-                     private httpReq: HttpeReqService,
+                     private httpReq: ServiceHttp,
                      private dialog: MatDialog) {
     super(_servicePointage);
     this._nomJoueur = "Nom du joueur";

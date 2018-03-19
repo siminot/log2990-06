@@ -4,7 +4,7 @@ import { TAILLE_TABLEAU } from "../constantes";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
 import { Injectable } from "@angular/core";
-import { HttpeReqService } from "../httpRequest/http-request.service";
+import { ServiceHttp } from "../serviceHttp/http-request.service";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
@@ -22,7 +22,7 @@ export class RequeteDeGrilleAbs {
   protected matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   protected motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
 
-  public constructor(private httpReq: HttpeReqService) {
+  public constructor(private httpReq: ServiceHttp) {
     this.genererGrille();
   }
   // Accesseurs

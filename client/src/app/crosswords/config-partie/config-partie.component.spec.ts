@@ -1,22 +1,25 @@
 import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
-import { HttpeReqService } from "../httpRequest/http-request.service";
+import { ServiceHttp } from "../serviceHttp/http-request.service";
 import { ConfigPartieComponent } from "./config-partie.component";
 // import { ProviderAstType } from "@angular/compiler";
 import { ServiceSocketService } from "../service-socket/service-socket.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
+import { Router } from "@angular/router";
 
 describe("ConfigPartieComponent", () => {
   let component: ConfigPartieComponent;
   let fixture: ComponentFixture<ConfigPartieComponent>;
-  let reqService: HttpeReqService;
+  let reqService: ServiceHttp;
   let serviceSocket: ServiceSocketService;
+  let mockRouter: any;
 
   beforeEach(async(() => {
+    mockRouter = jasmine.createSpyObj("Router", ["navigate"]);
     TestBed.configureTestingModule({
       declarations: [ ConfigPartieComponent ],
       imports: [ HttpClientTestingModule ],
-      providers: [HttpeReqService]
+      providers: [ServiceHttp, { provide: Router, useValue: mockRouter }, ServiceSocketService ]
 
     })
 
@@ -25,14 +28,15 @@ describe("ConfigPartieComponent", () => {
     .catch();
   }));
 
-  beforeEach(inject([HttpeReqService, ServiceSocketService],
-                    (service: HttpeReqService, servSock: ServiceSocketService) => {
+  beforeEach(inject([ServiceHttp, ServiceSocketService, Router],
+                    (service: ServiceHttp, servSock: ServiceSocketService) => {
       fixture = TestBed.createComponent(ConfigPartieComponent);
       // component = fixture.componentInstance;
       reqService = service;
       serviceSocket = servSock;
       fixture.detectChanges();
-      component = new ConfigPartieComponent(reqService, serviceSocket);
+      mockRouter = jasmine.createSpyObj("Router", ["navigate"]);
+      component = new ConfigPartieComponent(reqService, serviceSocket, mockRouter);
 
   }));
 

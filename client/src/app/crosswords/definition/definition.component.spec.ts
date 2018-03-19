@@ -4,7 +4,7 @@ import { RequeteDeGrilleAbs } from "../service-Requete-de-Grille/requete-de-gril
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { HttpeReqService } from "../httpRequest/http-request.service";
+import { ServiceHttp } from "../serviceHttp/http-request.service";
 import { listeMotsLongue, grilleLettres } from "../objetsTest/objetsTest";
 
 describe("DefinitionComponent", () => {
@@ -18,7 +18,7 @@ describe("DefinitionComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ DefinitionComponent ],
       imports: [ HttpClientTestingModule ],
-      providers: [ RequeteDeGrilleAbs, HttpeReqService ]
+      providers: [ RequeteDeGrilleAbs, ServiceHttp ]
     })
     .compileComponents()
     .catch(() => { throw new Error("Erreur de la creation du test"); });

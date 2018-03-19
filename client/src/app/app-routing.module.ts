@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 
 import { CarGameComponent } from "./carApp/game-component/carGame.component";
-import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
+import { MainGrilleComponent } from "./crosswords/main-grille-solo/main-grille.component";
 import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-grille-creer.component";
 import { MainGrilleRejoindreComponent } from "./crosswords/main-grille-rejoindre/main-grille-rejoindre.component";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";

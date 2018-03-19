@@ -21,11 +21,11 @@ import { GestionnaireCameraPiste } from "./carApp/piste-component/gestionnaireCa
 import { GestionnairePiste } from "./carApp/piste-component/GestionnairePiste";
 
 import { AppRoutingModule } from ".//app-routing.module";
-import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
+import { ServiceHttp } from "./crosswords/serviceHttp/http-request.service";
 
 import { DefinitionHComponent } from "./crosswords/definition/definitionH.component";
 import { DefinitionVComponent } from "./crosswords/definition/definitionV.component";
-import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
+import { MainGrilleComponent } from "./crosswords/main-grille-solo/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/solo/grille.component";
 import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
@@ -33,7 +33,7 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
 import { InfoJoueurSoloComponent } from "./crosswords/info-partie/info-joueur-solo/info-joueur-solo.component";
 import { InfoPartieMultijoueurComponent } from "./crosswords/info-partie/info-partie-multijoueur/info-partie-multijoueur.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
-import { ServiceSocketService } from "./crosswords/service-socket/service-socket.service";
+import { SocketService } from "./crosswords/service-socket/service-socket";
 import { GrilleRejointeComponent } from "./crosswords/grille/multijoueurs/grilleRejointe.component";
 import { GrilleCreeeComponent } from "./crosswords/grille/multijoueurs/grilleCreee.component";
 import { MainGrilleRejoindreComponent } from "./crosswords/main-grille-rejoindre/main-grille-rejoindre.component";
@@ -80,9 +80,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         GestionnaireEcran,
         GestionnaireSouris,
         GestionnairePiste,
-        HttpeReqService,
+        ServiceHttp,
         InfojoueurService,
-        ServiceSocketService,
+        SocketService,
         RequeteDeGrilleAbs
     ],
     bootstrap: [AppComponent],

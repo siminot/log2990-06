@@ -10,7 +10,7 @@ export const DIFFICULTE_DEFAUT: Difficulte = Difficulte.Facile;
 const URL_REQUETE: string = "http://localhost:3000/grille/";
 
 @Injectable()
-export class HttpeReqService {
+export class ServiceHttp {
   public difficulte: Difficulte;
 
   public constructor(private http: HttpClient) {

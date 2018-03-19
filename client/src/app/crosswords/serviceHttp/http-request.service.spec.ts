@@ -1,16 +1,16 @@
 import { TestBed, inject } from "@angular/core/testing";
-import { HttpeReqService } from "./http-request.service";
+import { ServiceHttp } from "./http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("HttpRequestService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [HttpeReqService]
+      providers: [ServiceHttp]
     });
   });
 
-  it("should be created", inject([HttpeReqService], (service: HttpeReqService) => {
+  it("should be created", inject([ServiceHttp], (service: ServiceHttp) => {
     expect(service).toBeTruthy();
   }));
 });

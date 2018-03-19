@@ -108,7 +108,7 @@ export class Skybox extends Mesh {
     }
 
     private get materielPlancher(): MeshPhongMaterial {
-        return new MeshPhongMaterial({ side: BackSide, map: this.texturePlancher });
+        return new MeshPhongMaterial({ side: BackSide, map: this.texturePlancher, depthWrite: false });
     }
 
     private get geometriePlancher(): PlaneGeometry {

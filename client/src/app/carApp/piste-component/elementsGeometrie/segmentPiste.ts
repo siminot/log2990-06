@@ -7,12 +7,6 @@ import { PI_OVER_2 } from "../../constants";
 export const LARGEUR_PISTE: number = 10;
 const NOMBRE_SEGMENTS: number = 25;
 const DROITE_REFERENCE: Droite = new Droite(new Point(0, 0), new Point(0, 1));
-const HAUTEUR_PISTE: number = 0.025;
-const AXE_Y: Vector3 = new Vector3(0, 1, 0);
-const AXE_Z: Vector3 = new Vector3(0, 0, 1);
-
-// tslint:disable-next-line
-export enum Hauteur { BASSE = 0.01 * HAUTEUR_PISTE, MOYENNE = 2 * BASSE, ELEVEE = 3 * BASSE, TRES_ELEVEE = 4 * BASSE}
 
 // Texture
 const CHEMIN: string = "./../../../../assets/skybox/textures/";
@@ -25,12 +19,12 @@ export class SegmentPiste extends Group {
 
     private readonly droite: Droite;
 
-    public constructor(point1: Point, point2: Point, hauteur: Hauteur) {
+    public constructor(point1: Point, point2: Point) {
         super();
         this.droite = new Droite(point1, point2);
-        this.position.set(point1.x, HAUTEUR_PISTE, point1.y);
+        this.position.set(point1.x, 0, point1.y);
         this.ajouterCercle();
-        this.ajouterSegment(hauteur);
+        this.ajouterSegment();
     }
 
     private ajouterCercle(): void {
@@ -40,29 +34,26 @@ export class SegmentPiste extends Group {
         const DEUX: number = 2;
         const cercle: Mesh = new Mesh(new CircleGeometry(LARGEUR_PISTE / DEUX, NOMBRE_SEGMENTS), this.materielCercle);
         cercle.rotateX(PI_OVER_2);
-        cercle.translate(-Hauteur.TRES_ELEVEE, AXE_Z);
         cercle.receiveShadow = true;
         this.add(cercle);
     }
 
-    private ajouterSegment(hauteur: Hauteur): void {
-        const segment: Mesh = new Mesh(this.geometrieSegment, this.materielSegment);
-        segment.translate(hauteur, AXE_Y);
-        this.add(segment);
+    private ajouterSegment(): void {
+        this.add(new Mesh(this.geometrieSegment, this.materielSegment));
     }
 
     private get materielSegment(): MeshPhongMaterial {
         const texture: Texture = this.texture;
         texture.repeat.set(LARGEUR_PISTE, this.longueur);
 
-        return new MeshPhongMaterial( {side: BackSide, map: texture});
+        return new MeshPhongMaterial( {side: BackSide, map: texture, depthWrite: false});
     }
 
     private get materielCercle(): MeshPhongMaterial {
         const texture: Texture = this.texture;
         texture.repeat.set(LARGEUR_PISTE, LARGEUR_PISTE);
 
-        return new MeshPhongMaterial( {side: BackSide, map: texture});
+        return new MeshPhongMaterial( {side: BackSide, map: texture, depthWrite: false});
     }
 
     private get texture(): Texture {

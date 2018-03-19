@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ServiceHttp } from "../serviceHttp/http-request.service";
-import { ServiceSocketService } from "../service-socket/service-socket.service";
+import { SocketService } from "../service-socket/service-socket";
 import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
 import { Router } from "@angular/router";
 
@@ -18,7 +18,7 @@ export class ConfigPartieComponent implements OnInit {
     private difficultee: string;
     private listePartie: string[];
 
-    public constructor(private serviceHTTP: ServiceHttp, private serviceSocket: ServiceSocketService, private router: Router) {
+    public constructor(private serviceHTTP: ServiceHttp, private serviceSocket: SocketService, private router: Router) {
         this.listePartie = [
             "Salle_1", // TEST
             "Salle_2",

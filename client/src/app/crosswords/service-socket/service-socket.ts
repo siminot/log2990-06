@@ -2,12 +2,12 @@ import { Injectable } from "@angular/core";
 import * as socketIo from "socket.io-client";
 import * as event from "../../../../../common/communication/evenementSocket";
 import { Observable } from "rxjs/Observable";
-import { Mot } from "../objetsTest/mot";
+// import { Mot } from "../objetsTest/mot";
 // import { Observer } from "rxjs/Observer";
 
 const SERVER_URL: string = "http://localhost:3000/";
 @Injectable()
-export class ServiceSocketService {
+export class SocketService {
 
     private socketClient: SocketIOClient.Socket;
 

@@ -1,19 +1,32 @@
 import { Point } from "./Point";
 import { Mesh, CircleGeometry, MeshBasicMaterial, Group, RingGeometry } from "three";
 import { PI_OVER_2 } from "../../constants";
+import { IPoint } from "./IPoint";
+import { ZOOM_DEFAUT } from "../gestionnaireCameraPiste";
 
-export const RAYON_POINT: number = 0.25;
-const RAYON_INTERNE: number = 0.15;
+const RAYON: number = 10;
+export const RAYON_POINT: number = RAYON / ZOOM_DEFAUT;
+const RAPPORT_RAYON_INTERNE: number = 0.75;
+const RAYON_INTERNE: number = RAYON_POINT * RAPPORT_RAYON_INTERNE;
 const NOMBRE_SEGMENTS: number = 25;
 const COULEUR_POINT: number = 0xFF8C1A;
 const COULEUR_CONTOUR: number = 0x804000;
 const DIFFERENCE_PROFONDEUR: number = -1;
 
-export class PointAffichage extends Group {
+export class PointAffichage extends Group implements IPoint {
 
     private _point: Point;
     private cercle: Mesh;
     private contour: Mesh;
+
+    public get point(): Point {
+        return this._point;
+    }
+
+    public set point(point: Point) {
+        this._point = point;
+        this.position.set(this._point.vecteurPlanXZ.x, this._point.vecteurPlanXZ.y + DIFFERENCE_PROFONDEUR, this._point.vecteurPlanXZ.z);
+    }
 
     public constructor(point: Point, estPremier: boolean) {
         super();
@@ -36,18 +49,5 @@ export class PointAffichage extends Group {
                                 new MeshBasicMaterial( {color: COULEUR_CONTOUR}));
         this.contour.rotateX(PI_OVER_2);
         this.add(this.contour);
-    }
-
-    public get point(): Point {
-        return this._point;
-    }
-
-    public set point(point: Point) {
-        this._point = point;
-        this.miseAJourMesh();
-    }
-
-    private miseAJourMesh(): void {
-        this.position.set(this._point.vecteurPlanXZ.x, this._point.vecteurPlanXZ.y + DIFFERENCE_PROFONDEUR, this._point.vecteurPlanXZ.z);
     }
 }

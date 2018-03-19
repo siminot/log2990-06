@@ -3,8 +3,8 @@ import { DroiteAffichage } from "./droiteAffichage";
 import { RapportContraintes } from "../rapportContraintes";
 import { Droite } from "./Droite";
 import { ContrainteCroisementDroite } from "./containteCroisementDroite";
+import { LARGEUR_PISTE } from "./segmentPiste";
 
-const LARGEUR_PISTE: number = 3;
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;
 const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
 const RATIO_ANGLE: number = 4;
@@ -70,7 +70,7 @@ export class VerificateurContraintesPiste {
     }
 
     private verifierAngle(intersection: IntersectionPiste): void {
-        if (this.angleDroitesEnCours(intersection) === null || this.angleDroitesEnCours(intersection) >= ANGLE_MINIMAL) {
+        if (this.angleDroitesEnCours(intersection) === null || (Math.PI - this.angleDroitesEnCours(intersection)) >= ANGLE_MINIMAL) {
             this.rapport(intersection.droiteArrivee).angleArriveeRespectee = true;
             this.rapport(intersection.droiteDebut).angleDebutRespectee = true;
         } else {

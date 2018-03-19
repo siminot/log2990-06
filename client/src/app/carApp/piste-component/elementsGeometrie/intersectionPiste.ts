@@ -2,20 +2,33 @@ import { Group, Vector3 } from "three";
 import { PointAffichage, RAYON_POINT } from "./pointAffichage";
 import { DroiteAffichage } from "./droiteAffichage";
 import { Point } from "./Point";
+import { IPoint } from "./IPoint";
 
-export class IntersectionPiste extends Group {
+export class IntersectionPiste extends Group implements IPoint {
 
     public droiteArrivee: DroiteAffichage;
-    public point: PointAffichage;
+    private pointAffichage: PointAffichage;
     public droiteDebut: DroiteAffichage;
 
     public get droites(): DroiteAffichage[] {
         return [this.droiteArrivee, this.droiteDebut];
     }
 
+    public get point(): Point {
+        return this.pointAffichage.point;
+    }
+
+    public get x(): number {
+        return this.point.x;
+    }
+
+    public get y(): number {
+        return this.point.y;
+    }
+
     public constructor(droiteArrivee: DroiteAffichage, point: Point, estPremier: boolean) {
         super();
-        this.point = new PointAffichage(point, estPremier);
+        this.pointAffichage = new PointAffichage(point, estPremier);
         this.droiteArrivee = droiteArrivee;
         this.droiteDebut = new DroiteAffichage(point, point);
         this.miseAJourPoint(point);
@@ -24,7 +37,7 @@ export class IntersectionPiste extends Group {
 
     private ajouterElements(): void {
         this.add(this.droiteArrivee);
-        this.add(this.point);
+        this.add(this.pointAffichage);
         this.add(this.droiteDebut);
     }
 
@@ -37,11 +50,11 @@ export class IntersectionPiste extends Group {
             ? this.droiteArrivee.miseAJourPoint(point)
             : this.droiteArrivee.miseAJourArrivee(point);
 
-        this.point.point = point;
+        this.pointAffichage.point = point;
     }
 
     public estEnContactAvec(autrePoint: Point): boolean {
-        const droiteEntreCentre: Vector3 = this.point.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ);
+        const droiteEntreCentre: Vector3 = this.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ);
         const DEUX: number = 2;
 
         return droiteEntreCentre.length() <= DEUX * RAYON_POINT;
@@ -49,21 +62,21 @@ export class IntersectionPiste extends Group {
 
     public ramenerDroiteArrivee(): void {
         this.remove(this.droiteArrivee);
-        this.droiteArrivee = new DroiteAffichage(this.point.point, this.point.point);
+        this.droiteArrivee = new DroiteAffichage(this.point, this.point);
         this.add(this.droiteArrivee);
     }
 
     public ramenerDroiteDepart(): void {
         this.remove(this.droiteDebut);
-        this.droiteDebut = new DroiteAffichage(this.point.point, this.point.point);
+        this.droiteDebut = new DroiteAffichage(this.point, this.point);
         this.add(this.droiteDebut);
     }
 
     private get estPointDuBout(): boolean {
-        return this.droiteDebut.droite.end.clone().sub(this.point.point.vecteurPlanXZ).length() === 0;
+        return this.droiteDebut.droite.end.clone().sub(this.point.vecteurPlanXZ).length() === 0;
     }
 
     private get estPremierPointPlace(): boolean {
-        return this.droiteArrivee.droite.start.clone().sub(this.point.point.vecteurPlanXZ).length() === 0;
+        return this.droiteArrivee.droite.start.clone().sub(this.point.vecteurPlanXZ).length() === 0;
     }
 }

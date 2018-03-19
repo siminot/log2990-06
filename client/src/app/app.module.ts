@@ -5,16 +5,19 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { CarGameComponent } from "./carApp/game-component/carGame.component";
 import { PisteComponent } from "./carApp/piste-component/piste.component";
+import { AdministrateurComponent } from "./carApp/administrateur-component/administrateur.component";
 
 import { ServiceDeRenduJeu } from "./carApp/serviceDeRendu/serviceDeRenduJeu";
-import { ServiceDeRenduPistes } from "./carApp/serviceDeRendu/serviceDeRenduPistes";
 import { GestionnaireScene } from "./carApp/scene/GestionnaireScene";
 import { GestionnaireCamera } from "./carApp/camera/GestionnaireCamera";
 import { GestionnaireSkybox } from "./carApp/skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "./carApp/voiture/gestionnaireVoitures";
+
 import { GestionnaireClavier } from "./carApp/clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "./carApp/ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "./carApp/souris/gestionnaireSouris";
+
+import { ServiceDeRenduPistes } from "./carApp/serviceDeRendu/serviceDeRenduPistes";
 import { GestionnaireScenePiste } from "./carApp/piste-component/gestionnaireScenePiste";
 import { GestionnaireCameraPiste } from "./carApp/piste-component/gestionnaireCameraPiste";
 import { GestionnairePiste } from "./carApp/piste-component/GestionnairePiste";
@@ -37,6 +40,7 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
         AppComponent,
         CarGameComponent,
         PisteComponent,
+        AdministrateurComponent,
         MainGrilleComponent,
         GrilleComponent,
         ConfigPartieComponent,
@@ -72,6 +76,7 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
         AppComponent,
         CarGameComponent,
         PisteComponent,
+        AdministrateurComponent,
         MainGrilleComponent,
         GrilleComponent,
         DefinitionVComponent,

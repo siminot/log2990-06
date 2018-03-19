@@ -7,7 +7,7 @@ import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { DialogComponent } from "../../dialog/dialog.component";
-import { ServiceSocketService } from "../../service-socket/service-socket.service";
+import { SocketService } from "../../service-socket/service-socket";
 
 import * as CONST from "../../constantes";
 
@@ -22,7 +22,7 @@ describe("InfoJoueur1Component", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ InfojoueurService, RequeteDeGrilleAbs, ServiceHttp, ServiceSocketService ],
+      providers: [ InfojoueurService, RequeteDeGrilleAbs, ServiceHttp, SocketService ],
       declarations: [ InfoJoueurSoloComponent ]
     })
     .compileComponents()

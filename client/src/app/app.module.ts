@@ -25,7 +25,7 @@ import { ServiceHttp } from "./crosswords/serviceHttp/http-request.service";
 
 import { DefinitionHComponent } from "./crosswords/definition/definitionH.component";
 import { DefinitionVComponent } from "./crosswords/definition/definitionV.component";
-import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
+import { MainGrilleComponent } from "./crosswords/main-grille-solo/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/solo/grille.component";
 import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";

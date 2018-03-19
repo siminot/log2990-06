@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
-import { REQUETE_INIT } from "../config-partie/config-partie.component";
+// import { REQUETE_INIT } from "../config-partie/config-partie.component";
 
 @Component({
   selector: "app-dialog",

@@ -56,8 +56,12 @@ export class ConfigPartieComponent implements OnInit {
         this.commencerPartie();
     }
 
-    public demmanderListe(): void {
+    public rejoindrePartie(): void {
         this.serviceSocket.rejoindrePartie();
+    }
+
+    public demanderListePartie(): void {
+        // this.listePartie = this.serviceSocket.demanderListePartie();
     }
 
     public enterKeyPress(touche: KeyboardEvent, section: string): void {
@@ -67,6 +71,14 @@ export class ConfigPartieComponent implements OnInit {
             this.nomPartie = touche.target.value;
             this.apparaitreSection(section);
             this.disparaitreSection("inputNomPartie");
+        }
+    }
+
+    public entrerNomJoueur(touche: KeyboardEvent, section: string): void {
+        if (touche.key === "Enter") {
+            // envoyer le nom au serveur
+            this.apparaitreSection(section);
+            this.disparaitreSection("inputNomJoueur");
         }
     }
 

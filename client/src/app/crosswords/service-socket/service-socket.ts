@@ -56,6 +56,16 @@ export class SocketService {
         this.socketClient.emit(event.REJOINDRE, nomSalle);
     }
 
+    public demanderListePartie(): Observable<string[]> {
+        this.socketClient.emit(event.ENVOYER_LISTE_PARTIES);
+
+        return new Observable<string[]>((unObs) => {
+            this.socketClient.on(event.ENVOYER_LISTE_PARTIES, (liste: string[]) => {
+                unObs.next();
+            });
+        });
+    }
+
     public chargementComplete(): Observable<void> {
         return new Observable<void>((unObs) => {
             this.socketClient.on(event.COMMENCER_PARTIE, () => {

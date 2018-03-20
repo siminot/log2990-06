@@ -49,7 +49,6 @@ export class SocketServer {
     private rejoindrePatrie(nomRoom: string, nomJoueur: string, unSocket: SocketIO.Socket): void {
         for (const partie of this.parties) {
             if (partie.obtenirNomPartie === nomRoom) {
-                console.log("partie trouvee");
                 partie.ajouterJoueur(unSocket);
             }
         }

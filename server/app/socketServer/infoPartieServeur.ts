@@ -60,8 +60,8 @@ export class InfoPartieServeur {
 
     private debuterPartie(): void {
         for (const joueur of this.joueurs) {
+            joueur.in(this.nomPartie).emit(event.COMMENCER_PARTIE);
             this.definirEvenementsPartie(joueur);
-            joueur.to(joueur.id).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
         }
     }
 

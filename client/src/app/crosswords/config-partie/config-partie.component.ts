@@ -55,8 +55,9 @@ export class ConfigPartieComponent implements OnInit {
         this.demandeEtEnvoieGrille();
     }
 
-    public rejoindrePartie(nomPartie: string): void {
-        this.serviceSocket.rejoindrePartie(nomPartie, this.nomJoueur);
+    public rejoindrePartie(): void {
+        this.serviceSocket.rejoindrePartie(this.nomPartie, this.nomJoueur);
+        this.commencerPartie();
     }
 
     public demanderListePartie(): void {
@@ -84,6 +85,9 @@ export class ConfigPartieComponent implements OnInit {
             this.nomJoueur = touche.target.value;
             this.apparaitreSection(section);
             this.disparaitreSection("inputNomJoueur");
+            if (!this.estCreateur) {
+                this.rejoindrePartie();
+            }
         }
     }
 

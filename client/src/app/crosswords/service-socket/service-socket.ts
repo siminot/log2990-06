@@ -20,10 +20,7 @@ export class SocketService {
     }
 
     public rejoindrePartie(nomPartie: string, nomJoueur: string): void {
-        this.connectionServeur(); // surement a retirer
-        this.socketClient.on(event.CONNECTION, () => {
-            this.socketClient.emit(event.REJOINDRE, nomPartie, nomJoueur);
-        });
+        this.socketClient.emit(event.REJOINDRE, nomPartie, nomJoueur);
     }
 
     public creerPartie(nomPartie: string, difficultee: string, nomJoueur: string): void {

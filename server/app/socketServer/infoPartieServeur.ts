@@ -39,22 +39,19 @@ export class InfoPartieServeur {
 
     public ajouterJoueur(nouveauJoueur: SocketIO.Socket): void {
         this.joueurs.push(nouveauJoueur);
-        if (this.joueurs.length < NB_JOUEUR_MAX) {
+        if (this.joueurs.length <= NB_JOUEUR_MAX) {
             nouveauJoueur.join(this.nomPartie);
             this.verifSiDeuxJoueurs();
-        } else if (this.joueurs.length >= NB_JOUEUR_MAX) {
-            nouveauJoueur.disconnect();
+        } else if (this.joueurs.length > NB_JOUEUR_MAX) {
+            nouveauJoueur.disconnect(); // devrait jamais arriver
         }
-        nouveauJoueur.on(event.CHANGER_NOM_JOUEUR, (nouveauNom: string) => {
-            this.nomJoueurs.push(nouveauNom);
-        });
-        console.log("Joueur ajoue");
+        // nouveauJoueur.on(event.CHANGER_NOM_JOUEUR, (nouveauNom: string) => {
+        //     this.nomJoueurs.push(nouveauNom);
+        // });
     }
 
     private verifSiDeuxJoueurs(): void {
-        console.log("nb Joueur = " + this.joueurs.length);
         if (this.joueurs.length === NB_JOUEUR_MAX) {
-            // TODO: faut attendre la grille avant!
             this.debuterPartie();
         } else if (this.joueurs.length === 1) {
             this.demanderGrille();
@@ -65,7 +62,6 @@ export class InfoPartieServeur {
         for (const joueur of this.joueurs) {
             this.definirEvenementsPartie(joueur);
             joueur.to(joueur.id).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
-            console.log("leServeur lance la partie");
         }
     }
 
@@ -82,7 +78,6 @@ export class InfoPartieServeur {
 
     private recevoirGrille(uneNouvelleGrille: Mot[]): void {
         this.grilleDeJeu = uneNouvelleGrille;
-        console.log("Grille bien recu !");
     }
 
     public socketEstDansPartie(unSocket: SocketIO.Socket): boolean {

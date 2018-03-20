@@ -4,13 +4,6 @@
     top: 0;
 }
 
-/* ul, li {
-    position: relative;
-    margin: 0;
-    top: 40px;
-    color: orange;
-} */
-
 #informations {
     position: relative;
     height:0;
@@ -19,7 +12,6 @@
     top: 2%;
     left: 0;
     color: orange;
-    
 }
 
 #containerInfos {
@@ -33,5 +25,4 @@
     font-family: 'Press Start 2P', cursive;
     font-size:12px;
     margin:5px;
-    /* margin-left:5px; */
 }

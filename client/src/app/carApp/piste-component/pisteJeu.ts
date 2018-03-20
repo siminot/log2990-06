@@ -1,11 +1,11 @@
 import { Vector3 } from "three";
-import { Piste } from "./IPiste";
 import { IPoint } from "./elementsGeometrie/IPoint";
 import { Point } from "./elementsGeometrie/Point";
 import { Droite } from "./elementsGeometrie/Droite";
 import { SegmentPiste } from "./elementsGeometrie/segmentPiste";
+import { PisteAbstraite } from "./pisteAbstraite";
 
-export class PisteJeu extends Piste {
+export class PisteJeu extends PisteAbstraite {
 
     protected readonly intersections: IPoint[];
 

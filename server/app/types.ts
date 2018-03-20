@@ -7,5 +7,7 @@ export default  {
         ServiceLexical: Symbol("ServiceLexical"),
 
         RouteGenGrille: Symbol("RouteGenGrille"),
-        GenerateurGrille: Symbol("GenerateurGrille")
+        GenerateurGrille: Symbol("GenerateurGrille"),
+
+        RouteBaseDonneesCourse: Symbol("RouteBaseDonneesCourse")
 };

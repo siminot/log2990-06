@@ -3,18 +3,25 @@ import { Point } from "./elementsGeometrie/Point";
 import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
 import { VerificateurContraintesPiste } from "./elementsGeometrie/verificateurContraintesPiste";
 import { PisteAbstraite } from "./pisteAbstraite";
+import { Subject } from "rxjs/Subject";
+import { Observable } from "rxjs/Observable";
 
 export class PisteEdition extends PisteAbstraite {
 
     protected intersections: IntersectionPiste[];
     private intersectionSelectionnee: IntersectionPiste;
     private verificateurPiste: VerificateurContraintesPiste;
+    private _nombreDePoints: number;
+
+    private _nbPointsSujet: Subject<number> = new Subject<number>();
+    private nbPointsObservable$: Observable<number> = this._nbPointsSujet.asObservable();
 
     public constructor() {
         super();
         this.intersections = [];
         this.intersectionSelectionnee = null;
         this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
+        this._nombreDePoints = 0;
     }
 
     public exporterPiste(): Point[] {
@@ -29,6 +36,14 @@ export class PisteEdition extends PisteAbstraite {
 
     public nombreDePoints(): number {
         return this.exporterPiste().length;
+    }
+
+    private envoieNbPoints(nbPoints: number): void {
+        this._nbPointsSujet.next(nbPoints);
+    }
+
+    public receptionNbPoints(): Observable<number> {
+        return this.nbPointsObservable$;
     }
 
     public ajouterPoint(point: Point): void {
@@ -78,6 +93,8 @@ export class PisteEdition extends PisteAbstraite {
         this.intersections.push(intersection);
         this.add(intersection);
         this.verificateurPiste.verifierContraintes(intersection);
+        this._nombreDePoints++;
+        this.envoieNbPoints(this._nombreDePoints);
     }
 
     private obtenirDroiteArriveeNouveauPoint(point: Point): DroiteAffichage {

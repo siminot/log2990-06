@@ -5,6 +5,7 @@ import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { GestionnairePiste } from "./GestionnairePiste";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
     moduleId: module.id,
@@ -15,6 +16,7 @@ import { GestionnairePiste } from "./GestionnairePiste";
 
 export class PisteComponent extends AbstractGameComponent {
     private _nombreDePoints: number;
+    private _souscriptionNbPoints: Subscription;
 
     public constructor(@Inject(ServiceDeRenduPistes) serviceDeRendu: ServiceDeRenduPistes,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
@@ -22,7 +24,14 @@ export class PisteComponent extends AbstractGameComponent {
                        @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
                        private gestionnairePiste: GestionnairePiste) {
         super(serviceDeRendu, gestionnaireClavier, gestionnaireEcran, gestionnaireSouris);
-        this._nombreDePoints = this.gestionnairePiste.piste.nombreDePoints();
+        this.souscrireNombrePoints();
+    }
+
+    private souscrireNombrePoints(): void {
+        this._souscriptionNbPoints = this.gestionnairePiste.piste.receptionNbPoints()
+            .subscribe((nbPoints) => {
+                this._nombreDePoints = nbPoints;
+        });
     }
 
 }

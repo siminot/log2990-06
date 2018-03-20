@@ -17,12 +17,18 @@
 #containerInfos {
     background-color: rgba(0, 0, 0, 0.342);
     border-radius: 10px;
-    height:100px;
-    width:100px;
+    height:150px;
+    width:200px;
+    text-align:center;
 }
 
 .infoTexte {
     font-family: 'Press Start 2P', cursive;
-    font-size:12px;
+    font-size:10px;
+    font-weight: normal;
     margin:5px;
+}
+
+#titreInfos {
+    font-size:12px !important;
 }

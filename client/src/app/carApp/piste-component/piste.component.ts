@@ -4,6 +4,7 @@ import { ServiceDeRenduPistes } from "../serviceDeRendu/serviceDeRenduPistes";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
+import { GestionnairePiste } from "./GestionnairePiste";
 
 @Component({
     moduleId: module.id,
@@ -17,8 +18,10 @@ export class PisteComponent extends AbstractGameComponent {
     public constructor(@Inject(ServiceDeRenduPistes) serviceDeRendu: ServiceDeRenduPistes,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
                        @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
-                       @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris) {
+                       @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
+                       private gestionnairePiste: GestionnairePiste) {
         super(serviceDeRendu, gestionnaireClavier, gestionnaireEcran, gestionnaireSouris);
+
     }
 
 }

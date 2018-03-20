@@ -16,7 +16,7 @@ export class GestionnairePiste {
     private transformateur: TransformateurCoordonnees;
     private _piste: PisteEdition;
 
-    public get piste(): Group {
+    public get piste(): PisteEdition {
         return this._piste;
     }
 

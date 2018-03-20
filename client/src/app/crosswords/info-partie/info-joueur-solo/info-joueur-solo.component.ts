@@ -27,7 +27,7 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
                      private _requeteGrille: RequeteDeGrilleAbs,
                      private httpReq: ServiceHttp,
                      public dialogRef: MatDialogRef<DialogComponent>,
-                     @Inject(MAT_DIALOG_DATA) public dialog: any) {
+                     @Inject(MAT_DIALOG_DATA) public dialog: MatDialog) {
     super(_servicePointage);
     this._nomJoueur = "Nom du joueur";
     this._nbMotsDecouverts = 0;

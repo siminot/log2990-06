@@ -1,13 +1,11 @@
-import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { InfoJoueurSoloComponent } from "./info-joueur-solo.component";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
 import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { DialogComponent } from "../../dialog/dialog.component";
-import { SocketService } from "../../service-socket/service-socket";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 import * as CONST from "../../constantes";
 

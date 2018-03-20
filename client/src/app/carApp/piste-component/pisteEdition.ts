@@ -4,6 +4,7 @@ import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
 import { VerificateurContraintesPiste } from "./elementsGeometrie/verificateurContraintesPiste";
 import { PisteAbstraite } from "./pisteAbstraite";
 import { Subject } from "rxjs/Subject";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
 
 export class PisteEdition extends PisteAbstraite {
@@ -13,8 +14,8 @@ export class PisteEdition extends PisteAbstraite {
     private verificateurPiste: VerificateurContraintesPiste;
     private _nombreDePoints: number;
 
-    private _nbPointsSujet: Subject<number> = new Subject<number>();
-    private nbPointsObservable$: Observable<number> = this._nbPointsSujet.asObservable();
+    private _nbPointsSujet: BehaviorSubject<number>;
+    private nbPointsObservable$: Observable<number>;
 
     public constructor() {
         super();
@@ -22,6 +23,8 @@ export class PisteEdition extends PisteAbstraite {
         this.intersectionSelectionnee = null;
         this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
         this._nombreDePoints = 0;
+        this._nbPointsSujet = new BehaviorSubject<number>(this._nombreDePoints);
+        this.nbPointsObservable$ = this._nbPointsSujet.asObservable();
     }
 
     public exporterPiste(): Point[] {
@@ -32,10 +35,6 @@ export class PisteEdition extends PisteAbstraite {
       }
 
       return points;
-    }
-
-    public nombreDePoints(): number {
-        return this.exporterPiste().length;
     }
 
     private envoieNbPoints(nbPoints: number): void {
@@ -126,6 +125,9 @@ export class PisteEdition extends PisteAbstraite {
             this.derniereIntersection.ramenerDroiteDepart();
             this.verifierContraintesExtremites();
         }
+
+        this._nombreDePoints--;
+        this.envoieNbPoints(this._nombreDePoints);
     }
 
     protected get premiereIntersection(): IntersectionPiste {

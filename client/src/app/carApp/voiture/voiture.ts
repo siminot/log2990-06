@@ -64,12 +64,14 @@ export class Voiture extends Object3D {
     }
 
     public constructor(
+        positionInitiale: Vector3,
         engine: Engine = new Engine(),
         rearWheel: Wheel = new Wheel(),
         wheelbase: number = DEFAULT_WHEELBASE,
         mass: number = DEFAULT_MASS,
         dragCoefficient: number = DEFAULT_DRAG_COEFFICIENT) {
         super();
+        this.position.set(positionInitiale.x, positionInitiale.y, positionInitiale.z);
 
         if (wheelbase <= 0) {
             console.error("Wheelbase should be greater than 0.");
@@ -91,7 +93,6 @@ export class Voiture extends Object3D {
         this.wheelbase = wheelbase;
         this.mass = mass;
         this.dragCoefficient = dragCoefficient;
-
         this.isBraking = false;
         this.steeringWheelDirection = 0;
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;

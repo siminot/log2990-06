@@ -65,7 +65,6 @@ export class GestionnaireScene implements IScene {
         this.changerTempsJournee();
     }
 
-    // TODO : Remplir lorsque la classe PisteJeu sera construite
     private ajouterPiste(): void {
         const piste: PisteJeu = new PisteJeu();
         piste.importerPiste(PISTE_TEST);

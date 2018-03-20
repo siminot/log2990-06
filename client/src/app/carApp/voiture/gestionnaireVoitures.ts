@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { ObjectLoader, Object3D } from "three";
+import { ObjectLoader, Object3D, Vector3 } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
@@ -10,10 +10,15 @@ import { ErreurChargementTexture } from "../../exceptions/erreurChargementTextur
 // AI
 const NOMBRE_AI: number = 1;
 
+const ORIGINE: Vector3 = new Vector3(0, 0, 0);
+const nombre: number = 15;
+const AUTRE: Vector3 = new Vector3(nombre, 0, nombre);
+
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
 const NOMS_TEXTURES: string[] = ["camero-2010-low-poly.json", "voiture-2010-low-poly.json"];
 const TEXTURE_DEFAUT_JOUEUR: number = 1;
+const TEXTURE_DEFAUT_AI: number = 0;
 
 // Touches clavier
 const ACCELERATEUR_APPUYE: EvenementClavier = new EvenementClavier("w", TypeEvenementClavier.TOUCHE_APPUYEE);
@@ -67,7 +72,7 @@ export class GestionnaireVoitures {
     }
 
     private creerVoitureJoueur(): void {
-        this._voitureJoueur = new Voiture();
+        this._voitureJoueur = new Voiture(AUTRE);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
             .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
             .catch(() => { throw new ErreurChargementTexture(); });
@@ -75,9 +80,9 @@ export class GestionnaireVoitures {
 
     private creerVoituresAI(): void {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
-            this._voituresAI.push(new Voiture());
-            this.chargerTexture(NOMS_TEXTURES[i % NOMS_TEXTURES.length])
-            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
+            this._voituresAI.push(new Voiture(ORIGINE));
+            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
+            .then((objet: Object3D) => this._voituresAI[i].initialiser(objet))
             .catch(() => { throw new ErreurChargementTexture(); });
         }
     }

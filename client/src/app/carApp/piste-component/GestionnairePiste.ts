@@ -6,7 +6,6 @@ import { GestionnaireCameraPiste } from "./gestionnaireCameraPiste";
 import { TransformateurCoordonnees } from "./elementsGeometrie/TransformateurCoordonnees";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { PisteEdition } from "./pisteEdition";
-import { Group } from "three";
 import { Point } from "./elementsGeometrie/Point";
 
 @Injectable()

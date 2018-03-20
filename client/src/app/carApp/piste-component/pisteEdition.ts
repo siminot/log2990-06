@@ -27,6 +27,10 @@ export class PisteEdition extends PisteAbstraite {
       return points;
     }
 
+    public nombreDePoints(): number {
+        return this.exporterPiste().length;
+    }
+
     public ajouterPoint(point: Point): void {
         if (this.estBoucle) {
             return;

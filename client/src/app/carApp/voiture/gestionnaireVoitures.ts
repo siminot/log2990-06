@@ -17,8 +17,11 @@ const AUTRE: Vector3 = new Vector3(nombre, 0, nombre);
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
 const NOMS_TEXTURES: string[] = ["camero-2010-low-poly.json", "voiture-2010-low-poly.json"];
-const TEXTURE_DEFAUT_JOUEUR: number = 1;
-const TEXTURE_DEFAUT_AI: number = 0;
+
+// Couleur voiture
+enum CouleurVoiture { JAUNE = 0, ROSE = 1 }
+const TEXTURE_DEFAUT_JOUEUR: CouleurVoiture = CouleurVoiture.ROSE;
+const TEXTURE_DEFAUT_AI: CouleurVoiture = CouleurVoiture.JAUNE;
 
 // Touches clavier
 const ACCELERATEUR_APPUYE: EvenementClavier = new EvenementClavier("w", TypeEvenementClavier.TOUCHE_APPUYEE);

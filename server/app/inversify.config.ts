@@ -9,6 +9,9 @@ import { ServiceLexical } from "./serviceLexical/ServiceLexical";
 import { RouteGenGrille } from "./generateurGrille/routeGenGrille";
 import { GenerateurGrille } from "./generateurGrille/generateurGrille";
 
+import { RouteBaseDonneesCourse } from "./baseDeDonneesCourse/routeBaseDonneesCourse";
+import { BaseDonneesCourse } from "./baseDeDonneesCourse/baseDonneesCourse";
+
 const container: Container = new Container();
 
 container.bind(Types.Server).to(Server);
@@ -19,5 +22,8 @@ container.bind(Types.ServiceLexical).to(ServiceLexical);
 
 container.bind(Types.GenerateurGrille).to(GenerateurGrille);
 container.bind(Types.RouteGenGrille).to(RouteGenGrille);
+
+container.bind(Types.RouteBaseDonneesCourse).to(RouteBaseDonneesCourse);
+container.bind(Types.BaseDonneesCourse).to(BaseDonneesCourse);
 
 export { container };

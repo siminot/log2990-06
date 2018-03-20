@@ -28,10 +28,12 @@
 
   <div id="creerOuJoindre" class="pasVisible"> <!-- Selection de creer une partie ou joindre -->
     <button (click)="apparaitreSection('inputNomPartie')"
-            (click)="disparaitreSection('creerOuJoindre')">
+            (click)="disparaitreSection('creerOuJoindre')"
+            (click)="estCreateur = true">
       Créer une partie</button>
     <button (click)="apparaitreSection('listePartie')"
             (click)="disparaitreSection('creerOuJoindre')"
+            (click)="estCreateur = false"
             (click)="demanderListePartie()">
       Rejoindre une partie</button>
   </div>
@@ -42,9 +44,13 @@
   </div>
 
   <div id="inputNomJoueur" class="pasVisible"> <!-- Entree pour nom du joueur -->
-    <input placeholder="Entrez un nom de Joueur"
+    <input *ngIf="estCreateur; else elseblock" placeholder="Entrez un nom de Joueur"
     (keyup)="entrerNomJoueur($event, 'difficulteMultijoueur')">                                           
   </div>
+  <ng-template #elseblock>
+    <input placeholder="Entrez un nom de Joueur"
+    (keyup)="entrerNomJoueur($event, 'pageChargement')">    
+  </ng-template>
 
   <div id="difficulteMultijoueur" class="pasVisible"> <!-- Selection de la dif multijoueur -->
       <button (click)="ajouterDifficulte('facile')"
@@ -68,9 +74,11 @@
 
   <div id="listePartie" class="pasVisible"> <!-- Affichage de la liste des parties en ligne  (click)="rejoindrePartie(nomPartie)",routerLink="/CrosswordsGameRejoindre" -->
       <ul id="laListe">
-          <li *ngFor="let nomPartie of listePartie"
-          >
-            <span>Nom: {{nomPartie[0]}} - Difficultée: {{nomPartie[1]}} - Créateur: {{nomPartie[2]}}</span> </li>
+          <li *ngFor="let nomPartie of listePartie">
+            <span (click)="modifierNomPartie(nomPartie[0])"
+                  (click)="apparaitreSection('inputNomJoueur')"
+                  (click)="disparaitreSection('listePartie')"
+            >Nom: {{nomPartie[0]}} - Difficultée: {{nomPartie[1]}} - Créateur: {{nomPartie[2]}}</span> </li>
       </ul>
   </div>
 

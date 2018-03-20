@@ -18,6 +18,7 @@ export class ConfigPartieComponent implements OnInit {
     private nomJoueur: string;
     private difficultee: string;
     private listePartie: Array<Array<string>>;
+    private estCreateur: boolean;
 
     public constructor(private serviceHTTP: ServiceHttp,
                        private serviceSocket: SocketService,
@@ -68,10 +69,14 @@ export class ConfigPartieComponent implements OnInit {
         if (touche.key === "Enter") {
             // Encore une fois ici, tslint dit que value existe pas.. pourtant
             // c'est une propriété angular
-            this.nomPartie = touche.target.value;
+            this.modifierNomPartie(touche.target.value);
             this.apparaitreSection(section);
             this.disparaitreSection("inputNomPartie");
         }
+    }
+
+    public modifierNomPartie(nouveauNom: string): void {
+        this.nomPartie = nouveauNom;
     }
 
     public entrerNomJoueur(touche: KeyboardEvent, section: string): void {

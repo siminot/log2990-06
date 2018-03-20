@@ -15,6 +15,7 @@ export class ConfigPartieComponent implements OnInit {
 
     // private estCreateurPartie: boolean;
     private nomPartie: string;
+    private nomJoueur: string;
     private difficultee: string;
     private listePartie: string[];
 
@@ -52,12 +53,12 @@ export class ConfigPartieComponent implements OnInit {
     }
 
     public creerPartie(): void {
-        this.serviceSocket.creerPartie(this.nomPartie, this.difficultee);
+        this.serviceSocket.creerPartie(this.nomPartie, this.difficultee, this.nomJoueur);
         this.commencerPartie();
     }
 
-    public rejoindrePartie(): void {
-        this.serviceSocket.rejoindrePartie();
+    public rejoindrePartie(nomPartie: string): void {
+        this.serviceSocket.rejoindrePartie(nomPartie, this.nomJoueur);
     }
 
     public demanderListePartie(): void {
@@ -76,7 +77,7 @@ export class ConfigPartieComponent implements OnInit {
 
     public entrerNomJoueur(touche: KeyboardEvent, section: string): void {
         if (touche.key === "Enter") {
-            // envoyer le nom au serveur
+            this.nomJoueur = touche.target.value;
             this.apparaitreSection(section);
             this.disparaitreSection("inputNomJoueur");
         }

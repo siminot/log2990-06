@@ -29,24 +29,24 @@ export class SocketServer {
     }
 
     private connection(unSocket: SocketIO.Socket): void {
-        // console.log("client connecte: " + unSocket.id);
-        unSocket.on(event.CREATEUR, (nomRoom: string, difficultee: string) => {
-            this.creerUnePartie(nomRoom, difficultee, unSocket);
+        console.log("client connecte: " + unSocket.id);
+        unSocket.on(event.CREATEUR, (nomRoom: string, difficultee: string, nomJoueur: string) => {
+            this.creerUnePartie(nomRoom, difficultee, nomJoueur, unSocket);
             // unSocket.to(unSocket.id).emit();
         });
         unSocket.on(event.ENVOYER_LISTE_PARTIES, () => {
             this.envoyerListePartie(unSocket);
         });
-        unSocket.on(event.REJOINDRE, (nomRoom: string) => {
-            this.rejoindrePatrie(nomRoom, unSocket);
+        unSocket.on(event.REJOINDRE, (nomRoom: string, nomJoueur: string) => {
+            this.rejoindrePatrie(nomRoom, nomJoueur, unSocket);
         });
     }
 
-    private creerUnePartie(nomRoom: string, difficultee: string, unSocket: SocketIO.Socket): void {
-        this.parties.push(new InfoPartieServeur(nomRoom, difficultee, unSocket));
+    private creerUnePartie(nomRoom: string, difficultee: string, nomJoueur: string, unSocket: SocketIO.Socket): void {
+        this.parties.push(new InfoPartieServeur(nomRoom, difficultee, nomJoueur, unSocket));
     }
 
-    private rejoindrePatrie(nomRoom: string, unSocket: SocketIO.Socket): void {
+    private rejoindrePatrie(nomRoom: string, nomJoueur: string, unSocket: SocketIO.Socket): void {
 
         for (const partie of this.parties) {
             if (partie.obtenirNomPartie === nomRoom) {

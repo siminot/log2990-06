@@ -18,15 +18,17 @@ export class SocketService {
         this.socketClient = socketIo(SERVER_URL);
     }
 
-    public rejoindrePartie(): void {
-        this.connectionServeur();
-        //
+    public rejoindrePartie(nomPartie: string, nomJoueur: string): void {
+        this.connectionServeur(); // surement a retirer
+        this.socketClient.on(event.CONNECTION, () => {
+            this.socketClient.emit(event.REJOINDRE, nomPartie, nomJoueur);
+        });
     }
 
-    public creerPartie(nomPartie: string, difficultee: string): void {
+    public creerPartie(nomPartie: string, difficultee: string, nomJoueur: string): void {
         this.connectionServeur();
         this.socketClient.on(event.CONNECTION, () => {
-            this.socketClient.emit(event.CREATEUR, nomPartie, difficultee);
+            this.socketClient.emit(event.CREATEUR, nomPartie, difficultee, nomJoueur);
             // TODO: requete grille
             // generer la grille
             // quand la grille est faite
@@ -40,14 +42,15 @@ export class SocketService {
         //
     }
 
+    // pu utile
     public envoyerDiff(difficultee: string): void {
         this.socketClient.emit(event.ENVOYER_DIFF, difficultee);
         this.attenteDeCreationPartie();
     }
 
+    // pu utile
     public attenteDeCreationPartie(): void {
         this.socketClient.on(event.DEMANDER_GRILLE, () => {
-            console.log("Le serveur attend la grille");
         });
     }
 
@@ -56,6 +59,7 @@ export class SocketService {
     }
 
     public demanderListePartie(): Observable<string[]> {
+        this.connectionServeur();
         this.socketClient.emit(event.ENVOYER_LISTE_PARTIES);
 
         return new Observable<string[]>((unObs) => {

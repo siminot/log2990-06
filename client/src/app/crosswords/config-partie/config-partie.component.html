@@ -36,13 +36,13 @@
   </div>
   
   <div id="inputNomPartie" class="pasVisible"> <!-- Entree pour nom de la partie -->
-      <input placeholder="Entrez un nom de partie" (keyup)="enterKeyPress($event, 'inputNomJoueur')"
-            (kekup)="serviceSocket.envoieNomPartie()">                                           
+      <input placeholder="Entrez un nom de partie"
+      (keyup)="enterKeyPress($event, 'inputNomJoueur')">                                           
   </div>
 
   <div id="inputNomJoueur" class="pasVisible"> <!-- Entree pour nom du joueur -->
-    <input placeholder="Entrez un nom de Joueur" (keyup)="entrerNomJoueur($event, 'difficulteMultijoueur')"
-          (kekup)="serviceSocket.envoieNomPartie()">                                           
+    <input placeholder="Entrez un nom de Joueur"
+    (keyup)="entrerNomJoueur($event, 'difficulteMultijoueur')">                                           
   </div>
 
   <div id="difficulteMultijoueur" class="pasVisible"> <!-- Selection de la dif multijoueur -->
@@ -68,7 +68,7 @@
   <div id="listePartie" class="pasVisible"> <!-- Affichage de la liste des parties en ligne -->
       <ul id="laListe">
           <li *ngFor="let nomPartie of listePartie"
-          (click)="serviceSocket.joueurVeutJoindre(nomPartie)"
+          (click)="rejoindrePartie(nomPartie)"
           routerLink="/CrosswordsGameRejoindre">
             <span>Nom de partie: {{nomPartie}} - Difficultée: Facile</span> </li>
       </ul>

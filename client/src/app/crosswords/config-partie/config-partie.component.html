@@ -31,7 +31,8 @@
             (click)="disparaitreSection('creerOuJoindre')">
       Créer une partie</button>
     <button (click)="apparaitreSection('listePartie')"
-            (click)="disparaitreSection('creerOuJoindre')">
+            (click)="disparaitreSection('creerOuJoindre')"
+            (click)="demanderListePartie()">
       Rejoindre une partie</button>
   </div>
   
@@ -65,19 +66,18 @@
   </div>
   
 
-  <div id="listePartie" class="pasVisible"> <!-- Affichage de la liste des parties en ligne -->
+  <div id="listePartie" class="pasVisible"> <!-- Affichage de la liste des parties en ligne  (click)="rejoindrePartie(nomPartie)",routerLink="/CrosswordsGameRejoindre" -->
       <ul id="laListe">
           <li *ngFor="let nomPartie of listePartie"
-          (click)="rejoindrePartie(nomPartie)"
-          routerLink="/CrosswordsGameRejoindre">
-            <span>Nom de partie: {{nomPartie}} - Difficultée: Facile</span> </li>
+          >
+            <span>Nom de partie: {{nomPartie[0]}} - Difficultée: {{nomPartie[1]}}</span> </li>
       </ul>
   </div>
 
   <div id="pageChargement" class="pasVisible">
     <div><p>CHARGEMENT PARTIE</p></div>
     <div>
-      <img src="./../../../assets/crosswords/loading.gif">      
+      <img id = "loading" src="./../../../assets/crosswords/loading.gif">      
     </div>
   </div>
 

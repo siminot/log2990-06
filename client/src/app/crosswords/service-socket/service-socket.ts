@@ -80,19 +80,21 @@ export class SocketService {
     }
 
     public demandeDeGrille(): Observable<void> {
-        return new Observable<void>( (unObs) => {
+        return new Observable<void>((unObs) => {
             this.socketClient.on(event.DEMANDER_GRILLE, () => unObs.next());
         });
     }
 
-    public envoyerGrille( mots: Mot[]): void {
+    public envoyerGrille(mots: Mot[]): void {
         this.socketClient.emit(event.ENVOYER_GRILLE, mots);
     }
 
-//     public receptionMatrice(): Observable<Mot[]> {
-//         return new Observable<Mot[]>((observer) => {
-//             this.socketClient.on(event.ENVOYER_GRILLE, (mots: Mot[]) => observer.next(mots));
-//         }
-// }
+    public recevoirListePartie(): Observable<Array<Array<string>>> {
+        this.connectionServeur();
+        this.socketClient.emit(event.ENVOYER_LISTE_PARTIES);
 
+        return new Observable<Array<Array<string>>>((unObs) => {
+            this.socketClient.on(event.ENVOYER_LISTE_PARTIES, (data: Array<Array<string>>) => unObs.next(data));
+        });
+    }
 }

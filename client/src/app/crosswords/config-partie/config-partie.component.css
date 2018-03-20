@@ -50,8 +50,10 @@ div div {
     justify-content: center;
 }
 
-img {
-    margin-top: 280px;
+#loading {
+    margin-top: 180px;
+    width: 100px;
+    height: 100px;
 }
 
 button {

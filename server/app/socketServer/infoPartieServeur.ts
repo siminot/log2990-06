@@ -82,6 +82,8 @@ export class InfoPartieServeur {
 
     private recevoirGrille(uneNouvelleGrille: Mot[]): void {
         this.grilleDeJeu = uneNouvelleGrille;
+        console.log("Grille bien recu !");
+    
     }
 
     public get obtenirNomPartie(): string {
@@ -90,6 +92,10 @@ export class InfoPartieServeur {
 
     public get obtenirDiff(): string {
         return this.difficultee;
+    }
+
+    public get obtenirNomCreateur(): string {
+        return this.nomJoueurs[0];
     }
 
 }

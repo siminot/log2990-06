@@ -56,11 +56,15 @@ export class SocketServer {
     }
 
     private envoyerListePartie(unSocket: SocketIO.Socket): void {
-        const listePartie: string[] = [];
-        for (const partie of this.parties) {
-            listePartie.push(partie.obtenirNomPartie + ";" + partie.obtenirNomPartie + ";NomCreateurs");
+        const listePartie: Array<Array<string>> = new Array<Array<string>>(); 
+        for (let i: number = 0; i < this.parties.length; i++) {
+            listePartie[i] = new Array<string>();
+            listePartie[i].push(this.parties[i].obtenirNomPartie);
+            listePartie[i].push(this.parties[i].obtenirDiff);
+            listePartie[i].push(this.parties[i].obtenirNomCreateur);
         }
-        unSocket.to(unSocket.id).emit(event.ENVOYER_LISTE_PARTIES, listePartie);
+        console.log(listePartie);
+        unSocket.emit(event.ENVOYER_LISTE_PARTIES, listePartie);
     }
 
     private deconnection(): void {

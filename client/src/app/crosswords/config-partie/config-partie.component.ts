@@ -17,14 +17,10 @@ export class ConfigPartieComponent implements OnInit {
     private nomPartie: string;
     private nomJoueur: string;
     private difficultee: string;
-    private listePartie: string[];
+    private listePartie: Array<Array<string>>;
 
     public constructor(private serviceHTTP: ServiceHttp, private serviceSocket: SocketService, private router: Router) {
-        this.listePartie = [
-            "Salle_1", // TEST
-            "Salle_2",
-            "Salle_3"
-        ];
+
     }
 
     public ngOnInit(): void { }
@@ -46,6 +42,7 @@ export class ConfigPartieComponent implements OnInit {
         }
     }
 
+
     private commencerPartie(): void {
         this.serviceSocket.chargementComplete().subscribe(() => {
             this.router.navigateByUrl("/CrosswordsGame");
@@ -63,7 +60,11 @@ export class ConfigPartieComponent implements OnInit {
     }
 
     public demanderListePartie(): void {
-        // this.listePartie = this.serviceSocket.demanderListePartie();
+        this.serviceSocket.recevoirListePartie().subscribe( (data: Array<Array<string>>) => {
+            this.listePartie = data;
+            console.log(data);
+            console.log("salut");
+        });
     }
 
     public enterKeyPress(touche: KeyboardEvent, section: string): void {
@@ -91,4 +92,6 @@ export class ConfigPartieComponent implements OnInit {
             });
         });
     }
+
+
 }

@@ -16,7 +16,7 @@ export class LigneDeDepart extends Mesh {
 
     public constructor(emplacement: Vector3, angle: number) {
         super();
-        this.angle = angle;
+        this.angle = angle + PI_OVER_2;
         this.position.set(emplacement.x, emplacement.y, emplacement.z);
         this.material = this.materiel;
         this.geometry = this.geometrie;
@@ -40,7 +40,7 @@ export class LigneDeDepart extends Mesh {
     private get geometrie(): PlaneGeometry {
         const geometrie: PlaneGeometry = new PlaneGeometry(LONGUEUR, LARGEUR_PISTE);
         geometrie.rotateX(PI_OVER_2);
-        geometrie.rotateY(Math.PI - this.angle);
+        geometrie.rotateY(this.angle);
 
         return geometrie;
     }

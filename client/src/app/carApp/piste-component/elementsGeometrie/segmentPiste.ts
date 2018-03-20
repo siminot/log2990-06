@@ -80,7 +80,7 @@ export class SegmentPiste extends Group {
         return this.centre.sub(this.droite.start);
     }
 
-    private get angle(): number {
+    public get angle(): number {
         return this.droite.direction.cross(DROITE_REFERENCE.direction).y < 0
             ? this.droite.angleAvecDroite(DROITE_REFERENCE)
             : Math.PI - this.droite.angleAvecDroite(DROITE_REFERENCE);

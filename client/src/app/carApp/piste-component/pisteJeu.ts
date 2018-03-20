@@ -4,14 +4,17 @@ import { Point } from "./elementsGeometrie/Point";
 import { Droite } from "./elementsGeometrie/Droite";
 import { SegmentPiste } from "./elementsGeometrie/segmentPiste";
 import { PisteAbstraite } from "./pisteAbstraite";
+import { LigneDeDepart } from "./ligneDepart";
 
 export class PisteJeu extends PisteAbstraite {
 
     protected readonly intersections: IPoint[];
+    private premierSegment: SegmentPiste;
 
     public constructor() {
         super();
         this.intersections = [];
+        this.premierSegment = null;
     }
 
     public importerPiste(points: Point[]): void {
@@ -20,13 +23,20 @@ export class PisteJeu extends PisteAbstraite {
         }
 
         this.bouclerPiste();
+        this.add(new LigneDeDepart(this.zoneDeDepart, this.premierSegment.angle));
     }
 
     public ajouterPoint(point: Point): void {
         this.intersections.push(point);
 
         if (this.intersections.length > 1) {
-            this.add(new SegmentPiste(this.pointPrecedent(point), point));
+            const segment: SegmentPiste = new SegmentPiste(this.pointPrecedent(point), point);
+
+            if (this.premierSegment === null) {
+                this.premierSegment = segment;
+            }
+
+            this.add(segment);
         }
     }
 

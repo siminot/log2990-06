@@ -36,11 +36,13 @@
   </div>
   
   <div id="inputNomPartie" class="pasVisible"> <!-- Entree pour nom de la partie -->
-      <input placeholder="Entrez un nom de partie" (keyup)="enterKeyPress($event, 'difficulteMultijoueur')"
-           
-            (kekup)="serviceSocket.envoieNomPartie()">  
-                                                   
-                                                    
+      <input placeholder="Entrez un nom de partie" (keyup)="enterKeyPress($event, 'inputNomJoueur')"
+            (kekup)="serviceSocket.envoieNomPartie()">                                           
+  </div>
+
+  <div id="inputNomJoueur" class="pasVisible"> <!-- Entree pour nom du joueur -->
+    <input placeholder="Entrez un nom de Joueur" (keyup)="entrerNomJoueur($event, 'difficulteMultijoueur')"
+          (kekup)="serviceSocket.envoieNomPartie()">                                           
   </div>
 
   <div id="difficulteMultijoueur" class="pasVisible"> <!-- Selection de la dif multijoueur -->
@@ -73,8 +75,10 @@
   </div>
 
   <div id="pageChargement" class="pasVisible">
-    <p>CHARGEMENT PARTIE</p>
-    <img src="./../../../assets/crosswords/loading.gif">
+    <div><p>CHARGEMENT PARTIE</p></div>
+    <div>
+      <img src="./../../../assets/crosswords/loading.gif">      
+    </div>
   </div>
 
 </div>

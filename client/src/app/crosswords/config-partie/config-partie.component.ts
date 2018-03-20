@@ -74,4 +74,12 @@ export class ConfigPartieComponent implements OnInit {
         }
     }
 
+    public entrerNomJoueur(touche: KeyboardEvent, section: string): void {
+        if (touche.key === "Enter") {
+            // envoyer le nom au serveur
+            this.apparaitreSection(section);
+            this.disparaitreSection("inputNomJoueur");
+        }
+    }
+
 }

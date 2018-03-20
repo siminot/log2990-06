@@ -50,6 +50,10 @@ div div {
     justify-content: center;
 }
 
+img {
+    margin-top: 280px;
+}
+
 button {
     color: white;
     display: inline-block;
@@ -79,7 +83,7 @@ button:hover {
 
 .pasVisible {
     visibility: hidden;
-    display: flex;
+    display: none;
     opacity: 0;
     transition: visibility 0s 0.05s, opacity 1s linear;
 }

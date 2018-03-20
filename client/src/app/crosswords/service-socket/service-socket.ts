@@ -75,10 +75,14 @@ export class SocketService {
 
     }
 
-    public envoyerGrille(): Observable<void> {
+    public demandeDeGrille(): Observable<void> {
         return new Observable<void>( (unObs) => {
             this.socketClient.on(event.DEMANDER_GRILLE, () => unObs.next());
         });
+    }
+
+    public envoyerGrille( mots: Mot[]): void {
+        this.socketClient.emit(event.ENVOYER_GRILLE, mots);
     }
 
 //     public receptionMatrice(): Observable<Mot[]> {

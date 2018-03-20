@@ -82,4 +82,11 @@ export class ConfigPartieComponent implements OnInit {
         }
     }
 
+    private demandeEtEnvoieGrille(): void {
+        this.serviceSocket.demandeDeGrille().subscribe(() => {
+            this.serviceHTTP.obtenirMots().subscribe( (x) => {
+                this.serviceSocket.envoyerGrille(x);
+            });
+        });
+    }
 }

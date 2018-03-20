@@ -14,6 +14,7 @@ import { GestionnairePiste } from "./GestionnairePiste";
 })
 
 export class PisteComponent extends AbstractGameComponent {
+    private _nombreDePoints: number;
 
     public constructor(@Inject(ServiceDeRenduPistes) serviceDeRendu: ServiceDeRenduPistes,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
@@ -21,7 +22,7 @@ export class PisteComponent extends AbstractGameComponent {
                        @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
                        private gestionnairePiste: GestionnairePiste) {
         super(serviceDeRendu, gestionnaireClavier, gestionnaireEcran, gestionnaireSouris);
-
+        this._nombreDePoints = this.gestionnairePiste.piste.nombreDePoints();
     }
 
 }

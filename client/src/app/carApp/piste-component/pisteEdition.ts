@@ -23,8 +23,20 @@ export class PisteEdition extends PisteAbstraite {
         this.intersectionSelectionnee = null;
         this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
         this._nombreDePoints = 0;
+        this.initObservableNbPoints();
+    }
+
+    private initObservableNbPoints(): void {
         this._nbPointsSujet = new BehaviorSubject<number>(this._nombreDePoints);
         this.nbPointsObservable$ = this._nbPointsSujet.asObservable();
+    }
+
+    private envoieNbPoints(nbPoints: number): void {
+        this._nbPointsSujet.next(nbPoints);
+    }
+
+    public receptionNbPoints(): Observable<number> {
+        return this.nbPointsObservable$;
     }
 
     public exporterPiste(): Point[] {
@@ -35,14 +47,6 @@ export class PisteEdition extends PisteAbstraite {
       }
 
       return points;
-    }
-
-    private envoieNbPoints(nbPoints: number): void {
-        this._nbPointsSujet.next(nbPoints);
-    }
-
-    public receptionNbPoints(): Observable<number> {
-        return this.nbPointsObservable$;
     }
 
     public ajouterPoint(point: Point): void {

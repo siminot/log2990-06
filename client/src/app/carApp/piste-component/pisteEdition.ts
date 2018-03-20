@@ -11,10 +11,20 @@ export class PisteEdition extends PisteAbstraite {
     protected intersections: IntersectionPiste[];
     private intersectionSelectionnee: IntersectionPiste;
     private verificateurPiste: VerificateurContraintesPiste;
+
     private _nombreDePoints: number;
+    private _estBoucle: boolean;
 
     private _nbPointsSujet: BehaviorSubject<number>;
     private nbPointsObservable$: Observable<number>;
+    private _estBoucleSujet: BehaviorSubject<boolean>;
+    private estBoucleObservable$: Observable<boolean>;
+    private _pisteRespecteContrainteSujet: BehaviorSubject<boolean>;
+    private pisteRespecteContrainteObservable$: Observable<boolean>;
+
+    public get verifPiste(): VerificateurContraintesPiste {
+        return this.verificateurPiste;
+    }
 
     public constructor() {
         super();
@@ -23,11 +33,23 @@ export class PisteEdition extends PisteAbstraite {
         this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
         this._nombreDePoints = 0;
         this.initObservableNbPoints();
+        this.initObservableEstBoucle();
+        this.initObservableContraintePiste();
     }
 
     private initObservableNbPoints(): void {
         this._nbPointsSujet = new BehaviorSubject<number>(this._nombreDePoints);
         this.nbPointsObservable$ = this._nbPointsSujet.asObservable();
+    }
+
+    private initObservableEstBoucle(): void {
+        this._estBoucleSujet = new BehaviorSubject<boolean>(false);
+        this.estBoucleObservable$ = this._estBoucleSujet.asObservable();
+    }
+
+    private initObservableContraintePiste(): void {
+        this._pisteRespecteContrainteSujet = new BehaviorSubject<boolean>(false);
+        this.pisteRespecteContrainteObservable$ = this._pisteRespecteContrainteSujet.asObservable();
     }
 
     private envoieNbPoints(nbPoints: number): void {
@@ -36,6 +58,22 @@ export class PisteEdition extends PisteAbstraite {
 
     public receptionNbPoints(): Observable<number> {
         return this.nbPointsObservable$;
+    }
+
+    private envoieEstBoucle(estBoucle: boolean): void {
+        this._estBoucleSujet.next(estBoucle);
+    }
+
+    public receptionEstBoucle(): Observable<boolean> {
+        return this.estBoucleObservable$;
+    }
+
+    private envoieContraintePiste(respectContrainte: boolean): void {
+        this._pisteRespecteContrainteSujet.next(respectContrainte);
+    }
+
+    public receptionContraintePiste(): Observable<boolean> {
+        return this.pisteRespecteContrainteObservable$;
     }
 
     public exporterPiste(): Point[] {
@@ -50,6 +88,9 @@ export class PisteEdition extends PisteAbstraite {
 
     public ajouterPoint(point: Point): void {
         if (this.estBoucle) {
+            this._estBoucle = true;
+            this.envoieEstBoucle(this._estBoucle);
+
             return;
         } else if (this.doitFermerCircuit(point)) {
             this.bouclerCircuit();
@@ -82,6 +123,7 @@ export class PisteEdition extends PisteAbstraite {
             this.verificateurPiste.verifierContraintes(this.premiereIntersection);
             this.verificateurPiste.verifierContraintes(this.derniereIntersection);
         }
+        this.envoieContraintePiste(this.verificateurPiste.pisteRespecteContraintes);
     }
 
     private creerNouvelleIntersection(point: Point): void {
@@ -95,6 +137,7 @@ export class PisteEdition extends PisteAbstraite {
         this.intersections.push(intersection);
         this.add(intersection);
         this.verificateurPiste.verifierContraintes(intersection);
+        this.envoieContraintePiste(this.verificateurPiste.pisteRespecteContraintes);
         this._nombreDePoints++;
         this.envoieNbPoints(this._nombreDePoints);
     }
@@ -109,6 +152,7 @@ export class PisteEdition extends PisteAbstraite {
         if (this.intersectionSelectionnee !== null) {
             this.intersectionSelectionnee.miseAJourPoint(point);
             this.verificateurPiste.verifierContraintes(this.intersectionSelectionnee);
+            this.envoieContraintePiste(this.verificateurPiste.pisteRespecteContraintes);
         }
     }
 
@@ -117,6 +161,11 @@ export class PisteEdition extends PisteAbstraite {
             this.debouclerCircuit();
         } else if (this.contientPoints) {
             this.retirerDernierPoint();
+        }
+
+        if (this._estBoucle) {
+            this._estBoucle = false;
+            this.envoieEstBoucle(this._estBoucle);
         }
     }
 
@@ -127,6 +176,7 @@ export class PisteEdition extends PisteAbstraite {
         if (this.contientPoints) {
             this.derniereIntersection.ramenerDroiteDepart();
             this.verifierContraintesExtremites();
+            this.envoieContraintePiste(this.verificateurPiste.pisteRespecteContraintes);
         }
 
         this._nombreDePoints--;

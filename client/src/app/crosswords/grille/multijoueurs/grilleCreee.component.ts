@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { EncadrementCase } from "../librairieGrille/encadrementCase";
-// import { GrilleMultijoueurs } from "./grilleMultijoueurs";
 import { GrilleAbs } from "../grilleAbs";
 
 @Component({
@@ -15,21 +14,23 @@ export class GrilleCreeeComponent extends GrilleAbs implements OnInit {
 
   public constructor(_servicePointage: InfojoueurService,
                      /*serviceSocket: number type à modifier,*/
-                     private listeMotsService: RequeteDeGrilleAbs) {
+                     private requeteDeGrille: RequeteDeGrilleAbs) {
     super(_servicePointage/*, serviceSocket*/);
-    this.listeMotsService.souscrireRequeteGrille();
+    this.requeteDeGrille.souscrireRequeteGrille();
   }
 
   public ngOnInit(): void {
-    this.mots = this.listeMotsService.mots;
-    this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
-    // this.remplirPositionLettres(); // JUSTE POUR LA GRILLE DE TEST
-    this.subscriptionMots = this.listeMotsService.serviceReceptionMots().subscribe((mots) => {
+    this.mots = this.requeteDeGrille.mots;
+    this.matriceDesMotsSurGrille = this.requeteDeGrille.matrice;
+
+    this.subscriptionMots = this.requeteDeGrille.serviceReceptionMots().subscribe((mots) => {
         this.mots = mots;
         this.remplirPositionLettres(); });
-    this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
+
+    this.subscriptionMatrice = this.requeteDeGrille.serviceReceptionMatriceLettres()
     .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
-    this.subscriptionMotSelec = this.listeMotsService.serviceReceptionMotSelectionne()
+
+    this.subscriptionMotSelec = this.requeteDeGrille.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
         this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
@@ -45,14 +46,14 @@ export class GrilleCreeeComponent extends GrilleAbs implements OnInit {
   }
 
   protected envoieMotSelectionne(): void {
-    this.listeMotsService.serviceEnvoieMotSelectionne(this.motSelectionne);
+    this.requeteDeGrille.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
 
   public switchCheatMode(): void {
     for (const mot of this.mots) {
       mot.cheat = !mot.cheat;
     }
-    this.listeMotsService.serviceEnvoieMots(this.mots);
+    this.requeteDeGrille.serviceEnvoieMots(this.mots);
   }
   public enleverSelection(x: string, y: string): void {
     EncadrementCase.appliquerStyleDefautGrille(document);

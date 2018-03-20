@@ -3,7 +3,6 @@ import { Point } from "./elementsGeometrie/Point";
 import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
 import { VerificateurContraintesPiste } from "./elementsGeometrie/verificateurContraintesPiste";
 import { PisteAbstraite } from "./pisteAbstraite";
-import { Subject } from "rxjs/Subject";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
 

@@ -83,7 +83,20 @@ export class InfoPartieServeur {
     private recevoirGrille(uneNouvelleGrille: Mot[]): void {
         this.grilleDeJeu = uneNouvelleGrille;
         console.log("Grille bien recu !");
-    
+    }
+
+    public socketEstDansPartie(unSocket: SocketIO.Socket): boolean {
+        for (const joueur of this.joueurs) {
+            if (joueur.id === unSocket.id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public partieEstPleine(): boolean {
+        return this.joueurs.length === NB_JOUEUR_MAX ? true : false;
     }
 
     public get obtenirNomPartie(): string {

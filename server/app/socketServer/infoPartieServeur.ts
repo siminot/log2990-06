@@ -40,6 +40,7 @@ export class InfoPartieServeur {
 
     private verifSiDeuxJoueurs(): void {
         if (this.joueurs.length === NB_JOUEUR_MAX) {
+            // TODO: faut attendre la grille avant!
             this.debuterPartie();
         } else if (this.joueurs.length === 1) {
             this.demanderGrille();
@@ -48,8 +49,8 @@ export class InfoPartieServeur {
 
     private debuterPartie(): void {
         for (const joueur of this.joueurs) {
-            joueur.to(joueur.id).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
             this.definirEvenementsPartie(joueur);
+            joueur.to(joueur.id).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
         }
     }
 

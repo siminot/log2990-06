@@ -58,9 +58,7 @@ export class SocketServer {
     private envoyerListePartie(unSocket: SocketIO.Socket): void {
         const listePartie: string[] = [];
         for (const partie of this.parties) {
-            listePartie.push(
-                "Nom de Partie: " + partie.obtenirNomPartie +
-                " Difficultee: " + partie.obtenirNomPartie);
+            listePartie.push(partie.obtenirNomPartie + ";" + partie.obtenirNomPartie + ";NomCreateurs");
         }
         unSocket.to(unSocket.id).emit(event.ENVOYER_LISTE_PARTIES, listePartie);
     }

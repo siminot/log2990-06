@@ -56,8 +56,12 @@ export class ConfigPartieComponent implements OnInit {
         this.commencerPartie();
     }
 
-    public demmanderListe(): void {
+    public rejoindrePartie(): void {
         this.serviceSocket.rejoindrePartie();
+    }
+
+    public demanderListePartie(): void {
+        // this.listePartie = this.serviceSocket.demanderListePartie();
     }
 
     public enterKeyPress(touche: KeyboardEvent, section: string): void {

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import * as socketIo from "socket.io-client";
 import * as event from "../../../../../common/communication/evenementSocket";
 import { Observable } from "rxjs/Observable";
+import { Mot } from "../objetsTest/mot";
 // import { Mot } from "../objetsTest/mot";
 // import { Observer } from "rxjs/Observer";
 
@@ -62,6 +63,12 @@ export class SocketService {
             });
         });
 
+    }
+
+    public envoyerGrille(): Observable<void> {
+        return new Observable<void>( (unObs) => {
+            this.socketClient.on(event.DEMANDER_GRILLE, () => unObs.next());
+        });
     }
 
 //     public receptionMatrice(): Observable<Mot[]> {

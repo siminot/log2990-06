@@ -5,6 +5,7 @@ import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
 import { Injectable } from "@angular/core";
 import { ServiceHttp } from "../serviceHttp/http-request.service";
+import { SocketService} from "../service-socket/service-socket";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
@@ -14,7 +15,6 @@ const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDeco
 export class RequeteDeGrilleAbs {
   protected _mots: Mot[];
   protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
-
   protected listeMotsSujet: Subject<Mot[]> = new Subject<Mot[]>();
   protected matriceDesMotsSurGrilleSujet: Subject<Array<Array<LettreGrille>>> = new Subject<Array<Array<LettreGrille>>>();
   protected motSelectionneSuject: Subject<Mot> = new Subject<Mot>();
@@ -22,11 +22,10 @@ export class RequeteDeGrilleAbs {
   protected matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   protected motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
 
-  public constructor(private httpReq: ServiceHttp) {
+  public constructor(private httpReq: ServiceHttp, private serviceSocket: SocketService) {
     this.genererGrille();
   }
   // Accesseurs
-
 
   public get mots(): Mot[] {
     return this._mots;
@@ -60,7 +59,6 @@ export class RequeteDeGrilleAbs {
   }
 
   // Traitement de la grille
-
   protected insererMotsDansGrille(): void {
     for (const objMot of this.mots) {
       for (let indice: number = 0; indice < objMot.longueur; indice++) {

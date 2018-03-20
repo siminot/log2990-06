@@ -55,6 +55,7 @@ export class ConfigPartieComponent implements OnInit {
     public creerPartie(): void {
         this.serviceSocket.creerPartie(this.nomPartie, this.difficultee, this.nomJoueur);
         this.commencerPartie();
+        this.demandeEtEnvoieGrille();
     }
 
     public rejoindrePartie(nomPartie: string): void {

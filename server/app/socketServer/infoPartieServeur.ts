@@ -113,6 +113,7 @@ export class InfoPartieServeur {
 
     public detruirePartie(): void {
         for (const joueur of this.joueurs) {
+            joueur.to(this.nomPartie).emit(event.JOUEUR_QUITTE);
             joueur.disconnect();
         }
     }

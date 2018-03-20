@@ -2,7 +2,7 @@ import { Vector3 } from "three";
 import { Piste } from "./IPiste";
 import { IPoint } from "./elementsGeometrie/IPoint";
 import { Point } from "./elementsGeometrie/Point";
-import { Droite } from "./elementsGeometrie/Droite";
+import { Droite } from "./elementsGeometrie/droite";
 import { SegmentPiste } from "./elementsGeometrie/segmentPiste";
 
 export class PisteJeu extends Piste {

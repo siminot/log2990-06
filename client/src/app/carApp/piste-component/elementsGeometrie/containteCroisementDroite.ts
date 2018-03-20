@@ -1,4 +1,4 @@
-import { Droite } from "./Droite";
+import { Droite } from "./droite";
 import { Point } from "./Point";
 
 export class ContrainteCroisementDroite {

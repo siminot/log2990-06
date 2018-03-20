@@ -1,5 +1,5 @@
 import { ContrainteCroisementDroite } from "./containteCroisementDroite";
-import { Droite } from "./Droite";
+import { Droite } from "./droite";
 import { Point } from "./Point";
 import * as assert from "assert";
 

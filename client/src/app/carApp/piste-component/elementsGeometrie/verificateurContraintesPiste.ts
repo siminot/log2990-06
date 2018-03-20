@@ -1,7 +1,7 @@
 import { IntersectionPiste } from "./intersectionPiste";
 import { DroiteAffichage } from "./droiteAffichage";
 import { RapportContraintes } from "../rapportContraintes";
-import { Droite } from "./Droite";
+import { Droite } from "./droite";
 import { ContrainteCroisementDroite } from "./containteCroisementDroite";
 import { LARGEUR_PISTE } from "./segmentPiste";
 

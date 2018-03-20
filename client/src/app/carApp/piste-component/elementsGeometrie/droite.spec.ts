@@ -1,4 +1,4 @@
-import { Droite } from "./Droite";
+import { Droite } from "./droite";
 import { Point } from "./Point";
 import { Vector3 } from "three";
 import * as assert from "assert";

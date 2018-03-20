@@ -1,6 +1,6 @@
 import { Group, Mesh, CircleGeometry, PlaneGeometry, Vector3, Texture,
          RepeatWrapping, MeshPhongMaterial, TextureLoader, BackSide } from "three";
-import { Droite } from "./Droite";
+import { Droite } from "./droite";
 import { Point } from "./Point";
 import { PI_OVER_2 } from "../../constants";
 

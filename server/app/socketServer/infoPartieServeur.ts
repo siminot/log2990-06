@@ -17,28 +17,16 @@ export class InfoPartieServeur {
                        socketCreateur: SocketIO.Socket) {
         this.joueurs = new Array<SocketIO.Socket>();
         this.joueurs.push(socketCreateur);
-        // this.demanderDiff(/*socketCreateur*/);
         this.nomPartie = nomPartie;
         this.difficultee = difficultee;
         this.init();
     }
 
-    // private demanderDiff(/*socketCreateur: SocketIO.Socket*/): void {
-    //         this.joueurs[0].on(event.ENVOYER_DIFF, (difficultee: string) => {
-    //         this.difficultee = difficultee;
-    //         console.log("Difficultee " + this.difficultee);
-    //         this.demanderGrille();
-    //     });
-    // }
-
     private init(): void {
         this.grilleDeJeu = [];
         for (const joueur of this.joueurs) {
             this.ajouterJoueur(joueur);
-            joueur.emit(event.COMMENCER_PARTIE);
         }
-        console.log("Nom de la partie " + this.nomPartie);
-        console.log("Difficultee partie " + this.difficultee);
     }
 
     public ajouterJoueur(nouveauJoueur: SocketIO.Socket): void {
@@ -53,13 +41,14 @@ export class InfoPartieServeur {
     private verifSiDeuxJoueurs(): void {
         if (this.joueurs.length === NB_JOUEUR_MAX) {
             this.debuterPartie();
+        } else if (this.joueurs.length === 1) {
+            this.demanderGrille();
         }
     }
 
     private debuterPartie(): void {
-        this.joueurs[0].to(this.nomPartie).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
-        // attendre un signal que les deux joueurs sont prets n shit
         for (const joueur of this.joueurs) {
+            joueur.to(joueur.id).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
             this.definirEvenementsPartie(joueur);
         }
     }
@@ -69,7 +58,6 @@ export class InfoPartieServeur {
     }
 
     public demanderGrille(): void {
-        console.log("Emmit de la demande de grille");
         this.joueurs[0].emit(event.DEMANDER_GRILLE);
         this.joueurs[0].on(event.ENVOYER_GRILLE, (laGrille: Mot[]) => {
             this.recevoirGrille(laGrille);
@@ -80,8 +68,12 @@ export class InfoPartieServeur {
         this.grilleDeJeu = uneNouvelleGrille;
     }
 
-    public obtenirNomPartie(): string {
+    public get obtenirNomPartie(): string {
         return this.nomPartie;
+    }
+
+    public get obtenirDiff(): string {
+        return this.difficultee;
     }
 
 }

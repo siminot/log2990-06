@@ -29,7 +29,7 @@ export class SocketServer {
     }
 
     private connection(unSocket: SocketIO.Socket): void {
-        console.log("client connecte: " + unSocket.id);
+        // console.log("client connecte: " + unSocket.id);
         unSocket.on(event.CREATEUR, (nomRoom: string, difficultee: string) => {
             this.creerUnePartie(nomRoom, difficultee, unSocket);
             // unSocket.to(unSocket.id).emit();
@@ -38,65 +38,32 @@ export class SocketServer {
             this.envoyerListePartie(unSocket);
         });
         unSocket.on(event.REJOINDRE, (nomRoom: string) => {
-            // this.rejoindrePatrie(nomRoom, unSocket);
+            this.rejoindrePatrie(nomRoom, unSocket);
         });
     }
 
     private creerUnePartie(nomRoom: string, difficultee: string, unSocket: SocketIO.Socket): void {
         this.parties.push(new InfoPartieServeur(nomRoom, difficultee, unSocket));
-        // unSocket.emit(event.ROOM_CREEE);
-        // if (nomRoom in this.rooms) {
-        //     this.mauvaisNomRoom(event.NOM_EXISTANT, unSocket);
-        // } else {
-        //     this.rooms.push(nomRoom);
-        //     unSocket.emit(event.ROOM_CREEE);
-        //     unSocket.join(nomRoom);
-        //     this.recevoirGrille(unSocket);
-        // }
     }
 
-    // private rejoindrePatrie(nomRoom: string, unSocket: SocketIO.Socket): void {
+    private rejoindrePatrie(nomRoom: string, unSocket: SocketIO.Socket): void {
 
-    //     for (const partie of this.parties) {
-    //         if (partie.obtenirNomPartie() === nomRoom) {
-    //             partie.ajouterJoueur(unSocket);
-    //         }
-    //     }
-    //     // if (nomRoom in this.rooms) {
-    //     //     unSocket.join(nomRoom);
-    //     //     this.envoyerGrille(unSocket);
-    //     // } else {
-    //     //     this.mauvaisNomRoom(event.NOM_NON_EXISTANT, unSocket);
-    //     // }
-    // }
+        for (const partie of this.parties) {
+            if (partie.obtenirNomPartie === nomRoom) {
+                partie.ajouterJoueur(unSocket);
+            }
+        }
+    }
 
     private envoyerListePartie(unSocket: SocketIO.Socket): void {
         const listePartie: string[] = [];
         for (const partie of this.parties) {
-            listePartie.push(partie.obtenirNomPartie());
+            listePartie.push(
+                "Nom de Partie: " + partie.obtenirNomPartie +
+                " Difficultee: " + partie.obtenirNomPartie);
         }
         unSocket.to(unSocket.id).emit(event.ENVOYER_LISTE_PARTIES, listePartie);
     }
-
-    // private mauvaisNomRoom(evenement: string, unSocket: SocketIO.Socket): void {
-    //     unSocket.to(unSocket.id).emit(evenement);
-    //     unSocket.disconnect();
-    // }
-
-    // private recevoirGrille(unSocket: SocketIO.Socket): void {
-    //     unSocket.to(unSocket.id).emit(event.DEMANDER_GRILLE);
-    //     unSocket.on(event.ENVOYER_GRILLE, (laGrille: Mot[]) => {
-    //         this.grilleDeJeu = laGrille;
-    //     });
-    // }
-
-    // private envoyerGrille(unSocket: SocketIO.Socket): void {
-    //     unSocket.to(unSocket.id).emit(event.ENVOYER_GRILLE, this.grilleDeJeu);
-    // }
-
-    // private attenteAutreJoueur(nomRoom: string, unSocket: SocketIO.Socket): void {
-    //     //
-    // }
 
     private deconnection(): void {
         // console.log("un dude est parti");

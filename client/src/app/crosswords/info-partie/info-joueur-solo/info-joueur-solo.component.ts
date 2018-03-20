@@ -39,7 +39,9 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   }
 
   public openDialog(): void {
-    this.dialogRef = this.dialog.open(DialogComponent);
+    this.dialogRef = this.dialog.open(DialogComponent, {
+      data: {difficulte: this._difficulte}
+    });
   }
 
   protected souscrireListeDeMots(): void {
@@ -65,12 +67,16 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
     }
   }
 
-  public majBarreProgression(): void {
+  private majBarreProgression(): void {
     this._barreProgression.style.width = String(this.pourcentagePoint) + "%";
-    if (this.pourcentagePoint == 100) {
-      this._subscriptionTimer.unsubscribe();
-      this.openDialog();
+    if (this.pourcentagePoint === 100) {
+      this.finPartie();
     }
+  }
+
+  public finPartie(): void {
+    this._subscriptionTimer.unsubscribe();
+    this.openDialog();
   }
 
   public ngOnDestroy(): void {

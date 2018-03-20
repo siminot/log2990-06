@@ -1,9 +1,10 @@
 import { GestionnaireScene } from "./GestionnaireScene";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
-import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
+import { GestionnaireVoitures, NOMBRE_AI } from "../voiture/gestionnaireVoitures";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
-const NB_ENFANTS: number = 3;
+const NOMBRE_ELEMENTS_SCENE: number = 4;
+const NB_ENFANTS: number = NOMBRE_AI + NOMBRE_ELEMENTS_SCENE;
 
 describe("GestionnaireScence", () => {
 

@@ -8,7 +8,7 @@ import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripheriqu
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 
 // AI
-const NOMBRE_AI: number = 1;
+export const NOMBRE_AI: number = 15;
 
 const ORIGINE: Vector3 = new Vector3(0, 0, 0);
 const DISTANCE_LIGNE: number = -45;

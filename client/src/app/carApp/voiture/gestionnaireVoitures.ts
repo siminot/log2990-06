@@ -11,8 +11,8 @@ import { ErreurChargementTexture } from "../../exceptions/erreurChargementTextur
 const NOMBRE_AI: number = 1;
 
 const ORIGINE: Vector3 = new Vector3(0, 0, 0);
-const nombre: number = 15;
-const AUTRE: Vector3 = new Vector3(nombre, 0, nombre);
+const DISTANCE_LIGNE: number = -45;
+const DEPART_TEST: Vector3 = new Vector3(DISTANCE_LIGNE, 0, 0);
 
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
@@ -75,7 +75,7 @@ export class GestionnaireVoitures {
     }
 
     private creerVoitureJoueur(): void {
-        this._voitureJoueur = new Voiture(AUTRE);
+        this._voitureJoueur = new Voiture(DEPART_TEST);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
             .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
             .catch(() => { throw new ErreurChargementTexture(); });

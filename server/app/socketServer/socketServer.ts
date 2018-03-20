@@ -72,13 +72,14 @@ export class SocketServer {
     private deconnection(unSocket: SocketIO.Socket): void {
         this.retirerListePartie(unSocket);
         this.envoyerListePartie();
-        unSocket.disconnect();
+        // unSocket.disconnect();
     }
 
     private retirerListePartie(unSocket: SocketIO.Socket): void {
         for (const partie of this.parties) {
             if (partie.socketEstDansPartie(unSocket)) {
                 this.parties.splice(this.parties.indexOf(partie), 1);
+                partie.detruirePartie();
             }
         }
     }

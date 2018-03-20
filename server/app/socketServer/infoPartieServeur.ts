@@ -111,4 +111,9 @@ export class InfoPartieServeur {
         return this.nomJoueurs[0];
     }
 
+    public detruirePartie(): void {
+        for (const joueur of this.joueurs) {
+            joueur.disconnect();
+        }
+    }
 }

@@ -29,6 +29,11 @@ export class ConfigPartieComponent implements OnInit {
     public apparaitreSection(laSection: string): void {
         document.getElementById(laSection).classList.remove("pasVisible");
         document.getElementById(laSection).classList.add("visible");
+        if (laSection === "inputNomPartie") {
+            document.getElementById("inp").focus();
+        } else if (laSection == "inputNomJoueur") {
+            document.getElementById("inj").focus();
+        }
     }
 
     public disparaitreSection(laSection: string): void {

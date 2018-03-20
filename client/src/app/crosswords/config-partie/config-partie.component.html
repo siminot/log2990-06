@@ -39,16 +39,16 @@
   </div>
   
   <div id="inputNomPartie" class="pasVisible"> <!-- Entree pour nom de la partie -->
-      <input placeholder="Entrez un nom de partie"
-      (keyup)="enterKeyPress($event, 'inputNomJoueur')">                                           
+      <input id="inp" placeholder="Entrez un nom de partie"
+      (keyup)="enterKeyPress($event, 'inputNomJoueur')" >                                           
   </div>
 
   <div id="inputNomJoueur" class="pasVisible"> <!-- Entree pour nom du joueur -->
-    <input *ngIf="estCreateur; else elseblock" placeholder="Entrez un nom de Joueur"
+    <input id="inj" *ngIf="estCreateur; else elseblock" placeholder="Entrez un nom de Joueur"
     (keyup)="entrerNomJoueur($event, 'difficulteMultijoueur')">                                           
   </div>
   <ng-template #elseblock>
-    <input placeholder="Entrez un nom de Joueur"
+    <input id="inj" placeholder="Entrez un nom de Joueur"
     (keyup)="entrerNomJoueur($event, 'pageChargement')">    
   </ng-template>
 

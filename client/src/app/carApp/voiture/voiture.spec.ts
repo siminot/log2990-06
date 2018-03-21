@@ -16,7 +16,7 @@ describe("Voiture", () => {
     let car: Voiture;
 
     beforeEach(async (done: () => void) => {
-        car = new Voiture(new MockEngine());
+        car = new Voiture();
         car.initialiser(new Object3D);
 
         car.accelerer();
@@ -26,7 +26,7 @@ describe("Voiture", () => {
     });
 
     it("should be instantiable using default constructor", () => {
-        car = new Voiture(new MockEngine());
+        car = new Voiture();
         expect(car).toBeDefined();
         expect(car.speed.length()).toBe(0);
     });

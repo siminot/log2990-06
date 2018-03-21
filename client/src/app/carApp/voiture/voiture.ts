@@ -91,7 +91,6 @@ export class Voiture extends Object3D {
         this.wheelbase = wheelbase;
         this.mass = mass;
         this.dragCoefficient = dragCoefficient;
-
         this.isBraking = false;
         this.steeringWheelDirection = 0;
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;

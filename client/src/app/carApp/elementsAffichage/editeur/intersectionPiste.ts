@@ -1,8 +1,8 @@
 import { Group, Vector3 } from "three";
 import { PointAffichage, RAYON_POINT } from "./pointAffichage";
 import { DroiteAffichage } from "./droiteAffichage";
-import { Point } from "./Point";
-import { IPoint } from "./IPoint";
+import { Point } from "../../elementsGeometrie/point";
+import { IPoint } from "../../elementsGeometrie/IPoint";
 
 export class IntersectionPiste extends Group implements IPoint {
 

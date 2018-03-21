@@ -1,10 +1,10 @@
 import { Component, Inject } from "@angular/core";
-import { AbstractGameComponent } from "../game-component/abstract.game.component";
+import { AbstractGameComponent } from "../abstract-component/abstract.game.component";
 import { ServiceDeRenduPistes } from "../serviceDeRendu/serviceDeRenduPistes";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
-import { GestionnairePiste } from "./GestionnairePiste";
+import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
@@ -27,7 +27,7 @@ export class PisteComponent extends AbstractGameComponent {
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
                        @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
                        @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
-                       private gestionnairePiste: GestionnairePiste) {
+                       private gestionnairePiste: GestionnaireEditionPiste) {
         super(serviceDeRendu, gestionnaireClavier, gestionnaireEcran, gestionnaireSouris);
         this.souscrireNombrePoints();
         this.souscrireEstBoucle();

@@ -2,14 +2,14 @@ import { Injectable, Inject } from "@angular/core";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { EvenementSouris, TypeEvenementSouris, BoutonSouris } from "../souris/evenementSouris";
-import { GestionnaireCameraPiste } from "./gestionnaireCameraPiste";
-import { TransformateurCoordonnees } from "./elementsGeometrie/TransformateurCoordonnees";
+import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
+import { TransformateurCoordonnees } from "../editeurPiste/transformateurCoordonnees";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
-import { PisteEdition } from "./pisteEdition";
-import { Point } from "./elementsGeometrie/Point";
+import { PisteEdition } from "../piste/pisteEdition";
+import { Point } from "../elementsGeometrie/point";
 
 @Injectable()
-export class GestionnairePiste {
+export class GestionnaireEditionPiste {
 
     private souris: UtilisateurPeripherique;
     private transformateur: TransformateurCoordonnees;

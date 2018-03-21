@@ -1,8 +1,8 @@
-import { Point } from "./Point";
+import { Point } from "../../elementsGeometrie/point";
 import { Mesh, CircleGeometry, MeshBasicMaterial, Group, RingGeometry } from "three";
 import { PI_OVER_2 } from "../../constants";
-import { IPoint } from "./IPoint";
-import { ZOOM_DEFAUT } from "../gestionnaireCameraPiste";
+import { IPoint } from "../../elementsGeometrie/IPoint";
+import { ZOOM_DEFAUT } from "../../camera/GestionnaireCameraPiste";
 
 const RAYON: number = 10;
 export const RAYON_POINT: number = RAYON / ZOOM_DEFAUT;

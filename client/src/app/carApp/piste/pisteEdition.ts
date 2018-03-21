@@ -1,7 +1,7 @@
-import { IntersectionPiste } from "./elementsGeometrie/intersectionPiste";
-import { Point } from "./elementsGeometrie/Point";
-import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
-import { VerificateurContraintesPiste } from "./elementsGeometrie/verificateurContraintesPiste";
+import { Point } from "../elementsGeometrie/point";
+import { DroiteAffichage } from "../elementsAffichage/editeur/droiteAffichage";
+import { IntersectionPiste } from "../elementsAffichage/editeur/intersectionPiste";
+import { VerificateurContraintesPiste } from "../editeurPiste/verificateurContraintesPiste";
 import { PisteAbstraite } from "./pisteAbstraite";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";

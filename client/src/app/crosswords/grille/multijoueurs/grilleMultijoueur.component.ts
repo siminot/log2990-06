@@ -5,7 +5,7 @@ import { EncadrementCase } from "../librairieGrille/encadrementCase";
 import { GrilleAbs } from "../grilleAbs";
 
 @Component({
-  selector: "app-grille-creee",
+  selector: "app-grille-multi",
   templateUrl: "../solo/grille.component.html",
   styleUrls: ["../solo/grille.component.css"]
 })

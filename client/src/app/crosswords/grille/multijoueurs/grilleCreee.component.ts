@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
+import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { EncadrementCase } from "../librairieGrille/encadrementCase";
 import { GrilleAbs } from "../grilleAbs";
@@ -14,7 +14,7 @@ export class GrilleCreeeComponent extends GrilleAbs implements OnInit {
 
   public constructor(_servicePointage: InfojoueurService,
                      /*serviceSocket: number type à modifier,*/
-                     private requeteDeGrille: RequeteDeGrilleAbs) {
+                     private requeteDeGrille: ServiceInteractionComponent) {
     super(_servicePointage/*, serviceSocket*/);
     this.requeteDeGrille.souscrireRequeteGrille();
   }

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { EncadrementCase } from "../librairieGrille/encadrementCase";
 // import { GrilleMultijoueurs } from "./grilleMultijoueurs";
-import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
+import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { GrilleAbs } from "../grilleAbs";
 
 @Component({
@@ -14,7 +14,7 @@ import { GrilleAbs } from "../grilleAbs";
 export class GrilleRejointeComponent extends GrilleAbs implements OnInit {
 
   public constructor(_servicePointage: InfojoueurService,
-                     private listeMotsService: RequeteDeGrilleAbs
+                     private listeMotsService: ServiceInteractionComponent
                      /*serviceSocket: type à déterminer*/) {
     super(_servicePointage/*, serviceSocket*/);
     this.listeMotsService.souscrireServiceSocket();

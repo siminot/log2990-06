@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { ServiceHttp } from "../../serviceHttp/http-request.service";
-import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
+import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import * as CONST from "../../constantes";
 import { Subscription } from "rxjs/Subscription";
@@ -24,7 +24,7 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   // private dialogRef: MatDialogRef<DialogComponent>;
 
   public constructor(_servicePointage: InfojoueurService,
-                     private _requeteGrille: RequeteDeGrilleAbs,
+                     private _requeteGrille: ServiceInteractionComponent,
                      private httpReq: ServiceHttp,
                      public dialogRef: MatDialogRef<DialogComponent>,
                      @Inject(MAT_DIALOG_DATA) public dialog: MatDialog) {

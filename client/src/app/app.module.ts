@@ -27,7 +27,7 @@ import { DefinitionHComponent } from "./crosswords/definition/definitionH.compon
 import { DefinitionVComponent } from "./crosswords/definition/definitionV.component";
 import { MainGrilleComponent } from "./crosswords/main-grille-solo/main-grille.component";
 import { GrilleComponent } from "./crosswords/grille/solo/grille.component";
-import { RequeteDeGrilleAbs } from "./crosswords/service-Requete-de-Grille/requete-de-grilleAbs";
+import { ServiceInteractionComponent } from "./crosswords/service-interaction-component/service-interaction-component";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 import { InfoJoueurSoloComponent } from "./crosswords/info-partie/info-joueur-solo/info-joueur-solo.component";
@@ -83,7 +83,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         ServiceHttp,
         InfojoueurService,
         SocketService,
-        RequeteDeGrilleAbs
+        ServiceInteractionComponent
     ],
     bootstrap: [AppComponent],
     exports: [

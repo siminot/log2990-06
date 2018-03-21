@@ -12,7 +12,7 @@ const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDeco
 // Classe sans HttpReq: pourrait être réutilisée pour le service de socket..?
 
 @Injectable()
-export class RequeteDeGrilleAbs {
+export class ServiceInteractionComponent {
   protected _mots: Mot[];
   protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   protected listeMotsSujet: Subject<Mot[]> = new Subject<Mot[]>();
@@ -25,7 +25,7 @@ export class RequeteDeGrilleAbs {
   public constructor(private httpReq: ServiceHttp /*, private serviceSocket: SocketService*/) {
     this.genererGrille();
   }
-  // Accesseurs
+  // 
 
   public get mots(): Mot[] {
     return this._mots;

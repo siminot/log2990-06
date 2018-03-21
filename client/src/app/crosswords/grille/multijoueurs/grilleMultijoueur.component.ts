@@ -10,7 +10,7 @@ import { GrilleAbs } from "../grilleAbs";
   styleUrls: ["../solo/grille.component.css"]
 })
 
-export class GrilleCreeeComponent extends GrilleAbs implements OnInit {
+export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   public constructor(_servicePointage: InfojoueurService,
                      /*serviceSocket: number type à modifier,*/

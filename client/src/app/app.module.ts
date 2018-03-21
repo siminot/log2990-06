@@ -34,8 +34,7 @@ import { InfoJoueurSoloComponent } from "./crosswords/info-partie/info-joueur-so
 import { InfoPartieMultijoueurComponent } from "./crosswords/info-partie/info-partie-multijoueur/info-partie-multijoueur.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
 import { SocketService } from "./crosswords/service-socket/service-socket";
-import { GrilleRejointeComponent } from "./crosswords/grille/multijoueurs/grilleRejointe.component";
-import { GrilleCreeeComponent } from "./crosswords/grille/multijoueurs/grilleCreee.component";
+import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/grilleMultijoueur.component";
 import { MainGrilleRejoindreComponent } from "./crosswords/main-grille-rejoindre/main-grille-rejoindre.component";
 import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-grille-creer.component";
 import { DialogComponent } from "./crosswords/dialog/dialog.component";
@@ -54,8 +53,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         DefinitionVComponent,
         InfoJoueurSoloComponent,
         InfoPartieMultijoueurComponent,
-        GrilleRejointeComponent,
-        GrilleCreeeComponent,
+        GrilleMultijoueurComponent,
         MainGrilleRejoindreComponent,
         MainGrilleCreerComponent,
         DialogComponent
@@ -94,8 +92,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         GrilleComponent,
         DefinitionVComponent,
         DefinitionHComponent,
-        GrilleRejointeComponent,
-        GrilleCreeeComponent,
+        GrilleMultijoueurComponent,
         DialogComponent
     ],
     entryComponents: [ DialogComponent ]

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Scene, PlaneGeometry, MeshBasicMaterial, DoubleSide, Mesh } from "three";
 import { IScene } from "../scene/IScene";
 import { PI_OVER_2 } from "../constants";
-import { GestionnairePiste } from "./GestionnairePiste";
+import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
 
 export const PROFONDEUR_SCENE: number = 50;
 const COULEUR_FOND: number = 0xB3ECFF;
@@ -16,7 +16,7 @@ export class GestionnaireScenePiste implements IScene {
         return this._scene;
     }
 
-    public constructor(private gestionnairePiste: GestionnairePiste) {
+    public constructor(private gestionnairePiste: GestionnaireEditionPiste) {
         this._scene = new Scene();
         this.creerScene();
     }

@@ -1,10 +1,26 @@
-import { Point } from "./Point";
+import { Point } from "./point";
 import { Line3, Vector3 } from "three";
 
 export class Droite extends Line3 {
 
     public constructor(depart: Point, arrivee: Point) {
         super(depart.vecteurPlanXZ, arrivee.vecteurPlanXZ);
+    }
+
+    public get plusPetitX(): number {
+      return Math.min(this.start.x, this.end.x);
+    }
+
+    public get plusGrandX(): number {
+      return Math.max(this.start.x, this.end.x);
+    }
+
+    public get plusPetitY(): number {
+      return Math.min(this.start.z, this.end.z);
+    }
+
+    public get plusGrandY(): number {
+      return Math.max(this.start.z, this.end.z);
     }
 
     public modifierDepart(point: Point): void {
@@ -26,7 +42,12 @@ export class Droite extends Line3 {
 
     }
 
-    public croiseDroite(droite: Droite): boolean {
-        return true;
+    public get boite(): Droite {
+      return new Droite(new Point(this.plusPetitX, this.plusPetitY),
+                        new Point(this.plusGrandX, this.plusGrandY));
+    }
+
+    public get pointFinalDroiteCentree(): Point {
+      return new Point(this.end.x - this.start.x, this.end.z - this.start.z);
     }
 }

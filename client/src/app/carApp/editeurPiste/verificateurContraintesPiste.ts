@@ -1,7 +1,9 @@
-import { IntersectionPiste } from "./intersectionPiste";
-import { DroiteAffichage } from "./droiteAffichage";
-import { RapportContraintes } from "../rapportContraintes";
-import { LARGEUR_PISTE } from "./segmentPiste";
+import { IntersectionPiste } from "../elementsAffichage/editeur/intersectionPiste";
+import { DroiteAffichage } from "../elementsAffichage/editeur/droiteAffichage";
+import { RapportContraintes } from "./rapportContraintes";
+import { Droite } from "../elementsGeometrie/droite";
+import { ContrainteCroisementDroite } from "./containteCroisementDroite";
+import { LARGEUR_PISTE } from "../elementsAffichage/jeu/segmentPiste";
 
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;
 const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
@@ -15,6 +17,17 @@ export class VerificateurContraintesPiste {
     private rapports: Map<DroiteAffichage, RapportContraintes>;
     private readonly intersections: IntersectionPiste[];
     private intersectionEnCours: IntersectionPiste;
+
+    private get droitesAffichage(): DroiteAffichage[] {
+        const droites: DroiteAffichage[] = [];
+        for (const intersection of this.intersections) {
+            if (intersection.droiteArrivee.droite.distance() !== 0) {
+            droites.push(intersection.droiteArrivee);
+            }
+        }
+
+        return droites;
+    }
 
     public constructor(intersections: IntersectionPiste[]) {
         this.intersections = intersections;
@@ -70,28 +83,25 @@ export class VerificateurContraintesPiste {
         return intersection.droiteArrivee.droite.angleAvecDroite(intersection.droiteDebut.droite);
     }
 
-    private verifierCroisement(): void {
-        for (const intersection of this.intersections) {
-            this.verifierCroisementIntersection(intersection);
-        }
+    private droitesPartagentDebutOuFin(droite1: Droite, droite2: Droite): boolean {
+        return droite1.start.equals(droite2.start)
+            || droite1.start.equals(droite2.end)
+            || droite1.end.equals(droite2.start)
+            || droite1.end.equals(droite2.end);
     }
 
-    private verifierCroisementIntersection(intersection: IntersectionPiste): void {
-        for (const droiteAnalyse of intersection.droites) {
-            for (const droiteEnCours of this.intersectionEnCours.droites) {
-                if (droiteAnalyse !== droiteEnCours) { /*
-                    if (droiteAnalyse.droite.croiseDroite(droiteEnCours.droite)) {
-                        this.rapport(droiteAnalyse).ajouterCroisement(droiteEnCours);
-                        this.rapport(droiteAnalyse).ajouterCroisement(droiteEnCours);
-                    } else {
-                        this.rapport(droiteAnalyse).retirerCroisement(droiteEnCours);
-                        this.rapport(droiteAnalyse).retirerCroisement(droiteEnCours);
-                    }*/
+    private verifierCroisement(): void {
+        for (const droiteAnalysee of this.droitesAffichage) {
+            this.rapport(droiteAnalysee).pasCroisementRespecte = true;
+            for (const droiteDeComparation of this.droitesAffichage) {
+                if (!this.droitesPartagentDebutOuFin(droiteAnalysee.droite, droiteDeComparation.droite)) {
+                    if (ContrainteCroisementDroite.droitesSeCroisent(droiteAnalysee.droite, droiteDeComparation.droite)) {
+                        this.rapport(droiteAnalysee).pasCroisementRespecte = false;
+                    }
                 }
             }
+            this.miseAJourCouleurDroite(droiteAnalysee);
         }
-
-        this.miseAJourCouleur(intersection);
     }
 
     private miseAJourCouleur(intersection: IntersectionPiste): void {

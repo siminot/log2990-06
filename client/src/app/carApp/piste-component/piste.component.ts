@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { AbstractGameComponent } from "../game-component/abstract.game.component";
+import { AbstractGameComponent } from "../abstract-component/abstract.game.component";
 import { ServiceDeRenduPistes } from "../serviceDeRendu/serviceDeRenduPistes";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";

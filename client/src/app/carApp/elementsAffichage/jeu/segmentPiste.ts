@@ -1,7 +1,7 @@
 import { Group, Mesh, CircleGeometry, PlaneGeometry, Vector3, Texture,
          RepeatWrapping, MeshPhongMaterial, TextureLoader, BackSide } from "three";
-import { Droite } from "./Droite";
-import { Point } from "./Point";
+import { Droite } from "../../elementsGeometrie/droite";
+import { Point } from "../../elementsGeometrie/point";
 import { PI_OVER_2 } from "../../constants";
 
 export const LARGEUR_PISTE: number = 10;
@@ -80,7 +80,7 @@ export class SegmentPiste extends Group {
         return this.centre.sub(this.droite.start);
     }
 
-    private get angle(): number {
+    public get angle(): number {
         return this.droite.direction.cross(DROITE_REFERENCE.direction).y < 0
             ? this.droite.angleAvecDroite(DROITE_REFERENCE)
             : Math.PI - this.droite.angleAvecDroite(DROITE_REFERENCE);

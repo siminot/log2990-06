@@ -1,10 +1,10 @@
-import { IntersectionPiste } from "./elementsGeometrie/intersectionPiste";
-import { Point } from "./elementsGeometrie/Point";
-import { DroiteAffichage } from "./elementsGeometrie/droiteAffichage";
-import { VerificateurContraintesPiste } from "./elementsGeometrie/verificateurContraintesPiste";
-import { Piste } from "./IPiste";
+import { Point } from "../elementsGeometrie/point";
+import { DroiteAffichage } from "../elementsAffichage/editeur/droiteAffichage";
+import { IntersectionPiste } from "../elementsAffichage/editeur/intersectionPiste";
+import { VerificateurContraintesPiste } from "../editeurPiste/verificateurContraintesPiste";
+import { PisteAbstraite } from "./pisteAbstraite";
 
-export class PisteEdition extends Piste {
+export class PisteEdition extends PisteAbstraite {
 
     protected intersections: IntersectionPiste[];
     private intersectionSelectionnee: IntersectionPiste;

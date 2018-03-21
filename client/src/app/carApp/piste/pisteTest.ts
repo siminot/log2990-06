@@ -1,4 +1,4 @@
-import { Point } from "./elementsGeometrie/Point";
+import { Point } from "../elementsGeometrie/point";
 import { PisteBD } from "./pisteBD";
 
 const LONGUEUR: number = 100;

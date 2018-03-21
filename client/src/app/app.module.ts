@@ -19,10 +19,8 @@ import { GestionnaireSouris } from "./carApp/souris/gestionnaireSouris";
 import { GestionnaireScenePiste } from "./carApp/piste-component/gestionnaireScenePiste";
 import { GestionnaireCameraPiste } from "./carApp/piste-component/gestionnaireCameraPiste";
 import { GestionnairePiste } from "./carApp/piste-component/GestionnairePiste";
-
 import { AppRoutingModule } from ".//app-routing.module";
 import { ServiceHttp } from "./crosswords/serviceHttp/http-request.service";
-
 import { DefinitionHComponent } from "./crosswords/definition/definitionH.component";
 import { DefinitionVComponent } from "./crosswords/definition/definitionV.component";
 import { MainGrilleComponent } from "./crosswords/main-grille-solo/main-grille.component";
@@ -35,8 +33,8 @@ import { InfoPartieMultijoueurComponent } from "./crosswords/info-partie/info-pa
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
 import { SocketService } from "./crosswords/service-socket/service-socket";
 import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/grilleMultijoueur.component";
-import { MainGrilleRejoindreComponent } from "./crosswords/main-grille-rejoindre/main-grille-rejoindre.component";
-import { MainGrilleCreerComponent } from "./crosswords/main-grille-creer/main-grille-creer.component";
+import { MainGrilleMultiComponent } from "./crosswords/main-grille-multi/main-grille-multi.component";
+ 
 import { DialogComponent } from "./crosswords/dialog/dialog.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
@@ -54,8 +52,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         InfoJoueurSoloComponent,
         InfoPartieMultijoueurComponent,
         GrilleMultijoueurComponent,
-        MainGrilleRejoindreComponent,
-        MainGrilleCreerComponent,
+        MainGrilleMultiComponent,
         DialogComponent
     ],
     imports: [

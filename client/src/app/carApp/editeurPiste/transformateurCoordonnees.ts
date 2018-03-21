@@ -1,7 +1,7 @@
-import { Point } from "./Point";
+import { Point } from "../elementsGeometrie/point";
 import { Vector3, Camera } from "three";
-import { ICamera } from "../../camera/ICamera";
-import { GestionnaireEcran } from "../../ecran/gestionnaireEcran";
+import { ICamera } from "../camera/ICamera";
+import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 
 const PROFONDEUR_DEFAUT: number = 0.5;
 

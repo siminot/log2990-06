@@ -1,4 +1,3 @@
-
 export class RapportContraintes {
 
     public longueurRespectee: boolean;

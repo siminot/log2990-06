@@ -1,9 +1,9 @@
-import { IntersectionPiste } from "./intersectionPiste";
-import { DroiteAffichage } from "./droiteAffichage";
-import { RapportContraintes } from "../rapportContraintes";
-import { Droite } from "./Droite";
+import { IntersectionPiste } from "../elementsAffichage/editeur/intersectionPiste";
+import { DroiteAffichage } from "../elementsAffichage/editeur/droiteAffichage";
+import { RapportContraintes } from "./rapportContraintes";
+import { Droite } from "../elementsGeometrie/droite";
 import { ContrainteCroisementDroite } from "./containteCroisementDroite";
-import { LARGEUR_PISTE } from "./segmentPiste";
+import { LARGEUR_PISTE } from "../elementsAffichage/jeu/segmentPiste";
 
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;
 const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;

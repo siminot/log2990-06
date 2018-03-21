@@ -1,5 +1,5 @@
-import { Droite } from "./Droite";
-import { Point } from "./Point";
+import { Droite } from "../elementsGeometrie/droite";
+import { Point } from "../elementsGeometrie/point";
 
 export class ContrainteCroisementDroite {
 

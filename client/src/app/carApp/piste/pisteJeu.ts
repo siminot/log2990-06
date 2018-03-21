@@ -1,10 +1,10 @@
 import { Vector3 } from "three";
-import { IPoint } from "./elementsGeometrie/IPoint";
-import { Point } from "./elementsGeometrie/Point";
-import { Droite } from "./elementsGeometrie/Droite";
-import { SegmentPiste } from "./elementsGeometrie/segmentPiste";
+import { IPoint } from "../elementsGeometrie/IPoint";
+import { Point } from "../elementsGeometrie/point";
+import { Droite } from "../elementsGeometrie/droite";
+import { SegmentPiste } from "../elementsAffichage/jeu/segmentPiste";
 import { PisteAbstraite } from "./pisteAbstraite";
-import { LigneDeDepart } from "./ligneDepart";
+import { LigneDeDepart } from "../elementsAffichage/jeu/ligneDepart";
 
 export class PisteJeu extends PisteAbstraite {
 

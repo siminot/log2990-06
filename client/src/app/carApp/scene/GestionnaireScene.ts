@@ -8,8 +8,8 @@ import { TempsJournee } from "../skybox/skybox";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
-import { PisteJeu } from "../piste-component/pisteJeu";
-import { PISTE_TEST } from "../piste-component/PisteTest";
+import { PisteJeu } from "../piste/pisteJeu";
+import { PISTE_TEST } from "../piste/pisteTest";
 
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 

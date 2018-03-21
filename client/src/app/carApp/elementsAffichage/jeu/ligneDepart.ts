@@ -1,6 +1,6 @@
 import { Vector3, TextureLoader, Texture, RepeatWrapping, MeshPhongMaterial, BackSide, Mesh, PlaneGeometry } from "three";
-import { LARGEUR_PISTE } from "./elementsGeometrie/segmentPiste";
-import { PI_OVER_2 } from "../constants";
+import { LARGEUR_PISTE } from "./segmentPiste";
+import { PI_OVER_2 } from "../../constants";
 
 // Texture ligne de depart
 const CHEMIN: string = "./../../../../assets/";

@@ -1,4 +1,4 @@
-import { ContrainteCroisementDroite } from "./containteCroisementDroite";
+import { ContrainteCroisementDroite } from "./contrainteCroisementDroite";
 import { Droite } from "../elementsGeometrie/droite";
 import { Point } from "../elementsGeometrie/point";
 import * as assert from "assert";

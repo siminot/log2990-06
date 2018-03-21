@@ -2,7 +2,7 @@ import { IntersectionPiste } from "../elementsAffichage/editeur/intersectionPist
 import { DroiteAffichage } from "../elementsAffichage/editeur/droiteAffichage";
 import { RapportContraintes } from "./rapportContraintes";
 import { Droite } from "../elementsGeometrie/droite";
-import { ContrainteCroisementDroite } from "./containteCroisementDroite";
+import { ContrainteCroisementDroite } from "./contrainteCroisementDroite";
 import { LARGEUR_PISTE } from "../elementsAffichage/jeu/segmentPiste";
 
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;

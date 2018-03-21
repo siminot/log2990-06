@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { ObjectLoader, Object3D, Vector3 } from "three";
+import { ObjectLoader, Object3D } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
@@ -8,11 +8,7 @@ import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripheriqu
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 
 // AI
-export const NOMBRE_AI: number = 15;
-
-const ORIGINE: Vector3 = new Vector3(0, 0, 0);
-const DISTANCE_LIGNE: number = -45;
-const DEPART_TEST: Vector3 = new Vector3(DISTANCE_LIGNE, 0, 0);
+export const NOMBRE_AI: number = 1;
 
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
@@ -75,7 +71,7 @@ export class GestionnaireVoitures {
     }
 
     private creerVoitureJoueur(): void {
-        this._voitureJoueur = new Voiture(DEPART_TEST);
+        this._voitureJoueur = new Voiture();
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
             .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
             .catch(() => { throw new ErreurChargementTexture(); });
@@ -83,7 +79,7 @@ export class GestionnaireVoitures {
 
     private creerVoituresAI(): void {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
-            this._voituresAI.push(new Voiture(ORIGINE));
+            this._voituresAI.push(new Voiture());
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
             .then((objet: Object3D) => this._voituresAI[i].initialiser(objet))
             .catch(() => { throw new ErreurChargementTexture(); });

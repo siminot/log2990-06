@@ -45,8 +45,7 @@ export class PisteEdition extends PisteAbstraite {
     }
 
     private bouclerCircuit(): void {
-        this.premiereIntersection.droiteArrivee = this.derniereIntersection.droiteDebut;
-        this.derniereIntersection.droiteDebut.arrivee = this.premiereIntersection.point;
+        this.premiereIntersection.bouclerAvec(this.derniereIntersection);
         this.verifierContraintesExtremites();
     }
 

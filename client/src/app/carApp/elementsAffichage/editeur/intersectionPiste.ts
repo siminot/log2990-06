@@ -36,7 +36,7 @@ export class IntersectionPiste extends Group implements IPoint {
         super();
         this.pointAffichage = new PointAffichage(point);
         this.droiteArrivee = droiteArrivee;
-        this.droiteDebut = new DroiteAffichage(point, point);
+        this.droiteDebut = this.droiteAuPoint;
         this.point = point;
         this.ajouterElements();
 
@@ -59,14 +59,30 @@ export class IntersectionPiste extends Group implements IPoint {
 
     public ramenerDroiteDepart(): void {
         this.remove(this.droiteDebut);
-        this.droiteDebut = new DroiteAffichage(this.point, this.point);
+        this.droiteDebut = this.droiteAuPoint;
         this.add(this.droiteDebut);
     }
 
     public ramenerDroiteArrivee(): void {
         this.remove(this.droiteArrivee);
-        this.droiteArrivee = new DroiteAffichage(this.point, this.point);
+        this.droiteArrivee = this.droiteAuPoint;
         this.add(this.droiteArrivee);
+    }
+
+    public bouclerAvec(intersection: IntersectionPiste): void {
+        let premiere: IntersectionPiste;
+        let derniere: IntersectionPiste;
+
+        if (this.estPointDuBout) {
+            premiere = intersection;
+            derniere = this;
+        } else {
+            premiere = this;
+            derniere = intersection;
+        }
+
+        premiere.droiteArrivee = derniere.droiteDebut;
+        derniere.droiteDebut.arrivee = premiere.point;
     }
 
     private get estPointDuBout(): boolean {
@@ -75,5 +91,9 @@ export class IntersectionPiste extends Group implements IPoint {
 
     private get estPremierPointPlace(): boolean {
         return this.droiteArrivee.droite.start.clone().sub(this.point.vecteurPlanXZ).length() === 0;
+    }
+
+    private get droiteAuPoint(): DroiteAffichage {
+        return new DroiteAffichage(this.point, this.point);
     }
 }

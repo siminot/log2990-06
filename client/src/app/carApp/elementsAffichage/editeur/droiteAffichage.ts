@@ -14,30 +14,29 @@ export class DroiteAffichage extends Line {
         return this._droite;
     }
 
+    public set depart(point: Point) {
+        this._droite.depart = point;
+        this.miseAJourGeometrie();
+    }
+
+    public set arrivee(point: Point) {
+        this._droite.arrivee = point;
+        this.miseAJourGeometrie();
+    }
+
+    public set point(point: Point) {
+        this.depart = point;
+        this.arrivee = point;
+    }
+
     public constructor(depart: Point, arrivee: Point) {
         super();
         this._droite = new Droite(depart, arrivee);
         this.material = new LineBasicMaterial({color: COULEUR_DEFAUT});
-        this.geometry = new Geometry();
+        this.miseAJourGeometrie();
     }
 
-    public miseAJourDepart(point: Point): void {
-        this._droite.depart = point;
-        this.miseAJour();
-    }
-
-    public miseAJourArrivee(point: Point): void {
-        this._droite.arrivee = point;
-        this.miseAJour();
-    }
-
-    public miseAJourPoint(point: Point): void {
-        this.miseAJourDepart(point);
-        this.miseAJourArrivee(point);
-        this.miseAJour();
-    }
-
-    private miseAJour(): void {
+    private miseAJourGeometrie(): void {
         this.geometry = new Geometry();
         this.geometry.vertices.push(this._droite.start, this._droite.end);
     }

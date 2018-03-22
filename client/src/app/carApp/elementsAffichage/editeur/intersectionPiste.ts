@@ -47,14 +47,14 @@ export class IntersectionPiste extends Group implements IPoint {
 
     private miseAJourDroiteDebut(point: Point): void {
         this.estPointDuBout
-            ? this.droiteDebut.miseAJourPoint(point)
-            : this.droiteDebut.miseAJourDepart(point);
+            ? this.droiteDebut.point = point
+            : this.droiteDebut.depart = point;
     }
 
     private miseAJourDroiteArrivee(point: Point): void {
         this.estPremierPointPlace
-            ? this.droiteArrivee.miseAJourPoint(point)
-            : this.droiteArrivee.miseAJourArrivee(point);
+            ? this.droiteArrivee.point = point
+            : this.droiteArrivee.arrivee = point;
     }
 
     public ramenerDroiteDepart(): void {

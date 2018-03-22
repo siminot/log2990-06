@@ -44,7 +44,7 @@ describe("PointAffichage", () => {
 
         it("la modification du point de depart se fait", () => {
             expect(droiteAffichage.droite.start).not.toEqual(NOUVEAU_POINT.vecteurPlanXZ);
-            droiteAffichage.miseAJourDepart(NOUVEAU_POINT);
+            droiteAffichage.depart = NOUVEAU_POINT;
             expect(droiteAffichage.droite.start).toEqual(NOUVEAU_POINT.vecteurPlanXZ);
 
             droiteAffichage.geometry instanceof Geometry
@@ -54,7 +54,7 @@ describe("PointAffichage", () => {
 
         it("la modification du point d'arrivee se fait", () => {
             expect(droiteAffichage.droite.end).not.toEqual(NOUVEAU_POINT.vecteurPlanXZ);
-            droiteAffichage.miseAJourArrivee(NOUVEAU_POINT);
+            droiteAffichage.arrivee = NOUVEAU_POINT;
             expect(droiteAffichage.droite.end).toEqual(NOUVEAU_POINT.vecteurPlanXZ);
 
             droiteAffichage.geometry instanceof Geometry
@@ -65,7 +65,7 @@ describe("PointAffichage", () => {
         it("la modification du point se fait", () => {
             expect(droiteAffichage.droite.start).not.toEqual(NOUVEAU_POINT.vecteurPlanXZ);
             expect(droiteAffichage.droite.end).not.toEqual(NOUVEAU_POINT.vecteurPlanXZ);
-            droiteAffichage.miseAJourPoint(NOUVEAU_POINT);
+            droiteAffichage.point = NOUVEAU_POINT;
             expect(droiteAffichage.droite.start).toEqual(NOUVEAU_POINT.vecteurPlanXZ);
             expect(droiteAffichage.droite.end).toEqual(NOUVEAU_POINT.vecteurPlanXZ);
 

@@ -15,9 +15,21 @@ export class IntersectionPiste extends Group implements IPoint {
     }
 
     public set point(point: Point) {
-        this.miseAJourDroiteDebut(point);
-        this.miseAJourDroiteArrivee(point);
+        this.pointDroiteDebut = point;
+        this.pointDroiteArrivee = point;
         this.pointAffichage.point = point;
+    }
+
+    private set pointDroiteDebut(point: Point) {
+        this.estPointDuBout
+            ? this.droiteDebut.point = point
+            : this.droiteDebut.depart = point;
+    }
+
+    private set pointDroiteArrivee(point: Point) {
+        this.estPremierPointPlace
+            ? this.droiteArrivee.point = point
+            : this.droiteArrivee.arrivee = point;
     }
 
     public constructor(droiteArrivee: DroiteAffichage, point: Point) {
@@ -43,18 +55,6 @@ export class IntersectionPiste extends Group implements IPoint {
         const DEUX: number = 2;
 
         return this.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ).length() <= DEUX * RAYON_POINT;
-    }
-
-    private miseAJourDroiteDebut(point: Point): void {
-        this.estPointDuBout
-            ? this.droiteDebut.point = point
-            : this.droiteDebut.depart = point;
-    }
-
-    private miseAJourDroiteArrivee(point: Point): void {
-        this.estPremierPointPlace
-            ? this.droiteArrivee.point = point
-            : this.droiteArrivee.arrivee = point;
     }
 
     public ramenerDroiteDepart(): void {

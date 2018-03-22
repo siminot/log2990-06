@@ -7,6 +7,12 @@ export class Droite extends Line3 {
         super(depart.vecteurPlanXZ, arrivee.vecteurPlanXZ);
     }
 
+    public angleAvecDroite(droite: Droite): number {
+        return this.direction.length() * droite.direction.length() !== 0
+            ? Math.acos(this.direction.dot(droite.direction) / (this.direction.length() * droite.direction.length()))
+            : null;
+    }
+
     public set depart(point: Point) {
         this.start = point.vecteurPlanXZ;
     }
@@ -33,13 +39,6 @@ export class Droite extends Line3 {
 
     public get direction(): Vector3 {
         return this.end.clone().sub(this.start);
-    }
-
-    public angleAvecDroite(droite: Droite): number {
-        return this.direction.length() * droite.direction.length() !== 0
-            ? Math.acos(this.direction.dot(droite.direction) / (this.direction.length() * droite.direction.length()))
-            : null;
-
     }
 
     public get boite(): Droite {

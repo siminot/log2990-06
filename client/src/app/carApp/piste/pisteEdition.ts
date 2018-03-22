@@ -100,6 +100,7 @@ export class PisteEdition extends PisteAbstraite {
         this.intersections.splice(-1);
 
         if (this.contientPoints) {
+            this.derniereIntersection.ramenerDroiteDepart();
             this.verifierContraintesExtremites();
         }
     }

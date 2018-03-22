@@ -91,7 +91,7 @@ export class IntersectionPiste extends Group implements IPoint {
         this.ramenerDroiteDepart();
     }
 
-    private ramenerDroiteDepart(): void {
+    public ramenerDroiteDepart(): void {
         this.remove(this.droiteDebut);
         this.droiteDebut = this.droiteAuPoint;
         this.add(this.droiteDebut);

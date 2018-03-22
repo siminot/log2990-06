@@ -71,10 +71,6 @@ export class PisteEdition extends PisteAbstraite {
     }
 
     private ajouterIntersection(intersection: IntersectionPiste): void {
-        if (!this.contientPoints) {
-            intersection.marquerCommePremier();
-        }
-
         this.intersections.push(intersection);
         this.add(intersection);
         this.verificateurPiste.verifierContraintes(intersection);
@@ -88,7 +84,7 @@ export class PisteEdition extends PisteAbstraite {
 
     public miseAJourElementSelectionne(point: Point): void {
         if (this.intersectionSelectionnee !== null) {
-            this.intersectionSelectionnee.miseAJourPoint(point);
+            this.intersectionSelectionnee.point = point;
             this.verificateurPiste.verifierContraintes(this.intersectionSelectionnee);
         }
     }

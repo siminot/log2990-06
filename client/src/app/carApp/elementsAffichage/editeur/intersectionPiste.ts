@@ -1,4 +1,4 @@
-import { Group, Vector3 } from "three";
+import { Group } from "three";
 import { PointAffichage, RAYON_POINT } from "./pointAffichage";
 import { DroiteAffichage } from "./droiteAffichage";
 import { Point } from "../../elementsGeometrie/point";
@@ -10,20 +10,14 @@ export class IntersectionPiste extends Group implements IPoint {
     private pointAffichage: PointAffichage;
     public droiteDebut: DroiteAffichage;
 
-    public get droites(): DroiteAffichage[] {
-        return [this.droiteArrivee, this.droiteDebut];
-    }
-
     public get point(): Point {
         return this.pointAffichage.point;
     }
 
-    public get x(): number {
-        return this.point.x;
-    }
-
-    public get y(): number {
-        return this.point.y;
+    public set point(point: Point) {
+        this.miseAJourDroiteDebut(point);
+        this.miseAJourDroiteArrivee(point);
+        this.pointAffichage.point = point;
     }
 
     public constructor(droiteArrivee: DroiteAffichage, point: Point) {
@@ -31,8 +25,12 @@ export class IntersectionPiste extends Group implements IPoint {
         this.pointAffichage = new PointAffichage(point);
         this.droiteArrivee = droiteArrivee;
         this.droiteDebut = new DroiteAffichage(point, point);
-        this.miseAJourPoint(point);
+        this.point = point;
         this.ajouterElements();
+
+        if (this.estPremierPointPlace) {
+            this.pointAffichage.marquerCommePremier();
+        }
     }
 
     private ajouterElements(): void {
@@ -41,39 +39,34 @@ export class IntersectionPiste extends Group implements IPoint {
         this.add(this.droiteDebut);
     }
 
-    public marquerCommePremier(): void {
-        this.pointAffichage.marquerCommePremier();
+    public estEnContactAvec(autrePoint: Point): boolean {
+        const DEUX: number = 2;
+
+        return this.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ).length() <= DEUX * RAYON_POINT;
     }
 
-    public miseAJourPoint(point: Point): void {
+    private miseAJourDroiteDebut(point: Point): void {
         this.estPointDuBout
             ? this.droiteDebut.miseAJourPoint(point)
             : this.droiteDebut.miseAJourDepart(point);
+    }
 
+    private miseAJourDroiteArrivee(point: Point): void {
         this.estPremierPointPlace
             ? this.droiteArrivee.miseAJourPoint(point)
             : this.droiteArrivee.miseAJourArrivee(point);
-
-        this.pointAffichage.point = point;
-    }
-
-    public estEnContactAvec(autrePoint: Point): boolean {
-        const droiteEntreCentre: Vector3 = this.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ);
-        const DEUX: number = 2;
-
-        return droiteEntreCentre.length() <= DEUX * RAYON_POINT;
-    }
-
-    public ramenerDroiteArrivee(): void {
-        this.remove(this.droiteArrivee);
-        this.droiteArrivee = new DroiteAffichage(this.point, this.point);
-        this.add(this.droiteArrivee);
     }
 
     public ramenerDroiteDepart(): void {
         this.remove(this.droiteDebut);
         this.droiteDebut = new DroiteAffichage(this.point, this.point);
         this.add(this.droiteDebut);
+    }
+
+    public ramenerDroiteArrivee(): void {
+        this.remove(this.droiteArrivee);
+        this.droiteArrivee = new DroiteAffichage(this.point, this.point);
+        this.add(this.droiteArrivee);
     }
 
     private get estPointDuBout(): boolean {

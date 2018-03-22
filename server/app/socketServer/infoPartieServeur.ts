@@ -37,8 +37,8 @@ export class InfoPartieServeur {
     }
 
     public ajouterJoueur(nouveauJoueur: SocketIO.Socket): void {
-        this.joueurs.push(nouveauJoueur);
-        if (this.joueurs.length <= NB_JOUEUR_MAX) {
+        if (this.joueurs.length < NB_JOUEUR_MAX) {
+            this.joueurs.push(nouveauJoueur);
             nouveauJoueur.join(this.nomPartie);
             this.verifSiDeuxJoueurs();
         } else if (this.joueurs.length > NB_JOUEUR_MAX) {
@@ -62,14 +62,47 @@ export class InfoPartieServeur {
     }
 
     private direJoueursPartiePrete(): void {
+        this.envoyerPaquetPartie();
         for (const joueur of this.joueurs) {
-            joueur.in(this.nomPartie).emit(event.COMMENCER_PARTIE);
             this.definirEvenementsPartie(joueur);
         }
     }
 
+    private envoyerPaquetPartie(): void {
+        for (const partie of this.joueurs) {
+            partie.in(this.nomPartie).emit(event.COMMENCER_PARTIE);
+            partie.on(event.PAGE_CHARGEE, () => {
+                partie.in(this.nomPartie).emit(event.PAQUET_PARTIE,
+                                               this.grilleDeJeu,
+                                               this.nomPartie,
+                                               this.nomJoueurs
+                );
+            });
+        }
+    }
+
     private definirEvenementsPartie(joueur: SocketIO.Socket): void {
-        //
+        this.defEvSelectionMot(joueur);
+        this.defEvConfirmationMot(joueur);
+    }
+
+    private defEvSelectionMot(joueur: SocketIO.Socket): void {
+        joueur.on(event.MOT_SELECTIONNE, (motSel: Mot) => {
+            joueur.in(this.nomPartie).emit(event.MOT_SEL_J2, motSel);
+            this.joueurs[this.indexAutreJoueur(joueur)].in(this.nomPartie).emit(event.MOT_SELECTIONNE, motSel);
+        });
+    }
+
+    private defEvConfirmationMot(joueur: SocketIO.Socket): void {
+        joueur.on(event.TENTATIVE, () => {
+            // verif si le mot est bon fait au client ou au serveur
+            this.verificationPartieTerminee();
+        });
+    }
+
+    private verificationPartieTerminee(): void {
+        // if tous les mots sont trouves,
+        // envoyer evenements adequats
     }
 
     public demanderGrille(): void {
@@ -110,6 +143,10 @@ export class InfoPartieServeur {
 
     public get obtenirNomCreateur(): string {
         return this.nomJoueurs[0];
+    }
+
+    private indexAutreJoueur(joueur: SocketIO.Socket): number {
+        return Math.abs(this.joueurs.indexOf(joueur));
     }
 
     public detruirePartie(): void {

@@ -31,7 +31,7 @@ export class ConfigPartieComponent implements OnInit {
         document.getElementById(laSection).classList.add("visible");
         if (laSection === "inputNomPartie") {
             document.getElementById("inp").focus();
-        } else if (laSection == "inputNomJoueur") {
+        } else if (laSection === "inputNomJoueur") {
             document.getElementById("inj").focus();
         }
     }

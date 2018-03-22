@@ -72,6 +72,8 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       this.mots = paquet.grilleDeJeu;
       console.log(this.mots);
       this.serviceInteraction.serviceEnvoieMots(this.mots);
+      this.serviceInteraction.souscrireServiceSocket();
+      this.matriceDesMotsSurGrille = this.serviceInteraction.matrice;
     });
   }
 }

@@ -46,6 +46,8 @@ export class ServiceInteractionComponent {
   }
 
   public souscrireServiceSocket(): void {
+    this.serviceEnvoieMots(this.mots);
+    this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
     this.insererMotsDansGrille();
   }
 
@@ -83,6 +85,7 @@ export class ServiceInteractionComponent {
 
   // Services publics
   public serviceEnvoieMots(mots: Mot[]): void {
+    this._mots = mots;
     this.listeMotsSujet.next(mots);
   }
 

@@ -1,5 +1,4 @@
 import { Point } from "../elementsGeometrie/point";
-import { Vector3 } from "three";
 
 // tslint:disable: no-magic-numbers
 describe("Point", () => {

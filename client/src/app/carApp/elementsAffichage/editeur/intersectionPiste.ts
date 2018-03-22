@@ -57,32 +57,50 @@ export class IntersectionPiste extends Group implements IPoint {
         return this.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ).length() <= DEUX * RAYON_POINT;
     }
 
-    public ramenerDroiteDepart(): void {
+    public bouclerAvec(intersection: IntersectionPiste): void {
+        if (this.peutBouclerAvec(intersection)) {
+            this.relier(intersection);
+        } else if (intersection.peutBouclerAvec(this)) {
+            intersection.relier(this);
+        }
+    }
+
+    private peutBouclerAvec(intersection: IntersectionPiste): boolean {
+        return this.estPointDuBout && intersection.estPremierPointPlace;
+    }
+
+    private relier(intersection: IntersectionPiste): void {
+        intersection.droiteArrivee = this.droiteDebut;
+        this.droiteDebut.arrivee = intersection.point;
+    }
+
+    public separer(intersection: IntersectionPiste): void {
+        if (this.pointeVers(intersection)) {
+            this.couperLienVers(intersection);
+        } else if (intersection.pointeVers(this)) {
+            intersection.couperLienVers(this);
+        }
+    }
+
+    private pointeVers(intersection: IntersectionPiste): boolean {
+        return this.droiteDebut.droite.end.equals(intersection.point.vecteurPlanXZ);
+    }
+
+    private couperLienVers(intersection: IntersectionPiste): void {
+        intersection.ramenerDroiteArrivee();
+        this.ramenerDroiteDepart();
+    }
+
+    private ramenerDroiteDepart(): void {
         this.remove(this.droiteDebut);
         this.droiteDebut = this.droiteAuPoint;
         this.add(this.droiteDebut);
     }
 
-    public ramenerDroiteArrivee(): void {
+    private ramenerDroiteArrivee(): void {
         this.remove(this.droiteArrivee);
         this.droiteArrivee = this.droiteAuPoint;
         this.add(this.droiteArrivee);
-    }
-
-    public bouclerAvec(intersection: IntersectionPiste): void {
-        let premiere: IntersectionPiste;
-        let derniere: IntersectionPiste;
-
-        if (this.estPointDuBout) {
-            premiere = intersection;
-            derniere = this;
-        } else {
-            premiere = this;
-            derniere = intersection;
-        }
-
-        premiere.droiteArrivee = derniere.droiteDebut;
-        derniere.droiteDebut.arrivee = premiere.point;
     }
 
     private get estPointDuBout(): boolean {

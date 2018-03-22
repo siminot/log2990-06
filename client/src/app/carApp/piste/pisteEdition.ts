@@ -50,8 +50,7 @@ export class PisteEdition extends PisteAbstraite {
     }
 
     private debouclerCircuit(): void {
-        this.premiereIntersection.ramenerDroiteArrivee();
-        this.derniereIntersection.droiteDebut.arrivee = this.derniereIntersection.point;
+        this.premiereIntersection.separer(this.derniereIntersection);
         this.verifierContraintesExtremites();
     }
 
@@ -101,7 +100,6 @@ export class PisteEdition extends PisteAbstraite {
         this.intersections.splice(-1);
 
         if (this.contientPoints) {
-            this.derniereIntersection.ramenerDroiteDepart();
             this.verifierContraintesExtremites();
         }
     }

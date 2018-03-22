@@ -10,6 +10,7 @@ import { GrilleAbs } from "../grilleAbs";
   styleUrls: ["./grille.component.css"]
 })
 
+
 export class GrilleComponent extends GrilleAbs implements OnInit {
 
   public constructor(private listeMotsService: ServiceInteractionComponent,
@@ -60,5 +61,10 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
       mot.cheat = !mot.cheat;
     }
     this.listeMotsService.serviceEnvoieMots(this.mots);
+    this.listeMotsService.souscrireServiceSocket();
   }
+
+  // private changementMotSelect(): void {
+
+  // }
 }

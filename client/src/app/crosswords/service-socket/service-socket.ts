@@ -3,6 +3,7 @@ import * as socketIo from "socket.io-client";
 import * as event from "../../../../../common/communication/evenementSocket";
 import { Observable } from "rxjs/Observable";
 import { Mot } from "../objetsTest/mot";
+import { PaquetPartie } from "../objetsTest/paquetPartie";
 // import { Mot } from "../objetsTest/mot";
 // import { Observer } from "rxjs/Observer";
 
@@ -73,7 +74,6 @@ export class SocketService {
                 unObs.next();
             });
         });
-
     }
 
     public demandeDeGrille(): Observable<void> {
@@ -94,4 +94,16 @@ export class SocketService {
             this.socketClient.on(event.ENVOYER_LISTE_PARTIES, (data: Array<Array<string>>) => unObs.next(data));
         });
     }
+
+    public commencerPartie(): void {
+        this.socketClient.emit(event.PAGE_CHARGEE);
+    }
+
+    public telechargerGrille(): Observable<PaquetPartie> {
+        return new Observable<PaquetPartie>((unObs) => {
+            this.socketClient.on(event.PAQUET_PARTIE, (paquet: PaquetPartie) => unObs.next(paquet));
+        });
+    }
+
+
 }

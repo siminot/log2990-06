@@ -5,8 +5,10 @@ export const CREATEUR = "creerPartie";              // 2
 export const DEMANDER_GRILLE = "demanderGrille";    // 3
 export const ENVOYER_DIFF = "envoyerDiff";
 export const ENVOYER_GRILLE = "envoyerGrille";      // 4
+
 export const COMMENCER_PARTIE = "commencerPartie";
 export const PAGE_CHARGEE = "pageChargee";
+
 export const PAQUET_PARTIE = "paquetPartie";
 export const NOM_SALLE = "nomDeLasalle";
 export const NOM_EXISTANT = "nomExistant";

@@ -5,7 +5,7 @@ import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
 import { Injectable } from "@angular/core";
 import { ServiceHttp } from "../serviceHttp/http-request.service";
-// import { SocketService} from "../service-socket/service-socket";
+
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
@@ -22,7 +22,7 @@ export class ServiceInteractionComponent {
   protected matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   protected motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
 
-  public constructor(private httpReq: ServiceHttp /*, private serviceSocket: SocketService*/) {
+  public constructor(private httpReq: ServiceHttp) {
     this.genererGrille();
   }
   // 
@@ -46,7 +46,7 @@ export class ServiceInteractionComponent {
   }
 
   public souscrireServiceSocket(): void {
-    //
+    this.insererMotsDansGrille();
   }
 
   public souscrireRequeteGrille(): void {
@@ -105,4 +105,5 @@ export class ServiceInteractionComponent {
   public serviceReceptionMotSelectionne(): Observable<Mot> {
     return this.motSelectionneObservable$;
   }
+
 }

@@ -1,5 +1,6 @@
 // import * as socket from "socket.io";
 import { Mot } from "./mot";
+import { PaquetPartie } from "./paquet";
 import * as event from "./../../../common/communication/evenementSocket";
 // import { Socket } from "net";
 
@@ -68,14 +69,20 @@ export class InfoPartieServeur {
         }
     }
 
+    private fairePaquet(): PaquetPartie {
+        let paquet : PaquetPartie = new PaquetPartie; 
+        paquet.grilleDeJeu = this.grilleDeJeu;
+        paquet.nomJoeurs = this.nomJoueurs;
+        paquet.nomPartie = this.nomPartie;
+
+        return paquet;
+    }
+
     private envoyerPaquetPartie(): void {
         for (const partie of this.joueurs) {
             partie.in(this.nomPartie).emit(event.COMMENCER_PARTIE);
             partie.on(event.PAGE_CHARGEE, () => {
-                partie.in(this.nomPartie).emit(event.PAQUET_PARTIE,
-                                               this.grilleDeJeu,
-                                               this.nomPartie,
-                                               this.nomJoueurs
+                partie.in(this.nomPartie).emit(event.PAQUET_PARTIE, this.fairePaquet()
                 );
             });
         }

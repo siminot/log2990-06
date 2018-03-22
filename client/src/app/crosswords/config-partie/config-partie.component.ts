@@ -50,7 +50,7 @@ export class ConfigPartieComponent implements OnInit {
 
     private commencerPartie(): void {
         this.serviceSocket.chargementComplete().subscribe(() => {
-            this.router.navigateByUrl("/");
+            this.router.navigateByUrl("CrosswordsGameMulti");
         });
     }
 

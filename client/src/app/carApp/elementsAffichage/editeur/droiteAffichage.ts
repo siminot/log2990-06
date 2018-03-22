@@ -2,9 +2,9 @@ import { Line, LineBasicMaterial, Geometry } from "three";
 import { Droite } from "../../elementsGeometrie/droite";
 import { Point } from "../../elementsGeometrie/point";
 
-const COULEUR_DEFAUT: number = 0x0000FF;
-const COULEUR_CORRECTE: number = 0x00FF00;
-const COULEUR_ERREUR: number = 0xFF0000;
+export const COULEUR_DEFAUT: number = 0x0000FF;
+export const COULEUR_CORRECTE: number = 0x00FF00;
+export const COULEUR_ERREUR: number = 0xFF0000;
 
 export class DroiteAffichage extends Line {
 

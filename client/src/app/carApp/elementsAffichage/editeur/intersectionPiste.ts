@@ -26,9 +26,9 @@ export class IntersectionPiste extends Group implements IPoint {
         return this.point.y;
     }
 
-    public constructor(droiteArrivee: DroiteAffichage, point: Point, estPremier: boolean) {
+    public constructor(droiteArrivee: DroiteAffichage, point: Point) {
         super();
-        this.pointAffichage = new PointAffichage(point, estPremier);
+        this.pointAffichage = new PointAffichage(point);
         this.droiteArrivee = droiteArrivee;
         this.droiteDebut = new DroiteAffichage(point, point);
         this.miseAJourPoint(point);
@@ -39,6 +39,10 @@ export class IntersectionPiste extends Group implements IPoint {
         this.add(this.droiteArrivee);
         this.add(this.pointAffichage);
         this.add(this.droiteDebut);
+    }
+
+    public marquerCommePremier(): void {
+        this.pointAffichage.marquerCommePremier();
     }
 
     public miseAJourPoint(point: Point): void {

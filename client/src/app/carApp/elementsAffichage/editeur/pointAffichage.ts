@@ -28,14 +28,14 @@ export class PointAffichage extends Group implements IPoint {
         this.position.set(this._point.vecteurPlanXZ.x, this._point.vecteurPlanXZ.y + DIFFERENCE_PROFONDEUR, this._point.vecteurPlanXZ.z);
     }
 
-    public constructor(point: Point, estPremier: boolean) {
+    public constructor(point: Point) {
         super();
         this.point = point;
         this.creerCercle();
+    }
 
-        if (estPremier) {
-            this.creerContour();
-        }
+    public marquerCommePremier(): void {
+        this.creerContour();
     }
 
     private creerCercle(): void {

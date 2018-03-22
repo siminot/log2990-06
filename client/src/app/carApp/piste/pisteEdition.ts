@@ -66,11 +66,15 @@ export class PisteEdition extends PisteAbstraite {
     private creerNouvelleIntersection(point: Point): void {
         if (!this.estEnContactAvecAutresPoints(point)) {
             this.ajouterIntersection(
-                new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point), point, !this.contientPoints));
+                new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point), point));
         }
     }
 
     private ajouterIntersection(intersection: IntersectionPiste): void {
+        if (!this.contientPoints) {
+            intersection.marquerCommePremier();
+        }
+
         this.intersections.push(intersection);
         this.add(intersection);
         this.verificateurPiste.verifierContraintes(intersection);

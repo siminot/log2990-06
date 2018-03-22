@@ -22,12 +22,12 @@ export class DroiteAffichage extends Line {
     }
 
     public miseAJourDepart(point: Point): void {
-        this._droite.modifierDepart(point);
+        this._droite.depart = point;
         this.miseAJour();
     }
 
     public miseAJourArrivee(point: Point): void {
-        this._droite.modifierArrivee(point);
+        this._droite.arrivee = point;
         this.miseAJour();
     }
 

@@ -7,6 +7,14 @@ export class Droite extends Line3 {
         super(depart.vecteurPlanXZ, arrivee.vecteurPlanXZ);
     }
 
+    public set depart(point: Point) {
+        this.start = point.vecteurPlanXZ;
+    }
+
+    public set arrivee(point: Point) {
+        this.end = point.vecteurPlanXZ;
+    }
+
     public get plusPetitX(): number {
       return Math.min(this.start.x, this.end.x);
     }
@@ -21,14 +29,6 @@ export class Droite extends Line3 {
 
     public get plusGrandY(): number {
       return Math.max(this.start.z, this.end.z);
-    }
-
-    public modifierDepart(point: Point): void {
-        this.start = point.vecteurPlanXZ;
-    }
-
-    public modifierArrivee(point: Point): void {
-        this.end = point.vecteurPlanXZ;
     }
 
     public get direction(): Vector3 {

@@ -35,14 +35,14 @@ describe("test de Droite: ", () => {
     describe("modifierDepart: ", () => {
         it("le depart devrait etre modifie", () => {
             const departInitial: Vector3 = droite.start;
-            droite.modifierDepart(new Point(5, 1));
+            droite.depart = new Point(5, 1);
             assert(!departInitial.equals(droite.start));
         });
     });
     describe("modifierArrivee: ", () => {
         it("l'arrivee devrait etre modifiee", () => {
             const arriveetInitiale: Vector3 = droite.end;
-            droite.modifierArrivee(new Point(1, 6));
+            droite.arrivee = new Point(1, 6);
             assert(!arriveetInitiale.equals(droite.end));
         });
     });

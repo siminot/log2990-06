@@ -117,8 +117,8 @@ export class VerificateurContraintesPiste {
     }
 
     public get pisteRespecteContraintes(): boolean {
-        for (const intersection of this.intersections) {
-            if (!this.rapport(intersection.droiteDebut).contraintesRespectees) {
+        for (const droite of this.droitesAffichage) {
+            if (!this.rapport(droite).contraintesRespectees) {
                 return false;
             }
         }

@@ -104,11 +104,11 @@ export class IntersectionPiste extends Group implements IPoint {
     }
 
     private get estPointDuBout(): boolean {
-        return this.droiteDebut.arrivee.clone().sub(this.point).length() === 0;
+        return this.droiteDebut.arrivee.equals(this.point);
     }
 
     private get estPremierPointPlace(): boolean {
-        return this.droiteArrivee.depart.clone().sub(this.point).length() === 0;
+        return this.droiteArrivee.depart.equals(this.point);
     }
 
     private get droiteAuPoint(): DroiteAffichage {

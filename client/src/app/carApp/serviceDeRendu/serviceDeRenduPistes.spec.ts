@@ -5,7 +5,7 @@ import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
 import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 
-describe("Service de rendu", () => {
+describe("Service de rendu de piste", () => {
     let serviceDeRendu: ServiceDeRenduPistes;
     const gestionnaireEditionPiste: GestionnaireEditionPiste = new GestionnaireEditionPiste(new GestionnaireSouris(),
                                                                                             new GestionnaireCameraPiste(),

@@ -64,21 +64,19 @@ export class SocketServer {
                 listePartie[i].push(this.parties[i].obtenirNomCreateur);
             }
         }
-        console.log(listePartie);
         this.io.emit(event.ENVOYER_LISTE_PARTIES, listePartie);
     }
 
     private deconnection(unSocket: SocketIO.Socket): void {
         this.retirerListePartie(unSocket);
         this.envoyerListePartie();
-        console.log("un dude est deco");
-        // unSocket.disconnect();
     }
 
     private retirerListePartie(unSocket: SocketIO.Socket): void {
         for (const partie of this.parties) {
             if (partie.socketEstDansPartie(unSocket)) {
                 this.parties.splice(this.parties.indexOf(partie), 1);
+                this.io.to(partie.obtenirNomPartie).emit(event.JOUEUR_QUITTE);
                 partie.detruirePartie();
             }
         }

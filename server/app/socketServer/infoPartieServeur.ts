@@ -70,7 +70,7 @@ export class InfoPartieServeur {
     }
 
     private fairePaquet(): PaquetPartie {
-        let paquet : PaquetPartie = new PaquetPartie; 
+        const paquet: PaquetPartie = new PaquetPartie;
         paquet.grilleDeJeu = this.grilleDeJeu;
         paquet.nomJoeurs = this.nomJoueurs;
         paquet.nomPartie = this.nomPartie;
@@ -158,7 +158,6 @@ export class InfoPartieServeur {
 
     public detruirePartie(): void {
         for (const joueur of this.joueurs) {
-            joueur.to(this.nomPartie).emit(event.JOUEUR_QUITTE);
             joueur.disconnect();
         }
     }

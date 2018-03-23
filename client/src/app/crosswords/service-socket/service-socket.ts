@@ -4,6 +4,7 @@ import * as event from "../../../../../common/communication/evenementSocket";
 import { Observable } from "rxjs/Observable";
 import { Mot } from "../objetsTest/mot";
 import { PaquetPartie } from "../objetsTest/paquetPartie";
+import { Router } from "@angular/router";
 // import { Mot } from "../objetsTest/mot";
 // import { Observer } from "rxjs/Observer";
 
@@ -13,7 +14,7 @@ export class SocketService {
 
     private socketClient: SocketIOClient.Socket;
 
-    public constructor() {
+    public constructor(private router: Router) {
     }
 
     private connectionServeur(): void {
@@ -28,17 +29,13 @@ export class SocketService {
         this.connectionServeur();
         this.socketClient.on(event.CONNECTION, () => {
             this.socketClient.emit(event.CREATEUR, nomPartie, difficultee, nomJoueur);
-            // TODO: requete grille
-            // generer la grille
-            // quand la grille est faite
-            // this.socketClient.emit(event.ENVOYER_GRILLE, laGrille);
         });
 
-        this.socketClient.on("connect_error", () => {
-            // TODO: Afficher au client que la conneciton n'a pas marchee
+        this.socketClient.on(event.JOUEUR_QUITTE, () => {
+            alert("Problème de connection avec le serveur! \nRetour à la page d'acceuil.");
             this.socketClient.disconnect();
+            this.router.navigateByUrl("/");
         });
-        //
     }
 
     // pu utile

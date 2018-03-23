@@ -1,4 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { ServiceHttp } from "../serviceHttp/http-request.service";
+import { SocketService } from "../service-socket/service-socket";
+import { Router } from "@angular/router";
 // import { MAT_DIALOG_DATA } from "@angular/material";
 // import { InfoJoueurSoloComponent } from "../info-partie/info-joueur-solo/info-joueur-solo.component"
 // import { REQUETE_INIT } from "../config-partie/config-partie.component";
@@ -11,7 +14,9 @@ import { Component, OnInit } from "@angular/core";
 
 export class DialogComponent implements OnInit {
 
-  public constructor() {}
+  public constructor(private serviceHTTP: ServiceHttp,
+                     private serviceSocket: SocketService,
+                     /* private router: Router */) {}
 
   public ngOnInit(): void {
   }
@@ -19,5 +24,4 @@ export class DialogComponent implements OnInit {
   public rejouer(): void {
     console.log("nouvelle partie");
   }
-
 }

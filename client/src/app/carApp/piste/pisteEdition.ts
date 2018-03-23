@@ -82,9 +82,24 @@ export class PisteEdition extends PisteAbstraite {
 
     public miseAJourElementSelectionne(point: Point): void {
         if (this.intersectionSelectionnee !== null) {
-            this.intersectionSelectionnee.point = point;
-            this.verificateurPiste.verifierContraintes(this.intersectionSelectionnee);
+            if (this.intersectionSelectionnerPeutBoucler(point)) {
+                this.fusionnerPoint(point);
+                this.verifierContraintesExtremites();
+            } else {
+                this.intersectionSelectionnee.point = point;
+                this.verificateurPiste.verifierContraintes(this.intersectionSelectionnee);
+            }
         }
+    }
+
+    private intersectionSelectionnerPeutBoucler(point: Point): boolean {
+        return this.intersectionSelectionnee === this.derniereIntersection && this.doitFermerCircuit(point)
+    }
+
+    private fusionnerPoint(point: Point): void {
+        this.retirerDernierPoint();
+        this.ajouterPoint(point);
+        this.intersectionSelectionnee = null;
     }
 
     public effacerPoint(): void {

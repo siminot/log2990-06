@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { GrilleComponent } from "../solo/grille.component";
-import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
+import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { listeMotsLongue, grilleLettres } from "../../objetsTest/objetsTest";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ServiceHttp } from "../../serviceHttp/http-request.service";
@@ -8,20 +8,20 @@ import { InfojoueurService } from "../../service-info-joueur/infojoueur.service"
 
 describe("GrilleComponent", () => {
   let component: GrilleComponent;
-  let serviceGrille: RequeteDeGrilleAbs;
+  let serviceGrille: ServiceInteractionComponent;
   let fixture: ComponentFixture<GrilleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GrilleComponent ],
       imports: [ HttpClientTestingModule ],
-      providers: [ RequeteDeGrilleAbs, ServiceHttp, InfojoueurService ]
+      providers: [ ServiceInteractionComponent, ServiceHttp, InfojoueurService ]
     })
     .compileComponents()
     .catch(() => { throw new Error("Erreur de la creation du test"); });
   }));
 
-  beforeEach(inject([RequeteDeGrilleAbs], (service: RequeteDeGrilleAbs) => {
+  beforeEach(inject([ServiceInteractionComponent], (service: ServiceInteractionComponent) => {
     service["_mots"] = listeMotsLongue;
     service["matriceDesMotsSurGrille"] = grilleLettres;
     serviceGrille = service;

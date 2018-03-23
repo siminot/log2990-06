@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { DefinitionComponent } from "./definition.component";
-import { RequeteDeGrilleAbs } from "../service-Requete-de-Grille/requete-de-grilleAbs";
+import { ServiceInteractionComponent } from "../service-interaction-component/service-interaction-component";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
@@ -18,13 +18,13 @@ describe("DefinitionComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ DefinitionComponent ],
       imports: [ HttpClientTestingModule ],
-      providers: [ RequeteDeGrilleAbs, ServiceHttp ]
+      providers: [ ServiceInteractionComponent, ServiceHttp ]
     })
     .compileComponents()
     .catch(() => { throw new Error("Erreur de la creation du test"); });
   }));
 
-  beforeEach(inject([RequeteDeGrilleAbs], (service: RequeteDeGrilleAbs) => {
+  beforeEach(inject([ServiceInteractionComponent], (service: ServiceInteractionComponent) => {
     component = new DefinitionComponent(service);
     component["matriceDesMotsSurGrille"] = grilleLettres;
     component["mots"] = listeMotsLongue;

@@ -1,5 +1,5 @@
 import { TestBed, inject } from "@angular/core/testing";
-import { RequeteDeGrilleAbs } from "./requete-de-grilleAbs";
+import { ServiceInteractionComponent } from "./service-interaction-component";
 import { GrilleComponent } from "../grille/solo/grille.component";
 import { DefinitionComponent } from "../definition/definition.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
@@ -8,7 +8,7 @@ import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { listeMotsLongue, grilleLettres } from "../objetsTest/objetsTest";
 
 describe("RequeteDeGrilleService", () => {
-  let serviceGrille: RequeteDeGrilleAbs;
+  let serviceGrille: ServiceInteractionComponent;
   let grille: GrilleComponent;
   let definition: DefinitionComponent;
   let infojoueur: InfojoueurService;
@@ -16,12 +16,12 @@ describe("RequeteDeGrilleService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ RequeteDeGrilleAbs, ServiceHttp ]
+      providers: [ ServiceInteractionComponent, ServiceHttp ]
     });
   });
 
   beforeEach(inject([ServiceHttp], (service: ServiceHttp) => {
-    serviceGrille = new RequeteDeGrilleAbs(service);
+    serviceGrille = new ServiceInteractionComponent(service);
     serviceGrille["_mots"] = listeMotsLongue;
     serviceGrille["matriceDesMotsSurGrille"] = grilleLettres;
     infojoueur = new InfojoueurService();

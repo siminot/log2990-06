@@ -6,10 +6,17 @@ import * as assert from "assert";
 // tslint:disable: no-magic-numbers
 describe("test de Droite: ", () => {
 
-    const droite: Droite = new Droite(new Point(6, 0), new Point(0, 5));
+    const POINT1: Point = new Point(6, 0);
+    const POINT2: Point = new Point(0, 5);
+    const droite: Droite = new Droite(POINT1, POINT2);
     describe("Constructeur: ", () => {
         it("le constructeur doit fonctionner", () => {
             expect(droite).toBeTruthy();
+        });
+
+        it("les accesseurs des points fonctionnent", () => {
+            expect(droite.depart.equals(POINT1)).toBeTruthy();
+            expect(droite.arrivee.equals(POINT2)).toBeTruthy();
         });
     });
     describe("plusPetitX: ", () => {
@@ -35,14 +42,14 @@ describe("test de Droite: ", () => {
     describe("modifierDepart: ", () => {
         it("le depart devrait etre modifie", () => {
             const departInitial: Vector3 = droite.start;
-            droite.modifierDepart(new Point(5, 1));
+            droite.depart = new Point(5, 1);
             assert(!departInitial.equals(droite.start));
         });
     });
     describe("modifierArrivee: ", () => {
         it("l'arrivee devrait etre modifiee", () => {
             const arriveetInitiale: Vector3 = droite.end;
-            droite.modifierArrivee(new Point(1, 6));
+            droite.arrivee = new Point(1, 6);
             assert(!arriveetInitiale.equals(droite.end));
         });
     });

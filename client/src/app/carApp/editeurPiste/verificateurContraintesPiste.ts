@@ -1,12 +1,12 @@
 import { IntersectionPiste } from "../elementsAffichage/editeur/intersectionPiste";
 import { DroiteAffichage } from "../elementsAffichage/editeur/droiteAffichage";
 import { RapportContraintes } from "./rapportContraintes";
-import { Droite } from "../elementsGeometrie/droite";
-import { ContrainteCroisementDroite } from "./containteCroisementDroite";
+import { IDroite } from "../elementsGeometrie/IDroite";
+import { ContrainteCroisementDroite } from "./contrainteCroisementDroite";
 import { LARGEUR_PISTE } from "../elementsAffichage/jeu/segmentPiste";
 
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;
-const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
+export const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
 const RATIO_ANGLE: number = 4;
 const ANGLE_MINIMAL: number = Math.PI / RATIO_ANGLE;
 const ANGLE_AVANT: number = -1;
@@ -22,7 +22,7 @@ export class VerificateurContraintesPiste {
         const droites: DroiteAffichage[] = [];
         for (const intersection of this.intersections) {
             if (intersection.droiteArrivee.droite.distance() !== 0) {
-            droites.push(intersection.droiteArrivee);
+                droites.push(intersection.droiteArrivee);
             }
         }
 
@@ -49,9 +49,10 @@ export class VerificateurContraintesPiste {
     }
 
     private verifierLongueur(droite: DroiteAffichage): void {
-        droite.droite.distance() >= LONGUEUR_MINIMALE
-            ? this.rapport(droite).longueurRespectee = true
-            : this.rapport(droite).longueurRespectee = false;
+        this.rapport(droite).longueurRespectee =
+            droite.droite.distance() >= LONGUEUR_MINIMALE
+            ? true
+            : false;
     }
 
     private verifierAngleIntersectionCourante(): void {
@@ -83,18 +84,18 @@ export class VerificateurContraintesPiste {
         return intersection.droiteArrivee.droite.angleAvecDroite(intersection.droiteDebut.droite);
     }
 
-    private droitesPartagentDebutOuFin(droite1: Droite, droite2: Droite): boolean {
-        return droite1.start.equals(droite2.start)
-            || droite1.start.equals(droite2.end)
-            || droite1.end.equals(droite2.start)
-            || droite1.end.equals(droite2.end);
+    private droitesPartagentDebutOuFin(droite1: IDroite, droite2: IDroite): boolean {
+        return droite1.depart.equals(droite2.depart)
+            || droite1.depart.equals(droite2.arrivee)
+            || droite1.arrivee.equals(droite2.depart)
+            || droite1.arrivee.equals(droite2.arrivee);
     }
 
     private verifierCroisement(): void {
         for (const droiteAnalysee of this.droitesAffichage) {
             this.rapport(droiteAnalysee).pasCroisementRespecte = true;
             for (const droiteDeComparation of this.droitesAffichage) {
-                if (!this.droitesPartagentDebutOuFin(droiteAnalysee.droite, droiteDeComparation.droite)) {
+                if (!this.droitesPartagentDebutOuFin(droiteAnalysee, droiteDeComparation)) {
                     if (ContrainteCroisementDroite.droitesSeCroisent(droiteAnalysee.droite, droiteDeComparation.droite)) {
                         this.rapport(droiteAnalysee).pasCroisementRespecte = false;
                     }
@@ -116,8 +117,8 @@ export class VerificateurContraintesPiste {
     }
 
     public get pisteRespecteContraintes(): boolean {
-        for (const intersection of this.intersections) {
-            if (!this.rapport(intersection.droiteDebut).contraintesRespectees) {
+        for (const droite of this.droitesAffichage) {
+            if (!this.rapport(droite).contraintesRespectees) {
                 return false;
             }
         }

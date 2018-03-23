@@ -3,8 +3,8 @@ import { Camera, OrthographicCamera } from "three";
 import { ICamera } from "../camera/ICamera";
 import { PI_OVER_2 } from "../constants";
 
-const PLAN_RAPPROCHE: number = -10;
-const PLAN_ELOIGNE: number = 50;
+export const PLAN_RAPPROCHE: number = -10;
+export const PLAN_ELOIGNE: number = 50;
 export const ZOOM_DEFAUT: number = 3;
 
 @Injectable()

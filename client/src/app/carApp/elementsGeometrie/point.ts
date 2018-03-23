@@ -14,13 +14,4 @@ export class Point extends Vector2 implements IPoint {
     public get point(): Point {
         return this;
     }
-
-    public estEgalA(autrePoint: Point): boolean {
-        return this.x === autrePoint.x &&
-               this.y === autrePoint.y;
-    }
-
-    public produitVectoriel(autrePoint: Point): number {
-      return this.x * autrePoint.y - autrePoint.x * this.y;
-    }
 }

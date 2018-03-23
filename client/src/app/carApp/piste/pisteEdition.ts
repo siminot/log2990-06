@@ -76,7 +76,7 @@ export class PisteEdition extends PisteAbstraite {
         return this.pisteRespecteContrainteObservable$;
     }
 
-    public exporterPiste(): Point[] {
+    public exporter(): Point[] {
       const points: Point[] = [];
 
       for (const intersection of this.intersections) {
@@ -107,14 +107,12 @@ export class PisteEdition extends PisteAbstraite {
     }
 
     private bouclerCircuit(): void {
-        this.premiereIntersection.droiteArrivee = this.derniereIntersection.droiteDebut;
-        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.premiereIntersection.point);
+        this.premiereIntersection.bouclerAvec(this.derniereIntersection);
         this.verifierContraintesExtremites();
     }
 
     private debouclerCircuit(): void {
-        this.premiereIntersection.ramenerDroiteArrivee();
-        this.derniereIntersection.droiteDebut.miseAJourArrivee(this.derniereIntersection.point);
+        this.premiereIntersection.separer(this.derniereIntersection);
         this.verifierContraintesExtremites();
     }
 
@@ -129,7 +127,7 @@ export class PisteEdition extends PisteAbstraite {
     private creerNouvelleIntersection(point: Point): void {
         if (!this.estEnContactAvecAutresPoints(point)) {
             this.ajouterIntersection(
-                new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point), point, !this.contientPoints));
+                new IntersectionPiste(this.obtenirDroiteArriveeNouveauPoint(point), point));
         }
     }
 
@@ -150,10 +148,26 @@ export class PisteEdition extends PisteAbstraite {
 
     public miseAJourElementSelectionne(point: Point): void {
         if (this.intersectionSelectionnee !== null) {
-            this.intersectionSelectionnee.miseAJourPoint(point);
-            this.verificateurPiste.verifierContraintes(this.intersectionSelectionnee);
-            this.envoieContraintePiste(this.verificateurPiste.pisteRespecteContraintes);
+            if (this.intersectionSelectionneePeutBoucler(point)) {
+                this.fusionnerPoint(point);
+                this.verifierContraintesExtremites();
+            } else {
+                this.intersectionSelectionnee.point = point;
+                this.verificateurPiste.verifierContraintes(this.intersectionSelectionnee);
+            }
         }
+    }
+
+    private intersectionSelectionneePeutBoucler(point: Point): boolean {
+        return this.intersectionSelectionnee === this.derniereIntersection &&
+               this.doitFermerCircuit(point) &&
+               !this.estBoucle;
+    }
+
+    private fusionnerPoint(point: Point): void {
+        this.retirerDernierPoint();
+        this.ajouterPoint(point);
+        this.intersectionSelectionnee = null;
     }
 
     public effacerPoint(): void {
@@ -213,7 +227,7 @@ export class PisteEdition extends PisteAbstraite {
         this.intersectionSelectionnee = null;
     }
 
-    public deselectionnerElement(): void {
+    public deselectionnerIntersection(): void {
         this.intersectionSelectionnee = null;
     }
 

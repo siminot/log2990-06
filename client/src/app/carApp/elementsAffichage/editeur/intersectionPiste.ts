@@ -1,4 +1,4 @@
-import { Group, Vector3 } from "three";
+import { Group } from "three";
 import { PointAffichage, RAYON_POINT } from "./pointAffichage";
 import { DroiteAffichage } from "./droiteAffichage";
 import { Point } from "../../elementsGeometrie/point";
@@ -10,29 +10,39 @@ export class IntersectionPiste extends Group implements IPoint {
     private pointAffichage: PointAffichage;
     public droiteDebut: DroiteAffichage;
 
-    public get droites(): DroiteAffichage[] {
-        return [this.droiteArrivee, this.droiteDebut];
-    }
-
     public get point(): Point {
         return this.pointAffichage.point;
     }
 
-    public get x(): number {
-        return this.point.x;
+    public set point(point: Point) {
+        this.pointDroiteDebut = point;
+        this.pointDroiteArrivee = point;
+        this.pointAffichage.point = point;
     }
 
-    public get y(): number {
-        return this.point.y;
+    private set pointDroiteDebut(point: Point) {
+        this.estPointDuBout
+            ? this.droiteDebut.point = point
+            : this.droiteDebut.depart = point;
     }
 
-    public constructor(droiteArrivee: DroiteAffichage, point: Point, estPremier: boolean) {
+    private set pointDroiteArrivee(point: Point) {
+        this.estPremierPointPlace
+            ? this.droiteArrivee.point = point
+            : this.droiteArrivee.arrivee = point;
+    }
+
+    public constructor(droiteArrivee: DroiteAffichage, point: Point) {
         super();
-        this.pointAffichage = new PointAffichage(point, estPremier);
+        this.pointAffichage = new PointAffichage(point);
         this.droiteArrivee = droiteArrivee;
-        this.droiteDebut = new DroiteAffichage(point, point);
-        this.miseAJourPoint(point);
+        this.droiteDebut = this.droiteAuPoint;
+        this.point = point;
         this.ajouterElements();
+
+        if (this.estPremierPointPlace) {
+            this.pointAffichage.marquerCommePremier();
+        }
     }
 
     private ajouterElements(): void {
@@ -41,42 +51,67 @@ export class IntersectionPiste extends Group implements IPoint {
         this.add(this.droiteDebut);
     }
 
-    public miseAJourPoint(point: Point): void {
-        this.estPointDuBout
-            ? this.droiteDebut.miseAJourPoint(point)
-            : this.droiteDebut.miseAJourDepart(point);
-
-        this.estPremierPointPlace
-            ? this.droiteArrivee.miseAJourPoint(point)
-            : this.droiteArrivee.miseAJourArrivee(point);
-
-        this.pointAffichage.point = point;
-    }
-
     public estEnContactAvec(autrePoint: Point): boolean {
-        const droiteEntreCentre: Vector3 = this.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ);
         const DEUX: number = 2;
 
-        return droiteEntreCentre.length() <= DEUX * RAYON_POINT;
+        return this.point.clone().sub(autrePoint).length() <= DEUX * RAYON_POINT;
     }
 
-    public ramenerDroiteArrivee(): void {
-        this.remove(this.droiteArrivee);
-        this.droiteArrivee = new DroiteAffichage(this.point, this.point);
-        this.add(this.droiteArrivee);
+    public bouclerAvec(intersection: IntersectionPiste): void {
+        if (this.peutBouclerAvec(intersection)) {
+            this.relier(intersection);
+        } else if (intersection.peutBouclerAvec(this)) {
+            intersection.relier(this);
+        }
+    }
+
+    private peutBouclerAvec(intersection: IntersectionPiste): boolean {
+        return this.estPointDuBout && intersection.estPremierPointPlace;
+    }
+
+    private relier(intersection: IntersectionPiste): void {
+        intersection.droiteArrivee = this.droiteDebut;
+        this.droiteDebut.arrivee = intersection.point;
+    }
+
+    public separer(intersection: IntersectionPiste): void {
+        if (this.pointeVers(intersection)) {
+            this.couperLienVers(intersection);
+        } else if (intersection.pointeVers(this)) {
+            intersection.couperLienVers(this);
+        }
+    }
+
+    private pointeVers(intersection: IntersectionPiste): boolean {
+        return this.droiteDebut.arrivee.equals(intersection.point);
+    }
+
+    private couperLienVers(intersection: IntersectionPiste): void {
+        intersection.ramenerDroiteArrivee();
+        this.ramenerDroiteDepart();
     }
 
     public ramenerDroiteDepart(): void {
         this.remove(this.droiteDebut);
-        this.droiteDebut = new DroiteAffichage(this.point, this.point);
+        this.droiteDebut = this.droiteAuPoint;
         this.add(this.droiteDebut);
     }
 
+    private ramenerDroiteArrivee(): void {
+        this.remove(this.droiteArrivee);
+        this.droiteArrivee = this.droiteAuPoint;
+        this.add(this.droiteArrivee);
+    }
+
     private get estPointDuBout(): boolean {
-        return this.droiteDebut.droite.end.clone().sub(this.point.vecteurPlanXZ).length() === 0;
+        return this.droiteDebut.arrivee.equals(this.point);
     }
 
     private get estPremierPointPlace(): boolean {
-        return this.droiteArrivee.droite.start.clone().sub(this.point.vecteurPlanXZ).length() === 0;
+        return this.droiteArrivee.depart.equals(this.point);
+    }
+
+    private get droiteAuPoint(): DroiteAffichage {
+        return new DroiteAffichage(this.point, this.point);
     }
 }

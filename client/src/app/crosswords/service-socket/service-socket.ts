@@ -3,8 +3,8 @@ import * as socketIo from "socket.io-client";
 import * as event from "../../../../../common/communication/evenementSocket";
 import { Observable } from "rxjs/Observable";
 import { Mot } from "../objetsTest/mot";
-// import { Mot } from "../objetsTest/mot";
-// import { Observer } from "rxjs/Observer";
+import { PaquetPartie } from "../objetsTest/paquetPartie";
+import { Router } from "@angular/router";
 
 const SERVER_URL: string = "http://localhost:3000/";
 @Injectable()
@@ -12,7 +12,7 @@ export class SocketService {
 
     private socketClient: SocketIOClient.Socket;
 
-    public constructor() {
+    public constructor(private router: Router) {
     }
 
     private connectionServeur(): void {
@@ -20,27 +20,20 @@ export class SocketService {
     }
 
     public rejoindrePartie(nomPartie: string, nomJoueur: string): void {
-        this.connectionServeur(); // surement a retirer
-        this.socketClient.on(event.CONNECTION, () => {
-            this.socketClient.emit(event.REJOINDRE, nomPartie, nomJoueur);
-        });
+        this.socketClient.emit(event.REJOINDRE, nomPartie, nomJoueur);
     }
 
     public creerPartie(nomPartie: string, difficultee: string, nomJoueur: string): void {
         this.connectionServeur();
         this.socketClient.on(event.CONNECTION, () => {
             this.socketClient.emit(event.CREATEUR, nomPartie, difficultee, nomJoueur);
-            // TODO: requete grille
-            // generer la grille
-            // quand la grille est faite
-            // this.socketClient.emit(event.ENVOYER_GRILLE, laGrille);
         });
 
-        this.socketClient.on("connect_error", () => {
-            // TODO: Afficher au client que la conneciton n'a pas marchee
+        this.socketClient.on(event.JOUEUR_QUITTE, () => {
+            alert("Problème de connection avec le serveur! \nRetour à la page d'acceuil.");
             this.socketClient.disconnect();
+            this.router.navigateByUrl("/");
         });
-        //
     }
 
     // pu utile
@@ -76,7 +69,6 @@ export class SocketService {
                 unObs.next();
             });
         });
-
     }
 
     public demandeDeGrille(): Observable<void> {
@@ -95,6 +87,16 @@ export class SocketService {
 
         return new Observable<Array<Array<string>>>((unObs) => {
             this.socketClient.on(event.ENVOYER_LISTE_PARTIES, (data: Array<Array<string>>) => unObs.next(data));
+        });
+    }
+
+    public commencerPartie(): void {
+        this.socketClient.emit(event.PAGE_CHARGEE);
+    }
+
+    public telechargerPaquetPartie(): Observable<PaquetPartie> {
+        return new Observable<PaquetPartie>((unObs) => {
+            this.socketClient.on(event.PAQUET_PARTIE, (paquet: PaquetPartie) => unObs.next(paquet));
         });
     }
 }

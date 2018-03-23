@@ -3,15 +3,16 @@ import { ServiceInteractionComponent } from "../service-interaction-component/se
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 
 @Component({
-  selector: "app-main-grille",
-  templateUrl: "./main-grille.component.html",
-  styleUrls: ["./main-grille.component.css"],
+  selector: "app-main-grille-multi",
+  templateUrl: "./main-grille-multi.component.html",
+  styleUrls: ["../main-grille-solo/main-grille.component.css"],
   providers: [ ServiceInteractionComponent, InfojoueurService ]
-
 })
-export class MainGrilleComponent implements OnInit {
+export class MainGrilleMultiComponent implements OnInit {
 
   public constructor() { }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {
+  }
+
 }

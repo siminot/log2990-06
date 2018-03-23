@@ -5,14 +5,14 @@ import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
 import { Injectable } from "@angular/core";
 import { ServiceHttp } from "../serviceHttp/http-request.service";
-// import { SocketService} from "../service-socket/service-socket";
+
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
 // Classe sans HttpReq: pourrait être réutilisée pour le service de socket..?
 
 @Injectable()
-export class RequeteDeGrilleAbs {
+export class ServiceInteractionComponent {
   protected _mots: Mot[];
   protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   protected listeMotsSujet: Subject<Mot[]> = new Subject<Mot[]>();
@@ -22,10 +22,10 @@ export class RequeteDeGrilleAbs {
   protected matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   protected motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
 
-  public constructor(private httpReq: ServiceHttp /*, private serviceSocket: SocketService*/) {
+  public constructor(private httpReq: ServiceHttp) {
     this.genererGrille();
   }
-  // Accesseurs
+  // 
 
   public get mots(): Mot[] {
     return this._mots;
@@ -46,7 +46,9 @@ export class RequeteDeGrilleAbs {
   }
 
   public souscrireServiceSocket(): void {
-    //
+    this.serviceEnvoieMots(this.mots);
+    this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
+    this.insererMotsDansGrille();
   }
 
   public souscrireRequeteGrille(): void {
@@ -83,6 +85,7 @@ export class RequeteDeGrilleAbs {
 
   // Services publics
   public serviceEnvoieMots(mots: Mot[]): void {
+    this._mots = mots;
     this.listeMotsSujet.next(mots);
   }
 
@@ -105,4 +108,5 @@ export class RequeteDeGrilleAbs {
   public serviceReceptionMotSelectionne(): Observable<Mot> {
     return this.motSelectionneObservable$;
   }
+
 }

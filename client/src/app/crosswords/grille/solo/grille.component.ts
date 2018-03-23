@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
+import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { EncadrementCase } from "../librairieGrille/encadrementCase";
 import { GrilleAbs } from "../grilleAbs";
@@ -10,10 +10,11 @@ import { GrilleAbs } from "../grilleAbs";
   styleUrls: ["./grille.component.css"]
 })
 
+
 export class GrilleComponent extends GrilleAbs implements OnInit {
 
-  public constructor(private listeMotsService: RequeteDeGrilleAbs,
-    _servicePointage: InfojoueurService) {
+  public constructor(private listeMotsService: ServiceInteractionComponent,
+                     _servicePointage: InfojoueurService) {
     super(_servicePointage);
     this.listeMotsService.souscrireRequeteGrille();
 
@@ -60,5 +61,10 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
       mot.cheat = !mot.cheat;
     }
     this.listeMotsService.serviceEnvoieMots(this.mots);
+    this.listeMotsService.souscrireServiceSocket();
   }
+
+  // private changementMotSelect(): void {
+
+  // }
 }

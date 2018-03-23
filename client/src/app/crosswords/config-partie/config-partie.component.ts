@@ -18,16 +18,22 @@ export class ConfigPartieComponent implements OnInit {
     private nomJoueur: string;
     private difficultee: string;
     private listePartie: Array<Array<string>>;
+    private estCreateur: boolean;
 
-    public constructor(private serviceHTTP: ServiceHttp, private serviceSocket: SocketService, private router: Router) {
-
-    }
+    public constructor(private serviceHTTP: ServiceHttp,
+                       private serviceSocket: SocketService,
+                       private router: Router) {}
 
     public ngOnInit(): void { }
 
     public apparaitreSection(laSection: string): void {
         document.getElementById(laSection).classList.remove("pasVisible");
         document.getElementById(laSection).classList.add("visible");
+        if (laSection === "inputNomPartie") {
+            document.getElementById("inp").focus();
+        } else if (laSection === "inputNomJoueur") {
+            document.getElementById("inj").focus();
+        }
     }
 
     public disparaitreSection(laSection: string): void {
@@ -42,10 +48,9 @@ export class ConfigPartieComponent implements OnInit {
         }
     }
 
-
     private commencerPartie(): void {
         this.serviceSocket.chargementComplete().subscribe(() => {
-            this.router.navigateByUrl("/CrosswordsGame");
+            this.router.navigateByUrl("CrosswordsGameMulti");
         });
     }
 
@@ -55,15 +60,14 @@ export class ConfigPartieComponent implements OnInit {
         this.demandeEtEnvoieGrille();
     }
 
-    public rejoindrePartie(nomPartie: string): void {
-        this.serviceSocket.rejoindrePartie(nomPartie, this.nomJoueur);
+    public rejoindrePartie(): void {
+        this.serviceSocket.rejoindrePartie(this.nomPartie, this.nomJoueur);
+        this.commencerPartie();
     }
 
     public demanderListePartie(): void {
         this.serviceSocket.recevoirListePartie().subscribe( (data: Array<Array<string>>) => {
             this.listePartie = data;
-            console.log(data);
-            console.log("salut");
         });
     }
 
@@ -71,10 +75,14 @@ export class ConfigPartieComponent implements OnInit {
         if (touche.key === "Enter") {
             // Encore une fois ici, tslint dit que value existe pas.. pourtant
             // c'est une propriété angular
-            this.nomPartie = touche.target.value;
+            this.modifierNomPartie(touche.target.value);
             this.apparaitreSection(section);
             this.disparaitreSection("inputNomPartie");
         }
+    }
+
+    public modifierNomPartie(nouveauNom: string): void {
+        this.nomPartie = nouveauNom;
     }
 
     public entrerNomJoueur(touche: KeyboardEvent, section: string): void {
@@ -82,6 +90,9 @@ export class ConfigPartieComponent implements OnInit {
             this.nomJoueur = touche.target.value;
             this.apparaitreSection(section);
             this.disparaitreSection("inputNomJoueur");
+            if (!this.estCreateur) {
+                this.rejoindrePartie();
+            }
         }
     }
 
@@ -92,6 +103,4 @@ export class ConfigPartieComponent implements OnInit {
             });
         });
     }
-
-
 }

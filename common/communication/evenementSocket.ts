@@ -5,14 +5,22 @@ export const CREATEUR = "creerPartie";              // 2
 export const DEMANDER_GRILLE = "demanderGrille";    // 3
 export const ENVOYER_DIFF = "envoyerDiff";
 export const ENVOYER_GRILLE = "envoyerGrille";      // 4
-export const COMMENCER_PARTIE = "commencerPartie";
 
+export const COMMENCER_PARTIE = "commencerPartie";
+export const PAGE_CHARGEE = "pageChargee";
+
+export const PAQUET_PARTIE = "paquetPartie";
 export const NOM_SALLE = "nomDeLasalle";
 export const NOM_EXISTANT = "nomExistant";
 export const NOM_NON_EXISTANT = "nomNonExistant";
 export const ROOM_CREEE = "roomCreee";
 
 export const CHANGER_NOM_JOUEUR = "changerNomJoueur";
+export const JOUEUR_QUITTE = "joueurQuitte";
 
 export const REJOINDRE = "rejoindrePartie";         // 2
 export const ENVOYER_LISTE_PARTIES = "envoyerListeParties";
+
+export const MOT_SELECTIONNE = "motSelecitonne";
+export const MOT_SEL_J2 = "motSelJ2";
+export const TENTATIVE = "tentative";

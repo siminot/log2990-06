@@ -29,7 +29,6 @@ export class SocketServer {
     }
 
     private connection(unSocket: SocketIO.Socket): void {
-        console.log("client connecte: " + unSocket.id);
         unSocket.on(event.CREATEUR, (nomRoom: string, difficultee: string, nomJoueur: string) => {
             this.creerUnePartie(nomRoom, difficultee, nomJoueur, unSocket);
             this.envoyerListePartie();
@@ -50,6 +49,7 @@ export class SocketServer {
         for (const partie of this.parties) {
             if (partie.obtenirNomPartie === nomRoom) {
                 partie.ajouterJoueur(unSocket);
+                partie.ajouterNomJoueur(nomJoueur);
             }
         }
     }

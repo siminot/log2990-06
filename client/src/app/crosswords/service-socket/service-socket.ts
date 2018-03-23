@@ -5,8 +5,6 @@ import { Observable } from "rxjs/Observable";
 import { Mot } from "../objetsTest/mot";
 import { PaquetPartie } from "../objetsTest/paquetPartie";
 import { Router } from "@angular/router";
-// import { Mot } from "../objetsTest/mot";
-// import { Observer } from "rxjs/Observer";
 
 const SERVER_URL: string = "http://localhost:3000/";
 @Injectable()
@@ -96,11 +94,9 @@ export class SocketService {
         this.socketClient.emit(event.PAGE_CHARGEE);
     }
 
-    public telechargerGrille(): Observable<PaquetPartie> {
+    public telechargerPaquetPartie(): Observable<PaquetPartie> {
         return new Observable<PaquetPartie>((unObs) => {
             this.socketClient.on(event.PAQUET_PARTIE, (paquet: PaquetPartie) => unObs.next(paquet));
         });
     }
-
-
 }

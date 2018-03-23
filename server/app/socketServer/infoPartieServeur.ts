@@ -47,6 +47,10 @@ export class InfoPartieServeur {
         }
     }
 
+    public ajouterNomJoueur(nouveauNom: string): void {
+        this.nomJoueurs.push(nouveauNom);
+    }
+
     private verifSiDeuxJoueurs(): void {
         if (this.joueurs.length === NB_JOUEUR_MAX) {
             this.joueursAttenteGrille();
@@ -74,6 +78,7 @@ export class InfoPartieServeur {
         paquet.grilleDeJeu = this.grilleDeJeu;
         paquet.nomJoeurs = this.nomJoueurs;
         paquet.nomPartie = this.nomPartie;
+        paquet.difficultee = this.difficultee;
 
         return paquet;
     }

@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
+import { SocketService } from "../../service-socket/service-socket";
+import { PaquetPartie } from "../../objetsTest/paquetPartie";
 
 @Component({
   selector: "app-info-partie-multijoueur",
@@ -16,13 +18,13 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
   private _nomJoueur2: string;
 
   public constructor(_servicePointage: InfojoueurService,
-                     /*protected _difficulte: string,*/
-                     /*private serviceSocket: type a determiner*/) {
+                     private socketClient: SocketService) {
     super(_servicePointage);
     this._motsDecouvertsJoueur1 = 0;
     this._motsDecouvertsJoueur2 = 0;
     this._nomJoueur1 = "Joueur 1";
     this._nomJoueur2 = "Joueur 2";
+    this.chargerNomsJoueurs();
    }
 
   protected souscrireListeDeMots(): void {
@@ -39,5 +41,13 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
         this._nbMotsDecouverts = pointage;
     }); */
     return;
+  }
+
+  private chargerNomsJoueurs(): void {
+    this.socketClient.telechargerPaquetPartie().subscribe( (paquet: PaquetPartie) => {
+      this._nomJoueur1 = paquet.nomJoeurs[0];
+      this._nomJoueur2 = paquet.nomJoeurs[1];
+      this._difficulte = paquet.difficultee;
+    });
   }
 }

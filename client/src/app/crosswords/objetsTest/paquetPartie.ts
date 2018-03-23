@@ -6,5 +6,6 @@ export class PaquetPartie implements IPaquetPartie {
     public nomPartie: string;
     public nomJoeurs: Array<string>;
     public grilleDeJeu: Mot[];
+    public difficultee: string;
 
 }

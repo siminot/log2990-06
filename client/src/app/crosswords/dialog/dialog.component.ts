@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ServiceHttp } from "../serviceHttp/http-request.service";
+// import { ServiceHttp } from "../serviceHttp/http-request.service";
 import { SocketService } from "../service-socket/service-socket";
 import { Router } from "@angular/router";
 // import { MAT_DIALOG_DATA } from "@angular/material";
@@ -9,14 +9,12 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-dialog",
   templateUrl: "./dialog.component.html",
-  styleUrls: ["./dialog.component.css"],
+  styleUrls: ["../config-partie/config-partie.component.css"],
 })
 
 export class DialogComponent implements OnInit {
 
-  public constructor(private serviceHTTP: ServiceHttp,
-                     private serviceSocket: SocketService,
-                     /* private router: Router */) {}
+  public constructor() {}
 
   public ngOnInit(): void {
   }

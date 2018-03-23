@@ -41,8 +41,7 @@ export class PisteEdition extends PisteAbstraite {
         const DEUX: number = 2;
 
         return this.intersections.length > DEUX &&
-               this.premiereIntersection.estEnContactAvec(point) &&
-               this.intersectionSelectionnee !== this.premiereIntersection;
+               this.premiereIntersection.estEnContactAvec(point);
     }
 
     private bouclerCircuit(): void {
@@ -94,7 +93,9 @@ export class PisteEdition extends PisteAbstraite {
     }
 
     private intersectionSelectionneePeutBoucler(point: Point): boolean {
-        return this.intersectionSelectionnee === this.derniereIntersection && this.doitFermerCircuit(point);
+        return this.intersectionSelectionnee === this.derniereIntersection &&
+               this.doitFermerCircuit(point) &&
+               !this.estBoucle;
     }
 
     private fusionnerPoint(point: Point): void {

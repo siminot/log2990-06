@@ -3,7 +3,7 @@ import { Mot } from "../../objetsTest/mot";
 export class GrilleFocus {
 
   public constructor(private document: Document,
-    private positionCourante: number) { }
+                     private positionCourante: number) { }
 
   public focusSurBonneLettre(motSelectionne: Mot): void {
     let elemTmp: HTMLInputElement, idTmp: string;

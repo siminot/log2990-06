@@ -5,8 +5,9 @@ import { LettreGrille } from "../objetsTest/lettreGrille";
 import * as CONST from "../constantes";
 import { InfojoueurService } from "../service-info-joueur/infojoueur.service";
 import { MiseEnEvidence } from "./librairieGrille/miseEnEvidence";
+import { OpaciteCase } from "./librairieGrille/opaciteCase";
 import { GrilleFocus } from "./librairieGrille/grilleFocus";
-import { HostListener } from '@angular/core';
+import { HostListener } from "@angular/core";
 import { EncadrementCase } from "./librairieGrille/encadrementCase";
 const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
 
@@ -89,7 +90,7 @@ export abstract class GrilleAbs implements OnDestroy {
     const y: number = +cordinate[1];
     const motSousJacent: Mot = this.findWordFromXY(x, y);
     this.motSelectionne = motSousJacent;
-
+    OpaciteCase.decouvrirCases(motSousJacent,this.matriceDesMotsSurGrille);
     this.envoieMotSelectionne();
   }
 

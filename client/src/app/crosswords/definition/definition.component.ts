@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
+import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks"; 
 import { Subscription } from "rxjs/Subscription";
 import { ServiceInteractionComponent } from "../service-interaction-component/service-interaction-component";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
+import { OpaciteCase} from "../grille/librairieGrille/opaciteCase";
 
 @Component({
   selector: "app-definition",
@@ -86,29 +87,8 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   }
 
   private decouvrirCases(mot: Mot): void {
-    this.cacherCases();
-    for (let indice: number = 0; indice < mot.longueur; indice++) {
-      mot.estVertical
-        ? this.obtenirLettreGrilleMotVertical(mot, indice).caseDecouverte = true
-        : this.obtenirLettreGrilleMotHorizontal(mot, indice).caseDecouverte = true;
-    }
+    OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
     this.envoieMatrice();
-  }
-
-  private cacherCases(): void {
-    for (const ligne of this.matriceDesMotsSurGrille) {
-      for (const lettre of ligne) {
-        lettre.caseDecouverte = false;
-      }
-    }
-  }
-
-  private obtenirLettreGrilleMotVertical(mot: Mot, indice: number): LettreGrille {
-    return this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY];
-  }
-
-  private obtenirLettreGrilleMotHorizontal(mot: Mot, indice: number): LettreGrille {
-    return this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY];
   }
 
   private envoieMatrice(): void {

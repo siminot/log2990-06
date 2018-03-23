@@ -48,7 +48,7 @@ export class ServiceInteractionComponent {
   public souscrireServiceSocket(): void {
     this.serviceEnvoieMots(this.mots);
     this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
-    this.insererMotsDansGrille();
+    // this.insererMotsDansGrille();
   }
 
   public souscrireRequeteGrille(): void {

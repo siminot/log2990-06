@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 // import { ServiceHttp } from "../serviceHttp/http-request.service";
-import { SocketService } from "../service-socket/service-socket";
+import { SocketService } from "../../service-socket/service-socket";
 import { Router } from "@angular/router";
 // import { MAT_DIALOG_DATA } from "@angular/material";
 // import { InfoJoueurSoloComponent } from "../info-partie/info-joueur-solo/info-joueur-solo.component"
@@ -8,11 +8,11 @@ import { Router } from "@angular/router";
 
 @Component({
   selector: "app-dialog",
-  templateUrl: "./dialog.component.html",
-  styleUrls: ["../config-partie/config-partie.component.css"],
+  templateUrl: "./fin-partie-solo.component.html",
+  styleUrls: ["../../config-partie/config-partie.component.css"],
 })
 
-export class DialogComponent implements OnInit {
+export class FinPartieSoloComponent implements OnInit {
 
   public constructor() {}
 

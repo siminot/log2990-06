@@ -34,8 +34,8 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
 import { SocketService } from "./crosswords/service-socket/service-socket";
 import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/grilleMultijoueur.component";
 import { MainGrilleMultiComponent } from "./crosswords/main-grille-multi/main-grille-multi.component";
- 
-import { DialogComponent } from "./crosswords/dialog/dialog.component";
+
+import { FinPartieSoloComponent } from "./crosswords/fin-partie/solo/fin-partie-solo.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
@@ -53,7 +53,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         InfoPartieMultijoueurComponent,
         GrilleMultijoueurComponent,
         MainGrilleMultiComponent,
-        DialogComponent
+        FinPartieSoloComponent
     ],
     imports: [
         BrowserModule,
@@ -90,8 +90,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         DefinitionVComponent,
         DefinitionHComponent,
         GrilleMultijoueurComponent,
-        DialogComponent
+        FinPartieSoloComponent
     ],
-    entryComponents: [ DialogComponent ]
+    // entryComponents: [ DialogComponent ]
 })
 export class AppModule { }

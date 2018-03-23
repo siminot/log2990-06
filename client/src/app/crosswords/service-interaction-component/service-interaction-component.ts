@@ -6,7 +6,6 @@ import { LettreGrille } from "../objetsTest/lettreGrille";
 import { Injectable } from "@angular/core";
 import { ServiceHttp } from "../serviceHttp/http-request.service";
 
-
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 
 // Classe sans HttpReq: pourrait être réutilisée pour le service de socket..?
@@ -25,7 +24,7 @@ export class ServiceInteractionComponent {
   public constructor(private httpReq: ServiceHttp) {
     this.genererGrille();
   }
-  // 
+  //
 
   public get mots(): Mot[] {
     return this._mots;

@@ -7,9 +7,8 @@ import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
-
 import * as CONST from "../../constantes";
-import { DialogComponent } from "../../dialog/dialog.component";
+import { FinPartieSoloComponent } from "../../fin-partie/solo/fin-partie-solo.component";
 
 describe("InfoJoueur1Component", () => {
   let component: InfoJoueurSoloComponent;

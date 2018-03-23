@@ -22,9 +22,9 @@ describe("Point", () => {
         });
 
         it("L'egalite est detectee entre 2 points", () => {
-            expect(POINT.estEgalA(POINT_INVERSE)).not.toBeTruthy();
-            expect(POINT.estEgalA(new Point(X, Y))).toBeTruthy();
-            expect(POINT.estEgalA(POINT)).toBeTruthy();
+            expect(POINT.equals(POINT_INVERSE)).not.toBeTruthy();
+            expect(POINT.equals(new Point(X, Y))).toBeTruthy();
+            expect(POINT.equals(POINT)).toBeTruthy();
         });
     });
 });

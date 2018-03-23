@@ -3,6 +3,7 @@ import { ServiceHttp } from "../serviceHttp/http-request.service";
 import { SocketService } from "../service-socket/service-socket";
 import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
 import { Router } from "@angular/router";
+import { listeMotsLongue } from "./../objetsTest/objetsTest";
 
 export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 
@@ -98,9 +99,10 @@ export class ConfigPartieComponent implements OnInit {
 
     private demandeEtEnvoieGrille(): void {
         this.serviceSocket.demandeDeGrille().subscribe(() => {
-            this.serviceHTTP.obtenirMots().subscribe( (x) => {
-                this.serviceSocket.envoyerGrille(x);
-            });
+            // this.serviceHTTP.obtenirMots().subscribe( (x) => {
+            //     this.serviceSocket.envoyerGrille(x);
+            // });
+            this.serviceSocket.envoyerGrille(listeMotsLongue);
         });
     }
 }

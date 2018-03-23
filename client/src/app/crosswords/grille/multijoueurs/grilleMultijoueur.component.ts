@@ -21,18 +21,17 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   }
 
-
   public ngOnInit(): void {
     this.mots = this.serviceInteraction.mots;
-    this.matriceDesMotsSurGrille = this.serviceInteraction.matrice;
+    // this.matriceDesMotsSurGrille = this.serviceInteraction.matrice;
 
     this.subscriptionMots = this.serviceInteraction.serviceReceptionMots().subscribe((mots) => {
       this.mots = mots;
       this.remplirPositionLettres();
     });
 
-    this.subscriptionMatrice = this.serviceInteraction.serviceReceptionMatriceLettres()
-      .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+    // this.subscriptionMatrice = this.serviceInteraction.serviceReceptionMatriceLettres()
+    //   .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
 
     this.subscriptionMotSelec = this.serviceInteraction.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {

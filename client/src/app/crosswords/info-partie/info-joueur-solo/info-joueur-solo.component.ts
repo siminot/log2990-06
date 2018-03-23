@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Injectable, /* Inject */ } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import * as CONST from "../../constantes";
 import { Subscription } from "rxjs/Subscription";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { DialogComponent } from "../../dialog/dialog.component";
+import { Router } from "@angular/router";
+// import { MatDialog, MatDialogRef, /* MAT_DIALOG_DATA */ } from "@angular/material/dialog";
+// import { DialogComponent } from "../../dialog/dialog.component";
 
 @Component({
   selector: "app-info-joueur-solo",
@@ -15,6 +16,7 @@ import { DialogComponent } from "../../dialog/dialog.component";
   // providers: [MAT_DIALOG_DATA]
 })
 
+@Injectable()
 export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, OnDestroy {
 
   private _nomJoueur: string;
@@ -22,13 +24,12 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   private _barreProgression: HTMLElement;
   private _subscriptionNbMotsDecouv: Subscription;
 
-  private dialogRef: MatDialogRef<DialogComponent>;
+  // private dialogRef: MatDialogRef<DialogComponent>;
 
   public constructor(_servicePointage: InfojoueurService,
                      private _requeteGrille: ServiceInteractionComponent,
                      private httpReq: ServiceHttp,
-                     // public dialogRef: MatDialogRef<DialogComponent>,
-                     private dialog: MatDialog) {
+                     private router: Router) {
     super(_servicePointage);
     this._nomJoueur = "Nom du joueur";
     this._nbMotsDecouverts = 0;
@@ -40,11 +41,11 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
     this._barreProgression = document.getElementById("progress-bar");
   }
 
-  public openDialog(): void {
-    this.dialogRef = this.dialog.open(DialogComponent, {
+/*   public openDialog(dialog: MatDialog): void {
+    this.dialogRef = dialog.open(DialogComponent, {
       data: {difficulte: this._difficulte}
     });
-  }
+  } */
 
   protected souscrireListeDeMots(): void {
     this._subscriptionListeMots = this._requeteGrille.serviceReceptionMots()
@@ -78,7 +79,8 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
 
   public finPartie(): void {
     this._subscriptionTimer.unsubscribe();
-    this.openDialog();
+    this.router.navigateByUrl("FinPartie");
+    // this.openDialog();
   }
 
   public ngOnDestroy(): void {

@@ -1,11 +1,37 @@
-div {
+#editeurPiste {
     width: 100%;
     height: 800px;
+    top: 0;
 }
 
-ul, li {
+/* ul, li {
     position: relative;
     margin: 0;
     top: 40px;
     color: orange;
+} */
+
+#informations {
+    position: relative;
+    height:0;
+    width:15%;
+    margin: 0;
+    top: 2%;
+    left: 0;
+    color: orange;
+    
+}
+
+#containerInfos {
+    background-color: rgba(0, 0, 0, 0.342);
+    border-radius: 10px;
+    height:100px;
+    width:100px;
+}
+
+.infoTexte {
+    font-family: 'Press Start 2P', cursive;
+    font-size:12px;
+    margin:5px;
+    /* margin-left:5px; */
 }

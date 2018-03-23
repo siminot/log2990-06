@@ -1,7 +1,7 @@
 import { Group, Mesh, CircleGeometry, PlaneGeometry, Vector3, Texture,
          RepeatWrapping, MeshPhongMaterial, TextureLoader, BackSide } from "three";
-import { Droite } from "./Droite";
-import { Point } from "./Point";
+import { Droite } from "../../elementsGeometrie/droite";
+import { Point } from "../../elementsGeometrie/point";
 import { PI_OVER_2 } from "../../constants";
 
 export const LARGEUR_PISTE: number = 10;
@@ -13,7 +13,7 @@ const CHEMIN: string = "./../../../../assets/skybox/textures/";
 const NOM_TEXTURE: string = "roche1";
 const FORMAT: string = ".jpg";
 const URL_TEXTURE: string = CHEMIN + NOM_TEXTURE + FORMAT;
-export const TAILLE_REPETITION: number = 1;
+const TAILLE_REPETITION: number = 8;
 
 export class SegmentPiste extends Group {
 
@@ -24,7 +24,7 @@ export class SegmentPiste extends Group {
         this.droite = new Droite(point1, point2);
         this.position.set(point1.x, 0, point1.y);
         this.ajouterCercle();
-        this.ajouterSegment();
+        this.add(new Mesh(this.geometrieSegment, this.obtenirMaterielSelonDimension(this.longueur)));
     }
 
     private ajouterCercle(): void {
@@ -32,26 +32,16 @@ export class SegmentPiste extends Group {
         texture.repeat.set(LARGEUR_PISTE, LARGEUR_PISTE);
 
         const DEUX: number = 2;
-        const cercle: Mesh = new Mesh(new CircleGeometry(LARGEUR_PISTE / DEUX, NOMBRE_SEGMENTS), this.materielCercle);
+        const cercle: Mesh = new Mesh(new CircleGeometry(LARGEUR_PISTE / DEUX, NOMBRE_SEGMENTS),
+                                      this.obtenirMaterielSelonDimension(LARGEUR_PISTE));
         cercle.rotateX(PI_OVER_2);
         cercle.receiveShadow = true;
         this.add(cercle);
     }
 
-    private ajouterSegment(): void {
-        this.add(new Mesh(this.geometrieSegment, this.materielSegment));
-    }
-
-    private get materielSegment(): MeshPhongMaterial {
+    private obtenirMaterielSelonDimension(dimension: number): MeshPhongMaterial {
         const texture: Texture = this.texture;
-        texture.repeat.set(LARGEUR_PISTE, this.longueur);
-
-        return new MeshPhongMaterial( {side: BackSide, map: texture, depthWrite: false});
-    }
-
-    private get materielCercle(): MeshPhongMaterial {
-        const texture: Texture = this.texture;
-        texture.repeat.set(LARGEUR_PISTE, LARGEUR_PISTE);
+        texture.repeat.set(LARGEUR_PISTE / TAILLE_REPETITION, dimension / TAILLE_REPETITION);
 
         return new MeshPhongMaterial( {side: BackSide, map: texture, depthWrite: false});
     }
@@ -72,18 +62,14 @@ export class SegmentPiste extends Group {
         return geometrie;
     }
 
-    private get centre(): Vector3 {
-        return this.droite.getCenter();
-    }
-
-    private get deplacementSegment(): Vector3 {
-        return this.centre.sub(this.droite.start);
-    }
-
-    private get angle(): number {
+    public get angle(): number {
         return this.droite.direction.cross(DROITE_REFERENCE.direction).y < 0
             ? this.droite.angleAvecDroite(DROITE_REFERENCE)
             : Math.PI - this.droite.angleAvecDroite(DROITE_REFERENCE);
+    }
+
+    private get deplacementSegment(): Vector3 {
+        return this.droite.getCenter().sub(this.droite.start);
     }
 
     private get longueur(): number {

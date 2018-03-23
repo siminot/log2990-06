@@ -18,9 +18,9 @@ import { GestionnaireEcran } from "./carApp/ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "./carApp/souris/gestionnaireSouris";
 
 import { ServiceDeRenduPistes } from "./carApp/serviceDeRendu/serviceDeRenduPistes";
-import { GestionnaireScenePiste } from "./carApp/piste-component/gestionnaireScenePiste";
-import { GestionnaireCameraPiste } from "./carApp/piste-component/gestionnaireCameraPiste";
-import { GestionnairePiste } from "./carApp/piste-component/GestionnairePiste";
+import { GestionnaireScenePiste } from "./carApp/scene/GestionnaireScenePiste";
+import { GestionnaireCameraPiste } from "./carApp/camera/GestionnaireCameraPiste";
+import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
 
 import { AppRoutingModule } from ".//app-routing.module";
 import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
@@ -66,7 +66,7 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
         GestionnaireClavier,
         GestionnaireEcran,
         GestionnaireSouris,
-        GestionnairePiste,
+        GestionnaireEditionPiste,
         RequeteDeGrilleService,
         HttpeReqService,
         InfojoueurService

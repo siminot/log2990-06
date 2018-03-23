@@ -54,7 +54,7 @@ export class IntersectionPiste extends Group implements IPoint {
     public estEnContactAvec(autrePoint: Point): boolean {
         const DEUX: number = 2;
 
-        return this.point.vecteurPlanXZ.sub(autrePoint.vecteurPlanXZ).length() <= DEUX * RAYON_POINT;
+        return this.point.clone().sub(autrePoint).length() <= DEUX * RAYON_POINT;
     }
 
     public bouclerAvec(intersection: IntersectionPiste): void {
@@ -83,7 +83,7 @@ export class IntersectionPiste extends Group implements IPoint {
     }
 
     private pointeVers(intersection: IntersectionPiste): boolean {
-        return this.droiteDebut.droite.end.equals(intersection.point.vecteurPlanXZ);
+        return this.droiteDebut.arrivee.equals(intersection.point);
     }
 
     private couperLienVers(intersection: IntersectionPiste): void {
@@ -104,7 +104,7 @@ export class IntersectionPiste extends Group implements IPoint {
     }
 
     private get estPointDuBout(): boolean {
-        return this.droiteDebut.droite.end.clone().sub(this.point.vecteurPlanXZ).length() === 0;
+        return this.droiteDebut.arrivee.clone().sub(this.point).length() === 0;
     }
 
     private get estPremierPointPlace(): boolean {

@@ -12,13 +12,9 @@ describe("Point", () => {
             expect(POINT.x).toEqual(X);
             expect(POINT.y).toEqual(Y);
         });
+    });
 
-        it("le vecteur XY est correct", () => {
-            expect(POINT.vecteurPlanXZ.x).toEqual(X);
-            expect(POINT.vecteurPlanXZ.y).toEqual(0);
-            expect(POINT.vecteurPlanXZ.z).toEqual(Y);
-        });
-
+    describe("Methodes: ", () => {
         it("le vecteur XY est correct", () => {
             expect(POINT.vecteurPlanXZ.x).toEqual(X);
             expect(POINT.vecteurPlanXZ.y).toEqual(0);

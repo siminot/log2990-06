@@ -5,6 +5,11 @@ import { EncadrementCase } from "../librairieGrille/encadrementCase";
 import { GrilleAbs } from "../grilleAbs";
 import { SocketService } from "../../service-socket/service-socket";
 import { PaquetPartie } from "../../objetsTest/paquetPartie";
+import { Mot } from "../../objetsTest/mot";
+import { LettreGrille } from "../../objetsTest/lettreGrille";
+import { TAILLE_TABLEAU } from "../../constantes";
+
+const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 @Component({
   selector: "app-grille-multi",
   templateUrl: "../solo/grille.component.html",
@@ -18,6 +23,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
                      private serviceInteraction: ServiceInteractionComponent) {
     super(_servicePointage/*, serviceSocket*/);
     this.serviceSocket.commencerPartie();
+    this.genererGrille();
 
   }
 
@@ -49,6 +55,16 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.chargerGrille();
   }
 
+  private genererGrille(): void {
+    this.matriceDesMotsSurGrille = new Array<Array<LettreGrille>>();
+    for (let i: number = 0; i < TAILLE_TABLEAU; i++) {
+      this.matriceDesMotsSurGrille.push(new Array<LettreGrille>(TAILLE_TABLEAU));
+      for (let j: number = 0; j < TAILLE_TABLEAU; j++) {
+        this.matriceDesMotsSurGrille[i][j] = CASE_NOIR;
+      }
+    }
+  }
+
   protected envoieMotSelectionne(): void {
     this.serviceInteraction.serviceEnvoieMotSelectionne(this.motSelectionne);
   }
@@ -66,12 +82,36 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   }
 
+  private obtenirLettre(objMot: Mot, indice: number): LettreGrille {
+    return {
+      caseDecouverte: false,
+      lettre: objMot.mot[indice],
+      lettreDecouverte: false
+    };
+  }
+
+  private assignerLettre(objMot: Mot, indice: number): void {
+    objMot.estVertical
+      ? this.matriceDesMotsSurGrille[objMot.premierX][indice + objMot.premierY] = this.obtenirLettre(objMot, indice)
+      : this.matriceDesMotsSurGrille[indice + objMot.premierX][objMot.premierY] = this.obtenirLettre(objMot, indice);
+  }
+
+  public insererMotsDansGrille(): void {
+    for (const objMot of this.mots) {
+      for (let indice: number = 0; indice < objMot.longueur; indice++) {
+        this.assignerLettre(objMot, indice);
+      }
+    }
+  }
+
   private chargerGrille(): void {
     this.serviceSocket.telechargerPaquetPartie().subscribe((paquet: PaquetPartie) => {
       this.mots = paquet.grilleDeJeu;
       this.serviceInteraction.serviceEnvoieMots(this.mots);
       this.serviceInteraction.souscrireServiceSocket();
-      this.matriceDesMotsSurGrille = this.serviceInteraction.matrice;
+      // this.matriceDesMotsSurGrille = this.serviceInteraction.matrice;
+      this.insererMotsDansGrille();
+      // this.serviceInteraction.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
     });
   }
 }

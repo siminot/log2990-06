@@ -83,7 +83,7 @@ export class PisteEdition extends PisteAbstraite {
 
     public miseAJourElementSelectionne(point: Point): void {
         if (this.intersectionSelectionnee !== null) {
-            if (this.intersectionSelectionnerPeutBoucler(point)) {
+            if (this.intersectionSelectionneePeutBoucler(point)) {
                 this.fusionnerPoint(point);
                 this.verifierContraintesExtremites();
             } else {
@@ -93,7 +93,7 @@ export class PisteEdition extends PisteAbstraite {
         }
     }
 
-    private intersectionSelectionnerPeutBoucler(point: Point): boolean {
+    private intersectionSelectionneePeutBoucler(point: Point): boolean {
         return this.intersectionSelectionnee === this.derniereIntersection && this.doitFermerCircuit(point);
     }
 

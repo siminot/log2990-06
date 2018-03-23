@@ -18,12 +18,13 @@ export class PisteJeu extends PisteAbstraite {
     }
 
     public importerPiste(points: Point[]): void {
-        for (const point of points) {
-            this.ajouterPoint(point);
+        if (this.intersections.length === 0) {
+            for (const point of points) {
+                this.ajouterPoint(point);
+            }
+            this.bouclerPiste();
+            this.add(new LigneDeDepart(this.zoneDeDepart, this.premierSegment.angle));
         }
-
-        this.bouclerPiste();
-        this.add(new LigneDeDepart(this.zoneDeDepart, this.premierSegment.angle));
     }
 
     public ajouterPoint(point: Point): void {
@@ -40,11 +41,11 @@ export class PisteJeu extends PisteAbstraite {
         }
     }
 
-    public bouclerPiste(): void {
+    private bouclerPiste(): void {
         this.add(new SegmentPiste(this.intersections[this.intersections.length - 1].point, this.intersections[0].point));
     }
 
-    public get zoneDeDepart(): Vector3 {
+    private get zoneDeDepart(): Vector3 {
         const DEUX: number = 2;
 
         return this.intersections.length >= DEUX

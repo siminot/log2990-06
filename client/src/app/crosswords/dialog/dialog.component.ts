@@ -1,5 +1,6 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA } from "@angular/material";
+import { Component, OnInit } from "@angular/core";
+// import { MAT_DIALOG_DATA } from "@angular/material";
+// import { InfoJoueurSoloComponent } from "../info-partie/info-joueur-solo/info-joueur-solo.component"
 // import { REQUETE_INIT } from "../config-partie/config-partie.component";
 
 @Component({
@@ -10,13 +11,13 @@ import { MAT_DIALOG_DATA } from "@angular/material";
 
 export class DialogComponent implements OnInit {
 
-  public constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  public constructor() {}
 
   public ngOnInit(): void {
   }
 
-  public rejouer(difficulte: string): void {
-    console.log("nouvelle partie", difficulte);
+  public rejouer(): void {
+    console.log("nouvelle partie");
   }
 
 }

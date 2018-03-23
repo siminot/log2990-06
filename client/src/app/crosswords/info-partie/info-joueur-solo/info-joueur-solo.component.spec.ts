@@ -2,23 +2,26 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { InfoJoueurSoloComponent } from "./info-joueur-solo.component";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
-import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-grilleAbs";
+import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
+
 import * as CONST from "../../constantes";
+import { DialogComponent } from "../../dialog/dialog.component";
 
 describe("InfoJoueur1Component", () => {
   let component: InfoJoueurSoloComponent;
   let fixture: ComponentFixture<InfoJoueurSoloComponent>;
-  // let dialog: MatDialog;
+  const data: string = "";
+  // let dialog: DialogComponent = new DialogComponent(data);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ InfojoueurService, RequeteDeGrilleAbs, ServiceHttp, MatDialog, {
-        provide: MatDialogRef, useValue: {} }, /* { provide: MAT_DIALOG_DATA, useValue: {} } */ ],
+      providers: [ InfojoueurService, ServiceInteractionComponent, ServiceHttp, {
+        provide: MatDialogRef, useValue: {} } ],
       declarations: [ InfoJoueurSoloComponent ]
     })
     .compileComponents()

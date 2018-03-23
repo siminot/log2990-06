@@ -6,10 +6,17 @@ import * as assert from "assert";
 // tslint:disable: no-magic-numbers
 describe("test de Droite: ", () => {
 
-    const droite: Droite = new Droite(new Point(6, 0), new Point(0, 5));
+    const POINT1: Point = new Point(6, 0);
+    const POINT2: Point = new Point(0, 5);
+    const droite: Droite = new Droite(POINT1, POINT2);
     describe("Constructeur: ", () => {
         it("le constructeur doit fonctionner", () => {
             expect(droite).toBeTruthy();
+        });
+
+        it("les accesseurs des points fonctionnent", () => {
+            expect(droite.depart.equals(POINT1)).toBeTruthy();
+            expect(droite.arrivee.equals(POINT2)).toBeTruthy();
         });
     });
     describe("plusPetitX: ", () => {

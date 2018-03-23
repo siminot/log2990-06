@@ -26,6 +26,13 @@ describe("PointAffichage", () => {
                 : expect(false).toBeTruthy();
         });
 
+        it("les accesseurs des points fonctionnent", () => {
+            expect(droiteAffichage.depart.equals(POINT)).toBeTruthy();
+            expect(droiteAffichage.arrivee.equals(POINT_INVERSE)).toBeTruthy();
+        });
+    });
+
+    describe("Couleur de la droite: ", () => {
         it("la droite est de la bonne couleur quand elle respecte les contraintes", () => {
             droiteAffichage.respecteContraintes();
 
@@ -41,7 +48,9 @@ describe("PointAffichage", () => {
             ? expect(droiteAffichage.material.color.getHex()).toEqual(COULEUR_ERREUR)
             : expect(false).toBeTruthy();
         });
+    });
 
+    describe("Modification de la droite: ", () => {
         it("la modification du point de depart se fait", () => {
             expect(droiteAffichage.droite.start).not.toEqual(NOUVEAU_POINT.vecteurPlanXZ);
             droiteAffichage.depart = NOUVEAU_POINT;

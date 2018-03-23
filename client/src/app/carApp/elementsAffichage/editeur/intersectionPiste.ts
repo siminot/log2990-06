@@ -108,7 +108,7 @@ export class IntersectionPiste extends Group implements IPoint {
     }
 
     private get estPremierPointPlace(): boolean {
-        return this.droiteArrivee.droite.start.clone().sub(this.point.vecteurPlanXZ).length() === 0;
+        return this.droiteArrivee.depart.clone().sub(this.point).length() === 0;
     }
 
     private get droiteAuPoint(): DroiteAffichage {

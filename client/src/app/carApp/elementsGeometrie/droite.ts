@@ -1,7 +1,8 @@
 import { Point } from "./point";
 import { Line3, Vector3 } from "three";
+import { IDroite } from "./IDroite";
 
-export class Droite extends Line3 {
+export class Droite extends Line3 implements IDroite {
 
     public constructor(depart: Point, arrivee: Point) {
         super(depart.vecteurPlanXZ, arrivee.vecteurPlanXZ);
@@ -13,8 +14,16 @@ export class Droite extends Line3 {
             : null;
     }
 
+    public get depart(): Point {
+        return new Point(this.start.x, this.start.z);
+    }
+
     public set depart(point: Point) {
         this.start = point.vecteurPlanXZ;
+    }
+
+    public get arrivee(): Point {
+        return new Point(this.end.x, this.end.z);
     }
 
     public set arrivee(point: Point) {

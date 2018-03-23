@@ -1,12 +1,13 @@
 import { Line, LineBasicMaterial, Geometry } from "three";
 import { Droite } from "../../elementsGeometrie/droite";
 import { Point } from "../../elementsGeometrie/point";
+import { IDroite } from "../../elementsGeometrie/IDroite";
 
 export const COULEUR_DEFAUT: number = 0x0000FF;
 export const COULEUR_CORRECTE: number = 0x00FF00;
 export const COULEUR_ERREUR: number = 0xFF0000;
 
-export class DroiteAffichage extends Line {
+export class DroiteAffichage extends Line implements IDroite {
 
     private _droite: Droite;
 
@@ -14,9 +15,17 @@ export class DroiteAffichage extends Line {
         return this._droite;
     }
 
+    public get depart(): Point {
+        return this._droite.depart;
+    }
+
     public set depart(point: Point) {
         this._droite.depart = point;
         this.miseAJourGeometrie();
+    }
+
+    public get arrivee(): Point {
+        return this._droite.arrivee;
     }
 
     public set arrivee(point: Point) {

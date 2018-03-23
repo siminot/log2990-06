@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
   selector: "app-dialog",
@@ -6,4 +6,4 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["../../config-partie/config-partie.component.css"],
 })
 
-export class FinPartieSoloComponent implements OnInit {}
+export class FinPartieSoloComponent {}

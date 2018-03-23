@@ -5,13 +5,15 @@ import { RequeteDeGrilleAbs } from "../../service-Requete-de-Grille/requete-de-g
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import * as CONST from "../../constantes";
 import { Subscription } from "rxjs/Subscription";
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { DialogComponent } from "../../dialog/dialog.component";
+import { Optional } from '@angular/core';
 
 @Component({
   selector: "app-info-joueur-solo",
   templateUrl: "./info-joueur-solo.component.html",
-  styleUrls: ["./info-joueur-solo.component.css"]
+  styleUrls: ["./info-joueur-solo.component.css"],
+  // providers: [MAT_DIALOG_DATA]
 })
 
 export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, OnDestroy {
@@ -21,13 +23,13 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   private _barreProgression: HTMLElement;
   private _subscriptionNbMotsDecouv: Subscription;
 
-  // private dialogRef: MatDialogRef<DialogComponent>;
+  private dialogRef: MatDialogRef<DialogComponent>;
 
   public constructor(_servicePointage: InfojoueurService,
                      private _requeteGrille: RequeteDeGrilleAbs,
                      private httpReq: ServiceHttp,
-                     public dialogRef: MatDialogRef<DialogComponent>,
-                     @Inject(MAT_DIALOG_DATA) public dialog: MatDialog) {
+                     // public dialogRef: MatDialogRef<DialogComponent>,
+                     private dialog: MatDialog) {
     super(_servicePointage);
     this._nomJoueur = "Nom du joueur";
     this._nbMotsDecouverts = 0;
@@ -40,7 +42,7 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   }
 
   public openDialog(): void {
-    this.dialogRef = this.dialog.open(DialogComponent, {
+    let dialogRef = this.dialog.open(DialogComponent, {
       data: {difficulte: this._difficulte}
     });
   }

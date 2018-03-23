@@ -17,8 +17,8 @@ describe("InfoJoueur1Component", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ InfojoueurService, RequeteDeGrilleAbs, ServiceHttp, {
-        provide: MatDialogRef, useValue: {} }, { provide: MAT_DIALOG_DATA, useValue: {} } ],
+      providers: [ InfojoueurService, RequeteDeGrilleAbs, ServiceHttp, MatDialog, {
+        provide: MatDialogRef, useValue: {} }, /* { provide: MAT_DIALOG_DATA, useValue: {} } */ ],
       declarations: [ InfoJoueurSoloComponent ]
     })
     .compileComponents()

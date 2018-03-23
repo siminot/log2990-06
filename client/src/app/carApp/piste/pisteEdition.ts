@@ -41,7 +41,8 @@ export class PisteEdition extends PisteAbstraite {
         const DEUX: number = 2;
 
         return this.intersections.length > DEUX &&
-               this.premiereIntersection.estEnContactAvec(point);
+               this.premiereIntersection.estEnContactAvec(point) &&
+               this.intersectionSelectionnee !== this.premiereIntersection;
     }
 
     private bouclerCircuit(): void {

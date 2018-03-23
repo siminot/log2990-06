@@ -93,7 +93,7 @@ export class PisteEdition extends PisteAbstraite {
     }
 
     private intersectionSelectionnerPeutBoucler(point: Point): boolean {
-        return this.intersectionSelectionnee === this.derniereIntersection && this.doitFermerCircuit(point)
+        return this.intersectionSelectionnee === this.derniereIntersection && this.doitFermerCircuit(point);
     }
 
     private fusionnerPoint(point: Point): void {

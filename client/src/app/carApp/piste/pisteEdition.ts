@@ -17,7 +17,7 @@ export class PisteEdition extends PisteAbstraite {
         this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
     }
 
-    public exporterPiste(): Point[] {
+    public exporter(): Point[] {
       const points: Point[] = [];
 
       for (const intersection of this.intersections) {
@@ -135,7 +135,7 @@ export class PisteEdition extends PisteAbstraite {
         this.intersectionSelectionnee = null;
     }
 
-    public deselectionnerElement(): void {
+    public deselectionnerIntersection(): void {
         this.intersectionSelectionnee = null;
     }
 

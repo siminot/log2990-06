@@ -63,7 +63,7 @@ export class GestionnaireEditionPiste {
 
     private deselectionner(evenementSouris: MouseEvent): void {
         if (this.positionSourisValide(evenementSouris) && evenementSouris.buttons === 0) {
-            this._piste.deselectionnerElement();
+            this._piste.deselectionnerIntersection();
         }
     }
 

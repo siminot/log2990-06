@@ -6,7 +6,7 @@ import { ContrainteCroisementDroite } from "./contrainteCroisementDroite";
 import { LARGEUR_PISTE } from "../elementsAffichage/jeu/segmentPiste";
 
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;
-const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
+export const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
 const RATIO_ANGLE: number = 4;
 const ANGLE_MINIMAL: number = Math.PI / RATIO_ANGLE;
 const ANGLE_AVANT: number = -1;

@@ -1,6 +1,6 @@
-import { ContrainteCroisementDroite } from "./containteCroisementDroite";
-import { Droite } from "./droite";
-import { Point } from "./Point";
+import { ContrainteCroisementDroite } from "./contrainteCroisementDroite";
+import { Droite } from "../elementsGeometrie/droite";
+import { Point } from "../elementsGeometrie/point";
 import * as assert from "assert";
 
 // tslint:disable: no-magic-numbers

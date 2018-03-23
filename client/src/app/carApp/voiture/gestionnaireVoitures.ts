@@ -8,12 +8,16 @@ import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripheriqu
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 
 // AI
-const NOMBRE_AI: number = 1;
+export const NOMBRE_AI: number = 1;
 
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
 const NOMS_TEXTURES: string[] = ["camero-2010-low-poly.json", "voiture-2010-low-poly.json"];
-const TEXTURE_DEFAUT_JOUEUR: number = 1;
+
+// Couleur voiture
+enum CouleurVoiture { JAUNE = 0, ROSE = 1 }
+const TEXTURE_DEFAUT_JOUEUR: CouleurVoiture = CouleurVoiture.ROSE;
+const TEXTURE_DEFAUT_AI: CouleurVoiture = CouleurVoiture.JAUNE;
 
 // Touches clavier
 const ACCELERATEUR_APPUYE: EvenementClavier = new EvenementClavier("w", TypeEvenementClavier.TOUCHE_APPUYEE);
@@ -76,8 +80,8 @@ export class GestionnaireVoitures {
     private creerVoituresAI(): void {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-            this.chargerTexture(NOMS_TEXTURES[i % NOMS_TEXTURES.length])
-            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
+            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
+            .then((objet: Object3D) => this._voituresAI[i].initialiser(objet))
             .catch(() => { throw new ErreurChargementTexture(); });
         }
     }

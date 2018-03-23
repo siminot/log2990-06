@@ -1,8 +1,8 @@
 import { Injectable, Inject } from "@angular/core";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { ServiceDeRenduAbstrait } from "./servideDeRenduAbstrait";
-import { GestionnaireCameraPiste } from "../piste-component/gestionnaireCameraPiste";
-import { GestionnaireScenePiste } from "../piste-component/gestionnaireScenePiste";
+import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
+import { GestionnaireScenePiste } from "../scene/GestionnaireScenePiste";
 
 @Injectable()
 export class ServiceDeRenduPistes extends ServiceDeRenduAbstrait {

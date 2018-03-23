@@ -1,10 +1,33 @@
-import { Point } from "./Point";
+import { Point } from "./point";
 import { Line3, Vector3 } from "three";
+import { IDroite } from "./IDroite";
 
-export class Droite extends Line3 {
+export class Droite extends Line3 implements IDroite {
 
     public constructor(depart: Point, arrivee: Point) {
         super(depart.vecteurPlanXZ, arrivee.vecteurPlanXZ);
+    }
+
+    public angleAvecDroite(droite: Droite): number {
+        return this.direction.length() * droite.direction.length() !== 0
+            ? Math.acos(this.direction.dot(droite.direction) / (this.direction.length() * droite.direction.length()))
+            : null;
+    }
+
+    public get depart(): Point {
+        return new Point(this.start.x, this.start.z);
+    }
+
+    public set depart(point: Point) {
+        this.start = point.vecteurPlanXZ;
+    }
+
+    public get arrivee(): Point {
+        return new Point(this.end.x, this.end.z);
+    }
+
+    public set arrivee(point: Point) {
+        this.end = point.vecteurPlanXZ;
     }
 
     public get plusPetitX(): number {
@@ -23,23 +46,8 @@ export class Droite extends Line3 {
       return Math.max(this.start.z, this.end.z);
     }
 
-    public modifierDepart(point: Point): void {
-        this.start = point.vecteurPlanXZ;
-    }
-
-    public modifierArrivee(point: Point): void {
-        this.end = point.vecteurPlanXZ;
-    }
-
     public get direction(): Vector3 {
         return this.end.clone().sub(this.start);
-    }
-
-    public angleAvecDroite(droite: Droite): number {
-        return this.direction.length() * droite.direction.length() !== 0
-            ? Math.acos(this.direction.dot(droite.direction) / (this.direction.length() * droite.direction.length()))
-            : null;
-
     }
 
     public get boite(): Droite {

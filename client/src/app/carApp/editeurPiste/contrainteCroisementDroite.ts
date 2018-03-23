@@ -1,10 +1,9 @@
-import { Droite } from "./droite";
-import { Point } from "./Point";
+import { Droite } from "../elementsGeometrie/droite";
+import { Point } from "../elementsGeometrie/point";
 
 export class ContrainteCroisementDroite {
 
     public static droitesSeCroisent(droite1: Droite, droite2: Droite): boolean {
-
         return this.boitesDroitesSeRecourbent(droite1.boite, droite2.boite)
                 && this.droiteCroiseOuToucheDroiteInfinie(droite1, droite2)
                 && this.droiteCroiseOuToucheDroiteInfinie(droite2, droite1);
@@ -18,15 +17,13 @@ export class ContrainteCroisementDroite {
     }
 
     private static locationPointParRapportADroite(droite: Droite, point: Point): number {
-        const pointTemp: Point = new Point(point.x - droite.start.x, point.y - droite.start.z);
+        const autrePoint: Point = new Point(point.x - droite.start.x, point.y - droite.start.z);
 
-        return droite.pointFinalDroiteCentree.produitVectoriel(pointTemp);
+        return droite.pointFinalDroiteCentree.vecteurPlanXZ.cross(autrePoint.vecteurPlanXZ).y;
     }
 
     private static pointEstSurDroite(droite: Droite, point: Point): boolean {
-        const DEGREE_ERREUR: number = 0.000001; // necessaire?
-
-        return Math.abs(this.locationPointParRapportADroite(droite, point)) < DEGREE_ERREUR;
+        return this.locationPointParRapportADroite(droite, point) === 0;
     }
 
     private static pointEstADroiteDeLaDroite(droite: Droite, point: Point): boolean {

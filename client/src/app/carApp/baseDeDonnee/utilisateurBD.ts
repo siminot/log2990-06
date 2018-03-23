@@ -1,5 +1,5 @@
-import { PisteBD } from "../piste-component/pisteBD";
-import { PISTES } from "../piste-component/PisteTest";
+import { PisteBD } from "../piste/pisteBD";
+import { PISTES } from "../piste/pisteTest";
 
 export class UtilisateurBD {
 

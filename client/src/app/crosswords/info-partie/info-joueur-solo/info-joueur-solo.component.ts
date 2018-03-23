@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy, Inject } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import * as CONST from "../../constantes";
 import { Subscription } from "rxjs/Subscription";
-import { MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { DialogComponent } from "../../dialog/dialog.component";
-import { Optional } from '@angular/core';
 
 @Component({
   selector: "app-info-joueur-solo",
@@ -42,7 +41,7 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   }
 
   public openDialog(): void {
-    let dialogRef = this.dialog.open(DialogComponent, {
+    this.dialogRef = this.dialog.open(DialogComponent, {
       data: {difficulte: this._difficulte}
     });
   }

@@ -73,14 +73,8 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   private majBarreProgression(): void {
     this._barreProgression.style.width = String(this.pourcentagePoint) + "%";
     if (this.pourcentagePoint === 100) {
-      this.finPartie();
+      this.router.navigateByUrl("FinPartie");
     }
-  }
-
-  public finPartie(): void {
-    this._subscriptionTimer.unsubscribe();
-    this.router.navigateByUrl("FinPartie");
-    // this.openDialog();
   }
 
   public ngOnDestroy(): void {

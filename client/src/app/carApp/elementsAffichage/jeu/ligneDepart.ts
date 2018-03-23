@@ -9,15 +9,14 @@ const FORMAT: string = ".png";
 const URL_TEXTURE: string = CHEMIN + NOM_TEXTURE + FORMAT;
 
 const LONGUEUR: number = 3;
+const AXE_Y: Vector3 = new Vector3(0, 1, 0);
 
 export class LigneDeDepart extends Mesh {
 
-    private readonly angle: number;
-
-    public constructor(emplacement: Vector3, angle: number) {
+    public constructor(emplacement: Vector3, anglePiste: number) {
         super();
-        this.angle = angle + PI_OVER_2;
         this.position.set(emplacement.x, emplacement.y, emplacement.z);
+        this.setRotationFromAxisAngle(AXE_Y, anglePiste + PI_OVER_2);
         this.material = this.materiel;
         this.geometry = this.geometrie;
     }
@@ -40,7 +39,6 @@ export class LigneDeDepart extends Mesh {
     private get geometrie(): PlaneGeometry {
         const geometrie: PlaneGeometry = new PlaneGeometry(LONGUEUR, LARGEUR_PISTE);
         geometrie.rotateX(PI_OVER_2);
-        geometrie.rotateY(this.angle);
 
         return geometrie;
     }

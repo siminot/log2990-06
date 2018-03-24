@@ -32,6 +32,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.inscriptionChangementMots();
     this.inscriptionChangementMotSelect();
     this.inscriptionMonMotSelect();
+    this.inscriptionMotSelecetionneJ2();
     this.chargerGrille();
   }
 
@@ -128,7 +129,12 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       this.motSelectionne = mot;
       OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
       this.envoieMotSelectionne();
-      console.log("salut");
+    });
+  }
+
+  private inscriptionMotSelecetionneJ2(): void {
+    this.serviceSocket.recevoirMotSelectJ2().subscribe((motJ2: Mot) => {
+      this.miseEnEvidence.miseEvidenceMot(motJ2, "blue");
     });
   }
 }

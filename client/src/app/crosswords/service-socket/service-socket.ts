@@ -110,7 +110,7 @@ export class SocketService {
         });
     }
 
-    public recevoirMotSelectJ2() : Observable<Mot> {
+    public recevoirMotSelectJ2(): Observable<Mot> {
         return new Observable<Mot>( (unObs) => {
             this.socketClient.on(event.MOT_SEL_J2, (mot: Mot) => unObs.next(mot));
         });

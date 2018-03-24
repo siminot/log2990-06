@@ -2,9 +2,11 @@ import { Mongoose, Model, Schema, Document } from "mongoose";
 import { PisteBD } from "../../../client/src/app/carApp/piste/pisteBD";
 import { ErreurRechercheBaseDonnees } from "./../../../client/src/app/exceptions/erreurRechercheBD";
 import { Request, Response, NextFunction } from "express";
+import { injectable } from "inversify";
 
 const URL_BD: string = "mongodb://admin:admin@ds123129.mlab.com:23129/log2990";
 
+@injectable()
 export class BaseDonneesCourse {
 
     private mongoose: Mongoose;

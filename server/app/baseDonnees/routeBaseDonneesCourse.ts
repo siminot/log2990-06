@@ -8,7 +8,7 @@ import { BaseDonneesCourse } from "./baseDonneesCourse";
 @injectable()
 export class RouteBaseDonneesCourse extends ServiceWeb {
 
-    public readonly mainRoute: string = "/mean";
+    public readonly mainRoute: string = "/apipistes";
 
     public constructor(@inject(Types.BaseDonneesCourse) private baseDonneesCourse: BaseDonneesCourse ) {
         super();

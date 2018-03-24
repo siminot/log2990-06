@@ -10,7 +10,7 @@ import { injectable, inject } from "inversify";
 import { ServiceWeb } from "./serviceweb";
 import { RouteServiceLexical } from "./serviceLexical/routeServiceLexical";
 import { RouteGenGrille } from "./generateurGrille/routeGenGrille";
-import { RouteBaseDonneesCourse } from "./baseDeDonneesCourse/routeBaseDonneesCourse";
+import { RouteBaseDonneesCourse } from "./baseDonnees/routeBaseDonneesCourse";
 
 @injectable()
 export class Application {

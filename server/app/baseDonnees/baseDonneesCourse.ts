@@ -1,8 +1,5 @@
-import { Mongoose, Model, Connection, Schema, Document } from "mongoose";
-import { RouteBaseDonneesCourse } from "./routeBaseDonneesCourse";
-import { Point } from "../../../client/src/app/carApp/elementsGeometrie/point";
+import { Mongoose, Model, Schema, Document } from "mongoose";
 import { PisteBD } from "../../../client/src/app/carApp/piste/pisteBD";
-import { InterfacePointBaseDonnees } from "./interfacePointBD";
 import { ErreurRechercheBaseDonnees } from "./../../../client/src/app/exceptions/erreurRechercheBD";
 import { Request, Response, NextFunction } from "express";
 
@@ -24,7 +21,7 @@ export class BaseDonneesCourse {
         this.modelPiste = this.mongoose.model("pistes", this.schemaPiste);
     }
 
-    public async seConnecter(): Promise<void> {
+    private async seConnecter(): Promise<void> {
         this.mongoose.connect(URL_BD)
         .then(() => {
             console.log("connecte a la base de donnee");
@@ -33,15 +30,15 @@ export class BaseDonneesCourse {
         });
     }
 
-    public get connection(): number {
+    private get connection(): number {
         return this.mongoose.connection.readyState;
     }
 
-    public chargerModelPiste(): void {
+    private chargerModelPiste(): void {
         this.mongoose.connection.model("pistes");
     }
 
-    public async ajouterPisteBidon(): Promise<void> {
+    private async ajouterPisteBidon(): Promise<void> {
         const longueur: number = 100;
         const piste: Document =  new this.modelPiste ({
             nom: "Piste 1",
@@ -54,7 +51,7 @@ export class BaseDonneesCourse {
         await this.modelPiste.create(piste);
     }
 
-    public async obtenirPistes(): Promise<PisteBD[]> {
+    private async obtenirPistes(): Promise<PisteBD[]> {
         const pistes: PisteBD[] = [];
         await this.modelPiste.find((err: ErreurRechercheBaseDonnees, res: Document[]) => {
             for (const document of res) {
@@ -70,7 +67,14 @@ export class BaseDonneesCourse {
             await this.seConnecter();
         }
         this.chargerModelPiste();
-        const pistes: PisteBD[] = await this.obtenirPistes();
-        res.send(pistes);
+        res.send(await this.obtenirPistes());
+    }
+
+    public async requeteAjoutDUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+        if (this.connection !== 1) {
+            await this.seConnecter();
+        }
+        this.chargerModelPiste();
+        res.send(await this.ajouterPisteBidon());
     }
 }

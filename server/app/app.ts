@@ -7,9 +7,10 @@ import * as cors from "cors";
 import Types from "./types";
 import { injectable, inject } from "inversify";
 
-import { RouteServiceLexical } from "./serviceLexical/routeServiceLexical";
 import { ServiceWeb } from "./serviceweb";
+import { RouteServiceLexical } from "./serviceLexical/routeServiceLexical";
 import { RouteGenGrille } from "./generateurGrille/routeGenGrille";
+import { RouteBaseDonneesCourse } from "./baseDeDonneesCourse/routeBaseDonneesCourse";
 
 @injectable()
 export class Application {
@@ -18,7 +19,8 @@ export class Application {
     public app: express.Application;
 
     constructor(@inject(Types.RouteServiceLexical) private serviceLexical: RouteServiceLexical,
-                @inject(Types.RouteGenGrille) private routeGenGrille: RouteGenGrille) {
+                @inject(Types.RouteGenGrille) private routeGenGrille: RouteGenGrille,
+                @inject(Types.RouteBaseDonneesCourse) private baseDonneesCourse: RouteBaseDonneesCourse) {
         this.app = express();
 
         this.config();
@@ -39,6 +41,7 @@ export class Application {
     public routes(): void {
         this.ajouterService(this.serviceLexical);
         this.ajouterService(this.routeGenGrille);
+        this.ajouterService(this.baseDonneesCourse);
 
         this.errorHandeling();
     }

@@ -98,16 +98,17 @@ export class InfoPartieServeur {
         this.defEvConfirmationMot(joueur);
     }
 
+    // nom de methode pas trop clair.. 
     private defEvSelectionMot(joueur: SocketIO.Socket): void {
         joueur.on(event.MOT_SELECTIONNE, (motSel: Mot) => {
             joueur.in(this.nomPartie).emit(event.MOT_SEL_J2, motSel);
             this.joueurs[this.indexAutreJoueur(joueur)].in(this.nomPartie).emit(event.MOT_SELECTIONNE, motSel);
         });
     }
-
+     // nom de methode pas trop clair.. 
     private defEvConfirmationMot(joueur: SocketIO.Socket): void {
         joueur.on(event.TENTATIVE, () => {
-            // verif si le mot est bon fait au client ou au serveur
+            // verif si le mot est bon fait au client ou au serveur <--- je comprends pas ce que cette phrase veut dire 
             this.verificationPartieTerminee();
         });
     }

@@ -21,24 +21,26 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   public constructor(_servicePointage: InfojoueurService,
                      private serviceSocket: SocketService,
                      private serviceInteraction: ServiceInteractionComponent) {
-    super(_servicePointage/*, serviceSocket*/);
+    super(_servicePointage);
     this.serviceSocket.commencerPartie();
     this.genererGrille();
-
   }
 
   public ngOnInit(): void {
     this.mots = this.serviceInteraction.mots;
-    // this.matriceDesMotsSurGrille = this.serviceInteraction.matrice;
+    this.inscriptionChangementMots();
+    this.inscriptionChangementMotSelect();
+    this.chargerGrille();
+  }
 
+  private inscriptionChangementMots(): void {
     this.subscriptionMots = this.serviceInteraction.serviceReceptionMots().subscribe((mots) => {
       this.mots = mots;
       this.remplirPositionLettres();
     });
+  }
 
-    // this.subscriptionMatrice = this.serviceInteraction.serviceReceptionMatriceLettres()
-    //   .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
-
+  private inscriptionChangementMotSelect(): void {
     this.subscriptionMotSelec = this.serviceInteraction.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
@@ -52,7 +54,6 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
           }
         }
       });
-    this.chargerGrille();
   }
 
   private genererGrille(): void {
@@ -109,9 +110,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       this.mots = paquet.grilleDeJeu;
       this.serviceInteraction.serviceEnvoieMots(this.mots);
       this.serviceInteraction.souscrireServiceSocket();
-      // this.matriceDesMotsSurGrille = this.serviceInteraction.matrice;
       this.insererMotsDansGrille();
-      // this.serviceInteraction.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
     });
   }
 }

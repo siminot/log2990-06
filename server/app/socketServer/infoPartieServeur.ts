@@ -94,21 +94,18 @@ export class InfoPartieServeur {
     }
 
     private definirEvenementsPartie(joueur: SocketIO.Socket): void {
-        this.defEvSelectionMot(joueur);
-        this.defEvConfirmationMot(joueur);
+        this.definirSelectionMot(joueur);
+        this.definirConfirmationMot(joueur);
     }
 
-    // nom de methode pas trop clair.. 
-    private defEvSelectionMot(joueur: SocketIO.Socket): void {
+    private definirSelectionMot(joueur: SocketIO.Socket): void {
         joueur.on(event.MOT_SELECTIONNE, (motSel: Mot) => {
             joueur.in(this.nomPartie).emit(event.MOT_SEL_J2, motSel);
             this.joueurs[this.indexAutreJoueur(joueur)].in(this.nomPartie).emit(event.MOT_SELECTIONNE, motSel);
         });
     }
-     // nom de methode pas trop clair.. 
-    private defEvConfirmationMot(joueur: SocketIO.Socket): void {
+    private definirConfirmationMot(joueur: SocketIO.Socket): void {
         joueur.on(event.TENTATIVE, () => {
-            // verif si le mot est bon fait au client ou au serveur <--- je comprends pas ce que cette phrase veut dire 
             this.verificationPartieTerminee();
         });
     }
@@ -159,7 +156,7 @@ export class InfoPartieServeur {
     }
 
     private indexAutreJoueur(joueur: SocketIO.Socket): number {
-        return Math.abs(this.joueurs.indexOf(joueur));
+        return Math.abs(this.joueurs.indexOf(joueur) - 1);
     }
 
     public detruirePartie(): void {

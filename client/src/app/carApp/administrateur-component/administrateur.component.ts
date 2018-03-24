@@ -1,5 +1,6 @@
 import { AfterViewInit, Component } from "@angular/core";
 import { UtilisateurBD } from "../baseDeDonnee/utilisateurBD";
+import { PisteBD } from "../piste/pisteBD";
 
 @Component({
     selector: "app-admin",
@@ -8,11 +9,24 @@ import { UtilisateurBD } from "../baseDeDonnee/utilisateurBD";
 })
 export class AdministrateurComponent implements AfterViewInit {
 
-    public baseDonnees: UtilisateurBD;
+    public pistes: PisteBD[];
 
     public constructor() {
-        this.baseDonnees = new UtilisateurBD();
+
     }
 
-    public ngAfterViewInit(): void { }
+    public ngAfterViewInit(): void {
+      this.obtenirPistes();
+    }
+
+    public obtenirPistes(): void {
+
+    }
+    public editerPiste(piste: PisteBD): void {
+
+    }
+
+    public supprimerPiste(piste: PisteBD): void {
+
+    }
 }

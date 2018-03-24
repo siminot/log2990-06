@@ -1,7 +1,12 @@
-<div #container>
-    <ul>
-        <li>Piste 1: </li>
-        <li>Piste 2: </li>
-        <li>Piste 3: </li>
-    </ul>
-</div>
+<ul class="pistes">
+  <li *ngFor="let piste of pistes">
+    {{piste.nom}} {{piste.description}}
+
+    <button class="editer" title="editer"
+    (click)="editer(piste)">x</button>
+
+    <button class="supprimer" title="supprimer"
+    (click)="supprimer(piste)">x</button>
+
+  </li>
+</ul>

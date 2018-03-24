@@ -3,6 +3,8 @@ import { ServiceInteractionComponent } from "../../service-interaction-component
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { EncadrementCase } from "../librairieGrille/encadrementCase";
 import { GrilleAbs } from "../grilleAbs";
+import { OpaciteCase } from "./../librairieGrille/opaciteCase";
+import { Mot } from "../../objetsTest/mot";
 
 @Component({
   selector: "app-grille",
@@ -63,8 +65,12 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
     this.listeMotsService.serviceEnvoieMots(this.mots);
     this.listeMotsService.souscrireServiceSocket();
   }
+  protected retrieveWordFromClick(event: KeyboardEvent): Mot {
+    const mot: Mot = super.retrieveWordFromClick(event);
+    this.motSelectionne = mot;
+    OpaciteCase.decouvrirCases(mot,this.matriceDesMotsSurGrille);
+    this.envoieMotSelectionne();
 
-  // private changementMotSelect(): void {
-
-  // }
+    return mot;
+  }
 }

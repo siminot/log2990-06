@@ -99,4 +99,20 @@ export class SocketService {
             this.socketClient.on(event.PAQUET_PARTIE, (paquet: PaquetPartie) => unObs.next(paquet));
         });
     }
+
+    public envoyerMotSelect(mot: Mot): void {
+        this.socketClient.emit(event.MOT_SELECTIONNE, mot );
+    }
+
+    public recevoirMotSelect(): Observable<Mot> {
+        return new Observable<Mot>( (unObs) => {
+            this.socketClient.on(event.MOT_SELECTIONNE, (mot: Mot) => unObs.next(mot));
+        });
+    }
+
+    public recevoirMotSelectJ2() : Observable<Mot> {
+        return new Observable<Mot>( (unObs) => {
+            this.socketClient.on(event.MOT_SEL_J2, (mot: Mot) => unObs.next(mot));
+        });
+    }
 }

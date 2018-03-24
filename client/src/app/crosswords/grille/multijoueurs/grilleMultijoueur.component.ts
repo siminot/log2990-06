@@ -8,6 +8,7 @@ import { PaquetPartie } from "../../objetsTest/paquetPartie";
 import { Mot } from "../../objetsTest/mot";
 import { LettreGrille } from "../../objetsTest/lettreGrille";
 import { TAILLE_TABLEAU } from "../../constantes";
+import { OpaciteCase } from "./../librairieGrille/opaciteCase";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 @Component({
@@ -30,6 +31,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.mots = this.serviceInteraction.mots;
     this.inscriptionChangementMots();
     this.inscriptionChangementMotSelect();
+    this.inscriptionMonMotSelect();
     this.chargerGrille();
   }
 
@@ -111,6 +113,22 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       this.serviceInteraction.serviceEnvoieMots(this.mots);
       this.serviceInteraction.souscrireServiceSocket();
       this.insererMotsDansGrille();
+    });
+  }
+
+  protected retrieveWordFromClick(event: KeyboardEvent): Mot {
+    const mot: Mot = super.retrieveWordFromClick(event);
+    this.serviceSocket.envoyerMotSelect(mot);
+
+    return mot;
+  }
+
+  private inscriptionMonMotSelect(): void {
+    this.serviceSocket.recevoirMotSelect().subscribe( (mot: Mot) => {
+      this.motSelectionne = mot;
+      OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
+      this.envoieMotSelectionne();
+      console.log("salut");
     });
   }
 }

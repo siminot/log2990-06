@@ -19,6 +19,8 @@ const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDeco
 
 export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
+  private motSelectJoeur2 : Mot;
+
   public constructor(_servicePointage: InfojoueurService,
                      private serviceSocket: SocketService,
                      private serviceInteraction: ServiceInteractionComponent) {
@@ -29,6 +31,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   public ngOnInit(): void {
     this.mots = this.serviceInteraction.mots;
+    // this.motSelectJoeur2 = new Mot;
     this.inscriptionChangementMots();
     this.inscriptionChangementMotSelect();
     this.inscriptionMonMotSelect();
@@ -49,6 +52,9 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
         this.motSelectionne = motSelec;
         this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
         EncadrementCase.appliquerStyleDefautGrille(document);
+        if(this.motSelectJoeur2 != null) {
+          this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
+        }
 
         if (!this.motSelectionne.motTrouve) {
           this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
@@ -134,7 +140,12 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   private inscriptionMotSelecetionneJ2(): void {
     this.serviceSocket.recevoirMotSelectJ2().subscribe((motJ2: Mot) => {
-      this.miseEnEvidence.miseEvidenceMot(motJ2, "blue");
+      this.motSelectJoeur2 = motJ2;
+      EncadrementCase.appliquerStyleDefautGrille(document);
+      this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
+      if(this.motSelectionne != null){
+        this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
+      }
     });
   }
 }

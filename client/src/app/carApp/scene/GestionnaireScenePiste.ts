@@ -1,31 +1,24 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { Scene, PlaneGeometry, MeshBasicMaterial, DoubleSide, Mesh } from "three";
 import { IScene } from "../scene/IScene";
 import { PI_OVER_2 } from "../constants";
-import { GestionnairePiste } from "./GestionnairePiste";
+import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
+import { PLAN_ELOIGNE } from "../camera/GestionnaireCameraPiste";
 
-export const PROFONDEUR_SCENE: number = 50;
+export const PROFONDEUR_SCENE: number = PLAN_ELOIGNE;
 const COULEUR_FOND: number = 0xB3ECFF;
 
 @Injectable()
-export class GestionnaireScenePiste implements IScene {
-
-    private _scene: Scene;
+export class GestionnaireScenePiste extends Scene implements IScene {
 
     public get scene(): Scene {
-        return this._scene;
+        return this;
     }
 
-    public constructor(private gestionnairePiste: GestionnairePiste) {
-        this._scene = new Scene();
-        this.creerScene();
-    }
-
-    // Creation de la scene
-
-    public creerScene(): void {
+    public constructor(@Inject(GestionnaireEditionPiste) gestionnairePiste: GestionnaireEditionPiste) {
+        super();
         this.ajouterCouleurDeFond();
-        this.ajouterPiste();
+        this.add(gestionnairePiste.piste);
     }
 
     private ajouterCouleurDeFond(): void {
@@ -34,10 +27,6 @@ export class GestionnaireScenePiste implements IScene {
         const geometrie: PlaneGeometry = new PlaneGeometry(DIMENSIONS, DIMENSIONS);
         geometrie.rotateX(PI_OVER_2);
         geometrie.translate(0, PROFONDEUR_SCENE, 0);
-        this._scene.add(new Mesh(geometrie, MATERIEL));
-    }
-
-    private ajouterPiste(): void {
-        this._scene.add(this.gestionnairePiste.piste);
+        this.add(new Mesh(geometrie, MATERIEL));
     }
 }

@@ -1,8 +1,8 @@
 import { Group } from "three";
-import { IPoint } from "./elementsGeometrie/IPoint";
-import { Point } from "./elementsGeometrie/Point";
+import { IPoint } from "../elementsGeometrie/IPoint";
+import { Point } from "../elementsGeometrie/point";
 
-export abstract class Piste extends Group {
+export abstract class PisteAbstraite extends Group {
 
     protected intersections: IPoint[];
 

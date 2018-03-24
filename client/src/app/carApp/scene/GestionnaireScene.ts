@@ -8,8 +8,8 @@ import { TempsJournee } from "../skybox/skybox";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
-import { PisteJeu } from "../piste-component/pisteJeu";
-import { PISTE_TEST } from "../piste-component/PisteTest";
+import { PisteJeu } from "../piste/pisteJeu";
+import { PISTE_TEST } from "../piste/pisteTest";
 
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
@@ -65,7 +65,6 @@ export class GestionnaireScene implements IScene {
         this.changerTempsJournee();
     }
 
-    // TODO : Remplir lorsque la classe PisteJeu sera construite
     private ajouterPiste(): void {
         const piste: PisteJeu = new PisteJeu();
         piste.importerPiste(PISTE_TEST);
@@ -79,7 +78,7 @@ export class GestionnaireScene implements IScene {
     }
 
     public miseAJour(tempsDepuisDerniereTrame: number): void {
-            this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
+        this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
     }
 
     public changerTempsJournee(): void {

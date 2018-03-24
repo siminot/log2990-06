@@ -9,5 +9,6 @@ export default  {
         RouteGenGrille: Symbol("RouteGenGrille"),
         GenerateurGrille: Symbol("GenerateurGrille"),
 
-        RouteBaseDonneesCourse: Symbol("RouteBaseDonneesCourse")
+        RouteBaseDonneesCourse: Symbol("RouteBaseDonneesCourse"),
+        BaseDonneesCourse: Symbol("BaseDonneesCourse")
 };

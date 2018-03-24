@@ -8,7 +8,7 @@ import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
-describe("Service de rendu", () => {
+describe("Service de rendu de jeu", () => {
   let serviceDeRendu: ServiceDeRenduJeu;
 
   let gestionnaireVoitures: GestionnaireVoitures;

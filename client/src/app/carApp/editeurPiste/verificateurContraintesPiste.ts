@@ -1,10 +1,12 @@
-import { IntersectionPiste } from "./intersectionPiste";
-import { DroiteAffichage } from "./droiteAffichage";
-import { RapportContraintes } from "../rapportContraintes";
-import { LARGEUR_PISTE } from "./segmentPiste";
+import { IntersectionPiste } from "../elementsAffichage/editeur/intersectionPiste";
+import { DroiteAffichage } from "../elementsAffichage/editeur/droiteAffichage";
+import { RapportContraintes } from "./rapportContraintes";
+import { IDroite } from "../elementsGeometrie/IDroite";
+import { ContrainteCroisementDroite } from "./contrainteCroisementDroite";
+import { LARGEUR_PISTE } from "../elementsAffichage/jeu/segmentPiste";
 
 const RAPPORT_LONGUEUR_LARGEUR: number = 2;
-const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
+export const LONGUEUR_MINIMALE: number = LARGEUR_PISTE * RAPPORT_LONGUEUR_LARGEUR;
 const RATIO_ANGLE: number = 4;
 const ANGLE_MINIMAL: number = Math.PI / RATIO_ANGLE;
 const ANGLE_AVANT: number = -1;
@@ -15,6 +17,17 @@ export class VerificateurContraintesPiste {
     private rapports: Map<DroiteAffichage, RapportContraintes>;
     private readonly intersections: IntersectionPiste[];
     private intersectionEnCours: IntersectionPiste;
+
+    private get droitesAffichage(): DroiteAffichage[] {
+        const droites: DroiteAffichage[] = [];
+        for (const intersection of this.intersections) {
+            if (intersection.droiteArrivee.droite.distance() !== 0) {
+                droites.push(intersection.droiteArrivee);
+            }
+        }
+
+        return droites;
+    }
 
     public constructor(intersections: IntersectionPiste[]) {
         this.intersections = intersections;
@@ -36,9 +49,10 @@ export class VerificateurContraintesPiste {
     }
 
     private verifierLongueur(droite: DroiteAffichage): void {
-        droite.droite.distance() >= LONGUEUR_MINIMALE
-            ? this.rapport(droite).longueurRespectee = true
-            : this.rapport(droite).longueurRespectee = false;
+        this.rapport(droite).longueurRespectee =
+            droite.droite.distance() >= LONGUEUR_MINIMALE
+            ? true
+            : false;
     }
 
     private verifierAngleIntersectionCourante(): void {
@@ -70,28 +84,25 @@ export class VerificateurContraintesPiste {
         return intersection.droiteArrivee.droite.angleAvecDroite(intersection.droiteDebut.droite);
     }
 
-    private verifierCroisement(): void {
-        for (const intersection of this.intersections) {
-            this.verifierCroisementIntersection(intersection);
-        }
+    private droitesPartagentDebutOuFin(droite1: IDroite, droite2: IDroite): boolean {
+        return droite1.depart.equals(droite2.depart)
+            || droite1.depart.equals(droite2.arrivee)
+            || droite1.arrivee.equals(droite2.depart)
+            || droite1.arrivee.equals(droite2.arrivee);
     }
 
-    private verifierCroisementIntersection(intersection: IntersectionPiste): void {
-        for (const droiteAnalyse of intersection.droites) {
-            for (const droiteEnCours of this.intersectionEnCours.droites) {
-                if (droiteAnalyse !== droiteEnCours) { /*
-                    if (droiteAnalyse.droite.croiseDroite(droiteEnCours.droite)) {
-                        this.rapport(droiteAnalyse).ajouterCroisement(droiteEnCours);
-                        this.rapport(droiteAnalyse).ajouterCroisement(droiteEnCours);
-                    } else {
-                        this.rapport(droiteAnalyse).retirerCroisement(droiteEnCours);
-                        this.rapport(droiteAnalyse).retirerCroisement(droiteEnCours);
-                    }*/
+    private verifierCroisement(): void {
+        for (const droiteAnalysee of this.droitesAffichage) {
+            this.rapport(droiteAnalysee).pasCroisementRespecte = true;
+            for (const droiteDeComparation of this.droitesAffichage) {
+                if (!this.droitesPartagentDebutOuFin(droiteAnalysee, droiteDeComparation)) {
+                    if (ContrainteCroisementDroite.droitesSeCroisent(droiteAnalysee.droite, droiteDeComparation.droite)) {
+                        this.rapport(droiteAnalysee).pasCroisementRespecte = false;
+                    }
                 }
             }
+            this.miseAJourCouleurDroite(droiteAnalysee);
         }
-
-        this.miseAJourCouleur(intersection);
     }
 
     private miseAJourCouleur(intersection: IntersectionPiste): void {
@@ -106,8 +117,8 @@ export class VerificateurContraintesPiste {
     }
 
     public get pisteRespecteContraintes(): boolean {
-        for (const intersection of this.intersections) {
-            if (!this.rapport(intersection.droiteDebut).contraintesRespectees) {
+        for (const droite of this.droitesAffichage) {
+            if (!this.rapport(droite).contraintesRespectees) {
                 return false;
             }
         }

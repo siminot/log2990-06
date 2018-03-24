@@ -1,4 +1,4 @@
-import { Point } from "./elementsGeometrie/Point";
+import { Point } from "../elementsGeometrie/point";
 
 export class PisteBD {
     public nom: string;

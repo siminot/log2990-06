@@ -1,4 +1,4 @@
-import { GestionnaireVoitures } from "./gestionnaireVoitures";
+import { GestionnaireVoitures, NOMBRE_AI } from "./gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 
@@ -38,6 +38,6 @@ describe("GestionnaireVoitures", () => {
     });
 
     it("get voituresAI renvoie une liste d'objets", () => {
-        expect(gestionnaire.voituresAI.length).toBe(1);
+        expect(gestionnaire.voituresAI.length).toBe(NOMBRE_AI);
     });
 });

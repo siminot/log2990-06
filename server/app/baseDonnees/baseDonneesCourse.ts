@@ -24,20 +24,17 @@ export class BaseDonneesCourse {
     }
 
     private async seConnecter(): Promise<void> {
-        this.mongoose.connect(URL_BD)
-        .then(() => {
-            console.log("connecte a la base de donnee");
-        }).catch(() => {
-            console.log("erreur de connection");
-        });
+        await this.mongoose.connect(URL_BD);
     }
 
-    private get connection(): number {
-        return this.mongoose.connection.readyState;
+    private get estConnecte(): boolean {
+        return this.mongoose.connection.readyState === 1;
     }
 
-    private chargerModelPiste(): void {
-        this.mongoose.connection.model("pistes");
+    private async assurerConnection(): Promise<void> {
+        if (!this.estConnecte) {
+            await this.seConnecter();
+        }
     }
 
     private async ajouterPisteBidon(): Promise<void> {
@@ -53,8 +50,7 @@ export class BaseDonneesCourse {
         await this.modelPiste.create(piste);
     }
 
-    private async ajouterPiste(pisteJson: JSON): Promise<void> {
-        const longueur: number = 100;
+    private async ajouterPiste(pisteJson: {}): Promise<void> {
         const piste: Document =  new this.modelPiste(pisteJson);
         await this.modelPiste.create(piste);
     }
@@ -81,34 +77,22 @@ export class BaseDonneesCourse {
     }
 
     public async requeteDePistes(req: Request, res: Response, next: NextFunction): Promise<void> {
-        if (this.connection !== 1) {
-            await this.seConnecter();
-        }
-        this.chargerModelPiste();
+        this.assurerConnection();
         res.send(await this.obtenirPistes());
     }
 
     public async requeteAjoutDUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
-        if (this.connection !== 1) {
-            await this.seConnecter();
-        }
-        this.chargerModelPiste();
+        this.assurerConnection();
         res.send(await this.ajouterPiste(req.body));
     }
 
     public async requeteAjoutDUnePisteBidon(req: Request, res: Response, next: NextFunction): Promise<void> {
-        if (this.connection !== 1) {
-            await this.seConnecter();
-        }
-        this.chargerModelPiste();
+        this.assurerConnection();
         res.send(await this.ajouterPisteBidon());
     }
 
     public async requeteSupprimerPiste(req: Request, res: Response, next: NextFunction): Promise<void> {
-        if (this.connection !== 1) {
-            await this.seConnecter();
-        }
-        this.chargerModelPiste();
+        this.assurerConnection();
         res.send(await this.supprimerUnePiste(req.params.nom));
     }
 }

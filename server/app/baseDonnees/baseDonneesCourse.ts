@@ -53,6 +53,12 @@ export class BaseDonneesCourse {
         await this.modelPiste.create(piste);
     }
 
+    private async ajouterPiste(pisteJson: JSON): Promise<void> {
+        const longueur: number = 100;
+        const piste: Document =  new this.modelPiste(pisteJson);
+        await this.modelPiste.create(piste);
+    }
+
     private async modifierUnePiste(nomPiste: string): Promise<void> {
         this.modelPiste.findOne({nom: nomPiste}, (err: ErreurRechercheBaseDonnees, res: Document) => {
             res.toJSON(); // en attendant
@@ -83,6 +89,14 @@ export class BaseDonneesCourse {
     }
 
     public async requeteAjoutDUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+        if (this.connection !== 1) {
+            await this.seConnecter();
+        }
+        this.chargerModelPiste();
+        res.send(await this.ajouterPiste(req.body));
+    }
+
+    public async requeteAjoutDUnePisteBidon(req: Request, res: Response, next: NextFunction): Promise<void> {
         if (this.connection !== 1) {
             await this.seConnecter();
         }

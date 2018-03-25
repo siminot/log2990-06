@@ -54,7 +54,9 @@ export class BaseDonneesCourse {
     }
 
     private async modifierUnePiste(nomPiste: string): Promise<void> {
-        this.modelPiste.findOne({nom: nomPiste}, (err: ErreurRechercheBaseDonnees, res: Document) =>)
+        this.modelPiste.findOne({nom: nomPiste}, (err: ErreurRechercheBaseDonnees, res: Document) => {
+            res.toJSON(); // en attendant
+        });
     }
 
     private async supprimerUnePiste(nomPiste: string): Promise<void> {

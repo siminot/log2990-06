@@ -11,8 +11,8 @@
             </div>
         </div> 
 
-        <button *ngIf="!estNouvellePiste" (click)="mettreAJourPiste()" routerLink="/admin">Mettre a jour la piste</button>
-        <button (click)="creerNouvellePiste()" routerLink="/admin">Créer une nouvelle piste</button>
+        <button  *ngIf="!estNouvellePiste" [disabled]="estNouvellePiste" (click)="mettreAJourPiste()" routerLink="/admin">Mettre a jour la piste</button>
+        <button  [disabled]="estNouvellePiste" (click)="creerNouvellePiste()" disabled routerLink="/admin">Créer une nouvelle piste</button>
         <button routerLink="/admin">Revenir à la liste des pistes sans sauvegarder</button>
         <div id="containerInfos">
             <span class="infoTexte">INFO 1</span><br>

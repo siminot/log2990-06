@@ -4,7 +4,6 @@ import { LettreGrille } from "../../objetsTest/lettreGrille";
 export class OpaciteCase {
     // private motSelectionne: Mot;
 
-
     public static decouvrirCases(mot: Mot, matriceDesMotsSurGrille: Array<Array<LettreGrille>> ): void {
         this.cacherCases(matriceDesMotsSurGrille);
         for (let indice: number = 0; indice < mot.longueur; indice++) {

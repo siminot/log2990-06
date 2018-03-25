@@ -31,7 +31,6 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   public ngOnInit(): void {
     this.mots = this.serviceInteraction.mots;
-    // this.motSelectJoeur2 = new Mot;
     this.inscriptionChangementMots();
     this.inscriptionChangementMotSelect();
     this.inscriptionMonMotSelect();
@@ -54,12 +53,11 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
         this.motSelectionne = motSelec;
         this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
         EncadrementCase.appliquerStyleDefautGrille(document);
-        if(this.motSelectJoeur2 != null) {
+        if (this.motSelectJoeur2 != null) {
           this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
         }
 
         if (!this.motSelectionne.motTrouve) {
-          console.log(this.motSelectionne);
           this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
           if (document.getElementById("00") !== null) {
             this.focusSurBonneLettre();
@@ -129,18 +127,28 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private bloquerMot(motABloquer: Mot, couleur: string): void {
-    this.bloquerMotSurGrille(motABloquer);
+    this.bloquerLettreSurMatrice(motABloquer);
     this.miseEnEvidence.miseEvidenceMot(motABloquer, couleur);
     this.focus.removeFocusFromSelectedWord(motABloquer);
+    this.remplirInputsMot(motABloquer);
   }
 
-  protected bloquerMotSurGrille(motABloquer: Mot): void {
+  protected bloquerLettreSurMatrice(motABloquer: Mot): void {
     for (let i: number = 0; i < motABloquer.longueur; i++) {
       if (motABloquer.estVertical) {
         this.lockedLetter[motABloquer.premierX][motABloquer.premierY + i] = true;
       } else {
         this.lockedLetter[motABloquer.premierX + i][motABloquer.premierY] = true;
       }
+    }
+  }
+
+  private remplirInputsMot(mot: Mot): void {
+    console.log("pls");
+    for (let i: number = 0; i < mot.longueur; i++) {
+      mot.estVertical
+      ? document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).value = mot.mot[i]
+      : document.getElementById((mot.premierX + i).toString() + mot.premierY.toString()).value = mot.mot[i];
     }
   }
 
@@ -177,7 +185,6 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       if (this.motSelectionne != null) {
         this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
       }
-
     });
   }
 

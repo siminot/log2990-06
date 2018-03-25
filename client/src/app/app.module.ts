@@ -34,6 +34,7 @@ import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
 import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
+import { EnregistrementPisteComponent } from "./carApp/enregistrement-piste/enregistrement-piste.component";
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.s
         DirectiveFocusDirective,
         DefinitionHComponent,
         DefinitionVComponent,
-        InfoJoueur1Component
+        InfoJoueur1Component,
+        EnregistrementPisteComponent
     ],
     imports: [
         BrowserModule,

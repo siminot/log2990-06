@@ -35,6 +35,7 @@ import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-
 import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
 import { EnregistrementPisteComponent } from "./carApp/enregistrement-piste/enregistrement-piste.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -54,7 +55,8 @@ import { EnregistrementPisteComponent } from "./carApp/enregistrement-piste/enre
     imports: [
         BrowserModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        FormsModule
     ],
     providers: [
         ServiceDeRenduJeu,

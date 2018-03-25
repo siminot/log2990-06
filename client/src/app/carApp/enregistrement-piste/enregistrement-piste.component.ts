@@ -7,12 +7,15 @@ import { Component, OnInit } from "@angular/core";
 })
 export class EnregistrementPisteComponent implements OnInit {
 
-  public constructor(private nom: string, private description: string) { }
+  public constructor(public nom: string, public description: string) {}
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
-  public sauvegarder(): {
+  public sauvegarder(): void {
+    JSON.stringify({
+      "nom": this.nom, "description": this.description
+    });
   }
 
 }

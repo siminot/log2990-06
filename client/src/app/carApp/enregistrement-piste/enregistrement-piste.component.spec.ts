@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { EnregistrementPisteComponent } from './enregistrement-piste.component';
+import { EnregistrementPisteComponent } from "./enregistrement-piste.component";
 
-describe('EnregistrementPisteComponent', () => {
+describe("EnregistrementPisteComponent", () => {
   let component: EnregistrementPisteComponent;
   let fixture: ComponentFixture<EnregistrementPisteComponent>;
 
@@ -19,7 +19,7 @@ describe('EnregistrementPisteComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

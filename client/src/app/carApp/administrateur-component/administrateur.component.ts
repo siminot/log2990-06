@@ -1,5 +1,4 @@
 import { AfterViewInit, Component } from "@angular/core";
-import { UtilisateurBD } from "../baseDeDonnee/utilisateurBD";
 import { PisteBD } from "../piste/pisteBD";
 import { HttpClient } from "@angular/common/http";
 @Component({

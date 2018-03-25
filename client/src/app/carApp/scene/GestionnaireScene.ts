@@ -67,7 +67,7 @@ export class GestionnaireScene implements IScene {
 
     private ajouterPiste(): void {
         const piste: PisteJeu = new PisteJeu();
-        piste.importerPiste(PISTE_TEST);
+        piste.importer(PISTE_TEST);
         this._scene.add(piste);
     }
 

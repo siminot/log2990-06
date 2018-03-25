@@ -17,6 +17,12 @@ export class PisteEdition extends PisteAbstraite {
         this.verificateurPiste = new VerificateurContraintesPiste(this.intersections);
     }
 
+    public importer(piste: Point[]): void {
+        for (const point of piste) {
+            this.ajouterPoint(point);
+        }
+      }
+
     public exporter(): Point[] {
       const points: Point[] = [];
 

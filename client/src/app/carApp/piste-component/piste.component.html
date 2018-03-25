@@ -15,8 +15,12 @@
         <button  [disabled]="estNouvellePiste" (click)="creerNouvellePiste()" disabled routerLink="/admin">Créer une nouvelle piste</button>
         <button routerLink="/admin">Revenir à la liste des pistes sans sauvegarder</button>
         <div id="containerInfos">
-            <span class="infoTexte">INFO 1</span><br>
-            <span class="infoTexte">INFO 2</span>
+            <br>
+            <a class="infoTexte" id="titreInfos">Informations</a><br>
+            <br>
+            <a class="infoTexte">Nombre de points: {{ nombreDePoints }}</a><br>
+            <a class="infoTexte">Boucle: {{ estBoucle }}</a><br>
+            <a class="infoTexte">Respecte contraintes: {{ respectContraintePiste }}</a><br>
         </div>
     </ul>
 </div>

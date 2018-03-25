@@ -6,6 +6,7 @@ import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
     moduleId: module.id,
@@ -15,6 +16,12 @@ import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPis
 })
 
 export class PisteComponent extends AbstractGameComponent {
+    public nombreDePoints: number;
+    public souscriptionNbPoints: Subscription;
+    public estBoucle: boolean;
+    public souscriptionEstBoucle: Subscription;
+    public respectContraintePiste: boolean;
+    public souscriptionContraintePiste: Subscription;
 
     public nom: string;
     public description: string;
@@ -36,6 +43,10 @@ export class PisteComponent extends AbstractGameComponent {
             this.nom = "";
             this.description = "";
         }
+
+        this.souscrireNombrePoints();
+        this.souscrireEstBoucle();
+        this.souscrireRespectContraintePiste();
     }
 
     public creerNouvellePiste(): void {
@@ -46,4 +57,24 @@ export class PisteComponent extends AbstractGameComponent {
         this.editeurPiste.mettreAJourPiste();
     }
 
+    private souscrireNombrePoints(): void {
+    this.souscriptionNbPoints = this.editeurPiste.piste.receptionNbPoints()
+        .subscribe((nbPoints: number) => {
+            this.nombreDePoints = nbPoints;
+            });
+    }
+
+    private souscrireEstBoucle(): void {
+    this.souscriptionEstBoucle = this.editeurPiste.piste.receptionEstBoucle()
+        .subscribe((estBoucle: boolean) => {
+            this.estBoucle = estBoucle;
+        });
+    }
+
+    private souscrireRespectContraintePiste(): void {
+    this.souscriptionContraintePiste = this.editeurPiste.piste.receptionContraintePiste()
+        .subscribe((respect: boolean) => {
+            this.respectContraintePiste = respect;
+        });
+    }
 }

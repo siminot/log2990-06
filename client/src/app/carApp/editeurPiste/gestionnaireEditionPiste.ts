@@ -6,7 +6,6 @@ import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
 import { TransformateurCoordonnees } from "../editeurPiste/transformateurCoordonnees";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { PisteEdition } from "../piste/pisteEdition";
-import { Group } from "three";
 import { Point } from "../elementsGeometrie/point";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
@@ -17,7 +16,7 @@ export class GestionnaireEditionPiste {
     private transformateur: TransformateurCoordonnees;
     private _piste: PisteEdition;
 
-    public get piste(): Group {
+    public get piste(): PisteEdition {
         return this._piste;
     }
 

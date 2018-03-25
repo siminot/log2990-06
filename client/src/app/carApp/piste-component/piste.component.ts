@@ -18,6 +18,7 @@ export class PisteComponent extends AbstractGameComponent {
 
     public nom: string;
     public description: string;
+    public estNouvellePiste: boolean;
 
     public constructor(private editeurPiste: GestionnaireEditionPiste,
                        @Inject(ServiceDeRenduPistes) serviceDeRendu: ServiceDeRenduPistes,
@@ -26,10 +27,14 @@ export class PisteComponent extends AbstractGameComponent {
                        @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
                        @Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
         super(serviceDeRendu, gestionnaireClavier, gestionnaireEcran, gestionnaireSouris);
-
         if (gestionnaireBD.pisteEdition !== null) {
+            this.estNouvellePiste = false;
             this.nom = gestionnaireBD.pisteEdition.nom;
             this.description = gestionnaireBD.pisteEdition.description;
+        } else {
+            this.estNouvellePiste = true;
+            this.nom = "";
+            this.description = "";
         }
     }
 

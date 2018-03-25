@@ -115,4 +115,20 @@ export class SocketService {
             this.socketClient.on(event.MOT_SEL_J2, (mot: Mot) => unObs.next(mot));
         });
     }
+
+    public recevoirMotTrouve(): void {
+        // recevoir un mot trouver par un joueur
+    }
+
+    public envoyerTentative(mot: Mot): void {
+        this.socketClient.emit(event.TENTATIVE, mot);
+    }
+
+    public recevoirScore(): Observable<number[]> {
+        return new Observable<number[]>( (unObs) => {
+            this.socketClient.on(event.MODIFIER_SCORES, (nouveauScores: number[]) => {
+                unObs.next(nouveauScores);
+            });
+        });
+    }
 }

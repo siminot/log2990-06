@@ -24,3 +24,5 @@ export const ENVOYER_LISTE_PARTIES = "envoyerListeParties";
 export const MOT_SELECTIONNE = "motSelecitonne";
 export const MOT_SEL_J2 = "motSelJ2";
 export const TENTATIVE = "tentative";
+export const BLOQUER_MOT = "bloquerMot";
+export const MODIFIER_SCORES = "MODIFIER_SCORES";

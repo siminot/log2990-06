@@ -115,6 +115,20 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     }
   }
 
+  protected validateWord(): void {
+    const usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
+    const valid: boolean = usersWord === this.motSelectionne.mot;
+
+    if (valid) {
+      this.serviceSocket.envoyerTentative(this.motSelectionne);
+      this.motSelectionne.motTrouve = true;
+      this.lockLettersFromWord();
+      this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "green");
+      this.focus.removeFocusFromSelectedWord(this.motSelectionne);
+      // this._servicePointage.incrementationNbMotDecouv(CONST.INCR_UN_MOT_DECOUVERT);
+    }
+  }
+
   private chargerGrille(): void {
     this.serviceSocket.telechargerPaquetPartie().subscribe((paquet: PaquetPartie) => {
       this.mots = paquet.grilleDeJeu;

@@ -12,7 +12,6 @@ const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tent
 
 export abstract class GrilleAbs implements OnDestroy {
 
-
   protected mots: Mot[];
   protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   protected motSelectionne: Mot;
@@ -149,7 +148,7 @@ export abstract class GrilleAbs implements OnDestroy {
     this.focus.focusSurBonneLettre(this.motSelectionne);
   }
 
-  private validateWord(): void {
+  protected validateWord(): void {
     const usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
     const valid: boolean = usersWord === this.motSelectionne.mot;
 
@@ -162,7 +161,7 @@ export abstract class GrilleAbs implements OnDestroy {
     }
   }
 
-  private lockLettersFromWord(): void {
+  protected lockLettersFromWord(): void {
     for (let i: number = 0; i < this.motSelectionne.longueur; i++) {
       if (this.motSelectionne.estVertical) {
         this.lockedLetter[this.motSelectionne.premierX][this.motSelectionne.premierY + i] = true;
@@ -172,7 +171,7 @@ export abstract class GrilleAbs implements OnDestroy {
     }
   }
 
-  private createWordFromSelectedLetters(): string {
+  protected createWordFromSelectedLetters(): string {
     let wordCreated: string = "";
 
     for (const elem of this.motSelectionne.positionsLettres) {

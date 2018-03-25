@@ -11,6 +11,7 @@ export class InfoPartieServeur {
     private nomPartie: string;
     private difficultee: string;
     private nomJoueurs: Array<string>;
+    private scoreJoueur: number[];
     private joueurs: Array<SocketIO.Socket>;
     private joueursSontPret: boolean;
     private grilleDeJeu: Mot[];
@@ -27,6 +28,7 @@ export class InfoPartieServeur {
     private initialisationsElemPartie(nomPartie: string, difficultee: string, nomJoueur: string): void {
         this.joueursSontPret = false;
         this.joueurs = new Array<SocketIO.Socket>();
+        this.scoreJoueur = [0, 0];
         this.nomPartie = nomPartie;
         this.difficultee = difficultee;
         this.nomJoueurs = new Array<string>();
@@ -105,14 +107,21 @@ export class InfoPartieServeur {
         });
     }
     private definirConfirmationMot(joueur: SocketIO.Socket): void {
-        joueur.on(event.TENTATIVE, () => {
-            this.verificationPartieTerminee();
+        joueur.on(event.TENTATIVE, (motABloquer: Mot) => {
+            this.actualisationScores(joueur);
+            this.grilleDeJeu.splice(this.grilleDeJeu.indexOf(motABloquer), 1); // retire le mot ici
+            joueur.in(this.nomPartie).emit(event.BLOQUER_MOT, motABloquer); // On envoi le mot a bloquer a l'autre joueur
+            if (this.grilleDeJeu.length === 0) {
+                // this.terminerPartie();
+            }
         });
     }
 
-    private verificationPartieTerminee(): void {
-        // if tous les mots sont trouves,
-        // envoyer evenements adequats
+    private actualisationScores(joueur: SocketIO.Socket): void {
+        this.scoreJoueur[this.joueurs.indexOf(joueur)]++;
+        for (const unJoueur of this.joueurs) {
+            unJoueur.in(this.nomPartie).emit(event.MODIFIER_SCORES, this.scoreJoueur);
+        }
     }
 
     public demanderGrille(): void {

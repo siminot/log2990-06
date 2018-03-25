@@ -25,6 +25,7 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
     this._nomJoueur1 = "Joueur 1";
     this._nomJoueur2 = "Joueur 2";
     this.chargerNomsJoueurs();
+    this.miseAJourScores();
    }
 
   protected souscrireListeDeMots(): void {
@@ -48,6 +49,13 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
       this._nomJoueur1 = paquet.nomJoeurs[0];
       this._nomJoueur2 = paquet.nomJoeurs[1];
       this._difficulte = paquet.difficultee;
+    });
+  }
+
+  private miseAJourScores(): void {
+    this.socketClient.recevoirScore().subscribe( (nouveauScores: number[]) => {
+      this._motsDecouvertsJoueur1 = nouveauScores[0];
+      this._motsDecouvertsJoueur2 = nouveauScores[1];
     });
   }
 }

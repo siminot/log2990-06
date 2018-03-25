@@ -16,7 +16,7 @@ describe("PisteJeu", () => {
 
         it("Importer une piste fonctionne", () => {
             expect(piste["intersections"].length).toEqual(0);
-            piste.importerPiste(PISTE_TEST);
+            piste.importer(PISTE_TEST);
             expect(piste["intersections"].length).toEqual(PISTE_TEST.length);
         });
 

@@ -119,10 +119,18 @@ export class InfoPartieServeur {
 
     private confirmerMotTrouve(joueur: SocketIO.Socket, motABloquer: Mot): void {
         this.actualisationScores(joueur);
-        this.grilleDeJeu.splice(this.grilleDeJeu.indexOf(motABloquer), 1);
+        this.retirerMotDeGrille(motABloquer);
         joueur.in(this.nomPartie).emit(event.MOT_PERDU, motABloquer);
         this.joueurs[this.indexAutreJoueur(joueur)].in(this.nomPartie).emit(event.MOT_TROUVE, motABloquer);
         this.verificationFinDePartie();
+    }
+
+    private retirerMotDeGrille(motABloquer: Mot): void {
+        for (const mot of this.grilleDeJeu) {
+            if (motABloquer.mot === mot.mot.toUpperCase()) {
+                this.grilleDeJeu.splice(this.grilleDeJeu.indexOf(mot), 1);
+            }
+        }
     }
 
     private verificationFinDePartie(): void {

@@ -124,7 +124,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     if (valid) {
       this.serviceSocket.envoyerTentative(this.motSelectionne);
       this.motSelectionne.motTrouve = true;
-      this.bloquerMot(this.motSelectionne, "#E98074");
+      this.bloquerMot(this.motSelectionne, "rgb(233, 128, 116)");
     }
   }
 
@@ -147,20 +147,24 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private remplirMotTrouve(mot: Mot, couleur: string): void {
+    let styleInput: string;
+    let idCase: string;
     for (let i: number = 0; i < mot.longueur; i++) {
       if (mot.estVertical) {
-        document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).value = mot.mot[i];
-        const styleInput: string = document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).style.backgroundColor;
-        document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).style.backgroundColor = couleur;
+        idCase = mot.premierX.toString() + (mot.premierY + i).toString();
+        document.getElementById(idCase).value = mot.mot[i];
+        styleInput = document.getElementById(idCase).style.backgroundColor;
+        document.getElementById(idCase).style.backgroundColor = couleur;
         if (styleInput === COULEUR_J2 && couleur !== styleInput) {
-          this.affihcerCasePartagee(mot.premierX.toString() + (mot.premierY + i).toString() + "c");
+          this.affihcerCasePartagee(idCase + "c");
         }
       } else {
-        document.getElementById((mot.premierX + i).toString() + mot.premierY.toString()).value = mot.mot[i];
-        const styleInput: string = document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).style.backgroundColor;
-        document.getElementById((mot.premierX + i).toString() + mot.premierY.toString()).style.backgroundColor = couleur;
+        idCase = (mot.premierX + i).toString() + mot.premierY.toString();
+        document.getElementById(idCase).value = mot.mot[i];
+        styleInput = document.getElementById(idCase).style.backgroundColor;
+        document.getElementById(idCase).style.backgroundColor = couleur;
         if (styleInput === COULEUR_J2 && couleur !== styleInput) {
-          this.affihcerCasePartagee((mot.premierX + i).toString() + mot.premierY.toString() + "c");
+          this.affihcerCasePartagee(idCase + "c");
         }
       }
     }

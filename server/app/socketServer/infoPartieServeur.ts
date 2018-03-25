@@ -108,11 +108,21 @@ export class InfoPartieServeur {
     }
     private definirConfirmationMot(joueur: SocketIO.Socket): void {
         joueur.on(event.TENTATIVE, (motABloquer: Mot) => {
-            this.actualisationScores(joueur);
-            this.grilleDeJeu.splice(this.grilleDeJeu.indexOf(motABloquer), 1);
-            joueur.in(this.nomPartie).emit(event.BLOQUER_MOT, motABloquer); // Pas sur encore :O
-            this.verificationFinDePartie();
+            for (const mot of this.grilleDeJeu) {
+                if (motABloquer.mot === mot.mot.toUpperCase()) {
+                    console.log(mot.mot.toUpperCase() + " " + motABloquer.mot);
+                    this.confirmerMotTrouve(joueur, motABloquer);
+                }
+            }
         });
+    }
+
+    private confirmerMotTrouve(joueur: SocketIO.Socket, motABloquer: Mot): void {
+        this.actualisationScores(joueur);
+        this.grilleDeJeu.splice(this.grilleDeJeu.indexOf(motABloquer), 1);
+        joueur.in(this.nomPartie).emit(event.MOT_PERDU, motABloquer);
+        this.joueurs[this.indexAutreJoueur(joueur)].in(this.nomPartie).emit(event.MOT_TROUVE, motABloquer);
+        this.verificationFinDePartie();
     }
 
     private verificationFinDePartie(): void {

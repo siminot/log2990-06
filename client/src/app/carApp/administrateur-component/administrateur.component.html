@@ -5,10 +5,10 @@
     {{piste.nom}}: {{piste.description}}
 
     <button class="editer" title="editer"
-    (click)="editer(piste)">éditer</button>
+    (click)="editerPiste(piste)" routerLink="/editeurPistes">Éditer</button>
 
     <button class="supprimer" title="supprimer"
-    (click)="supprimer(piste)">supprimer</button>
+    (click)="supprimerPiste(piste)">Supprimer</button>
 
   </li>
 </ul>

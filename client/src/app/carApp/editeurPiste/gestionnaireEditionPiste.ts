@@ -21,15 +21,23 @@ export class GestionnaireEditionPiste {
         return this._piste;
     }
 
-    public constructor(@Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
+    public constructor(private gestionnaireBD: GestionnaireBDCourse,
+                       @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
                        @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste,
-                       @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
-                       @Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
+                       @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran) {
         this._piste = new PisteEdition();
         this._piste.importer(gestionnaireBD.pointsEdition);
         this.souris = new UtilisateurPeripherique(gestionnaireSouris);
         this.transformateur = new TransformateurCoordonnees(gestionnaireCamera, gestionnaireEcran);
         this.inscriptionSouris();
+    }
+
+    public creerNouvellePiste(nom: string, description: string): void {
+        this.gestionnaireBD.creerNouvellePiste({_id: null, nom: nom, description: description, points: this._piste.exporter()});
+    }
+
+    public mettreAJourPiste(): void {
+        this.gestionnaireBD.mettreAJourPiste(this._piste.exporter());
     }
 
     private inscriptionSouris(): void {

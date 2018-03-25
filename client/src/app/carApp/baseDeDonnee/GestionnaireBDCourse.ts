@@ -5,6 +5,8 @@ import { Point } from "../elementsGeometrie/point";
 
 export const PISTES_URL: string = "http://localhost:3000/apipistes/";
 const URL_SUPPRIMER_PISTE: string = PISTES_URL + "supprimer/";
+const URL_AJOUTER_PISTE: string = PISTES_URL + "ajouter/";
+const URL_MODIFIER_PISTE: string = PISTES_URL + "modifier/";
 
 @Injectable()
 export class GestionnaireBDCourse {
@@ -38,5 +40,14 @@ export class GestionnaireBDCourse {
 
     public supprimerPiste(piste: PisteBD): void {
         this.http.delete(URL_SUPPRIMER_PISTE + piste._id).subscribe();
+    }
+
+    public creerNouvellePiste(piste: PisteBD): void {
+        this.http.post(URL_AJOUTER_PISTE, piste).subscribe();
+    }
+
+    public mettreAJourPiste(points: Point[]): void {
+        this.pisteEdition.points = points;
+        this.http.patch(URL_MODIFIER_PISTE, this.pisteEdition).subscribe();
     }
 }

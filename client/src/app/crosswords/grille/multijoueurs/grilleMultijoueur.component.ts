@@ -130,6 +130,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.bloquerLettreSurMatrice(motABloquer);
     this.miseEnEvidence.miseEvidenceMot(motABloquer, couleur);
     this.focus.removeFocusFromSelectedWord(motABloquer);
+    this.retrouverMot(motABloquer).motTrouve = true;
     this.remplirInputsMot(motABloquer);
   }
 
@@ -144,7 +145,6 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private remplirInputsMot(mot: Mot): void {
-    console.log("pls");
     for (let i: number = 0; i < mot.longueur; i++) {
       mot.estVertical
       ? document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).value = mot.mot[i]
@@ -171,7 +171,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   private inscriptionMonMotSelect(): void {
     this.serviceSocket.recevoirMotSelect().subscribe( (mot: Mot) => {
       OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
-      this.motSelectionne = mot;
+      this.motSelectionne = this.retrouverMot(mot);
       this.motSelectionne.activer = true;
       this.envoieMotSelectionne(mot);
     });
@@ -179,7 +179,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   private inscriptionMotSelecetionneJ2(): void {
     this.serviceSocket.recevoirMotSelectJ2().subscribe((motJ2: Mot) => {
-      this.motSelectJoeur2 = motJ2;
+      this.motSelectJoeur2 = this.retrouverMot(motJ2);
       EncadrementCase.appliquerStyleDefautGrille(document);
       this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
       if (this.motSelectionne != null) {
@@ -198,5 +198,15 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.serviceSocket.recevoirMotPerdu().subscribe( (motPerdu: Mot) => {
       this.bloquerMot(motPerdu, "purple");
     });
+  }
+
+  private retrouverMot(motSocket: Mot): Mot {
+    for (const mot of this.mots) {
+      if (mot.mot.toLowerCase() === motSocket.mot.toLowerCase()) {
+        return mot;
+      }
+    }
+
+    return undefined;
   }
 }

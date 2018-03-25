@@ -1,6 +1,6 @@
 import { Mongoose, Model, Schema, Document } from "mongoose";
 import { PisteBD } from "../../../client/src/app/carApp/piste/pisteBD";
-import { ErreurRechercheBaseDonnees } from "./../../../client/src/app/exceptions/erreurRechercheBD";
+import { ErreurRechercheBaseDonnees } from "../exceptions/erreurRechercheBD";
 import { Request, Response, NextFunction } from "express";
 import { injectable } from "inversify";
 

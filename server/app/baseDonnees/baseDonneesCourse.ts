@@ -3,6 +3,7 @@ import { PisteBD } from "../../../client/src/app/carApp/piste/pisteBD";
 import { ErreurRechercheBaseDonnees } from "../exceptions/erreurRechercheBD";
 import { Request, Response, NextFunction } from "express";
 import { injectable } from "inversify";
+import { ErreurSupressionBaseDonnees } from "../exceptions/erreurSupressionBD";
 
 const URL_BD: string = "mongodb://admin:admin@ds123129.mlab.com:23129/log2990";
 
@@ -65,8 +66,8 @@ export class BaseDonneesCourse {
         });
     }
 
-    private async supprimerUnePiste(nomPiste: string): Promise<void> {
-        this.modelPiste.findOneAndRemove({nom: nomPiste});
+    private async supprimerUnePiste(identifiant: string): Promise<void> {
+        this.modelPiste.findByIdAndRemove(identifiant).exec().catch(() => new ErreurSupressionBaseDonnees());
     }
 
     private async obtenirPistes(): Promise<PisteBD[]> {
@@ -109,6 +110,6 @@ export class BaseDonneesCourse {
             await this.seConnecter();
         }
         this.chargerModelPiste();
-        res.send(await this.supprimerUnePiste(req.params.nom));
+        res.send(await this.supprimerUnePiste(req.params.id));
     }
 }

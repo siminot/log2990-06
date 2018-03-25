@@ -3,8 +3,8 @@ import { PisteBD } from "../piste/pisteBD";
 import { HttpClient } from "@angular/common/http";
 import { Point } from "../elementsGeometrie/point";
 
-export const PISTES_URL: string = "http://localhost:3000/apipistes";
-const SUPRIMER_PISTES_URL: string = "http://localhost:3000/apipistes/supprimer/";
+export const PISTES_URL: string = "http://localhost:3000/apipistes/";
+const URL_SUPPRIMER_PISTE: string = PISTES_URL + "supprimer/";
 
 @Injectable()
 export class GestionnaireBDCourse {
@@ -32,6 +32,6 @@ export class GestionnaireBDCourse {
     }
 
     public supprimerPiste(piste: PisteBD): void {
-        this.http.delete(SUPRIMER_PISTES_URL + piste.nom);
+        this.http.delete(URL_SUPPRIMER_PISTE + piste._id).subscribe();
     }
 }

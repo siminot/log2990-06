@@ -29,7 +29,7 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
             await this.baseDonneesCourse.requeteAjoutDUnePiste(res, req, next);
         });
 
-        router.delete("supprimer/:nom", async (res: Request, req: Response, next: NextFunction) => {
+        router.delete("/supprimer/:id", async (res: Request, req: Response, next: NextFunction) => {
             await this.baseDonneesCourse.requeteSupprimerPiste(res, req, next);
         });
 

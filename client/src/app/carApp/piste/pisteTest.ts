@@ -10,12 +10,14 @@ export const PISTE_TEST: Point[] = [
 ];
 
 const PISTE1: PisteBD = {
+    _id: "1",
     nom: "Piste 1",
     description: "Parc au centre de la ville",
     points: PISTE_TEST
 };
 
 const PISTE2: PisteBD = {
+    _id: "2",
     nom: "Piste 2",
     description: "Champs de ble",
     points: PISTE_TEST

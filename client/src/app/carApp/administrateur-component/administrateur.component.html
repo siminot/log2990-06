@@ -1,14 +1,14 @@
 
-<h2>Pistes stockees</h2>
+<h2>Pistes stockées</h2>
 <ul class="pistes">
   <li *ngFor="let piste of pistes">
-    {{piste.nom}} {{piste.description}}
+    {{piste.nom}}: {{piste.description}}
 
     <button class="editer" title="editer"
-    (click)="editer(piste)">x</button>
+    (click)="editer(piste)">éditer</button>
 
     <button class="supprimer" title="supprimer"
-    (click)="supprimer(piste)">x</button>
+    (click)="supprimer(piste)">supprimer</button>
 
   </li>
 </ul>

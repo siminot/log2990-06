@@ -46,8 +46,7 @@ export class GestionnaireBDCourse {
         this.http.post(URL_AJOUTER_PISTE, piste).subscribe();
     }
 
-    public mettreAJourPiste(points: Point[]): void {
-        this.pisteEdition.points = points;
-        this.http.patch(URL_MODIFIER_PISTE + this.pisteEdition._id, this.pisteEdition.points).subscribe();
+    public mettreAJourPiste(piste: PisteBD): void {
+        this.http.patch(URL_MODIFIER_PISTE + this.pisteEdition._id, piste).subscribe();
     }
 }

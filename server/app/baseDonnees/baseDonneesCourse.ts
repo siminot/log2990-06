@@ -4,7 +4,6 @@ import { ErreurRechercheBaseDonnees } from "../exceptions/erreurRechercheBD";
 import { Request, Response, NextFunction } from "express";
 import { injectable } from "inversify";
 import { ErreurSupressionBaseDonnees } from "../exceptions/erreurSupressionBD";
-import { IDefinitionPoint } from "../../../common/communication/IDefinitionPoint";
 
 const URL_BD: string = "mongodb://admin:admin@ds123129.mlab.com:23129/log2990";
 
@@ -44,8 +43,9 @@ export class BaseDonneesCourse {
         await this.modelPiste.create(piste);
     }
 
-    private async modifierUnePiste(identifiant: string, points: IDefinitionPoint[]): Promise<void> {
-        this.modelPiste.findByIdAndUpdate(identifiant, {points: points}).exec();
+    private async modifierUnePiste(identifiant: string, piste: PisteBD): Promise<void> {
+        console.log(piste);
+        this.modelPiste.findByIdAndUpdate(identifiant, {nom: piste.nom, description: piste.description, points: piste.points}).exec();
     }
 
     private async supprimerUnePiste(identifiant: string): Promise<void> {

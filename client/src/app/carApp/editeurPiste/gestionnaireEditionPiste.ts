@@ -35,8 +35,8 @@ export class GestionnaireEditionPiste {
         this.gestionnaireBD.creerNouvellePiste({_id: null, nom: nom, description: description, points: this._piste.exporter()});
     }
 
-    public mettreAJourPiste(): void {
-        this.gestionnaireBD.mettreAJourPiste(this._piste.exporter());
+    public mettreAJourPiste(nom: string, description: string): void {
+        this.gestionnaireBD.mettreAJourPiste({_id: null, nom: nom, description: description, points: this._piste.exporter()});
     }
 
     private inscriptionSouris(): void {

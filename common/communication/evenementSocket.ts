@@ -15,7 +15,6 @@ export const NOM_EXISTANT = "nomExistant";
 export const NOM_NON_EXISTANT = "nomNonExistant";
 export const ROOM_CREEE = "roomCreee";
 
-export const CHANGER_NOM_JOUEUR = "changerNomJoueur";
 export const JOUEUR_QUITTE = "joueurQuitte";
 
 export const REJOINDRE = "rejoindrePartie";         // 2
@@ -27,3 +26,7 @@ export const TENTATIVE = "tentative";
 export const MOT_TROUVE = "motTrouve";
 export const MOT_PERDU = "motPerdu"
 export const MODIFIER_SCORES = "MODIFIER_SCORES";
+
+export const VICTOIRE = "victoire";
+export const DEFAITE = "defaite";
+export const EXECO = "execo";

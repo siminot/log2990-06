@@ -21,6 +21,7 @@ import { ServiceDeRenduPistes } from "./carApp/serviceDeRendu/serviceDeRenduPist
 import { GestionnaireScenePiste } from "./carApp/scene/GestionnaireScenePiste";
 import { GestionnaireCameraPiste } from "./carApp/camera/GestionnaireCameraPiste";
 import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
+import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse";
 
 import { AppRoutingModule } from ".//app-routing.module";
 import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
@@ -71,6 +72,7 @@ import { FormsModule } from "@angular/forms";
         GestionnaireEcran,
         GestionnaireSouris,
         GestionnaireEditionPiste,
+        GestionnaireBDCourse,
         RequeteDeGrilleService,
         HttpeReqService,
         InfojoueurService

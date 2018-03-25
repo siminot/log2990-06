@@ -4,8 +4,11 @@
         <li>Gear: {{this.gestionnaireVoitures.voitureJoueur.currentGear + 1}}</li>
         <li>RPM: {{this.gestionnaireVoitures.voitureJoueur.rpm | number:'2.0-0'}} </li>
     </ul> -->
-    
+
     <ul id="informations">
+        <button class="annuler" title="annuler"
+        routerLink="/admin">Revenir à la liste des pistes sans sauvegarder</button>
+
         <div id="containerInfos">
             <span class="infoTexte">INFO 1</span><br>
             <span class="infoTexte">INFO 2</span>

@@ -10,6 +10,7 @@ export class AdministrateurComponent implements AfterViewInit {
 
     public pistes: PisteBD[];
     private readonly pistesURL: string = "http://localhost:3000/apipistes";
+    private readonly supprimerPisteURL: string = "http://localhost:3000/apipistes/supprimer/";
 
     public constructor(private http: HttpClient) {
 
@@ -29,6 +30,6 @@ export class AdministrateurComponent implements AfterViewInit {
     }
 
     public supprimerPiste(piste: PisteBD): void {
-
+      this.http.delete(this.supprimerPisteURL + piste.nom);
     }
 }

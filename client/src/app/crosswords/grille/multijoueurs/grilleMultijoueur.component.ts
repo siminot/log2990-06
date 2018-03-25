@@ -57,6 +57,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
         }
 
         if (!this.motSelectionne.motTrouve) {
+          console.log(this.motSelectionne);
           this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
           if (document.getElementById("00") !== null) {
             this.focusSurBonneLettre();
@@ -75,8 +76,8 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     }
   }
 
-  protected envoieMotSelectionne(): void {
-    this.serviceInteraction.serviceEnvoieMotSelectionne(this.motSelectionne);
+  protected envoieMotSelectionne(mot: Mot): void {
+    this.serviceInteraction.serviceEnvoieMotSelectionne(mot);
   }
 
   public switchCheatMode(): void {
@@ -155,9 +156,10 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   private inscriptionMonMotSelect(): void {
     this.serviceSocket.recevoirMotSelect().subscribe( (mot: Mot) => {
-      this.motSelectionne = mot;
       OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
-      this.envoieMotSelectionne();
+      this.motSelectionne = mot;
+      this.motSelectionne.activer = true;
+      this.envoieMotSelectionne(mot);
     });
   }
 
@@ -169,6 +171,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       if(this.motSelectionne != null){
         this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
       }
+
     });
   }
 }

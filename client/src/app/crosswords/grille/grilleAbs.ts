@@ -24,6 +24,7 @@ export abstract class GrilleAbs implements OnDestroy {
   protected focus: GrilleFocus;
   protected focusSurPage: boolean;
 
+
   public constructor(protected _servicePointage: InfojoueurService) {
     this.miseEnEvidence = new MiseEnEvidence();
     this.focus = new GrilleFocus(document, 0);
@@ -89,8 +90,6 @@ export abstract class GrilleAbs implements OnDestroy {
 
     return this.findWordFromXY(x, y);
   }
-
-  protected abstract envoieMotSelectionne(): void;
 
   private findWordFromXY(X: number, Y: number): Mot {
     let motTrouve: Mot;

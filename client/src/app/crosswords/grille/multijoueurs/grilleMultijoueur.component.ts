@@ -11,6 +11,8 @@ import { TAILLE_TABLEAU } from "../../constantes";
 import { OpaciteCase } from "./../librairieGrille/opaciteCase";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
+const COULEUR_J2: string = "rgb(132, 112, 255)";
+
 @Component({
   selector: "app-grille-multi",
   templateUrl: "../solo/grille.component.html",
@@ -122,16 +124,16 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     if (valid) {
       this.serviceSocket.envoyerTentative(this.motSelectionne);
       this.motSelectionne.motTrouve = true;
-      this.bloquerMot(this.motSelectionne, "green");
+      this.bloquerMot(this.motSelectionne, "#E98074");
     }
   }
 
   private bloquerMot(motABloquer: Mot, couleur: string): void {
     this.bloquerLettreSurMatrice(motABloquer);
     this.miseEnEvidence.miseEvidenceMot(motABloquer, couleur);
-    this.focus.removeFocusFromSelectedWord(motABloquer);
+    this.focus.removeFocusFromSelectedWord(this.retrouverMot(motABloquer));
     this.retrouverMot(motABloquer).motTrouve = true;
-    this.remplirInputsMot(motABloquer);
+    this.remplirMotTrouve(motABloquer, couleur);
   }
 
   protected bloquerLettreSurMatrice(motABloquer: Mot): void {
@@ -144,12 +146,28 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     }
   }
 
-  private remplirInputsMot(mot: Mot): void {
+  private remplirMotTrouve(mot: Mot, couleur: string): void {
     for (let i: number = 0; i < mot.longueur; i++) {
-      mot.estVertical
-      ? document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).value = mot.mot[i]
-      : document.getElementById((mot.premierX + i).toString() + mot.premierY.toString()).value = mot.mot[i];
+      if (mot.estVertical) {
+        document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).value = mot.mot[i];
+        const styleInput: string = document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).style.backgroundColor;
+        document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).style.backgroundColor = couleur;
+        if (styleInput === COULEUR_J2 && couleur !== styleInput) {
+          this.affihcerCasePartagee(mot.premierX.toString() + (mot.premierY + i).toString() + "c");
+        }
+      } else {
+        document.getElementById((mot.premierX + i).toString() + mot.premierY.toString()).value = mot.mot[i];
+        const styleInput: string = document.getElementById(mot.premierX.toString() + (mot.premierY + i).toString()).style.backgroundColor;
+        document.getElementById((mot.premierX + i).toString() + mot.premierY.toString()).style.backgroundColor = couleur;
+        if (styleInput === COULEUR_J2 && couleur !== styleInput) {
+          this.affihcerCasePartagee((mot.premierX + i).toString() + mot.premierY.toString() + "c");
+        }
+      }
     }
+  }
+
+  private affihcerCasePartagee(idCase: string): void {
+    document.getElementById(idCase).src = "../../../assets/hachure.png";
   }
 
   private chargerGrille(): void {
@@ -163,7 +181,9 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   protected retrieveWordFromClick(event: KeyboardEvent): Mot {
     const mot: Mot = super.retrieveWordFromClick(event);
-    this.serviceSocket.envoyerMotSelect(mot);
+    if (!mot.motTrouve) {
+      this.serviceSocket.envoyerMotSelect(mot);
+    }
 
     return mot;
   }
@@ -173,7 +193,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
       this.motSelectionne = this.retrouverMot(mot);
       this.motSelectionne.activer = true;
-      this.envoieMotSelectionne(mot);
+      this.envoieMotSelectionne(this.motSelectionne);
     });
   }
 
@@ -190,13 +210,13 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   private inscriptionMotTrouve(): void {
     this.serviceSocket.recevoirMotTrouve().subscribe( (motTrouve: Mot) => {
-      this.bloquerMot(motTrouve, "green");
+      this.bloquerMot(motTrouve, "rgb(233, 128, 116)");
     });
   }
 
   private inscriptionMotPerdu(): void {
     this.serviceSocket.recevoirMotPerdu().subscribe( (motPerdu: Mot) => {
-      this.bloquerMot(motPerdu, "purple");
+      this.bloquerMot(motPerdu, "rgb(132, 112, 255)");
     });
   }
 

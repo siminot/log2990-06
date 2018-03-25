@@ -13,16 +13,21 @@ export class GestionnaireBDCourse {
     public pisteEdition: PisteBD;
 
     public get pointsEdition(): Point[] {
-        const piste: Point[] = [];
+        if (this.pisteEdition === null) {
+            return [];
+        } else {
+            const piste: Point[] = [];
+            for (const point of this.pisteEdition.points) {
+                piste.push(new Point(point.x, point.y));
+            }
 
-        for (const point of this.pisteEdition.points) {
-            piste.push(new Point(point.x, point.y));
+            return piste;
         }
-
-        return piste;
     }
 
-    public constructor(private http: HttpClient) { }
+    public constructor(private http: HttpClient) {
+        this.pisteEdition = null;
+    }
 
     public obtenirPistes(): PisteBD[] {
         this.http.get<PisteBD[]>(PISTES_URL)

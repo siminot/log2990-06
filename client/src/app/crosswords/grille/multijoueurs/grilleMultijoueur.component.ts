@@ -19,7 +19,7 @@ const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDeco
 
 export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
-  private motSelectJoeur2 : Mot;
+  private motSelectJoeur2: Mot;
 
   public constructor(_servicePointage: InfojoueurService,
                      private serviceSocket: SocketService,
@@ -124,7 +124,16 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       this.lockLettersFromWord();
       this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "green");
       this.focus.removeFocusFromSelectedWord(this.motSelectionne);
-      // this._servicePointage.incrementationNbMotDecouv(CONST.INCR_UN_MOT_DECOUVERT);
+    }
+  }
+
+  protected lockLettersFromWord(): void {
+    for (let i: number = 0; i < this.motSelectionne.longueur; i++) {
+      if (this.motSelectionne.estVertical) {
+        this.lockedLetter[this.motSelectionne.premierX][this.motSelectionne.premierY + i] = true;
+      } else {
+        this.lockedLetter[this.motSelectionne.premierX + i][this.motSelectionne.premierY] = true;
+      }
     }
   }
 

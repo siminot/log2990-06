@@ -109,12 +109,16 @@ export class InfoPartieServeur {
     private definirConfirmationMot(joueur: SocketIO.Socket): void {
         joueur.on(event.TENTATIVE, (motABloquer: Mot) => {
             this.actualisationScores(joueur);
-            this.grilleDeJeu.splice(this.grilleDeJeu.indexOf(motABloquer), 1); // retire le mot ici
-            joueur.in(this.nomPartie).emit(event.BLOQUER_MOT, motABloquer); // On envoi le mot a bloquer a l'autre joueur
-            if (this.grilleDeJeu.length === 0) {
-                // this.terminerPartie();
-            }
+            this.grilleDeJeu.splice(this.grilleDeJeu.indexOf(motABloquer), 1);
+            joueur.in(this.nomPartie).emit(event.BLOQUER_MOT, motABloquer); // Pas sur encore :O
+            this.verificationFinDePartie();
         });
+    }
+
+    private verificationFinDePartie(): void {
+        if (this.grilleDeJeu.length === 0) {
+            // this.terminerPartie();
+        }
     }
 
     private actualisationScores(joueur: SocketIO.Socket): void {

@@ -17,7 +17,7 @@ export class PisteJeu extends PisteAbstraite {
         this.premierSegment = null;
     }
 
-    public importerPiste(points: Point[]): void {
+    public importer(points: Point[]): void {
         if (this.intersections.length === 0) {
             for (const point of points) {
                 this.ajouterPoint(point);

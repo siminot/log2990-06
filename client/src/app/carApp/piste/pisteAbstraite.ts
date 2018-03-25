@@ -23,6 +23,7 @@ export abstract class PisteAbstraite extends Group {
         return somme > 0;
     }
 
+    public abstract importer(piste: Point[]): void;
     public abstract ajouterPoint(point: IPoint): void;
 
     protected get premiereIntersection(): IPoint {

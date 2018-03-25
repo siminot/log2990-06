@@ -110,7 +110,6 @@ export class InfoPartieServeur {
         joueur.on(event.TENTATIVE, (motABloquer: Mot) => {
             for (const mot of this.grilleDeJeu) {
                 if (motABloquer.mot === mot.mot.toUpperCase()) {
-                    console.log(mot.mot.toUpperCase() + " " + motABloquer.mot);
                     this.confirmerMotTrouve(joueur, motABloquer);
                 }
             }
@@ -135,7 +134,7 @@ export class InfoPartieServeur {
 
     private verificationFinDePartie(): void {
         if (this.grilleDeJeu.length === 0) {
-            // this.terminerPartie();
+            console.log("FINI");
         }
     }
 

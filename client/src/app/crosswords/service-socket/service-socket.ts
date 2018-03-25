@@ -116,12 +116,24 @@ export class SocketService {
         });
     }
 
-    public recevoirMotTrouve(): void {
-        // recevoir un mot trouver par un joueur
-    }
-
     public envoyerTentative(mot: Mot): void {
         this.socketClient.emit(event.TENTATIVE, mot);
+    }
+
+    public recevoirMotPerdu(): Observable<Mot> {
+        return new Observable<Mot>( (unObs) => {
+            this.socketClient.on(event.MOT_PERDU, (motPerdu: Mot) => {
+                unObs.next(motPerdu);
+            });
+        });
+    }
+
+    public recevoirMotTrouve(): Observable<Mot> {
+        return new Observable<Mot>( (unObs) => {
+            this.socketClient.on(event.MOT_TROUVE, (motTrouve: Mot) => {
+                unObs.next(motTrouve);
+            });
+        });
     }
 
     public recevoirScore(): Observable<number[]> {

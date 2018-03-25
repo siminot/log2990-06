@@ -36,6 +36,8 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.inscriptionChangementMotSelect();
     this.inscriptionMonMotSelect();
     this.inscriptionMotSelecetionneJ2();
+    this.inscriptionMotTrouve();
+    this.inscriptionMotPerdu();
     this.chargerGrille();
   }
 
@@ -122,18 +124,22 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     if (valid) {
       this.serviceSocket.envoyerTentative(this.motSelectionne);
       this.motSelectionne.motTrouve = true;
-      this.lockLettersFromWord();
-      this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "green");
-      this.focus.removeFocusFromSelectedWord(this.motSelectionne);
+      this.bloquerMot(this.motSelectionne, "green");
     }
   }
 
-  protected lockLettersFromWord(): void {
-    for (let i: number = 0; i < this.motSelectionne.longueur; i++) {
-      if (this.motSelectionne.estVertical) {
-        this.lockedLetter[this.motSelectionne.premierX][this.motSelectionne.premierY + i] = true;
+  private bloquerMot(motABloquer: Mot, couleur: string): void {
+    this.bloquerMotSurGrille(motABloquer);
+    this.miseEnEvidence.miseEvidenceMot(motABloquer, couleur);
+    this.focus.removeFocusFromSelectedWord(motABloquer);
+  }
+
+  protected bloquerMotSurGrille(motABloquer: Mot): void {
+    for (let i: number = 0; i < motABloquer.longueur; i++) {
+      if (motABloquer.estVertical) {
+        this.lockedLetter[motABloquer.premierX][motABloquer.premierY + i] = true;
       } else {
-        this.lockedLetter[this.motSelectionne.premierX + i][this.motSelectionne.premierY] = true;
+        this.lockedLetter[motABloquer.premierX + i][motABloquer.premierY] = true;
       }
     }
   }
@@ -168,10 +174,22 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       this.motSelectJoeur2 = motJ2;
       EncadrementCase.appliquerStyleDefautGrille(document);
       this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
-      if(this.motSelectionne != null){
+      if (this.motSelectionne != null) {
         this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
       }
 
+    });
+  }
+
+  private inscriptionMotTrouve(): void {
+    this.serviceSocket.recevoirMotTrouve().subscribe( (motTrouve: Mot) => {
+      this.bloquerMot(motTrouve, "green");
+    });
+  }
+
+  private inscriptionMotPerdu(): void {
+    this.serviceSocket.recevoirMotPerdu().subscribe( (motPerdu: Mot) => {
+      this.bloquerMot(motPerdu, "purple");
     });
   }
 }

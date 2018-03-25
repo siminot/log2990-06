@@ -53,6 +53,14 @@ export class BaseDonneesCourse {
         await this.modelPiste.create(piste);
     }
 
+    private async modifierUnePiste(nomPiste: string): Promise<void> {
+        this.modelPiste.findOne({nom: nomPiste}, (err: ErreurRechercheBaseDonnees, res: Document) =>)
+    }
+
+    private async supprimerUnePiste(nomPiste: string): Promise<void> {
+        this.modelPiste.findOneAndRemove({nom: nomPiste});
+    }
+
     private async obtenirPistes(): Promise<PisteBD[]> {
         const pistes: PisteBD[] = [];
         await this.modelPiste.find((err: ErreurRechercheBaseDonnees, res: Document[]) => {
@@ -78,5 +86,13 @@ export class BaseDonneesCourse {
         }
         this.chargerModelPiste();
         res.send(await this.ajouterPisteBidon());
+    }
+
+    public async requeteSupprimerPiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+        if (this.connection !== 1) {
+            await this.seConnecter();
+        }
+        this.chargerModelPiste();
+        res.send(await this.supprimerUnePiste(req.params.nom));
     }
 }

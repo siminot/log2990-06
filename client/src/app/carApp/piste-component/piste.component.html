@@ -1,13 +1,17 @@
 <div #container oncontextmenu="return false" id="editeurPiste">
-    <!-- <ul>
-        <li>Speed: {{this.gestionnaireVoitures.voitureJoueur.speed.length() * 3.6 | number :'2.2-2'}} km/h</li>
-        <li>Gear: {{this.gestionnaireVoitures.voitureJoueur.currentGear + 1}}</li>
-        <li>RPM: {{this.gestionnaireVoitures.voitureJoueur.rpm | number:'2.0-0'}} </li>
-    </ul> -->
-
     <ul id="informations">
-        <button class="annuler" title="annuler"
-        routerLink="/admin">Revenir à la liste des pistes sans sauvegarder</button>
+        <div id="InputsEnregistrement">
+            <div>
+                <label>Nom:</label>
+                <input type="text" [(ngModel)]="nom" placeholder="">
+            </div>
+            <div>
+                <label>Description:</label>
+                <input type="text" [(ngModel)]="description" placeholder="">
+            </div>
+        </div> 
+
+        <button (click)="sauvegarder()">Sauvegarder</button>
 
         <div id="containerInfos">
             <span class="infoTexte">INFO 1</span><br>

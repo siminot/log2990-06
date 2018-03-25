@@ -48,6 +48,6 @@ export class GestionnaireBDCourse {
 
     public mettreAJourPiste(points: Point[]): void {
         this.pisteEdition.points = points;
-        this.http.patch(URL_MODIFIER_PISTE, this.pisteEdition).subscribe();
+        this.http.patch(URL_MODIFIER_PISTE + this.pisteEdition._id, this.pisteEdition.points).subscribe();
     }
 }

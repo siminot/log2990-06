@@ -4,6 +4,7 @@ import { ErreurRechercheBaseDonnees } from "../exceptions/erreurRechercheBD";
 import { Request, Response, NextFunction } from "express";
 import { injectable } from "inversify";
 import { ErreurSupressionBaseDonnees } from "../exceptions/erreurSupressionBD";
+import { IDefinitionPoint } from "../../../common/communication/IDefinitionPoint";
 
 const URL_BD: string = "mongodb://admin:admin@ds123129.mlab.com:23129/log2990";
 
@@ -38,28 +39,13 @@ export class BaseDonneesCourse {
         }
     }
 
-    private async ajouterPisteBidon(): Promise<void> {
-        const longueur: number = 100;
-        const piste: Document =  new this.modelPiste ({
-            nom: "Piste 1",
-            description: "Parc au centre de la ville",
-            points: [   {x: -longueur, y: -longueur},
-                        {x: longueur, y: -longueur},
-                        {x: longueur, y: longueur},
-                        {x: -longueur , y: longueur}    ]
-        });
-        await this.modelPiste.create(piste);
-    }
-
     private async ajouterPiste(pisteJson: {}): Promise<void> {
         const piste: Document =  new this.modelPiste(pisteJson);
         await this.modelPiste.create(piste);
     }
 
-    private async modifierUnePiste(nomPiste: string): Promise<void> {
-        this.modelPiste.findOne({nom: nomPiste}, (err: ErreurRechercheBaseDonnees, res: Document) => {
-            res.toJSON(); // en attendant
-        });
+    private async modifierUnePiste(identifiant: string, points: IDefinitionPoint[]): Promise<void> {
+        this.modelPiste.findByIdAndUpdate(identifiant, {points: points}).exec();
     }
 
     private async supprimerUnePiste(identifiant: string): Promise<void> {
@@ -87,13 +73,13 @@ export class BaseDonneesCourse {
         res.send(await this.ajouterPiste(req.body));
     }
 
-    public async requeteAjoutDUnePisteBidon(req: Request, res: Response, next: NextFunction): Promise<void> {
-        this.assurerConnection();
-        res.send(await this.ajouterPisteBidon());
-    }
-
     public async requeteSupprimerPiste(req: Request, res: Response, next: NextFunction): Promise<void> {
         this.assurerConnection();
-        res.send(await this.supprimerUnePiste(req.params.nom));
+        res.send(await this.supprimerUnePiste(req.params.id));
+    }
+
+    public async requeteModifierPiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+        this.assurerConnection();
+        res.send(await this.modifierUnePiste(req.params.id, req.body));
     }
 }

@@ -21,12 +21,12 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
             this.baseDonneesCourse.requeteDePistes(req, res, next).catch((erreur: Error) => res.send(erreur));
         });
 
-        router.post("/ajoutBidon", async (res: Request, req: Response, next: NextFunction) => {
-            await this.baseDonneesCourse.requeteAjoutDUnePisteBidon(res, req, next);
-        });
-
         router.post("/ajouter", async (res: Request, req: Response, next: NextFunction) => {
             await this.baseDonneesCourse.requeteAjoutDUnePiste(res, req, next);
+        });
+
+        router.patch("/modifier/:id", async (res: Request, req: Response, next: NextFunction) => {
+            await this.baseDonneesCourse.requeteModifierPiste(res, req, next);
         });
 
         router.delete("/supprimer/:id", async (res: Request, req: Response, next: NextFunction) => {

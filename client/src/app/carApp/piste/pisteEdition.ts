@@ -18,19 +18,22 @@ export class PisteEdition extends PisteAbstraite {
     }
 
     public importer(piste: Point[]): void {
-        for (const point of piste) {
-            this.ajouterPoint(point);
+        if (piste.length > 1) {
+            for (const point of piste) {
+                this.ajouterPoint(point);
+            }
+            this.ajouterPoint(piste[0]);
         }
-      }
+    }
 
     public exporter(): Point[] {
-      const points: Point[] = [];
+        const points: Point[] = [];
 
-      for (const intersection of this.intersections) {
-           points.push(intersection.point);
-      }
+        for (const intersection of this.intersections) {
+            points.push(intersection.point);
+        }
 
-      return points;
+        return points;
     }
 
     public ajouterPoint(point: Point): void {
@@ -47,7 +50,7 @@ export class PisteEdition extends PisteAbstraite {
         const DEUX: number = 2;
 
         return this.intersections.length > DEUX &&
-               this.premiereIntersection.estEnContactAvec(point);
+            this.premiereIntersection.estEnContactAvec(point);
     }
 
     private bouclerCircuit(): void {
@@ -100,8 +103,8 @@ export class PisteEdition extends PisteAbstraite {
 
     private intersectionSelectionneePeutBoucler(point: Point): boolean {
         return this.intersectionSelectionnee === this.derniereIntersection &&
-               this.doitFermerCircuit(point) &&
-               !this.estBoucle;
+            this.doitFermerCircuit(point) &&
+            !this.estBoucle;
     }
 
     private fusionnerPoint(point: Point): void {
@@ -142,8 +145,8 @@ export class PisteEdition extends PisteAbstraite {
 
     private get droiteArriveeCourante(): DroiteAffichage {
         return this.derniereIntersection !== null
-         ? this.derniereIntersection.droiteDebut
-         : null;
+            ? this.derniereIntersection.droiteDebut
+            : null;
     }
 
     public selectionnerIntersection(point: Point): void {

@@ -8,6 +8,7 @@ import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { PisteEdition } from "../piste/pisteEdition";
 import { Group } from "three";
 import { Point } from "../elementsGeometrie/point";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
 @Injectable()
 export class GestionnaireEditionPiste {
@@ -22,8 +23,10 @@ export class GestionnaireEditionPiste {
 
     public constructor(@Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
                        @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste,
-                       @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran) {
+                       @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
+                       @Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
         this._piste = new PisteEdition();
+        this._piste.importer(gestionnaireBD.pointsEdition);
         this.souris = new UtilisateurPeripherique(gestionnaireSouris);
         this.transformateur = new TransformateurCoordonnees(gestionnaireCamera, gestionnaireEcran);
         this.inscriptionSouris();

@@ -1,21 +1,28 @@
 import { Injectable } from "@angular/core";
 import { PisteBD } from "../piste/pisteBD";
-import { PISTES } from "../piste/pisteTest";
 import { HttpClient } from "@angular/common/http";
+import { Point } from "../elementsGeometrie/point";
 
-const PISTES_URL: string = "http://localhost:3000/apipistes";
+export const PISTES_URL: string = "http://localhost:3000/apipistes";
 const SUPRIMER_PISTES_URL: string = "http://localhost:3000/apipistes/supprimer/";
 
 @Injectable()
 export class GestionnaireBDCourse {
 
     public pistes: PisteBD[];
+    public pisteEdition: PisteBD;
+
+    public get pointsEdition(): Point[] {
+        const piste: Point[] = [];
+
+        for (const point of this.pisteEdition.points) {
+            piste.push(new Point(point.x, point.y));
+        }
+
+        return piste;
+    }
 
     public constructor(private http: HttpClient) { }
-
-    public static get pistes(): PisteBD[] {
-        return PISTES;
-    }
 
     public obtenirPistes(): PisteBD[] {
         this.http.get<PisteBD[]>(PISTES_URL)
@@ -24,12 +31,7 @@ export class GestionnaireBDCourse {
         return this.pistes;
     }
 
-    public editerPiste(piste: PisteBD): void {
-
-    }
-
     public supprimerPiste(piste: PisteBD): void {
         this.http.delete(SUPRIMER_PISTES_URL + piste.nom);
     }
-
 }

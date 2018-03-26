@@ -15,6 +15,10 @@ export class GestionnaireBDCourse {
     public pisteEdition: PisteBD;
     public pisteJeu: PisteBD;
 
+    public constructor(private http: HttpClient) {
+        this.pisteEdition = null;
+  }
+
     public get pointsEdition(): Point[] {
         return this.obtenirPoints(this.pisteEdition);
     }
@@ -34,9 +38,6 @@ export class GestionnaireBDCourse {
 
             return points;
         }
-    }
-    public constructor(private http: HttpClient) {
-        this.pisteEdition = null;
     }
 
     public obtenirPistes(): PisteBD[] {

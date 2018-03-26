@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from "@angular/core";
-import { PisteBD } from "../piste/pisteBD";
+import { PisteBD } from "../piste/IPisteBD";
 import { HttpClient } from "@angular/common/http";
 import { GestionnaireBDCourse, PISTES_URL } from "../baseDeDonnee/GestionnaireBDCourse";
 

@@ -1,5 +1,5 @@
 import { Point } from "../elementsGeometrie/point";
-import { PisteBD } from "./pisteBD";
+import { PisteBD } from "./IPisteBD";
 
 const LONGUEUR: number = 100;
 export const PISTE_TEST: Point[] = [

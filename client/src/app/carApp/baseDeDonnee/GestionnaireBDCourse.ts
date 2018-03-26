@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { PisteBD } from "../piste/pisteBD";
+import { PisteBD } from "../piste/IPisteBD";
 import { HttpClient } from "@angular/common/http";
 import { Point } from "../elementsGeometrie/point";
 

@@ -1,18 +1,34 @@
 import { GestionnaireScenePiste, PROFONDEUR_SCENE } from "./GestionnaireScenePiste";
 import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
-import { GestionnaireSouris } from "../souris/gestionnaireSouris";
-import { GestionnaireCameraPiste, PLAN_ELOIGNE, PLAN_RAPPROCHE } from "../camera/GestionnaireCameraPiste";
-import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
+import { PLAN_ELOIGNE, PLAN_RAPPROCHE, GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
 import { Mesh, Object3D, PlaneGeometry } from "three";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { TestBed, inject } from "@angular/core/testing";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { GestionnaireSouris } from "../souris/gestionnaireSouris";
+import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
+import { HttpClient } from "@angular/common/http";
+
+let gestionnaire: GestionnaireScenePiste;
 
 describe("GestionnaireScenePiste", () => {
-    let gestionnaire: GestionnaireScenePiste;
-    const gestionnaireEditionPiste: GestionnaireEditionPiste =
-        new GestionnaireEditionPiste(new GestionnaireSouris(),
-                                     new GestionnaireCameraPiste(),
-                                     new GestionnaireEcran());
 
-    gestionnaire = new GestionnaireScenePiste(gestionnaireEditionPiste);
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [GestionnaireScenePiste, GestionnaireEditionPiste, GestionnaireBDCourse,
+                        GestionnaireSouris, GestionnaireCameraPiste, GestionnaireEcran]
+        });
+    });
+
+    beforeEach(inject([HttpClient], (httpClient: HttpClient) => {
+        const bd: GestionnaireBDCourse = new GestionnaireBDCourse(httpClient);
+        const editeurPiste: GestionnaireEditionPiste = new GestionnaireEditionPiste(bd,
+                                                                                    new GestionnaireSouris(),
+                                                                                    new GestionnaireCameraPiste(),
+                                                                                    new GestionnaireEcran());
+        gestionnaire = new GestionnaireScenePiste(editeurPiste);
+    }));
 
     describe("Constructeur", () => {
         it("Objet est construit", () => {

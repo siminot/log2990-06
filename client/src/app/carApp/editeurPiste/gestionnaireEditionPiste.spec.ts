@@ -1,18 +1,30 @@
 import { GestionnaireEditionPiste } from "./gestionnaireEditionPiste";
-
 import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
-describe("TransformateurCoordonnees", () => {
-  let gestionnaire: GestionnaireEditionPiste;
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { TestBed, inject } from "@angular/core/testing";
+import { HttpClient } from "@angular/common/http";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
-  beforeEach(() => {
-    gestionnaire = new GestionnaireEditionPiste(new GestionnaireSouris(), new GestionnaireCameraPiste, new GestionnaireEcran());
-  });
+describe("GestionnaireEditionPiste", () => {
+    let gestionnaire: GestionnaireEditionPiste;
 
-  describe("Constructeur", () => {
-    it("Objet est construit", () => {
-      expect(gestionnaire).toBeDefined();
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [GestionnaireEditionPiste, GestionnaireCameraPiste, GestionnaireEcran, GestionnaireSouris, GestionnaireBDCourse]
+        });
     });
-  });
+
+    beforeEach(inject([HttpClient], (httpClient: HttpClient) => {
+        const bd: GestionnaireBDCourse = new GestionnaireBDCourse(httpClient);
+        gestionnaire = new GestionnaireEditionPiste(bd, new GestionnaireSouris(), new GestionnaireCameraPiste(), new GestionnaireEcran());
+    }));
+
+    describe("Constructeur", () => {
+        it("Objet est construit", () => {
+            expect(gestionnaire).toBeDefined();
+        });
+    });
 });

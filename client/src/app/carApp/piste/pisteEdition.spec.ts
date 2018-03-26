@@ -24,9 +24,9 @@ describe("PisteEdition", () => {
         });
 
         it("Boucler le circuit fonctionne", () => {
-            expect(piste.estBoucle).toBeFalsy();
+            expect(piste["estBoucle"]).toBeFalsy();
             piste.ajouterPoint(PISTE_TEST[0]);
-            expect(piste.estBoucle).toBeTruthy();
+            expect(piste["estBoucle"]).toBeTruthy();
         });
 
         it("Exporter piste", () => {
@@ -49,7 +49,7 @@ describe("PisteEdition", () => {
             }
             expect(pisteTest.estSensHoraire()).toEqual(null);
             pisteTest.ajouterPoint(PISTE_TEST[0]);
-            expect(pisteTest.estBoucle).toBeTruthy();
+            expect(pisteTest["estBoucle"]).toBeTruthy();
             expect(pisteTest.estSensHoraire()).toBeTruthy();
         });
     });

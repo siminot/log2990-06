@@ -1,4 +1,5 @@
-import { Component, AfterViewInit } from "@angular/core";
+import { Component } from "@angular/core";
+import { Subscription } from "rxjs/Subscription";
 import { PisteBD } from "../piste/pisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
@@ -7,24 +8,24 @@ import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
     templateUrl: "./administrateur.component.html",
     styleUrls: ["./administrateur.component.css"]
 })
-export class AdministrateurComponent implements AfterViewInit {
+export class AdministrateurComponent {
 
     public pistes: PisteBD[];
 
-    public constructor(private gestionnaireBDCourse: GestionnaireBDCourse) {}
+    public abonnementPistes: Subscription;
 
-    public ngAfterViewInit(): void {
-      this.obtenirPistes();
+    public constructor(private gestionnaireBDCourse: GestionnaireBDCourse) {
+        this.pistes = gestionnaireBDCourse.pistes;
+        this.abonnementPistes = this.gestionnaireBDCourse.obtenirPistes()
+            .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
+
     }
 
-    public obtenirPistes(): void {
-      this.pistes = this.gestionnaireBDCourse.obtenirPistes();
-    }
     public editerPiste(piste: PisteBD): void {
-      this.gestionnaireBDCourse.pisteEdition = piste;
+        this.gestionnaireBDCourse.pisteEdition = piste;
     }
 
     public supprimerPiste(piste: PisteBD): void {
-      this.gestionnaireBDCourse.supprimerPiste(piste);
+        this.gestionnaireBDCourse.supprimerPiste(piste);
     }
 }

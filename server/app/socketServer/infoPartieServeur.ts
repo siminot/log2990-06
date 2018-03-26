@@ -2,7 +2,7 @@
 import { Mot } from "./mot";
 import { PaquetPartie } from "./paquet";
 import * as event from "./../../../common/communication/evenementSocket";
-import * as WebRequest from "web-request";
+// import * as WebRequest from "web-request";
 
 const NB_JOUEUR_MAX: number = 2;
 
@@ -37,7 +37,7 @@ export class InfoPartieServeur {
 
     private async initNouvellePartie(): Promise<void> {
         this.grilleDeJeu = [];
-        this.grilleDeJeu = await this.genererGrille();
+        // this.grilleDeJeu = await this.genererGrille();
     }
 
     public ajouterJoueur(nouveauJoueur: SocketIO.Socket): void {
@@ -208,9 +208,9 @@ export class InfoPartieServeur {
         return Math.abs(this.joueurs.indexOf(joueur) - 1);
     }
 
-    private async genererGrille(): Promise<Mot[]> {
-        return WebRequest.json<Mot[]>("http://localhost:3000/grille/" + this.difficultee);
-    }
+    // private async genererGrille(): Promise<Mot[]> {
+    //     return WebRequest.json<Mot[]>("http://localhost:3000/grille/" + this.difficultee);
+    // }
 
     public detruirePartie(): void {
         for (const joueur of this.joueurs) {

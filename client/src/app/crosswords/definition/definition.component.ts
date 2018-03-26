@@ -19,6 +19,8 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
+  private subscriptionMotTrouve: Subscription;
+  private subscriptionMotPerdu: Subscription;
 
   private motSelectionne: Mot;
 
@@ -43,6 +45,8 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     this.souscrireReceptionMots();
     this.souscrireSelectionMots();
     this.souscrireReceptionMatrice();
+    this.souscrireMotsTrouves();
+    this.souscrireMotsPerdus();
   }
 
   private souscrireReceptionMots(): void {
@@ -60,6 +64,16 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   private souscrireReceptionMatrice(): void {
     this.subscriptionMatrice = this.listeMotsService.serviceReceptionMatriceLettres()
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
+  }
+
+  private souscrireMotsTrouves(): void {
+    this.subscriptionMotTrouve = this.listeMotsService.serviceReceptionMotTrouve()
+      .subscribe((mot: Mot) => document.getElementById(mot.mot).classList.add("motTrouve"));
+  }
+
+  private souscrireMotsPerdus(): void {
+    this.subscriptionMotPerdu = this.listeMotsService.serviceReceptionMotPerdu()
+      .subscribe((mot: Mot) => document.getElementById(mot.mot).classList.add("motPerdu"));
   }
 
   // Changement d'un mot

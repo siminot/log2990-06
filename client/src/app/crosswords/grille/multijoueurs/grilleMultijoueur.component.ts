@@ -10,6 +10,7 @@ import { LettreGrille } from "../../objetsTest/lettreGrille";
 import { TAILLE_TABLEAU } from "../../constantes";
 import { OpaciteCase } from "./../librairieGrille/opaciteCase";
 import { Subscription } from "rxjs/Subscription";
+import { Subject } from "rxjs/Subject";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 const COULEUR_J2: string = "rgb(132, 112, 255)";
@@ -248,12 +249,14 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   private inscriptionMotTrouve(): void {
     this.serviceSocket.recevoirMotTrouve().subscribe((motTrouve: Mot) => {
       this.bloquerMot(motTrouve, "rgb(233, 128, 116)");
+      this.serviceInteraction.serviceEnvoieMotTrouve(motTrouve);
     });
   }
 
   private inscriptionMotPerdu(): void {
     this.serviceSocket.recevoirMotPerdu().subscribe((motPerdu: Mot) => {
       this.bloquerMot(motPerdu, "rgb(132, 112, 255)");
+      this.serviceInteraction.serviceEnvoieMotPerdu(motPerdu);
     });
   }
 
@@ -282,5 +285,9 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.serviceInteraction.serviceEnvoieMots(this.mots);
     this.genererGrille();
     this.serviceSocket.rejouerPartie();
+  }
+
+  protected envoyerMotTrouve(mot: Mot): void {
+    return;
   }
 }

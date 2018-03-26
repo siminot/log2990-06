@@ -20,6 +20,10 @@ export class ServiceInteractionComponent {
   protected listeMotsObservable$: Observable<Mot[]> = this.listeMotsSujet.asObservable();
   protected matriceDesMotsSurGrilleObservable$: Observable<Array<Array<LettreGrille>>> = this.matriceDesMotsSurGrilleSujet.asObservable();
   protected motSelectionneObservable$: Observable<Mot> = this.motSelectionneSuject.asObservable();
+  protected motTrouveSujet: Subject<Mot> = new Subject<Mot>();
+  protected motTrouveObservable$: Observable<Mot> = this.motTrouveSujet.asObservable();
+  protected motPerduSujet: Subject<Mot> = new Subject<Mot>();
+  protected motPerduObservable$: Observable<Mot> = this.motPerduSujet.asObservable();
 
   public constructor(private httpReq: ServiceHttp) {
     this.genererGrille();
@@ -96,6 +100,14 @@ export class ServiceInteractionComponent {
     this.motSelectionneSuject.next(motSelec);
   }
 
+  public serviceEnvoieMotTrouve(motTrouve: Mot): void {
+    this.motTrouveSujet.next(motTrouve);
+  }
+
+  public serviceEnvoieMotPerdu(motPerdu: Mot): void {
+    this.motPerduSujet.next(motPerdu);
+  }
+
   public serviceReceptionMots(): Observable<Mot[]> {
     return this.listeMotsObservable$;
   }
@@ -106,6 +118,14 @@ export class ServiceInteractionComponent {
 
   public serviceReceptionMotSelectionne(): Observable<Mot> {
     return this.motSelectionneObservable$;
+  }
+
+  public serviceReceptionMotTrouve(): Observable<Mot> {
+    return this.motTrouveObservable$;
+  }
+
+  public serviceReceptionMotPerdu(): Observable<Mot> {
+    return this.motPerduObservable$;
   }
 
 }

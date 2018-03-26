@@ -27,6 +27,14 @@ export class PisteComponent extends AbstractGameComponent {
     public description: string;
     public estNouvellePiste: boolean;
 
+    public get champsSontRemplis(): boolean {
+        return this.nom.length > 0 && this.description.length > 0;
+    }
+
+    public peutEnregistrer(): boolean {
+        return this.estBoucle && this.respectContraintePiste && this.champsSontRemplis;
+    }
+
     public constructor(private editeurPiste: GestionnaireEditionPiste,
                        @Inject(ServiceDeRenduPistes) serviceDeRendu: ServiceDeRenduPistes,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
@@ -40,8 +48,6 @@ export class PisteComponent extends AbstractGameComponent {
             this.description = gestionnaireBD.pisteEdition.description;
         } else {
             this.estNouvellePiste = true;
-            this.nom = "";
-            this.description = "";
         }
 
         this.souscrireNombrePoints();
@@ -54,7 +60,7 @@ export class PisteComponent extends AbstractGameComponent {
     }
 
     public mettreAJourPiste(): void {
-        this.editeurPiste.mettreAJourPiste();
+        this.editeurPiste.mettreAJourPiste(this.nom, this.description);
     }
 
     private souscrireNombrePoints(): void {

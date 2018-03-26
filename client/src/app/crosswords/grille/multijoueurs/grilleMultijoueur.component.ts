@@ -12,6 +12,7 @@ import { OpaciteCase } from "./../librairieGrille/opaciteCase";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 const COULEUR_J2: string = "rgb(132, 112, 255)";
+const COULEUR_J1: string = "rgb(233, 128, 116)";
 
 @Component({
   selector: "app-grille-multi",
@@ -155,24 +156,36 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       if (mot.estVertical) {
         idCase = mot.premierX.toString() + (mot.premierY + i).toString();
         document.getElementById(idCase).value = mot.mot[i];
-        styleInput = document.getElementById(idCase).style.backgroundColor;
-        document.getElementById(idCase).style.backgroundColor = couleur;
-        if (styleInput === COULEUR_J2 && couleur !== styleInput) {
-          this.affihcerCasePartagee(idCase + "c");
-        }
       } else {
         idCase = (mot.premierX + i).toString() + mot.premierY.toString();
         document.getElementById(idCase).value = mot.mot[i];
-        styleInput = document.getElementById(idCase).style.backgroundColor;
-        document.getElementById(idCase).style.backgroundColor = couleur;
-        if (styleInput === COULEUR_J2 && couleur !== styleInput) {
-          this.affihcerCasePartagee(idCase + "c");
-        }
+      }
+      this.croisementDesCases(mot, idCase, couleur);
+    }
+  }
+
+  private croisementDesCases(mot: Mot, idCase: string, couleur: string): void {
+    let styleInput: string;
+    styleInput = document.getElementById(idCase).style.backgroundColor;
+    document.getElementById(idCase).style.backgroundColor = couleur;
+    if (mot.estVertical) {
+      if (this.verifCroisementAutreJoueur(styleInput, couleur)) {
+        this.affihcerCasePartagee(idCase + "c");
+      }
+    } else {
+      if (this.verifCroisementAutreJoueur(styleInput, couleur)) {
+        this.affihcerCasePartagee(idCase + "c");
       }
     }
   }
 
+  private verifCroisementAutreJoueur(styleInput: string, couleur: string): boolean {
+    return styleInput === COULEUR_J2 && couleur !== styleInput ||
+      styleInput === COULEUR_J1 && couleur !== styleInput;
+  }
+
   private affihcerCasePartagee(idCase: string): void {
+    document.getElementById(idCase).style.backgroundColor = COULEUR_J1;
     document.getElementById(idCase).src = "../../../assets/hachure.png";
   }
 

@@ -271,10 +271,17 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   private finPartie(): void {
     this.serviceSocket.finPartie().subscribe( (resultat: string) => {
       console.log("fin partie");
+      document.getElementById("appFinPartie").classList.remove("pasVisible");
+      document.getElementById("appFinPartie").classList.add("visible");
       // this.router.navigateByUrl("FinPartieMulti");
-      this.mots = [];
-      this.serviceInteraction.serviceEnvoieMots(this.mots);
-      this.genererGrille();
     });
+  }
+
+  private rejouerPartie(): void {
+    document.getElementById("appFinPartie").classList.remove("visible");
+    document.getElementById("appFinPartie").classList.add("pasVisible");
+    this.mots = [];
+    this.serviceInteraction.serviceEnvoieMots(this.mots);
+    this.genererGrille();
   }
 }

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
-import { PisteBD } from "../piste/pisteBD";
+import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
 @Component({

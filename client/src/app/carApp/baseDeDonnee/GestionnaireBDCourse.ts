@@ -14,7 +14,7 @@ const URL_MODIFIER_PISTE: string = PISTES_URL + "modifier/";
 export class GestionnaireBDCourse {
 
     public pistes: PisteBD[];
-    public pistesSujet: Subject<PisteBD[]> = new Subject<PisteBD[]>();
+    public pistesSujet: Subject<PisteBD[]>;
 
     public pisteEdition: PisteBD;
     public pisteJeu: PisteBD;
@@ -22,6 +22,7 @@ export class GestionnaireBDCourse {
     public constructor(private http: HttpClient) {
         this.pisteEdition = null;
         this.pisteJeu = null;
+        this.pistesSujet = new Subject<PisteBD[]>();
   }
 
     public get pointsEdition(): Point[] {

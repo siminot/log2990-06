@@ -1,24 +1,17 @@
-import { AfterViewInit, Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { PisteBD } from "../piste/pisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
 
 @Component({
     selector: "app-admin",
     templateUrl: "./administrateur.component.html",
     styleUrls: ["./administrateur.component.css"]
 })
-export class AdministrateurComponent implements AfterViewInit {
+export class AdministrateurComponent extends AbstractListePisteComponent {
 
-    public pistes: PisteBD[];
-
-    public constructor(private gestionnaireBD: GestionnaireBDCourse) { }
-
-    public ngAfterViewInit(): void {
-      this.obtenirPistes();
-    }
-
-    public obtenirPistes(): void {
-      this.gestionnaireBD.obtenirPistes().subscribe((piste: PisteBD[]) => this.pistes = piste);
+    public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
+      super(gestionnaireBD);
     }
 
     public editerPiste(piste: PisteBD): void {

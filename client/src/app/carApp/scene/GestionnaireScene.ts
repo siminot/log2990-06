@@ -9,7 +9,7 @@ import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClav
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { PisteJeu } from "../piste/pisteJeu";
-import { PISTE_TEST } from "../piste/pisteTest";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
@@ -34,6 +34,7 @@ export class GestionnaireScene implements IScene {
 
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures,
+                       private gestionnaireBDCourse: GestionnaireBDCourse,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
@@ -67,7 +68,7 @@ export class GestionnaireScene implements IScene {
 
     private ajouterPiste(): void {
         const piste: PisteJeu = new PisteJeu();
-        piste.importer(PISTE_TEST);
+        piste.importer(this.gestionnaireBDCourse.pointsJeu);
         this._scene.add(piste);
     }
 

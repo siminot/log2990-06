@@ -13,20 +13,28 @@ export class GestionnaireBDCourse {
 
     public pistes: PisteBD[];
     public pisteEdition: PisteBD;
+    public pisteJeu: PisteBD;
 
     public get pointsEdition(): Point[] {
-        if (this.pisteEdition === null) {
-            return [];
-        } else {
-            const piste: Point[] = [];
-            for (const point of this.pisteEdition.points) {
-                piste.push(new Point(point.x, point.y));
-            }
-
-            return piste;
-        }
+        return this.obtenirPoints(this.pisteEdition);
     }
 
+    public get pointsJeu(): Point[] {
+        return this.obtenirPoints(this.pisteJeu);
+    }
+
+    private obtenirPoints(piste: PisteBD): Point[] {
+        if (piste === null) {
+            return [];
+        } else {
+            const points: Point[] = [];
+            for (const point of piste.points) {
+                points.push(new Point(point.x, point.y));
+            }
+
+            return points;
+        }
+    }
     public constructor(private http: HttpClient) {
         this.pisteEdition = null;
     }

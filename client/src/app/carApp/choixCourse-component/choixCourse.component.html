@@ -1,0 +1,9 @@
+<h2>Veuillez choisir une piste</h2>
+<ul class="pistes">
+  <li *ngFor="let piste of pistes">
+    {{piste.nom}}: {{piste.description}}
+
+    <button class="selection" title="choix"
+    (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
+  </li>
+</ul>

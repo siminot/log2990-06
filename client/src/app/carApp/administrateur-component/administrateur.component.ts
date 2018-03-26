@@ -24,5 +24,5 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public creerNouvellePiste(): void {
         this.gestionnaireBD.pisteEdition = null;
-      }
+    }
 }

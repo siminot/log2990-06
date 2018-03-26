@@ -1,7 +1,7 @@
 import { Mot } from "./mot";
 import { PaquetPartie } from "./paquet";
 import * as event from "./../../../common/communication/evenementSocket";
-// import * as WebRequest from "web-request";
+import * as WebRequest from "web-request";
 
 const NB_JOUEUR_MAX: number = 2;
 
@@ -36,7 +36,7 @@ export class InfoPartieServeur {
         this.grilleDeJeu = [];
         this.scoreJoueur = [0, 0];
         this.joueursSontPret = 0;
-        // this.grilleDeJeu = await this.genererGrille();
+        this.grilleDeJeu = await this.genererGrille();
     }
 
     public ajouterJoueur(nouveauJoueur: SocketIO.Socket): void {
@@ -82,6 +82,7 @@ export class InfoPartieServeur {
         paquet.nomJoeurs = this.nomJoueurs;
         paquet.nomPartie = this.nomPartie;
         paquet.difficultee = this.difficultee;
+        console.log(paquet);
 
         return paquet;
     }
@@ -90,9 +91,15 @@ export class InfoPartieServeur {
         for (const joueur of this.joueurs) {
                 joueur.in(this.nomPartie).emit(event.COMMENCER_PARTIE);
                 joueur.on(event.PAGE_CHARGEE, () => {
-                joueur.in(this.nomPartie).emit(event.PAQUET_PARTIE, this.fairePaquet()
+                    joueur.in(this.nomPartie).emit(event.PAQUET_PARTIE, this.fairePaquet()
                 );
             });
+        }
+    }
+
+    private envoyerNouvellePartie(): void {
+        for (const joueur of this.joueurs) {
+            joueur.in(this.nomPartie).emit(event.PAQUET_PARTIE, this.fairePaquet());
         }
     }
 
@@ -164,14 +171,14 @@ export class InfoPartieServeur {
                 if (++this.joueursSontPret === NB_JOUEUR_MAX) {
                     this.nouvellePartie();
                 }
-                this.initNouvellePartie();
             });
         }
     }
 
     private nouvellePartie(): void {
-        this.initNouvellePartie();
-        this.envoyerPaquetPartie();
+        this.initNouvellePartie().then( () => {
+            this.envoyerNouvellePartie();
+        });
     }
 
     private actualisationScores(joueur: SocketIO.Socket): void {
@@ -225,9 +232,9 @@ export class InfoPartieServeur {
         return Math.abs(this.joueurs.indexOf(joueur) - 1);
     }
 
-    // private async genererGrille(): Promise<Mot[]> {
-    //     return WebRequest.json<Mot[]>("http://localhost:3000/grille/" + this.difficultee);
-    // }
+    private async genererGrille(): Promise<Mot[]> {
+        return WebRequest.json<Mot[]>("http://localhost:3000/grille/" + this.difficultee);
+    }
 
     public detruirePartie(): void {
         for (const joueur of this.joueurs) {

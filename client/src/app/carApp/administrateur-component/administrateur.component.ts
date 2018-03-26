@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
@@ -9,21 +9,13 @@ import { AbstractListePisteComponent } from "../abstract-component/abstract.list
     templateUrl: "./administrateur.component.html",
     styleUrls: ["./administrateur.component.css"]
 })
-export class AdministrateurComponent extends AbstractListePisteComponent implements OnInit {
-
-    public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
-        super(gestionnaireBD);
-    }
+export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public pistes: PisteBD[];
-
     public abonnementPistes: Subscription;
 
-    public ngOnInit(): void {
-      this.pistes = this.gestionnaireBD.pistes;
-      this.abonnementPistes = this.gestionnaireBD.obtenirPistes()
-          .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
-
+    public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
+      super(gestionnaireBD);
     }
 
     public editerPiste(piste: PisteBD): void {

@@ -9,6 +9,7 @@ import { Mot } from "../../objetsTest/mot";
 import { LettreGrille } from "../../objetsTest/lettreGrille";
 import { TAILLE_TABLEAU } from "../../constantes";
 import { OpaciteCase } from "./../librairieGrille/opaciteCase";
+import { Subscription } from "rxjs/Subscription";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 const COULEUR_J2: string = "rgb(132, 112, 255)";
@@ -25,8 +26,8 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   private motSelectJoeur2: Mot;
 
   public constructor(_servicePointage: InfojoueurService,
-    private serviceSocket: SocketService,
-    private serviceInteraction: ServiceInteractionComponent) {
+                     private serviceSocket: SocketService,
+                     private serviceInteraction: ServiceInteractionComponent) {
     super(_servicePointage);
     this.serviceSocket.commencerPartie();
     this.genererGrille();
@@ -34,6 +35,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   public ngOnInit(): void {
     this.mots = this.serviceInteraction.mots;
+    this.subscriptionMatrice = new Subscription();
     this.inscriptionChangementMotsGrille();
     this.changerMotSelectDef();
     this.inscriptionChangementMotSelectDef();
@@ -42,6 +44,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.inscriptionMotTrouve();
     this.inscriptionMotPerdu();
     this.chargerGrille();
+    this.finPartie();
   }
 
   private inscriptionChangementMotsGrille(): void {
@@ -69,7 +72,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       this.motSelectionne.activer = true;
       this.procedureCommune();
 
-    })
+    });
   }
 
   private procedureCommune(): void {
@@ -263,5 +266,15 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     }
 
     return undefined;
+  }
+
+  private finPartie(): void {
+    this.serviceSocket.finPartie().subscribe( (resultat: string) => {
+      console.log("fin partie");
+      // this.router.navigateByUrl("FinPartieMulti");
+      this.mots = [];
+      this.serviceInteraction.serviceEnvoieMots(this.mots);
+      this.genererGrille();
+    });
   }
 }

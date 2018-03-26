@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
@@ -8,16 +8,18 @@ import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
     templateUrl: "./administrateur.component.html",
     styleUrls: ["./administrateur.component.css"]
 })
-export class AdministrateurComponent {
+export class AdministrateurComponent implements OnInit {
 
     public pistes: PisteBD[];
 
     public abonnementPistes: Subscription;
 
-    public constructor(private gestionnaireBDCourse: GestionnaireBDCourse) {
-        this.pistes = gestionnaireBDCourse.pistes;
-        this.abonnementPistes = this.gestionnaireBDCourse.obtenirPistes()
-            .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
+    public constructor(private gestionnaireBDCourse: GestionnaireBDCourse) {}
+
+    public ngOnInit(): void {
+      this.pistes = this.gestionnaireBDCourse.pistes;
+      this.abonnementPistes = this.gestionnaireBDCourse.obtenirPistes()
+          .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
 
     }
 

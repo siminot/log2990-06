@@ -9,9 +9,11 @@ import { AbstractListePisteComponent } from "../abstract-component/abstract.list
     templateUrl: "./administrateur.component.html",
     styleUrls: ["./administrateur.component.css"]
 })
-export class AdministrateurComponent implements OnInit {
+export class AdministrateurComponent extends AbstractListePisteComponent implements OnInit {
 
-    public constructor(private gestionnaireBD: GestionnaireBDCourse) {}
+    public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
+        super(gestionnaireBD);
+    }
 
     public pistes: PisteBD[];
 

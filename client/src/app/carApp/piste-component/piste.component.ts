@@ -50,6 +50,7 @@ export class PisteComponent extends AbstractGameComponent {
             this.estNouvellePiste = true;
         }
 
+        this.editeurPiste.importerPiste();
         this.souscrireNombrePoints();
         this.souscrireEstBoucle();
         this.souscrireRespectContraintePiste();

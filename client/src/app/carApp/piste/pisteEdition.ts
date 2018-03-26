@@ -92,10 +92,17 @@ export class PisteEdition extends PisteAbstraite {
 
     public importer(piste: Point[]): void {
         if (piste !== undefined && piste.length > 1) {
+            this.effacerPiste();
             for (const point of piste) {
                 this.ajouterPoint(point);
             }
             this.ajouterPoint(piste[0]);
+        }
+    }
+
+    private effacerPiste(): void {
+        while (this.intersections.length > 0) {
+            this.effacerPoint();
         }
     }
 

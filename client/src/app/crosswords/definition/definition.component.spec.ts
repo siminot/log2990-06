@@ -52,7 +52,7 @@ describe("DefinitionComponent", () => {
       expect(result).toEqual(expectedValues);
     });
 
-    it("remettre toute les caseDecouverte a false", () => {
+/*     it("remettre toute les caseDecouverte a false", () => {
       const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
       matrice[0][0] = {
         caseDecouverte: true,
@@ -62,6 +62,6 @@ describe("DefinitionComponent", () => {
       component["cacherCases"]();
 
       expect(matrice[0][0].caseDecouverte).toBeFalsy();
-    });
+    }); */
   });
 });

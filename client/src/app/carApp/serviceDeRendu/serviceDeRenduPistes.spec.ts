@@ -4,17 +4,35 @@ import { GestionnaireScenePiste } from "../scene/GestionnaireScenePiste";
 import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
 import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
+import { TestBed, inject } from "@angular/core/testing";
+import { HttpClient } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
 describe("Service de rendu de piste", () => {
+
     let serviceDeRendu: ServiceDeRenduPistes;
-    const gestionnaireEditionPiste: GestionnaireEditionPiste = new GestionnaireEditionPiste(new GestionnaireSouris(),
-                                                                                            new GestionnaireCameraPiste(),
-                                                                                            new GestionnaireEcran());
 
-    serviceDeRendu = new ServiceDeRenduPistes(new GestionnaireScenePiste(gestionnaireEditionPiste),
-                                              new GestionnaireEcran(),
-                                              new GestionnaireCameraPiste());
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [ServiceDeRenduPistes, GestionnaireEcran, GestionnaireScenePiste,
+                        GestionnaireEditionPiste, GestionnaireSouris, GestionnaireCameraPiste]
+        });
+    });
 
+    beforeEach(inject([HttpClient], (httpClient: HttpClient) => {
+        const gestionnaireEcran: GestionnaireEcran = new GestionnaireEcran();
+        const gestionnaireCamera: GestionnaireCameraPiste = new GestionnaireCameraPiste();
+        const gestionnaireEditionPiste: GestionnaireEditionPiste = new GestionnaireEditionPiste(
+                                                                        new GestionnaireBDCourse(httpClient),
+                                                                        new GestionnaireSouris(),
+                                                                        gestionnaireCamera,
+                                                                        gestionnaireEcran);
+        serviceDeRendu = new ServiceDeRenduPistes(new GestionnaireScenePiste(gestionnaireEditionPiste),
+                                                  gestionnaireEcran,
+                                                  gestionnaireCamera);
+    }));
     describe("Constructeur", () => {
         it("Objet est construit", () => {
             expect(serviceDeRendu).toBeDefined();

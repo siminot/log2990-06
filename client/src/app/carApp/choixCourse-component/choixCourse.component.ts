@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from "@angular/core";
-import { PisteBD } from "../piste/pisteBD";
+import { PisteBD } from "../piste/IPisteBD";
 import { HttpClient } from "@angular/common/http";
 import { GestionnaireBDCourse, PISTES_URL } from "../baseDeDonnee/GestionnaireBDCourse";
 
@@ -24,6 +24,8 @@ export class ChoixCourseComponent implements AfterViewInit {
       .subscribe((pistes) => this.pistes = pistes);
     }
     public choisirCourse(piste: PisteBD): void {
-      this.gestionnaireBD.pisteJeu = piste;
+        if (piste !== undefined) {
+            this.gestionnaireBD.pisteJeu = piste;
+        }
     }
 }

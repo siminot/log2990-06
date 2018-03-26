@@ -1,7 +1,7 @@
 import { TransformateurCoordonnees } from "./transformateurCoordonnees";
-
 import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
+
 describe("TransformateurCoordonnees", () => {
   let transform: TransformateurCoordonnees;
 

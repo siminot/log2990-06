@@ -18,12 +18,15 @@ export class PisteJeu extends PisteAbstraite {
     }
 
     public importer(points: Point[]): void {
-        if (this.intersections.length === 0) {
+        if (this.intersections.length === 0 && points !== undefined) {
             for (const point of points) {
                 this.ajouterPoint(point);
             }
-            this.bouclerPiste();
-            this.add(new LigneDeDepart(this.zoneDeDepart, this.premierSegment.angle));
+
+            if (this.intersections.length > 0) {
+                this.bouclerPiste();
+                this.add(new LigneDeDepart(this.zoneDeDepart, this.premierSegment.angle));
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { PisteBD } from "../piste/pisteBD";
+import { PisteBD } from "../piste/IPisteBD";
 import { HttpClient } from "@angular/common/http";
 import { Point } from "../elementsGeometrie/point";
 import { Observable } from "rxjs/Observable";
@@ -21,6 +21,7 @@ export class GestionnaireBDCourse {
 
     public constructor(private http: HttpClient) {
         this.pisteEdition = null;
+        this.pisteJeu = null;
   }
 
     public get pointsEdition(): Point[] {

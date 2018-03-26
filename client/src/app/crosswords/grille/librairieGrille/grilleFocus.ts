@@ -31,14 +31,14 @@ export class GrilleFocus {
       const elem: HTMLInputElement =
         this.document.getElementById(motSelectionne.positionsLettres[this.positionCourante]) as HTMLInputElement;
       if (elem !== null) {
-        elem.focus();
-
         if (elem.value !== "") {
           return this.focusOnNextLetter(motSelectionne);
+        } else {
+          elem.focus();
         }
       }
-
     } else if (this.positionCourante === motSelectionne.longueur - 1) {
+
       return true;
     }
 

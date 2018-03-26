@@ -55,7 +55,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.subscriptionMotSelec = this.serviceInteraction.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
-        this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
+        // this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
         EncadrementCase.appliquerStyleDefautGrille(document);
         if (this.motSelectJoeur2 != null) {
           this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
@@ -120,8 +120,8 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   protected validateWord(): void {
-    const usersWord: string = this.createWordFromSelectedLetters().toUpperCase();
-    const valid: boolean = usersWord === this.motSelectionne.mot;
+    const usersWord: string = this.createWordFromSelectedLetters();
+    const valid: boolean = usersWord.toLowerCase() === this.motSelectionne.mot.toLowerCase();
 
     if (valid) {
       this.serviceSocket.envoyerTentative(this.motSelectionne);
@@ -133,7 +133,9 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   private bloquerMot(motABloquer: Mot, couleur: string): void {
     this.bloquerLettreSurMatrice(motABloquer);
     this.miseEnEvidence.miseEvidenceMot(motABloquer, couleur);
-    this.focus.removeFocusFromSelectedWord(this.retrouverMot(motABloquer));
+    if (this.motSelectionne === this.motSelectJoeur2) {
+      this.focus.removeFocusFromSelectedWord(this.retrouverMot(motABloquer));
+    }
     this.retrouverMot(motABloquer).motTrouve = true;
     this.remplirMotTrouve(motABloquer, couleur);
   }

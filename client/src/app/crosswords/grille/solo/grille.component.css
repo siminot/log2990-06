@@ -88,3 +88,31 @@ input {
     color:white !important;
     background-color:blue !important;
 }
+
+.visible {
+    visibility: visible;
+    display: flex;
+    opacity: 1;
+    -webkit-transition:  opacity 0.05s linear;
+    transition: opacity 0.05s linear;
+    z-index: 2;
+    float: center;
+    position: absolute;
+}
+
+.pasVisible {
+    visibility: hidden;
+    display: none;
+    opacity: 0;
+    transition: visibility 0s 0.05s, opacity 1s linear;
+    z-index: -1;
+}
+
+#appFinPartie {
+    height: 100px;
+    padding: 10px;
+    background-color: aliceblue;
+    font-family: 'Press Start 2P', cursive;
+    border-radius:5px;
+    border: 2px solid rgba(0, 0, 0, 0.747);
+}

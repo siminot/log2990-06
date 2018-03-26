@@ -1,11 +1,34 @@
-div {
-    width: 100%;
-    height: 800px;
+#container {
+    height:100%;
+    width:100%;
+    padding:0px;
+    margin:0px;
 }
 
-ul, li {
+.pistes, li {
     position: relative;
     margin: 0;
     top: 20px;
     color: black;
 }
+
+.titre, .creer {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.creer {
+    font-size: 10px;
+    color: purple;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid rgba(0,0,0, 0.747);
+}
+
+.titre {
+    font-size: 12px;
+    margin:10px;
+    padding:0px;
+}
+
+

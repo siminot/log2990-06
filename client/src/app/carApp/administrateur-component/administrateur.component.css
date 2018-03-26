@@ -7,7 +7,7 @@
 
 .piste {
     position: relative;
-    margin: 0;
+    margin-top: 10px;
     margin-bottom: 10px;
     top: 0;
     color: black;
@@ -28,7 +28,7 @@
     left: 650px;
 }
 
-.titre, .creer, .piste, .editer, .supprimer {
+.titre, .creer, .piste, .editer, .supprimer, #titrePrincipal {
     font-family: 'Press Start 2P', cursive;
 }
 
@@ -36,15 +36,26 @@
     font-size: 10px;
     color: purple;
     padding: 6px;
+    cursor:pointer;
     border-radius: 5px;
     background-color: white;
     border: 2px solid rgba(0,0,0, 0.747);
+}
+.creer:hover, .editer:hover, .supprimer:hover {
+    color: white !important;
+    background-color: blue !important;
 }
 
 .titre {
     font-size: 12px;
     margin:10px;
     padding:0px;
+}
+
+#titrePrincipal {
+    font-size: 18px;
+    text-align: center;
+    margin:30px;
 }
 
 

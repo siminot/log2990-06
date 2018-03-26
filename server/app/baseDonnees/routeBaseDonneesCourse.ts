@@ -17,8 +17,8 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/", (req: Request, res: Response, next: NextFunction) => {
-            this.baseDonneesCourse.requeteDePistes(req, res, next).catch((erreur: Error) => res.send(erreur));
+        router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+           await this.baseDonneesCourse.requeteDePistes(req, res, next);
         });
 
         router.post("/ajouter", async (res: Request, req: Response, next: NextFunction) => {

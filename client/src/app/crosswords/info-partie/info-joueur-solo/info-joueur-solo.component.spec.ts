@@ -8,13 +8,11 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 import * as CONST from "../../constantes";
-import { FinPartieSoloComponent } from "../../fin-partie/solo/fin-partie-solo.component";
 
 describe("InfoJoueur1Component", () => {
   let component: InfoJoueurSoloComponent;
   let fixture: ComponentFixture<InfoJoueurSoloComponent>;
   const data: string = "";
-  // let dialog: DialogComponent = new DialogComponent(data);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

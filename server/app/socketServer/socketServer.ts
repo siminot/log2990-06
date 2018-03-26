@@ -55,7 +55,7 @@ export class SocketServer {
     }
 
     private envoyerListePartie(): void {
-        const listePartie: Array<Array<string>> = new Array<Array<string>>(); 
+        const listePartie: Array<Array<string>> = new Array<Array<string>>();
         for (let i: number = 0; i < this.parties.length; i++) {
             if (!this.parties[i].partieEstPleine()) {
                 listePartie[i] = new Array<string>();

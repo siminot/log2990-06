@@ -169,7 +169,6 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private remplirMotTrouve(mot: Mot, couleur: string): void {
-    let styleInput: string;
     let idCase: string;
     for (let i: number = 0; i < mot.longueur; i++) {
       if (mot.estVertical) {
@@ -270,10 +269,8 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   private finPartie(): void {
     this.serviceSocket.finPartie().subscribe( (resultat: string) => {
-      console.log("fin partie");
       document.getElementById("appFinPartie").classList.remove("pasVisible");
       document.getElementById("appFinPartie").classList.add("visible");
-      // this.router.navigateByUrl("FinPartieMulti");
     });
   }
 

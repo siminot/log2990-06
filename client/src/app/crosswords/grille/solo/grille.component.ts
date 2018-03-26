@@ -12,7 +12,6 @@ import { Mot } from "../../objetsTest/mot";
   styleUrls: ["./grille.component.css"]
 })
 
-
 export class GrilleComponent extends GrilleAbs implements OnInit {
 
   public constructor(private listeMotsService: ServiceInteractionComponent,
@@ -68,7 +67,7 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
   protected retrieveWordFromClick(event: KeyboardEvent): Mot {
     const mot: Mot = super.retrieveWordFromClick(event);
     this.motSelectionne = mot;
-    OpaciteCase.decouvrirCases(mot,this.matriceDesMotsSurGrille);
+    OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
     this.envoieMotSelectionne();
 
     return mot;

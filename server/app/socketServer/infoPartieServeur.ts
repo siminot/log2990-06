@@ -21,7 +21,7 @@ export class InfoPartieServeur {
                        socketCreateur: SocketIO.Socket) {
         this.initialisationsElemPartie(nomPartie, difficultee, nomJoueur);
         this.ajouterJoueur(socketCreateur);
-        this.initNouvellePartie();
+        this.initNouvellePartie().catch();
     }
 
     private initialisationsElemPartie(nomPartie: string, difficultee: string, nomJoueur: string): void {
@@ -82,7 +82,6 @@ export class InfoPartieServeur {
         paquet.nomJoeurs = this.nomJoueurs;
         paquet.nomPartie = this.nomPartie;
         paquet.difficultee = this.difficultee;
-        console.log(paquet);
 
         return paquet;
     }
@@ -178,7 +177,7 @@ export class InfoPartieServeur {
     private nouvellePartie(): void {
         this.initNouvellePartie().then( () => {
             this.envoyerNouvellePartie();
-        });
+        }).catch();
     }
 
     private actualisationScores(joueur: SocketIO.Socket): void {

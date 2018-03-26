@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks"; 
+import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Subscription } from "rxjs/Subscription";
 import { ServiceInteractionComponent } from "../service-interaction-component/service-interaction-component";
 import { Mot } from "../objetsTest/mot";

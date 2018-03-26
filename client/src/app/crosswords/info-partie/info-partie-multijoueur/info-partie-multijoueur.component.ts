@@ -3,7 +3,6 @@ import { InfojoueurService } from "../../service-info-joueur/infojoueur.service"
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import { SocketService } from "../../service-socket/service-socket";
 import { PaquetPartie } from "../../objetsTest/paquetPartie";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "app-info-partie-multijoueur",
@@ -19,8 +18,7 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
   private _nomJoueur2: string;
 
   public constructor(_servicePointage: InfojoueurService,
-                     private socketClient: SocketService,
-                     private router: Router) {
+                     private socketClient: SocketService) {
     super(_servicePointage);
     this._motsDecouvertsJoueur1 = 0;
     this._motsDecouvertsJoueur2 = 0;
@@ -28,24 +26,7 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
     this._nomJoueur2 = "Joueur 2";
     this.chargerNomsJoueurs();
     this.miseAJourScores();
-    // this.finPartie();
    }
-
-  protected souscrireListeDeMots(): void {
-/*     this._subscriptionListeMots = this._requeteGrille.serviceReceptionMots()
-    .subscribe((listeMots) => {
-      this._listeMots = listeMots;
-    }); */
-    return;
-  }
-
-  protected souscrireMotsDecouverts(): void {
-/*     this._subscriptionNbMotsDecouv = this._servicePointage.serviceReceptionPointage()
-      .subscribe((pointage) => {
-        this._nbMotsDecouverts = pointage;
-    }); */
-    return;
-  }
 
   private chargerNomsJoueurs(): void {
     this.socketClient.telechargerPaquetPartie().subscribe( (paquet: PaquetPartie) => {
@@ -61,11 +42,4 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
       this._motsDecouvertsJoueur2 = nouveauScores[1];
     });
   }
-
-/*   private finPartie(): void {
-    this.socketClient.finPartie().subscribe( (resultat: string) => {
-      console.log("fin partie");
-      this.router.navigateByUrl("FinPartieMulti");
-    });
-  } */
 }

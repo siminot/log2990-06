@@ -22,7 +22,7 @@ export class OpaciteCase {
         }
       }
 
-    private static obtenirLettreGrilleMotVertical(mot: Mot,indice: number, matrice: Array<Array<LettreGrille>>): LettreGrille{
+    private static obtenirLettreGrilleMotVertical(mot: Mot, indice: number, matrice: Array<Array<LettreGrille>>): LettreGrille {
     return matrice[mot.premierX][indice + mot.premierY];
     }
 

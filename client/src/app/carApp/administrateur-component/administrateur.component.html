@@ -5,7 +5,7 @@
 
   <h2 class="titre">Pistes stockées</h2>
   <ul class="pistes">
-    <li *ngFor="let piste of pistes">
+    <li *ngFor="let piste of pistes" class="piste">
       {{piste.nom}}: {{piste.description}}
 
       <button class="editer" title="editer"

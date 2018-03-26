@@ -36,7 +36,7 @@ import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/gri
 import { MainGrilleMultiComponent } from "./crosswords/main-grille-multi/main-grille-multi.component";
 
 import { FinPartieSoloComponent } from "./crosswords/fin-partie/solo/fin-partie-solo.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FinPartieMultiComponent } from "./crosswords/fin-partie/multi/fin-partie-multi.component";
 
 @NgModule({
     declarations: [
@@ -53,14 +53,14 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         InfoPartieMultijoueurComponent,
         GrilleMultijoueurComponent,
         MainGrilleMultiComponent,
-        FinPartieSoloComponent
+        FinPartieSoloComponent,
+        FinPartieMultiComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
-        MatDialogModule,
-        BrowserAnimationsModule
+        MatDialogModule
     ],
     providers: [
         ServiceDeRenduJeu,

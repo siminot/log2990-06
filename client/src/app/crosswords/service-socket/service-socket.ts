@@ -143,4 +143,12 @@ export class SocketService {
             });
         });
     }
+
+    public finPartie(): Observable<string> {
+        return new Observable<string>( (unObs) => {
+            console.log("fin partie service-socket");
+            this.socketClient.on(event.FINPARTIE, (resultat: string) => unObs.next(resultat)
+            );
+        });
+    }
 }

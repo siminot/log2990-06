@@ -8,6 +8,7 @@ import { MainGrilleMultiComponent } from "./crosswords/main-grille-multi/main-gr
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { PisteComponent } from "./carApp/piste-component/piste.component";
 import { FinPartieSoloComponent } from "./crosswords/fin-partie/solo/fin-partie-solo.component";
+import { FinPartieMultiComponent } from "./crosswords/fin-partie/multi/fin-partie-multi.component";
 
 const routes: Routes = [
   { path: "CarGame", component: CarGameComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: "CrosswordsGame", component: MainGrilleComponent },
   { path: "ConfigPartie", component: ConfigPartieComponent},
   { path: "CrosswordsGameMulti", component: MainGrilleMultiComponent},
-  { path: "FinPartie", component: FinPartieSoloComponent }
+  { path: "FinPartie", component: FinPartieSoloComponent },
+  { path: "FinPartieMulti", component: FinPartieMultiComponent}
 ];
 
 @NgModule({

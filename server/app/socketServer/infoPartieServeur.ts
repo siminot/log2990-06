@@ -135,14 +135,14 @@ export class InfoPartieServeur {
     private verificationFinDePartie(): void {
         if (this.grilleDeJeu.length === 0) {
             if (this.scoreJoueur[0] > this.scoreJoueur[1]) {
-                this.joueurs[1].in(this.nomPartie).emit(event.VICTOIRE);
-                this.joueurs[0].in(this.nomPartie).emit(event.DEFAITE);
+                this.joueurs[1].in(this.nomPartie).emit(event.FINPARTIE, event.VICTOIRE);
+                this.joueurs[0].in(this.nomPartie).emit(event.FINPARTIE, event.DEFAITE);
             } else if (this.scoreJoueur[0] < this.scoreJoueur[1]) {
-                this.joueurs[0].in(this.nomPartie).emit(event.VICTOIRE);
-                this.joueurs[1].in(this.nomPartie).emit(event.DEFAITE);
+                this.joueurs[0].in(this.nomPartie).emit(event.FINPARTIE, event.VICTOIRE);
+                this.joueurs[1].in(this.nomPartie).emit(event.FINPARTIE, event.DEFAITE);
             } else {
-                this.joueurs[0].in(this.nomPartie).emit(event.EXECO);
-                this.joueurs[1].in(this.nomPartie).emit(event.EXECO);
+                this.joueurs[0].in(this.nomPartie).emit(event.FINPARTIE, event.EXAEQUO);
+                this.joueurs[1].in(this.nomPartie).emit(event.FINPARTIE, event.EXAEQUO);
             }
         }
     }

@@ -9,6 +9,7 @@ import { Mot } from "../../objetsTest/mot";
 import { LettreGrille } from "../../objetsTest/lettreGrille";
 import { TAILLE_TABLEAU } from "../../constantes";
 import { OpaciteCase } from "./../librairieGrille/opaciteCase";
+import { Subscription } from "rxjs/Subscription";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 const COULEUR_J2: string = "rgb(132, 112, 255)";
@@ -33,6 +34,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   public ngOnInit(): void {
     this.mots = this.serviceInteraction.mots;
+    this.subscriptionMatrice = new Subscription();
     this.inscriptionChangementMots();
     this.inscriptionChangementMotSelect();
     this.inscriptionMonMotSelect();

@@ -3,6 +3,7 @@ import { InfojoueurService } from "../../service-info-joueur/infojoueur.service"
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import { SocketService } from "../../service-socket/service-socket";
 import { PaquetPartie } from "../../objetsTest/paquetPartie";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-info-partie-multijoueur",
@@ -18,7 +19,8 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
   private _nomJoueur2: string;
 
   public constructor(_servicePointage: InfojoueurService,
-                     private socketClient: SocketService) {
+                     private socketClient: SocketService,
+                     private router: Router) {
     super(_servicePointage);
     this._motsDecouvertsJoueur1 = 0;
     this._motsDecouvertsJoueur2 = 0;
@@ -26,6 +28,7 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
     this._nomJoueur2 = "Joueur 2";
     this.chargerNomsJoueurs();
     this.miseAJourScores();
+    this.finPartie();
    }
 
   protected souscrireListeDeMots(): void {
@@ -56,6 +59,13 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
     this.socketClient.recevoirScore().subscribe( (nouveauScores: number[]) => {
       this._motsDecouvertsJoueur1 = nouveauScores[0];
       this._motsDecouvertsJoueur2 = nouveauScores[1];
+    });
+  }
+
+  private finPartie(): void {
+    this.socketClient.finPartie().subscribe( (resultat: string) => {
+      console.log("fin partie");
+      this.router.navigateByUrl("FinPartieMulti");
     });
   }
 }

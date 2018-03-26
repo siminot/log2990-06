@@ -9,14 +9,14 @@ export const PISTE_TEST: Point[] = [
     new Point(0, -LONGUEUR),
 ];
 
-const PISTE1: PisteBD = {
+export const PISTE1: PisteBD = {
     _id: "1",
     nom: "Piste 1",
     description: "Parc au centre de la ville",
     points: PISTE_TEST
 };
 
-const PISTE2: PisteBD = {
+export const PISTE2: PisteBD = {
     _id: "2",
     nom: "Piste 2",
     description: "Champs de ble",

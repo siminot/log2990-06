@@ -3,7 +3,6 @@ import { InfojoueurService } from "../../service-info-joueur/infojoueur.service"
 import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import { SocketService } from "../../service-socket/service-socket";
 import { PaquetPartie } from "../../objetsTest/paquetPartie";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "app-info-partie-multijoueur",
@@ -19,8 +18,7 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
   private _nomJoueur2: string;
 
   public constructor(_servicePointage: InfojoueurService,
-                     private socketClient: SocketService,
-                     private router: Router) {
+                     private socketClient: SocketService) {
     super(_servicePointage);
     this._motsDecouvertsJoueur1 = 0;
     this._motsDecouvertsJoueur2 = 0;

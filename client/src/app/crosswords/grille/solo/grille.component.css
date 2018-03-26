@@ -91,7 +91,7 @@ input {
 
 .visible {
     visibility: visible;
-    display: flex;
+    /*display: flex;*/
     opacity: 1;
     -webkit-transition:  opacity 0.05s linear;
     transition: opacity 0.05s linear;
@@ -115,4 +115,24 @@ input {
     font-family: 'Press Start 2P', cursive;
     border-radius:5px;
     border: 2px solid rgba(0, 0, 0, 0.747);
+    text-align: center;
+}
+
+button {
+    color: white;
+    display: inline-block;
+    border: none;
+    border-radius: 6px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #3900FF;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: rgb(29, 10, 95);
 }

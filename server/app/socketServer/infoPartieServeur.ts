@@ -37,6 +37,9 @@ export class InfoPartieServeur {
         this.scoreJoueur = [0, 0];
         this.joueursSontPret = 0;
         this.grilleDeJeu = await this.genererGrille();
+        if (this.joueursSontPret) {
+            this.direJoueursPartiePrete();
+        }
     }
 
     public ajouterJoueur(nouveauJoueur: SocketIO.Socket): void {
@@ -190,15 +193,10 @@ export class InfoPartieServeur {
     public demanderGrille(): void {
         this.joueurs[0].emit(event.DEMANDER_GRILLE);
         this.joueurs[0].on(event.ENVOYER_GRILLE, (laGrille: Mot[]) => {
-            this.recevoirGrille(laGrille);
             if (this.joueursSontPret) {
                 this.direJoueursPartiePrete();
             }
         });
-    }
-
-    private recevoirGrille(uneNouvelleGrille: Mot[]): void {
-        this.grilleDeJeu = uneNouvelleGrille;
     }
 
     public socketEstDansPartie(unSocket: SocketIO.Socket): boolean {

@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
 
 @Component({
     selector: "app-admin",
@@ -10,24 +11,28 @@ import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 })
 export class AdministrateurComponent implements OnInit {
 
+    public constructor(private gestionnaireBD: GestionnaireBDCourse) {}
+
     public pistes: PisteBD[];
 
     public abonnementPistes: Subscription;
 
-    public constructor(private gestionnaireBDCourse: GestionnaireBDCourse) {}
-
     public ngOnInit(): void {
-      this.pistes = this.gestionnaireBDCourse.pistes;
-      this.abonnementPistes = this.gestionnaireBDCourse.obtenirPistes()
+      this.pistes = this.gestionnaireBD.pistes;
+      this.abonnementPistes = this.gestionnaireBD.obtenirPistes()
           .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
 
     }
 
     public editerPiste(piste: PisteBD): void {
-        this.gestionnaireBDCourse.pisteEdition = piste;
+        this.gestionnaireBD.pisteEdition = piste;
     }
 
     public supprimerPiste(piste: PisteBD): void {
-        this.gestionnaireBDCourse.supprimerPiste(piste);
+        this.gestionnaireBD.supprimerPiste(piste);
     }
+
+    public creerNouvellePiste(): void {
+        this.gestionnaireBD.pisteEdition = null;
+      }
 }

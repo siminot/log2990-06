@@ -273,6 +273,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       console.log("fin partie");
       document.getElementById("appFinPartie").classList.remove("pasVisible");
       document.getElementById("appFinPartie").classList.add("visible");
+      document.getElementById("message").innerHTML = resultat + "!";
       // this.router.navigateByUrl("FinPartieMulti");
     });
   }

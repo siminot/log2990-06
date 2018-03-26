@@ -24,7 +24,7 @@
 
 .infoTexte {
     font-family: 'Press Start 2P', cursive;
-    font-size:10px;
+    font-size:8px;
     font-weight: normal;
     margin:5px;
 }
@@ -33,12 +33,12 @@
     font-size:12px !important;
 }
 
-#majPiste {
+#majPiste, #retourBtn {
+    width: 90%;
     font-family: 'Press Start 2P', cursive;
     font-size:8px;
     padding:8px;
     margin-top: 4px;
-    color:purple;
     cursor:pointer;
     background-color: white;
     border-radius: 5px;

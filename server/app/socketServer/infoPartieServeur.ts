@@ -21,7 +21,7 @@ export class InfoPartieServeur {
                        socketCreateur: SocketIO.Socket) {
         this.initialisationsElemPartie(nomPartie, difficultee, nomJoueur);
         this.ajouterJoueur(socketCreateur);
-        this.initNouvellePartie();
+        this.initNouvellePartie().catch();
     }
 
     private initialisationsElemPartie(nomPartie: string, difficultee: string, nomJoueur: string): void {
@@ -37,6 +37,9 @@ export class InfoPartieServeur {
         this.scoreJoueur = [0, 0];
         this.joueursSontPret = 0;
         this.grilleDeJeu = await this.genererGrille();
+        if (this.joueursSontPret) {
+            this.direJoueursPartiePrete();
+        }
     }
 
     public ajouterJoueur(nouveauJoueur: SocketIO.Socket): void {
@@ -82,7 +85,6 @@ export class InfoPartieServeur {
         paquet.nomJoeurs = this.nomJoueurs;
         paquet.nomPartie = this.nomPartie;
         paquet.difficultee = this.difficultee;
-        console.log(paquet);
 
         return paquet;
     }
@@ -178,7 +180,7 @@ export class InfoPartieServeur {
     private nouvellePartie(): void {
         this.initNouvellePartie().then( () => {
             this.envoyerNouvellePartie();
-        });
+        }).catch();
     }
 
     private actualisationScores(joueur: SocketIO.Socket): void {
@@ -191,15 +193,10 @@ export class InfoPartieServeur {
     public demanderGrille(): void {
         this.joueurs[0].emit(event.DEMANDER_GRILLE);
         this.joueurs[0].on(event.ENVOYER_GRILLE, (laGrille: Mot[]) => {
-            this.recevoirGrille(laGrille);
             if (this.joueursSontPret) {
                 this.direJoueursPartiePrete();
             }
         });
-    }
-
-    private recevoirGrille(uneNouvelleGrille: Mot[]): void {
-        this.grilleDeJeu = uneNouvelleGrille;
     }
 
     public socketEstDansPartie(unSocket: SocketIO.Socket): boolean {

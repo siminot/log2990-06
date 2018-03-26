@@ -24,7 +24,6 @@ export abstract class GrilleAbs implements OnDestroy {
   protected focus: GrilleFocus;
   protected focusSurPage: boolean;
 
-
   public constructor(protected _servicePointage: InfojoueurService) {
     this.miseEnEvidence = new MiseEnEvidence();
     this.focus = new GrilleFocus(document, 0);

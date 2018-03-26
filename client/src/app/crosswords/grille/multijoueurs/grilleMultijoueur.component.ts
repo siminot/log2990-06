@@ -170,7 +170,6 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private remplirMotTrouve(mot: Mot, couleur: string): void {
-    let styleInput: string;
     let idCase: string;
     for (let i: number = 0; i < mot.longueur; i++) {
       if (mot.estVertical) {

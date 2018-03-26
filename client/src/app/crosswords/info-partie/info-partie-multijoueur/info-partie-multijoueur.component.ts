@@ -26,24 +26,7 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
     this._nomJoueur2 = "Joueur 2";
     this.chargerNomsJoueurs();
     this.miseAJourScores();
-    // this.finPartie();
    }
-
-  protected souscrireListeDeMots(): void {
-/*     this._subscriptionListeMots = this._requeteGrille.serviceReceptionMots()
-    .subscribe((listeMots) => {
-      this._listeMots = listeMots;
-    }); */
-    return;
-  }
-
-  protected souscrireMotsDecouverts(): void {
-/*     this._subscriptionNbMotsDecouv = this._servicePointage.serviceReceptionPointage()
-      .subscribe((pointage) => {
-        this._nbMotsDecouverts = pointage;
-    }); */
-    return;
-  }
 
   private chargerNomsJoueurs(): void {
     this.socketClient.telechargerPaquetPartie().subscribe( (paquet: PaquetPartie) => {
@@ -59,11 +42,4 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
       this._motsDecouvertsJoueur2 = nouveauScores[1];
     });
   }
-
-/*   private finPartie(): void {
-    this.socketClient.finPartie().subscribe( (resultat: string) => {
-      console.log("fin partie");
-      this.router.navigateByUrl("FinPartieMulti");
-    });
-  } */
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Injectable, /* Inject */ } from "@angular/core";
+import { Component, OnInit, OnDestroy, Injectable } from "@angular/core";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
 import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
@@ -6,14 +6,13 @@ import { InfoPartieAbs } from "../../info-partie/info-partie-abs";
 import * as CONST from "../../constantes";
 import { Subscription } from "rxjs/Subscription";
 import { Router } from "@angular/router";
-// import { MatDialog, MatDialogRef, /* MAT_DIALOG_DATA */ } from "@angular/material/dialog";
-// import { DialogComponent } from "../../dialog/dialog.component";
+
+const POURCENTAGE_MAX: number = 100;
 
 @Component({
   selector: "app-info-joueur-solo",
   templateUrl: "./info-joueur-solo.component.html",
   styleUrls: ["./info-joueur-solo.component.css"],
-  // providers: [MAT_DIALOG_DATA]
 })
 
 @Injectable()
@@ -23,8 +22,6 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
   private _nbMotsDecouverts: number;
   private _barreProgression: HTMLElement;
   private _subscriptionNbMotsDecouv: Subscription;
-
-  // private dialogRef: MatDialogRef<DialogComponent>;
 
   public constructor(_servicePointage: InfojoueurService,
                      private _requeteGrille: ServiceInteractionComponent,
@@ -41,20 +38,20 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
     this._barreProgression = document.getElementById("progress-bar");
   }
 
-/*   public openDialog(dialog: MatDialog): void {
-    this.dialogRef = dialog.open(DialogComponent, {
-      data: {difficulte: this._difficulte}
-    });
-  } */
+  protected initialiserSouscriptions(): void {
+    super.initialiserSouscriptions();
+    this.souscrireListeDeMots();
+    this.souscrireMotsDecouverts();
+  }
 
-  protected souscrireListeDeMots(): void {
+  private souscrireListeDeMots(): void {
     this._subscriptionListeMots = this._requeteGrille.serviceReceptionMots()
     .subscribe((listeMots) => {
       this._listeMots = listeMots;
     });
   }
 
-  protected souscrireMotsDecouverts(): void {
+  private souscrireMotsDecouverts(): void {
     this._subscriptionNbMotsDecouv = this._servicePointage.serviceReceptionPointage()
       .subscribe((pointage) => {
         this._nbMotsDecouverts = pointage;
@@ -72,7 +69,7 @@ export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, On
 
   private majBarreProgression(): void {
     this._barreProgression.style.width = String(this.pourcentagePoint) + "%";
-    if (this.pourcentagePoint === 100) {
+    if (this.pourcentagePoint === POURCENTAGE_MAX) {
       this.router.navigateByUrl("FinPartie");
     }
   }

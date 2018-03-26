@@ -37,14 +37,10 @@ export abstract class InfoPartieAbs {
   }
 
   protected initialiserSouscriptions(): void {
-    this.souscrireListeDeMots();
-    this.souscrireMotsDecouverts();
+    // this.souscrireListeDeMots();
+    // this.souscrireMotsDecouverts();
     this.souscrireTimer();
   }
-
-  protected abstract souscrireListeDeMots(): void;
-
-  protected abstract souscrireMotsDecouverts(): void;
 
   private souscrireTimer(): void {
     this._subscriptionTimer = this._timerObservable$

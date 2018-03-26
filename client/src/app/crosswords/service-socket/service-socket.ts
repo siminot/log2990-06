@@ -106,7 +106,7 @@ export class SocketService {
 
     public envoyerMotSelectFromDef(mot: Mot): void {
         this.socketClient.emit(event.EVOIE_MOT_DEF, mot);
-    } 
+    }
 
     public recevoirMotDef(): Observable<Mot> {
         return new Observable<Mot>( (unObs) => {
@@ -156,7 +156,6 @@ export class SocketService {
 
     public finPartie(): Observable<string> {
         return new Observable<string>( (unObs) => {
-            console.log("fin partie service-socket");
             this.socketClient.on(event.FINPARTIE, (resultat: string) => unObs.next(resultat)
             );
         });

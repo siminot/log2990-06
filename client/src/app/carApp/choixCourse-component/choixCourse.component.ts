@@ -1,28 +1,19 @@
-import { AfterViewInit, Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { PisteBD } from "../piste/IPisteBD";
-import { HttpClient } from "@angular/common/http";
-import { GestionnaireBDCourse, PISTES_URL } from "../baseDeDonnee/GestionnaireBDCourse";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
 
 @Component({
     selector: "app-choix-course",
     templateUrl: "./choixCourse.component.html",
     styleUrls: ["./choixCourse.component.css"]
 })
-export class ChoixCourseComponent implements AfterViewInit {
+export class ChoixCourseComponent extends AbstractListePisteComponent {
 
-    public pistes: PisteBD[];
-
-    public constructor(private http: HttpClient,
-                       private gestionnaireBD: GestionnaireBDCourse) { }
-
-    public ngAfterViewInit(): void {
-      this.obtenirPistes();
+    public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
+        super(gestionnaireBD);
     }
 
-    public obtenirPistes(): void {
-      this.http.get<PisteBD[]>(PISTES_URL)
-      .subscribe((pistes) => this.pistes = pistes);
-    }
     public choisirCourse(piste: PisteBD): void {
         if (piste !== undefined) {
             this.gestionnaireBD.pisteJeu = piste;

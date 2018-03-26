@@ -34,10 +34,10 @@ export class GestionnaireBDCourse {
     }
 
     private obtenirPoints(piste: PisteBD): Point[] {
+        const points: Point[] = [];
         if (piste === null) {
-            return [];
+            return points;
         } else {
-            const points: Point[] = [];
             for (const point of piste.points) {
                 points.push(new Point(point.x, point.y));
             }

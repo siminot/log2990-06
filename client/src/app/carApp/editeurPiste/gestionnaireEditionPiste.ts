@@ -25,10 +25,13 @@ export class GestionnaireEditionPiste {
                        @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste,
                        @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran) {
         this._piste = new PisteEdition();
-        this._piste.importer(gestionnaireBD.pointsEdition);
         this.souris = new UtilisateurPeripherique(gestionnaireSouris);
         this.transformateur = new TransformateurCoordonnees(gestionnaireCamera, gestionnaireEcran);
         this.inscriptionSouris();
+    }
+
+    public importerPiste(): void {
+        this._piste.importer(this.gestionnaireBD.pointsEdition);
     }
 
     public creerNouvellePiste(nom: string, description: string): void {

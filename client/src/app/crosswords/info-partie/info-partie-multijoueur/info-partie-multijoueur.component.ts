@@ -28,7 +28,7 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
     this._nomJoueur2 = "Joueur 2";
     this.chargerNomsJoueurs();
     this.miseAJourScores();
-    this.finPartie();
+    // this.finPartie();
    }
 
   protected souscrireListeDeMots(): void {
@@ -62,10 +62,10 @@ export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
     });
   }
 
-  private finPartie(): void {
+/*   private finPartie(): void {
     this.socketClient.finPartie().subscribe( (resultat: string) => {
       console.log("fin partie");
       this.router.navigateByUrl("FinPartieMulti");
     });
-  }
+  } */
 }

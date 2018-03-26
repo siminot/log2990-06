@@ -42,6 +42,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.inscriptionMotTrouve();
     this.inscriptionMotPerdu();
     this.chargerGrille();
+    this.finPartie();
   }
 
   private inscriptionChangementMots(): void {
@@ -236,5 +237,15 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     }
 
     return undefined;
+  }
+
+  private finPartie(): void {
+    this.serviceSocket.finPartie().subscribe( (resultat: string) => {
+      console.log("fin partie");
+      // this.router.navigateByUrl("FinPartieMulti");
+      this.mots = [];
+      this.serviceInteraction.serviceEnvoieMots(this.mots);
+      this.genererGrille();
+    });
   }
 }

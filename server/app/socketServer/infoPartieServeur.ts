@@ -180,6 +180,7 @@ export class InfoPartieServeur {
     private nouvellePartie(): void {
         this.initNouvellePartie().then( () => {
             this.envoyerNouvellePartie();
+            this.joueursSontPret = 0;
         }).catch();
     }
 

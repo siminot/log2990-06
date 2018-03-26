@@ -278,12 +278,13 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     });
   }
 
-  private rejouerPartie(): void {
+  public rejouerPartie(): void {
     document.getElementById("appFinPartie").classList.remove("visible");
     document.getElementById("appFinPartie").classList.add("pasVisible");
     this.mots = [];
     this.serviceInteraction.serviceEnvoieMots(this.mots);
     this.genererGrille();
+    this.serviceSocket.rejouerPartie();
   }
 
   protected envoyerMotTrouve(mot: Mot): void {

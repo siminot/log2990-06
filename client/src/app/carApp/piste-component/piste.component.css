@@ -17,7 +17,7 @@
 #containerInfos {
     background-color: rgba(0, 0, 0, 0.342);
     border-radius: 10px;
-    height:150px;
+    /* height:150px; */
     width:200px;
     text-align:center;
 }
@@ -31,4 +31,27 @@
 
 #titreInfos {
     font-size:12px !important;
+}
+
+#majPiste {
+    font-family: 'Press Start 2P', cursive;
+    font-size:8px;
+    padding:8px;
+    margin-top: 4px;
+    color:purple;
+    cursor:pointer;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid rgba(0,0,0,0.747);
+}
+
+#creerPiste {
+    width: 90%;
+    font-family: 'Press Start 2P', cursive;
+    font-size:8px;
+    padding:8px;
+    margin-top:4px;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.747);
 }

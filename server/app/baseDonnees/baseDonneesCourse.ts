@@ -55,6 +55,9 @@ export class BaseDonneesCourse {
     private async obtenirPistes(): Promise<PisteBD[]> {
         const pistes: PisteBD[] = [];
         await this.modelPiste.find((err: ErreurRechercheBaseDonnees, res: Document[]) => {
+            if (err) {
+                throw err;
+            }
             for (const document of res) {
                 pistes.push(document.toObject());
             }

@@ -13,7 +13,6 @@ const URL_MODIFIER_PISTE: string = PISTES_URL + "modifier/";
 @Injectable()
 export class GestionnaireBDCourse {
 
-    public pistes: PisteBD[];
     public pistesSujet: Subject<PisteBD[]>;
 
     public pisteEdition: PisteBD;
@@ -49,8 +48,7 @@ export class GestionnaireBDCourse {
     public obtenirPistes(): Observable<PisteBD[]> {
         this.http.get<PisteBD[]>(PISTES_URL)
             .subscribe((pistes: PisteBD[]) => {
-                this.pistes = pistes;
-                this.pistesSujet.next(this.pistes);
+                this.pistesSujet.next(pistes);
             });
 
         return this.pistesSujet.asObservable();

@@ -98,7 +98,7 @@ export class PisteEdition extends PisteAbstraite {
             }
 
             if (piste.length > 0) {
-            this.ajouterPoint(piste[0]);
+                this.ajouterPoint(piste[0]);
             }
         }
     }

@@ -1,4 +1,3 @@
-// import * as socket from "socket.io";
 import { Mot } from "./mot";
 import { PaquetPartie } from "./paquet";
 import * as event from "./../../../common/communication/evenementSocket";
@@ -13,7 +12,7 @@ export class InfoPartieServeur {
     private nomJoueurs: Array<string>;
     private scoreJoueur: number[];
     private joueurs: Array<SocketIO.Socket>;
-    private joueursSontPret: boolean;
+    private joueursSontPret: number;
     private grilleDeJeu: Mot[];
 
     public constructor(nomPartie: string,
@@ -26,9 +25,7 @@ export class InfoPartieServeur {
     }
 
     private initialisationsElemPartie(nomPartie: string, difficultee: string, nomJoueur: string): void {
-        this.joueursSontPret = false;
         this.joueurs = new Array<SocketIO.Socket>();
-        this.scoreJoueur = [0, 0];
         this.nomPartie = nomPartie;
         this.difficultee = difficultee;
         this.nomJoueurs = new Array<string>();
@@ -37,6 +34,8 @@ export class InfoPartieServeur {
 
     private async initNouvellePartie(): Promise<void> {
         this.grilleDeJeu = [];
+        this.scoreJoueur = [0, 0];
+        this.joueursSontPret = 0;
         // this.grilleDeJeu = await this.genererGrille();
     }
 
@@ -63,13 +62,14 @@ export class InfoPartieServeur {
     }
 
     private joueursAttenteGrille(): void {
-        this.joueursSontPret = true;
+        this.joueursSontPret = 1;
         if (this.grilleDeJeu.length) {
             this.direJoueursPartiePrete();
         }
     }
 
     private direJoueursPartiePrete(): void {
+        this.joueursSontPret = 0;
         this.envoyerPaquetPartie();
         for (const joueur of this.joueurs) {
             this.definirEvenementsPartie(joueur);
@@ -87,10 +87,10 @@ export class InfoPartieServeur {
     }
 
     private envoyerPaquetPartie(): void {
-        for (const partie of this.joueurs) {
-            partie.in(this.nomPartie).emit(event.COMMENCER_PARTIE);
-            partie.on(event.PAGE_CHARGEE, () => {
-                partie.in(this.nomPartie).emit(event.PAQUET_PARTIE, this.fairePaquet()
+        for (const joueur of this.joueurs) {
+                joueur.in(this.nomPartie).emit(event.COMMENCER_PARTIE);
+                joueur.on(event.PAGE_CHARGEE, () => {
+                joueur.in(this.nomPartie).emit(event.PAQUET_PARTIE, this.fairePaquet()
                 );
             });
         }
@@ -154,7 +154,24 @@ export class InfoPartieServeur {
                 this.joueurs[0].in(this.nomPartie).emit(event.FINPARTIE, event.EXAEQUO);
                 this.joueurs[1].in(this.nomPartie).emit(event.FINPARTIE, event.EXAEQUO);
             }
+            this.evenementsFinPartie();
         }
+    }
+
+    private evenementsFinPartie(): void {
+        for (const joueur of this.joueurs) {
+            joueur.on(event.RECOMMENCER_PARTIE, () => {
+                if (++this.joueursSontPret === NB_JOUEUR_MAX) {
+                    this.nouvellePartie();
+                }
+                this.initNouvellePartie();
+            });
+        }
+    }
+
+    private nouvellePartie(): void {
+        this.initNouvellePartie();
+        this.envoyerPaquetPartie();
     }
 
     private actualisationScores(joueur: SocketIO.Socket): void {

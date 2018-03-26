@@ -31,5 +31,6 @@ export const VICTOIRE = "victoire";
 export const DEFAITE = "defaite";
 export const EXAEQUO = "exaequo";
 export const FINPARTIE = "finPartie";
+export const RECOMMENCER_PARTIE = "recommencerPartie";
 
 export const EVOIE_MOT_DEF = "motFromDef";

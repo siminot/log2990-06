@@ -160,4 +160,8 @@ export class SocketService {
             );
         });
     }
+
+    public rejouerPartie(): void {
+        this.socketClient.emit(event.RECOMMENCER_PARTIE);
+    }
 }

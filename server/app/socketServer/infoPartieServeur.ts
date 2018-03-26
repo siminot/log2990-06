@@ -109,7 +109,7 @@ export class InfoPartieServeur {
     private definirConfirmationMot(joueur: SocketIO.Socket): void {
         joueur.on(event.TENTATIVE, (motABloquer: Mot) => {
             for (const mot of this.grilleDeJeu) {
-                if (motABloquer.mot === mot.mot.toUpperCase()) {
+                if (motABloquer.mot.toLowerCase() === mot.mot.toLowerCase()) {
                     this.confirmerMotTrouve(joueur, motABloquer);
                 }
             }
@@ -126,7 +126,7 @@ export class InfoPartieServeur {
 
     private retirerMotDeGrille(motABloquer: Mot): void {
         for (const mot of this.grilleDeJeu) {
-            if (motABloquer.mot === mot.mot.toUpperCase()) {
+            if (motABloquer.mot.toLowerCase() === mot.mot.toLowerCase()) {
                 this.grilleDeJeu.splice(this.grilleDeJeu.indexOf(mot), 1);
             }
         }

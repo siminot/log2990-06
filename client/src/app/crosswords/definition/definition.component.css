@@ -9,7 +9,7 @@
 #vertCont, #horizCont {
     height:100%;
     overflow:auto;
-}
+} 
 
 p {
     margin: 0;
@@ -28,4 +28,14 @@ span{
 li{
     background-color: rgba(55, 55, 224, 0.367);
     border-radius: 10px;
+}
+
+.motTrouve {
+    background-color: rgba(233, 128, 116, 0.667) !important;
+    text-decoration: line-through;
+}
+
+.motPerdu {
+    background-color: rgba(132, 112, 255, 0.367) !important;
+    text-decoration: line-through;
 }

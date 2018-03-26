@@ -25,8 +25,8 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   private motSelectJoeur2: Mot;
 
   public constructor(_servicePointage: InfojoueurService,
-                     private serviceSocket: SocketService,
-                     private serviceInteraction: ServiceInteractionComponent) {
+    private serviceSocket: SocketService,
+    private serviceInteraction: ServiceInteractionComponent) {
     super(_servicePointage);
     this.serviceSocket.commencerPartie();
     this.genererGrille();
@@ -34,8 +34,9 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
 
   public ngOnInit(): void {
     this.mots = this.serviceInteraction.mots;
-    this.inscriptionChangementMots();
-    this.inscriptionChangementMotSelect();
+    this.inscriptionChangementMotsGrille();
+    this.changerMotSelectDef();
+    this.inscriptionChangementMotSelectDef();
     this.inscriptionMonMotSelect();
     this.inscriptionMotSelecetionneJ2();
     this.inscriptionMotTrouve();
@@ -43,30 +44,45 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.chargerGrille();
   }
 
-  private inscriptionChangementMots(): void {
+  private inscriptionChangementMotsGrille(): void {
     this.subscriptionMots = this.serviceInteraction.serviceReceptionMots().subscribe((mots) => {
       this.mots = mots;
       this.remplirPositionLettres();
     });
   }
 
-  private inscriptionChangementMotSelect(): void {
+  private inscriptionChangementMotSelectDef(): void {
     this.subscriptionMotSelec = this.serviceInteraction.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
-        // this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
-        EncadrementCase.appliquerStyleDefautGrille(document);
-        if (this.motSelectJoeur2 != null) {
-          this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
+        if (this.motSelectionne != null) {
+          this.serviceSocket.envoyerMotSelectFromDef(this.motSelectionne);
         }
-
-        if (!this.motSelectionne.motTrouve) {
-          this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
-          if (document.getElementById("00") !== null) {
-            this.focusSurBonneLettre();
-          }
-        }
+        this.procedureCommune();
       });
+  }
+
+  private changerMotSelectDef(): void {
+    this.serviceSocket.recevoirMotDef().subscribe((motSelect: Mot) => {
+      OpaciteCase.decouvrirCases(motSelect, this.matriceDesMotsSurGrille);
+      this.motSelectionne = this.retrouverMot(motSelect);
+      this.motSelectionne.activer = true;
+      this.procedureCommune();
+
+    })
+  }
+
+  private procedureCommune(): void {
+    EncadrementCase.appliquerStyleDefautGrille(document);
+    if (this.motSelectJoeur2 != null) {
+      this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
+    }
+    if (!this.motSelectionne.motTrouve) {
+      this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
+      if (document.getElementById("00") !== null) {
+        this.focusSurBonneLettre();
+      }
+    }
   }
 
   private genererGrille(): void {
@@ -208,7 +224,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private inscriptionMonMotSelect(): void {
-    this.serviceSocket.recevoirMotSelect().subscribe( (mot: Mot) => {
+    this.serviceSocket.recevoirMotSelect().subscribe((mot: Mot) => {
       OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
       this.motSelectionne = this.retrouverMot(mot);
       this.motSelectionne.activer = true;
@@ -228,13 +244,13 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private inscriptionMotTrouve(): void {
-    this.serviceSocket.recevoirMotTrouve().subscribe( (motTrouve: Mot) => {
+    this.serviceSocket.recevoirMotTrouve().subscribe((motTrouve: Mot) => {
       this.bloquerMot(motTrouve, "rgb(233, 128, 116)");
     });
   }
 
   private inscriptionMotPerdu(): void {
-    this.serviceSocket.recevoirMotPerdu().subscribe( (motPerdu: Mot) => {
+    this.serviceSocket.recevoirMotPerdu().subscribe((motPerdu: Mot) => {
       this.bloquerMot(motPerdu, "rgb(132, 112, 255)");
     });
   }

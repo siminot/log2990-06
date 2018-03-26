@@ -96,6 +96,7 @@ export class InfoPartieServeur {
     }
 
     private definirEvenementsPartie(joueur: SocketIO.Socket): void {
+        this.definirSelectionMotDef(joueur);
         this.definirSelectionMot(joueur);
         this.definirConfirmationMot(joueur);
     }
@@ -106,6 +107,14 @@ export class InfoPartieServeur {
             this.joueurs[this.indexAutreJoueur(joueur)].in(this.nomPartie).emit(event.MOT_SELECTIONNE, motSel);
         });
     }
+
+    private definirSelectionMotDef(joueur: SocketIO.Socket): void {
+        joueur.on(event.EVOIE_MOT_DEF, (motSel: Mot) => {
+            joueur.in(this.nomPartie).emit(event.MOT_SEL_J2, motSel);
+            this.joueurs[this.indexAutreJoueur(joueur)].in(this.nomPartie).emit(event.EVOIE_MOT_DEF, motSel);
+        });
+    }
+
     private definirConfirmationMot(joueur: SocketIO.Socket): void {
         joueur.on(event.TENTATIVE, (motABloquer: Mot) => {
             for (const mot of this.grilleDeJeu) {

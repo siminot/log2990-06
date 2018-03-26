@@ -30,3 +30,5 @@ export const MODIFIER_SCORES = "MODIFIER_SCORES";
 export const VICTOIRE = "victoire";
 export const DEFAITE = "defaite";
 export const EXECO = "execo";
+
+export const EVOIE_MOT_DEF = "motFromDef";

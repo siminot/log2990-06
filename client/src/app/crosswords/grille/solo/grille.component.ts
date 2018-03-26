@@ -72,4 +72,8 @@ export class GrilleComponent extends GrilleAbs implements OnInit {
 
     return mot;
   }
+
+  protected envoyerMotTrouve(mot: Mot): void {
+    this.listeMotsService.serviceEnvoieMotTrouve(mot);
+  }
 }

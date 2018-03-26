@@ -285,4 +285,8 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.serviceInteraction.serviceEnvoieMots(this.mots);
     this.genererGrille();
   }
+
+  protected envoyerMotTrouve(mot: Mot): void {
+    return;
+  }
 }

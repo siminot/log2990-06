@@ -116,6 +116,8 @@ export abstract class GrilleAbs implements OnDestroy {
     return motTrouve;
   }
 
+  protected abstract envoyerMotTrouve(mot: Mot): void;
+
   protected remplirPositionLettres(): void {
     for (const mot of this.mots) {
       this.remplirPositionLettresMot(mot);
@@ -157,6 +159,7 @@ export abstract class GrilleAbs implements OnDestroy {
       this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "green");
       this.focus.removeFocusFromSelectedWord(this.motSelectionne);
       this._servicePointage.incrementationNbMotDecouv(CONST.INCR_UN_MOT_DECOUVERT);
+      this.envoyerMotTrouve(this.motSelectionne);
     }
   }
 

@@ -30,4 +30,8 @@ export class AdministrateurComponent implements AfterViewInit {
     public supprimerPiste(piste: PisteBD): void {
       this.gestionnaireBD.supprimerPiste(piste);
     }
+
+    public creerNouvellePiste(): void {
+        this.gestionnaireBD.pisteEdition = null;
+      }
 }

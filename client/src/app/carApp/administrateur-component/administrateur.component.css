@@ -8,6 +8,7 @@
 .piste {
     position: relative;
     margin: 0;
+    margin-bottom: 10px;
     top: 0;
     color: black;
     font-size:10px;
@@ -17,6 +18,16 @@
     list-style-image: url('../../../assets/purple_ghost.jpg');
 }
 
+.editer {
+    position:absolute;
+    left: 550px;
+}
+
+.supprimer {
+    position:absolute;
+    left: 650px;
+}
+
 .titre, .creer, .piste, .editer, .supprimer {
     font-family: 'Press Start 2P', cursive;
 }
@@ -24,7 +35,7 @@
 .creer, .editer, .supprimer {
     font-size: 10px;
     color: purple;
-    padding: 8px;
+    padding: 6px;
     border-radius: 5px;
     background-color: white;
     border: 2px solid rgba(0,0,0, 0.747);

@@ -24,7 +24,7 @@ export class GestionnaireBDCourse {
     }
 
     private obtenirPoints(piste: PisteBD): Point[] {
-        if (piste === null || piste === undefined) {
+        if (piste === null) {
             return [];
         } else {
             const points: Point[] = [];
@@ -37,6 +37,7 @@ export class GestionnaireBDCourse {
     }
     public constructor(private http: HttpClient) {
         this.pisteEdition = null;
+        this.pisteJeu = null;
     }
 
     public obtenirPistes(): PisteBD[] {

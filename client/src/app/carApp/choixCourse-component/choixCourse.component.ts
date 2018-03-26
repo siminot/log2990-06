@@ -24,6 +24,8 @@ export class ChoixCourseComponent implements AfterViewInit {
       .subscribe((pistes) => this.pistes = pistes);
     }
     public choisirCourse(piste: PisteBD): void {
-      this.gestionnaireBD.pisteJeu = piste;
+        if (piste !== undefined) {
+            this.gestionnaireBD.pisteJeu = piste;
+        }
     }
 }

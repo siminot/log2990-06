@@ -29,5 +29,11 @@ export const MODIFIER_SCORES = "MODIFIER_SCORES";
 
 export const VICTOIRE = "victoire";
 export const DEFAITE = "defaite";
+<<<<<<< HEAD
 export const EXAEQUO = "exaequo";
 export const FINPARTIE = "finPartie";
+=======
+export const EXECO = "execo";
+
+export const EVOIE_MOT_DEF = "motFromDef";
+>>>>>>> 90b373df2e4e9083eed7ac875aac890b3752c823

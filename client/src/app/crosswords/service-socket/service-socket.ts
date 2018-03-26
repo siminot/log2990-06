@@ -104,6 +104,16 @@ export class SocketService {
         this.socketClient.emit(event.MOT_SELECTIONNE, mot );
     }
 
+    public envoyerMotSelectFromDef(mot: Mot): void {
+        this.socketClient.emit(event.EVOIE_MOT_DEF, mot);
+    } 
+
+    public recevoirMotDef(): Observable<Mot> {
+        return new Observable<Mot>( (unObs) => {
+            this.socketClient.on(event.EVOIE_MOT_DEF, (mot: Mot) => unObs.next(mot));
+        });
+    }
+
     public recevoirMotSelect(): Observable<Mot> {
         return new Observable<Mot>( (unObs) => {
             this.socketClient.on(event.MOT_SELECTIONNE, (mot: Mot) => unObs.next(mot));

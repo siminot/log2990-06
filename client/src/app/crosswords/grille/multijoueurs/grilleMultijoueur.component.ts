@@ -13,6 +13,7 @@ import { Subscription } from "rxjs/Subscription";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 const COULEUR_J2: string = "rgb(132, 112, 255)";
+const COULEUR_J1: string = "rgb(233, 128, 116)";
 
 @Component({
   selector: "app-grille-multi",
@@ -35,8 +36,9 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   public ngOnInit(): void {
     this.mots = this.serviceInteraction.mots;
     this.subscriptionMatrice = new Subscription();
-    this.inscriptionChangementMots();
-    this.inscriptionChangementMotSelect();
+    this.inscriptionChangementMotsGrille();
+    this.changerMotSelectDef();
+    this.inscriptionChangementMotSelectDef();
     this.inscriptionMonMotSelect();
     this.inscriptionMotSelecetionneJ2();
     this.inscriptionMotTrouve();
@@ -45,30 +47,45 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     this.finPartie();
   }
 
-  private inscriptionChangementMots(): void {
+  private inscriptionChangementMotsGrille(): void {
     this.subscriptionMots = this.serviceInteraction.serviceReceptionMots().subscribe((mots) => {
       this.mots = mots;
       this.remplirPositionLettres();
     });
   }
 
-  private inscriptionChangementMotSelect(): void {
+  private inscriptionChangementMotSelectDef(): void {
     this.subscriptionMotSelec = this.serviceInteraction.serviceReceptionMotSelectionne()
       .subscribe((motSelec) => {
         this.motSelectionne = motSelec;
-        // this.motSelectionne.mot = this.motSelectionne.mot.toUpperCase();
-        EncadrementCase.appliquerStyleDefautGrille(document);
-        if (this.motSelectJoeur2 != null) {
-          this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
+        if (this.motSelectionne != null) {
+          this.serviceSocket.envoyerMotSelectFromDef(this.motSelectionne);
         }
-
-        if (!this.motSelectionne.motTrouve) {
-          this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
-          if (document.getElementById("00") !== null) {
-            this.focusSurBonneLettre();
-          }
-        }
+        this.procedureCommune();
       });
+  }
+
+  private changerMotSelectDef(): void {
+    this.serviceSocket.recevoirMotDef().subscribe((motSelect: Mot) => {
+      OpaciteCase.decouvrirCases(motSelect, this.matriceDesMotsSurGrille);
+      this.motSelectionne = this.retrouverMot(motSelect);
+      this.motSelectionne.activer = true;
+      this.procedureCommune();
+
+    });
+  }
+
+  private procedureCommune(): void {
+    EncadrementCase.appliquerStyleDefautGrille(document);
+    if (this.motSelectJoeur2 != null) {
+      this.miseEnEvidence.miseEvidenceMot(this.motSelectJoeur2, "blue");
+    }
+    if (!this.motSelectionne.motTrouve) {
+      this.miseEnEvidence.miseEvidenceMot(this.motSelectionne, "red");
+      if (document.getElementById("00") !== null) {
+        this.focusSurBonneLettre();
+      }
+    }
   }
 
   private genererGrille(): void {
@@ -158,24 +175,36 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
       if (mot.estVertical) {
         idCase = mot.premierX.toString() + (mot.premierY + i).toString();
         document.getElementById(idCase).value = mot.mot[i];
-        styleInput = document.getElementById(idCase).style.backgroundColor;
-        document.getElementById(idCase).style.backgroundColor = couleur;
-        if (styleInput === COULEUR_J2 && couleur !== styleInput) {
-          this.affihcerCasePartagee(idCase + "c");
-        }
       } else {
         idCase = (mot.premierX + i).toString() + mot.premierY.toString();
         document.getElementById(idCase).value = mot.mot[i];
-        styleInput = document.getElementById(idCase).style.backgroundColor;
-        document.getElementById(idCase).style.backgroundColor = couleur;
-        if (styleInput === COULEUR_J2 && couleur !== styleInput) {
-          this.affihcerCasePartagee(idCase + "c");
-        }
+      }
+      this.croisementDesCases(mot, idCase, couleur);
+    }
+  }
+
+  private croisementDesCases(mot: Mot, idCase: string, couleur: string): void {
+    let styleInput: string;
+    styleInput = document.getElementById(idCase).style.backgroundColor;
+    document.getElementById(idCase).style.backgroundColor = couleur;
+    if (mot.estVertical) {
+      if (this.verifCroisementAutreJoueur(styleInput, couleur)) {
+        this.affihcerCasePartagee(idCase + "c");
+      }
+    } else {
+      if (this.verifCroisementAutreJoueur(styleInput, couleur)) {
+        this.affihcerCasePartagee(idCase + "c");
       }
     }
   }
 
+  private verifCroisementAutreJoueur(styleInput: string, couleur: string): boolean {
+    return styleInput === COULEUR_J2 && couleur !== styleInput ||
+      styleInput === COULEUR_J1 && couleur !== styleInput;
+  }
+
   private affihcerCasePartagee(idCase: string): void {
+    document.getElementById(idCase).style.backgroundColor = COULEUR_J1;
     document.getElementById(idCase).src = "../../../assets/hachure.png";
   }
 
@@ -198,7 +227,7 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private inscriptionMonMotSelect(): void {
-    this.serviceSocket.recevoirMotSelect().subscribe( (mot: Mot) => {
+    this.serviceSocket.recevoirMotSelect().subscribe((mot: Mot) => {
       OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
       this.motSelectionne = this.retrouverMot(mot);
       this.motSelectionne.activer = true;
@@ -218,13 +247,13 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private inscriptionMotTrouve(): void {
-    this.serviceSocket.recevoirMotTrouve().subscribe( (motTrouve: Mot) => {
+    this.serviceSocket.recevoirMotTrouve().subscribe((motTrouve: Mot) => {
       this.bloquerMot(motTrouve, "rgb(233, 128, 116)");
     });
   }
 
   private inscriptionMotPerdu(): void {
-    this.serviceSocket.recevoirMotPerdu().subscribe( (motPerdu: Mot) => {
+    this.serviceSocket.recevoirMotPerdu().subscribe((motPerdu: Mot) => {
       this.bloquerMot(motPerdu, "rgb(132, 112, 255)");
     });
   }

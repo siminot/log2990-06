@@ -14,7 +14,6 @@ describe("PisteEdition", () => {
     });
 
     describe("Ajout de points", () => {
-
         it("Ajout d'une liste de points", () => {
             for (const point of PISTE_TEST) {
                 piste.ajouterPoint(point);
@@ -66,6 +65,19 @@ describe("PisteEdition", () => {
             expect(piste["intersectionSelectionnee"]).not.toEqual(null);
             piste.deselectionnerIntersection();
             expect(piste["intersectionSelectionnee"]).toEqual(null);
+        });
+    });
+
+    describe("Importation", () => {
+        it("Importer une piste non vide fonctionne", () => {
+            piste.importer(PISTE_TEST);
+            expect(piste["intersections"].length).toEqual(PISTE_TEST.length);
+            expect(piste["estBoucle"]).toBeTruthy();
+        });
+
+        it("Importer une piste vide fonctionne", () => {
+            piste.importer([]);
+            expect(piste["intersections"].length).toEqual(0);
         });
     });
 });

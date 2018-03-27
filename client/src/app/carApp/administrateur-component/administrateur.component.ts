@@ -1,33 +1,32 @@
-import { AfterViewInit, Component } from "@angular/core";
-import { PisteBD } from "../piste/pisteBD";
-import { HttpClient } from "@angular/common/http";
-import { GestionnaireBDCourse, PISTES_URL } from "../baseDeDonnee/GestionnaireBDCourse";
+import { Component, Inject } from "@angular/core";
+import { Subscription } from "rxjs/Subscription";
+import { PisteBD } from "../piste/IPisteBD";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
 
 @Component({
     selector: "app-admin",
     templateUrl: "./administrateur.component.html",
     styleUrls: ["./administrateur.component.css"]
 })
-export class AdministrateurComponent implements AfterViewInit {
+export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public pistes: PisteBD[];
+    public abonnementPistes: Subscription;
 
-    public constructor(private http: HttpClient,
-                       private gestionnaireBD: GestionnaireBDCourse) { }
-
-    public ngAfterViewInit(): void {
-      this.obtenirPistes();
+    public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
+      super(gestionnaireBD);
     }
 
-    public obtenirPistes(): void {
-      this.http.get<PisteBD[]>(PISTES_URL)
-      .subscribe((pistes) => this.pistes = pistes);
-    }
     public editerPiste(piste: PisteBD): void {
-      this.gestionnaireBD.pisteEdition = piste;
+        this.gestionnaireBD.pisteEdition = piste;
     }
 
     public supprimerPiste(piste: PisteBD): void {
-      this.gestionnaireBD.supprimerPiste(piste);
+        this.gestionnaireBD.supprimerPiste(piste);
+    }
+
+    public creerNouvellePiste(): void {
+        this.gestionnaireBD.pisteEdition = null;
     }
 }

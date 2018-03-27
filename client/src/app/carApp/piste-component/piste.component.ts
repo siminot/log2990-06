@@ -48,8 +48,11 @@ export class PisteComponent extends AbstractGameComponent {
             this.description = gestionnaireBD.pisteEdition.description;
         } else {
             this.estNouvellePiste = true;
+            this.nom = "";
+            this.description = "";
         }
 
+        this.editeurPiste.importerPiste();
         this.souscrireNombrePoints();
         this.souscrireEstBoucle();
         this.souscrireRespectContraintePiste();

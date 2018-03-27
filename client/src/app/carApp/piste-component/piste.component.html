@@ -1,26 +1,31 @@
 <div #container oncontextmenu="return false" id="editeurPiste">
     <ul id="informations">
-        <div id="InputsEnregistrement">
-            <div>
-                <label>Nom:</label>
-                <input type="text" [(ngModel)]="nom" placeholder="">
-            </div>
-            <div>
-                <label>Description:</label>
-                <input type="text" [(ngModel)]="description" placeholder="">
-            </div>
-        </div> 
+        
+        <div id="containerInfos" oncontextmenu="return false">
+            <a class="infoTexte" id="titreInfos">Informations</a>
+            <br>
 
-        <button  *ngIf="!estNouvellePiste" [disabled]="!peutEnregistrer()" (click)="mettreAJourPiste()" routerLink="/admin">Mettre a jour la piste</button>
-        <button  [disabled]="!peutEnregistrer()" (click)="creerNouvellePiste()" disabled routerLink="/admin">Créer une nouvelle piste</button>
-        <button routerLink="/admin">Revenir à la liste des pistes sans sauvegarder</button>
-        <div id="containerInfos">
+            <div id="InputsEnregistrement">
+                <div>
+                    <label class="infoTexte">Nom:</label>
+                    <input type="text" [(ngModel)]="nom" placeholder="">
+                </div>
+                <div>
+                    <label class="infoTexte">Description:</label>
+                    <input type="text" [(ngModel)]="description" placeholder="">
+                </div>
+            </div> 
+            
+            <button id="majPiste" *ngIf="!estNouvellePiste" [disabled]="!peutEnregistrer()" (click)="mettreAJourPiste()" routerLink="/admin">Mettre a jour la piste</button>
+            <button id="creerPiste" [disabled]="!peutEnregistrer()" (click)="creerNouvellePiste()" disabled routerLink="/admin">Créer une nouvelle piste</button>
+            <button id="retourBtn" routerLink="/admin">Revenir à la liste des pistes sans sauvegarder</button>
+            
             <br>
-            <a class="infoTexte" id="titreInfos">Informations</a><br>
-            <br>
+            
             <a class="infoTexte">Nombre de points: {{ nombreDePoints }}</a><br>
             <a class="infoTexte">Boucle: {{ estBoucle }}</a><br>
-            <a class="infoTexte">Respecte contraintes: {{ respectContraintePiste }}</a><br>
+            <a class="infoTexte">Respect contraintes: {{ respectContraintePiste }}</a><br>
+            
         </div>
     </ul>
 </div>

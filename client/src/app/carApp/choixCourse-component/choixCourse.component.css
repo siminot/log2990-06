@@ -1,11 +1,46 @@
-div {
+#container {
     width: 100%;
-    height: 800px;
+    height: 100%;
+    padding:0;
+    margin:0;
 }
 
-ul, li {
+.piste {
     position: relative;
-    margin: 0;
-    top: 20px;
+    margin: 15px;
+    top: 0;
     color: black;
+    font-size: 10px;
+}
+
+.pistes {
+    list-style-image: url('../../../assets/purple_ghost.jpg');
+}
+
+.selection {
+    font-size: 10px;
+    color: purple;
+    padding: 6px;
+    cursor:pointer;
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid rgba(0,0,0, 0.747);
+    position:absolute;
+    left: 550px;
+}
+
+.piste, .selection, #titrePrincipal, #titreChoixPiste {
+    font-family: 'Press Start 2P', cursive;
+}
+
+#titrePrincipal {
+    font-size: 18px;
+    text-align: center;
+    margin:30px;
+}
+
+#titreChoixPiste {
+    font-size: 12px;
+    margin: 10px;
+    padding: 0px;
 }

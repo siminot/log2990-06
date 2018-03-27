@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
-import { PisteBD } from "../piste/pisteBD";
+import { PisteBD } from "../piste/IPisteBD";
 import { HttpClient } from "@angular/common/http";
 import { Point } from "../elementsGeometrie/point";
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
 
 export const PISTES_URL: string = "http://localhost:3000/apipistes/";
 const URL_SUPPRIMER_PISTE: string = PISTES_URL + "supprimer/";
@@ -11,9 +13,16 @@ const URL_MODIFIER_PISTE: string = PISTES_URL + "modifier/";
 @Injectable()
 export class GestionnaireBDCourse {
 
-    public pistes: PisteBD[];
+    public pistesSujet: Subject<PisteBD[]>;
+
     public pisteEdition: PisteBD;
     public pisteJeu: PisteBD;
+
+    public constructor(private http: HttpClient) {
+        this.pisteEdition = null;
+        this.pisteJeu = null;
+        this.pistesSujet = new Subject<PisteBD[]>();
+  }
 
     public get pointsEdition(): Point[] {
         return this.obtenirPoints(this.pisteEdition);
@@ -24,10 +33,10 @@ export class GestionnaireBDCourse {
     }
 
     private obtenirPoints(piste: PisteBD): Point[] {
+        const points: Point[] = [];
         if (piste === null) {
-            return [];
+            return points;
         } else {
-            const points: Point[] = [];
             for (const point of piste.points) {
                 points.push(new Point(point.x, point.y));
             }
@@ -35,16 +44,14 @@ export class GestionnaireBDCourse {
             return points;
         }
     }
-    public constructor(private http: HttpClient) {
-        this.pisteEdition = null;
-        this.pisteJeu = null;
-    }
 
-    public obtenirPistes(): PisteBD[] {
+    public obtenirPistes(): Observable<PisteBD[]> {
         this.http.get<PisteBD[]>(PISTES_URL)
-            .subscribe((pistes) => this.pistes = pistes);
+            .subscribe((pistes: PisteBD[]) => {
+                this.pistesSujet.next(pistes);
+            });
 
-        return this.pistes;
+        return this.pistesSujet.asObservable();
     }
 
     public supprimerPiste(piste: PisteBD): void {

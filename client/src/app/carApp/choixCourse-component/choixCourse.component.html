@@ -1,9 +1,12 @@
-<h2>Veuillez choisir une piste</h2>
-<ul class="pistes">
-  <li *ngFor="let piste of pistes">
-    {{piste.nom}}: {{piste.description}}
+<div id="container">
+  <h1 id="titrePrincipal">C'est le temps de sélectionner une piste</h1>
+  <h2 id="titreChoixPiste">Choix de pistes</h2>
+  <ul class="pistes">
+    <li class="piste" *ngFor="let piste of pistes">
+      {{piste.nom}}: {{piste.description}}
 
-    <button class="selection" title="choix"
-    (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
-  </li>
-</ul>
+      <button class="selection" title="choix"
+      (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
+    </li>
+  </ul>
+</div>

@@ -1,9 +1,11 @@
 import { Mongoose, Model, Schema, Document } from "mongoose";
-import { PisteBD } from "../../../client/src/app/carApp/piste/pisteBD";
+import { PisteBD } from "../../../client/src/app/carApp/piste/IPisteBD";
 import { ErreurRechercheBaseDonnees } from "../exceptions/erreurRechercheBD";
 import { Request, Response, NextFunction } from "express";
 import { injectable } from "inversify";
 import { ErreurSupressionBaseDonnees } from "../exceptions/erreurSupressionBD";
+import { ErreurModificationBaseDonnees } from "../exceptions/erreurModificationBD";
+import { ErreurConnectionBD } from "../exceptions/erreurConnectionBD";
 
 const URL_BD: string = "mongodb://admin:admin@ds123129.mlab.com:23129/log2990";
 
@@ -44,42 +46,56 @@ export class BaseDonneesCourse {
     }
 
     private async modifierUnePiste(identifiant: string, piste: PisteBD): Promise<void> {
-        console.log(piste);
-        this.modelPiste.findByIdAndUpdate(identifiant, {nom: piste.nom, description: piste.description, points: piste.points}).exec();
+        this.modelPiste.findByIdAndUpdate(identifiant, {nom: piste.nom, description: piste.description, points: piste.points})
+        .exec().catch( () => {
+            throw new ErreurModificationBaseDonnees;
+        });
     }
 
     private async supprimerUnePiste(identifiant: string): Promise<void> {
-        this.modelPiste.findByIdAndRemove(identifiant).exec().catch(() => new ErreurSupressionBaseDonnees());
+        this.modelPiste.findByIdAndRemove(identifiant).exec()
+            .catch(() => {
+                throw new ErreurSupressionBaseDonnees();
+        });
     }
 
     private async obtenirPistes(): Promise<PisteBD[]> {
         const pistes: PisteBD[] = [];
-        await this.modelPiste.find((err: ErreurRechercheBaseDonnees, res: Document[]) => {
+        await this.modelPiste.find()
+        .then((res: Document[]) => {
             for (const document of res) {
                 pistes.push(document.toObject());
             }
-        });
+        }).catch( () => { throw new ErreurRechercheBaseDonnees; } );
 
         return pistes;
     }
 
     public async requeteDePistes(req: Request, res: Response, next: NextFunction): Promise<void> {
-        this.assurerConnection();
+        this.assurerConnection().catch(() => {
+            throw new ErreurConnectionBD();
+        });
         res.send(await this.obtenirPistes());
     }
 
     public async requeteAjoutDUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
-        this.assurerConnection();
+        this.assurerConnection().catch(() => {
+            throw new ErreurConnectionBD();
+        });
         res.send(await this.ajouterPiste(req.body));
     }
 
     public async requeteSupprimerPiste(req: Request, res: Response, next: NextFunction): Promise<void> {
-        this.assurerConnection();
+        this.assurerConnection().catch(() => {
+            throw new ErreurConnectionBD();
+        });
         res.send(await this.supprimerUnePiste(req.params.id));
     }
 
     public async requeteModifierPiste(req: Request, res: Response, next: NextFunction): Promise<void> {
-        this.assurerConnection();
+        this.assurerConnection().catch(() => {
+            throw new ErreurConnectionBD();
+        });
         res.send(await this.modifierUnePiste(req.params.id, req.body));
     }
 }

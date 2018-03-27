@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Mesh } from "three";
 import { Skybox, TempsJournee } from "./skybox";
 
-export class ConstructionSkybox {
+export class ElementsInitialisationSkybox {
     public tempsJournee: TempsJournee;
     public paysage: string;
     public plancher: string;
@@ -14,11 +14,11 @@ export class ConstructionSkybox {
     }
 }
 
-export const SKYBOX: ConstructionSkybox[] = [
-    new ConstructionSkybox(TempsJournee.Nuit, "nuit1", "grass4"),
-    new ConstructionSkybox(TempsJournee.Nuit, "nuit2", "pave1"),
-    new ConstructionSkybox(TempsJournee.Jour, "jour1", "grass2"),
-    new ConstructionSkybox(TempsJournee.Jour, "jour2", "roche1"),
+export const SKYBOX: ElementsInitialisationSkybox[] = [
+    new ElementsInitialisationSkybox(TempsJournee.Nuit, "nuit1", "grass4"),
+    new ElementsInitialisationSkybox(TempsJournee.Nuit, "nuit2", "pave1"),
+    new ElementsInitialisationSkybox(TempsJournee.Jour, "jour1", "grass2"),
+    new ElementsInitialisationSkybox(TempsJournee.Jour, "jour2", "roche1"),
 ];
 
 @Injectable()
@@ -26,24 +26,45 @@ export class GestionnaireSkybox {
 
     private tempsJournee: TempsJournee;
     private skyboxCourante: Skybox;
-    private indexAncienneSkybox: number[];
-    private environnements: Skybox[][];
+    private indexAncienneSkybox: Map<TempsJournee, number>;
+    private environnements: Map<TempsJournee, Skybox[]>;
 
     public get skybox(): Mesh {
         return this.skyboxCourante;
     }
 
     public constructor() {
-        this.environnements = [[], []];
-        this.indexAncienneSkybox = [0, 0];
+        this.environnements = new Map<TempsJournee, Skybox[]>();
+        this.indexAncienneSkybox = new Map<TempsJournee, number>();
         this.tempsJournee = TempsJournee.Nuit;
         this.chargerSkybox();
         this.miseAJourSkybox();
     }
 
+    private get skyboxSelonTemps(): Skybox[] {
+        if (this.environnements.get(this.tempsJournee) === undefined) {
+            this.environnements.set(this.tempsJournee , new Array<Skybox>());
+        }
+
+        return this.environnements.get(this.tempsJournee);
+    }
+
+    private get indexSelonTemps(): number {
+        if (this.indexAncienneSkybox.get(this.tempsJournee) === undefined) {
+            this.indexAncienneSkybox.set(this.tempsJournee , 0);
+        }
+
+        return this.indexAncienneSkybox.get(this.tempsJournee);
+    }
+
+    private get positionCouranteSkybox(): number {
+        return this.skyboxSelonTemps.findIndex((paysage: Skybox) => this.skyboxCourante === paysage );
+    }
+
     private chargerSkybox(): void {
-        for (const liens of SKYBOX) {
-            this.environnements[liens.tempsJournee].push(new Skybox(liens.tempsJournee, liens.paysage, liens.plancher));
+        for (const elementInitialisation of SKYBOX) {
+            this.tempsJournee = elementInitialisation.tempsJournee;
+            this.skyboxSelonTemps.push(new Skybox(elementInitialisation));
         }
     }
 
@@ -54,22 +75,14 @@ export class GestionnaireSkybox {
     }
 
     private miseAJourSkybox(): void {
-        this.skyboxCourante = this.environnements[this.tempsJournee][this.indexAncienneSkybox[this.tempsJournee]];
+        this.skyboxCourante = this.skyboxSelonTemps[this.indexSelonTemps];
     }
 
     public changerDecor(): void {
-        this.skyboxCourante = this.paysagesSelonTemps[(this.positionCouranteSkybox + 1) % this.paysagesSelonTemps.length];
+        this.skyboxCourante = this.skyboxSelonTemps[(this.positionCouranteSkybox + 1) % this.skyboxSelonTemps.length];
     }
 
     private miseAJourAncienIndex(): void {
-        this.indexAncienneSkybox[this.tempsJournee] = this.positionCouranteSkybox;
-    }
-
-    private get positionCouranteSkybox(): number {
-        return this.paysagesSelonTemps.findIndex((paysage: Skybox) => this.skyboxCourante === paysage );
-    }
-
-    private get paysagesSelonTemps(): Skybox[] {
-        return this.environnements[this.tempsJournee];
+        this.indexAncienneSkybox.set(this.tempsJournee, this.positionCouranteSkybox);
     }
 }

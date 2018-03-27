@@ -1,0 +1,21 @@
+<div id="container">
+  <h1 id="titrePrincipal">Bienvenue sur la page Administrateur</h1>
+  <h2 class="titre">Création d'une nouvelle piste</h2>
+  <button class="creer" title="creer"
+          routerLink="/editeurPistes" (click)="creerNouvellePiste()" >Créer une nouvelle piste</button>
+  <br><br>
+
+  <h2 class="titre">Pistes stockées</h2>
+  <ul class="pistes">
+    <li *ngFor="let piste of pistes" class="piste">
+      {{piste.nom}}: {{piste.description}}
+
+      <button class="editer" title="editer"
+      (click)="editerPiste(piste)" routerLink="/editeurPistes">Éditer</button>
+
+      <button class="supprimer" title="supprimer"
+      (click)="supprimerPiste(piste)">Supprimer</button>
+
+    </li>
+  </ul>
+</div>

@@ -4,13 +4,11 @@
 */
 import * as assert from "assert";
 import { RouteServiceLexical } from "./routeServiceLexical";
-import { ServiceLexical } from "./ServiceLexical";
 import { Mot } from "./Mot";
 import * as WebRequest from "web-request";
 import { ServiceWeb } from "../serviceweb";
 
-const SERVICE: ServiceLexical = new ServiceLexical();
-const ROUTE: ServiceWeb = new RouteServiceLexical(SERVICE);
+const ROUTE: ServiceWeb = new RouteServiceLexical();
 
 const URL_SERVICE_LEXICAL: string = "http://localhost:3000" + ROUTE.mainRoute;
 const URL_DEFINITION: string = "/def/";
@@ -23,7 +21,7 @@ const URL_CONTRAINTE: string = "/contrainte/";
         describe("Constructeur", () => {
 
             it("Creation d'un service web", () => {
-                assert.notEqual(RouteServiceLexical.constructor(ServiceLexical), null || undefined);
+                assert.notEqual(RouteServiceLexical.constructor(), null || undefined);
             });
         });
 

@@ -1,5 +1,6 @@
 import { Definition } from "./Definition";
 import { MotAPI } from "./MotAPI";
+import { IMot } from "../../../common/communication/IMot";
 // import { define } from "mime";
 
 export enum Frequence { Commun, NonCommun }
@@ -12,7 +13,7 @@ const MEDIANE_FREQUENCE_DEFAUT: number = 80;
 // Pour détecter ce qui n'est pas un lettre majuscule/minuscule/accentuée
 const CARACTERES_INVALIDES: string = "[^A-Z|^a-z]";
 
-export class Mot {
+export class Mot implements IMot {
 
     public mot: string;
     public definitions: Definition[];

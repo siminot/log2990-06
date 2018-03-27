@@ -1,28 +1,53 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { Scene } from "three";
+import { IScene } from "./IScene";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
+import { PisteJeu } from "../piste/pisteJeu";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Nuit;
 
-@Injectable()
-export class GestionnaireScene extends Scene {
+// Touches clavier
+const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementClavier.TOUCHE_RELEVEE);
+const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("n", TypeEvenementClavier.TOUCHE_RELEVEE);
 
+@Injectable()
+export class GestionnaireScene implements IScene {
+
+    private _scene: Scene;
     private tempsJournee: TempsJournee;
+    private clavier: UtilisateurPeripherique;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
     }
 
-    public constructor(private gestionnaireSkybox: GestionnaireSkybox,
-                       private gestionnaireVoiture: GestionnaireVoitures) {
-        super();
-        this.tempsJournee = TEMPS_JOURNEE_INITIAL;
+    public get scene(): Scene {
+        return this._scene;
     }
 
-    // Creation de la scene
+    public constructor(private gestionnaireSkybox: GestionnaireSkybox,
+                       private gestionnaireVoiture: GestionnaireVoitures,
+                       private gestionnaireBDCourse: GestionnaireBDCourse,
+                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
+        this._scene = new Scene;
+        this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
+        this.tempsJournee = TEMPS_JOURNEE_INITIAL;
+        this.gestionnaireVoiture.initialiser();
+        this.initialisationTouches();
+        this.creerScene();
+    }
+
+    protected initialisationTouches(): void {
+        this.clavier.ajouter(this.changerDecor.bind(this), CHANGER_DECOR);
+        this.clavier.ajouter(this.changerTempsJournee.bind(this), CHANGER_HEURE_JOURNEE);
+    }
 
     public creerScene(): void {
         this.ajouterElements();
@@ -30,10 +55,10 @@ export class GestionnaireScene extends Scene {
     }
 
     private ajouterElements(): void {
-        this.ajouterSkybox();
-        this.ajouterPiste();
-        this.ajouterVoitureJoueur();
+        this._scene.add(this.gestionnaireSkybox.skybox);
+        this._scene.add(this.gestionnaireVoiture.voitureJoueur);
         this.ajouterVoituresAI();
+        this.ajouterPiste();
     }
 
     private initialiserTempsJournee(): void {
@@ -41,39 +66,27 @@ export class GestionnaireScene extends Scene {
         this.changerTempsJournee();
     }
 
-    private ajouterSkybox(): void {
-        this.add(this.gestionnaireSkybox.skybox);
-    }
-
-    private retirerSkybox(): void {
-        this.remove(this.gestionnaireSkybox.skybox);
-    }
-
     private ajouterPiste(): void {
-        return;
-    }
-
-    private ajouterVoitureJoueur(): void {
-        this.add(this.gestionnaireVoiture.voitureJoueur);
+        const piste: PisteJeu = new PisteJeu();
+        piste.importer(this.gestionnaireBDCourse.pointsJeu);
+        this._scene.add(piste);
     }
 
     private ajouterVoituresAI(): void {
         for (const VOITURE of this.gestionnaireVoiture.voituresAI) {
-            this.add(VOITURE);
+            this._scene.add(VOITURE);
         }
     }
 
-    // Changement dans la scene
-
     public miseAJour(tempsDepuisDerniereTrame: number): void {
-            this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
+        this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
     }
 
     public changerTempsJournee(): void {
         this.avancerTemps();
-        this.retirerSkybox();
+        this._scene.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerTempsJournee(this.tempsJournee);
-        this.ajouterSkybox();
+        this._scene.add(this.gestionnaireSkybox.skybox);
         this.gestionnaireVoiture.changerTempsJournee(this.tempsJournee);
     }
 
@@ -84,8 +97,8 @@ export class GestionnaireScene extends Scene {
     }
 
     public changerDecor(): void {
-        this.retirerSkybox();
+        this._scene.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerDecor();
-        this.ajouterSkybox();
+        this._scene.add(this.gestionnaireSkybox.skybox);
     }
 }

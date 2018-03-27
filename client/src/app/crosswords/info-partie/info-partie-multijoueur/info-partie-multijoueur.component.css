@@ -1,0 +1,87 @@
+#container {
+    height:100%;
+    width:100%;
+}
+
+table {
+    height:100%;
+    width:100%;
+}
+
+#col1, #col3 {
+    width:40%;
+}
+
+#col2 {
+    width:20%;
+}
+
+.nomJoueur {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    text-align: center;
+}
+
+#profilPicture {
+    display: block;
+    height:60px;
+    width:60px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#difficulte{
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    font-size: 10px;
+    
+}
+
+#pointageTitre {
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+#progress {
+    width: 80%;
+    height:12%;
+    background-color: black;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#progress-bar {
+    width:0%;
+    height:100%;
+    background-color: white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+#point-progress-bar {
+    text-align:center;
+    width:100%;
+    height:100%;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+}
+
+#progress, #progress-bar {
+    border-radius:5px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.nbMotsDecouverts, #timerTitre, #timer  {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+}
+
+.nbMotsDecouverts {
+    text-align: center;
+}
+
+#timerTitre, #timer {
+    text-align: left;
+}

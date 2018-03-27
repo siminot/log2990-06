@@ -1,57 +1,110 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpeReqService } from "../httpRequest/http-request.service";
-import { OptionPartie } from "./../../../../../common/communication/optionPartie";
+import { ServiceHttp } from "../serviceHttp/http-request.service";
+import { SocketService } from "../service-socket/service-socket";
+import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
+import { Router } from "@angular/router";
+import { listeMotsLongue } from "./../objetsTest/objetsTest";
 
 export const REQUETE_INIT: string = "http://localhost:3000/grille/";
 
 @Component({
-  selector: "app-config-partie",
-  templateUrl: "./config-partie.component.html",
-  styleUrls: ["./config-partie.component.css"]
+    selector: "app-config-partie",
+    templateUrl: "./config-partie.component.html",
+    styleUrls: ["./config-partie.component.css"]
 })
 export class ConfigPartieComponent implements OnInit {
 
-  private requete: string;
-  private lesOptions: OptionPartie;
+    // private estCreateurPartie: boolean;
+    private nomPartie: string;
+    private nomJoueur: string;
+    private difficultee: string;
+    private listePartie: Array<Array<string>>;
+    private estCreateur: boolean;
 
-  public constructor(private serviceHTTP: HttpeReqService) {
-    this.requete = REQUETE_INIT;
-    this.lesOptions = new OptionPartie();
-  }
+    public constructor(private serviceHTTP: ServiceHttp,
+                       private serviceSocket: SocketService,
+                       private router: Router) {}
 
-  public ngOnInit(): void {
-    document.getElementById("difficulte").classList.add("pasVisible");
-    document.getElementById("creerOuJoindre").classList.add("pasVisible");
-  }
+    public ngOnInit(): void { }
 
-  public get getRequete(): string {
-    return this.requete;
-  }
-
-  public modificationDeRequeteHTTP(): void {
-    this.serviceHTTP.modifierRequete(this.getRequete);
-  }
-
-  public apparaitreSection(laSection: string): void {
-    document.getElementById(laSection).classList.remove("pasVisible");
-    document.getElementById(laSection).classList.add("visible");
-  }
-
-  public disparaitreSection(laSection: string): void {
-    document.getElementById(laSection).classList.remove("visible");
-    document.getElementById(laSection).classList.add("pasVisible");
-  }
-
-  public ajouterDifficulte(ajout: string): void {
-    if (ajout !== "") {
-      this.lesOptions.difficulte = ajout;
-      this.miseAJourRequete();
-      this.serviceHTTP.difficulte = this.lesOptions.difficulte;
+    public apparaitreSection(laSection: string): void {
+        document.getElementById(laSection).classList.remove("pasVisible");
+        document.getElementById(laSection).classList.add("visible");
+        if (laSection === "inputNomPartie") {
+            document.getElementById("inp").focus();
+        } else if (laSection === "inputNomJoueur") {
+            document.getElementById("inj").focus();
+        }
     }
-  }
 
-  private miseAJourRequete(): void {
-    this.requete = REQUETE_INIT + this.lesOptions.difficulte;
-  }
+    public disparaitreSection(laSection: string): void {
+        document.getElementById(laSection).classList.remove("visible");
+        document.getElementById(laSection).classList.add("pasVisible");
+    }
 
+    public ajouterDifficulte(difficulte: Difficulte): void {
+        this.difficultee = difficulte;
+        if (difficulte !== undefined) {
+            this.serviceHTTP.difficulte = difficulte;
+        }
+    }
+
+    private commencerPartie(): void {
+        this.serviceSocket.chargementComplete().subscribe(() => {
+            this.router.navigateByUrl("CrosswordsGameMulti");
+        });
+    }
+
+    public creerPartie(): void {
+        this.serviceSocket.creerPartie(this.nomPartie, this.difficultee, this.nomJoueur);
+        this.commencerPartie();
+        this.demandeEtEnvoieGrille();
+    }
+
+    public rejoindrePartie(): void {
+        this.serviceSocket.rejoindrePartie(this.nomPartie, this.nomJoueur);
+        this.commencerPartie();
+    }
+
+    public demanderListePartie(): void {
+        this.serviceSocket.recevoirListePartie().subscribe( (data: Array<Array<string>>) => {
+            this.listePartie = data;
+        });
+    }
+
+    public enterKeyPress(touche: KeyboardEvent, section: string): void {
+        if (touche.key === "Enter") {
+            if (touche.target instanceof HTMLInputElement) {
+                this.modifierNomPartie(touche.target.value);
+            }
+            this.apparaitreSection(section);
+            this.disparaitreSection("inputNomPartie");
+        }
+    }
+
+    public modifierNomPartie(nouveauNom: string): void {
+        this.nomPartie = nouveauNom;
+    }
+
+    public entrerNomJoueur(touche: KeyboardEvent, section: string): void {
+        if (touche.key === "Enter") {
+            if (touche.target instanceof HTMLInputElement) {
+                this.nomJoueur = touche.target.value;
+            }
+            this.apparaitreSection(section);
+            this.disparaitreSection("inputNomJoueur");
+            if (!this.estCreateur) {
+                this.rejoindrePartie();
+            }
+        }
+    }
+
+    private demandeEtEnvoieGrille(): void {
+        this.serviceSocket.demandeDeGrille().subscribe(() => {
+            // this.serviceHTTP.obtenirMots().subscribe( (x) => {
+            //     this.serviceSocket.envoyerGrille(x);
+            // });
+            this.serviceSocket.envoyerGrille(listeMotsLongue);
+        });
+    }
 }

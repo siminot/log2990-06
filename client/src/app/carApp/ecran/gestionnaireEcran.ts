@@ -6,7 +6,7 @@ export class GestionnaireEcran {
     private conteneur: HTMLDivElement;
 
     public constructor() {
-        this.conteneur = null;
+        this.conteneur = document.createElement("div");
     }
 
     public get largeur(): number {
@@ -29,5 +29,14 @@ export class GestionnaireEcran {
 
     public ajouterElementConteneur(element: HTMLElement): void {
         this.conteneur.appendChild(element);
+    }
+
+    public estLaBonneCible(element: EventTarget): boolean {
+        if (element instanceof HTMLCanvasElement) {
+            return this.hauteur === element.clientHeight &&
+                    this.largeur === element.clientWidth;
+        } else {
+            return false;
+        }
     }
 }

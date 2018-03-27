@@ -1,18 +1,28 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { Camera } from "three";
 import { Voiture } from "../voiture/voiture";
 import { CameraJeu } from "./CameraJeu";
 import { CameraJeu2D } from "./CameraJeu2D";
 import { CameraJeu3D } from "./CameraJeu3D";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
+import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { ICamera } from "./ICamera";
 
 const CAMERA_INITIALE: number = 0;
 
+// Touches
+const ZOOM: EvenementClavier = new EvenementClavier("=", TypeEvenementClavier.TOUCHE_APPUYEE);
+const DEZOOM: EvenementClavier = new EvenementClavier("-", TypeEvenementClavier.TOUCHE_APPUYEE);
+const CHANGER_CAMERA: EvenementClavier = new EvenementClavier("c", TypeEvenementClavier.TOUCHE_RELEVEE);
+
 @Injectable()
-export class GestionnaireCamera {
+export class GestionnaireCamera implements ICamera {
 
     private cameras: CameraJeu[];
     private cameraCourante: CameraJeu;
+    private clavier: UtilisateurPeripherique;
 
     public get camera(): Camera {
         this.miseAJourCameraCourante();
@@ -20,33 +30,26 @@ export class GestionnaireCamera {
         return this.cameraCourante.camera;
     }
 
-    public constructor(private gestionnaireVoitures: GestionnaireVoitures) {
+    public constructor(private gestionnaireVoitures: GestionnaireVoitures,
+                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this.cameras = [];
+        this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.initialiserCameras();
+        this.initialisationTouches();
     }
 
-    // Initialisation
+    protected initialisationTouches(): void {
+        this.clavier.ajouter(this.zoomer.bind(this), ZOOM);
+        this.clavier.ajouter(this.dezoomer.bind(this), DEZOOM);
+        this.clavier.ajouter(this.changerCamera.bind(this), CHANGER_CAMERA);
+    }
 
     private initialiserCameras(): void {
-        this.ajouterNouvelleCamera3D();
-        this.ajouterNouvelleCamera2D();
-        this.suivre(this.gestionnaireVoitures.voitureJoueur);
-        this.choisirCameraCouranteInitiale();
-    }
-
-    private ajouterNouvelleCamera2D(): void {
-        this.cameras.push(new CameraJeu2D());
-    }
-
-    private ajouterNouvelleCamera3D(): void {
         this.cameras.push(new CameraJeu3D());
-    }
-
-    private choisirCameraCouranteInitiale(): void {
+        this.cameras.push(new CameraJeu2D());
+        this.suivre(this.gestionnaireVoitures.voitureJoueur);
         this.cameraCourante = this.cameras[CAMERA_INITIALE];
     }
-
-    // Modifications des cameras
 
     private suivre(voiture: Voiture): void {
         for (const camera of this.cameras) {

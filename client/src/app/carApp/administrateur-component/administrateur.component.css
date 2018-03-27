@@ -1,0 +1,60 @@
+#container {
+    height:100%;
+    width:100%;
+    padding:0px;
+    margin:0px;
+}
+
+.piste {
+    position: relative;
+    margin: 15px;
+    top: 0;
+    color: black;
+    font-size:10px;
+}
+
+.pistes {
+    list-style-image: url('../../../assets/purple_ghost.jpg');
+}
+
+.editer {
+    position:absolute;
+    left: 550px;
+}
+
+.supprimer {
+    position:absolute;
+    left: 650px;
+}
+
+.titre, .creer, .piste, .editer, .supprimer, #titrePrincipal {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.creer, .editer, .supprimer {
+    font-size: 10px;
+    color: purple;
+    padding: 6px;
+    cursor:pointer;
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid rgba(0,0,0, 0.747);
+}
+.creer:hover, .editer:hover, .supprimer:hover {
+    color: white !important;
+    background-color: blue !important;
+}
+
+.titre {
+    font-size: 12px;
+    margin:10px;
+    padding:0px;
+}
+
+#titrePrincipal {
+    font-size: 18px;
+    text-align: center;
+    margin:30px;
+}
+
+

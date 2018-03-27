@@ -1,73 +1,32 @@
 import { Injectable } from "@angular/core";
-import { GestionnaireCamera } from "../camera/GestionnaireCamera";
-import { GestionnaireScene } from "../scene/GestionnaireScene";
-import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
-
-export const ACCELERATEUR: string = "w";
-export const DIRECTION_GAUCHE: string = "a";
-export const FREIN: string = "s";
-export const DIRECTION_DROITE: string = "d";
-export const CHANGER_VUE: string = "v";
-export const ZOOM_IN: string = "=";
-export const ZOOM_OUT: string = "-";
-export const CHANGER_DECOR: string = "t";
-export const CHANGER_HEURE_JOURNEE: string = "y";
+import { EvenementClavier, TypeEvenementClavier } from "./evenementClavier";
+import { GestionnairePeripherique } from "../peripheriques/GestionnairePeripherique";
+import { ConteneurFonctionsClavier } from "./conteneurFonctionsClavier";
 
 @Injectable()
-export class GestionnaireClavier {
+export class GestionnaireClavier extends GestionnairePeripherique {
 
-    public constructor(private gestionnaireCamera: GestionnaireCamera,
-                       private gestionnaireVoitures: GestionnaireVoitures,
-                       private gestionnaireScene: GestionnaireScene) { }
+    protected listeRappel: ConteneurFonctionsClavier;
+    protected evenementRecu: KeyboardEvent;
+
+    public constructor() {
+        super();
+        this.listeRappel = new ConteneurFonctionsClavier();
+        this.evenementRecu = null;
+    }
 
     public toucheAppuyee(evenement: KeyboardEvent): void {
-        switch (evenement.key) {
-            case ACCELERATEUR:
-                this.gestionnaireVoitures.voitureJoueur.accelerer();
-                break;
-            case DIRECTION_GAUCHE:
-                this.gestionnaireVoitures.voitureJoueur.virerGauche();
-                break;
-            case DIRECTION_DROITE:
-                this.gestionnaireVoitures.voitureJoueur.virerDroite();
-                break;
-            case FREIN:
-                this.gestionnaireVoitures.voitureJoueur.freiner();
-                break;
-            case ZOOM_IN:
-                this.gestionnaireCamera.zoomer();
-                break;
-            case ZOOM_OUT:
-                this.gestionnaireCamera.dezoomer();
-                break;
-            default:
-                break;
-        }
+        this.evenementRecu = evenement;
+        this.notifier(new EvenementClavier(evenement.key, TypeEvenementClavier.TOUCHE_APPUYEE));
     }
 
     public toucheRelevee(evenement: KeyboardEvent): void {
-        switch (evenement.key) {
-            case ACCELERATEUR:
-                this.gestionnaireVoitures.voitureJoueur.relacherAccelerateur();
-                break;
-            case DIRECTION_GAUCHE:
-            case DIRECTION_DROITE:
-                this.gestionnaireVoitures.voitureJoueur.relacherVolant();
-                break;
-            case FREIN:
-                this.gestionnaireVoitures.voitureJoueur.relacherFreins();
-                break;
-            case CHANGER_VUE:
-                this.gestionnaireCamera.changerCamera();
-                break;
-            case CHANGER_DECOR:
-                this.gestionnaireScene.changerDecor();
-                break;
-            case CHANGER_HEURE_JOURNEE:
-                this.gestionnaireScene.changerTempsJournee();
-                break;
-            default:
-                break;
-        }
+        this.evenementRecu = evenement;
+        this.notifier(new EvenementClavier(evenement.key, TypeEvenementClavier.TOUCHE_RELEVEE));
+    }
+
+    public touchePressee(evenement: KeyboardEvent): void {
+        this.evenementRecu = evenement;
+        this.notifier(new EvenementClavier(evenement.key, TypeEvenementClavier.TOUCHE_PRESSEE));
     }
 }

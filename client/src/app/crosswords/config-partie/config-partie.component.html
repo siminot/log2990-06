@@ -2,7 +2,7 @@
 <p>Configuration de la partie</p>
 <div>
 
-  <div id="soloOuMulti">
+  <div id="soloOuMulti"> <!-- Selection partie solo ou en ligne (multjoueur) -->
     <button (click)="apparaitreSection('difficulte')"
             (click)="disparaitreSection('soloOuMulti')">
       Partie solo</button>
@@ -11,31 +11,83 @@
       Partie en ligne</button>
   </div>
 
-  <div id="difficulte">
+  <div id="difficulte" class="pasVisible"> <!-- Selection de la dif pour une partie solo -->
     <button (click)="ajouterDifficulte('facile')"
-    (click)="modificationDeRequeteHTTP()"
     routerLink="/CrosswordsGame"
     >
       Facile</button>
     <button (click)="ajouterDifficulte('normal')"
-    (click)="modificationDeRequeteHTTP()"
     routerLink="/CrosswordsGame"
     >
       Normal</button>
     <button (click)="ajouterDifficulte('difficile')"
-    (click)="modificationDeRequeteHTTP()"
     routerLink="/CrosswordsGame"
     >
       Difficile</button>
   </div>
 
-  <div id="creerOuJoindre">
-    <button (click)="apparaitreSection('difficulte')"
-            (click)="disparaitreSection('creerOuJoindre')">
+  <div id="creerOuJoindre" class="pasVisible"> <!-- Selection de creer une partie ou joindre -->
+    <button (click)="apparaitreSection('inputNomPartie')"
+            (click)="disparaitreSection('creerOuJoindre')"
+            (click)="estCreateur = true">
       Créer une partie</button>
-    <button (click)="apparaitreSection('difficulte')"
-            (click)="disparaitreSection('creerOuJoindre')"> <!-- Pas encore sur si on choisi une difficulte ici -->
+    <button (click)="apparaitreSection('listePartie')"
+            (click)="disparaitreSection('creerOuJoindre')"
+            (click)="estCreateur = false"
+            (click)="demanderListePartie()">
       Rejoindre une partie</button>
+  </div>
+  
+  <div id="inputNomPartie" class="pasVisible"> <!-- Entree pour nom de la partie -->
+      <input id="inp" placeholder="Entrez un nom de partie"
+      (keyup)="enterKeyPress($event, 'inputNomJoueur')" >                                           
+  </div>
+
+  <div id="inputNomJoueur" class="pasVisible"> <!-- Entree pour nom du joueur -->
+    <input id="inj" *ngIf="estCreateur; else elseblock" placeholder="Entrez un nom de Joueur"
+    (keyup)="entrerNomJoueur($event, 'difficulteMultijoueur')">                                           
+  </div>
+  <ng-template #elseblock>
+    <input id="inj" placeholder="Entrez un nom de Joueur"
+    (keyup)="entrerNomJoueur($event, 'pageChargement')">    
+  </ng-template>
+
+  <div id="difficulteMultijoueur" class="pasVisible"> <!-- Selection de la dif multijoueur -->
+      <button (click)="ajouterDifficulte('facile')"
+      (click)="creerPartie()"
+      (click)="apparaitreSection('pageChargement')"
+      (click)="disparaitreSection('difficulteMultijoueur')"
+      >
+        Facile</button>
+      <button (click)="ajouterDifficulte('normal')"
+      (click)="creerPartie()"
+      (click)="apparaitreSection('pageChargement')"
+      (click)="disparaitreSection('difficulteMultijoueur')"
+      >
+        Normal</button>
+      <button (click)="ajouterDifficulte('difficile')"
+      (click)="creerPartie()"
+      (click)="apparaitreSection('pageChargement')"
+      (click)="disparaitreSection('difficulteMultijoueur')">
+        Difficile</button>
+  </div>
+  
+
+  <div id="listePartie" class="pasVisible"> <!-- Affichage de la liste des parties en ligne  (click)="rejoindrePartie(nomPartie)",routerLink="/CrosswordsGameRejoindre" -->
+      <ul id="laListe">
+          <li *ngFor="let nomPartie of listePartie">
+            <span (click)="modifierNomPartie(nomPartie[0])"
+                  (click)="apparaitreSection('inputNomJoueur')"
+                  (click)="disparaitreSection('listePartie')"
+            >Nom: {{nomPartie[0]}} - Difficultée: {{nomPartie[1]}} - Créateur: {{nomPartie[2]}}</span> </li>
+      </ul>
+  </div>
+
+  <div id="pageChargement" class="pasVisible">
+    <div><p>CHARGEMENT PARTIE</p></div>
+    <div>
+      <img id = "loading" src="./../../../assets/crosswords/loading.gif">      
+    </div>
   </div>
 
 </div>

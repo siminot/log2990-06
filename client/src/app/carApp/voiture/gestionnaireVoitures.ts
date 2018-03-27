@@ -1,21 +1,41 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { ObjectLoader, Object3D } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
+import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
+import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 
 // AI
-const NOMBRE_AI: number = 1;
+export const NOMBRE_AI: number = 1;
 
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
 const NOMS_TEXTURES: string[] = ["camero-2010-low-poly.json", "voiture-2010-low-poly.json"];
-const TEXTURE_DEFAUT_JOUEUR: number = 1;
+
+// Couleur voiture
+enum CouleurVoiture { JAUNE = 0, ROSE = 1 }
+const TEXTURE_DEFAUT_JOUEUR: CouleurVoiture = CouleurVoiture.ROSE;
+const TEXTURE_DEFAUT_AI: CouleurVoiture = CouleurVoiture.JAUNE;
+
+// Touches clavier
+const ACCELERATEUR_APPUYE: EvenementClavier = new EvenementClavier("w", TypeEvenementClavier.TOUCHE_APPUYEE);
+const ACCELERATEUR_RELEVE: EvenementClavier = new EvenementClavier("w", TypeEvenementClavier.TOUCHE_RELEVEE);
+const DIRECTION_GAUCHE_APPUYEE: EvenementClavier = new EvenementClavier("a", TypeEvenementClavier.TOUCHE_APPUYEE);
+const DIRECTION_GAUCHE_RELEVE: EvenementClavier = new EvenementClavier("a", TypeEvenementClavier.TOUCHE_RELEVEE);
+const DIRECTION_DROITE_APPUYE: EvenementClavier = new EvenementClavier("d", TypeEvenementClavier.TOUCHE_APPUYEE);
+const DIRECTION_DROITE_RELEVE: EvenementClavier = new EvenementClavier("d", TypeEvenementClavier.TOUCHE_RELEVEE);
+const FREIN_APPUYE: EvenementClavier = new EvenementClavier("s", TypeEvenementClavier.TOUCHE_APPUYEE);
+const FREIN_RELEVE: EvenementClavier = new EvenementClavier("s", TypeEvenementClavier.TOUCHE_RELEVEE);
+const INTERRUPTEUR_LUMIERE: EvenementClavier = new EvenementClavier("l", TypeEvenementClavier.TOUCHE_RELEVEE);
 
 @Injectable()
 export class GestionnaireVoitures {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
+    private clavier: UtilisateurPeripherique;
 
     public get voitureJoueur(): Voiture {
         return this._voitureJoueur;
@@ -25,27 +45,44 @@ export class GestionnaireVoitures {
         return this._voituresAI;
     }
 
-    public constructor() {
+    public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._voituresAI = [];
-        this.initialiser().catch(() => new Error("Erreur lors de l'initialisation"));
+        this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
+    }
+
+    protected initialisationTouches(): void {
+        this.clavier.ajouter(this._voitureJoueur.accelerer.bind(this._voitureJoueur), ACCELERATEUR_APPUYE);
+        this.clavier.ajouter(this._voitureJoueur.relacherAccelerateur.bind(this._voitureJoueur), ACCELERATEUR_RELEVE);
+        this.clavier.ajouter(this._voitureJoueur.virerGauche.bind(this._voitureJoueur), DIRECTION_GAUCHE_APPUYEE);
+        this.clavier.ajouter(this._voitureJoueur.relacherVolant.bind(this._voitureJoueur), DIRECTION_GAUCHE_RELEVE);
+        this.clavier.ajouter(this._voitureJoueur.virerDroite.bind(this._voitureJoueur), DIRECTION_DROITE_APPUYE);
+        this.clavier.ajouter(this._voitureJoueur.relacherVolant.bind(this._voitureJoueur), DIRECTION_DROITE_RELEVE);
+        this.clavier.ajouter(this._voitureJoueur.freiner.bind(this._voitureJoueur), FREIN_APPUYE);
+        this.clavier.ajouter(this._voitureJoueur.relacherFreins.bind(this._voitureJoueur), FREIN_RELEVE);
+        this.clavier.ajouter(this._voitureJoueur.changerEtatPhares.bind(this._voitureJoueur), INTERRUPTEUR_LUMIERE);
     }
 
     // Creation des voitures
 
-    private async initialiser(): Promise<void> {
-        this.creerVoitureJoueur().catch(() => new Error("Erreur construction de la voiture du joueur"));
-        this.creerVoituresAI().catch(() => new Error("Erreur construction des voituresAI"));
+    public initialiser(): void {
+        this.creerVoitureJoueur();
+        this.creerVoituresAI();
+        this.initialisationTouches();
     }
 
-    private async creerVoitureJoueur(): Promise<void> {
+    private creerVoitureJoueur(): void {
         this._voitureJoueur = new Voiture();
-        this._voitureJoueur.initialiser(await this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR]));
+        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
+            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
+            .catch(() => { throw new ErreurChargementTexture(); });
     }
 
-    private async creerVoituresAI(): Promise<void> {
+    private creerVoituresAI(): void {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-            this._voituresAI[i].initialiser(await this.chargerTexture(NOMS_TEXTURES[i % NOMS_TEXTURES.length]));
+            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
+            .then((objet: Object3D) => this._voituresAI[i].initialiser(objet))
+            .catch(() => { throw new ErreurChargementTexture(); });
         }
     }
 
@@ -61,22 +98,28 @@ export class GestionnaireVoitures {
     // Changements affectant les voitures
 
     public miseAJourVoitures(tempsDepuisDerniereTrame: number): void {
-            this.voitureJoueur.update(tempsDepuisDerniereTrame);
+        this.voitureJoueur.update(tempsDepuisDerniereTrame);
 
-            for (const voiture of this._voituresAI) {
-                voiture.update(tempsDepuisDerniereTrame);
-            }
+        for (const voiture of this._voituresAI) {
+            voiture.update(tempsDepuisDerniereTrame);
+        }
     }
 
     public changerTempsJournee(temps: TempsJournee): void {
-        if (temps === TempsJournee.Jour) {
-            for (const voiture of this.voitures) {
-                voiture.eteindrePhares();
-            }
-        } else {
-            for (const voiture of this.voitures) {
-                voiture.allumerPhares();
-            }
+        temps === TempsJournee.Jour
+            ? this.eteindrePhares()
+            : this.allumerPhares();
+    }
+
+    private eteindrePhares(): void {
+        for (const voiture of this.voitures) {
+            voiture.eteindrePhares();
+        }
+    }
+
+    private allumerPhares(): void {
+        for (const voiture of this.voitures) {
+            voiture.allumerPhares();
         }
     }
 

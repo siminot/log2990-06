@@ -1,11 +1,14 @@
 import { TestBed, inject } from "@angular/core/testing";
 
 import { SocketService } from "./service-socket";
+import { Router } from "@angular/router";
 
 describe("ServiceSocketService", () => {
+  let mockRouter: Router;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SocketService]
+      providers: [SocketService, { provide: Router, useValue: mockRouter }]
     });
   });
 

@@ -5,19 +5,19 @@ import { InfojoueurService } from "../../service-info-joueur/infojoueur.service"
 import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { MatDialogRef } from "@angular/material/dialog";
 
 import * as CONST from "../../constantes";
+import { Router } from "@angular/router";
 
-describe("InfoJoueur1Component", () => {
+describe("InfoJoueurSoloComponent", () => {
   let component: InfoJoueurSoloComponent;
   let fixture: ComponentFixture<InfoJoueurSoloComponent>;
+  let mockRouter: Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ InfojoueurService, ServiceInteractionComponent, ServiceHttp, {
-        provide: MatDialogRef, useValue: {} } ],
+      providers: [ InfojoueurService, ServiceInteractionComponent, ServiceHttp, { provide: Router, useValue: mockRouter } ],
       declarations: [ InfoJoueurSoloComponent ]
     })
     .compileComponents()

@@ -12,6 +12,8 @@ import { Router } from "@angular/router";
 describe("InfoJoueurSoloComponent", () => {
   let component: InfoJoueurSoloComponent;
   let fixture: ComponentFixture<InfoJoueurSoloComponent>;
+  // On veut utiliser let afin de ne pas l'initialser
+  // tslint:disable-next-line:prefer-const
   let mockRouter: Router;
 
   beforeEach(async(() => {

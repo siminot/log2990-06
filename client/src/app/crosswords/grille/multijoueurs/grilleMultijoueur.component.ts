@@ -10,7 +10,6 @@ import { LettreGrille } from "../../objetsTest/lettreGrille";
 import { TAILLE_TABLEAU } from "../../constantes";
 import { OpaciteCase } from "./../librairieGrille/opaciteCase";
 import { Subscription } from "rxjs/Subscription";
-import { Subject } from "rxjs/Subject";
 
 const CASE_NOIR: LettreGrille = { caseDecouverte: false, lettre: "1", lettreDecouverte: false };
 const COULEUR_J2: string = "rgb(132, 112, 255)";
@@ -172,12 +171,11 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   private remplirMotTrouve(mot: Mot, couleur: string): void {
     let idCase: string;
     for (let i: number = 0; i < mot.longueur; i++) {
-      if (mot.estVertical) {
-        idCase = mot.premierX.toString() + (mot.premierY + i).toString();
-        document.getElementById(idCase).value = mot.mot[i];
-      } else {
-        idCase = (mot.premierX + i).toString() + mot.premierY.toString();
-        document.getElementById(idCase).value = mot.mot[i];
+      idCase = mot.estVertical ? mot.premierX.toString() + (mot.premierY + i).toString()
+                               : (mot.premierX + i).toString() + mot.premierY.toString();
+      const input: HTMLElement = document.getElementById(idCase);
+      if (input instanceof HTMLInputElement) {
+        input.value = mot.mot[i];
       }
       this.croisementDesCases(mot, idCase, couleur);
     }
@@ -187,14 +185,8 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
     let styleInput: string;
     styleInput = document.getElementById(idCase).style.backgroundColor;
     document.getElementById(idCase).style.backgroundColor = couleur;
-    if (mot.estVertical) {
-      if (this.verifCroisementAutreJoueur(styleInput, couleur)) {
-        this.affihcerCasePartagee(idCase + "c");
-      }
-    } else {
-      if (this.verifCroisementAutreJoueur(styleInput, couleur)) {
-        this.affihcerCasePartagee(idCase + "c");
-      }
+    if (this.verifCroisementAutreJoueur(styleInput, couleur)) {
+      this.affihcerCasePartagee(idCase + "c");
     }
   }
 
@@ -204,8 +196,11 @@ export class GrilleMultijoueurComponent extends GrilleAbs implements OnInit {
   }
 
   private affihcerCasePartagee(idCase: string): void {
-    document.getElementById(idCase).style.backgroundColor = COULEUR_J1;
-    document.getElementById(idCase).src = "../../../assets/hachure.png";
+    const image: HTMLElement = document.getElementById(idCase);
+    if (image instanceof HTMLImageElement) {
+      image.style.backgroundColor = COULEUR_J1;
+      image.src = "../../../assets/hachure.png";
+    }
   }
 
   private chargerGrille(): void {

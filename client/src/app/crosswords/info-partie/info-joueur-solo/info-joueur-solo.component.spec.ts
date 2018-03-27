@@ -5,14 +5,13 @@ import { InfojoueurService } from "../../service-info-joueur/infojoueur.service"
 import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { ServiceHttp } from "../../serviceHttp/http-request.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialogRef } from "@angular/material/dialog";
 
 import * as CONST from "../../constantes";
 
 describe("InfoJoueur1Component", () => {
   let component: InfoJoueurSoloComponent;
   let fixture: ComponentFixture<InfoJoueurSoloComponent>;
-  const data: string = "";
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

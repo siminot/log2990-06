@@ -34,15 +34,14 @@ export class Application {
         this.app.use(cookieParser());
         this.app.use(express.static(path.join(__dirname, "../client")));
         this.app.use(cors());
-        this.app.use(function(req, res, next) {
-            res.header("Access-Control-Allow-Origin", 'http://localhost:4200'); //<--
+        this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+            res.header("Access-Control-Allow-Origin", "http://localhost:4200");
             res.header("Access-Control-Allow-Credentials", "true");
-            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+            res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
             res.header("Access-Control-Allow-Headers",
-          'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization');
+                       "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization");
             next();
           });
-    
     }
 
     public routes(): void {
@@ -63,9 +62,9 @@ export class Application {
             next(err);
         });
 
-        this.app.use(function(request, response, next) {
-            response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             next();
           });
 

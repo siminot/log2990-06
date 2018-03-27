@@ -6,4 +6,3 @@ describe("DirectiveFocusDirective", () => {
     expect(directive).toBeTruthy();
   });
 });
-

@@ -61,7 +61,7 @@ export class BaseDonneesCourse {
 
     private async obtenirPistes(): Promise<PisteBD[]> {
         const pistes: PisteBD[] = [];
-        this.modelPiste.find()
+        await this.modelPiste.find()
         .then((res: Document[]) => {
             for (const document of res) {
                 pistes.push(document.toObject());

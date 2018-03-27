@@ -1,9 +1,9 @@
-import { OnChanges, OnInit } from "@angular/core";
+import { OnInit } from "@angular/core";
 import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { Subscription } from "rxjs/Subscription";
 
-export abstract class AbstractListePisteComponent implements OnInit, OnChanges {
+export abstract class AbstractListePisteComponent implements OnInit {
 
     protected pistes: PisteBD[];
     protected abonnementPistes: Subscription;
@@ -13,8 +13,5 @@ export abstract class AbstractListePisteComponent implements OnInit, OnChanges {
     public ngOnInit(): void {
       this.abonnementPistes = this.gestionnaireBD.obtenirPistes()
           .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
-    }
-
-    public ngOnChanges(): void {
     }
 }

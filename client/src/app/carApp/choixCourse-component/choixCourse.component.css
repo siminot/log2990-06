@@ -29,6 +29,11 @@
     left: 550px;
 }
 
+.selection:hover {
+    color: white !important;
+    background-color: blue !important;
+}
+
 .piste, .selection, #titrePrincipal, #titreChoixPiste {
     font-family: 'Press Start 2P', cursive;
 }

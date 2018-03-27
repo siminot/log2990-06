@@ -61,14 +61,12 @@ export class BaseDonneesCourse {
 
     private async obtenirPistes(): Promise<PisteBD[]> {
         const pistes: PisteBD[] = [];
-        this.modelPiste.find((err: ErreurRechercheBaseDonnees, res: Document[]) => {
+        this.modelPiste.find()
+        .then((res: Document[]) => {
             for (const document of res) {
                 pistes.push(document.toObject());
             }
-        })
-        .then()
-        .catch( () => { throw new ErreurModificationBaseDonnees; }
-        );
+        }).catch( () => { throw new ErreurRechercheBaseDonnees; } );
 
         return pistes;
     }

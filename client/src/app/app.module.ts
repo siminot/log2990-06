@@ -21,7 +21,7 @@ import { ServiceDeRenduPistes } from "./carApp/serviceDeRendu/serviceDeRenduPist
 import { GestionnaireScenePiste } from "./carApp/scene/GestionnaireScenePiste";
 import { GestionnaireCameraPiste } from "./carApp/camera/GestionnaireCameraPiste";
 import { ChoixCourseComponent } from "./carApp/choixCourse-component/choixCourse.component";
-
+import { FormsModule } from "@angular/forms";
 import { AppRoutingModule } from ".//app-routing.module";
 import { ServiceHttp } from "./crosswords/serviceHttp/http-request.service";
 import { DefinitionHComponent } from "./crosswords/definition/definitionH.component";
@@ -36,6 +36,8 @@ import { InfoPartieMultijoueurComponent } from "./crosswords/info-partie/info-pa
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
 import { FinPartieSoloComponent } from "./crosswords/fin-partie/solo/fin-partie-solo.component";
 import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/grilleMultijoueur.component";
+import { MainGrilleMultiComponent } from "./crosswords/main-grille-multi/main-grille-multi.component";
+import { SocketService } from "./crosswords/service-socket/service-socket";
 
 @NgModule({
     declarations: [
@@ -52,12 +54,15 @@ import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/gri
         DefinitionVComponent,
         InfoJoueurSoloComponent,
         GrilleMultijoueurComponent,
-        InfoPartieMultijoueurComponent
+        InfoPartieMultijoueurComponent,
+        FinPartieSoloComponent,
+        MainGrilleMultiComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        FormsModule
     ],
     providers: [
         ServiceDeRenduJeu,
@@ -73,6 +78,7 @@ import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/gri
         GestionnaireSouris,
         ServiceInteractionComponent,
         ServiceHttp,
+        SocketService,
         InfojoueurService
     ],
     bootstrap: [AppComponent],
@@ -85,8 +91,8 @@ import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/gri
         GrilleComponent,
         DefinitionVComponent,
         DefinitionHComponent,
-        GrilleMultijoueurComponent,
-        FinPartieSoloComponent
+        FinPartieSoloComponent,
+        GrilleMultijoueurComponent
     ],
     // entryComponents: [ DialogComponent ]
 })

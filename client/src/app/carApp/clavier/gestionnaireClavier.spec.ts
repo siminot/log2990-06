@@ -1,10 +1,11 @@
 import { GestionnaireClavier } from "./gestionnaireClavier";
-import { EvenementClavier, FonctionTouche, TypeEvenementClavier } from "./evenementClavier";
+// import { EvenementClavier, FonctionTouche, TypeEvenementClavier } from "./evenementClavier";
 
 describe("GestionnaireClavier", () => {
 
     let gestionnaire: GestionnaireClavier;
 
+    /*
     const FONCTION: Function = GestionnaireClavier.prototype.inscrire;
     const TOUCHE_C: string = "c";
     const EVENEMENT_CLAVIER: EvenementClavier = new EvenementClavier(TOUCHE_C, TypeEvenementClavier.TOUCHE_APPUYEE);
@@ -14,6 +15,7 @@ describe("GestionnaireClavier", () => {
     const TOUCHE_F: string = "f";
     const EVENEMENT_CLAVIER2: EvenementClavier = new EvenementClavier(TOUCHE_F, TypeEvenementClavier.TOUCHE_PRESSEE);
     const FONCTION_TOUCHE2: FonctionTouche = new FonctionTouche(FONCTION2, EVENEMENT_CLAVIER2);
+    */
 
     it("Constructeur", () => {
         gestionnaire = new GestionnaireClavier();
@@ -21,12 +23,12 @@ describe("GestionnaireClavier", () => {
         expect(gestionnaire["evenementRecu"]).toBeDefined();
     });
 
+    /*
     it("devrait notifier lors d'un evenement", () => {
         gestionnaire.inscrire(FONCTION_TOUCHE);
         gestionnaire.inscrire(FONCTION_TOUCHE2);
-
-        // TODO : tester l'appel au callback
-        // gestionnaire.toucheAppuyee(new KeyboardEvent("keydown", {key: TOUCHE_C}));
+        estionnaire.toucheAppuyee(new KeyboardEvent("keydown", {key: TOUCHE_C}));
     });
+    */
 
 });

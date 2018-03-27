@@ -38,6 +38,8 @@ import { FinPartieSoloComponent } from "./crosswords/fin-partie/solo/fin-partie-
 import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/grilleMultijoueur.component";
 import { MainGrilleMultiComponent } from "./crosswords/main-grille-multi/main-grille-multi.component";
 import { SocketService } from "./crosswords/service-socket/service-socket";
+import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse";
+import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
 
 @NgModule({
     declarations: [
@@ -71,6 +73,8 @@ import { SocketService } from "./crosswords/service-socket/service-socket";
         GestionnaireScenePiste,
         GestionnaireCamera,
         GestionnaireCameraPiste,
+        GestionnaireBDCourse,
+        GestionnaireEditionPiste,
         GestionnaireSkybox,
         GestionnaireVoitures,
         GestionnaireClavier,

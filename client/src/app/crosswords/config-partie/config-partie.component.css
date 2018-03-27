@@ -4,9 +4,41 @@ p {
     font-family: 'Press Start 2P', cursive;
 }
 
-/* div {
-    border: solid 1px black;
-} */
+input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #3900FF;
+    outline: none;
+    padding-bottom: 15px;
+    text-align: center;
+    width: 40%;
+
+    font-size: 20px;
+    font-family: 'Press Start 2P', cursive;
+  }
+
+ul {
+    width: 75%;
+}
+
+li {
+    color: transparent;
+    background-color: #3900FF;
+    width: 100%;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 8px;
+}
+
+span {
+    color: white;
+    font-size: 15px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+li:hover {
+    background-color: rgb(29, 10, 95);
+}
 
 div div {
     position: absolute;
@@ -16,6 +48,12 @@ div div {
     padding: 20px;
     align-items: center;
     justify-content: center;
+}
+
+#loading {
+    margin-top: 180px;
+    width: 100px;
+    height: 100px;
 }
 
 button {
@@ -30,6 +68,7 @@ button {
     background-color: #3900FF;
     font-family: 'Press Start 2P', cursive;
     font-size: 20px;
+    margin: 5px;
 }
 
 button:hover {
@@ -40,13 +79,13 @@ button:hover {
     visibility: visible;
     display: flex;
     opacity: 1;
-    -webkit-transition:  opacity 1s linear;
-    transition: opacity 1s linear;
+    -webkit-transition:  opacity 0.05s linear;
+    transition: opacity 0.05s linear;
 }
 
 .pasVisible {
     visibility: hidden;
-    display: flex;
+    display: none;
     opacity: 0;
-    transition: visibility 0s 0.5s, opacity 1s linear;
+    transition: visibility 0s 0.05s, opacity 1s linear;
 }

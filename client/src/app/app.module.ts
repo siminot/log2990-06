@@ -20,23 +20,22 @@ import { GestionnaireSouris } from "./carApp/souris/gestionnaireSouris";
 import { ServiceDeRenduPistes } from "./carApp/serviceDeRendu/serviceDeRenduPistes";
 import { GestionnaireScenePiste } from "./carApp/scene/GestionnaireScenePiste";
 import { GestionnaireCameraPiste } from "./carApp/camera/GestionnaireCameraPiste";
-import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
-import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse";
 import { ChoixCourseComponent } from "./carApp/choixCourse-component/choixCourse.component";
 
 import { AppRoutingModule } from ".//app-routing.module";
-import { HttpeReqService } from "./crosswords/httpRequest/http-request.service";
-
-import { DefinitionHComponent} from "./crosswords/definition/definitionH.component";
-import { DefinitionVComponent} from "./crosswords/definition/definitionV.component";
-import { MainGrilleComponent } from "./crosswords/main-grille/main-grille.component";
-import { GrilleComponent } from "./crosswords/grille/grille.component";
-import { RequeteDeGrilleService } from "./crosswords/service-Requete-de-Grille/requete-de-grille.service";
+import { ServiceHttp } from "./crosswords/serviceHttp/http-request.service";
+import { DefinitionHComponent } from "./crosswords/definition/definitionH.component";
+import { DefinitionVComponent } from "./crosswords/definition/definitionV.component";
+import { MainGrilleComponent } from "./crosswords/main-grille-solo/main-grille.component";
+import { GrilleComponent } from "./crosswords/grille/solo/grille.component";
+import { ServiceInteractionComponent } from "./crosswords/service-interaction-component/service-interaction-component";
 import { ConfigPartieComponent } from "./crosswords/config-partie/config-partie.component";
 import { DirectiveFocusDirective } from "./crosswords/directive-focus/directive-focus.directive";
-import { InfoJoueur1Component } from "./crosswords/info-joueur1/info-joueur1.component";
+import { InfoJoueurSoloComponent } from "./crosswords/info-partie/info-joueur-solo/info-joueur-solo.component";
+import { InfoPartieMultijoueurComponent } from "./crosswords/info-partie/info-partie-multijoueur/info-partie-multijoueur.component";
 import { InfojoueurService } from "./crosswords/service-info-joueur/infojoueur.service";
-import { FormsModule } from "@angular/forms";
+import { FinPartieSoloComponent } from "./crosswords/fin-partie/solo/fin-partie-solo.component";
+import { GrilleMultijoueurComponent } from "./crosswords/grille/multijoueurs/grilleMultijoueur.component";
 
 @NgModule({
     declarations: [
@@ -51,13 +50,14 @@ import { FormsModule } from "@angular/forms";
         DirectiveFocusDirective,
         DefinitionHComponent,
         DefinitionVComponent,
-        InfoJoueur1Component,
+        InfoJoueurSoloComponent,
+        GrilleMultijoueurComponent,
+        InfoPartieMultijoueurComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        AppRoutingModule,
-        FormsModule
+        AppRoutingModule
     ],
     providers: [
         ServiceDeRenduJeu,
@@ -71,13 +71,11 @@ import { FormsModule } from "@angular/forms";
         GestionnaireClavier,
         GestionnaireEcran,
         GestionnaireSouris,
-        GestionnaireEditionPiste,
-        GestionnaireBDCourse,
-        RequeteDeGrilleService,
-        HttpeReqService,
+        ServiceInteractionComponent,
+        ServiceHttp,
         InfojoueurService
     ],
-    bootstrap: [ AppComponent ],
+    bootstrap: [AppComponent],
     exports: [
         AppComponent,
         CarGameComponent,
@@ -86,7 +84,10 @@ import { FormsModule } from "@angular/forms";
         MainGrilleComponent,
         GrilleComponent,
         DefinitionVComponent,
-        DefinitionHComponent
-    ]
+        DefinitionHComponent,
+        GrilleMultijoueurComponent,
+        FinPartieSoloComponent
+    ],
+    // entryComponents: [ DialogComponent ]
 })
 export class AppModule { }

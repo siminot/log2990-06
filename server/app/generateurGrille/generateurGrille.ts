@@ -74,8 +74,8 @@ module Route {
         }
 
         private async remplirLaGrilleDeMots(): Promise<void> {
-            while (!await this.remplirGrilleRecursif(0)) {
-                this.motsDejaPlaces.clear();
+            while (!await this.remplirGrilleRecursif(0).catch()) {
+                this.initGrille();
             }
         }
 

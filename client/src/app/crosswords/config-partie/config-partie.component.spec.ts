@@ -1,20 +1,23 @@
-import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
-import { HttpeReqService } from "../httpRequest/http-request.service";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ServiceHttp } from "../serviceHttp/http-request.service";
 import { ConfigPartieComponent } from "./config-partie.component";
 // import { ProviderAstType } from "@angular/compiler";
+import { SocketService } from "../service-socket/service-socket";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
+import { Router } from "@angular/router";
 
 describe("ConfigPartieComponent", () => {
   let component: ConfigPartieComponent;
   let fixture: ComponentFixture<ConfigPartieComponent>;
-  let reqService: HttpeReqService;
+  let mockRouter: Router;
 
   beforeEach(async(() => {
+    mockRouter = jasmine.createSpyObj("Router", ["navigate"]);
     TestBed.configureTestingModule({
       declarations: [ ConfigPartieComponent ],
       imports: [ HttpClientTestingModule ],
-      providers: [HttpeReqService]
+      providers: [ServiceHttp, { provide: Router, useValue: mockRouter }, SocketService ]
 
     })
 
@@ -23,14 +26,12 @@ describe("ConfigPartieComponent", () => {
     .catch();
   }));
 
-  beforeEach(inject([HttpeReqService], (service: HttpeReqService) => {
+  beforeEach(() => {
       fixture = TestBed.createComponent(ConfigPartieComponent);
-      // component = fixture.componentInstance;
-      reqService = service;
+      component = fixture.componentInstance;
       fixture.detectChanges();
-      component = new ConfigPartieComponent(reqService);
-
-  }));
+      mockRouter = jasmine.createSpyObj("Router", ["navigate"]);
+  });
 
   it("should create", () => {
     expect(component).toBeTruthy();

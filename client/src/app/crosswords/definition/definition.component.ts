@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Subscription } from "rxjs/Subscription";
-import { RequeteDeGrilleService } from "../service-Requete-de-Grille/requete-de-grille.service";
+import { ServiceInteractionComponent } from "../service-interaction-component/service-interaction-component";
 import { Mot } from "../objetsTest/mot";
 import { LettreGrille } from "../objetsTest/lettreGrille";
+import { OpaciteCase} from "../grille/librairieGrille/opaciteCase";
 
 @Component({
   selector: "app-definition",
@@ -18,10 +19,12 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   private subscriptionMots: Subscription;
   private subscriptionMatrice: Subscription;
   private subscriptionMotSelec: Subscription;
+  private subscriptionMotTrouve: Subscription;
+  private subscriptionMotPerdu: Subscription;
 
   private motSelectionne: Mot;
 
-  public constructor (private listeMotsService: RequeteDeGrilleService) {
+  public constructor(private listeMotsService: ServiceInteractionComponent) {
     this.mots = this.listeMotsService.mots;
     this.matriceDesMotsSurGrille = this.listeMotsService.matrice;
 
@@ -42,11 +45,13 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     this.souscrireReceptionMots();
     this.souscrireSelectionMots();
     this.souscrireReceptionMatrice();
+    this.souscrireMotsTrouves();
+    this.souscrireMotsPerdus();
   }
 
   private souscrireReceptionMots(): void {
     this.subscriptionMots = this.listeMotsService.serviceReceptionMots()
-    .subscribe((mots) => this.mots = mots);
+      .subscribe((mots) => this.mots = mots);
   }
 
   private souscrireSelectionMots(): void {
@@ -61,11 +66,23 @@ export class DefinitionComponent implements OnInit, OnDestroy {
       .subscribe((matrice) => this.matriceDesMotsSurGrille = matrice);
   }
 
+  private souscrireMotsTrouves(): void {
+    this.subscriptionMotTrouve = this.listeMotsService.serviceReceptionMotTrouve()
+      .subscribe((mot: Mot) => document.getElementById(mot.mot).classList.add("motTrouve"));
+  }
+
+  private souscrireMotsPerdus(): void {
+    this.subscriptionMotPerdu = this.listeMotsService.serviceReceptionMotPerdu()
+      .subscribe((mot: Mot) => document.getElementById(mot.mot).classList.add("motPerdu"));
+  }
+
   // Changement d'un mot
 
   public changementMotSelectionne(mot: Mot): void {
-    this.miseAJourMotSelectionne(mot);
-    this.envoieMotSelectionne();
+    if (!mot.motTrouve) {
+      this.miseAJourMotSelectionne(mot);
+      this.envoieMotSelectionne();
+    }
   }
 
   private envoieMotSelectionne(): void {
@@ -84,29 +101,8 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   }
 
   private decouvrirCases(mot: Mot): void {
-    this.cacherCases();
-    for (let indice: number = 0 ; indice < mot.longueur ; indice++) {
-      mot.estVertical
-        ? this.obtenirLettreGrilleMotVertical(mot, indice).caseDecouverte = true
-        : this.obtenirLettreGrilleMotHorizontal(mot, indice).caseDecouverte = true;
-    }
+    OpaciteCase.decouvrirCases(mot, this.matriceDesMotsSurGrille);
     this.envoieMatrice();
-  }
-
-  private cacherCases(): void {
-    for (const ligne of this.matriceDesMotsSurGrille) {
-      for (const lettre of ligne) {
-          lettre.caseDecouverte = false;
-      }
-    }
-  }
-
-  private obtenirLettreGrilleMotVertical(mot: Mot, indice: number): LettreGrille {
-    return this.matriceDesMotsSurGrille[mot.premierX][indice + mot.premierY];
-  }
-
-  private obtenirLettreGrilleMotHorizontal(mot: Mot, indice: number): LettreGrille {
-    return this.matriceDesMotsSurGrille[indice + mot.premierX][mot.premierY];
   }
 
   private envoieMatrice(): void {

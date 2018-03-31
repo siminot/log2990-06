@@ -80,6 +80,7 @@ export class GestionnaireVoitures {
     private creerVoituresAI(): void {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
+            this._voituresAI[i].position.set(0, 0, -4);
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
             .then((objet: Object3D) => this._voituresAI[i].initialiser(objet))
             .catch(() => { throw new ErreurChargementTexture(); });

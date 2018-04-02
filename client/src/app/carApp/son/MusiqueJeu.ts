@@ -1,7 +1,7 @@
 import { SonAbstrait, LISTENER } from "./SonAbstrait";
 import { Audio } from "three";
 
-export class SonDepart extends SonAbstrait {
+export class MusiqueJeu extends SonAbstrait {
 
     private _audio: Audio;
 

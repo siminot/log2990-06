@@ -16,7 +16,6 @@ export class SonCollision extends SonAbstrait {
                                (buffer: THREE.AudioBuffer) => {
             this._audio.setBuffer(buffer);
             this._audio.setRefDistance(this.distanceRef);
-            // this._audio.play();
         },                     null, null);
     }
 

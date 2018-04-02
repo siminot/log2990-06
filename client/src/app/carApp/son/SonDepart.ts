@@ -1,7 +1,7 @@
 import { SonAbstrait, LISTENER } from "./SonAbstrait";
 import { PositionalAudio } from "three";
 
-export class SonVoiture extends SonAbstrait {
+export class SonDepart extends SonAbstrait {
 
     private _audio: PositionalAudio;
 
@@ -11,22 +11,17 @@ export class SonVoiture extends SonAbstrait {
         this.initialisationSon();
     }
 
-    public actualiserSon(rpm: number): void {
-        // actualiser le son selon la vitesse/rpm
-    }
-
     protected initialisationSon(): void {
-        this._audioLoader.load("./../../../assets/sons/moteur_idle.wav",
+        this._audioLoader.load("./../../../assets/sons/JELAIPASENCORE",
                                (buffer: THREE.AudioBuffer) => {
             this._audio.setBuffer(buffer);
             this._audio.setRefDistance(this.distanceRef);
-            this._audio.setLoop(true);
-            this._audio.play();
+            // this._audio.play();
         },                     null, null);
     }
 
-    public get obtenirSon(): PositionalAudio {
-        return this._audio;
+    public jouerSon(): void {
+        this._audio.play();
     }
 
 }

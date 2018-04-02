@@ -3,6 +3,7 @@ import { Engine } from "./engine";
 import { MS_TO_SECONDS, GRAVITY, PI_OVER_2 } from "../constants";
 import { Wheel } from "./wheel";
 import { GroupePhares } from "./groupePhares";
+import { SonVoiture } from "../son/SonVoiture";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -85,7 +86,6 @@ export class Voiture extends Object3D {
             console.error("Drag coefficient should be greater than 0.");
             dragCoefficient = DEFAULT_DRAG_COEFFICIENT;
         }
-
         this.engine = engine;
         this.rearWheel = rearWheel;
         this.wheelbase = wheelbase;
@@ -97,6 +97,7 @@ export class Voiture extends Object3D {
         this._speed = new Vector3(0, 0, 0);
         this.boiteCollision = new Box3();
         this.phares = new GroupePhares();
+        this.add(new SonVoiture().obtenirSon);
     }
 
     public initialiser(texture: Object3D): void {

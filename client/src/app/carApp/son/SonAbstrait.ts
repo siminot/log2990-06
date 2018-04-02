@@ -1,15 +1,13 @@
 import { AudioListener, AudioLoader } from "three";
-import { GestionnaireCamera } from "../camera/GestionnaireCamera";
+
+export const LISTENER: AudioListener = new AudioListener();
 
 export abstract class SonAbstrait {
 
-    protected _audioListener: AudioListener;
     protected _audioLoader: AudioLoader;
-    private gestionnaireCamera: GestionnaireCamera;
 
     public constructor() {
-        this._audioListener = new AudioListener();
-        this.gestionnaireCamera.camera.add(this._audioListener); // <-- je suis pas certain qu'il sagit de la vrai camera
+        this._audioLoader = new AudioLoader();
         this.initialisationSon();
     }
 

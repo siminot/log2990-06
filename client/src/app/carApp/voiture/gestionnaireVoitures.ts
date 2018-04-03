@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { ObjectLoader, Object3D, Group } from "three";
+import { ObjectLoader, Object3D, Group, LoadingManager } from "three";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
@@ -85,28 +85,25 @@ export class GestionnaireVoitures {
 
     private creerVoitureJoueur(): void {
         this._voitureJoueur = new Voiture();
-        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
-            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
+        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur)
             .catch(() => { throw new ErreurChargementTexture(); });
     }
 
     private creerVoituresAI(piste: PisteJeu): void {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
-            .then((objet: Object3D) => this._voituresAI[i].initialiser(objet))
+            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI], this._voituresAI[i])
             .catch(() => { throw new ErreurChargementTexture(); });
             this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
         }
     }
 
-    private async chargerTexture(URL_TEXTURE: string): Promise<Object3D> {
-        return new Promise<Object3D>((resolve, reject) => {
-            const loader: ObjectLoader = new ObjectLoader();
-            loader.load(CHEMIN_TEXTURE + URL_TEXTURE, (object) => {
-                resolve(object);
-            });
-        });
+    private async chargerTexture(URL_TEXTURE: string, voiture: Voiture): Promise<Object3D> {
+        return new Promise<Object3D>((resolve) => {
+                    new ObjectLoader(new LoadingManager()).load(
+                        CHEMIN_TEXTURE + URL_TEXTURE,
+                        (object) => voiture.initialiser(object));
+               });
     }
 
     // Changements affectant les voitures

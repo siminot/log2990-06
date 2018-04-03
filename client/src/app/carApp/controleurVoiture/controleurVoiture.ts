@@ -6,7 +6,6 @@ import { Droite } from "../elementsGeometrie/droite";
 const DISTANCE_MINIMALE_PROCHAIN_POINT: number = 1;
 const DISTANCE_MINIMALE_COURBE: number = 1;
 const VITESSE_MAXIMALE_COURBE: number = 50;
-const ORIGINE: Point = new Point(0, 0);
 
 export class ControleurVoiture implements IObjetEnMouvement {
 

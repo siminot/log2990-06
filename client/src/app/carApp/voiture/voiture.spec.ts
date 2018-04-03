@@ -121,7 +121,7 @@ describe("Voiture", () => {
     it("phares initialises", () => {
         car = new Voiture(undefined);
         car.initialiser(new Object3D());
-        expect(car.children.length).toBe(2);
+        expect(car.children.length - 2).toBe(2); // -2 car 2 children sont des sons
     });
 
     it("boiteCollision suit la voiture", () => {

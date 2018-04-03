@@ -1,7 +1,9 @@
 import { AudioListener, AudioLoader } from "three";
+import { Injectable } from "@angular/core";
 
 export const LISTENER: AudioListener = new AudioListener();
 
+@Injectable()
 export abstract class SonAbstrait {
 
     protected _audioLoader: AudioLoader;

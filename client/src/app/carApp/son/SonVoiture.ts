@@ -24,8 +24,8 @@ export class SonVoiture extends SonAbstrait {
     }
 
     protected initialisationSon(): void {
-        this.initialisationSonRepos();
         this.initialisationSonAcceleration();
+        this.initialisationSonRepos();
     }
 
     private initialisationSonRepos(): void {
@@ -33,26 +33,25 @@ export class SonVoiture extends SonAbstrait {
             this._audioRepos.setBuffer(buffer);
             this._audioRepos.setRefDistance(this.distanceRef);
             this._audioRepos.setLoop(true);
-            this._audioRepos.play();
-        },                     null, null);
+            this.jouerRepos();
+        },                     () => {}, () => {});
     }
 
-    private initialisationSonAcceleration(): void {
+    private  initialisationSonAcceleration(): void {
         this._audioLoader.load("./../../../assets/sons/moteur_accel.wav", (buffer: THREE.AudioBuffer) => {
             this._audioAcceleration.setBuffer(buffer);
             this._audioAcceleration.setRefDistance(this.distanceRef);
             this._audioAcceleration.setLoop(true);
             this._audioAcceleration.setVolume(VOLUME_INIT);
-        },                     null, null);
+        },                     () => {}, () => {});
     }
 
     public jouerRepos(): void {
-        this._audioAcceleration.stop();
         this._audioRepos.play();
+        this._audioAcceleration.stop();
     }
 
     public jouerAccel(): void {
-        this._audioRepos.stop();
         this._audioAcceleration.play();
     }
 

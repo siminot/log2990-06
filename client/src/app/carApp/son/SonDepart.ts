@@ -15,7 +15,7 @@ export class SonDepart extends SonAbstrait {
         this._audioLoader.load("./../../../assets/sons/raceStart.wav",
                                (buffer: THREE.AudioBuffer) => {
             this._audio.setBuffer(buffer);
-        },                     null, null);
+        },                     () => {}, () => {});
     }
 
     public get obtenirSon(): Audio {

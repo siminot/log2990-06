@@ -5,8 +5,7 @@
     <li class="piste" *ngFor="let piste of pistes">
       {{piste.nom}}: {{piste.description}}
 
-      <button class="selection" title="choix"
-      (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
+      <button class="selection" title="choix" (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
     </li>
   </ul>
 </div>

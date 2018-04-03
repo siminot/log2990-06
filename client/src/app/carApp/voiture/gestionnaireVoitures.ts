@@ -6,6 +6,7 @@ import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
+import { LISTENER } from "../son/SonAbstrait";
 
 // AI
 export const NOMBRE_AI: number = 1;
@@ -72,6 +73,7 @@ export class GestionnaireVoitures {
 
     private creerVoitureJoueur(): void {
         this._voitureJoueur = new Voiture();
+        this.voitureJoueur.add(LISTENER);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
             .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
             .catch(() => { throw new ErreurChargementTexture(); });

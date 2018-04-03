@@ -1,7 +1,7 @@
 import { SonAbstrait, LISTENER } from "./SonAbstrait";
 import { PositionalAudio } from "three";
 
-export class SonCollision extends SonAbstrait {
+export class SonSortieRoute extends SonAbstrait {
 
     private _audio: PositionalAudio;
 
@@ -16,15 +16,16 @@ export class SonCollision extends SonAbstrait {
                                (buffer: THREE.AudioBuffer) => {
             this._audio.setBuffer(buffer);
             this._audio.setRefDistance(this.distanceRef);
+            this._audio.setLoop(true);
         },                     null, null);
-    }
-
-    public get obtenirSon(): PositionalAudio {
-        return this._audio;
     }
 
     public jouerSon(): void {
         this._audio.play();
+    }
+
+    public get obtenirSon(): PositionalAudio {
+        return this._audio;
     }
 
 }

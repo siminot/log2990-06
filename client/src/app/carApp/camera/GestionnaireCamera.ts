@@ -9,7 +9,6 @@ import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripheriqu
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { ICamera } from "./ICamera";
-import { LISTENER } from "../son/SonAbstrait";
 
 const CAMERA_INITIALE: number = 0;
 
@@ -48,7 +47,6 @@ export class GestionnaireCamera implements ICamera {
     private initialiserCameras(): void {
         this.cameras.push(new CameraJeu3D());
         this.cameras.push(new CameraJeu2D());
-        this.cameras[0].camera.add(LISTENER);
         this.suivre(this.gestionnaireVoitures.voitureJoueur);
         this.cameraCourante = this.cameras[CAMERA_INITIALE];
     }

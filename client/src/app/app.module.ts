@@ -41,6 +41,9 @@ import { SocketService } from "./crosswords/service-socket/service-socket";
 import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse";
 import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
 
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatExpansionModule } from "@angular/material/expansion";
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -64,7 +67,9 @@ import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEdit
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        BrowserAnimationsModule,
+        MatExpansionModule
     ],
     providers: [
         ServiceDeRenduJeu,

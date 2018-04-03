@@ -30,6 +30,13 @@ export class PisteJeu extends PisteAbstraite {
         }
     }
 
+    public exporter(): Point[] {
+        return this.estSensHoraire
+            ? super.exporter()
+            : super.exporter().reverse();
+
+    }
+
     public ajouterPoint(point: Point): void {
         this.intersections.push(point);
 

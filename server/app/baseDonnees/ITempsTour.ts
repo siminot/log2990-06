@@ -1,5 +1,5 @@
-export interface TempsTour {
-    minutes: Number;
-    secondes: Number;
-    milliSec: Number;
+export class TempsTour {
+    public minutes: Number;
+    public secondes: Number;
+    public milliSec: Number;
 }

@@ -51,6 +51,7 @@ export class GestionnaireVoitures {
 
     public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._voituresAI = [];
+        this.controleursAI = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
     }
 
@@ -87,9 +88,9 @@ export class GestionnaireVoitures {
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
             .then((objet: Object3D) => {
                 this._voituresAI[i].initialiser(objet);
-                this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
             })
             .catch(() => { throw new ErreurChargementTexture(); });
+            this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
         }
     }
 

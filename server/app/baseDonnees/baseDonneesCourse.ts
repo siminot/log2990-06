@@ -6,7 +6,6 @@ import { injectable } from "inversify";
 import { ErreurSupressionBaseDonnees } from "../exceptions/erreurSupressionBD";
 import { ErreurModificationBaseDonnees } from "../exceptions/erreurModificationBD";
 import { ErreurConnectionBD } from "../exceptions/erreurConnectionBD";
-import { TempsTour } from "../../../common/communication/TempsTour";
 
 const URL_BD: string = "mongodb://admin:admin@ds123129.mlab.com:23129/log2990";
 
@@ -24,7 +23,7 @@ export class BaseDonneesCourse {
             description: String,
             points: [{ x: Number, y: Number }],
             infos: String,
-            tempsTour: [{ temps: TempsTour }]
+            tempsTours: [{ min: Number, sec: Number, milliSec: Number }]
         });
         this.modelPiste = this.mongoose.model("pistes", this.schemaPiste);
     }

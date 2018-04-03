@@ -5,9 +5,9 @@
     margin:0;
 }
 
-/* ul, li {
+ul, li {
     list-style-image: url('../../../assets/purple_ghost.jpg');
-} */
+}
 
 .pisteTitre, .pisteDescription, .selection, #titrePrincipal, #titreChoixPiste {
     font-family: 'Press Start 2P', cursive;

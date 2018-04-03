@@ -4,6 +4,8 @@ import { Wheel } from "./wheel";
 import { Vector3, Object3D } from "three";
 
 const MS_BETWEEN_FRAMES: number = 16.6667;
+const NOMBRE_PHARES: number = 2;
+const NOMBRE_SONS: number = 2;
 
 /* tslint:disable: no-magic-numbers */
 class MockEngine extends Engine {
@@ -121,7 +123,7 @@ describe("Voiture", () => {
     it("phares initialises", () => {
         car = new Voiture(undefined);
         car.initialiser(new Object3D());
-        expect(car.children.length - 2).toBe(2); // -2 car 2 children sont des sons
+        expect(car.children.length - NOMBRE_SONS).toBe(NOMBRE_PHARES);
     });
 
     it("boiteCollision suit la voiture", () => {

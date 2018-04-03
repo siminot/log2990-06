@@ -5,7 +5,7 @@ export const LISTENER: AudioListener = new AudioListener();
 export abstract class SonAbstrait {
 
     protected _audioLoader: AudioLoader;
-    protected readonly distanceRef: number = 10;
+    protected readonly distanceRef: number = 15;
 
     public constructor() {
         this._audioLoader = new AudioLoader();

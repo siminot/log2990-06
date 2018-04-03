@@ -12,20 +12,19 @@ export class SonSortieRoute extends SonAbstrait {
     }
 
     protected initialisationSon(): void {
-        this._audioLoader.load("./../../../assets/sons/JELAIPASENCORE",
+        this._audioLoader.load("./../../../assets/sons/sortieRoute.mp3",
                                (buffer: THREE.AudioBuffer) => {
             this._audio.setBuffer(buffer);
             this._audio.setRefDistance(this.distanceRef);
-            this._audio.setLoop(true);
         },                     null, null);
-    }
-
-    public jouerSon(): void {
-        this._audio.play();
     }
 
     public get obtenirSon(): PositionalAudio {
         return this._audio;
+    }
+
+    public jouerSon(): void {
+        this._audio.play();
     }
 
 }

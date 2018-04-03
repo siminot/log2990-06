@@ -18,6 +18,7 @@ const NUMBER_WHEELS: number = 4;
 const CAR_SURFACE: number = 3;
 const AIR_DENSITY: number = 1.2;
 const TIRE_PRESSURE: number = 1;
+const VITESSE_MIN: number = 2;
 
 export class Voiture extends Object3D {
     private readonly engine: Engine;
@@ -129,7 +130,7 @@ export class Voiture extends Object3D {
     }
 
     private verificationRepos(): void {
-        if (this._speed.length() <= 2) {
+        if (this._speed.length() <= VITESSE_MIN) {
             this._sonVoiture.jouerRepos();
         }
     }

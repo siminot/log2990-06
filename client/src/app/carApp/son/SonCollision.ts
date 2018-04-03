@@ -12,7 +12,7 @@ export class SonCollision extends SonAbstrait {
     }
 
     protected initialisationSon(): void {
-        this._audioLoader.load("./../../../assets/sons/crash1.flac",
+        this._audioLoader.load("./../../../assets/sons/collisionAuto.mp3",
                                (buffer: THREE.AudioBuffer) => {
             this._audio.setBuffer(buffer);
             this._audio.setRefDistance(this.distanceRef);

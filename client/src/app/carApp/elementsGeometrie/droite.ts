@@ -14,6 +14,12 @@ export class Droite extends Line3 implements IDroite {
             : null;
     }
 
+    public estAGaucheDe(droite: Droite): boolean {
+        return this.direction.length() * droite.direction.length() !== 0
+            ? Math.asin(this.direction.cross(droite.direction).length() / (this.direction.length() * droite.direction.length())) < 0
+            : false;
+    }
+
     public get depart(): Point {
         return new Point(this.start.x, this.start.z);
     }

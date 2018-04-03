@@ -29,12 +29,13 @@ ul, li {
     font-size: 10px;
     color: purple;
     padding: 6px;
-    cursor:pointer;
+    cursor: pointer;
     border-radius: 5px;
     background-color: white;
     border: 2px solid rgba(0,0,0, 0.747);
     position:absolute;
-    left: 550px;
+    right:0;
+    bottom:0;
 }
 
 .selection:hover {
@@ -53,4 +54,5 @@ ul, li {
 
 .pisteDescription {
     font-size: 10px;
+    position:relative;
 }

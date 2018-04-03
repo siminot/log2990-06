@@ -36,7 +36,7 @@ export class SonVoiture extends SonAbstrait {
     }
 
     private initialisationSonAcceleration(): void {
-        this._audioLoader.load("./../../../assets/sons/MOTEUR QUI ACCEL", (buffer: THREE.AudioBuffer) => {
+        this._audioLoader.load("./../../../assets/sons/moteur_accel.wav", (buffer: THREE.AudioBuffer) => {
             this._audioAcceleration.setBuffer(buffer);
             this._audioAcceleration.setRefDistance(this.distanceRef);
             this._audioAcceleration.setLoop(true);

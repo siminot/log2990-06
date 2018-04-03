@@ -13,13 +13,14 @@ export class ControleurVoiture implements IObjetEnMouvement {
 
     public constructor(private voiture: Voiture,
                        private piste: Point[]) {
-        if (piste !== null) {
-            this.pointDestination = piste[0];
-        }
+        this.pointDestination =
+            piste !== undefined && piste[0] !== undefined
+            ? piste[0]
+            : null;
     }
 
     public miseAJour(temps: number): void {
-        if (this.piste !== null) {
+        if (this.pointDestination !== null) {
             this.miseAJourPoint();
             this.ajustementDirection();
             this.ajustementVitesse();

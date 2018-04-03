@@ -33,6 +33,7 @@ export class Voiture extends Object3D {
     private weightRear: number;
     private phares: GroupePhares;
     private boiteCollision: Box3;
+    private _sonVoiture: SonVoiture;
 
     public get isAcceleratorPressed(): boolean {
         return this._isAcceleratorPressed;
@@ -81,7 +82,6 @@ export class Voiture extends Object3D {
             console.error("Mass should be greater than 0.");
             mass = DEFAULT_MASS;
         }
-
         if (dragCoefficient <= 0) {
             console.error("Drag coefficient should be greater than 0.");
             dragCoefficient = DEFAULT_DRAG_COEFFICIENT;
@@ -97,7 +97,9 @@ export class Voiture extends Object3D {
         this._speed = new Vector3(0, 0, 0);
         this.boiteCollision = new Box3();
         this.phares = new GroupePhares();
-        this.add(new SonVoiture().obtenirSon);
+        this._sonVoiture = new SonVoiture();
+        this.add(this._sonVoiture.obtenirSon);
+        this._sonVoiture.jouerRepos();
     }
 
     public initialiser(texture: Object3D): void {
@@ -129,10 +131,12 @@ export class Voiture extends Object3D {
 
     public relacherAccelerateur(): void {
         this._isAcceleratorPressed = false;
+        this._sonVoiture.jouerRepos();
     }
 
     public accelerer(): void {
         this._isAcceleratorPressed = true;
+        this._sonVoiture.jouerAccel();
     }
 
     public update(deltaTime: number): void {
@@ -185,6 +189,11 @@ export class Voiture extends Object3D {
         this._speed.setLength(this._speed.length() <= MINIMUM_SPEED && !this._isAcceleratorPressed ? 0 : this._speed.length());
         this.position.add(this.getDeltaPosition(deltaTime));
         this.rearWheel.update(this._speed.length());
+        this.updateSon();
+    }
+
+    private updateSon(): void {
+        this._sonVoiture.actualiserSon(this.rpm);
     }
 
     private getWeightDistribution(): number {

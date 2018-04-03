@@ -1,5 +1,4 @@
 import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
-import { TempsTour } from "../../../../../common/communication/TempsTour";
 
 export interface PisteBD {
     _id: string;
@@ -7,5 +6,5 @@ export interface PisteBD {
     description: string;
     points: IDefinitionPoint[];
     infos: String;
-    tempsTours: [{ tempsTours: TempsTour }];
+    tempsTours: [{ min: number, sec: number, milliSec: number }];
 }

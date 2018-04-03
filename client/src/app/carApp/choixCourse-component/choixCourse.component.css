@@ -7,7 +7,7 @@
 
     /* list-style-image: url('../../../assets/purple_ghost.jpg'); */
 
-.selection, #titrePrincipal, #titreChoixPiste {
+.pisteTitre, .pisteDescription, .selection, #titrePrincipal, #titreChoixPiste {
     font-family: 'Press Start 2P', cursive;
 }
 
@@ -38,4 +38,17 @@
 .selection:hover {
     color: white !important;
     background-color: blue !important;
+}
+
+.pisteTitre {
+    font-size: 12px;
+}
+
+.piste {
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.404);
+}
+
+.pisteDescription {
+    font-size: 10px;
 }

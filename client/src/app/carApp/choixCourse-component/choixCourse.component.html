@@ -4,16 +4,17 @@
   
   <mat-accordion multi="false">
 
-    <mat-expansion-panel *ngFor="let piste of pistes">
+    <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
       
-      <mat-expansion-panel-header>
+      <mat-expansion-panel-header class="pisteTitre">
         {{ piste.nom }}
         
       </mat-expansion-panel-header>
-  
-      {{ piste.description }}
-      <button class="selection" title="choix" (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
-  
+      
+      <div class="pisteDescription">
+        {{ piste.description }}
+        <button class="selection" title="choix" (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
+      </div>
     </mat-expansion-panel>
   
   </mat-accordion>

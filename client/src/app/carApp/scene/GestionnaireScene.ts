@@ -35,13 +35,17 @@ export class GestionnaireScene implements IScene {
 
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures,
-                       private gestionnaireBDCourse: GestionnaireBDCourse,
+                       @Inject (GestionnaireBDCourse) gestionnaireBDCourse: GestionnaireBDCourse,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
-        this.gestionnaireVoiture.initialiser(this.piste);
         this.initialisationTouches();
+
+        this.piste = new PisteJeu();
+        this.piste.importer(gestionnaireBDCourse.pointsJeu);
+        this.gestionnaireVoiture.initialiser(this.piste);
+
         this.creerScene();
     }
 
@@ -56,10 +60,10 @@ export class GestionnaireScene implements IScene {
     }
 
     private ajouterElements(): void {
-        this._scene.add(this.gestionnaireSkybox.skybox);
-        this._scene.add(this.gestionnaireVoiture.voitureJoueur);
         this.ajouterVoituresAI();
         this.ajouterPiste();
+        this._scene.add(this.gestionnaireSkybox.skybox);
+        this._scene.add(this.gestionnaireVoiture.voitureJoueur);
     }
 
     private initialiserTempsJournee(): void {
@@ -68,8 +72,6 @@ export class GestionnaireScene implements IScene {
     }
 
     private ajouterPiste(): void {
-        this.piste = new PisteJeu();
-        this.piste.importer(this.gestionnaireBDCourse.pointsJeu);
         this._scene.add(this.piste);
     }
 

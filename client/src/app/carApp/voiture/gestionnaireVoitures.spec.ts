@@ -1,13 +1,14 @@
 import { GestionnaireVoitures, NOMBRE_AI } from "./gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { PisteJeu } from "../piste/pisteJeu";
 
 describe("GestionnaireVoitures", () => {
     let gestionnaire: GestionnaireVoitures;
 
     beforeEach(() => {
         gestionnaire = new GestionnaireVoitures(new GestionnaireClavier());
-        gestionnaire.initialiser();
+        gestionnaire.initialiser(new PisteJeu());
 
     });
 

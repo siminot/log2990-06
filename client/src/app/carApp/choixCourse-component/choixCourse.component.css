@@ -5,16 +5,22 @@
     margin:0;
 }
 
-.piste {
-    position: relative;
-    margin: 15px;
-    top: 0;
-    color: black;
-    font-size: 10px;
+    /* list-style-image: url('../../../assets/purple_ghost.jpg'); */
+
+.selection, #titrePrincipal, #titreChoixPiste {
+    font-family: 'Press Start 2P', cursive;
 }
 
-.pistes {
-    list-style-image: url('../../../assets/purple_ghost.jpg');
+#titrePrincipal {
+    font-size: 18px;
+    text-align: center;
+    margin:30px;
+}
+
+#titreChoixPiste {
+    font-size: 12px;
+    margin: 10px;
+    padding: 0px;
 }
 
 .selection {
@@ -32,20 +38,4 @@
 .selection:hover {
     color: white !important;
     background-color: blue !important;
-}
-
-.piste, .selection, #titrePrincipal, #titreChoixPiste {
-    font-family: 'Press Start 2P', cursive;
-}
-
-#titrePrincipal {
-    font-size: 18px;
-    text-align: center;
-    margin:30px;
-}
-
-#titreChoixPiste {
-    font-size: 12px;
-    margin: 10px;
-    padding: 0px;
 }

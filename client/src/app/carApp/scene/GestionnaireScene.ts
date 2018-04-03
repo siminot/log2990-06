@@ -21,6 +21,7 @@ const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("n", TypeEv
 export class GestionnaireScene implements IScene {
 
     private _scene: Scene;
+    private piste: PisteJeu;
     private tempsJournee: TempsJournee;
     private clavier: UtilisateurPeripherique;
 
@@ -39,7 +40,7 @@ export class GestionnaireScene implements IScene {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
-        this.gestionnaireVoiture.initialiser();
+        this.gestionnaireVoiture.initialiser(this.piste);
         this.initialisationTouches();
         this.creerScene();
     }
@@ -67,9 +68,9 @@ export class GestionnaireScene implements IScene {
     }
 
     private ajouterPiste(): void {
-        const piste: PisteJeu = new PisteJeu();
-        piste.importer(this.gestionnaireBDCourse.pointsJeu);
-        this._scene.add(piste);
+        this.piste = new PisteJeu();
+        this.piste.importer(this.gestionnaireBDCourse.pointsJeu);
+        this._scene.add(this.piste);
     }
 
     private ajouterVoituresAI(): void {

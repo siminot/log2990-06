@@ -6,6 +6,9 @@ import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
+import { PisteJeu } from "../piste/pisteJeu";
+import { ControleurVoiture } from "../controleurVoiture/controleurVoiture";
+import { IObjetEnMouvement } from "./IObjetEnMouvement";
 
 // AI
 export const NOMBRE_AI: number = 1;
@@ -35,6 +38,7 @@ export class GestionnaireVoitures {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
+    private controleursAI: ControleurVoiture[];
     private clavier: UtilisateurPeripherique;
 
     public get voitureJoueur(): Voiture {
@@ -64,9 +68,9 @@ export class GestionnaireVoitures {
 
     // Creation des voitures
 
-    public initialiser(): void {
+    public initialiser(piste: PisteJeu): void {
         this.creerVoitureJoueur();
-        this.creerVoituresAI();
+        this.creerVoituresAI(piste);
         this.initialisationTouches();
     }
 
@@ -77,11 +81,14 @@ export class GestionnaireVoitures {
             .catch(() => { throw new ErreurChargementTexture(); });
     }
 
-    private creerVoituresAI(): void {
+    private creerVoituresAI(piste: PisteJeu): void {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
-            .then((objet: Object3D) => this._voituresAI[i].initialiser(objet))
+            .then((objet: Object3D) => {
+                this._voituresAI[i].initialiser(objet);
+                this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
+            })
             .catch(() => { throw new ErreurChargementTexture(); });
         }
     }
@@ -98,10 +105,8 @@ export class GestionnaireVoitures {
     // Changements affectant les voitures
 
     public miseAJourVoitures(tempsDepuisDerniereTrame: number): void {
-        this.voitureJoueur.update(tempsDepuisDerniereTrame);
-
-        for (const voiture of this._voituresAI) {
-            voiture.update(tempsDepuisDerniereTrame);
+        for (const voiture of this.voituresEnMouvement) {
+            voiture.miseAJour(tempsDepuisDerniereTrame);
         }
     }
 
@@ -125,5 +130,9 @@ export class GestionnaireVoitures {
 
     public get voitures(): Voiture[] {
         return this._voituresAI.concat([this._voitureJoueur]);
+    }
+
+    public get voituresEnMouvement(): IObjetEnMouvement[] {
+        return (this.controleursAI as IObjetEnMouvement[]).concat([this._voitureJoueur]);
     }
 }

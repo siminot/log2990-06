@@ -1,5 +1,8 @@
 import { SonAbstrait, LISTENER } from "./SonAbstrait";
 import { PositionalAudio } from "three";
+import { DEFAULT_MINIMUM_RPM, DEFAULT_MAX_RPM } from "../voiture/engine";
+
+const DELTA_VITESSE_MAX: number = 2;
 
 export class SonVoiture extends SonAbstrait {
 
@@ -14,12 +17,14 @@ export class SonVoiture extends SonAbstrait {
     }
 
     public actualiserSon(rpm: number): void {
-        // actualiser le son selon la vitesse/rpm
+        const ratioVitesse: number = ((rpm - DEFAULT_MINIMUM_RPM) /
+        (DEFAULT_MAX_RPM - DEFAULT_MINIMUM_RPM)) * DELTA_VITESSE_MAX + 1;
+        this._audioAcceleration.playbackRate = ratioVitesse; // ratioVitesse varie de 1 a DELTA_VITESSE_MAX + 1
     }
 
     protected initialisationSon(): void {
         this.initialisationSonRepos();
-        // this.initialisationSonAcceleration();
+        this.initialisationSonAcceleration();
     }
 
     private initialisationSonRepos(): void {
@@ -39,18 +44,13 @@ export class SonVoiture extends SonAbstrait {
     }
 
     public jouerRepos(): void {
-        // this._audioAcceleration.stop();
+        this._audioAcceleration.stop();
         this._audioRepos.play();
     }
 
     public jouerAccel(): void {
         this._audioRepos.stop();
-        // this._audioAcceleration.play();
-    }
-
-    public ajustemetSonSelonRPM(rpm: number): void {
-        // formule qui change le playback du son d'accel
-        this._audioAcceleration.playbackRate = 1;
+        this._audioAcceleration.play();
     }
 
     public get obtenirSon(): PositionalAudio {

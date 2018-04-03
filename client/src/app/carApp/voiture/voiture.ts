@@ -3,6 +3,7 @@ import { Engine } from "./engine";
 import { MS_TO_SECONDS, GRAVITY, PI_OVER_2 } from "../constants";
 import { Wheel } from "./wheel";
 import { GroupePhares } from "./groupePhares";
+import { SonVoiture } from "../son/SonVoiture";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -17,6 +18,7 @@ const NUMBER_WHEELS: number = 4;
 const CAR_SURFACE: number = 3;
 const AIR_DENSITY: number = 1.2;
 const TIRE_PRESSURE: number = 1;
+const VITESSE_MIN: number = 2;
 
 export class Voiture extends Object3D {
     private readonly engine: Engine;
@@ -32,6 +34,7 @@ export class Voiture extends Object3D {
     private weightRear: number;
     private phares: GroupePhares;
     private boiteCollision: Box3;
+    private _sonVoiture: SonVoiture;
 
     public get isAcceleratorPressed(): boolean {
         return this._isAcceleratorPressed;
@@ -70,22 +73,18 @@ export class Voiture extends Object3D {
         mass: number = DEFAULT_MASS,
         dragCoefficient: number = DEFAULT_DRAG_COEFFICIENT) {
         super();
-
         if (wheelbase <= 0) {
             console.error("Wheelbase should be greater than 0.");
             wheelbase = DEFAULT_WHEELBASE;
         }
-
         if (mass <= 0) {
             console.error("Mass should be greater than 0.");
             mass = DEFAULT_MASS;
         }
-
         if (dragCoefficient <= 0) {
             console.error("Drag coefficient should be greater than 0.");
             dragCoefficient = DEFAULT_DRAG_COEFFICIENT;
         }
-
         this.engine = engine;
         this.rearWheel = rearWheel;
         this.wheelbase = wheelbase;
@@ -97,6 +96,9 @@ export class Voiture extends Object3D {
         this._speed = new Vector3(0, 0, 0);
         this.boiteCollision = new Box3();
         this.phares = new GroupePhares();
+        this._sonVoiture = new SonVoiture();
+        this.add(this._sonVoiture.obtenirSonRepos);
+        this.add(this._sonVoiture.obtenirSonAccel);
     }
 
     public initialiser(texture: Object3D): void {
@@ -124,14 +126,23 @@ export class Voiture extends Object3D {
 
     public freiner(): void {
         this.isBraking = true;
+        this.verificationRepos();
+    }
+
+    private verificationRepos(): void {
+        if (this._speed.length() <= VITESSE_MIN) {
+            this._sonVoiture.jouerRepos();
+        }
     }
 
     public relacherAccelerateur(): void {
         this._isAcceleratorPressed = false;
+        this.verificationRepos();
     }
 
     public accelerer(): void {
         this._isAcceleratorPressed = true;
+        this._sonVoiture.jouerAccel();
     }
 
     public update(deltaTime: number): void {
@@ -184,6 +195,11 @@ export class Voiture extends Object3D {
         this._speed.setLength(this._speed.length() <= MINIMUM_SPEED && !this._isAcceleratorPressed ? 0 : this._speed.length());
         this.position.add(this.getDeltaPosition(deltaTime));
         this.rearWheel.update(this._speed.length());
+        this.updateSon();
+    }
+
+    private updateSon(): void {
+        this._sonVoiture.actualiserSon(this.rpm);
     }
 
     private getWeightDistribution(): number {

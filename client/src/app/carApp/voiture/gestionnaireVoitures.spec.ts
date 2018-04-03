@@ -38,7 +38,7 @@ describe("GestionnaireVoitures", () => {
         expect(gestionnaire.voitureJoueur).toBeDefined();
     });
 
-    it("get voituresAI renvoie une liste d'objets", () => {
-        expect(gestionnaire.voituresAI.length).toBe(NOMBRE_AI);
+    it("get voituresAI renvoie un groupe contenant les voitures AI", () => {
+        expect(gestionnaire.voituresAI.children.length).toBe(NOMBRE_AI);
     });
 });

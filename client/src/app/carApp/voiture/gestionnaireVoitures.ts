@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { ObjectLoader, Object3D } from "three";
+import { ObjectLoader, Object3D, Group } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
@@ -45,8 +45,14 @@ export class GestionnaireVoitures {
         return this._voitureJoueur;
     }
 
-    public get voituresAI(): Voiture[] {
-        return this._voituresAI;
+    public get voituresAI(): Group {
+        const groupe: Group = new Group();
+
+        for (const voiture of this._voituresAI) {
+            groupe.add(voiture);
+        }
+
+        return groupe;
     }
 
     public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {

@@ -72,12 +72,10 @@ export class Voiture extends Object3D {
         mass: number = DEFAULT_MASS,
         dragCoefficient: number = DEFAULT_DRAG_COEFFICIENT) {
         super();
-
         if (wheelbase <= 0) {
             console.error("Wheelbase should be greater than 0.");
             wheelbase = DEFAULT_WHEELBASE;
         }
-
         if (mass <= 0) {
             console.error("Mass should be greater than 0.");
             mass = DEFAULT_MASS;
@@ -98,8 +96,8 @@ export class Voiture extends Object3D {
         this.boiteCollision = new Box3();
         this.phares = new GroupePhares();
         this._sonVoiture = new SonVoiture();
-        this.add(this._sonVoiture.obtenirSon);
-        this._sonVoiture.jouerRepos();
+        this.add(this._sonVoiture.obtenirSonRepos);
+        this.add(this._sonVoiture.obtenirSonAccel);
     }
 
     public initialiser(texture: Object3D): void {
@@ -127,11 +125,18 @@ export class Voiture extends Object3D {
 
     public freiner(): void {
         this.isBraking = true;
+        this.verificationRepos();
+    }
+
+    private verificationRepos(): void {
+        if (this._speed.length() <= 2) {
+            this._sonVoiture.jouerRepos();
+        }
     }
 
     public relacherAccelerateur(): void {
         this._isAcceleratorPressed = false;
-        this._sonVoiture.jouerRepos();
+        this.verificationRepos();
     }
 
     public accelerer(): void {

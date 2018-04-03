@@ -20,7 +20,7 @@ describe("Voiture", () => {
         car.initialiser(new Object3D);
 
         car.accelerer();
-        car.update(MS_BETWEEN_FRAMES);
+        car.miseAJour(MS_BETWEEN_FRAMES);
         car.relacherAccelerateur();
         done();
     });
@@ -34,7 +34,7 @@ describe("Voiture", () => {
     it("should accelerate when accelerator is pressed", () => {
         const initialSpeed: number = car.speed.length();
         car.accelerer();
-        car.update(MS_BETWEEN_FRAMES);
+        car.miseAJour(MS_BETWEEN_FRAMES);
         expect(car.speed.length()).toBeGreaterThan(initialSpeed);
     });
 
@@ -49,12 +49,12 @@ describe("Voiture", () => {
         };
 
         car.accelerer();
-        car.update(MS_BETWEEN_FRAMES);
+        car.miseAJour(MS_BETWEEN_FRAMES);
         car.relacherAccelerateur();
 
         const initialSpeed: number = car.speed.length();
         car.freiner();
-        car.update(MS_BETWEEN_FRAMES);
+        car.miseAJour(MS_BETWEEN_FRAMES);
         expect(car.speed.length()).toBeLessThan(initialSpeed);
     });
 
@@ -62,7 +62,7 @@ describe("Voiture", () => {
         const initialSpeed: number = car.speed.length();
 
         car.relacherFreins();
-        car.update(MS_BETWEEN_FRAMES);
+        car.miseAJour(MS_BETWEEN_FRAMES);
         expect(car.speed.length()).toBeLessThan(initialSpeed);
     });
 
@@ -70,7 +70,7 @@ describe("Voiture", () => {
         const initialAngle: number = car.angle;
         car.accelerer();
         car.virerGauche();
-        car.update(MS_BETWEEN_FRAMES * 2);
+        car.miseAJour(MS_BETWEEN_FRAMES * 2);
         expect(car.angle).toBeLessThan(initialAngle);
     });
 
@@ -78,18 +78,18 @@ describe("Voiture", () => {
         const initialAngle: number = car.angle;
         car.accelerer();
         car.virerDroite();
-        car.update(MS_BETWEEN_FRAMES * 2);
+        car.miseAJour(MS_BETWEEN_FRAMES * 2);
         expect(car.angle).toBeLessThan(initialAngle);
     });
 
     it("should not turn when steering keys are released", () => {
         car.accelerer();
         car.virerDroite();
-        car.update(MS_BETWEEN_FRAMES);
+        car.miseAJour(MS_BETWEEN_FRAMES);
 
         const initialAngle: number = car.angle;
         car.relacherVolant();
-        car.update(MS_BETWEEN_FRAMES);
+        car.miseAJour(MS_BETWEEN_FRAMES);
         expect(car.angle).toBe(initialAngle);
     });
 
@@ -128,7 +128,7 @@ describe("Voiture", () => {
         car = new Voiture(undefined);
         car.initialiser(new Object3D());
         car.accelerer();
-        car.update(MS_BETWEEN_FRAMES);
+        car.miseAJour(MS_BETWEEN_FRAMES);
         expect(car["boiteCollision"].getCenter()).toEqual(car.position);
     });
 });

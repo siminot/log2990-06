@@ -3,6 +3,7 @@ import { Engine } from "./engine";
 import { MS_TO_SECONDS, GRAVITY, PI_OVER_2 } from "../constants";
 import { Wheel } from "./wheel";
 import { GroupePhares } from "./groupePhares";
+import { IObjetEnMouvement } from "./IObjetEnMouvement";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -18,7 +19,7 @@ const CAR_SURFACE: number = 3;
 const AIR_DENSITY: number = 1.2;
 const TIRE_PRESSURE: number = 1;
 
-export class Voiture extends Object3D {
+export class Voiture extends Object3D implements IObjetEnMouvement {
     private readonly engine: Engine;
     private readonly mass: number;
     private readonly rearWheel: Wheel;
@@ -134,7 +135,7 @@ export class Voiture extends Object3D {
         this._isAcceleratorPressed = true;
     }
 
-    public update(deltaTime: number): void {
+    public miseAJour(deltaTime: number): void {
         deltaTime = deltaTime / MS_TO_SECONDS;
 
         // Move to car coordinates

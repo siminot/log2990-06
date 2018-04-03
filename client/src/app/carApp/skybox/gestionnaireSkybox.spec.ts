@@ -1,5 +1,5 @@
 import { GestionnaireSkybox } from "./gestionnaireSkybox";
-import { TempsJournee } from "./skybox";
+import { TempsJournee } from "./tempsJournee";
 
 describe ("GestionnaireSkybox", () => {
     let gestionnaire: GestionnaireSkybox;

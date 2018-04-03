@@ -15,4 +15,16 @@ export class Point extends Vector2 implements IPoint, IDefinitionPoint {
     public get point(): Point {
         return this;
     }
+
+    public add(point: Point): Point {
+        super.add(point);
+
+        return this;
+    }
+
+    public sub(point: Point): Point {
+        super.sub(point);
+
+        return this;
+    }
 }

@@ -4,6 +4,7 @@ import { MS_TO_SECONDS, GRAVITY, PI_OVER_2 } from "../constants";
 import { Wheel } from "./wheel";
 import { GroupePhares } from "./groupePhares";
 import { SonVoiture } from "../son/SonVoiture";
+import { IObjetEnMouvement } from "./IObjetEnMouvement";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -20,7 +21,7 @@ const AIR_DENSITY: number = 1.2;
 const TIRE_PRESSURE: number = 1;
 const VITESSE_MIN: number = 2;
 
-export class Voiture extends Object3D {
+export class Voiture extends Object3D implements IObjetEnMouvement {
     private readonly engine: Engine;
     private readonly mass: number;
     private readonly rearWheel: Wheel;
@@ -95,17 +96,16 @@ export class Voiture extends Object3D {
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
         this.boiteCollision = new Box3();
-        this.phares = new GroupePhares();
         this._sonVoiture = new SonVoiture();
         this.add(this._sonVoiture.obtenirSonRepos);
         this.add(this._sonVoiture.obtenirSonAccel);
+        this.initialiserPhares();
     }
 
     public initialiser(texture: Object3D): void {
         this.add(texture);
         this.setRotationFromEuler(INITIAL_MODEL_ROTATION);
         this.boiteCollision.setFromObject(this);
-        this.initialiserPhares();
     }
 
     public virerGauche(): void {
@@ -145,7 +145,7 @@ export class Voiture extends Object3D {
         this._sonVoiture.jouerAccel();
     }
 
-    public update(deltaTime: number): void {
+    public miseAJour(deltaTime: number): void {
         deltaTime = deltaTime / MS_TO_SECONDS;
 
         // Move to car coordinates
@@ -183,6 +183,7 @@ export class Voiture extends Object3D {
     }
 
     private initialiserPhares(): void {
+        this.phares = new GroupePhares();
         this.phares.initialiser();
         this.add(this.phares);
     }

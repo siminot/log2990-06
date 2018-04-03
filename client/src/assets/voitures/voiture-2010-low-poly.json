@@ -5,15 +5,15 @@
         "fps": 29
     }],
     "object": {
-        "uuid": "108A298A-3BAB-49EE-AD87-177EC6BFBB68",
+        "uuid": "108A298A-3BAB-49EE-AD87-177EC6BFBB69",
         "type": "Scene",
         "children": [{
             "name": "Camero",
-            "uuid": "2AF13A0D-AB5F-372A-AE91-976BDCF6873A",
+            "uuid": "2AF13A0D-AB5F-372A-AE91-976BDCF6873B",
             "matrix": [-0.5248,0,0,0,0,0,0.5248,0,0,0.5248,0,0,0,0,0,1],
             "visible": true,
             "type": "Mesh",
-            "material": "DA2DB727-F766-3434-B879-9034985D99FC",
+            "material": "DA2DB727-F766-3434-B879-9034985D99FD",
             "castShadow": true,
             "receiveShadow": true,
             "geometry": "1E2CA79B-1F42-3E8D-969A-900CA1082BA4"
@@ -84,9 +84,9 @@
         "name": "voiture_map_png",
         "mapping": 300,
         "minFilter": 1008,
-        "image": "B6A6440D-820E-3FF9-BEB3-3FB2F73E7F8A",
+        "image": "B6A6440D-820E-3FF9-BEB3-3FB2F73E7F8B",
         "repeat": [1,1],
-        "uuid": "AE38A956-9AB2-3824-8674-F71A275AFD60",
+        "uuid": "AE38A956-9AB2-3824-8674-F71A275AFD61",
         "magFilter": 1006,
         "wrap": [1000,1000],
         "anisotropy": 1
@@ -94,9 +94,9 @@
         "name": "voiture_map_png",
         "mapping": 300,
         "minFilter": 1008,
-        "image": "B6A6440D-820E-3FF9-BEB3-3FB2F73E7F8A",
+        "image": "B6A6440D-820E-3FF9-BEB3-3FB2F73E7F8B",
         "repeat": [1,1],
-        "uuid": "AE38A956-9AB2-3824-8674-F71A275AFD60",
+        "uuid": "AE38A956-9AB2-3824-8674-F71A275AFD61",
         "magFilter": 1006,
         "wrap": [1000,1000],
         "anisotropy": 1
@@ -104,21 +104,21 @@
         "name": "voiture_map_png",
         "mapping": 300,
         "minFilter": 1008,
-        "image": "B6A6440D-820E-3FF9-BEB3-3FB2F73E7F8A",
+        "image": "B6A6440D-820E-3FF9-BEB3-3FB2F73E7F8B",
         "repeat": [1,1],
-        "uuid": "AE38A956-9AB2-3824-8674-F71A275AFD60",
+        "uuid": "AE38A956-9AB2-3824-8674-F71A275AFD61",
         "magFilter": 1006,
         "wrap": [1000,1000],
         "anisotropy": 1
     }],
     "materials": [{
-        "bumpMap": "AE38A956-9AB2-3824-8674-F71A275AFD60",
+        "bumpMap": "AE38A956-9AB2-3824-8674-F71A275AFD61",
         "name": "Carcamero_ma",
         "type": "MeshPhongMaterial",
         "blending": "NormalBlending",
-        "uuid": "DA2DB727-F766-3434-B879-9034985D99FC",
+        "uuid": "DA2DB727-F766-3434-B879-9034985D99FD",
         "bumpScale": 1,
-        "map": "AE38A956-9AB2-3824-8674-F71A275AFD60",
+        "map": "AE38A956-9AB2-3824-8674-F71A275AFD61",
         "specular": 789516,
         "emissive": 0,
         "ambient": 14737632,
@@ -126,7 +126,7 @@
         "side": 2,
         "color": 14737632,
         "vertexColors": false,
-        "specularMap": "AE38A956-9AB2-3824-8674-F71A275AFD60",
+        "specularMap": "AE38A956-9AB2-3824-8674-F71A275AFD61",
         "depthWrite": true,
         "depthTest": true
     }],
@@ -136,7 +136,7 @@
         "generator": "io_three"
     },
     "images": [{
-        "uuid": "B6A6440D-820E-3FF9-BEB3-3FB2F73E7F8A",
+        "uuid": "B6A6440D-820E-3FF9-BEB3-3FB2F73E7F8B",
         "name": "voiture map.png",
         "url": "voiture map.png"
     }]

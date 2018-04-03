@@ -23,7 +23,7 @@ export class BaseDonneesCourse {
             description: String,
             points: [{ x: Number, y: Number }],
             infos: String,
-            tempsTours: [{ min: Number, sec: Number, milliSec: Number }]
+            tempsTours: [{ nom: String, min: Number, sec: Number, milliSec: Number }]
         });
         this.modelPiste = this.mongoose.model("pistes", this.schemaPiste);
     }

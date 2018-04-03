@@ -1,7 +1,7 @@
 import { GestionnaireVoitures, NOMBRE_AI } from "./gestionnaireVoitures";
-import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { PisteJeu } from "../piste/pisteJeu";
+import { TempsJournee } from "../skybox/tempsJournee";
 
 describe("GestionnaireVoitures", () => {
     let gestionnaire: GestionnaireVoitures;

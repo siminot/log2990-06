@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Mesh } from "three";
-import { Skybox, TempsJournee } from "./skybox";
+import { Skybox } from "./skybox";
+import { TEMPS_JOURNEE_INITIAL } from "../constants";
+import { TempsJournee } from "./tempsJournee";
 
 export class ElementsInitialisationSkybox {
     public tempsJournee: TempsJournee;
@@ -36,7 +38,7 @@ export class GestionnaireSkybox {
     public constructor() {
         this.environnements = new Map<TempsJournee, Skybox[]>();
         this.indexAncienneSkybox = new Map<TempsJournee, number>();
-        this.tempsJournee = TempsJournee.Nuit;
+        this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.chargerSkybox();
         this.miseAJourSkybox();
     }

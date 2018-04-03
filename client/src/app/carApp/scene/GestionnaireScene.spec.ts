@@ -36,7 +36,5 @@ describe("GestionnaireScene", () => {
     it("creerScene", () => {
         gestionnaireScene.creerScene();
         expect(gestionnaireScene.scene.children.length).toBe(NB_ENFANTS);
-        expect(gestionnaireScene.voitureJoueur).toBeDefined();
-
     });
 });

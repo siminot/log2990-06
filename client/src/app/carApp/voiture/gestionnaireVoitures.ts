@@ -1,7 +1,6 @@
 import { Injectable, Inject } from "@angular/core";
 import { ObjectLoader, Object3D, Group } from "three";
 import { Voiture } from "../voiture/voiture";
-import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
@@ -9,6 +8,8 @@ import { ErreurChargementTexture } from "../../exceptions/erreurChargementTextur
 import { PisteJeu } from "../piste/pisteJeu";
 import { ControleurVoiture } from "../controleurVoiture/controleurVoiture";
 import { IObjetEnMouvement } from "./IObjetEnMouvement";
+import { TempsJournee } from "../skybox/tempsJournee";
+import { TEMPS_JOURNEE_INITIAL } from "../constants";
 
 // AI
 export const NOMBRE_AI: number = 1;
@@ -79,6 +80,7 @@ export class GestionnaireVoitures {
         this.creerVoitureJoueur();
         this.creerVoituresAI(piste);
         this.initialisationTouches();
+        this.changerTempsJournee(TEMPS_JOURNEE_INITIAL);
     }
 
     private creerVoitureJoueur(): void {
@@ -92,9 +94,7 @@ export class GestionnaireVoitures {
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
-            .then((objet: Object3D) => {
-                this._voituresAI[i].initialiser(objet);
-            })
+            .then((objet: Object3D) => this._voituresAI[i].initialiser(objet))
             .catch(() => { throw new ErreurChargementTexture(); });
             this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
         }

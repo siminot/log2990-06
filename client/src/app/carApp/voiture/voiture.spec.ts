@@ -129,6 +129,8 @@ describe("Voiture", () => {
         car.initialiser(new Object3D());
         car.accelerer();
         car.miseAJour(MS_BETWEEN_FRAMES);
-        expect(car["boiteCollision"].getCenter()).toEqual(car.position);
+        expect(car["boiteCollision"].getCenter().x).toBeCloseTo(car.position.x);
+        expect(car["boiteCollision"].getCenter().y).toEqual(car.position.y);
+        expect(car["boiteCollision"].getCenter().z).toBeCloseTo(car.position.z);
     });
 });

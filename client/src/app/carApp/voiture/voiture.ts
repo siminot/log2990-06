@@ -97,14 +97,13 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
         this.boiteCollision = new Box3();
-        this.phares = new GroupePhares();
+        this.initialiserPhares();
     }
 
     public initialiser(texture: Object3D): void {
         this.add(texture);
         this.setRotationFromEuler(INITIAL_MODEL_ROTATION);
         this.boiteCollision.setFromObject(this);
-        this.initialiserPhares();
     }
 
     public virerGauche(): void {
@@ -173,6 +172,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     private initialiserPhares(): void {
+        this.phares = new GroupePhares();
         this.phares.initialiser();
         this.add(this.phares);
     }

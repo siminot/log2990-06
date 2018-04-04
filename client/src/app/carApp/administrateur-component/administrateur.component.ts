@@ -29,4 +29,11 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
     public creerNouvellePiste(): void {
         this.gestionnaireBD.pisteEdition = null;
     }
+
+    public supprimerToutesPistes(): void {
+        for (const piste of this.pistes) {
+            this.gestionnaireBD.supprimerPiste(piste);
+        }
+        window.location.reload();
+    }
 }

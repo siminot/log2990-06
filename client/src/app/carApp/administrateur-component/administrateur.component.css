@@ -9,16 +9,6 @@ ul, li {
     list-style-image: url('../../../assets/purple_ghost.jpg');
 }
 
-/* .editer {
-    position:absolute;
-    left: 550px;
-} */
-
-/* .supprimer {
-    position:absolute;
-    left: 650px;
-} */
-
 .pisteTitre, .pisteDescription, .titre, .creer, .piste, .editer, .supprimer, #titrePrincipal {
     font-family: 'Press Start 2P', cursive;
 }
@@ -38,6 +28,7 @@ ul, li {
     background-color: white;
     border: 2px solid rgba(0,0,0, 0.747);
 }
+
 .creer:hover, .editer:hover, .supprimer:hover {
     color: white !important;
     background-color: blue !important;

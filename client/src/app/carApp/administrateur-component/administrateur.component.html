@@ -29,15 +29,4 @@
       </mat-expansion-panel>
     </mat-accordion>
     </div>
-
-  <ul class="pistes">
-    <li *ngFor="let piste of pistes" class="piste">
-      {{piste.nom}}: {{piste.description}}
-
-      <button class="editer" title="editer" (click)="editerPiste(piste)" routerLink="/editeurPistes">Éditer</button>
-
-      <button class="supprimer" title="supprimer" (click)="supprimerPiste(piste)">Supprimer</button>
-
-    </li>
-  </ul>
 </div>

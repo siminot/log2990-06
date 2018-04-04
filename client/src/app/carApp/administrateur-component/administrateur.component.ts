@@ -26,6 +26,7 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public supprimerPiste(piste: PisteBD): void {
         this.gestionnaireBD.supprimerPiste(piste);
+        window.location.reload();
     }
 
     public creerNouvellePiste(): void {
@@ -40,6 +41,9 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
     }
 
     public ajoutPistesDeTest(): void {
-        // this.editeurPiste.creerNouvellePiste(nom, description);
+        for (let i: number = 0; i < 10; i++) {
+            this.editeurPiste.creerNouvellePiste("nom" + i, "description" + i);
+        }
+        window.location.reload();
     }
 }

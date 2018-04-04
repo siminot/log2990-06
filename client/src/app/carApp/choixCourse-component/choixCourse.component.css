@@ -50,9 +50,16 @@ ul, li {
 .piste {
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.404);
+    width: 95%;
+    left: 0px;
+    margin-bottom: 5px;
 }
 
 .pisteDescription {
     font-size: 10px;
     position:relative;
+}
+
+#listePistes {
+    margin-bottom: 50px;
 }

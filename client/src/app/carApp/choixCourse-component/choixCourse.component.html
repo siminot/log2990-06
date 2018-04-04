@@ -2,29 +2,31 @@
   <h1 id="titrePrincipal">C'est le temps de sélectionner une piste</h1>
   <h2 id="titreChoixPiste">Choix de pistes</h2>
   
-  <mat-accordion multi="false">
+  <div  id="listePistes">
+    <mat-accordion multi="false">
 
-    <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
-      
-      <mat-expansion-panel-header class="pisteTitre">
-        {{ piste.nom }}
+      <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
         
-      </mat-expansion-panel-header>
-      
-      <div class="pisteDescription">
-        {{ piste.description }}
+        <mat-expansion-panel-header class="pisteTitre">
+          {{ piste.nom }}
+          
+        </mat-expansion-panel-header>
         
-        <ul>
-          <li *ngFor="let temps of piste.tempsTours">
-            {{ temps.min }} {{ temps.sec }} {{ temps.milliSec }} par {{ temps.nom }}
-          </li>
-        </ul>
+        <div class="pisteDescription">
+          {{ piste.description }}
+          
+          <ul>
+            <li *ngFor="let temps of piste.tempsTours">
+              {{ temps.min }} {{ temps.sec }} {{ temps.milliSec }} par {{ temps.nom }}
+            </li>
+          </ul>
 
-        <button class="selection" title="choix" (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
-      </div>
+          <button class="selection" title="choix" (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
+        </div>
 
-    </mat-expansion-panel>
-  
-  </mat-accordion>
+      </mat-expansion-panel>
+    
+    </mat-accordion>
+  </div>
   
 </div>

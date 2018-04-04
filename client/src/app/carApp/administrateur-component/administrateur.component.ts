@@ -3,6 +3,7 @@ import { Subscription } from "rxjs/Subscription";
 import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
+import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
 
 @Component({
     selector: "app-admin",
@@ -14,7 +15,8 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
     public pistes: PisteBD[];
     public abonnementPistes: Subscription;
 
-    public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
+    public constructor(private editeurPiste: GestionnaireEditionPiste,
+                       @Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
       super(gestionnaireBD);
     }
 
@@ -35,5 +37,9 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
             this.gestionnaireBD.supprimerPiste(piste);
         }
         window.location.reload();
+    }
+
+    public ajoutPistesDeTest(): void {
+        // this.editeurPiste.creerNouvellePiste(nom, description);
     }
 }

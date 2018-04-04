@@ -5,30 +5,28 @@
     margin:0px;
 }
 
-.piste {
-    position: relative;
-    margin: 15px;
-    top: 0;
-    color: black;
-    font-size:10px;
-}
-
-.pistes {
+ul, li {
     list-style-image: url('../../../assets/purple_ghost.jpg');
 }
 
-.editer {
+/* .editer {
     position:absolute;
     left: 550px;
-}
+} */
 
-.supprimer {
+/* .supprimer {
     position:absolute;
     left: 650px;
+} */
+
+.pisteTitre, .pisteDescription, .titre, .creer, .piste, .editer, .supprimer, #titrePrincipal {
+    font-family: 'Press Start 2P', cursive;
 }
 
-.titre, .creer, .piste, .editer, .supprimer, #titrePrincipal {
-    font-family: 'Press Start 2P', cursive;
+#titreChoixPiste {
+    font-size: 12px;
+    margin: 10px;
+    padding: 0px;
 }
 
 .creer, .editer, .supprimer {
@@ -57,4 +55,29 @@
     margin:30px;
 }
 
+.pisteTitre {
+    font-size: 12px;
+}
+
+.piste {
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.404);
+    width: 95%;
+    left: 0px;
+    margin-bottom: 5px;
+}
+
+.pisteDescription {
+    font-size: 10px;
+    position:relative;
+}
+
+#listePistes {
+    margin-bottom: 50px;
+}
+
+.divider {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 

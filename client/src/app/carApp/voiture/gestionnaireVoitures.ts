@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { ObjectLoader, Object3D, Euler } from "three";
+import { ObjectLoader, Object3D, Euler, Vector3 } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
@@ -7,9 +7,15 @@ import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClav
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 import { PisteJeu } from "../piste/pisteJeu";
+import { PI_OVER_2 } from "../constants";
 
 // AI
 export const NOMBRE_AI: number = 1;
+const ANGLE_DROIT: Euler = new Euler(0, PI_OVER_2, 0);
+const AUTO_GAUCHE: number = -2;
+const AUTO_DROITE: number = 2;
+const AUTO_ARRIERE: number = 6;
+const POSITION_VOITURES: number[][] = [[AUTO_GAUCHE, 0], [AUTO_DROITE, 0], [AUTO_GAUCHE, AUTO_ARRIERE], [AUTO_DROITE, AUTO_ARRIERE]];
 
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
@@ -74,20 +80,29 @@ export class GestionnaireVoitures {
     private creerVoitureJoueur(piste: PisteJeu): void {
         this._voitureJoueur = new Voiture();
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
+        const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur.applyEuler(ANGLE_DROIT).normalize();
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
             .then((objet: Object3D) => this._voitureJoueur.initialiser(objet, rotation))
             .catch(() => { throw new ErreurChargementTexture(); });
-        this._voitureJoueur.position.set(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
+        const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
+        position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[0][0]));
+        position.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[0][1]));
+        this._voitureJoueur.position.set(position.x, position.y, position.z);
     }
 
     private creerVoituresAI(piste: PisteJeu): void {
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
+        const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur.applyEuler(ANGLE_DROIT).normalize();
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-            this._voituresAI[i].position.set(0, 0, -4);
+            this._voituresAI[i].position.set(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
             .then((objet: Object3D) => this._voituresAI[i].initialiser(objet, rotation))
             .catch(() => { throw new ErreurChargementTexture(); });
+            const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
+            position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[1][0]));
+            position.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[1][1]));
+            this._voituresAI[i].position.set(position.x, position.y, position.z);
         }
     }
 

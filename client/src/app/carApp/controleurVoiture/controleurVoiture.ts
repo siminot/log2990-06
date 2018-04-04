@@ -3,9 +3,9 @@ import { Point } from "../elementsGeometrie/point";
 import { IObjetEnMouvement } from "../voiture/IObjetEnMouvement";
 import { Droite } from "../elementsGeometrie/droite";
 
-const DISTANCE_MINIMALE_PROCHAIN_POINT: number = 1;
-const DISTANCE_MINIMALE_COURBE: number = 1;
-const VITESSE_MAXIMALE_COURBE: number = 50;
+const DISTANCE_MINIMALE_PROCHAIN_POINT: number = 2;
+const DISTANCE_MINIMALE_COURBE: number = 3;
+const VITESSE_MAXIMALE_COURBE: number = 25;
 
 export class ControleurVoiture implements IObjetEnMouvement {
 
@@ -21,10 +21,10 @@ export class ControleurVoiture implements IObjetEnMouvement {
 
     public miseAJour(temps: number): void {
         if (this.pointDestination !== null) {
+            this.voiture.miseAJour(temps);
             this.miseAJourPoint();
             this.ajustementDirection();
             this.ajustementVitesse();
-            this.voiture.miseAJour(temps);
         }
     }
 

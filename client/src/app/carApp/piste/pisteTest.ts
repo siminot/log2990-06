@@ -16,7 +16,7 @@ export const PISTE1: PisteBD = {
     description: "Parc au centre de la ville",
     points: PISTE_TEST,
     infos: "Cette piste est un test parmi plusieurs. Enjoy the ride.",
-    tempsTours: [{ nom: "Rick Nash", min: 0, sec: 0, milliSec: 0 }]
+    tempsTours: [{ nom: "Ken Block", min: 0, sec: 0, milliSec: 0 }]
 };
 
 export const PISTE2: PisteBD = {

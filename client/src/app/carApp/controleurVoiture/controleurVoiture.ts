@@ -66,7 +66,7 @@ export class ControleurVoiture implements IObjetEnMouvement {
     }
 
     private get voitureEstAGauche(): boolean {
-        return this.droiteVitesse.estAGaucheDe(this.droiteVersDestination);
+        return this.droiteDirection.estAGaucheDe(this.droiteVersDestination);
     }
 
     private get angleProchainVirage(): number {
@@ -78,7 +78,7 @@ export class ControleurVoiture implements IObjetEnMouvement {
     }
 
     private get pointPrecedant(): Point {
-        return this.piste[(this.indexPointCourant - 1) % this.piste.length];
+        return this.piste[(this.indexPointCourant + this.piste.length - 1) % this.piste.length];
     }
 
     private get pointSuivant(): Point {
@@ -93,12 +93,12 @@ export class ControleurVoiture implements IObjetEnMouvement {
         return new Point(this.voiture.position.x, this.voiture.position.z);
     }
 
-    private get droiteVitesse(): Droite {
-        return new Droite(this.position, this.vitesse.add(this.position));
+    private get droiteDirection(): Droite {
+        return new Droite(this.position, this.direction.add(this.position));
     }
 
-    private get vitesse(): Point {
-        return new Point(this.voiture.speed.x, this.voiture.speed.z);
+    private get direction(): Point {
+        return new Point(this.voiture.direction.x, this.voiture.direction.z);
     }
 
     private get droiteVersDestination(): Droite {
@@ -106,7 +106,7 @@ export class ControleurVoiture implements IObjetEnMouvement {
     }
 
     private get droiteAvantVirage(): Droite {
-        return new Droite(this.pointPrecedant, this.pointDestination);
+        return new Droite(this.pointDestination, this.pointPrecedant);
     }
 
     private get droiteApresVirage(): Droite {

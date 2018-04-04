@@ -37,13 +37,13 @@ export class GestionnaireEditionPiste {
     public creerNouvellePiste(nom: string, description: string): void {
         this.gestionnaireBD.creerNouvellePiste({ _id: null, nom: nom, description: description, points: this._piste.exporter(),
                                                  infos: "Informations relatives",
-                                                 tempsTours: [{ nom: "Ken Block", min: 99, sec: 99, milliSec: 99 }] });
+                                                 tempsTours: [{ nom: "Ken Block", min: 9, sec: 9, milliSec: 9 }] });
     }
 
     public mettreAJourPiste(nom: string, description: string): void {
         this.gestionnaireBD.mettreAJourPiste({ _id: null, nom: nom, description: description, points: this._piste.exporter(),
                                                infos: "Informations relatives",
-                                               tempsTours: [{ nom: "Ken Block", min: 99, sec: 99, milliSec: 99 }] });
+                                               tempsTours: [{ nom: "Ken Block", min: 9, sec: 9, milliSec: 9 }] });
     }
 
     private inscriptionSouris(): void {

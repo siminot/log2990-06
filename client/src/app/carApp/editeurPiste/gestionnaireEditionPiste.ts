@@ -36,12 +36,12 @@ export class GestionnaireEditionPiste {
 
     public creerNouvellePiste(nom: string, description: string): void {
         this.gestionnaireBD.creerNouvellePiste({ _id: null, nom: nom, description: description, points: this._piste.exporter(),
-                                                 infos: null, tempsTours: [{ nom: "", min: 0, sec: 0, milliSec: 0 }] });
+                                                 infos: null, tempsTours: null });
     }
 
     public mettreAJourPiste(nom: string, description: string): void {
         this.gestionnaireBD.mettreAJourPiste({ _id: null, nom: nom, description: description, points: this._piste.exporter(),
-                                               infos: null, tempsTours: [{ nom: "", min: 0, sec: 0, milliSec: 0 }] });
+                                               infos: null, tempsTours: null });
     }
 
     private inscriptionSouris(): void {

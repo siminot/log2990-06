@@ -22,7 +22,7 @@
           
           <ul>
             <li *ngFor="let temps of piste.tempsTours">
-              {{ temps.min | number:'2.0-0' }}:{{ temps.sec }}.{{ temps.milliSec }} par {{ temps.nom }}
+              {{ temps.min }}:{{ temps.sec | number:'2.0-0' }}.{{ temps.milliSec | number:'2.0-0' }} par {{ temps.nom }}
             </li>
           </ul>
 

@@ -16,9 +16,13 @@
         <div class="pisteDescription">
           {{ piste.description }}
           
+          <div class="divider">
+            <mat-divider></mat-divider>
+          </div>
+          
           <ul>
             <li *ngFor="let temps of piste.tempsTours">
-              {{ temps.min }}:{{ temps.sec }}.{{ temps.milliSec }} par {{ temps.nom }}
+              {{ temps.min | number:'2.0-0' }}:{{ temps.sec }}.{{ temps.milliSec }} par {{ temps.nom }}
             </li>
           </ul>
 

@@ -63,3 +63,8 @@ ul, li {
 #listePistes {
     margin-bottom: 50px;
 }
+
+.divider {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

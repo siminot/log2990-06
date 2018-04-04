@@ -43,6 +43,9 @@ import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEdit
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { MatDividerModule } from "@angular/material/divider";
+
+import { DecimalPipe } from "@angular/common";
 
 @NgModule({
     declarations: [
@@ -69,7 +72,8 @@ import { MatExpansionModule } from "@angular/material/expansion";
         AppRoutingModule,
         FormsModule,
         BrowserAnimationsModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatDividerModule
     ],
     providers: [
         ServiceDeRenduJeu,
@@ -88,7 +92,8 @@ import { MatExpansionModule } from "@angular/material/expansion";
         ServiceInteractionComponent,
         ServiceHttp,
         SocketService,
-        InfojoueurService
+        InfojoueurService,
+        DecimalPipe
     ],
     bootstrap: [AppComponent],
     exports: [

@@ -23,6 +23,7 @@ export class GestionnaireScene implements IScene {
     private _scene: Scene;
     private tempsJournee: TempsJournee;
     private clavier: UtilisateurPeripherique;
+    private piste: PisteJeu;
 
     public get voitureJoueur(): Voiture {
         return this.gestionnaireVoiture.voitureJoueur;
@@ -39,7 +40,6 @@ export class GestionnaireScene implements IScene {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
-        this.gestionnaireVoiture.initialiser();
         this.initialisationTouches();
         this.creerScene();
     }
@@ -55,10 +55,11 @@ export class GestionnaireScene implements IScene {
     }
 
     private ajouterElements(): void {
+        this.ajouterPiste();
+        this.gestionnaireVoiture.initialiser(this.piste);
         this._scene.add(this.gestionnaireSkybox.skybox);
         this._scene.add(this.gestionnaireVoiture.voitureJoueur);
         this.ajouterVoituresAI();
-        this.ajouterPiste();
     }
 
     private initialiserTempsJournee(): void {
@@ -69,6 +70,10 @@ export class GestionnaireScene implements IScene {
     private ajouterPiste(): void {
         const piste: PisteJeu = new PisteJeu();
         piste.importer(this.gestionnaireBDCourse.pointsJeu);
+        this.piste = piste;
+        // piste.position.sub(piste.zoneDeDepart);
+        // console.log(piste.rotation);
+        // piste.rotation.setFromVector3(piste.premierSegment.position);
         this._scene.add(piste);
     }
 

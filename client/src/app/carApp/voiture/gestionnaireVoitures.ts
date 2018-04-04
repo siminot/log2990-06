@@ -1,11 +1,12 @@
 import { Injectable, Inject } from "@angular/core";
-import { ObjectLoader, Object3D } from "three";
+import { ObjectLoader, Object3D, Euler } from "three";
 import { Voiture } from "../voiture/voiture";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
+import { PisteJeu } from "../piste/pisteJeu";
 
 // AI
 export const NOMBRE_AI: number = 1;
@@ -64,25 +65,28 @@ export class GestionnaireVoitures {
 
     // Creation des voitures
 
-    public initialiser(): void {
-        this.creerVoitureJoueur();
-        this.creerVoituresAI();
+    public initialiser(piste: PisteJeu): void {
+        this.creerVoitureJoueur(piste);
+        this.creerVoituresAI(piste);
         this.initialisationTouches();
     }
 
-    private creerVoitureJoueur(): void {
+    private creerVoitureJoueur(piste: PisteJeu): void {
         this._voitureJoueur = new Voiture();
+        const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
-            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
+            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet, rotation))
             .catch(() => { throw new ErreurChargementTexture(); });
+        this._voitureJoueur.position.set(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
     }
 
-    private creerVoituresAI(): void {
+    private creerVoituresAI(piste: PisteJeu): void {
+        const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
             this._voituresAI[i].position.set(0, 0, -4);
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
-            .then((objet: Object3D) => this._voituresAI[i].initialiser(objet))
+            .then((objet: Object3D) => this._voituresAI[i].initialiser(objet, rotation))
             .catch(() => { throw new ErreurChargementTexture(); });
         }
     }

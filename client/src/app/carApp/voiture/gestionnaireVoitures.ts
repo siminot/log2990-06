@@ -10,7 +10,7 @@ import { PisteJeu } from "../piste/pisteJeu";
 import { PI_OVER_2 } from "../constants";
 
 // AI
-export const NOMBRE_AI: number = 1;
+export const NOMBRE_AI: number = 3;
 const ANGLE_DROIT: Euler = new Euler(0, PI_OVER_2, 0);
 const AUTO_GAUCHE: number = -2;
 const AUTO_DROITE: number = 2;
@@ -80,7 +80,10 @@ export class GestionnaireVoitures {
     private creerVoitureJoueur(piste: PisteJeu): void {
         this._voitureJoueur = new Voiture();
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
-        const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur.applyEuler(ANGLE_DROIT).normalize();
+        const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur;
+        vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
+        console.log(piste.premierSegment.vecteur.normalize());
+        console.log(vecteurPerpendiculaire);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
             .then((objet: Object3D) => this._voitureJoueur.initialiser(objet, rotation))
             .catch(() => { throw new ErreurChargementTexture(); });
@@ -92,16 +95,17 @@ export class GestionnaireVoitures {
 
     private creerVoituresAI(piste: PisteJeu): void {
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
-        const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur.applyEuler(ANGLE_DROIT).normalize();
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
             this._voituresAI[i].position.set(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
             .then((objet: Object3D) => this._voituresAI[i].initialiser(objet, rotation))
             .catch(() => { throw new ErreurChargementTexture(); });
+            const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur;
+            vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
             const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
-            position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[1][0]));
-            position.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[1][1]));
+            position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[i + 1][0]));
+            position.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[i + 1][1]));
             this._voituresAI[i].position.set(position.x, position.y, position.z);
         }
     }

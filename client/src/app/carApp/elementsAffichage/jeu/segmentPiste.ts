@@ -69,8 +69,8 @@ export class SegmentPiste extends Group {
     }
 
     public get vecteur(): Vector3 {
-        return new Vector3(this.droite.arrivee.x - this.droite.depart.x,
-                           this.droite.arrivee.y - this.droite.depart.y, 0);
+        return new Vector3(this.droite.arrivee.x - this.droite.depart.x, 0,
+                           this.droite.arrivee.y - this.droite.depart.y);
     }
 
     private get deplacementSegment(): Vector3 {

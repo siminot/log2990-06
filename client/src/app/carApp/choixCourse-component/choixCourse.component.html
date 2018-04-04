@@ -3,7 +3,7 @@
   <h2 id="titreChoixPiste">Choix de pistes</h2>
   
   <div  id="listePistes">
-    
+
     <mat-accordion multi="false">
 
       <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
@@ -18,7 +18,7 @@
           
           <ul>
             <li *ngFor="let temps of piste.tempsTours">
-              {{ temps.min }} {{ temps.sec }} {{ temps.milliSec }} par {{ temps.nom }}
+              {{ temps.min }}:{{ temps.sec }}.{{ temps.milliSec }} par {{ temps.nom }}
             </li>
           </ul>
 

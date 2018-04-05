@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { TimerService } from "../../timer/timer.service";
 
 @Component({
   selector: "app-vue-tete-haute",
@@ -7,7 +8,9 @@ import { Component, OnInit } from "@angular/core";
 })
 export class VueTeteHauteComponent implements OnInit {
 
-  public constructor() { }
+  public constructor(private timer: TimerService) {
+    this.timer.debuterCourse();
+  }
 
   public ngOnInit(): void {
     //

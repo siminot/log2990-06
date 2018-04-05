@@ -10,6 +10,7 @@ export class TimerService {
     public constructor() {
         this.tempsDebutCourse = 0;
         this.tempsActuel = 0;
+        this.tempsDernierTour = 0;
     }
 
     public debuterCourse(): void {

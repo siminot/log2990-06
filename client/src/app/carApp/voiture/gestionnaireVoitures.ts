@@ -109,19 +109,27 @@ export class GestionnaireVoitures {
     }
 
     private positionnerVoitures(piste: PisteJeu): void {
+        const places: boolean[] = [false, false, false, false];
+        const placeJoueur: number = Math.floor(Math.random() * (NOMBRE_AI + 1));
+        places[placeJoueur] = true;
         let vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur;
         vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
         const positionJoueur: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
-        positionJoueur.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[0][0]));
-        positionJoueur.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[0][1]));
+        positionJoueur.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[placeJoueur][0]));
+        positionJoueur.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[placeJoueur][1]));
         this._voitureJoueur.position.set(positionJoueur.x, positionJoueur.y, positionJoueur.z);
 
+        let placeAI: number = 0;
         for (let i: number = 0; i < NOMBRE_AI; i++) {
+            while (places[placeAI] === true) {
+                placeAI++;
+            }
+            places[placeAI] = true;
             const positionAI: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
             vecteurPerpendiculaire = piste.premierSegment.vecteur;
             vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
-            positionAI.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[i + 1][0]));
-            positionAI.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[i + 1][1]));
+            positionAI.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[placeAI][0]));
+            positionAI.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[placeAI][1]));
             this._voituresAI[i].position.set(positionAI.x, positionAI.y, positionAI.z);
         }
     }

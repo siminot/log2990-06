@@ -16,8 +16,10 @@ export const NOMBRE_AI: number = 3;
 const ANGLE_DROIT: Euler = new Euler(0, PI_OVER_2, 0);
 const AUTO_GAUCHE: number = -2;
 const AUTO_DROITE: number = 2;
+const AUTO_AVANT: number = 0;
 const AUTO_ARRIERE: number = 6;
-const POSITION_VOITURES: number[][] = [[AUTO_GAUCHE, 0], [AUTO_DROITE, 0], [AUTO_GAUCHE, AUTO_ARRIERE], [AUTO_DROITE, AUTO_ARRIERE]];
+const POSITION_VOITURES: number[][] = [[AUTO_GAUCHE, AUTO_AVANT], [AUTO_DROITE, AUTO_AVANT],
+                                       [AUTO_GAUCHE, AUTO_ARRIERE], [AUTO_DROITE, AUTO_ARRIERE]];
 
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
@@ -84,6 +86,7 @@ export class GestionnaireVoitures {
     public initialiser(piste: PisteJeu): void {
         this.creerVoitureJoueur(piste);
         this.creerVoituresAI(piste);
+        this.positionnerVoitures(piste);
         this.initialisationTouches();
         this.changerTempsJournee(TEMPS_JOURNEE_INITIAL);
     }
@@ -91,33 +94,35 @@ export class GestionnaireVoitures {
     private creerVoitureJoueur(piste: PisteJeu): void {
         this._voitureJoueur = new Voiture();
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
-        const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur;
-        vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
-        console.log(piste.premierSegment.vecteur.normalize());
-        console.log(vecteurPerpendiculaire);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
-        const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
-        position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[0][0]));
-        position.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[0][1]));
-        this._voitureJoueur.position.set(position.x, position.y, position.z);
     }
 
     private creerVoituresAI(piste: PisteJeu): void {
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-/*             this._voituresAI[i].position.set(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
-            this._voituresAI.push(new Voiture()); */
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI], this._voituresAI[i], rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
             this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
-            const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur;
+        }
+    }
+
+    private positionnerVoitures(piste: PisteJeu): void {
+        let vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur;
+        vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
+        const positionJoueur: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
+        positionJoueur.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[0][0]));
+        positionJoueur.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[0][1]));
+        this._voitureJoueur.position.set(positionJoueur.x, positionJoueur.y, positionJoueur.z);
+
+        for (let i: number = 0; i < NOMBRE_AI; i++) {
+            const positionAI: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
+            vecteurPerpendiculaire = piste.premierSegment.vecteur;
             vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
-            const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
-            position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[i + 1][0]));
-            position.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[i + 1][1]));
-            this._voituresAI[i].position.set(position.x, position.y, position.z);
+            positionAI.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[i + 1][0]));
+            positionAI.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[i + 1][1]));
+            this._voituresAI[i].position.set(positionAI.x, positionAI.y, positionAI.z);
         }
     }
 

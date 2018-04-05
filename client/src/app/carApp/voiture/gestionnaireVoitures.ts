@@ -1,13 +1,15 @@
 import { Injectable, Inject } from "@angular/core";
-import { ObjectLoader, Object3D, Euler, Vector3 } from "three";
+import { ObjectLoader, Object3D, Euler, Vector3, Group, LoadingManager } from "three";
 import { Voiture } from "../voiture/voiture";
-import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 import { PisteJeu } from "../piste/pisteJeu";
-import { PI_OVER_2 } from "../constants";
+import { PI_OVER_2, TEMPS_JOURNEE_INITIAL } from "../constants";
+import { ControleurVoiture } from "../controleurVoiture/controleurVoiture";
+import { IObjetEnMouvement } from "./IObjetEnMouvement";
+import { TempsJournee } from "../skybox/tempsJournee";
 
 // AI
 export const NOMBRE_AI: number = 3;
@@ -42,18 +44,26 @@ export class GestionnaireVoitures {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
+    private controleursAI: ControleurVoiture[];
     private clavier: UtilisateurPeripherique;
 
     public get voitureJoueur(): Voiture {
         return this._voitureJoueur;
     }
 
-    public get voituresAI(): Voiture[] {
-        return this._voituresAI;
+    public get voituresAI(): Group {
+        const groupe: Group = new Group();
+
+        for (const voiture of this._voituresAI) {
+            groupe.add(voiture);
+        }
+
+        return groupe;
     }
 
     public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._voituresAI = [];
+        this.controleursAI = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
     }
 
@@ -75,6 +85,7 @@ export class GestionnaireVoitures {
         this.creerVoitureJoueur(piste);
         this.creerVoituresAI(piste);
         this.initialisationTouches();
+        this.changerTempsJournee(TEMPS_JOURNEE_INITIAL);
     }
 
     private creerVoitureJoueur(piste: PisteJeu): void {
@@ -84,8 +95,7 @@ export class GestionnaireVoitures {
         vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
         console.log(piste.premierSegment.vecteur.normalize());
         console.log(vecteurPerpendiculaire);
-        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
-            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet, rotation))
+        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
         const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
         position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[0][0]));
@@ -97,10 +107,11 @@ export class GestionnaireVoitures {
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-            this._voituresAI[i].position.set(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
-            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI])
-            .then((objet: Object3D) => this._voituresAI[i].initialiser(objet, rotation))
+/*             this._voituresAI[i].position.set(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
+            this._voituresAI.push(new Voiture()); */
+            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI], this._voituresAI[i], rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
+            this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
             const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur;
             vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
             const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
@@ -110,22 +121,19 @@ export class GestionnaireVoitures {
         }
     }
 
-    private async chargerTexture(URL_TEXTURE: string): Promise<Object3D> {
-        return new Promise<Object3D>((resolve, reject) => {
-            const loader: ObjectLoader = new ObjectLoader();
-            loader.load(CHEMIN_TEXTURE + URL_TEXTURE, (object) => {
-                resolve(object);
-            });
-        });
+    private async chargerTexture(URL_TEXTURE: string, voiture: Voiture, rotation: Euler): Promise<Object3D> {
+        return new Promise<Object3D>((resolve) => {
+                    new ObjectLoader(new LoadingManager()).load(
+                        CHEMIN_TEXTURE + URL_TEXTURE,
+                        (object) => voiture.initialiser(object, rotation));
+               });
     }
 
     // Changements affectant les voitures
 
     public miseAJourVoitures(tempsDepuisDerniereTrame: number): void {
-        this.voitureJoueur.update(tempsDepuisDerniereTrame);
-
-        for (const voiture of this._voituresAI) {
-            voiture.update(tempsDepuisDerniereTrame);
+        for (const voiture of this.voituresEnMouvement) {
+            voiture.miseAJour(tempsDepuisDerniereTrame);
         }
     }
 
@@ -149,5 +157,9 @@ export class GestionnaireVoitures {
 
     public get voitures(): Voiture[] {
         return this._voituresAI.concat([this._voitureJoueur]);
+    }
+
+    public get voituresEnMouvement(): IObjetEnMouvement[] {
+        return (this.controleursAI as IObjetEnMouvement[]).concat([this._voitureJoueur]);
     }
 }

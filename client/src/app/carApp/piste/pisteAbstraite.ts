@@ -26,6 +26,16 @@ export abstract class PisteAbstraite extends Group {
     public abstract importer(piste: Point[]): void;
     public abstract ajouterPoint(point: IPoint): void;
 
+    public exporter(): Point[] {
+        const points: Point[] = [];
+
+        for (const intersection of this.intersections) {
+            points.push(intersection.point);
+        }
+
+        return points;
+    }
+
     protected get premiereIntersection(): IPoint {
         return this.contientPoints
             ? this.intersections[0]

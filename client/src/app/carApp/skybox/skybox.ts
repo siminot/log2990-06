@@ -5,8 +5,7 @@ import {
 } from "three";
 import { RAD_TO_DEG } from "../constants";
 import { ElementsInitialisationSkybox } from "./gestionnaireSkybox";
-
-export enum TempsJournee { Jour, Nuit }
+import { TempsJournee } from "./tempsJournee";
 
 // Paysage
 export const TAILLE_SKYBOX: number = 8192;

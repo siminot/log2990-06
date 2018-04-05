@@ -109,16 +109,6 @@ export class PisteEdition extends PisteAbstraite {
         }
     }
 
-    public exporter(): Point[] {
-        const points: Point[] = [];
-
-        for (const intersection of this.intersections) {
-            points.push(intersection.point);
-        }
-
-        return points;
-    }
-
     public ajouterPoint(point: Point): void {
         if (this.estBoucle) {
             return;

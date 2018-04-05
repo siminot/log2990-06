@@ -17,13 +17,16 @@ export class VueTeteHauteComponent implements OnInit {
     private tempsActuel: number;
     private tempsCourseMin: string;
     private tempsCourseSec: string;
-    private tempsCourseMil: string;
+    private tempsCourseMS: string;
+
+    private tempsTours: Array<string>;
 
     public constructor(private timer: TimerService) {
         this.tempsActuel = 0;
-        this.tempsCourseMin = "00";
-        this.tempsCourseSec = "00";
-        this.tempsCourseMil = "00";
+        this.tempsCourseMin = "--";
+        this.tempsCourseSec = "--";
+        this.tempsCourseMS = "--";
+        this.tempsTours = new Array<string>();
     }
 
     public ngOnInit(): void {
@@ -34,25 +37,31 @@ export class VueTeteHauteComponent implements OnInit {
     private updateTempsCourse(): void {
         setInterval(() => {
             this.tempsActuel = this.timer.obtenirTempsActuel;
-            this.formaterTempsMinute();
-            this.formaterTempsSec();
-            this.formaterTempsMilSec();
+            this.tempsCourseMin = this.formaterTempsMinute(this.tempsActuel);
+            this.tempsCourseSec = this.formaterTempsSec(this.tempsActuel);
+            this.tempsCourseMS = this.formaterTempsMilSec(this.tempsActuel);
         },          TAUX_REFRESH);
     }
 
-    private formaterTempsMinute(): void {
-        this.tempsCourseMin = "" + Math.floor(this.tempsActuel / MILSEC_PAR_MIN);
-        this.tempsCourseMin = this.ajouterZero(this.tempsCourseMin);
+    private formaterTempsMinute(temps: number): string {
+        let tempsMin: string = "" + Math.floor(temps / MILSEC_PAR_MIN);
+        tempsMin = this.ajouterZero(tempsMin);
+
+        return tempsMin;
     }
 
-    private formaterTempsSec(): void {
-        this.tempsCourseSec = "" + Math.floor(this.tempsActuel / MILSEC_PAR_SEC) % SEC_PAR_MIN;
-        this.tempsCourseSec = this.ajouterZero(this.tempsCourseSec);
+    private formaterTempsSec(temps: number): string {
+        let tempsSec: string = "" + Math.floor(temps / MILSEC_PAR_SEC) % SEC_PAR_MIN;
+        tempsSec = this.ajouterZero(tempsSec);
+
+        return tempsSec;
     }
 
-    private formaterTempsMilSec(): void {
-        this.tempsCourseMil = "" + Math.floor((this.tempsActuel % MILSEC_PAR_SEC) / DIVISEUR_POUR_DEUX_DECIMALS);
-        this.tempsCourseMil = this.ajouterZero(this.tempsCourseMil);
+    private formaterTempsMilSec(temps: number): string {
+        let tempsMS: string = "" + Math.floor((temps % MILSEC_PAR_SEC) / DIVISEUR_POUR_DEUX_DECIMALS);
+        tempsMS = this.ajouterZero(tempsMS);
+
+        return tempsMS;
     }
 
     private ajouterZero(temps: string): string {

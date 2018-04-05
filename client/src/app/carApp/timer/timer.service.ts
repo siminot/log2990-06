@@ -21,7 +21,7 @@ export class TimerService {
     private partirTimer(): void {
         setInterval(() => {
             this.tempsActuel = new Date().getTime() - this.tempsDebutCourse;
-        },          10);
+        },          1);
     }
 
     private actualisationTempsTour(): void {

@@ -29,17 +29,19 @@ export class VueTeteHauteComponent implements OnInit {
         this.tempsTours = new Array<string>();
     }
 
-    public ngOnInit(): void {
+    public debuterCourse(): void {
         this.timer.debuterCourse(); // lancer quand la course commence (a retirer)
         this.updateTempsCourse();
     }
+
+    public ngOnInit(): void {}
 
     private updateTempsCourse(): void {
         setInterval(() => {
             this.tempsActuel = this.timer.obtenirTempsActuel;
             this.tempsCourseMin = this.formaterTempsMinute(this.tempsActuel);
             this.tempsCourseSec = this.formaterTempsSec(this.tempsActuel);
-            this.tempsCourseMS = this.formaterTempsMilSec(this.tempsActuel);
+            this.tempsCourseMS = this.formaterTempsMS(this.tempsActuel);
         },          TAUX_REFRESH);
     }
 
@@ -57,7 +59,7 @@ export class VueTeteHauteComponent implements OnInit {
         return tempsSec;
     }
 
-    private formaterTempsMilSec(temps: number): string {
+    private formaterTempsMS(temps: number): string {
         let tempsMS: string = "" + Math.floor((temps % MILSEC_PAR_SEC) / DIVISEUR_POUR_DEUX_DECIMALS);
         tempsMS = this.ajouterZero(tempsMS);
 

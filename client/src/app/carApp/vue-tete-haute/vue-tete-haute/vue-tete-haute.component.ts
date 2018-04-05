@@ -56,7 +56,7 @@ export class VueTeteHauteComponent implements OnInit {
     }
 
     private ajouterZero(temps: string): string {
-        if (temps.length < 2) {
+        if (temps.length === 1) {
             temps = "0" + temps;
         }
 

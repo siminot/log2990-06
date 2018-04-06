@@ -69,9 +69,14 @@ export class BaseDonneesCourse {
             for (const document of res) {
                 pistes.push(document.toObject());
             }
-        }).catch( () => { throw new ErreurRechercheBaseDonnees; } );
+        }).catch( () => { throw new ErreurRechercheBaseDonnees; });
 
         return pistes;
+    }
+
+    private async obtenirUnePiste(identifiant: string): Promise<void> {
+        this.modelPiste.findById(identifiant).exec()
+            .catch(() => { throw new ErreurRechercheBaseDonnees; });
     }
 
     public async requeteDePistes(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -80,6 +85,8 @@ export class BaseDonneesCourse {
         });
         res.send(await this.obtenirPistes());
     }
+
+
 
     public async requeteAjoutDUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
         this.assurerConnection().catch(() => {

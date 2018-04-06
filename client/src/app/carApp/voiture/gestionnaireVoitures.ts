@@ -94,7 +94,6 @@ export class GestionnaireVoitures {
     private creerVoitureJoueur(piste: PisteJeu): void {
         this._voitureJoueur = new Voiture();
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
-        console.log(rotation);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
     }
@@ -110,7 +109,7 @@ export class GestionnaireVoitures {
     }
 
     private positionnerVoitures(piste: PisteJeu): void {
-        const places: boolean[] = [false, false, false, false];
+        /* const places: boolean[] = [false, false, false, false];
         const placeJoueur: number = Math.floor(Math.random() * (NOMBRE_AI + 1));
         places[placeJoueur] = true;
         let vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur;
@@ -118,20 +117,22 @@ export class GestionnaireVoitures {
         const positionJoueur: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
         positionJoueur.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[placeJoueur][0]));
         positionJoueur.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[placeJoueur][1]));
-        this._voitureJoueur.position.set(positionJoueur.x, positionJoueur.y, positionJoueur.z);
+        this._voitureJoueur.position.set(positionJoueur.x, positionJoueur.y, positionJoueur.z); */
 
-        let placeAI: number = 0;
-        for (let i: number = 0; i < NOMBRE_AI; i++) {
-            while (places[placeAI] === true) {
-                placeAI++;
-            }
-            places[placeAI] = true;
-            const positionAI: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
-            vecteurPerpendiculaire = piste.premierSegment.vecteur;
+        // const place: number = 0;
+        let place: number = Math.floor(Math.random() * (NOMBRE_AI + 1));
+
+        for (let i: number = 0; i < NOMBRE_AI + 1; i++) {
+            // places[place] = true;
+            const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
+            const vecteurPerpendiculaire: Vector3 = piste.premierSegment.vecteur;
             vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
-            positionAI.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[placeAI][0]));
-            positionAI.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[placeAI][1]));
-            this._voituresAI[i].position.set(positionAI.x, positionAI.y, positionAI.z);
+            position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[place][0]));
+            position.add(piste.premierSegment.vecteur.normalize().multiplyScalar(POSITION_VOITURES[place][1]));
+            this.voitures[i].position.set(position.x, position.y, position.z);
+            place === this.voitures.length - 1
+                ? place = 0
+                : place++;
         }
     }
 

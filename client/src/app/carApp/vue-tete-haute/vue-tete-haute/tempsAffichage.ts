@@ -9,14 +9,17 @@ export class TempsAffichage {
     private minutes: string;
     private secondes: string;
     private milliseconde: string;
+    private temps: number;
 
     public constructor() {
+        this.temps = 0;
         this.minutes = "--";
         this.secondes = "--";
         this.milliseconde = "--";
     }
 
     public set tempsAffichable(temps: number) {
+        this.temps = temps;
         this.minutes = this.formaterTempsMinute(temps);
         this.secondes = this.formaterTempsSec(temps);
         this.milliseconde = this.formaterTempsMS(temps);
@@ -24,6 +27,10 @@ export class TempsAffichage {
 
     public get tempsFormate(): string {
         return this.minutes + " : " + this.secondes + " : " + this.milliseconde;
+    }
+
+    public get obtenirTemps(): number {
+        return this.temps;
     }
 
     private ajouterZero(temps: string): string {

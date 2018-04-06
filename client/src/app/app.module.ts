@@ -41,6 +41,12 @@ import { SocketService } from "./crosswords/service-socket/service-socket";
 import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse";
 import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
 
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatDividerModule } from "@angular/material/divider";
+
+import { DecimalPipe } from "@angular/common";
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -64,7 +70,10 @@ import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEdit
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        BrowserAnimationsModule,
+        MatExpansionModule,
+        MatDividerModule
     ],
     providers: [
         ServiceDeRenduJeu,
@@ -83,7 +92,8 @@ import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEdit
         ServiceInteractionComponent,
         ServiceHttp,
         SocketService,
-        InfojoueurService
+        InfojoueurService,
+        DecimalPipe
     ],
     bootstrap: [AppComponent],
     exports: [

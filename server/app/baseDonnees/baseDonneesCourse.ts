@@ -22,6 +22,8 @@ export class BaseDonneesCourse {
             nom: String,
             description: String,
             points: [{ x: Number, y: Number }],
+            infos: String,
+            tempsTours: [{ nom: String, min: Number, sec: Number, milliSec: Number }]
         });
         this.modelPiste = this.mongoose.model("pistes", this.schemaPiste);
     }
@@ -46,10 +48,11 @@ export class BaseDonneesCourse {
     }
 
     private async modifierUnePiste(identifiant: string, piste: PisteBD): Promise<void> {
-        this.modelPiste.findByIdAndUpdate(identifiant, {nom: piste.nom, description: piste.description, points: piste.points})
-        .exec().catch( () => {
-            throw new ErreurModificationBaseDonnees;
-        });
+        this.modelPiste.findByIdAndUpdate(identifiant, { nom: piste.nom, description: piste.description, points: piste.points,
+                                                         infos: piste.infos, tempsTour: piste.tempsTours })
+            .exec().catch( () => {
+                throw new ErreurModificationBaseDonnees;
+            });
     }
 
     private async supprimerUnePiste(identifiant: string): Promise<void> {

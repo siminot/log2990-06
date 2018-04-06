@@ -36,11 +36,9 @@ export class PisteJeu extends PisteAbstraite {
         piste.splice(0, 1);
         piste.push(premierPoint);
 
-        if (!this.estSensHoraire) {
-            piste.reverse();
-        }
-
-        return piste;
+        return this.estSensHoraire()
+            ? piste.reverse()
+            : piste;
     }
 
     public ajouterPoint(point: Point): void {

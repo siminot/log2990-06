@@ -67,8 +67,8 @@ export class GestionnaireBDCourse {
         return this.pistesSujet.asObservable();
     }
 
-    public supprimerPiste(piste: PisteBD): void {
-        this.http.delete(URL_SUPPRIMER_PISTE + piste._id).subscribe();
+    public async supprimerPiste(piste: PisteBD): Promise<void> {
+        await this.http.delete(URL_SUPPRIMER_PISTE + piste._id).subscribe();
     }
 
     public creerNouvellePiste(piste: PisteBD): void {

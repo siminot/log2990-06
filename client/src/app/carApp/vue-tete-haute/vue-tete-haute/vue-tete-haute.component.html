@@ -1,13 +1,18 @@
-<p>
-  {{tempsCourse.tempsFormate}}
-</p>
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+<div>
+  <p>Temps Course</p>
+  <p>
+    {{tempsCourse.tempsFormate}}
+  </p>
 
-<p *ngIf="numTour < 3; else partieTerminee">Tour # {{numTour}} / 3</p>
+  <p *ngIf="numTour < 3; else partieTerminee">Tour # {{numTour}} / 3</p>
 
-<ng-template #partieTerminee>Tour # 3 / 3</ng-template>
+  <ng-template #partieTerminee>Tour # 3 / 3</ng-template>
 
-<ul>
-  <li *ngFor="let tempsTour of this.tempsTours" >
+  <ul>
+    <li *ngFor="let tempsTour of this.tempsTours">
       {{tempsTour.tempsFormate}}
-  </li>
-</ul>
+    </li>
+  </ul>
+
+</div>

@@ -65,18 +65,23 @@ export class BaseDonneesCourse {
     private async obtenirPistes(): Promise<PisteBD[]> {
         const pistes: PisteBD[] = [];
         await this.modelPiste.find()
-        .then((res: Document[]) => {
-            for (const document of res) {
-                pistes.push(document.toObject());
-            }
-        }).catch( () => { throw new ErreurRechercheBaseDonnees; });
+            .then((res: Document[]) => {
+                for (const document of res) {
+                    pistes.push(document.toObject());
+                }
+            })
+            .catch( () => { throw new ErreurRechercheBaseDonnees; });
 
         return pistes;
     }
 
-    private async obtenirUnePiste(identifiant: string): Promise<void> {
-        this.modelPiste.findById(identifiant).exec()
+    private async obtenirUnePiste(identifiant: string): Promise<PisteBD> {
+        let piste: PisteBD = null;
+        await this.modelPiste.findById(identifiant)
+            .then((res: Document) => { piste = res.toObject(); })
             .catch(() => { throw new ErreurRechercheBaseDonnees; });
+
+        return piste;
     }
 
     public async requeteDePistes(req: Request, res: Response, next: NextFunction): Promise<void> {

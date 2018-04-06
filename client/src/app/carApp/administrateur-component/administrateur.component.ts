@@ -15,8 +15,7 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
     public pistes: PisteBD[];
     public abonnementPistes: Subscription;
 
-    public constructor(private editeurPiste: GestionnaireEditionPiste,
-                       @Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
+    public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
       super(gestionnaireBD);
     }
 
@@ -36,13 +35,6 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
     public supprimerToutesPistes(): void {
         for (const piste of this.pistes) {
             this.gestionnaireBD.supprimerPiste(piste);
-        }
-        window.location.reload();
-    }
-
-    public ajoutPistesDeTest(): void {
-        for (let i: number = 0; i < 10; i++) {
-            this.editeurPiste.creerNouvellePiste("nom" + i, "description" + i);
         }
         window.location.reload();
     }

@@ -46,6 +46,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDividerModule } from "@angular/material/divider";
 
 import { DecimalPipe } from "@angular/common";
+import { ResultatsFinCourseComponent } from './carApp/resultats-fin-course/resultats-fin-course.component';
 
 @NgModule({
     declarations: [
@@ -64,7 +65,8 @@ import { DecimalPipe } from "@angular/common";
         GrilleMultijoueurComponent,
         InfoPartieMultijoueurComponent,
         FinPartieSoloComponent,
-        MainGrilleMultiComponent
+        MainGrilleMultiComponent,
+        ResultatsFinCourseComponent
     ],
     imports: [
         BrowserModule,

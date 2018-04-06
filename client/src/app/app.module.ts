@@ -40,6 +40,8 @@ import { MainGrilleMultiComponent } from "./crosswords/main-grille-multi/main-gr
 import { SocketService } from "./crosswords/service-socket/service-socket";
 import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse";
 import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
+import { VueTeteHauteComponent } from "./carApp/vue-tete-haute/vue-tete-haute/vue-tete-haute.component";
+import { TimerService } from "./carApp/timer/timer.service";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
@@ -66,7 +68,8 @@ import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
         InfoPartieMultijoueurComponent,
         FinPartieSoloComponent,
         MainGrilleMultiComponent,
-        FinCourseComponent
+        FinCourseComponent,
+        VueTeteHauteComponent
     ],
     imports: [
         BrowserModule,
@@ -94,8 +97,7 @@ import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
         ServiceInteractionComponent,
         ServiceHttp,
         SocketService,
-        InfojoueurService,
-        DecimalPipe
+        InfojoueurService
     ],
     bootstrap: [AppComponent],
     exports: [

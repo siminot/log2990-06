@@ -3,9 +3,12 @@ import { Point } from "../elementsGeometrie/point";
 import { IObjetEnMouvement } from "../voiture/IObjetEnMouvement";
 import { Droite } from "../elementsGeometrie/droite";
 
-const DISTANCE_MINIMALE_PROCHAIN_POINT: number = 2;
-const DISTANCE_MINIMALE_COURBE: number = 3;
+const DISTANCE_MINIMALE_PROCHAIN_POINT: number = 4;
+const DISTANCE_MINIMALE_COURBE: number = 5;
+const VITESSE_MINIMALE: number = 40;
 const VITESSE_MAXIMALE_COURBE: number = 25;
+const DEUX: number = 2;
+const ANGLE_VIRAGE_SERRE: number = Math.PI / DEUX;
 
 export class ControleurVoiture implements IObjetEnMouvement {
 
@@ -46,15 +49,26 @@ export class ControleurVoiture implements IObjetEnMouvement {
         if (this.doitDecelererAvantCourbe) {
             this.voiture.relacherAccelerateur();
             this.voiture.freiner();
-        } else {
+        } else if (this.doitAccelerer) {
             this.voiture.relacherFreins();
             this.voiture.accelerer();
+        } else {
+            this.voiture.relacherAccelerateur();
         }
+    }
+
+    private get doitAccelerer(): boolean {
+        return this.voiture.speed.length() < VITESSE_MINIMALE;
     }
 
     private get doitDecelererAvantCourbe(): boolean {
         return this.distanceAvecDestination < DISTANCE_MINIMALE_COURBE &&
-               this.voiture.speed.length() > VITESSE_MAXIMALE_COURBE;
+               this.voiture.speed.length() > VITESSE_MAXIMALE_COURBE &&
+               this.virageEstSerre;
+    }
+
+    private get virageEstSerre(): boolean {
+        return this.angleProchainVirage < ANGLE_VIRAGE_SERRE;
     }
 
     private get pointDestinationAtteint(): boolean {

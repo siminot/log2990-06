@@ -18,9 +18,10 @@ export class ResultatsFinCourseComponent implements OnInit {
 
     public unePiste: PisteBD = { _id: "1a", nom: "Une piste", description: "Une description",
                                  points: null, infos: "Hello",
-                                 tempsTours: [{ nom: "Ken Block", min: 0, sec: 0, milliSec: 0}]};
+                                 tempsTours: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0}]};
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse) {
+
     }
 
     public ngOnInit(): void {

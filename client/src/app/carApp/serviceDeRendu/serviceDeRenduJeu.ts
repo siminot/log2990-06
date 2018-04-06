@@ -13,8 +13,6 @@ export class ServiceDeRenduJeu extends ServiceDeRenduAbstrait {
         super(gestionnaireEcran, gestionnaireCamera, gestionnaireScene);
     }
 
-    // Rendu
-
     protected miseAJour(): void {
         this.gestionnaireScene.miseAJour(Date.now() - this.tempsDerniereMiseAJour);
         this.tempsDerniereMiseAJour = Date.now();

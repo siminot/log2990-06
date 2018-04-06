@@ -86,7 +86,10 @@ export class BaseDonneesCourse {
         res.send(await this.obtenirPistes());
     }
 
-
+    public async requeteUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+        this.assurerConnection().catch(() => { throw new ErreurConnectionBD(); });
+        res.send(await this.obtenirUnePiste(req.params.id));
+    }
 
     public async requeteAjoutDUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
         this.assurerConnection().catch(() => {

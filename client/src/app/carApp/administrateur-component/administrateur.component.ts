@@ -3,7 +3,6 @@ import { Subscription } from "rxjs/Subscription";
 import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
-import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
 
 @Component({
     selector: "app-admin",

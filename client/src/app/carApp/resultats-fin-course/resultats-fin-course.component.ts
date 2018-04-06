@@ -5,11 +5,12 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./resultats-fin-course.component.html",
   styleUrls: ["./resultats-fin-course.component.css"]
 })
+
 export class ResultatsFinCourseComponent implements OnInit {
 
-  constructor() { }
+  public constructor() { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }

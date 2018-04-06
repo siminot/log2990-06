@@ -3,10 +3,11 @@ import { Point } from "../elementsGeometrie/point";
 import { IObjetEnMouvement } from "../voiture/IObjetEnMouvement";
 import { Droite } from "../elementsGeometrie/droite";
 
-const DISTANCE_MINIMALE_PROCHAIN_POINT: number = 4;
-const DISTANCE_MINIMALE_COURBE: number = 5;
-const VITESSE_MINIMALE: number = 40;
-const VITESSE_MAXIMALE_COURBE: number = 25;
+const DISTANCE_MINIMALE_PROCHAIN_POINT: number = 10;
+const DISTANCE_MINIMALE_COURBE: number = 25;
+const VITESSE_MINIMALE: number = 20;
+const VITESSE_MAXIMALE: number = 40;
+const VITESSE_MAXIMALE_COURBE: number = 6;
 const DEUX: number = 2;
 const ANGLE_VIRAGE_SERRE: number = Math.PI / DEUX;
 
@@ -46,7 +47,7 @@ export class ControleurVoiture implements IObjetEnMouvement {
     }
 
     private ajustementVitesse(): void {
-        if (this.doitDecelererAvantCourbe) {
+        if (this.doitDecelererAvantCourbe || this.doitDecelerer) {
             this.voiture.relacherAccelerateur();
             this.voiture.freiner();
         } else if (this.doitAccelerer) {
@@ -59,6 +60,10 @@ export class ControleurVoiture implements IObjetEnMouvement {
 
     private get doitAccelerer(): boolean {
         return this.voiture.speed.length() < VITESSE_MINIMALE;
+    }
+
+    private get doitDecelerer(): boolean {
+        return this.voiture.speed.length() > VITESSE_MAXIMALE;
     }
 
     private get doitDecelererAvantCourbe(): boolean {

@@ -30,6 +30,19 @@ export class PisteJeu extends PisteAbstraite {
         }
     }
 
+    public exporter(): Point[] {
+        const piste: Point[] = super.exporter();
+        const premierPoint: Point = piste[0];
+        piste.splice(0, 1);
+        piste.push(premierPoint);
+
+        if (!this.estSensHoraire) {
+            piste.reverse();
+        }
+
+        return piste;
+    }
+
     public ajouterPoint(point: Point): void {
         this.intersections.push(point);
 

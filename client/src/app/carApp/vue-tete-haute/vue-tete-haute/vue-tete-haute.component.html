@@ -1,27 +1,13 @@
 <p>
-  {{tempsCourseMin}} : {{tempsCourseSec}} : {{tempsCourseMS}}
+  {{tempsCourse.tempsFormate}}
 </p>
 
-<ul *ngIf="tempsTours.length; else elseblock"> 
-  <p>Temps tours</p>
-  <li *ngFor="let tempsTour of tempsTours">
-    <p># {{tempsTours.indexOf(tempsTour) + 1}} {{tempsTour}}</p>
+<p *ngIf="numTour < 3; else partieTerminee">Tour # {{numTour}} / 3</p>
+
+<ng-template #partieTerminee>Tour # 3 / 3</ng-template>
+
+<ul>
+  <li *ngFor="let tempsTour of this.tempsTours" >
+      {{tempsTour.tempsFormate}}
   </li>
 </ul>
-
-<ng-template #elseblock>
-  <p>Temps tours</p>
-  <p>
-    --/--/--
-  </p>
-</ng-template>
-
-<p *ngIf="tempsTours.length < 3; else partieTerminee">
-  Tour # {{tempsTours.length + 1}} / 3
-</p>
-
-<ng-template #partieTerminee>
-  <p>
-    Tour # 3 / 3
-  </p>      
-</ng-template>

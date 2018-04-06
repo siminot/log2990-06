@@ -1,11 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { TimerService } from "../../timer/timer.service";
+import { TempsAffichage } from "./tempsAffichage";
 
-const MILSEC_PAR_MIN: number = 60000;
-const MILSEC_PAR_SEC: number = 1000;
-const SEC_PAR_MIN: number = 60;
 const TAUX_REFRESH: number = 20;
-const DIVISEUR_POUR_DEUX_DECIMALS: number = 10;
+const NBR_TOURS: number = 3;
 
 @Component({
     selector: "app-vue-tete-haute",
@@ -15,62 +13,49 @@ const DIVISEUR_POUR_DEUX_DECIMALS: number = 10;
 export class VueTeteHauteComponent implements OnInit {
 
     private tempsActuel: number;
-    private tempsCourseMin: string;
-    private tempsCourseSec: string;
-    private tempsCourseMS: string;
-
-    private tempsTours: Array<string>;
+    private tempsCourse: TempsAffichage;
+    private tempsTours: Array<TempsAffichage>;
+    private numTour: number;
 
     public constructor(private timer: TimerService) {
         this.tempsActuel = 0;
-        this.tempsCourseMin = "--";
-        this.tempsCourseSec = "--";
-        this.tempsCourseMS = "--";
-        this.tempsTours = new Array<string>();
+        this.numTour = 1;
+        this.tempsCourse = new TempsAffichage();
+        this.tempsTours = new Array<TempsAffichage>();
+        for (let i: number = 0; i < NBR_TOURS; i++) {
+            this.tempsTours.push(new TempsAffichage);
+        }
     }
 
     public debuterCourse(): void {
         this.timer.debuterCourse(); // lancer quand la course commence (a retirer)
         this.updateTempsCourse();
+        this.foo();
     }
 
-    public ngOnInit(): void {}
+    public ngOnInit(): void {
+        this.debuterCourse();
+    }
 
     private updateTempsCourse(): void {
         setInterval(() => {
             this.tempsActuel = this.timer.obtenirTempsActuel;
-            this.tempsCourseMin = this.formaterTempsMinute(this.tempsActuel);
-            this.tempsCourseSec = this.formaterTempsSec(this.tempsActuel);
-            this.tempsCourseMS = this.formaterTempsMS(this.tempsActuel);
+            this.tempsCourse.tempsAffichable = this.tempsActuel;
+            if ( this.numTour <= NBR_TOURS) {
+                this.tempsTours[this.numTour - 1].tempsAffichable = this.timer.obtenirTempsTour;
+            }
         },          TAUX_REFRESH);
     }
 
-    private formaterTempsMinute(temps: number): string {
-        let tempsMin: string = "" + Math.floor(temps / MILSEC_PAR_MIN);
-        tempsMin = this.ajouterZero(tempsMin);
-
-        return tempsMin;
-    }
-
-    private formaterTempsSec(temps: number): string {
-        let tempsSec: string = "" + Math.floor(temps / MILSEC_PAR_SEC) % SEC_PAR_MIN;
-        tempsSec = this.ajouterZero(tempsSec);
-
-        return tempsSec;
-    }
-
-    private formaterTempsMS(temps: number): string {
-        let tempsMS: string = "" + Math.floor((temps % MILSEC_PAR_SEC) / DIVISEUR_POUR_DEUX_DECIMALS);
-        tempsMS = this.ajouterZero(tempsMS);
-
-        return tempsMS;
-    }
-
-    private ajouterZero(temps: string): string {
-        if (temps.length === 1) {
-            temps = "0" + temps;
+    private nouveauTour(): void {
+        if (this.numTour <= NBR_TOURS) {
+            this.tempsTours[this.numTour++ - 1].tempsAffichable = this.timer.nouveauTour;
         }
+    }
 
-        return temps;
+    private foo(): void { // fonction seulement pour essayer des  choses
+        setInterval(() => {
+            this.nouveauTour();
+        },         5000);
     }
 }

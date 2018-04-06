@@ -4,38 +4,48 @@ import { Injectable } from "@angular/core";
 export class TimerService {
 
     private tempsDebutCourse: number;
+    private tempsDebutTour: number;
     private tempsActuel: number;
-    private tempsDernierTour: number;
+    private tempsTour: number;
 
     public constructor() {
         this.tempsDebutCourse = 0;
+        this.tempsDebutTour = 0;
         this.tempsActuel = 0;
-        this.tempsDernierTour = 0;
+        this.tempsTour = 0;
     }
 
     public debuterCourse(): void {
         this.tempsDebutCourse = new Date().getTime();
+        this.tempsDebutTour = new Date().getTime();
         this.partirTimer();
     }
 
     private partirTimer(): void {
         setInterval(() => {
             this.tempsActuel = new Date().getTime() - this.tempsDebutCourse;
+            this.tempsTour = new Date().getTime() - this.tempsDebutTour;
         },          1);
     }
 
     private actualisationTempsTour(): void {
-        this.tempsDernierTour = this.tempsDernierTour - this.tempsActuel;
+        this.tempsDebutTour = new Date().getTime();
+        this.tempsTour = 0;
     }
 
-    public get obtenirTempsDernierTour(): number {
+    public get nouveauTour(): number {
+        const tempsDernierTour: number = this.tempsTour;
         this.actualisationTempsTour();
 
-        return this.tempsDernierTour;
+        return tempsDernierTour;
     }
 
     public get obtenirTempsActuel(): number {
         return this.tempsActuel;
+    }
+
+    public get obtenirTempsTour(): number {
+        return this.tempsTour;
     }
 
 }

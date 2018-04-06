@@ -24,8 +24,8 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         this.gestionnaireBD.pisteEdition = piste;
     }
 
-    public supprimerPiste(piste: PisteBD): void {
-        this.gestionnaireBD.supprimerPiste(piste);
+    public async supprimerPiste(piste: PisteBD): Promise<void> {
+        await this.gestionnaireBD.supprimerPiste(piste);
         window.location.reload();
     }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ResultatJoueur } from "./resultatJoueur";
 
 @Component({
     selector: "app-fin-course",
@@ -7,7 +8,17 @@ import { Component, OnInit } from "@angular/core";
 })
 export class FinCourseComponent implements OnInit {
 
-    public constructor() { }
+    public constructor(public resultatsCourse: ResultatJoueur[]) {
+        this.ajouterRangs();
+    }
+
+    private ajouterRangs(): void {
+        let rang: number = 1;
+        for (const resultat of this.resultatsCourse) {
+            resultat.rang = rang;
+            rang++;
+        }
+    }
 
     public ngOnInit(): void {
     }

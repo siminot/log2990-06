@@ -21,6 +21,10 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
            await this.baseDonneesCourse.requeteDePistes(req, res, next);
         });
 
+        router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
+            await this.baseDonneesCourse.requeteUnePiste(req, res, next);
+        });
+
         router.post("/ajouter", async (req: Request, res: Response, next: NextFunction) => {
             await this.baseDonneesCourse.requeteAjoutDUnePiste(req, res, next);
         });

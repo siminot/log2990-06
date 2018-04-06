@@ -17,6 +17,7 @@ export class ChoixCourseComponent extends AbstractListePisteComponent {
     public choisirCourse(piste: PisteBD): void {
         if (piste !== undefined) {
             this.gestionnaireBD.pisteJeu = piste;
+            console.log(this.gestionnaireBD.pisteJeu);
         }
     }
 }

@@ -94,6 +94,7 @@ export class GestionnaireVoitures {
     private creerVoitureJoueur(piste: PisteJeu): void {
         this._voitureJoueur = new Voiture();
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
+        console.log(rotation);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
     }

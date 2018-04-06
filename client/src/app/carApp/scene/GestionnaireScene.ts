@@ -62,8 +62,7 @@ export class GestionnaireScene implements IScene {
     }
 
     public miseAJour(tempsDepuisDerniereTrame: number): void {
-       // this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
-       return;
+       this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
     }
 
     public miseAJourTempsJournee(): void {

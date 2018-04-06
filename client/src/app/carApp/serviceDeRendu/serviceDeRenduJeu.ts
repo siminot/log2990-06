@@ -20,10 +20,6 @@ export class ServiceDeRenduJeu extends ServiceDeRenduAbstrait {
     // Rendu
 
     protected miseAJour(): void {
-        /* if (this.courseEstCommencee === false) {
-            // let timer: NodeJS.Timer;
-            setTimeout(() => this.courseEstCommencee = true, TEMPS_ATTENTE);
-        } */
         if (this.courseEstCommencee) {
         this.gestionnaireScene.miseAJour(Date.now() - this.tempsDerniereMiseAJour);
         }

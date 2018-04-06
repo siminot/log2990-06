@@ -24,7 +24,8 @@ export class CarGameComponent extends AbstractGameComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        if (!this.serviceDeRendu.courseEstCommencee)
+        if (!this.serviceDeRendu.courseEstCommencee) {
             setTimeout(() => this.serviceDeRendu.courseEstCommencee = true, TEMPS_ATTENTE);
+        }
     }
 }

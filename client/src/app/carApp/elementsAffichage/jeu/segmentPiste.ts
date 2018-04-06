@@ -68,9 +68,8 @@ export class SegmentPiste extends Group {
             : Math.PI - this.droite.angleAvecDroite(DROITE_REFERENCE);
     }
 
-    public get vecteur(): Vector3 {
-        return new Vector3(this.droite.arrivee.x - this.droite.depart.x, 0,
-                           this.droite.arrivee.y - this.droite.depart.y);
+    public get direction(): Vector3 {
+        return this.droite.direction;
     }
 
     private get deplacementSegment(): Vector3 {

@@ -9,7 +9,7 @@
       <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
         
         <mat-expansion-panel-header class="pisteTitre">
-          {{ piste.nom | uppercase }}
+          {{ piste.nom | uppercase }} 
           
         </mat-expansion-panel-header>
         
@@ -21,8 +21,8 @@
           </div>
           
           <ul>
-            <li *ngFor="let temps of piste.tempsTours">
-              {{ temps.min }}:{{ temps.sec | number:'2.0-0' }}.{{ temps.milliSec | number:'2.0-0' }} par {{ temps.nom }}
+            <li *ngFor="let te of piste.temps">
+              {{ te.min }}:{{ te.sec | number:'2.0-0' }}.{{ te.milliSec | number:'2.0-0' }} par {{ te.nom }}
             </li>
           </ul>
 

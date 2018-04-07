@@ -37,20 +37,22 @@ export class GestionnaireEditionPiste {
 
     public creerNouvellePiste(nom: string, description: string): void {
         const unePiste: PisteBD = { _id: null, nom: nom, description: description,
-                                    points: this._piste.exporter(), infos: "Hello",
-                                    tempsTours: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0}]};
-        unePiste.tempsTours.push({ nom: "Ken Block", min: 1, sec: 1, milliSec: 0});
-        unePiste.tempsTours.push({ nom: "Ken Block", min: 1, sec: 2, milliSec: 0});
-        unePiste.tempsTours.push({ nom: "Ken Block", min: 1, sec: 3, milliSec: 0});
-        unePiste.tempsTours.push({ nom: "Ken Block", min: 1, sec: 4, milliSec: 0});
-        unePiste.tempsTours.push({ nom: "Ken Block", min: 1, sec: 5, milliSec: 0});
+                                    points: this._piste.exporter(), type: "Hello",
+                                    temps: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0}],
+                                    nbFoisJoue: 0};
+        unePiste.temps.push({ nom: "Ken Block", min: 1, sec: 1, milliSec: 0});
+        unePiste.temps.push({ nom: "Ken Block", min: 1, sec: 2, milliSec: 0});
+        unePiste.temps.push({ nom: "Ken Block", min: 1, sec: 3, milliSec: 0});
+        unePiste.temps.push({ nom: "Ken Block", min: 1, sec: 4, milliSec: 0});
+        unePiste.temps.push({ nom: "Ken Block", min: 1, sec: 5, milliSec: 0});
         this.gestionnaireBD.creerNouvellePiste(unePiste);
     }
 
     public mettreAJourPiste(nom: string, description: string): void {
         this.gestionnaireBD.mettreAJourPiste({ _id: null, nom: nom, description: description, points: this._piste.exporter(),
-                                               infos: "Informations relatives",
-                                               tempsTours: [{ nom: "Ken Block", min: 9, sec: 9, milliSec: 9 }] });
+                                               type: "Une piste",
+                                               temps: [{ nom: "Ken Block", min: 9, sec: 9, milliSec: 9 }],
+                                               nbFoisJoue: 0 });
     }
 
     private inscriptionSouris(): void {

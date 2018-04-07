@@ -14,11 +14,12 @@ export class ResultatsFinCourseComponent implements OnInit, OnDestroy {
     private abonnementPistes: Subscription;
 
     private pisteCourante: PisteBD;
-    private abonnementPisteCourante: Subscription;
+    // private abonnementPisteCourante: Subscription;
 
     private unePiste: PisteBD = { _id: "1a", nom: "Une piste", description: "Une description",
-                                  points: null, infos: "Hello",
-                                  tempsTours: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0}]};
+                                  points: null, type: "Hello",
+                                  temps: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0}],
+                                  nbFoisJoue: 0};
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse) {
 
@@ -41,7 +42,7 @@ export class ResultatsFinCourseComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.abonnementPistes.unsubscribe();
-        this.abonnementPisteCourante.unsubscribe();
+        // this.abonnementPisteCourante.unsubscribe();
     }
 
 }

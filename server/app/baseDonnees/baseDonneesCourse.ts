@@ -21,9 +21,10 @@ export class BaseDonneesCourse {
         this.schemaPiste = new Schema({
             nom: String,
             description: String,
+            type: String,
             points: [{ x: Number, y: Number }],
-            infos: String,
-            tempsTours: [{ nom: String, min: Number, sec: Number, milliSec: Number }]
+            temps: [{ nom: String, min: Number, sec: Number, milliSec: Number }],
+            nbFoisJoue: Number
         });
         this.modelPiste = this.mongoose.model("pistes", this.schemaPiste);
     }
@@ -49,7 +50,7 @@ export class BaseDonneesCourse {
 
     private async modifierUnePiste(identifiant: string, piste: PisteBD): Promise<void> {
         this.modelPiste.findByIdAndUpdate(identifiant, { nom: piste.nom, description: piste.description, points: piste.points,
-                                                         infos: piste.infos, tempsTour: piste.tempsTours })
+                                                         type: piste.type, temps: piste.temps, nbFoisJoue: piste.nbFoisJoue })
             .exec().catch( () => {
                 throw new ErreurModificationBaseDonnees;
             });

@@ -19,7 +19,7 @@ ul, li {
     padding: 0px;
 }
 
-.creer, .editer, .supprimer, #suppToutesPistes {
+.creer, .editer, .supprimer, #suppToutesPistes, .incrementer {
     font-size: 10px;
     color: purple;
     padding: 6px;
@@ -29,7 +29,7 @@ ul, li {
     border: 2px solid rgba(0,0,0, 0.747);
 }
 
-.creer:hover, .editer:hover, .supprimer:hover, #suppToutesPistes:hover {
+.creer:hover, .editer:hover, .supprimer:hover, #suppToutesPistes:hover, .incrementer:hover {
     color: white !important;
     background-color: blue !important;
 }

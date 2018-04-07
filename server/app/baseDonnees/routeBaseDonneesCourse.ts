@@ -33,6 +33,10 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
             await this.baseDonneesCourse.requeteModifierPiste(req, res, next);
         });
 
+        router.patch("/incrementer/:id", async (req: Request, res: Response, next: NextFunction) => {
+            await this.baseDonneesCourse.requeteIncrementerNbFoisJoue(req, res, next);
+        });
+
         router.delete("/supprimer/:id", async (req: Request, res: Response, next: NextFunction) => {
             await this.baseDonneesCourse.requeteSupprimerPiste(req, res, next);
         });

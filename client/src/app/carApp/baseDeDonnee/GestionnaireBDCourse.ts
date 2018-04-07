@@ -9,6 +9,7 @@ export const PISTES_URL: string = "http://localhost:3000/apipistes/";
 const URL_SUPPRIMER_PISTE: string = PISTES_URL + "supprimer/";
 const URL_AJOUTER_PISTE: string = PISTES_URL + "ajouter/";
 const URL_MODIFIER_PISTE: string = PISTES_URL + "modifier/";
+const URL_INC_NB_FOIS_JOUE_PISTE: string = PISTES_URL + "incrementer/";
 
 @Injectable()
 export class GestionnaireBDCourse {
@@ -76,5 +77,9 @@ export class GestionnaireBDCourse {
 
     public mettreAJourPiste(piste: PisteBD): void {
         this.http.patch(URL_MODIFIER_PISTE + this.pisteEdition._id, piste).subscribe();
+    }
+
+    public incrementerNbFoisJouePiste(piste: PisteBD): void {
+        this.http.patch(URL_INC_NB_FOIS_JOUE_PISTE + piste._id, piste).subscribe();
     }
 }

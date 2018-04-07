@@ -44,14 +44,26 @@ export class BaseDonneesCourse {
     }
 
     private async ajouterPiste(pisteJson: {}): Promise<void> {
-        const piste: Document =  new this.modelPiste(pisteJson);
+        const piste: Document = new this.modelPiste(pisteJson);
         await this.modelPiste.create(piste);
     }
 
     private async modifierUnePiste(identifiant: string, piste: PisteBD): Promise<void> {
-        this.modelPiste.findByIdAndUpdate(identifiant, { nom: piste.nom, description: piste.description, points: piste.points,
-                                                         type: piste.type, temps: piste.temps, nbFoisJoue: piste.nbFoisJoue })
-            .exec().catch( () => {
+        this.modelPiste.findByIdAndUpdate(identifiant, {
+            nom: piste.nom, description: piste.description, points: piste.points,
+            type: piste.type, temps: piste.temps, nbFoisJoue: piste.nbFoisJoue
+        })
+            .exec().catch(() => {
+                throw new ErreurModificationBaseDonnees;
+            });
+    }
+
+    private async incrementerNbFoisJoue(identifiant: string, piste: PisteBD): Promise<void> {
+        this.modelPiste.findByIdAndUpdate(piste._id, {
+            nom: piste.nom, description: piste.description, points: piste.points,
+            type: piste.type, temps: piste.temps, nbFoisJoue: (piste.nbFoisJoue + 1)
+        })
+            .exec().catch(() => {
                 throw new ErreurModificationBaseDonnees;
             });
     }
@@ -60,7 +72,7 @@ export class BaseDonneesCourse {
         this.modelPiste.findByIdAndRemove(identifiant).exec()
             .catch(() => {
                 throw new ErreurSupressionBaseDonnees();
-        });
+            });
     }
 
     private async obtenirPistes(): Promise<PisteBD[]> {
@@ -71,7 +83,7 @@ export class BaseDonneesCourse {
                     pistes.push(document.toObject());
                 }
             })
-            .catch( () => { throw new ErreurRechercheBaseDonnees; });
+            .catch(() => { throw new ErreurRechercheBaseDonnees; });
 
         return pistes;
     }
@@ -116,5 +128,10 @@ export class BaseDonneesCourse {
             throw new ErreurConnectionBD();
         });
         res.send(await this.modifierUnePiste(req.params.id, req.body));
+    }
+
+    public async requeteIncrementerNbFoisJoue(req: Request, res: Response, next: NextFunction): Promise<void> {
+        this.assurerConnection().catch(() => { throw new ErreurConnectionBD(); });
+        res.send(await this.incrementerNbFoisJoue(req.params.id, req.body));
     }
 }

@@ -1,38 +1,51 @@
 <div id="container">
-  <h1 id="titrePrincipal">C'est le temps de sélectionner une piste</h1>
-  <h2 id="titreChoixPiste">Choix de pistes</h2>
-  
-  <div  id="listePistes">
+    <h1 id="titrePrincipal">C'est le temps de sélectionner une piste</h1>
+    <h2 id="titreChoixPiste">Choix de pistes</h2>
 
-    <mat-accordion multi="false">
+    <div id="listePistes">
 
-      <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
-        
-        <mat-expansion-panel-header class="pisteTitre">
-          {{ piste.nom | uppercase }} 
-          
-        </mat-expansion-panel-header>
-        
-        <div class="pisteDescription">
-          {{ piste.description }}
-          
-          <div class="divider">
-            <mat-divider></mat-divider>
-          </div>
-          
-          <ul>
-            <li *ngFor="let te of piste.temps">
-              {{ te.min }}:{{ te.sec | number:'2.0-0' }}.{{ te.milliSec | number:'2.0-0' }} par {{ te.nom }}
-            </li>
-          </ul>
+        <mat-accordion multi="false">
 
-          <button class="selection" title="choix" (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
-        </div>
+            <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
 
-      </mat-expansion-panel>
-    
-    </mat-accordion>
+                <mat-expansion-panel-header class="pisteTitre">
+                    <span>{{ piste.nom | uppercase }}</span>
 
-  </div>
-  
+
+                </mat-expansion-panel-header>
+
+                <div class="pisteDescription">
+                    Type : {{ piste.type }}
+                    
+                    <div class="divider">
+                        <mat-divider></mat-divider>
+                    </div>
+
+                    Nombre de fois joué: {{ piste.nbFoisJoue }}
+
+                    <div class="divider">
+                        <mat-divider></mat-divider>
+                    </div>
+                    
+                    {{ piste.description }}
+
+                    <div class="divider">
+                        <mat-divider></mat-divider>
+                    </div>
+
+                    <ul>
+                        <li *ngFor="let te of piste.temps">
+                            {{ te.min }}:{{ te.sec | number:'2.0-0' }}.{{ te.milliSec | number:'2.0-0' }} par {{ te.nom }}
+                        </li>
+                    </ul>
+
+                    <button class="selection" title="choix" (click)="choisirCourse(piste)" routerLink="/CarGame">Choisir</button>
+                </div>
+
+            </mat-expansion-panel>
+
+        </mat-accordion>
+
+    </div>
+
 </div>

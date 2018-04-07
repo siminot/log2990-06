@@ -38,7 +38,6 @@ export class GestionnaireScene implements IScene {
 
         this.piste = new PisteJeu();
         this.piste.importer(gestionnaireBDCourse.pointsJeu);
-        this.gestionnaireVoiture.initialiser(this.piste);
 
         this.creerScene();
     }
@@ -55,6 +54,7 @@ export class GestionnaireScene implements IScene {
     }
 
     private ajouterElements(): void {
+        this.gestionnaireVoiture.initialiser(this.piste);
         this._scene.add(this.gestionnaireVoiture.voituresAI);
         this._scene.add(this.piste);
         this._scene.add(this.gestionnaireSkybox.skybox);
@@ -62,7 +62,7 @@ export class GestionnaireScene implements IScene {
     }
 
     public miseAJour(tempsDepuisDerniereTrame: number): void {
-        this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
+       this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
     }
 
     public miseAJourTempsJournee(): void {

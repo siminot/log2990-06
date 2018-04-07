@@ -1,6 +1,6 @@
 import { Vector3, Matrix4, Object3D, Euler, Quaternion, Box3 } from "three";
 import { Engine } from "./engine";
-import { MS_TO_SECONDS, GRAVITY, PI_OVER_2 } from "../constants";
+import { MS_TO_SECONDS, GRAVITY } from "../constants";
 import { Wheel } from "./wheel";
 import { GroupePhares } from "./groupePhares";
 import { SonVoiture } from "../son/SonVoiture";
@@ -11,7 +11,6 @@ export const DEFAULT_MASS: number = 1515;
 export const DEFAULT_DRAG_COEFFICIENT: number = 0.35;
 
 const MAXIMUM_STEERING_ANGLE: number = 0.25;
-const INITIAL_MODEL_ROTATION: Euler = new Euler(0, PI_OVER_2, 0);
 const INITIAL_WEIGHT_DISTRIBUTION: number = 0.5;
 const MINIMUM_SPEED: number = 0.2;
 const NUMBER_REAR_WHEELS: number = 2;
@@ -102,9 +101,9 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this.initialiserPhares();
     }
 
-    public initialiser(texture: Object3D): void {
+    public initialiser(texture: Object3D, rotation: Euler): void {
         this.add(texture);
-        this.setRotationFromEuler(INITIAL_MODEL_ROTATION);
+        this.setRotationFromEuler(rotation);
         this.boiteCollision.setFromObject(this);
     }
 

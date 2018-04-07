@@ -9,12 +9,12 @@ import { LigneDeDepart } from "../elementsAffichage/jeu/ligneDepart";
 export class PisteJeu extends PisteAbstraite {
 
     protected readonly intersections: IPoint[];
-    private premierSegment: SegmentPiste;
+    private _premierSegment: SegmentPiste;
 
     public constructor() {
         super();
         this.intersections = [];
-        this.premierSegment = null;
+        this._premierSegment = null;
     }
 
     public importer(points: Point[]): void {
@@ -25,7 +25,7 @@ export class PisteJeu extends PisteAbstraite {
 
             if (this.intersections.length > 0) {
                 this.bouclerPiste();
-                this.add(new LigneDeDepart(this.zoneDeDepart, this.premierSegment.angle));
+                this.add(new LigneDeDepart(this.zoneDeDepart, this._premierSegment.angle));
             }
         }
     }
@@ -36,11 +36,9 @@ export class PisteJeu extends PisteAbstraite {
         piste.splice(0, 1);
         piste.push(premierPoint);
 
-        if (!this.estSensHoraire) {
-            piste.reverse();
-        }
-
-        return piste;
+        return this.estSensHoraire()
+            ? piste.reverse()
+            : piste;
     }
 
     public ajouterPoint(point: Point): void {
@@ -49,8 +47,8 @@ export class PisteJeu extends PisteAbstraite {
         if (this.intersections.length > 1) {
             const segment: SegmentPiste = new SegmentPiste(this.pointPrecedent(point), point);
 
-            if (this.premierSegment === null) {
-                this.premierSegment = segment;
+            if (this._premierSegment === null) {
+                this._premierSegment = segment;
             }
 
             this.add(segment);
@@ -61,12 +59,16 @@ export class PisteJeu extends PisteAbstraite {
         this.add(new SegmentPiste(this.intersections[this.intersections.length - 1].point, this.intersections[0].point));
     }
 
-    private get zoneDeDepart(): Vector3 {
+    public get zoneDeDepart(): Vector3 {
         const DEUX: number = 2;
 
         return this.intersections.length >= DEUX
             ? new Droite(this.premiereIntersection.point, this.intersections[1].point).getCenter()
             : null;
+    }
+
+    public get premierSegment(): SegmentPiste {
+        return this._premierSegment;
     }
 
     private pointPrecedent(point: Point): Point {

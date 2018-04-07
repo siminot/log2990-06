@@ -59,9 +59,10 @@ export class BaseDonneesCourse {
     }
 
     private async incrementerNbFoisJoue(identifiant: string, piste: PisteBD): Promise<void> {
-        this.modelPiste.findByIdAndUpdate(piste._id, {
+        piste.nbFoisJoue = piste.nbFoisJoue + 1;
+        this.modelPiste.findByIdAndUpdate(identifiant, {
             nom: piste.nom, description: piste.description, points: piste.points,
-            type: piste.type, temps: piste.temps, nbFoisJoue: (piste.nbFoisJoue + 1)
+            type: piste.type, temps: piste.temps, nbFoisJoue: piste.nbFoisJoue
         })
             .exec().catch(() => {
                 throw new ErreurModificationBaseDonnees;

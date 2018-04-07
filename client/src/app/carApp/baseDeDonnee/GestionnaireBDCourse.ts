@@ -79,7 +79,7 @@ export class GestionnaireBDCourse {
         this.http.patch(URL_MODIFIER_PISTE + this.pisteEdition._id, piste).subscribe();
     }
 
-    public incrementerNbFoisJouePiste(piste: PisteBD): void {
-        this.http.patch(URL_INC_NB_FOIS_JOUE_PISTE + piste._id, piste).subscribe();
+    public async incrementerNbFoisJouePiste(piste: PisteBD): Promise<void> {
+        await this.http.patch(URL_INC_NB_FOIS_JOUE_PISTE + piste._id, piste).subscribe();
     }
 }

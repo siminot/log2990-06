@@ -71,6 +71,12 @@ export class PisteJeu extends PisteAbstraite {
         return this._premierSegment;
     }
 
+    public get estValide(): boolean {
+        const NOMBRE_MINIMAL_SEGMENTS: number = 3;
+
+        return this.intersections.length >= NOMBRE_MINIMAL_SEGMENTS;
+    }
+
     private pointPrecedent(point: Point): Point {
         return this.intersections.indexOf(point) >= 1
             ? this.intersections[(this.intersections.indexOf(point) - 1) % this.intersections.length].point

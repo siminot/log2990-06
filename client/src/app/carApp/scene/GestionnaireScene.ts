@@ -10,6 +10,8 @@ import { PisteJeu } from "../piste/pisteJeu";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { TempsJournee } from "../skybox/tempsJournee";
 import { TEMPS_JOURNEE_INITIAL } from "../constants";
+import { PISTE_TEST } from "../piste/pisteTest";
+import { Point } from "../elementsGeometrie/point";
 
 // Touches clavier
 const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementClavier.TOUCHE_RELEVEE);
@@ -35,11 +37,18 @@ export class GestionnaireScene implements IScene {
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.initialisationTouches();
-
-        this.piste = new PisteJeu();
-        this.piste.importer(gestionnaireBDCourse.pointsJeu);
-
+        this.initialisationPiste(gestionnaireBDCourse.pointsJeu);
         this.creerScene();
+    }
+
+    private initialisationPiste(point: Point[]): void {
+        this.piste = new PisteJeu();
+        this.piste.importer(point);
+
+        if (!this.piste.estValide) {
+            this.piste = new PisteJeu();
+            this.piste.importer(PISTE_TEST);
+        }
     }
 
     protected initialisationTouches(): void {

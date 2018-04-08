@@ -6,6 +6,7 @@ import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
+import { GestionnaireCollision} from "../collision/gestionnaireCollisions";
 
 // AI
 export const NOMBRE_AI: number = 1;
@@ -45,7 +46,8 @@ export class GestionnaireVoitures {
         return this._voituresAI;
     }
 
-    public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
+    public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
+                       public gestionnaireCollision: GestionnaireCollision) {
         this._voituresAI = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
     }
@@ -73,8 +75,10 @@ export class GestionnaireVoitures {
     private creerVoitureJoueur(): void {
         this._voitureJoueur = new Voiture();
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR])
-            .then((objet: Object3D) => this._voitureJoueur.initialiser(objet))
+            .then((objet: Object3D) =>{ this._voitureJoueur.initialiser(objet);
+                                        this.gestionnaireCollision.mesureDimensionAuto(objet); })
             .catch(() => { throw new ErreurChargementTexture(); });
+
     }
 
     private creerVoituresAI(): void {

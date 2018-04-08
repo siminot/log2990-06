@@ -1,12 +1,12 @@
 import { GestionnaireVoitures, NOMBRE_AI } from "./gestionnaireVoitures";
 import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
-
+import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
 describe("GestionnaireVoitures", () => {
     let gestionnaire: GestionnaireVoitures;
 
     beforeEach(() => {
-        gestionnaire = new GestionnaireVoitures(new GestionnaireClavier());
+        gestionnaire = new GestionnaireVoitures(new GestionnaireClavier(), new GestionnaireCollision());
         gestionnaire.initialiser();
 
     });

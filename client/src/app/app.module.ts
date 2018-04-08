@@ -40,6 +40,9 @@ import { MainGrilleMultiComponent } from "./crosswords/main-grille-multi/main-gr
 import { SocketService } from "./crosswords/service-socket/service-socket";
 import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse";
 import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
+import { GestionnaireCollision } from "./carApp/collision/gestionnaireCollisions";
+
+
 
 @NgModule({
     declarations: [
@@ -83,7 +86,8 @@ import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEdit
         ServiceInteractionComponent,
         ServiceHttp,
         SocketService,
-        InfojoueurService
+        InfojoueurService,
+        GestionnaireCollision
     ],
     bootstrap: [AppComponent],
     exports: [
@@ -98,6 +102,6 @@ import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEdit
         FinPartieSoloComponent,
         GrilleMultijoueurComponent
     ],
-    // entryComponents: [ DialogComponent ]
 })
+    // entryComponents: [ DialogComponent ]
 export class AppModule { }

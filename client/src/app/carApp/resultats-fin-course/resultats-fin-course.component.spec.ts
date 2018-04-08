@@ -1,14 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ResultatsFinCourseComponent } from './resultats-fin-course.component';
+import { ResultatsFinCourseComponent } from "./resultats-fin-course.component";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { HttpClient, HttpHandler } from "@angular/common/http";
 
-describe('ResultatsFinCourseComponent', () => {
+describe("ResultatsFinCourseComponent", () => {
   let component: ResultatsFinCourseComponent;
   let fixture: ComponentFixture<ResultatsFinCourseComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResultatsFinCourseComponent ]
+      declarations: [ ResultatsFinCourseComponent ],
+      providers: [GestionnaireBDCourse, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));
@@ -19,7 +22,7 @@ describe('ResultatsFinCourseComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

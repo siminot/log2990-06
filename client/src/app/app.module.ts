@@ -41,15 +41,16 @@ import { SocketService } from "./crosswords/service-socket/service-socket";
 import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse";
 import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
 import { GestionnaireCollision } from "./carApp/collision/gestionnaireCollisions";
-
-
+import { VueTeteHauteComponent } from "./carApp/vue-tete-haute/vue-tete-haute/vue-tete-haute.component";
+import { TimerService } from "./carApp/timer/timer.service";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDividerModule } from "@angular/material/divider";
 
 import { DecimalPipe } from "@angular/common";
-import { ResultatsFinCourseComponent } from './carApp/resultats-fin-course/resultats-fin-course.component';
+import { ResultatsFinCourseComponent } from "./carApp/resultats-fin-course/resultats-fin-course.component";
+import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
 
 @NgModule({
     declarations: [
@@ -69,7 +70,10 @@ import { ResultatsFinCourseComponent } from './carApp/resultats-fin-course/resul
         InfoPartieMultijoueurComponent,
         FinPartieSoloComponent,
         MainGrilleMultiComponent,
-        ResultatsFinCourseComponent
+        VueTeteHauteComponent,
+        ResultatsFinCourseComponent,
+        FinCourseComponent,
+        VueTeteHauteComponent
     ],
     imports: [
         BrowserModule,
@@ -99,7 +103,8 @@ import { ResultatsFinCourseComponent } from './carApp/resultats-fin-course/resul
         SocketService,
         InfojoueurService,
         GestionnaireCollision,
-        DecimalPipe
+        DecimalPipe,
+        TimerService
     ],
     bootstrap: [AppComponent],
     exports: [

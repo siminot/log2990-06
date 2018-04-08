@@ -6,6 +6,7 @@ import { injectable } from "inversify";
 import { ErreurSupressionBaseDonnees } from "../exceptions/erreurSupressionBD";
 import { ErreurModificationBaseDonnees } from "../exceptions/erreurModificationBD";
 import { ErreurConnectionBD } from "../exceptions/erreurConnectionBD";
+import "reflect-metadata";
 
 const URL_BD: string = "mongodb://admin:admin@ds123129.mlab.com:23129/log2990";
 

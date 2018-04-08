@@ -47,8 +47,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDividerModule } from "@angular/material/divider";
 
-// import { DecimalPipe } from "@angular/common";
 import { ResultatsFinCourseComponent } from "./carApp/resultats-fin-course/resultats-fin-course.component";
+import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
 
 @NgModule({
     declarations: [
@@ -69,7 +69,9 @@ import { ResultatsFinCourseComponent } from "./carApp/resultats-fin-course/resul
         FinPartieSoloComponent,
         MainGrilleMultiComponent,
         VueTeteHauteComponent,
-        ResultatsFinCourseComponent
+        ResultatsFinCourseComponent,
+        FinCourseComponent,
+        VueTeteHauteComponent
     ],
     imports: [
         BrowserModule,

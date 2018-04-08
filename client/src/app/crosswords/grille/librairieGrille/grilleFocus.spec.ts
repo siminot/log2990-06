@@ -15,13 +15,22 @@ describe("Grille Focus", () => {
     unMot.premierY = 0;
     unMot.positionsLettres = ["00", "01", "02", "03"];
 
-    it("La méthode focus() doit être appelée sur un" +
-       "inputElement sur le document lorsque focusSurBonneLettre est appelee",
-       () => {
-        const inputTest: HTMLInputElement = document.createElement("input") as HTMLInputElement;
-        document.body.appendChild(inputTest);
-        spyOn(document, "getElementById").and.returnValue(inputTest);
-        component.focusSurBonneLettre(unMot);
-        expect(inputTest.focus).toHaveBeenCalled();
+    const motVide: Mot = new Mot();
+    motVide.mot = "";
+
+    it("Devrait retourner faux", () => {
+        expect(component["isLastLetterOfWord"](unMot)).toEqual(false);
+    });
+
+    it("Devrait retourner vrai", () => {
+        expect(component["isLastLetterOfWord"](motVide)).toEqual(false);
+    });
+
+    it("Devrait retourner faux", () => {
+        expect(component.focusOnNextLetter(unMot)).toEqual(false);
+    });
+
+    it("Devrait retourner faux", () => {
+        expect(component.focusOnNextLetter(motVide)).toEqual(false);
     });
 });

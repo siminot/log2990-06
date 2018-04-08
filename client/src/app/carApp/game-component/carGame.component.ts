@@ -27,11 +27,11 @@ export class CarGameComponent extends AbstractGameComponent implements OnInit, O
         if (!this.serviceDeRendu.gestionnaireScene.courseEstCommencee) {
             setTimeout(() => this.serviceDeRendu.gestionnaireScene.courseEstCommencee = true, TEMPS_ATTENTE);
         }
-        console.log("CREER");
+        // console.log("CREER");
     }
 
     public ngOnDestroy(): void {
-        console.log("DESTROYED");
+        // console.log("DESTROYED");
 
     }
 }

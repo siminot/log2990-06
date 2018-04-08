@@ -13,7 +13,7 @@ export class ResultatsFinCourseComponent implements OnInit, OnDestroy {
     private pistes: PisteBD[];
     private abonnementPistes: Subscription;
 
-    private pisteCourante: PisteBD;
+    public pisteCourante: PisteBD;
     // private abonnementPisteCourante: Subscription;
 
     private unePiste: PisteBD = { _id: "1a", nom: "Une piste", description: "Une description",
@@ -31,13 +31,11 @@ export class ResultatsFinCourseComponent implements OnInit, OnDestroy {
         // this.abonnementPisteCourante = this.gestionnaireBD.obtenirUnePiste(this.gestionnaireBD.pisteJeu._id)
         //     .subscribe((piste: PisteBD) => this.pisteCourante = piste);
 
-        console.log(this.gestionnaireBD.pisteJeu);
         if (this.gestionnaireBD.pisteJeu === null) {
             this.gestionnaireBD.pisteJeu = this.unePiste;
         }
 
         this.pisteCourante = this.gestionnaireBD.pisteJeu;
-        console.log(this.pisteCourante);
     }
 
     public ngOnDestroy(): void {

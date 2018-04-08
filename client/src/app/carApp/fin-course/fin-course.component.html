@@ -1,3 +1,7 @@
-<p>
-  fin-course works!
-</p>
+<div id="container">
+  <h1 id="titrePrincipal">Fin de course</h1>
+  <h2 class="titre"></h2>
+    <li *ngFor="let resultatCourse of resultatsCourse">
+      {{resultatCourse.nom}} {{resultatCourse.tempsCourse}}
+    </li>
+</div>

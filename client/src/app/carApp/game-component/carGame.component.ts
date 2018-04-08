@@ -5,7 +5,7 @@ import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 
-const TEMPS_ATTENTE: number = 10000;
+// const TEMPS_ATTENTE: number = 10000;
 
 @Component({
     moduleId: module.id,
@@ -24,8 +24,8 @@ export class CarGameComponent extends AbstractGameComponent implements OnInit, O
     }
 
     public ngOnInit(): void {
-        if (!this.serviceDeRendu.courseEstCommencee) {
-            setTimeout(() => this.serviceDeRendu.courseEstCommencee = true, TEMPS_ATTENTE);
+        if (!this.serviceDeRendu.gestionnaireScene.courseEstCommencee) {
+            setTimeout(() => this.serviceDeRendu.gestionnaireScene.courseEstCommencee = true, TEMPS_ATTENTE);
         }
         console.log("CREER");
     }

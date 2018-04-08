@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { Scene } from "three";
+import { Scene, Sprite, Vector3, SpriteMaterial, TextureLoader, Texture } from "three";
 import { IScene } from "./IScene";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
@@ -10,6 +10,10 @@ import { PisteJeu } from "../piste/pisteJeu";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { TempsJournee } from "../skybox/tempsJournee";
 import { TEMPS_JOURNEE_INITIAL } from "../constants";
+import { PISTE_TEST } from "../piste/pisteTest";
+import { Point } from "../elementsGeometrie/point";
+
+const TEMPS_ATTENTE: number = 10000;
 
 // Touches clavier
 const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementClavier.TOUCHE_RELEVEE);
@@ -22,24 +26,33 @@ export class GestionnaireScene implements IScene {
     private piste: PisteJeu;
     private tempsJournee: TempsJournee;
     private clavier: UtilisateurPeripherique;
+    public courseEstCommencee: boolean;
 
     public get scene(): Scene {
         return this._scene;
     }
 
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
-                       private gestionnaireVoiture: GestionnaireVoitures,
-                       @Inject (GestionnaireBDCourse) gestionnaireBDCourse: GestionnaireBDCourse,
-                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
+        private gestionnaireVoiture: GestionnaireVoitures,
+        @Inject(GestionnaireBDCourse) gestionnaireBDCourse: GestionnaireBDCourse,
+        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
+        this.courseEstCommencee = false;
         this.initialisationTouches();
-
-        this.piste = new PisteJeu();
-        this.piste.importer(gestionnaireBDCourse.pointsJeu);
-
+        this.initialisationPiste(gestionnaireBDCourse.pointsJeu);
         this.creerScene();
+    }
+
+    private initialisationPiste(point: Point[]): void {
+        this.piste = new PisteJeu();
+        this.piste.importer(point);
+
+        if (!this.piste.estValide) {
+            this.piste = new PisteJeu();
+            this.piste.importer(PISTE_TEST);
+        }
     }
 
     protected initialisationTouches(): void {
@@ -51,6 +64,7 @@ export class GestionnaireScene implements IScene {
         this.ajouterElements();
         this.avancerTemps();
         this.miseAJourTempsJournee();
+        this.signalerDepart();
     }
 
     private ajouterElements(): void {
@@ -61,8 +75,24 @@ export class GestionnaireScene implements IScene {
         this._scene.add(this.gestionnaireVoiture.voitureJoueur);
     }
 
+    private signalerDepart(): void {
+        const spriteMap: Texture = new TextureLoader().load("../../../assets/sprite.png");
+        const spriteMaterial: SpriteMaterial = new SpriteMaterial({ map: spriteMap, color: "0xaaaaaa" });
+        const sprite: Sprite = new Sprite(spriteMaterial);
+        sprite.scale.set(5, 2, 1);
+        const position: Vector3 = this.piste.zoneDeDepart;
+        sprite.position.set(position.x, 3, position.z);
+        this._scene.add(sprite);
+        setTimeout(() => {
+            this.courseEstCommencee = true;
+            this._scene.remove(sprite);
+        }, TEMPS_ATTENTE);
+    }
+
     public miseAJour(tempsDepuisDerniereTrame: number): void {
-       this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
+        if (this.courseEstCommencee) {
+            this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
+        }
     }
 
     public miseAJourTempsJournee(): void {

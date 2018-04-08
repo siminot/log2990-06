@@ -77,7 +77,7 @@ export class GestionnaireScene implements IScene {
 
     private signalerDepart(): void {
         const spriteMap: Texture = new TextureLoader().load("../../../assets/sprite.png");
-        const spriteMaterial: SpriteMaterial = new SpriteMaterial({ map: spriteMap, color: "0xaaaaaa" });
+        const spriteMaterial: SpriteMaterial = new SpriteMaterial({ map: spriteMap, color: 0xAAAAAA });
         const sprite: Sprite = new Sprite(spriteMaterial);
         sprite.scale.set(5, 2, 1);
         const position: Vector3 = this.piste.zoneDeDepart;

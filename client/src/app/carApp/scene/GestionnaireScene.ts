@@ -32,10 +32,10 @@ export class GestionnaireScene implements IScene {
         return this._scene;
     }
 
-    public constructor(private gestionnaireSkybox: GestionnaireSkybox,
-        private gestionnaireVoiture: GestionnaireVoitures,
-        @Inject(GestionnaireBDCourse) gestionnaireBDCourse: GestionnaireBDCourse,
-        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
+    public constructor( private gestionnaireSkybox: GestionnaireSkybox,
+                        private gestionnaireVoiture: GestionnaireVoitures,
+                        @Inject(GestionnaireBDCourse) gestionnaireBDCourse: GestionnaireBDCourse,
+                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;

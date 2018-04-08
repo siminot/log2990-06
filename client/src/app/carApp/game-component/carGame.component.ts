@@ -5,7 +5,7 @@ import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 
-// const TEMPS_ATTENTE: number = 10000;
+const TEMPS_ATTENTE: number = 10000;
 
 @Component({
     moduleId: module.id,

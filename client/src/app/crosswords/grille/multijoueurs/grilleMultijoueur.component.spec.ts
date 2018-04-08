@@ -1,28 +1,15 @@
-import { TestBed, inject, ComponentFixture } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { GrilleMultijoueurComponent } from "./grilleMultijoueur.component";
-import { Component, OnInit } from "@angular/core";
 import { ServiceInteractionComponent } from "../../service-interaction-component/service-interaction-component";
 import { InfojoueurService } from "../../service-info-joueur/infojoueur.service";
-import { EncadrementCase } from "../librairieGrille/encadrementCase";
-import { GrilleAbs } from "../grilleAbs";
 import { SocketService } from "../../service-socket/service-socket";
-import { PaquetPartie } from "../../objetsTest/paquetPartie";
-import { Mot } from "../../objetsTest/mot";
-import { objetsTest } from "../../objetsTest/objetsTest";
-import { LettreGrille } from "../../objetsTest/lettreGrille";
-import { TAILLE_TABLEAU } from "../../constantes";
-import { OpaciteCase } from "./../librairieGrille/opaciteCase";
-import { Subscription } from "rxjs/Subscription";
+// import { Mot } from "../../objetsTest/mot";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ServiceHttp} from "../../serviceHttp/http-request.service";
-import { HttpClient, HttpHandler } from '@angular/common/http';
-import { MockBackend } from '@angular/http/testing';
-import { Socket } from "dgram";
+import { HttpClient, HttpHandler } from "@angular/common/http";
 
-
-class mockSocketService {
+class MockSocketService {
     public commencerPartie(): void {
-        console.log("utilisation MockSocketService");
     }
 }
 
@@ -35,15 +22,15 @@ describe("GrilleMultiJoeur", () => {
 
         TestBed.configureTestingModule({
             imports: [RouterTestingModule.withRoutes([])],
-            providers: [HttpHandler, SocketService],
+            providers: [HttpHandler],
             declarations: [GrilleMultijoueurComponent],
             // tslint:disable-next-line:max-line-length
         }).compileComponents();
         TestBed.overrideComponent(GrilleMultijoueurComponent, {
             set: {
               providers: [
-                { provide: SocketService, useClass: mockSocketService }, InfojoueurService, ServiceInteractionComponent, ServiceHttp,
-                HttpClient
+                { provide: SocketService, useClass: MockSocketService }, InfojoueurService, ServiceInteractionComponent, ServiceHttp,
+                , HttpClient,
               ]
             }
           });

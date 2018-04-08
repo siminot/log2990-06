@@ -18,5 +18,5 @@ describe("Gestionnaire de collisions", () => {
 
     it("Construction", () => {
         expect(gestionnaireCollision).toBeTruthy();
-    }
+    });
 });

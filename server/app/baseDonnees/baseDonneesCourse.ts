@@ -21,9 +21,10 @@ export class BaseDonneesCourse {
         this.schemaPiste = new Schema({
             nom: String,
             description: String,
+            type: String,
             points: [{ x: Number, y: Number }],
-            infos: String,
-            tempsTours: [{ nom: String, min: Number, sec: Number, milliSec: Number }]
+            temps: [{ nom: String, min: Number, sec: Number, milliSec: Number }],
+            nbFoisJoue: Number
         });
         this.modelPiste = this.mongoose.model("pistes", this.schemaPiste);
     }
@@ -43,14 +44,27 @@ export class BaseDonneesCourse {
     }
 
     private async ajouterPiste(pisteJson: {}): Promise<void> {
-        const piste: Document =  new this.modelPiste(pisteJson);
+        const piste: Document = new this.modelPiste(pisteJson);
         await this.modelPiste.create(piste);
     }
 
     private async modifierUnePiste(identifiant: string, piste: PisteBD): Promise<void> {
-        this.modelPiste.findByIdAndUpdate(identifiant, { nom: piste.nom, description: piste.description, points: piste.points,
-                                                         infos: piste.infos, tempsTour: piste.tempsTours })
-            .exec().catch( () => {
+        this.modelPiste.findByIdAndUpdate(identifiant, {
+            nom: piste.nom, description: piste.description, points: piste.points,
+            type: piste.type, temps: piste.temps, nbFoisJoue: piste.nbFoisJoue
+        })
+            .exec().catch(() => {
+                throw new ErreurModificationBaseDonnees;
+            });
+    }
+
+    private async incrementerNbFoisJoue(identifiant: string, piste: PisteBD): Promise<void> {
+        piste.nbFoisJoue = piste.nbFoisJoue + 1;
+        this.modelPiste.findByIdAndUpdate(identifiant, {
+            nom: piste.nom, description: piste.description, points: piste.points,
+            type: piste.type, temps: piste.temps, nbFoisJoue: piste.nbFoisJoue
+        })
+            .exec().catch(() => {
                 throw new ErreurModificationBaseDonnees;
             });
     }
@@ -59,19 +73,29 @@ export class BaseDonneesCourse {
         this.modelPiste.findByIdAndRemove(identifiant).exec()
             .catch(() => {
                 throw new ErreurSupressionBaseDonnees();
-        });
+            });
     }
 
     private async obtenirPistes(): Promise<PisteBD[]> {
         const pistes: PisteBD[] = [];
         await this.modelPiste.find()
-        .then((res: Document[]) => {
-            for (const document of res) {
-                pistes.push(document.toObject());
-            }
-        }).catch( () => { throw new ErreurRechercheBaseDonnees; } );
+            .then((res: Document[]) => {
+                for (const document of res) {
+                    pistes.push(document.toObject());
+                }
+            })
+            .catch(() => { throw new ErreurRechercheBaseDonnees; });
 
         return pistes;
+    }
+
+    private async obtenirUnePiste(identifiant: string): Promise<PisteBD> {
+        let piste: PisteBD = null;
+        await this.modelPiste.findById(identifiant)
+            .then((res: Document) => { piste = res.toObject(); })
+            .catch(() => { throw new ErreurRechercheBaseDonnees; });
+
+        return piste;
     }
 
     public async requeteDePistes(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -79,6 +103,11 @@ export class BaseDonneesCourse {
             throw new ErreurConnectionBD();
         });
         res.send(await this.obtenirPistes());
+    }
+
+    public async requeteUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+        this.assurerConnection().catch(() => { throw new ErreurConnectionBD(); });
+        res.send(await this.obtenirUnePiste(req.params.id));
     }
 
     public async requeteAjoutDUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -100,5 +129,10 @@ export class BaseDonneesCourse {
             throw new ErreurConnectionBD();
         });
         res.send(await this.modifierUnePiste(req.params.id, req.body));
+    }
+
+    public async requeteIncrementerNbFoisJoue(req: Request, res: Response, next: NextFunction): Promise<void> {
+        this.assurerConnection().catch(() => { throw new ErreurConnectionBD(); });
+        res.send(await this.incrementerNbFoisJoue(req.params.id, req.body));
     }
 }

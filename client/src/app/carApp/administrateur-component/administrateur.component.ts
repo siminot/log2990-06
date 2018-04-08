@@ -37,4 +37,9 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         }
         window.location.reload();
     }
+
+    public async incrementer(piste: PisteBD): Promise<void> {
+        await this.gestionnaireBD.incrementerNbFoisJouePiste(piste);
+        window.location.reload();
+    }
 }

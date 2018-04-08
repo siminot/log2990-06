@@ -16,8 +16,6 @@ export class ServiceDeRenduJeu extends ServiceDeRenduAbstrait {
         // this.courseEstCommencee = false;
     }
 
-    // Rendu
-
     protected miseAJour(): void {
         // if (this.courseEstCommencee) {
         this.gestionnaireScene.miseAJour(Date.now() - this.tempsDerniereMiseAJour);

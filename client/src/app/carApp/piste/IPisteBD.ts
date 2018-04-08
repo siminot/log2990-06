@@ -4,7 +4,8 @@ export interface PisteBD {
     _id: string;
     nom: string;
     description: string;
+    type: string;
     points: IDefinitionPoint[];
-    infos: String;
-    tempsTours: [{ nom: String, min: number, sec: number, milliSec: number }];
+    temps: [{ nom: string, min: number, sec: number, milliSec: number }];
+    nbFoisJoue: number;
 }

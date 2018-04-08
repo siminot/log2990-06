@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { Scene, Sprite, Vector3, SpriteMaterial, TextureLoader, Texture, FontLoader, TextGeometry } from "three";
+import { Scene, Sprite, Vector3, SpriteMaterial, Texture } from "three";
 import { IScene } from "./IScene";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
@@ -11,6 +11,8 @@ import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { TempsJournee } from "../skybox/tempsJournee";
 import { TEMPS_JOURNEE_INITIAL } from "../constants";
 import { SonDepart } from "../son/SonDepart";
+import { PISTE_TEST } from "../piste/pisteTest";
+import { Point } from "../elementsGeometrie/point";
 
 const TEMPS_ATTENTE: number = 10000;
 const TEMPS_SIGNAL_DEPART: number = 1000;
@@ -41,11 +43,18 @@ export class GestionnaireScene implements IScene {
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.courseEstCommencee = false;
         this.initialisationTouches();
-
-        this.piste = new PisteJeu();
-        this.piste.importer(gestionnaireBDCourse.pointsJeu);
-
+        this.initialisationPiste(gestionnaireBDCourse.pointsJeu);
         this.creerScene();
+    }
+
+    private initialisationPiste(point: Point[]): void {
+        this.piste = new PisteJeu();
+        this.piste.importer(point);
+
+        if (!this.piste.estValide) {
+            this.piste = new PisteJeu();
+            this.piste.importer(PISTE_TEST);
+        }
     }
 
     protected initialisationTouches(): void {
@@ -93,11 +102,11 @@ export class GestionnaireScene implements IScene {
                         this.courseEstCommencee = true;
                         setTimeout(() => {
                             this._scene.remove(sprite);
-                        }, TEMPS_SIGNAL_DEPART);
+                        },TEMPS_SIGNAL_DEPART);
                     }, TEMPS_SIGNAL_DEPART);
-                }, TEMPS_SIGNAL_DEPART);
-            }, TEMPS_SIGNAL_DEPART);
-        }, TEMPS_ATTENTE);
+                },  TEMPS_SIGNAL_DEPART);
+            },  TEMPS_SIGNAL_DEPART);
+        },  TEMPS_ATTENTE);
     }
 
     private nouveauSignal(texte: string, couleur: string): Sprite {

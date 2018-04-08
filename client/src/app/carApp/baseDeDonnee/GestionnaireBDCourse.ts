@@ -4,17 +4,18 @@ import { HttpClient } from "@angular/common/http";
 import { Point } from "../elementsGeometrie/point";
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
-// import { Vector2 } from "three";
 
 export const PISTES_URL: string = "http://localhost:3000/apipistes/";
 const URL_SUPPRIMER_PISTE: string = PISTES_URL + "supprimer/";
 const URL_AJOUTER_PISTE: string = PISTES_URL + "ajouter/";
 const URL_MODIFIER_PISTE: string = PISTES_URL + "modifier/";
+const URL_INC_NB_FOIS_JOUE_PISTE: string = PISTES_URL + "incrementer/";
 
 @Injectable()
 export class GestionnaireBDCourse {
 
     public pistesSujet: Subject<PisteBD[]>;
+    public pisteSujet: Subject<PisteBD>;
 
     public pisteEdition: PisteBD;
     public pisteJeu: PisteBD;
@@ -23,6 +24,7 @@ export class GestionnaireBDCourse {
         this.pisteEdition = null;
         this.pisteJeu = null;
         this.pistesSujet = new Subject<PisteBD[]>();
+        this.pisteSujet = new Subject<PisteBD>();
   }
 
     public get pointsEdition(): Point[] {
@@ -41,22 +43,10 @@ export class GestionnaireBDCourse {
             for (const point of piste.points) {
                 points.push(new Point(point.x, point.y));
             }
-            // points = this.centrerPiste(points);
 
             return points;
         }
     }
-
-/*     private centrerPiste(points: Point[]): Point[] {
-        const vecteurTranslation: Point = points[0];
-        points[0] = new Point(0, 0);
-        for (let i: number = 1; i < points.length; i++) {
-            const nouvellePosition: Vector2 = points[i].sub(vecteurTranslation);
-            points[i] = new Point(nouvellePosition.x, nouvellePosition.y);
-        }
-
-        return points;
-    } */
 
     public obtenirPistes(): Observable<PisteBD[]> {
         this.http.get<PisteBD[]>(PISTES_URL)
@@ -65,6 +55,16 @@ export class GestionnaireBDCourse {
             });
 
         return this.pistesSujet.asObservable();
+    }
+
+    public obtenirUnePiste(identifiant: string): Observable<PisteBD> {
+        this.pisteSujet = new Subject<PisteBD>();
+        this.http.get<PisteBD>(PISTES_URL + identifiant)
+            .subscribe((piste: PisteBD) => {
+                this.pisteSujet.next(piste);
+            });
+
+        return this.pisteSujet.asObservable();
     }
 
     public async supprimerPiste(piste: PisteBD): Promise<void> {
@@ -77,5 +77,9 @@ export class GestionnaireBDCourse {
 
     public mettreAJourPiste(piste: PisteBD): void {
         this.http.patch(URL_MODIFIER_PISTE + this.pisteEdition._id, piste).subscribe();
+    }
+
+    public async incrementerNbFoisJouePiste(piste: PisteBD): Promise<void> {
+        await this.http.patch(URL_INC_NB_FOIS_JOUE_PISTE + piste._id, piste).subscribe();
     }
 }

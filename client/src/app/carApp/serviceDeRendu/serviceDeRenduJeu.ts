@@ -4,7 +4,6 @@ import { GestionnaireCamera } from "../camera/GestionnaireCamera";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { ServiceDeRenduAbstrait } from "./servideDeRenduAbstrait";
 
-
 @Injectable()
 export class ServiceDeRenduJeu extends ServiceDeRenduAbstrait {
 

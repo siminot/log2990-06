@@ -7,8 +7,9 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed, inject } from "@angular/core/testing";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
-const NOMBRE_ELEMENTS_SCENE: number = 4;
-const NB_ENFANTS: number = NOMBRE_AI + NOMBRE_ELEMENTS_SCENE;
+const NOMBRE_ELEMENTS_SCENE: number = 3;
+const NOMBRE_VOITURES: number = NOMBRE_AI + 1;
+const NB_ENFANTS: number = NOMBRE_VOITURES + NOMBRE_ELEMENTS_SCENE;
 
 describe("GestionnaireScene", () => {
 
@@ -35,7 +36,5 @@ describe("GestionnaireScene", () => {
     it("creerScene", () => {
         gestionnaireScene.creerScene();
         expect(gestionnaireScene.scene.children.length).toBe(NB_ENFANTS);
-        expect(gestionnaireScene.voitureJoueur).toBeDefined();
-
     });
 });

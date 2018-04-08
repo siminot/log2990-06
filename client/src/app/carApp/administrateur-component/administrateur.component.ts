@@ -22,11 +22,24 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         this.gestionnaireBD.pisteEdition = piste;
     }
 
-    public supprimerPiste(piste: PisteBD): void {
-        this.gestionnaireBD.supprimerPiste(piste);
+    public async supprimerPiste(piste: PisteBD): Promise<void> {
+        await this.gestionnaireBD.supprimerPiste(piste);
+        window.location.reload();
     }
 
     public creerNouvellePiste(): void {
         this.gestionnaireBD.pisteEdition = null;
+    }
+
+    public supprimerToutesPistes(): void {
+        for (const piste of this.pistes) {
+            this.gestionnaireBD.supprimerPiste(piste);
+        }
+        window.location.reload();
+    }
+
+    public async incrementer(piste: PisteBD): Promise<void> {
+        await this.gestionnaireBD.incrementerNbFoisJouePiste(piste);
+        window.location.reload();
     }
 }

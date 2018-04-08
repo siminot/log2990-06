@@ -44,6 +44,13 @@ import { GestionnaireCollision } from "./carApp/collision/gestionnaireCollisions
 
 
 
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatDividerModule } from "@angular/material/divider";
+
+import { DecimalPipe } from "@angular/common";
+import { ResultatsFinCourseComponent } from './carApp/resultats-fin-course/resultats-fin-course.component';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -61,13 +68,17 @@ import { GestionnaireCollision } from "./carApp/collision/gestionnaireCollisions
         GrilleMultijoueurComponent,
         InfoPartieMultijoueurComponent,
         FinPartieSoloComponent,
-        MainGrilleMultiComponent
+        MainGrilleMultiComponent,
+        ResultatsFinCourseComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        BrowserAnimationsModule,
+        MatExpansionModule,
+        MatDividerModule
     ],
     providers: [
         ServiceDeRenduJeu,
@@ -87,7 +98,8 @@ import { GestionnaireCollision } from "./carApp/collision/gestionnaireCollisions
         ServiceHttp,
         SocketService,
         InfojoueurService,
-        GestionnaireCollision
+        GestionnaireCollision,
+        DecimalPipe
     ],
     bootstrap: [AppComponent],
     exports: [

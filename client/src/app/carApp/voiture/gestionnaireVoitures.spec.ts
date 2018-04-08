@@ -1,13 +1,15 @@
 import { GestionnaireVoitures, NOMBRE_AI } from "./gestionnaireVoitures";
-import { TempsJournee } from "../skybox/skybox";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
+import { PisteJeu } from "../piste/pisteJeu";
+import { TempsJournee } from "../skybox/tempsJournee";
+
 describe("GestionnaireVoitures", () => {
     let gestionnaire: GestionnaireVoitures;
 
     beforeEach(() => {
         gestionnaire = new GestionnaireVoitures(new GestionnaireClavier(), new GestionnaireCollision());
-        gestionnaire.initialiser();
+        gestionnaire.initialiser(new PisteJeu());
 
     });
 
@@ -37,7 +39,7 @@ describe("GestionnaireVoitures", () => {
         expect(gestionnaire.voitureJoueur).toBeDefined();
     });
 
-    it("get voituresAI renvoie une liste d'objets", () => {
-        expect(gestionnaire.voituresAI.length).toBe(NOMBRE_AI);
+    it("get voituresAI renvoie un groupe contenant les voitures AI", () => {
+        expect(gestionnaire.voituresAI.children.length).toBe(NOMBRE_AI);
     });
 });

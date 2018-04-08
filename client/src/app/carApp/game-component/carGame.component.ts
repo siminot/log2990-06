@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, OnDestroy } from "@angular/core";
 import { AbstractGameComponent } from "../abstract-component/abstract.game.component";
 import { ServiceDeRenduJeu } from "../serviceDeRendu/serviceDeRenduJeu";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
@@ -14,7 +14,7 @@ const TEMPS_ATTENTE: number = 10000;
     styleUrls: ["./game.component.css"]
 })
 
-export class CarGameComponent extends AbstractGameComponent implements OnInit {
+export class CarGameComponent extends AbstractGameComponent implements OnInit, OnDestroy {
 
     public constructor(@Inject(ServiceDeRenduJeu) public serviceDeRendu: ServiceDeRenduJeu,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
@@ -27,5 +27,11 @@ export class CarGameComponent extends AbstractGameComponent implements OnInit {
         if (!this.serviceDeRendu.courseEstCommencee) {
             setTimeout(() => this.serviceDeRendu.courseEstCommencee = true, TEMPS_ATTENTE);
         }
+        console.log("CREER");
+    }
+
+    public ngOnDestroy(): void {
+        console.log("DESTROYED");
+
     }
 }

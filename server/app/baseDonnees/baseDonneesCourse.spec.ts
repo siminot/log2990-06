@@ -1,7 +1,5 @@
 import * as assert from "assert";
-import * as WebRequest from "web-request";
 import { BaseDonneesCourse } from "./baseDonneesCourse";
-import { PisteBD } from "../../../client/src/app/carApp/piste/IPisteBD";
 
 describe("Tests base de données du jeu de course", () => {
     describe("Tests du constructeur", () => {
@@ -27,16 +25,4 @@ describe("Tests base de données du jeu de course", () => {
             done();
         });
     });
-
-    describe("Requête à la base de données.", () => {
-        const baseDonneesCourse: BaseDonneesCourse = new BaseDonneesCourse();
-
-        it ("Requête obtention des pistes fonctionne.", (done: MochaDone) => {
-            const URL_TEST: string = "http://localhost:3000/apipistes/";
-            const data: Promise<PisteBD[]> = WebRequest.json<PisteBD[]>(URL_TEST);
-            assert.ok(data);
-            done();
-        });
-    });
-
 });

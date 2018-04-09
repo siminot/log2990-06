@@ -1,4 +1,4 @@
-import { Vector3, Matrix4, Object3D, Euler, Quaternion, Box3 } from "three";
+import { Vector3, Matrix4, Object3D, Euler, Quaternion, BoxHelper } from "three";
 import { Engine } from "./engine";
 import { MS_TO_SECONDS, GRAVITY } from "../constants";
 import { Wheel } from "./wheel";
@@ -33,7 +33,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     private steeringWheelDirection: number;
     private weightRear: number;
     private phares: GroupePhares;
-    private boiteCollision: Box3;
+    public boiteCollision: BoxHelper;
     private _sonVoiture: SonVoiture;
 
     public get isAcceleratorPressed(): boolean {
@@ -94,7 +94,8 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this.steeringWheelDirection = 0;
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
-        this.boiteCollision = new Box3();
+        this.boiteCollision = new BoxHelper(this);
+        this.add(this.boiteCollision);
         this._sonVoiture = new SonVoiture();
         this.add(this._sonVoiture.obtenirSonRepos);
         this.add(this._sonVoiture.obtenirSonAccel);
@@ -102,9 +103,10 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     public initialiser(texture: Object3D, rotation: Euler): void {
+        this.boiteCollision.setRotationFromEuler(rotation);
+        // this.boiteCollision.update();
         this.add(texture);
         this.setRotationFromEuler(rotation);
-        this.boiteCollision.setFromObject(this);
     }
 
     public virerGauche(): void {
@@ -144,6 +146,10 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this._sonVoiture.jouerAccel();
     }
 
+    public getDirection(): Vector3 {
+        return this.direction;
+    }
+
     public miseAJour(deltaTime: number): void {
         deltaTime = deltaTime / MS_TO_SECONDS;
 
@@ -164,7 +170,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
         this.rotateY(this._speed.length() / R);
 
-        this.boiteCollision.setFromCenterAndSize(this.position, this.boiteCollision.getSize()); // manque orientation de la boite...
+        // this.boiteCollision.setFromCenterAndSize(this.position, this.boiteCollision.getSize()); // manque orientation de la boite...
     }
 
     public eteindrePhares(): void {

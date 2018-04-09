@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture} from "@angular/core/testing";
+// import { TestBed, ComponentFixture} from "@angular/core/testing";
 import {GestionnaireCollision } from "./gestionnaireCollisions";
 
 describe("Gestionnaire de collisions", () => {

@@ -64,8 +64,12 @@ export class GestionnaireVoitures {
         return groupe;
     }
 
+    public get tableauVoitureAI(): Voiture[] {
+        return this._voituresAI;
+    }
+
     public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
-                       public gestionnaireCollision: GestionnaireCollision) {
+                       private gestionnaireCollision: GestionnaireCollision) {
         this._voituresAI = [];
         this.controleursAI = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
@@ -97,7 +101,7 @@ export class GestionnaireVoitures {
         this._voitureJoueur = new Voiture();
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
-        .then((objet: Object3D) => this.gestionnaireCollision.mesureDimensionAuto(objet))
+        // .then((objet: Object3D) => this.gestionnaireCollision.mesureDimensionAuto(objet))
             .catch(() => { throw new ErreurChargementTexture(); });
 
     }

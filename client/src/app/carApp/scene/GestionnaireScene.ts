@@ -12,6 +12,8 @@ import { TempsJournee } from "../skybox/tempsJournee";
 import { TEMPS_JOURNEE_INITIAL } from "../constants";
 import { PISTE_TEST } from "../piste/pisteTest";
 import { Point } from "../elementsGeometrie/point";
+import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
+
 
 const TEMPS_ATTENTE: number = 10000;
 
@@ -33,9 +35,10 @@ export class GestionnaireScene implements IScene {
     }
 
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
-        private gestionnaireVoiture: GestionnaireVoitures,
-        @Inject(GestionnaireBDCourse) gestionnaireBDCourse: GestionnaireBDCourse,
-        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
+                       private gestionnaireVoiture: GestionnaireVoitures,
+                       @Inject(GestionnaireBDCourse) gestionnaireBDCourse: GestionnaireBDCourse,
+                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
+                       private gestionnaireCollision: GestionnaireCollision) {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
@@ -73,6 +76,7 @@ export class GestionnaireScene implements IScene {
         this._scene.add(this.piste);
         this._scene.add(this.gestionnaireSkybox.skybox);
         this._scene.add(this.gestionnaireVoiture.voitureJoueur);
+        this.gestionnaireCollision.genererSphere(this._scene);
     }
 
     private signalerDepart(): void {
@@ -86,13 +90,15 @@ export class GestionnaireScene implements IScene {
         setTimeout(() => {
             this.courseEstCommencee = true;
             this._scene.remove(sprite);
-        }, TEMPS_ATTENTE);
+        },         TEMPS_ATTENTE);
     }
 
     public miseAJour(tempsDepuisDerniereTrame: number): void {
         if (this.courseEstCommencee) {
             this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
+            this.gestionnaireCollision.miseAjour(this.gestionnaireVoiture.voitureJoueur);
         }
+
     }
 
     public miseAJourTempsJournee(): void {

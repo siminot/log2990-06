@@ -1,6 +1,5 @@
 import { GestionnaireVoitures, NOMBRE_AI } from "./gestionnaireVoitures";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
-import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
 import { PisteJeu } from "../piste/pisteJeu";
 import { TempsJournee } from "../skybox/tempsJournee";
 import { PISTE_TEST } from "../piste/pisteTest";
@@ -12,7 +11,7 @@ describe("GestionnaireVoitures", () => {
     let gestionnaire: GestionnaireVoitures;
 
     beforeEach(() => {
-        gestionnaire = new GestionnaireVoitures(new GestionnaireClavier(), new GestionnaireCollision());
+        gestionnaire = new GestionnaireVoitures(new GestionnaireClavier());
         gestionnaire.initialiser(PISTE_JEU);
 
     });

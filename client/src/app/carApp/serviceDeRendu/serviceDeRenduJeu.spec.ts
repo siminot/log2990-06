@@ -9,7 +9,7 @@ import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
-
+import { GestionnaireCollision} from "../collision/gestionnaireCollisions";
 describe("Service de rendu de jeu", () => {
     let serviceDeRendu: ServiceDeRenduJeu;
 
@@ -20,21 +20,23 @@ describe("Service de rendu de jeu", () => {
     let gestionnaireCamera: GestionnaireCamera;
     let gestionnaireBD: GestionnaireBDCourse;
     let gestionnaireClavier: GestionnaireClavier;
-
+    let gestionnaireCollision: GestionnaireCollision;
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [ServiceDeRenduJeu, GestionnaireBDCourse, GestionnaireClavier, GestionnaireVoitures,
-                        GestionnaireSkybox, GestionnaireScene, GestionnaireEcran, GestionnaireCamera ]
+                        GestionnaireSkybox, GestionnaireScene, GestionnaireEcran, GestionnaireCamera, GestionnaireCollision ]
         });
     });
 
     beforeEach(inject([HttpClient], (httpClient: HttpClient) => {
         gestionnaireBD = new GestionnaireBDCourse(httpClient);
+        gestionnaireCollision = new GestionnaireCollision;
         gestionnaireClavier = new GestionnaireClavier();
         gestionnaireVoitures = new GestionnaireVoitures(gestionnaireClavier);
         gestionnaireSkybox = new GestionnaireSkybox();
-        gestionnaireScene = new GestionnaireScene(gestionnaireSkybox, gestionnaireVoitures, gestionnaireBD, gestionnaireClavier);
+        gestionnaireScene = new GestionnaireScene(gestionnaireSkybox, gestionnaireVoitures, gestionnaireBD, 
+                                                  gestionnaireClavier, gestionnaireCollision);
         gestionnaireEcran = new GestionnaireEcran();
         gestionnaireCamera = new GestionnaireCamera(gestionnaireVoitures, gestionnaireClavier);
         serviceDeRendu = new ServiceDeRenduJeu(gestionnaireScene, gestionnaireEcran, gestionnaireCamera);

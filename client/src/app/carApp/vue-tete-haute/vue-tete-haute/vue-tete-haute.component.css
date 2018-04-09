@@ -1,8 +1,17 @@
 div {
-    width: 200px;
-    height: 150px;
-    border: 1px solid black;
-    color: #3900FF;
-    font-size: 12px;
+    width: 95%;    
+    color: rgb(68, 35, 255);
     font-family: 'Press Start 2P', cursive;
+    z-index: -1;      
+    margin-top: 55px;
+    margin-left: 10px;
+    text-shadow: 2px 0 0 rgb(0, 0, 0),
+                -2px 0 0 rgb(0, 0, 0),
+                 0 2px 0 rgb(0, 0, 0),
+                 0 -2px 0 rgb(0, 0, 0),
+                 1px 1px rgb(0, 0, 0),
+                -1px -1px 0 rgb(0, 0, 0),
+                 1px -1px 0 rgb(0, 0, 0),
+                -1px 1px 0 rgb(0, 0, 0);
+
 }

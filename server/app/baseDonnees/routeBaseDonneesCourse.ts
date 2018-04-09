@@ -18,8 +18,6 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
         const router: Router = Router();
 
         router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-            console.log(req);
-            console.log(res);
             await this.baseDonneesCourse.requeteDePistes(req, res, next);
         });
 

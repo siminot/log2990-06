@@ -10,7 +10,7 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
 
     public readonly mainRoute: string = "/apipistes";
 
-    public constructor(@inject(Types.BaseDonneesCourse) private baseDonneesCourse: BaseDonneesCourse ) {
+    public constructor(@inject(Types.BaseDonneesCourse) private baseDonneesCourse: BaseDonneesCourse) {
         super();
     }
 
@@ -18,7 +18,9 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
         const router: Router = Router();
 
         router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-           await this.baseDonneesCourse.requeteDePistes(req, res, next);
+            console.log(req);
+            console.log(res);
+            await this.baseDonneesCourse.requeteDePistes(req, res, next);
         });
 
         router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {

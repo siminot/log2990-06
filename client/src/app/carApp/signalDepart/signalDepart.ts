@@ -5,8 +5,8 @@ const ROUGE: string = "#ff0000";
 const VERT: string = "#00ff00";
 const BLEU: string = "#0000ff";
 
-const TEMPS_SIGNAL_DEPART: number = 1000;
-const TEMPS_MAXIMAL: number = 6;
+const TEMPS_SIGNAL_DEPART: number = 650;
+const TEMPS_MAXIMAL: number = 10;
 const DEBUT_COMPTEUR: number = 3;
 
 const MESSAGE_PREPARATION: string = "Préparez-vous au départ";
@@ -17,7 +17,7 @@ export class SignalDepart extends Sprite {
     private compteur: number;
     private readonly zoneDepart: Vector3;
 
-    public constructor(zoneDepart: Vector3) {
+    public constructor(zoneDepart: Vector3, private sonDepart: SonDepart) {
         super();
         this.zoneDepart = zoneDepart;
         this.compteur = TEMPS_MAXIMAL;
@@ -27,8 +27,9 @@ export class SignalDepart extends Sprite {
         if (this.compteur >= 0) {
             this.passerAuProchainMessage();
             setTimeout(() => {
-                const sonDepart: SonDepart = new SonDepart();
-                sonDepart.jouerSon();
+                if (this.compteur === DEBUT_COMPTEUR) {
+                    this.sonDepart.jouerSon();
+                }
                 this.demarrer();
             },         TEMPS_SIGNAL_DEPART);
         } else {
@@ -48,6 +49,7 @@ export class SignalDepart extends Sprite {
         }
     }
 
+    // Source: https://stackoverflow.com/questions/14103986/canvas-and-spritematerial
     private nouveauSignal(texte: string, couleur: string): void {
         const canvas: HTMLCanvasElement = document.createElement("canvas");
         const size: number = 256; // CHANGED

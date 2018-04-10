@@ -10,7 +10,7 @@ import { PisteComponent } from "./carApp/piste-component/piste.component";
 import { AdministrateurComponent } from "./carApp/administrateur-component/administrateur.component";
 import { ChoixCourseComponent } from "./carApp/choixCourse-component/choixCourse.component";
 import { FinPartieSoloComponent } from "./crosswords/fin-partie/solo/fin-partie-solo.component";
-import { ResultatsFinCourseComponent } from "./carApp/resultats-fin-course/resultats-fin-course.component";
+import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps/tableau-meilleurs-temps.component"
 
 const routes: Routes = [
   { path: "CarGame", component: CarGameComponent },
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: "FinPartie", component: FinPartieSoloComponent },
   { path: "admin", component: AdministrateurComponent },
   { path: "choixCourse", component: ChoixCourseComponent },
-  { path: "resultatsFinCourse", component: ResultatsFinCourseComponent }
+  { path: "tableauMeilleursTemps", component: TableauMeilleursTempsComponent }
 ];
 
 @NgModule({

@@ -1,8 +1,7 @@
 <div id="container">
   <h1 id="titrePrincipal">Fin de course</h1>
-  <h2 class="resulats de la couse sur la piste: " {{piste}} ></h2>
+  <h2> voici les resultats</h2>
     <li *ngFor="let resultatCourse of resultatsCourse">
-      {{resultatCourse.nom}} {{resultatCourse.tempsCourse}}
+      {{resultatCourse.nom}} {{resultatCourse.tempsCourse.tempsFormate}}
     </li>
-  <button *ngIf="peutComparer" routerLink = "/resulats" >
 </div>

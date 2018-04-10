@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Vector3, Scene, Sphere} from "three";
 
 
-// const LONGEUR_AUTO: number = 1.7000000476837158;
+
 const FACTEUR_AVANT: number = 1.1;
 const FACTEUR_ARRIERE: number = -1;
 const FACTEUR_MILIEU: number = 0;
@@ -13,22 +13,17 @@ const SPHERE_ARRIERE: Vector3 = new Vector3(FACTEUR_ARRIERE, FACTEUR_ARRIERE, FA
 const SPHERE_MILIEU: Vector3 = new Vector3(FACTEUR_MILIEU, FACTEUR_MILIEU, FACTEUR_MILIEU);
 const NOMBRE_SPHERE: number = 3;
 const DISTANCE_CRITIQUE: number = 2;
-// const HAUTEUR_AUTO: number = 0.550000011920929;
+
 @Injectable()
 export class GestionnaireCollision {
-
-    // private position: Vector3;
-    // private direction: Vector3;
     private arrayDeSphere: Array<Sphere[]>;
-    // private longueurVoiture: number;
+
     public constructor() {
         this.arrayDeSphere = new Array<Array<Sphere>>();
     }
 
     public creationShpere(): Sphere {
-        // let geometry: SphereGeometry = new SphereGeome try(LARGEUR_AUTO, 32, 32);
-        // let material: MeshBasicMaterial = new MeshBasicMaterial({ color: 0xffff00 });
-        let positionDepart: Vector3 = new Vector3(0,0,0);
+        let positionDepart: Vector3 = new Vector3(0, 0, 0);
 
         return new Sphere(positionDepart, LARGEUR_AUTO);
     }
@@ -84,14 +79,23 @@ export class GestionnaireCollision {
                 this.verifierPerimetrePriver(this.arrayDeSphere[i], this.arrayDeSphere[j]);
             }
         }
-
     }
 
     private verifierPerimetrePriver( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
         const sphereMilieuA: Sphere = spheresA[1];
         for(const sphere of spheresB){
             if(sphereMilieuA.distanceToPoint(sphere.center) < DISTANCE_CRITIQUE) {
-                console.log("DANGER DANGER");
+                this.observationZoneCritique(spheresA, spheresB);
+            }
+        }
+    }
+
+    private observationZoneCritique ( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void{
+        for( let sphereA of spheresA){
+            for( let sphereB of spheresB) {
+                if(sphereA.intersectsSphere(sphereB)){
+                    console.log("DANGER DANGER");
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 import { Voiture } from "../voiture/voiture";
 import { Injectable } from "@angular/core";
-import { Vector3, Scene, Sphere} from "three";
+import { Vector3, Sphere} from "three";
+
 
 
 
@@ -17,6 +18,8 @@ const DISTANCE_CRITIQUE: number = 2;
 @Injectable()
 export class GestionnaireCollision {
     private arrayDeSphere: Array<Sphere[]>;
+    private voitureJoueur: Voiture;
+    private voituresAi: Voiture[];
 
     public constructor() {
         this.arrayDeSphere = new Array<Array<Sphere>>();
@@ -73,7 +76,9 @@ export class GestionnaireCollision {
         this.insererSphereDansVoitureAI(voitureAi);
     }
 
-    public verifierPerimetreContact(): void{
+    public gestionCollision(voitureJoueur: Voiture, voitureAi: Voiture[]): void {
+        this.voitureJoueur = voitureJoueur;
+        this.voituresAi = voitureAi;
         for (let i: number = 0; i < this.arrayDeSphere.length; i++) {
             for ( let j: number = i + 1; j < this.arrayDeSphere.length; j++ ) {
                 this.verifierPerimetrePriver(this.arrayDeSphere[i], this.arrayDeSphere[j]);
@@ -91,12 +96,35 @@ export class GestionnaireCollision {
     }
 
     private observationZoneCritique ( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void{
-        for( let sphereA of spheresA){
-            for( let sphereB of spheresB) {
-                if(sphereA.intersectsSphere(sphereB)){
-                    console.log("DANGER DANGER");
+        for ( let sphereA of spheresA){
+            for ( let sphereB of spheresB) {
+                if (sphereA.intersectsSphere(sphereB)) {
+                    this.resoudreContact(spheresA, spheresB);
                 }
             }
         }
     }
+
+    private resoudreContact(spheresA: Array<Sphere>, spheresB: Array<Sphere>) {
+        let distanceAReculer: Vector3 = new Vector3();
+        for(let sphereA of spheresA){
+            let distanceAAjouter: Vector3 = new Vector3();
+            for(let sphereB of spheresB){
+                sphereA.clampPoint(distanceAAjouter, sphereB.center);
+                distanceAReculer.add(distanceAAjouter);
+                console.log(distanceAAjouter.x, distanceAAjouter.y, distanceAAjouter.z);
+            }
+        }
+        let i: number = this.arrayDeSphere.indexOf(spheresA);
+        if ( i === 0) {
+            let ajustement: Vector3 = new Vector3();
+            // console.log(distanceAReculer.x, distanceAReculer.y, distanceAReculer.z);
+            ajustement = this.voitureJoueur.position.sub(distanceAReculer);
+            this.voitureJoueur.position.set(ajustement.x, ajustement.y, ajustement.z);
+            // console.log("CONTACT!")
+        }
+    }
+
+
+
 }

@@ -55,7 +55,6 @@ export class SignalDepart extends Sprite {
         }
     }
 
-    // Source: https://stackoverflow.com/questions/14103986/canvas-and-spritematerial
     private nouveauSignal(texte: string, couleur: string): void {
         this.remplirContexte(texte, couleur);
         this.miseAJourSprite();
@@ -74,10 +73,11 @@ export class SignalDepart extends Sprite {
         return new SpriteMaterial({ map: spriteMap });
     }
 
+    // Source: https://stackoverflow.com/questions/14103986/canvas-and-spritematerial
     private remplirContexte(texte: string, couleur: string): void {
         this.creerNouveauCanvas();
         const context: CanvasRenderingContext2D = this.canvas.getContext("2d");
-        context.fillStyle = couleur; // CHANGED
+        context.fillStyle = couleur;
         context.textAlign = "center";
         context.font = "24px Arial";
         const DEUX: number = 2;

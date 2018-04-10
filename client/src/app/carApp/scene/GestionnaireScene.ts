@@ -15,7 +15,7 @@ import { Point } from "../elementsGeometrie/point";
 import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
 
 
-const TEMPS_ATTENTE: number = 10000;
+const TEMPS_ATTENTE: number = 5000;
 
 // Touches clavier
 const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementClavier.TOUCHE_RELEVEE);
@@ -76,7 +76,8 @@ export class GestionnaireScene implements IScene {
         this._scene.add(this.piste);
         this._scene.add(this.gestionnaireSkybox.skybox);
         this._scene.add(this.gestionnaireVoiture.voitureJoueur);
-        this.gestionnaireCollision.genererSphere(this._scene);
+        this.gestionnaireCollision.insererSphereDansAutos(this.gestionnaireVoiture.voitureJoueur,
+                                                          this.gestionnaireVoiture.tableauVoitureAI, this._scene);
     }
 
     private signalerDepart(): void {
@@ -96,7 +97,7 @@ export class GestionnaireScene implements IScene {
     public miseAJour(tempsDepuisDerniereTrame: number): void {
         if (this.courseEstCommencee) {
             this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
-            this.gestionnaireCollision.miseAjour(this.gestionnaireVoiture.voitureJoueur);
+            this.gestionnaireCollision.miseAjour(this.gestionnaireVoiture.voitureJoueur, this.gestionnaireVoiture.tableauVoitureAI);
         }
 
     }

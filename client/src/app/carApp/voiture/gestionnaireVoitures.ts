@@ -13,7 +13,7 @@ import { TempsJournee } from "../skybox/tempsJournee";
 import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
 
 // AI
-export const NOMBRE_AI: number = 3;
+export const NOMBRE_AI: number = 1;
 const ANGLE_DROIT: Euler = new Euler(0, PI_OVER_2, 0);
 const AUTO_GAUCHE: number = -2;
 const AUTO_DROITE: number = 2;

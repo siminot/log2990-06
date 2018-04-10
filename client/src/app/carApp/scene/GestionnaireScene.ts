@@ -77,7 +77,7 @@ export class GestionnaireScene implements IScene {
         this._scene.add(this.gestionnaireSkybox.skybox);
         this._scene.add(this.gestionnaireVoiture.voitureJoueur);
         this.gestionnaireCollision.insererSphereDansAutos(this.gestionnaireVoiture.voitureJoueur,
-                                                          this.gestionnaireVoiture.tableauVoitureAI, this._scene);
+                                                          this.gestionnaireVoiture.tableauVoitureAI);
     }
 
     private signalerDepart(): void {
@@ -98,6 +98,7 @@ export class GestionnaireScene implements IScene {
         if (this.courseEstCommencee) {
             this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
             this.gestionnaireCollision.miseAjour(this.gestionnaireVoiture.voitureJoueur, this.gestionnaireVoiture.tableauVoitureAI);
+            this.gestionnaireCollision.verifierPerimetreContact();
         }
 
     }

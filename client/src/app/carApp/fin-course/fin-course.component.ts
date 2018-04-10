@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { ResultatJoueur } from "./resultatJoueur";
 
 @Component({
@@ -6,11 +6,14 @@ import { ResultatJoueur } from "./resultatJoueur";
     templateUrl: "./fin-course.component.html",
     styleUrls: ["./fin-course.component.css"]
 })
-export class FinCourseComponent implements OnInit {
+export class FinCourseComponent {
+
+    public peutComparer: boolean;
 
     public constructor(public resultatsCourse: ResultatJoueur[]) {
         this.classerLesTemps();
         this.ajouterRangs();
+        this.peutComparer = this.peutComparerAvecLesMeilleursTemps();
     }
 
     private classerLesTemps(): void {
@@ -26,13 +29,8 @@ export class FinCourseComponent implements OnInit {
         }
     }
 
-    public comparerAvecLesMeilleursTemps(): void {
-        if (this.resultatsCourse[0].joueurEstHumain) {
-            console.log("peut comparer");
-        }
-    }
-
-    public ngOnInit(): void {
+    private peutComparerAvecLesMeilleursTemps(): boolean {
+        return this.resultatsCourse[0].joueurEstHumain;
     }
 
 }

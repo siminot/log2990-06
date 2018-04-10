@@ -11,6 +11,7 @@ describe("ConfigPartieComponent", () => {
     let component: ConfigPartieComponent;
     let fixture: ComponentFixture<ConfigPartieComponent>;
     let mockRouter: Router;
+    const mockHtmlElem: HTMLElement = document.createElement("div");
 
     beforeEach(async(() => {
         mockRouter = jasmine.createSpyObj("Router", ["navigate"]);
@@ -37,7 +38,7 @@ describe("ConfigPartieComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    describe("ajouterDifficulte()", () => {
+    describe("modification d'attributs", () => {
 
         it("devrait mettre a jour la requete", () => {
             component.ajouterDifficulte(Difficulte.Facile);
@@ -54,5 +55,32 @@ describe("ConfigPartieComponent", () => {
             expect(component["serviceHTTP"].difficulte).toEqual(DIFFICULTE_AVANT);
         });
 
+        it("devrait modifier le nom de la partie", () => {
+            component.modifierNomPartie("nouveauNom");
+            expect(component["nomPartie"]).toEqual("nouveauNom");
+        });
+
     });
+
+    describe("Sections Visible", () => {
+        it("une section devrait devenir visible", () => {
+            spyOn(document, "getElementById").and.returnValue(mockHtmlElem);
+            component.apparaitreSection("uneSection");
+            expect(mockHtmlElem.classList.contains("visible")).toBeTruthy();
+        });
+
+        it("une section devrait devenir invisible", () => {
+            spyOn(document, "getElementById").and.returnValue(mockHtmlElem);
+            component.disparaitreSection("uneSection");
+            expect(mockHtmlElem.classList.contains("pasVisible")).toBeTruthy();
+        });
+
+        it("le focus doit etre fait sur des section de texte", () => {
+            spyOn(document, "getElementById").and.returnValue(mockHtmlElem);
+            spyOn(mockHtmlElem, "focus");
+            component.apparaitreSection("inputNomPartie");
+            expect(mockHtmlElem.focus).toHaveBeenCalled();
+        });
+    });
+
 });

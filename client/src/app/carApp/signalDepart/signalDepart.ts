@@ -12,15 +12,21 @@ const DEBUT_COMPTEUR: number = 3;
 const MESSAGE_PREPARATION: string = "Préparez-vous au départ";
 const SIGNAL_DEPART: string = "GO";
 
+const DIMENSION: number = 10;
+const DIMENSION_CANEVAS: number = 256;
+const HAUTEUR: number = 3;
+
 export class SignalDepart extends Sprite {
 
     private compteur: number;
     private readonly zoneDepart: Vector3;
+    private canvas: HTMLCanvasElement;
 
     public constructor(zoneDepart: Vector3, private sonDepart: SonDepart) {
         super();
         this.zoneDepart = zoneDepart;
         this.compteur = TEMPS_MAXIMAL;
+        this.creerNouveauCanvas();
     }
 
     public demarrer(): void {
@@ -51,22 +57,37 @@ export class SignalDepart extends Sprite {
 
     // Source: https://stackoverflow.com/questions/14103986/canvas-and-spritematerial
     private nouveauSignal(texte: string, couleur: string): void {
-        const canvas: HTMLCanvasElement = document.createElement("canvas");
-        const size: number = 256; // CHANGED
-        canvas.width = size;
-        canvas.height = size;
-        const context: CanvasRenderingContext2D = canvas.getContext("2d");
+        this.remplirContexte(texte, couleur);
+        this.miseAJourSprite();
+    }
+
+    private miseAJourSprite(): void {
+        this.material.setValues(this.materielSprite);
+        this.scale.set(DIMENSION, DIMENSION, 1);
+        this.position.set(this.zoneDepart.x, HAUTEUR, this.zoneDepart.z);
+    }
+
+    private get materielSprite(): SpriteMaterial {
+        const spriteMap: Texture = new Texture(this.canvas);
+        spriteMap.needsUpdate = true;
+
+        return new SpriteMaterial({ map: spriteMap });
+    }
+
+    private remplirContexte(texte: string, couleur: string): void {
+        this.creerNouveauCanvas();
+        const context: CanvasRenderingContext2D = this.canvas.getContext("2d");
         context.fillStyle = couleur; // CHANGED
         context.textAlign = "center";
         context.font = "24px Arial";
-        context.fillText(texte, size / 2, size / 2);
+        const DEUX: number = 2;
+        context.fillText(texte, DIMENSION_CANEVAS / DEUX, DIMENSION_CANEVAS / DEUX);
+    }
 
-        const spriteMap: Texture = new Texture(canvas);
-        spriteMap.needsUpdate = true;
-        const spriteMaterial: SpriteMaterial = new SpriteMaterial({ map: spriteMap });
-        this.material.setValues(spriteMaterial);
-        this.scale.set(10, 10, 1);
-        this.position.set(this.zoneDepart.x, 3, this.zoneDepart.z);
+    private creerNouveauCanvas(): void {
+        this.canvas = document.createElement("canvas");
+        this.canvas.width = DIMENSION_CANEVAS;
+        this.canvas.height = DIMENSION_CANEVAS;
     }
 
     private retirerMessage(): void {

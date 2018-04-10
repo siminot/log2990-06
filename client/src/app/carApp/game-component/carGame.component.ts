@@ -5,8 +5,6 @@ import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
 import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 
-const TEMPS_ATTENTE: number = 10000;
-
 @Component({
     moduleId: module.id,
     selector: "app-cargame-component",
@@ -24,14 +22,10 @@ export class CarGameComponent extends AbstractGameComponent implements OnInit, O
     }
 
     public ngOnInit(): void {
-        if (!this.serviceDeRendu.gestionnaireScene.courseEstCommencee) {
-            setTimeout(() => this.serviceDeRendu.gestionnaireScene.courseEstCommencee = true, TEMPS_ATTENTE);
-        }
         // console.log("CREER");
     }
 
     public ngOnDestroy(): void {
         // console.log("DESTROYED");
-
     }
 }

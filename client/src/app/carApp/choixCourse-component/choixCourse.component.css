@@ -68,3 +68,9 @@ ul, li {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+
+.thumb {
+    height:100%;
+    width:100%;
+    border: 2px solid black;
+}

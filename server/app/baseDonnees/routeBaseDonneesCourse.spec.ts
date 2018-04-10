@@ -11,7 +11,7 @@ import { PisteBD } from "../../../client/src/app/carApp/piste/IPisteBD";
 // import { PISTE1 } from "../../../client/src/app/carApp/piste/pisteTest";
 
 const URL_SERVICE: string = "http://localhost:3000/apipistes/";
-const URL_AJOUTER: string = URL_SERVICE + "ajouter/";
+// const URL_AJOUTER: string = URL_SERVICE + "ajouter/";
 // const URL_MODIFIER: string = URL_SERVICE + "modifier/";
 // const URL_SUPPRIMER: string = URL_SERVICE + "supprimer/";
 

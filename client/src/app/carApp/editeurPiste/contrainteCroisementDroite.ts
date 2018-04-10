@@ -22,7 +22,7 @@ export class ContrainteCroisementDroite {
         return droite.pointFinalDroiteCentree.vecteurPlanXZ.cross(autrePoint.vecteurPlanXZ).y;
     }
 
-    private static pointEstSurDroite(droite: Droite, point: Point): boolean {
+    private static pointEstSurDroite(point: Point, droite: Droite, ): boolean {
         return this.locationPointParRapportADroite(droite, point) === 0;
     }
 
@@ -34,8 +34,8 @@ export class ContrainteCroisementDroite {
         const pointDebutDroite: Point = new Point(droite.start.x, droite.start.z);
         const pointFinDroite: Point = new Point(droite.end.x, droite.end.z);
 
-        return this.pointEstSurDroite(droiteInfinie, pointDebutDroite)
-                || this.pointEstSurDroite(droiteInfinie, pointFinDroite)
+        return this.pointEstSurDroite(pointDebutDroite, droiteInfinie)
+                || this.pointEstSurDroite(pointFinDroite, droiteInfinie)
                 || (this.pointEstADroiteDeLaDroite(droiteInfinie, pointDebutDroite)
                     !== this.pointEstADroiteDeLaDroite(droiteInfinie, pointFinDroite));
     }

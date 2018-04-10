@@ -22,22 +22,22 @@ export class ContrainteCroisementDroite {
         return droite.pointFinalDroiteCentree.vecteurPlanXZ.cross(autrePoint.vecteurPlanXZ).y;
     }
 
-    private static pointEstSurDroite(droite: Droite, point: Point): boolean {
+    private static pointEstSurDroite(point: Point, droite: Droite, ): boolean {
         return this.locationPointParRapportADroite(droite, point) === 0;
     }
 
-    private static pointEstADroiteDeLaDroite(droite: Droite, point: Point): boolean {
+    private static pointEstADroiteDeLaDroite(point: Point, droite: Droite): boolean {
         return this.locationPointParRapportADroite(droite, point) < 0;
     }
 
-    private static droiteCroiseOuToucheDroiteInfinie(droiteInfinie: Droite, droite: Droite): boolean {
+    private static droiteCroiseOuToucheDroiteInfinie(droite: Droite, droiteInfinie: Droite): boolean {
         const pointDebutDroite: Point = new Point(droite.start.x, droite.start.z);
         const pointFinDroite: Point = new Point(droite.end.x, droite.end.z);
 
-        return this.pointEstSurDroite(droiteInfinie, pointDebutDroite)
-                || this.pointEstSurDroite(droiteInfinie, pointFinDroite)
-                || (this.pointEstADroiteDeLaDroite(droiteInfinie, pointDebutDroite)
-                    !== this.pointEstADroiteDeLaDroite(droiteInfinie, pointFinDroite));
+        return this.pointEstSurDroite(pointDebutDroite, droiteInfinie)
+                || this.pointEstSurDroite(pointFinDroite, droiteInfinie)
+                || (this.pointEstADroiteDeLaDroite(pointDebutDroite, droiteInfinie)
+                    !== this.pointEstADroiteDeLaDroite(pointFinDroite, droiteInfinie));
     }
 
 }

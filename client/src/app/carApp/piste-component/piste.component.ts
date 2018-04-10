@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, Input } from "@angular/core";
 import { AbstractGameComponent } from "../abstract-component/abstract.game.component";
 import { ServiceDeRenduPistes } from "../serviceDeRendu/serviceDeRenduPistes";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
@@ -16,6 +16,9 @@ import { Subscription } from "rxjs/Subscription";
 })
 
 export class PisteComponent extends AbstractGameComponent {
+    @Input()
+    public avecBouton: boolean;
+
     public nombreDePoints: number;
     public souscriptionNbPoints: Subscription;
     public estBoucle: boolean;

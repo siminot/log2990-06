@@ -31,12 +31,9 @@ export class VueTeteHauteComponent implements OnInit {
     public debuterCourse(): void {
         this.timer.debuterCourse(); // lancer quand la course commence (a retirer)
         this.updateTempsCourse();
-        this.foo();
     }
 
-    public ngOnInit(): void {
-        this.debuterCourse();
-    }
+    public ngOnInit(): void {}
 
     private updateTempsCourse(): void {
         this.rafraichissement = setInterval(() => {
@@ -59,11 +56,5 @@ export class VueTeteHauteComponent implements OnInit {
 
     private courseTermiee(): void {
         clearInterval(this.rafraichissement);
-    }
-
-    private foo(): void { // fonction seulement pour essayer des  choses
-        setInterval(() => {
-            this.nouveauTour(0);
-        },         5000);
     }
 }

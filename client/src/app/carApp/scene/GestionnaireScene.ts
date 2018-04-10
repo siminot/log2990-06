@@ -13,6 +13,7 @@ import { TEMPS_JOURNEE_INITIAL } from "../constants";
 import { PISTE_TEST } from "../piste/pisteTest";
 import { Point } from "../elementsGeometrie/point";
 import { SignalDepart } from "../signalDepart/signalDepart";
+import { SonDepart } from "../son/SonDepart";
 
 // Touches clavier
 const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementClavier.TOUCHE_RELEVEE);
@@ -26,6 +27,7 @@ export class GestionnaireScene implements IScene {
     private tempsJournee: TempsJournee;
     private clavier: UtilisateurPeripherique;
     private signalDepart: SignalDepart;
+    private sonDepart: SonDepart;
 
     public get scene(): Scene {
         return this._scene;
@@ -38,6 +40,7 @@ export class GestionnaireScene implements IScene {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
+        this.sonDepart = new SonDepart();
         this.initialisationTouches();
         this.initialisationPiste(gestionnaireBDCourse.pointsJeu);
         this.creerScene();
@@ -74,7 +77,7 @@ export class GestionnaireScene implements IScene {
     }
 
     private signalerDepart(): void {
-        this.signalDepart = new SignalDepart(this.piste.zoneDeDepart);
+        this.signalDepart = new SignalDepart(this.piste.zoneDeDepart, this.sonDepart);
         this._scene.add(this.signalDepart);
         this.signalDepart.demarrer();
     }

@@ -10,7 +10,7 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
 
     public readonly mainRoute: string = "/apipistes";
 
-    public constructor(@inject(Types.BaseDonneesCourse) private baseDonneesCourse: BaseDonneesCourse ) {
+    public constructor(@inject(Types.BaseDonneesCourse) private baseDonneesCourse: BaseDonneesCourse) {
         super();
     }
 
@@ -18,7 +18,11 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
         const router: Router = Router();
 
         router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-           await this.baseDonneesCourse.requeteDePistes(req, res, next);
+            await this.baseDonneesCourse.requeteDePistes(req, res, next);
+        });
+
+        router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
+            await this.baseDonneesCourse.requeteUnePiste(req, res, next);
         });
 
         router.post("/ajouter", async (req: Request, res: Response, next: NextFunction) => {
@@ -27,6 +31,10 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
 
         router.patch("/modifier/:id", async (req: Request, res: Response, next: NextFunction) => {
             await this.baseDonneesCourse.requeteModifierPiste(req, res, next);
+        });
+
+        router.patch("/incrementer/:id", async (req: Request, res: Response, next: NextFunction) => {
+            await this.baseDonneesCourse.requeteIncrementerNbFoisJoue(req, res, next);
         });
 
         router.delete("/supprimer/:id", async (req: Request, res: Response, next: NextFunction) => {

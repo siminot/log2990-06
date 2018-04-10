@@ -18,5 +18,6 @@ export class ChoixCourseComponent extends AbstractListePisteComponent {
         if (piste !== undefined) {
             this.gestionnaireBD.pisteJeu = piste;
         }
+        this.gestionnaireBD.incrementerNbFoisJouePiste(piste);
     }
 }

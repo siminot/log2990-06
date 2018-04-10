@@ -1,34 +1,51 @@
 <div id="container">
-  <h1 id="titrePrincipal">Bienvenue sur la page Administrateur</h1>
-  <h2 class="titre">Création d'une nouvelle piste</h2>
-  <button class="creer" title="creer"
-          routerLink="/editeurPistes" (click)="creerNouvellePiste()">Créer une nouvelle piste</button>
-  <br><br>
+    <h1 id="titrePrincipal">Bienvenue sur la page Administrateur</h1>
+    <h2 class="titre">Création d'une nouvelle piste</h2>
+    <button class="creer" title="creer" routerLink="/editeurPistes" (click)="creerNouvellePiste()">Créer une nouvelle piste</button>
+    <br>
+    <br>
 
-  <h2 class="titre">Pistes stockées</h2>
+    <h2 class="titre">Pistes stockées</h2>
 
-  <div  id="listePistes">
-    <mat-accordion multi="false">
-      <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
-        <mat-expansion-panel-header class="pisteTitre">
-          {{ piste.nom | uppercase }}
-        </mat-expansion-panel-header>
-        <div class="pisteDescription">
-          {{ piste.description }}
-          <div class="divider">
-            <mat-divider></mat-divider>
-          </div>
-          <ul>
-            <li *ngFor="let temps of piste.tempsTours">
-              {{ temps.min }}:{{ temps.sec | number:'2.0-0' }}.{{ temps.milliSec | number:'2.0-0' }} par {{ temps.nom }}
-            </li>
-          </ul>
-          <button class="editer" title="editer" (click)="editerPiste(piste)" routerLink="/editeurPistes">Éditer</button>
-          <button class="supprimer" title="supprimer" (click)="supprimerPiste(piste)">Supprimer</button>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-    <button id="suppToutesPistes" title="suppToutesPistes" (click)="supprimerToutesPistes()">Supprimer toutes les pistes</button>
+    <div id="listePistes">
+        <mat-accordion multi="false">
+            <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
+                <mat-expansion-panel-header class="pisteTitre">
+                    {{ piste.nom | uppercase }}
+                </mat-expansion-panel-header>
+                
+                <div class="pisteDescription">
+                    Type : {{ piste.type }}
+                    
+                    <div class="divider">
+                        <mat-divider></mat-divider>
+                    </div>
+
+                    Nombre de fois joué : {{ piste.nbFoisJoue }}
+
+                    <div class="divider">
+                        <mat-divider></mat-divider>
+                    </div>
+
+                    {{ piste.description }}
+
+                    <div class="divider">
+                        <mat-divider></mat-divider>
+                    </div>
+                
+                    <ul>
+                        <li *ngFor="let temps of piste.temps">
+                            {{ temps.min }}:{{ temps.sec | number:'2.0-0' }}.{{ temps.milliSec | number:'2.0-0' }} par {{ temps.nom }}
+                        </li>
+                    </ul>
+                
+                    <button class="editer" title="editer" (click)="editerPiste(piste)" routerLink="/editeurPistes">Éditer</button>
+                    <button class="supprimer" title="supprimer" (click)="supprimerPiste(piste)">Supprimer</button>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+        <button id="suppToutesPistes" title="suppToutesPistes" (click)="supprimerToutesPistes()">Supprimer toutes les pistes</button>
     </div>
-    
+
 </div>

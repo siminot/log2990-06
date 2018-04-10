@@ -7,16 +7,19 @@ import { ServiceDeRenduAbstrait } from "./servideDeRenduAbstrait";
 @Injectable()
 export class ServiceDeRenduJeu extends ServiceDeRenduAbstrait {
 
-    public constructor(protected gestionnaireScene: GestionnaireScene,
+    // public courseEstCommencee: boolean;
+
+    public constructor(public gestionnaireScene: GestionnaireScene,
                        @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
                        @Inject(GestionnaireCamera) gestionnaireCamera: GestionnaireCamera) {
         super(gestionnaireEcran, gestionnaireCamera, gestionnaireScene);
+        // this.courseEstCommencee = false;
     }
 
-    // Rendu
-
     protected miseAJour(): void {
+        // if (this.courseEstCommencee) {
         this.gestionnaireScene.miseAJour(Date.now() - this.tempsDerniereMiseAJour);
+        // }
         this.tempsDerniereMiseAJour = Date.now();
     }
 }

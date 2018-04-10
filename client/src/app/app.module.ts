@@ -47,8 +47,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDividerModule } from "@angular/material/divider";
 
-import { DecimalPipe } from "@angular/common";
 import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
+import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps/tableau-meilleurs-temps.component";
 
 @NgModule({
     declarations: [
@@ -68,8 +68,10 @@ import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
         InfoPartieMultijoueurComponent,
         FinPartieSoloComponent,
         MainGrilleMultiComponent,
+        VueTeteHauteComponent,
         FinCourseComponent,
-        VueTeteHauteComponent
+        VueTeteHauteComponent,
+        TableauMeilleursTempsComponent
     ],
     imports: [
         BrowserModule,
@@ -97,7 +99,8 @@ import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
         ServiceInteractionComponent,
         ServiceHttp,
         SocketService,
-        InfojoueurService
+        InfojoueurService,
+        TimerService
     ],
     bootstrap: [AppComponent],
     exports: [

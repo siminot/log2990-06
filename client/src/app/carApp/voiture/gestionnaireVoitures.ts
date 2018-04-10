@@ -1,18 +1,25 @@
 import { Injectable, Inject } from "@angular/core";
-import { ObjectLoader, Object3D, Group, LoadingManager } from "three";
+import { ObjectLoader, Object3D, Euler, Vector3, Group, LoadingManager } from "three";
 import { Voiture } from "../voiture/voiture";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
 import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClavier";
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 import { PisteJeu } from "../piste/pisteJeu";
+import { PI_OVER_2, TEMPS_JOURNEE_INITIAL } from "../constants";
 import { ControleurVoiture } from "../controleurVoiture/controleurVoiture";
 import { IObjetEnMouvement } from "./IObjetEnMouvement";
 import { TempsJournee } from "../skybox/tempsJournee";
-import { TEMPS_JOURNEE_INITIAL } from "../constants";
 
 // AI
-export const NOMBRE_AI: number = 1;
+export const NOMBRE_AI: number = 3;
+const ANGLE_DROIT: Euler = new Euler(0, PI_OVER_2, 0);
+const AUTO_GAUCHE: number = -2;
+const AUTO_DROITE: number = 2;
+const AUTO_AVANT: number = 2;
+const AUTO_ARRIERE: number = 8;
+const POSITION_VOITURES: number[][] = [[AUTO_GAUCHE, AUTO_AVANT], [AUTO_DROITE, AUTO_AVANT],
+                                       [AUTO_GAUCHE, AUTO_ARRIERE], [AUTO_DROITE, AUTO_ARRIERE]];
 
 // Textures
 const CHEMIN_TEXTURE: string = "../../../assets/voitures/";
@@ -77,32 +84,51 @@ export class GestionnaireVoitures {
     // Creation des voitures
 
     public initialiser(piste: PisteJeu): void {
-        this.creerVoitureJoueur();
+        this.creerVoitureJoueur(piste);
         this.creerVoituresAI(piste);
+        this.positionnerVoitures(piste);
         this.initialisationTouches();
         this.changerTempsJournee(TEMPS_JOURNEE_INITIAL);
     }
 
-    private creerVoitureJoueur(): void {
+    private creerVoitureJoueur(piste: PisteJeu): void {
         this._voitureJoueur = new Voiture();
-        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur)
+        const rotation: Euler = new Euler(0, piste.premierSegment.angle);
+        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
     }
 
     private creerVoituresAI(piste: PisteJeu): void {
+        const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI], this._voituresAI[i])
+            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI], this._voituresAI[i], rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
             this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
         }
     }
 
-    private async chargerTexture(URL_TEXTURE: string, voiture: Voiture): Promise<Object3D> {
+    private positionnerVoitures(piste: PisteJeu): void {
+        const sensHoraire: number = piste.estSensHoraire() ? 1 : -1;
+        let place: number = Math.floor(Math.random() * (NOMBRE_AI + 1));
+        for (let i: number = 0; i < NOMBRE_AI + 1; i++) {
+            const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
+            const vecteurPerpendiculaire: Vector3 = piste.premierSegment.direction.applyEuler(ANGLE_DROIT).normalize();
+            // vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
+            position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[place][0]));
+            position.add(piste.premierSegment.direction.normalize().multiplyScalar(sensHoraire * POSITION_VOITURES[place][1]));
+            this.voitures[i].position.set(position.x, position.y, position.z);
+            place === this.voitures.length - 1
+                ? place = 0
+                : place++;
+        }
+    }
+
+    private async chargerTexture(URL_TEXTURE: string, voiture: Voiture, rotation: Euler): Promise<Object3D> {
         return new Promise<Object3D>((resolve) => {
                     new ObjectLoader(new LoadingManager()).load(
                         CHEMIN_TEXTURE + URL_TEXTURE,
-                        (object) => voiture.initialiser(object));
+                        (object) => voiture.initialiser(object, rotation));
                });
     }
 

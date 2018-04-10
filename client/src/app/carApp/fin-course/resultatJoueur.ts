@@ -6,7 +6,7 @@ export class ResultatJoueur {
 
     public rang: number;
 
-    private constructor(public nom: string,
+    public constructor( public nom: string,
                         public joueurEstHumain: boolean,
                         public tempsDesTours: TempsAffichage[],
                         public tempsCourse: TempsAffichage) {

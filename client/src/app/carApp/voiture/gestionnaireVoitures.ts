@@ -10,10 +10,9 @@ import { PI_OVER_2, TEMPS_JOURNEE_INITIAL } from "../constants";
 import { ControleurVoiture } from "../controleurVoiture/controleurVoiture";
 import { IObjetEnMouvement } from "./IObjetEnMouvement";
 import { TempsJournee } from "../skybox/tempsJournee";
-import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
 
 // AI
-export const NOMBRE_AI: number = 1;
+export const NOMBRE_AI: number = 3;
 const ANGLE_DROIT: Euler = new Euler(0, PI_OVER_2, 0);
 const AUTO_GAUCHE: number = -2;
 const AUTO_DROITE: number = 2;
@@ -68,8 +67,7 @@ export class GestionnaireVoitures {
         return this._voituresAI;
     }
 
-    public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
-                       private gestionnaireCollision: GestionnaireCollision) {
+    public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._voituresAI = [];
         this.controleursAI = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
@@ -101,7 +99,6 @@ export class GestionnaireVoitures {
         this._voitureJoueur = new Voiture();
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
-        // .then((objet: Object3D) => this.gestionnaireCollision.mesureDimensionAuto(objet))
             .catch(() => { throw new ErreurChargementTexture(); });
 
     }
@@ -122,7 +119,7 @@ export class GestionnaireVoitures {
         for (let i: number = 0; i < NOMBRE_AI + 1; i++) {
             const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
             const vecteurPerpendiculaire: Vector3 = piste.premierSegment.direction.applyEuler(ANGLE_DROIT).normalize();
-            // vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
+            vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
             position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[place][0]));
             position.add(piste.premierSegment.direction.normalize().multiplyScalar(sensHoraire * POSITION_VOITURES[place][1]));
             this.voitures[i].position.set(position.x, position.y, position.z);

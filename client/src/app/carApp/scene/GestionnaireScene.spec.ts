@@ -28,7 +28,7 @@ describe("GestionnaireScene", () => {
                                                   new GestionnaireVoitures(new GestionnaireClavier()),
                                                   new GestionnaireBDCourse(httpClient),
                                                   new GestionnaireClavier(),
-                                                  new GestionnaireCollision);
+                                                  new GestionnaireCollision());
     }));
 
     it("Constructeur", () => {

@@ -99,6 +99,7 @@ export class GestionnaireScene implements IScene {
             this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
             this.gestionnaireCollision.miseAjour(this.gestionnaireVoiture.voitureJoueur, this.gestionnaireVoiture.tableauVoitureAI);
             this.gestionnaireCollision.gestionCollision(this.gestionnaireVoiture.voitureJoueur, this.gestionnaireVoiture.tableauVoitureAI);
+ 
         }
 
     }

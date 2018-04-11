@@ -33,7 +33,6 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     private steeringWheelDirection: number;
     private weightRear: number;
     private phares: GroupePhares;
-    public boiteCollision: BoxHelper;
     private _sonVoiture: SonVoiture;
 
     public get isAcceleratorPressed(): boolean {
@@ -42,6 +41,10 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
 
     public get speed(): Vector3 {
         return this._speed.clone();
+    }
+
+    public set speed(nouvelleVitesse: Vector3) {
+        this._speed = nouvelleVitesse;
     }
 
     public get currentGear(): number {
@@ -94,8 +97,6 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this.steeringWheelDirection = 0;
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
-        this.boiteCollision = new BoxHelper(this);
-        this.add(this.boiteCollision);
         this._sonVoiture = new SonVoiture();
         this.add(this._sonVoiture.obtenirSonRepos);
         this.add(this._sonVoiture.obtenirSonAccel);
@@ -103,8 +104,6 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     public initialiser(texture: Object3D, rotation: Euler): void {
-        this.boiteCollision.setRotationFromEuler(rotation);
-        // this.boiteCollision.update();
         this.add(texture);
         this.setRotationFromEuler(rotation);
     }
@@ -150,6 +149,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         return this.direction;
     }
 
+
     public miseAJour(deltaTime: number): void {
         deltaTime = deltaTime / MS_TO_SECONDS;
 
@@ -170,7 +170,6 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
         this.rotateY(this._speed.length() / R);
 
-        // this.boiteCollision.setFromCenterAndSize(this.position, this.boiteCollision.getSize()); // manque orientation de la boite...
     }
 
     public eteindrePhares(): void {

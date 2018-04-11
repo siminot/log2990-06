@@ -129,16 +129,6 @@ describe("Voiture", () => {
         expect(car.children.length - NOMBRE_SONS).toBe(NOMBRE_PHARES);
     });
 
-    it("boiteCollision suit la voiture", () => {
-        car = new Voiture(undefined);
-        car.initialiser(new Object3D(), ROTATION_TEST);
-        car.accelerer();
-        car.miseAJour(MS_BETWEEN_FRAMES);
-        expect(car["boiteCollision"].getCenter().x).toBeCloseTo(car.position.x);
-        expect(car["boiteCollision"].getCenter().y).toEqual(car.position.y);
-        expect(car["boiteCollision"].getCenter().z).toBeCloseTo(car.position.z);
-    });
-
     it("la direction est bien initialisee", () => {
         car = new Voiture(undefined);
         expect(car.direction.x).toEqual(0);

@@ -2,9 +2,6 @@ import { Voiture } from "../voiture/voiture";
 import { Injectable } from "@angular/core";
 import { Vector3, Sphere} from "three";
 
-
-
-
 const FACTEUR_AVANT: number = 1.1;
 const FACTEUR_ARRIERE: number = -1;
 const FACTEUR_MILIEU: number = 0;
@@ -100,6 +97,7 @@ export class GestionnaireCollision {
             for ( let sphereB of spheresB) {
                 if (sphereA.intersectsSphere(sphereB)) {
                     this.resoudreContact(sphereA, sphereB, spheresA);
+                    // this.ajustementVitesseVoitures(spheresA, spheresB);
                 }
             }
         }
@@ -107,17 +105,72 @@ export class GestionnaireCollision {
 
     private resoudreContact(sphereA: Sphere, sphereB: Sphere, spheresA: Array<Sphere>): void {
 
+            const distanceAReculer: Vector3 = new Vector3();
+            const voiture: Voiture = this.retournerVoitureImpact(spheresA);
+            const AB: number = sphereA.distanceToPoint(sphereB.center);
+            let vecteurAB: Vector3 = sphereB.center.clone().sub(sphereA.center);
 
-            let distanceAReculer: Vector3 = new Vector3();
-            let AB: number = sphereA.distanceToPoint(sphereB.center);
-            let vecteurAB: Vector3 = sphereB.center.sub(sphereA.center);
             vecteurAB = vecteurAB.normalize();
             distanceAReculer.add(vecteurAB.multiplyScalar(AB));
-            let i: number = this.arrayDeSphere.indexOf(spheresA);
-            if ( i === 0) {
-                let ajustement: Vector3 = new Vector3();
-                ajustement = this.voitureJoueur.position.sub(distanceAReculer);
-                this.voitureJoueur.position.set(ajustement.x, ajustement.y, ajustement.z);
-            }
+            this.reculerAuto(voiture, distanceAReculer);
     }
+
+    private reculerAuto(voiture: Voiture, distanceAReculer: Vector3): void {
+        const ajustement: Vector3 = voiture.position.clone().sub(distanceAReculer);
+        voiture.position.set(ajustement.x, ajustement.y, ajustement.z);
+    }
+
+    private retournerVoitureImpact( spheres: Array<Sphere>): Voiture {
+        const indexAutoA: number = this.arrayDeSphere.indexOf(spheres);
+        if ( indexAutoA === 0 ) {
+            return this.voitureJoueur;
+        } else {
+            return this.voituresAi[indexAutoA - 1];
+        }
+    }
+
+    private ajustementVitesseVoitures( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
+        let autoA: Voiture = this.retournerVoitureImpact(spheresA);
+        let autoB: Voiture = this.retournerVoitureImpact(spheresB);
+
+        let nouvelleVitesseA: Vector3 = this.calculeNouvelleVitesse(autoA.position,
+                                        this.vitesseAutoToWorld(autoA), autoB.position, this.vitesseAutoToWorld(autoB));
+        let nouvelleVitesseB: Vector3 = this.calculeNouvelleVitesse(autoB.position,
+                                        this.vitesseAutoToWorld(autoB), autoA.position, this.vitesseAutoToWorld(autoA));
+
+        autoA.speed = this.vitesseAutoToLocal(nouvelleVitesseA);
+        autoB.speed = this.vitesseAutoToLocal(nouvelleVitesseB);
+    }
+
+    private calculeNouvelleVitesse( vecteurVitesseA: Vector3, vecteurPositionA: Vector3,
+                                    vecteurVitesseB: Vector3, vecteurPositionB: Vector3): Vector3 {
+        // Formule : https://en.wikipedia.org/wiki/Elastic_collision
+        // soustraction 1
+        let soustractionVitesse: Vector3 = vecteurVitesseA.clone().sub(vecteurVitesseB);
+        let soustractionPosition: Vector3 = vecteurPositionA.clone().sub(vecteurPositionB);
+        let produitSclaire: number = soustractionVitesse.clone().dot(soustractionPosition);
+        let denominateur: number = Math.pow(soustractionVitesse.length(), 2);
+        produitSclaire = produitSclaire / denominateur;
+
+        soustractionPosition = soustractionPosition.multiplyScalar(produitSclaire);
+
+        return this.vitesseAutoToLocal(vecteurVitesseA.clone().sub(soustractionPosition));
+
+    }
+
+    private vitesseAutoToWorld( auto: Voiture): Vector3 {
+        const vitesseVoiture: Vector3 = auto.speed.clone();
+        const dirAuto: Vector3 = auto.direction.clone();
+        dirAuto.normalize();
+        dirAuto.multiplyScalar(-vitesseVoiture.z);
+
+        return dirAuto;
+    }
+
+    private vitesseAutoToLocal(vitesseWorld: Vector3): Vector3 {
+        const norme: number = vitesseWorld.length();
+
+        return new Vector3(0, 0, -norme);
+    }
+    // private ajustementVitesse()
 }

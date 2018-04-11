@@ -1,18 +1,17 @@
 <div id="container">
   <h1 id="titrePrincipal">Fin de course</h1>
-  <h2> Résultats</h2>
-  <br>
+  <h2>Résultats de la piste: enAttente</h2>
   <br>
   <table>
-    <thead>
+    <thead id="teteTable">
       <th>Position</th>
       <th>Nom</th>
       <th>Temps du parcours</th>
-      <th> Tour 1</th>
-      <th> Tour 2</th>
-      <th> Tour 3</th>
+      <th>Tour 1</th>
+      <th>Tour 2</th>
+      <th>Tour 3</th>
     </thead>
-    <tbody>
+    <tbody id="corpsTable">
       <tr *ngFor="let resultatCourse of resultatsCourse">
         <td>{{resultatCourse.rang}}</td>
         <td>{{resultatCourse.nom}}</td>
@@ -23,4 +22,9 @@
       </tr>
     </tbody>
   </table>
+  <br>
+  <div>
+  <button [disabled]="!peutComparer" (click)="compare()">
+    Comparer avec les meilleurs temps
+  </button>
 </div>

@@ -149,6 +149,30 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         return this.direction;
     }
 
+    public vitesseEnWorld(): Vector3 {
+        const rotationMatrix: Matrix4 = new Matrix4();
+
+        rotationMatrix.extractRotation(this.matrix);
+        const rotationQuaternion: Quaternion = new Quaternion();
+        rotationQuaternion.setFromRotationMatrix(rotationMatrix);
+
+        return this._speed.clone().applyMatrix4(rotationMatrix);
+    }
+
+    public vitesseEnLocal(nouvelleVitesse: Vector3): void {
+        // const vitessePerpen: Vector3 = nouvelleVitesse.clone().
+
+        const rotationMatrix: Matrix4 = new Matrix4();
+
+        rotationMatrix.extractRotation(this.matrix);
+        const rotationQuaternion: Quaternion = new Quaternion();
+        rotationQuaternion.setFromRotationMatrix(rotationMatrix);
+
+
+
+        this._speed = nouvelleVitesse.applyQuaternion(rotationQuaternion.inverse());
+
+    }
 
     public miseAJour(deltaTime: number): void {
         deltaTime = deltaTime / MS_TO_SECONDS;

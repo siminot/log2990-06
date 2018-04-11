@@ -59,7 +59,7 @@ export class GestionnaireCollision {
     }
 
     private insererSphereDansVoitureAI(voitures: Voiture[]): void {
-        for (const voiture of voitures) {
+        for (const _voiture of voitures) {
             this.arrayDeSphere.push(this.genererSphere());
         }
     }

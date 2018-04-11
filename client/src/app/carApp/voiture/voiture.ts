@@ -1,4 +1,4 @@
-import { Vector3, Matrix4, Object3D, Euler, Quaternion,  BoxHelper } from "three";
+import { Vector3, Matrix4, Object3D, Euler, Quaternion } from "three";
 import { Engine } from "./engine";
 import { MS_TO_SECONDS, GRAVITY } from "../constants";
 import { Wheel } from "./wheel";

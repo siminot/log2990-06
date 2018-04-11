@@ -13,6 +13,7 @@
     "postinstall": "rimraf false"
   },
   "dependencies": {
+    "@angular/http": "^5.2.9",
     "body-parser": "~1.16.0",
     "cookie-parser": "~1.4.0",
     "cors": "~2.8.1",

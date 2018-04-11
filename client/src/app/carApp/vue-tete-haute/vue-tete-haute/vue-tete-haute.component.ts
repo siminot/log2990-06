@@ -16,6 +16,7 @@ export class VueTeteHauteComponent implements OnInit {
     private tempsCourse: TempsAffichage;
     private tempsTours: Array<TempsAffichage>;
     private numTour: number;
+    private rafraichissement: NodeJS.Timer;
 
     public constructor(private timer: TimerService) {
         this.tempsActuel = 0;
@@ -30,32 +31,30 @@ export class VueTeteHauteComponent implements OnInit {
     public debuterCourse(): void {
         this.timer.debuterCourse(); // lancer quand la course commence (a retirer)
         this.updateTempsCourse();
-        this.foo();
     }
 
-    public ngOnInit(): void {
-        this.debuterCourse();
-    }
+    public ngOnInit(): void {}
 
     private updateTempsCourse(): void {
-        setInterval(() => {
+        this.rafraichissement = setInterval(() => {
             this.tempsActuel = this.timer.obtenirTempsActuel;
             this.tempsCourse.tempsAffichable = this.tempsActuel;
             if ( this.numTour <= NBR_TOURS) {
-                this.tempsTours[this.numTour - 1].tempsAffichable = this.timer.obtenirTempsTour;
+                this.tempsTours[this.numTour - 1].tempsAffichable = this.timer.obtenirTempsTourJoueur;
             }
-        },          TAUX_REFRESH);
+        },                                  TAUX_REFRESH);
     }
 
-    private nouveauTour(): void {
+    public nouveauTour(noJoueur: number): void {
         if (this.numTour <= NBR_TOURS) {
-            this.tempsTours[this.numTour++ - 1].tempsAffichable = this.timer.nouveauTour;
+            this.tempsTours[this.numTour++ - 1].tempsAffichable = this.timer.nouveauTour(noJoueur);
+            if (this.numTour > NBR_TOURS) {
+                this.courseTermiee();
+            }
         }
     }
 
-    private foo(): void { // fonction seulement pour essayer des  choses
-        setInterval(() => {
-            this.nouveauTour();
-        },         5000);
+    private courseTermiee(): void {
+        clearInterval(this.rafraichissement);
     }
 }

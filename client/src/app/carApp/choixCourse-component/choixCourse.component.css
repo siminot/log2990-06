@@ -49,7 +49,7 @@ ul, li {
 
 .piste {
     border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.404);
+    border: 2px solid rgba(0, 0, 0, 0.404);
     width: 95%;
     left: 0px;
     margin-bottom: 5px;
@@ -67,4 +67,10 @@ ul, li {
 .divider {
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.thumb {
+    height:100%;
+    width:100%;
+    border: 2px solid black;
 }

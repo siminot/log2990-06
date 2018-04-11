@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { Scene, Sprite, Vector3, SpriteMaterial, TextureLoader, Texture } from "three";
+import { Scene } from "three";
 import { IScene } from "./IScene";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
@@ -13,9 +13,8 @@ import { TEMPS_JOURNEE_INITIAL } from "../constants";
 import { PISTE_TEST } from "../piste/pisteTest";
 import { Point } from "../elementsGeometrie/point";
 import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
-
-
-const TEMPS_ATTENTE: number = 5000;
+import { SignalDepart } from "../signalDepart/signalDepart";
+import { SonDepart } from "../son/SonDepart";
 
 // Touches clavier
 const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementClavier.TOUCHE_RELEVEE);
@@ -28,7 +27,8 @@ export class GestionnaireScene implements IScene {
     private piste: PisteJeu;
     private tempsJournee: TempsJournee;
     private clavier: UtilisateurPeripherique;
-    public courseEstCommencee: boolean;
+    private signalDepart: SignalDepart;
+    private sonDepart: SonDepart;
 
     public get scene(): Scene {
         return this._scene;
@@ -42,7 +42,7 @@ export class GestionnaireScene implements IScene {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
-        this.courseEstCommencee = false;
+        this.sonDepart = new SonDepart();
         this.initialisationTouches();
         this.initialisationPiste(gestionnaireBDCourse.pointsJeu);
         this.creerScene();
@@ -63,7 +63,7 @@ export class GestionnaireScene implements IScene {
         this.clavier.ajouter(this.miseAJourTempsJournee.bind(this), CHANGER_HEURE_JOURNEE);
     }
 
-    public creerScene(): void {
+    private creerScene(): void {
         this.ajouterElements();
         this.avancerTemps();
         this.miseAJourTempsJournee();
@@ -81,21 +81,13 @@ export class GestionnaireScene implements IScene {
     }
 
     private signalerDepart(): void {
-        const spriteMap: Texture = new TextureLoader().load("../../../assets/sprite.png");
-        const spriteMaterial: SpriteMaterial = new SpriteMaterial({ map: spriteMap, color: 0xAAAAAA });
-        const sprite: Sprite = new Sprite(spriteMaterial);
-        sprite.scale.set(5, 2, 1);
-        const position: Vector3 = this.piste.zoneDeDepart;
-        sprite.position.set(position.x, 3, position.z);
-        this._scene.add(sprite);
-        setTimeout(() => {
-            this.courseEstCommencee = true;
-            this._scene.remove(sprite);
-        },         TEMPS_ATTENTE);
+        this.signalDepart = new SignalDepart(this.piste.zoneDeDepart, this.sonDepart);
+        this._scene.add(this.signalDepart);
+        this.signalDepart.demarrer();
     }
 
     public miseAJour(tempsDepuisDerniereTrame: number): void {
-        if (this.courseEstCommencee) {
+        if (this.signalDepart.estTermine) {
             this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
             this.gestionnaireCollision.miseAjour(this.gestionnaireVoiture.voitureJoueur, this.gestionnaireVoiture.tableauVoitureAI);
             this.gestionnaireCollision.gestionCollision(this.gestionnaireVoiture.voitureJoueur, this.gestionnaireVoiture.tableauVoitureAI);

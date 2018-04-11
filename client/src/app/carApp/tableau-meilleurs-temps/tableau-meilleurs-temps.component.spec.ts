@@ -1,23 +1,23 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ResultatsFinCourseComponent } from "./resultats-fin-course.component";
+import { TableauMeilleursTempsComponent } from "./tableau-meilleurs-temps.component";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { HttpClient, HttpHandler } from "@angular/common/http";
 
-describe("ResultatsFinCourseComponent", () => {
-  let component: ResultatsFinCourseComponent;
-  let fixture: ComponentFixture<ResultatsFinCourseComponent>;
+describe("TableauMeilleursTempsComponent", () => {
+  let component: TableauMeilleursTempsComponent;
+  let fixture: ComponentFixture<TableauMeilleursTempsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResultatsFinCourseComponent ],
-      providers: [GestionnaireBDCourse, HttpClient, HttpHandler]
+      declarations: [ TableauMeilleursTempsComponent ],
+      providers: [ GestionnaireBDCourse, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResultatsFinCourseComponent);
+    fixture = TestBed.createComponent(TableauMeilleursTempsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

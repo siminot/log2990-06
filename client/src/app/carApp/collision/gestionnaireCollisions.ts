@@ -1,6 +1,6 @@
 import { Voiture } from "../voiture/voiture";
 import { Injectable } from "@angular/core";
-import { Vector3, Sphere} from "three";
+import { Vector3, Sphere, Vector} from "three";
 
 const FACTEUR_AVANT: number = 1.1;
 const FACTEUR_ARRIERE: number = -1;
@@ -93,26 +93,38 @@ export class GestionnaireCollision {
     }
 
     private observationZoneCritique ( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void{
-        for ( let sphereA of spheresA){
-            for ( let sphereB of spheresB) {
+        for ( const sphereA of spheresA){
+            let resolu: Boolean = false;
+            for ( const sphereB of spheresB) {
                 if (sphereA.intersectsSphere(sphereB)) {
                     this.resoudreContact(sphereA, sphereB, spheresA);
+                    resolu = true;
+                    break;
                     // this.ajustementVitesseVoitures(spheresA, spheresB);
                 }
+            }
+            if (resolu) {
+                break;
             }
         }
     }
 
     private resoudreContact(sphereA: Sphere, sphereB: Sphere, spheresA: Array<Sphere>): void {
 
-            const distanceAReculer: Vector3 = new Vector3();
+            let distance1: Vector3;
+            let distance2: Vector3;
             const voiture: Voiture = this.retournerVoitureImpact(spheresA);
-            const AB: number = sphereA.distanceToPoint(sphereB.center);
-            let vecteurAB: Vector3 = sphereB.center.clone().sub(sphereA.center);
+            const boundAtoBcenter: number = sphereA.distanceToPoint(sphereB.center);
+            const boundBtoAcenter: number = sphereB.distanceToPoint(sphereA.center);
+            let vecteurAB: Vector3 = sphereB.center.clone().sub(sphereA.center).clone();
+            const vecteurABnormaliser: Vector3 = vecteurAB.clone().normalize();
 
-            vecteurAB = vecteurAB.normalize();
-            distanceAReculer.add(vecteurAB.multiplyScalar(AB));
-            this.reculerAuto(voiture, distanceAReculer);
+            distance1 = vecteurABnormaliser.clone().multiplyScalar(boundAtoBcenter);
+            distance2 = vecteurABnormaliser.clone().multiplyScalar(boundBtoAcenter);
+
+            vecteurAB = vecteurAB.sub(distance1);
+            vecteurAB = vecteurAB.sub(distance2);
+            this.reculerAuto(voiture, vecteurAB);
     }
 
     private reculerAuto(voiture: Voiture, distanceAReculer: Vector3): void {

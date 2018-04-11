@@ -110,17 +110,14 @@ export class GestionnaireCollision {
     }
 
     private resoudreContact(sphereA: Sphere, sphereB: Sphere, spheresA: Array<Sphere>): void {
-
-            let distance1: Vector3;
-            let distance2: Vector3;
             const voiture: Voiture = this.retournerVoitureImpact(spheresA);
             const boundAtoBcenter: number = sphereA.distanceToPoint(sphereB.center);
             const boundBtoAcenter: number = sphereB.distanceToPoint(sphereA.center);
             let vecteurAB: Vector3 = sphereB.center.clone().sub(sphereA.center).clone();
             const vecteurABnormaliser: Vector3 = vecteurAB.clone().normalize();
 
-            distance1 = vecteurABnormaliser.clone().multiplyScalar(boundAtoBcenter);
-            distance2 = vecteurABnormaliser.clone().multiplyScalar(boundBtoAcenter);
+            const distance2: Vector3 = vecteurABnormaliser.clone().multiplyScalar(boundAtoBcenter);
+            const distance1: Vector3 = vecteurABnormaliser.clone().multiplyScalar(boundBtoAcenter);
 
             vecteurAB = vecteurAB.sub(distance1);
             vecteurAB = vecteurAB.sub(distance2);
@@ -157,13 +154,11 @@ export class GestionnaireCollision {
     private calculeNouvelleVitesse( vecteurVitesseA: Vector3, vecteurPositionA: Vector3,
                                     vecteurVitesseB: Vector3, vecteurPositionB: Vector3): Vector3 {
         // Formule : https://en.wikipedia.org/wiki/Elastic_collision
-        // soustraction 1
         let soustractionVitesse: Vector3 = vecteurVitesseA.clone().sub(vecteurVitesseB);
         let soustractionPosition: Vector3 = vecteurPositionA.clone().sub(vecteurPositionB);
         let produitSclaire: number = soustractionVitesse.clone().dot(soustractionPosition);
         let denominateur: number = Math.pow(soustractionVitesse.length(), 2);
         produitSclaire = produitSclaire / denominateur;
-
         soustractionPosition = soustractionPosition.multiplyScalar(produitSclaire);
 
         return this.vitesseAutoToLocal(vecteurVitesseA.clone().sub(soustractionPosition));

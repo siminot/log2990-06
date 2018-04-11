@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { ResultatJoueur } from "./resultatJoueur";
 import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
 
@@ -15,7 +16,7 @@ const temps4: TempsAffichage = new TempsAffichage();
 temps4.tempsAffichable = 50000;
 
 const tempsfinal1: TempsAffichage = new TempsAffichage();
-tempsfinal1.tempsAffichable = 180000;
+tempsfinal1.tempsAffichable = 300;
 
 const tempsfinal2: TempsAffichage = new TempsAffichage();
 tempsfinal2.tempsAffichable = 120000;
@@ -44,7 +45,7 @@ export class FinCourseComponent {
     public peutComparer: boolean;
     public resultatsCourse: ResultatJoueur[];
 
-    public constructor() {
+    public constructor(private router: Router) {
         this.resultatsCourse = resultatsBidon;
         this.classerLesTemps();
         this.ajouterRangs();
@@ -66,6 +67,10 @@ export class FinCourseComponent {
 
     private peutComparerAvecLesMeilleursTemps(): boolean {
         return this.resultatsCourse[0].joueurEstHumain;
+    }
+
+    private compare(): void {
+        this.router.navigate(["/tableauMeilleursTemps"]);
     }
 
 }

@@ -69,7 +69,7 @@ export class FinCourseComponent {
         return this.resultatsCourse[0].joueurEstHumain;
     }
 
-    private compare(): void {
+    public compare(): void {
         this.router.navigate(["/tableauMeilleursTemps"]);
     }
 

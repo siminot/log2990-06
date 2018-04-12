@@ -36,7 +36,7 @@ export class TimerService {
             for (let i: number = 0; i < NBR_JOUEURS; i++) {
                 this.tempsTour[i] = temps - this.tempsDebutTour[i];
             }
-        },          1);
+        },                         1);
     }
 
     private actualisationTempsTour(noJoueur: number): void {

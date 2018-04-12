@@ -1,40 +1,40 @@
 import { Injectable } from "@angular/core";
 import { TimerService } from "../timer/timer.service";
-import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
 import { InvalidArgumentError } from "../../exceptions/invalidArgumentError";
+import { TempsJoueur } from "./tempsJoueur";
 
 const NBR_JOUEURS: number = 4;
 
 @Injectable()
 export class GestionnaireDesTempsService {
 
-    private tempsJoueur: TempsAffichage;
-    private tempsAIs: Array<TempsAffichage>;
+    private tempsJoueur: TempsJoueur;
+    private tempsAIs: Array<TempsJoueur>;
 
     public constructor(private timer: TimerService) {
         this.initialisation();
     }
 
     private initialisation(): void {
-        this.tempsJoueur = new TempsAffichage();
-        this.tempsAIs = new Array<TempsAffichage>(NBR_JOUEURS - 1);
+        this.tempsJoueur = new TempsJoueur();
+        this.tempsAIs = new Array<TempsJoueur>(NBR_JOUEURS - 1);
         for (let i: number = 0; i < NBR_JOUEURS - 1; i++) {
-            this.tempsAIs[i] = new TempsAffichage();
+            this.tempsAIs[i] = new TempsJoueur();
         }
     }
 
-    public set actualiserTempsJoueur(temps: TempsAffichage) {
+    public set actualiserTempsJoueur(temps: TempsJoueur) {
         this.tempsJoueur = temps;
     }
 
     public AIxTourComplete(noJoueur: number): void {
         this.verifierIndex(noJoueur);
-        this.timer.nouveauTour(noJoueur); // juste pour pas avoir de probleme de compil...
+        this.tempsAIs[noJoueur].definirTempsTour = this.timer.nouveauTour(noJoueur);
     }
 
     public AIXCourseComplete(noJoueur: number): void {
         this.verifierIndex(noJoueur);
-        this.tempsAIs[noJoueur].tempsAffichable = this.timer.obtenirTempsActuel;
+        this.tempsAIs[noJoueur].definirTempsCourse = this.timer.obtenirTempsActuel;
     }
 
     private verifierIndex(noJoueur: number): void {
@@ -43,8 +43,8 @@ export class GestionnaireDesTempsService {
         }
     }
 
-    public get obtenirTempsDesJoueurs(): Array<TempsAffichage> {
-        const tempsFinCourse: Array<TempsAffichage> = new Array<TempsAffichage>();
+    public get obtenirTempsDesJoueurs(): Array<TempsJoueur> {
+        const tempsFinCourse: Array<TempsJoueur> = new Array<TempsJoueur>();
         tempsFinCourse.push(this.tempsJoueur);
         for (const tempsAi of this.tempsAIs) {
             tempsFinCourse.push(tempsAi);

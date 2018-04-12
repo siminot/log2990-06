@@ -8,10 +8,12 @@ export class TempsJoueur {
     private estAI: boolean;
     private tempsCourse: TempsAffichage;
     private tempsTours: Array<TempsAffichage>;
+    private ctrNbrTour: number;
 
     public constructor() {
         this.nom = "joueur";
         this.estAI = true;
+        this.ctrNbrTour = 0;
         this.initialisationTemps();
     }
 
@@ -45,6 +47,12 @@ export class TempsJoueur {
 
     public get obtenirTempsCourse(): TempsAffichage {
         return this.tempsCourse;
+    }
+
+    public set definirTempsTour(tempsTour: number) {
+        if (this.ctrNbrTour < NBR_TOUR) {
+            this.tempsTours[this.ctrNbrTour++].tempsAffichable = tempsTour;
+        }
     }
 
     public get obtenirTempsTours(): Array<TempsAffichage> {

@@ -9,6 +9,7 @@ export class TimerService {
     private tempsDebutTour: Array<number>;
     private tempsActuel: number;
     private tempsTour: Array<number>;
+    private leTimer: NodeJS.Timer;
 
     public constructor() {
         this.tempsDebutCourse = 0;
@@ -24,8 +25,12 @@ export class TimerService {
         this.partirTimer();
     }
 
+    public terminerCourse(): void {
+        clearInterval(this.leTimer);
+    }
+
     private partirTimer(): void {
-        setInterval(() => {
+        this.leTimer = setInterval(() => {
             const temps: number = new Date().getTime();
             this.tempsActuel = temps - this.tempsDebutCourse;
             for (let i: number = 0; i < NBR_JOUEURS; i++) {

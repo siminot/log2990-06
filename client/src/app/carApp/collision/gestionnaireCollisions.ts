@@ -1,7 +1,7 @@
 import { Voiture } from "../voiture/voiture";
 import { Injectable } from "@angular/core";
-import { Vector3, Sphere, Vector} from "three";
-import { projection } from "@angular/core/src/render3/instructions";
+import { Vector3, Sphere} from "three";
+
 
 const FACTEUR_AVANT: number = 1.1;
 const FACTEUR_ARRIERE: number = -1;
@@ -24,7 +24,7 @@ export class GestionnaireCollision {
     }
 
     public creationShpere(): Sphere {
-        let positionDepart: Vector3 = new Vector3(0, 0, 0);
+        const positionDepart: Vector3 = new Vector3(0, 0, 0);
 
         return new Sphere(positionDepart, LARGEUR_AUTO);
     }
@@ -52,7 +52,6 @@ export class GestionnaireCollision {
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
             let tempo: Sphere = this.creationShpere();
             tabTempo.push(tempo);
-            // scene.add(tempo);
         }
 
         return tabTempo;
@@ -139,30 +138,30 @@ export class GestionnaireCollision {
     }
 
     private ajustementVitesseVoitures( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
-        let autoA: Voiture = this.retournerVoitureImpact(spheresA);
-        let autoB: Voiture = this.retournerVoitureImpact(spheresB);
+        const autoA: Voiture = this.retournerVoitureImpact(spheresA);
+        const autoB: Voiture = this.retournerVoitureImpact(spheresB);
 
-        let vitesseAutoA: Vector3 = autoA.vitesseEnWorld();
-        let vitesseAutoB: Vector3 = autoB.vitesseEnWorld();
+        const vitesseAutoA: Vector3 = autoA.vitesseEnWorld();
+        const vitesseAutoB: Vector3 = autoB.vitesseEnWorld();
 
-        autoA.vitesseEnLocal(this.calculeNouvelleVitesse(vitesseAutoA, autoA.position, vitesseAutoB, autoB.position));
-        autoB.vitesseEnLocal(this.calculeNouvelleVitesse(vitesseAutoB, autoB.position, vitesseAutoA, autoB.position));
-        // let nouvelleVitesseA: Vector3 = this.calculeNouvelleVitesse(autoA.position,
-        //                                 this.vitesseAutoToWorld(autoA), autoB.position, this.vitesseAutoToWorld(autoB));
-        // let nouvelleVitesseB: Vector3 = this.calculeNouvelleVitesse(autoB.position,
-        //                                 this.vitesseAutoToWorld(autoB), autoA.position, this.vitesseAutoToWorld(autoA));
-        // autoA.speed = this.vitesseAutoToLocal(autoA, nouvelleVitesseA);
-        // autoB.speed = this.vitesseAutoToLocal(autoB, nouvelleVitesseB);
+        const nouvelleVitesseA : Vector3 = this.calculeNouvelleVitesse(vitesseAutoA, autoA.position, vitesseAutoB, autoB.position);
+        const nouvelleVitesseB : Vector3 = this.calculeNouvelleVitesse(vitesseAutoB, autoB.position, vitesseAutoA, autoB.position);
+
+        autoA.vitesseEnLocal(this.ajustementFriction(nouvelleVitesseA, autoA));
+        autoB.vitesseEnLocal(this.ajustementFriction(nouvelleVitesseB, autoB));
+
+        // autoA.vitesseEnLocal(this.calculeNouvelleVitesse(vitesseAutoA, autoA.position, vitesseAutoB, autoB.position));
+        // autoB.vitesseEnLocal(this.calculeNouvelleVitesse(vitesseAutoB, autoB.position, vitesseAutoA, autoB.position));
 
     }
 
     private calculeNouvelleVitesse( vecteurVitesseA: Vector3, vecteurPositionA: Vector3,
                                     vecteurVitesseB: Vector3, vecteurPositionB: Vector3): Vector3 {
         // Formule : https://en.wikipedia.org/wiki/Elastic_collision
-        let soustractionVitesse: Vector3 = vecteurVitesseA.clone().sub(vecteurVitesseB);
+        const soustractionVitesse: Vector3 = vecteurVitesseA.clone().sub(vecteurVitesseB);
         let soustractionPosition: Vector3 = vecteurPositionA.clone().sub(vecteurPositionB);
         let produitSclaire: number = soustractionVitesse.clone().dot(soustractionPosition);
-        let denominateur: number = Math.pow(soustractionVitesse.clone().length(), 2);
+        const denominateur: number = Math.pow(soustractionVitesse.clone().length(), 2);
         produitSclaire = produitSclaire / denominateur;
         soustractionPosition = soustractionPosition.multiplyScalar(produitSclaire);
 
@@ -171,25 +170,9 @@ export class GestionnaireCollision {
 
     }
 
-    private vitesseAutoToWorld( auto: Voiture): Vector3 {
-        const vitesseVoiture: Vector3 = auto.speed.clone();
-        const dirAuto: Vector3 = auto.direction.clone();
-        dirAuto.multiplyScalar(-vitesseVoiture.z);
-
-        return dirAuto;
-    }
-
-    private vitesseAutoToLocal(voiture: Voiture, vitesseWorld: Vector3): Vector3 {
-       const projectionSurDirection: Vector3 = vitesseWorld.projectOnVector(voiture.direction.clone());
-       
-       const norme: number = projectionSurDirection.clone().length() * - 1;
-    
-       if(norme >= 0){
-           return new Vector3(0, 0, 0);
-       } else {
-           return new Vector3(0, 0, norme);
-       }
+    private ajustementFriction( vitesseAAjuster: Vector3, voiture: Voiture): Vector3 {
+        return vitesseAAjuster.clone().projectOnVector(voiture.direction);
 
     }
-    // private ajustementVitesse()
+
 }

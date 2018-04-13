@@ -38,10 +38,7 @@ export class GestionnaireCollision {
 
     private miseAjourSpheresVoiture(voiture: Voiture, spheres: Array<Sphere>): void {
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
-            let directionTempo: Vector3 = voiture.getDirection().clone();
-            const positionTempo: Vector3 = voiture.position.clone();
-            directionTempo = directionTempo.multiply(VECTEUR_PLACEMENT[i]);
-            positionTempo.add(directionTempo);
+            const positionTempo: Vector3 = voiture.position.clone().add(voiture.getDirection().clone().multiply(VECTEUR_PLACEMENT[i]));
             spheres[i].center.set(positionTempo.x, positionTempo.y, positionTempo.z);
         }
     }
@@ -78,7 +75,7 @@ export class GestionnaireCollision {
         }
     }
 
-    private verifierPerimetrePriver( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
+    private verifierPerimetrePriver(spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
         const sphereMilieuA: Sphere = spheresA[1];
         for (const sphere of spheresB) {
             if (sphereMilieuA.distanceToPoint(sphere.center) < DISTANCE_CRITIQUE) {
@@ -87,7 +84,7 @@ export class GestionnaireCollision {
         }
     }
 
-    private observationZoneCritique ( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
+    private observationZoneCritique(spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
         for (const sphereA of spheresA) {
             for ( const sphereB of spheresB) {
                 if (sphereA.intersectsSphere(sphereB)) {

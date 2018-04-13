@@ -108,20 +108,24 @@ export class GestionnaireCollision {
     }
 
     private ajustementVitesseVoitures(autoA: Voiture, autoB: Voiture): void {
-        autoA.vitesseEnLocal(this.ajustementFriction(this.calculeNouvelleVitesse(autoA, autoB), autoA));
-        autoB.vitesseEnLocal(this.ajustementFriction(this.calculeNouvelleVitesse(autoB, autoA), autoB));
+        const nouvelleVitesseA: Vector3 = this.calculeNouvelleVitesse(autoA, autoB);
+        const nouvelleVitesseB: Vector3 = this.calculeNouvelleVitesse(autoB, autoA);
+
+        autoA.vitesseEnLocal(this.ajustementFriction(nouvelleVitesseA, autoA));
+        autoB.vitesseEnLocal(this.ajustementFriction(nouvelleVitesseB, autoB));
     }
 
     private calculeNouvelleVitesse(autoA: Voiture, autoB: Voiture): Vector3 {
         // Formule : https://en.wikipedia.org/wiki/Elastic_collision
-        const soustractionVitesse: Vector3 = autoA.vitesseEnWorld().sub(autoB.vitesseEnWorld());
+        const soustractionVitesse: Vector3 = autoA.vitesseEnWorld().clone().sub(autoB.vitesseEnWorld());
         let soustractionPosition: Vector3 = autoA.position.clone().sub(autoB.position);
-        const produitSclaire: number = soustractionVitesse.dot(soustractionPosition);
+        let produitSclaire: number = soustractionVitesse.clone().dot(soustractionPosition);
         const DEUX: number = 2;
-        const denominateur: number = Math.pow(soustractionVitesse.length(), DEUX);
-        soustractionPosition = soustractionPosition.multiplyScalar(produitSclaire / denominateur);
+        const denominateur: number = Math.pow(soustractionVitesse.clone().length(), DEUX);
+        produitSclaire = produitSclaire / denominateur;
+        soustractionPosition = soustractionPosition.multiplyScalar(produitSclaire);
 
-        return autoA.vitesseEnWorld().sub(soustractionPosition);
+        return autoA.vitesseEnWorld().clone().sub(soustractionPosition);
     }
 
     private ajustementFriction(vitesseAAjuster: Vector3, voiture: Voiture): Vector3 {

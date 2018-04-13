@@ -1,5 +1,4 @@
 import { Component, Inject } from "@angular/core";
-import { Subscription } from "rxjs/Subscription";
 import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
@@ -11,15 +10,13 @@ import { AbstractListePisteComponent } from "../abstract-component/abstract.list
 })
 export class AdministrateurComponent extends AbstractListePisteComponent {
 
-    public pistes: PisteBD[];
-    public abonnementPistes: Subscription;
-
     public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
       super(gestionnaireBD);
     }
 
     public editerPiste(piste: PisteBD): void {
         this.gestionnaireBD.pisteEdition = piste;
+        this.gestionnaireBD.obtenirPistes();
     }
 
     public async supprimerPiste(piste: PisteBD): Promise<void> {
@@ -29,6 +26,7 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public creerNouvellePiste(): void {
         this.gestionnaireBD.pisteEdition = null;
+        this.gestionnaireBD.obtenirPistes();
     }
 
     public async supprimerToutesPistes(): Promise<void> {

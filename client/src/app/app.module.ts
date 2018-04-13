@@ -75,8 +75,7 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
         VueTeteHauteComponent,
         FinCourseComponent,
         VueTeteHauteComponent,
-        TableauMeilleursTempsComponent,
-        GestionnaireDesTempsService
+        TableauMeilleursTempsComponent
     ],
     imports: [
         BrowserModule,
@@ -107,7 +106,8 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
         InfojoueurService,
         GestionnaireCollision,
         DecimalPipe,
-        TimerService
+        TimerService,
+        GestionnaireDesTempsService
     ],
     bootstrap: [AppComponent],
     exports: [

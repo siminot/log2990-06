@@ -5,9 +5,13 @@ const FACTEUR_AVANT: number = 1.1;
 const FACTEUR_ARRIERE: number = -1;
 const FACTEUR_MILIEU: number = 0;
 const LARGEUR_AUTO: number = 0.8;
+
 const SPHERE_AVANT: Vector3 = new Vector3(FACTEUR_AVANT, FACTEUR_AVANT, FACTEUR_AVANT);
 const SPHERE_ARRIERE: Vector3 = new Vector3(FACTEUR_ARRIERE, FACTEUR_ARRIERE, FACTEUR_ARRIERE);
 const SPHERE_MILIEU: Vector3 = new Vector3(FACTEUR_MILIEU, FACTEUR_MILIEU, FACTEUR_MILIEU);
+const ORIGINE: Vector3 = new Vector3(0, 0, 0);
+const SPHERE: Sphere = new Sphere(ORIGINE, LARGEUR_AUTO);
+
 const VECTEUR_PLACEMENT: Vector3[] = [SPHERE_ARRIERE, SPHERE_MILIEU, SPHERE_AVANT];
 const NOMBRE_SPHERE: number = 3;
 const DISTANCE_CRITIQUE: number = 2;
@@ -21,12 +25,6 @@ export class GestionnaireCollision {
         this.arrayDeSphere = new Array<Array<Sphere>>();
         this.voituresAi = [];
         this.insererSphereDansAutos(voitureJoueur, voituresAi);
-    }
-
-    public creationShpere(): Sphere {
-        const positionDepart: Vector3 = new Vector3(0, 0, 0);
-
-        return new Sphere(positionDepart, LARGEUR_AUTO);
     }
 
     public miseAjour(voitureJoueur: Voiture, voituresAi: Voiture[]): void {
@@ -50,7 +48,7 @@ export class GestionnaireCollision {
     public genererSphere(): Array<Sphere> {
         const spheres: Array<Sphere> = new Array<Sphere>();
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
-            spheres.push(this.creationShpere());
+            spheres.push(SPHERE.clone());
         }
 
         return spheres;

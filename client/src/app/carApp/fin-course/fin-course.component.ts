@@ -13,8 +13,9 @@ export class FinCourseComponent {
 
     public peutComparer: boolean;
     public resultatsCourse: ResultatJoueur[];
+    private router: Router;
 
-    public constructor(private router: Router) {
+    public constructor() {
         this.resultatsCourse = RESULTATS_BIDONS;
         this.classerLesTemps();
         this.ajouterRangs();

@@ -1,3 +1,41 @@
-<p>
-  fin-course works!
-</p>
+<div>
+  <h1>Fin de course</h1>
+  <h2>Résultats de la piste: enAttente</h2>
+
+  <br>
+
+  <table>
+    <thead>
+      <th>Position</th>
+      <th>Nom</th>
+      <th>Temps du parcours</th>
+      <th>Tour 1</th>
+      <th>Tour 2</th>
+      <th>Tour 3</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let resultatCourse of resultatsCourse">
+        <td>{{resultatCourse.rang}}</td>
+        <td>{{resultatCourse.nom}}</td>
+        <td>{{resultatCourse.tempsCourse.tempsFormate}}</td>
+        <td>{{resultatCourse.tempsDesTours[0].tempsFormate}}</td>
+        <td>{{resultatCourse.tempsDesTours[1].tempsFormate}}</td>
+        <td>{{resultatCourse.tempsDesTours[2].tempsFormate}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <ng-container *ngIf="peutComparer; else elseTemplate">
+    <h2>Bravo vous avez finis premier! Vous pouvez alors vous comparer aux meilleurs temps!</h2>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <h2>Malheureusement vous n'avez finis premier! Meilleure chance la prochaine fois!</h2>
+  </ng-template>
+
+  <button [disabled]="!peutComparer" (click)="compare()">
+    Comparer avec les meilleurs temps
+  </button>
+
+</div>

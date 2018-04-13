@@ -47,6 +47,7 @@ import { TimerService } from "./carApp/timer/timer.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatTableModule } from "@angular/material/table";
 
 import { DecimalPipe } from "@angular/common";
 // import { ResultatsFinCourseComponent } from "./carApp/resultats-fin-course/resultats-fin-course.component";
@@ -84,7 +85,8 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
         FormsModule,
         BrowserAnimationsModule,
         MatExpansionModule,
-        MatDividerModule
+        MatDividerModule,
+        MatTableModule
     ],
     providers: [
         ServiceDeRenduJeu,

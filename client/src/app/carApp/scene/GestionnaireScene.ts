@@ -29,6 +29,7 @@ export class GestionnaireScene implements IScene {
     private clavier: UtilisateurPeripherique;
     private signalDepart: SignalDepart;
     private sonDepart: SonDepart;
+    private _pointsCourse: Point[];
 
     public get scene(): Scene {
         return this._scene;
@@ -40,6 +41,7 @@ export class GestionnaireScene implements IScene {
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
                        private gestionnaireCollision: GestionnaireCollision) {
         this._scene = new Scene;
+        this._pointsCourse = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.sonDepart = new SonDepart();
@@ -48,9 +50,10 @@ export class GestionnaireScene implements IScene {
         this.creerScene();
     }
 
-    private initialisationPiste(point: Point[]): void {
+    private initialisationPiste(points: Point[]): void {
         this.piste = new PisteJeu();
-        this.piste.importer(point);
+        this._pointsCourse = points;
+        this.piste.importer(points);
 
         if (!this.piste.estValide) {
             this.piste = new PisteJeu();
@@ -113,5 +116,9 @@ export class GestionnaireScene implements IScene {
         this._scene.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerDecor();
         this._scene.add(this.gestionnaireSkybox.skybox);
+    }
+
+    public get obtenirPoints(): Point[] {
+        return this._pointsCourse;
     }
 }

@@ -117,13 +117,11 @@ export class GestionnaireCollision {
 
     private calculeNouvelleVitesse(autoA: Voiture, autoB: Voiture): Vector3 {
         // Formule : https://en.wikipedia.org/wiki/Elastic_collision
-        const soustractionVitesse: Vector3 = autoA.vitesseEnWorld().clone().sub(autoB.vitesseEnWorld());
-        let soustractionPosition: Vector3 = autoA.position.clone().sub(autoB.position);
-        let produitSclaire: number = soustractionVitesse.clone().dot(soustractionPosition);
+        const soustractionVitesse: Vector3 = autoA.vitesseEnWorld().sub(autoB.vitesseEnWorld());
+        const soustractionPosition: Vector3 = autoA.position.clone().sub(autoB.position);
         const DEUX: number = 2;
-        const denominateur: number = Math.pow(soustractionVitesse.clone().length(), DEUX);
-        produitSclaire = produitSclaire / denominateur;
-        soustractionPosition = soustractionPosition.multiplyScalar(produitSclaire);
+        const denominateur: number = Math.pow(soustractionVitesse.length(), DEUX);
+        soustractionPosition.multiplyScalar(soustractionVitesse.dot(soustractionPosition) / denominateur);
 
         return autoA.vitesseEnWorld().clone().sub(soustractionPosition);
     }

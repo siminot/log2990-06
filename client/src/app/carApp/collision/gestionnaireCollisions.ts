@@ -1,5 +1,4 @@
 import { Voiture } from "../voiture/voiture";
-import { Injectable } from "@angular/core";
 import { Vector3, Sphere} from "three";
 
 const FACTEUR_AVANT: number = 1.1;
@@ -13,7 +12,6 @@ const VECTEUR_PLACEMENT: Vector3[] = [SPHERE_ARRIERE, SPHERE_MILIEU, SPHERE_AVAN
 const NOMBRE_SPHERE: number = 3;
 const DISTANCE_CRITIQUE: number = 2;
 
-@Injectable()
 export class GestionnaireCollision {
     private arrayDeSphere: Array<Sphere[]>;
     private voitureJoueur: Voiture;

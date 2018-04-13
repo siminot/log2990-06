@@ -10,6 +10,7 @@ import { PI_OVER_2, TEMPS_JOURNEE_INITIAL } from "../constants";
 import { ControleurVoiture } from "../controleurVoiture/controleurVoiture";
 import { IObjetEnMouvement } from "./IObjetEnMouvement";
 import { TempsJournee } from "../skybox/tempsJournee";
+import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
 
 // AI
 export const NOMBRE_AI: number = 3;
@@ -47,6 +48,7 @@ export class GestionnaireVoitures {
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
     private controleursAI: ControleurVoiture[];
+    private gestionnaireCollisions: GestionnaireCollision;
     private clavier: UtilisateurPeripherique;
 
     public get voitureJoueur(): Voiture {
@@ -71,6 +73,7 @@ export class GestionnaireVoitures {
         this._voituresAI = [];
         this.controleursAI = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
+        this.gestionnaireCollisions = new GestionnaireCollision();
     }
 
     protected initialisationTouches(): void {
@@ -93,6 +96,7 @@ export class GestionnaireVoitures {
         this.positionnerVoitures(piste);
         this.initialisationTouches();
         this.changerTempsJournee(TEMPS_JOURNEE_INITIAL);
+        this.gestionnaireCollisions.insererSphereDansAutos(this.voitureJoueur, this.tableauVoitureAI);
     }
 
     private creerVoitureJoueur(piste: PisteJeu): void {
@@ -143,6 +147,8 @@ export class GestionnaireVoitures {
         for (const voiture of this.voituresEnMouvement) {
             voiture.miseAJour(tempsDepuisDerniereTrame);
         }
+        this.gestionnaireCollisions.miseAjour(this.voitureJoueur, this.tableauVoitureAI);
+        this.gestionnaireCollisions.gestionCollision(this.voitureJoueur, this.tableauVoitureAI);
     }
 
     public changerTempsJournee(temps: TempsJournee): void {

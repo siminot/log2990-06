@@ -1,7 +1,7 @@
 import { CameraJeu } from "./CameraJeu";
 import { Vector3, OrthographicCamera } from "three";
 
-export const PLAN_RAPPROCHE: number = 0;
+export const PLAN_RAPPROCHE: number = -10;
 export const PLAN_ELOIGNE: number = 10;
 
 export const ZOOM_MINIMUM: number = 16;

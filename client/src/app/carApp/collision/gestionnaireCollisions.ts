@@ -57,16 +57,15 @@ export class GestionnaireCollision {
 
     private gestionCollision(): void {
         for (let i: number = 0; i < this.voitures.length; i++) {
-            for ( let j: number = i + 1; j < this.voitures.length; j++ ) {
+            for (let j: number = i + 1; j < this.voitures.length; j++) {
                 this.verifierPerimetrePriver(this.spheres.get(this.voitures[j]), this.spheres.get(this.voitures[i]));
             }
         }
     }
 
     private verifierPerimetrePriver(spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
-        const sphereMilieuA: Sphere = spheresA[1];
         for (const sphere of spheresB) {
-            if (sphereMilieuA.distanceToPoint(sphere.center) < DISTANCE_CRITIQUE) {
+            if (spheresA[1].distanceToPoint(sphere.center) < DISTANCE_CRITIQUE) {
                 this.observationZoneCritique(spheresA, spheresB);
             }
         }
@@ -77,7 +76,7 @@ export class GestionnaireCollision {
             for ( const sphereB of spheresB) {
                 if (sphereA.intersectsSphere(sphereB)) {
                     this.resoudreContact(sphereA, sphereB, spheresA);
-                    this.ajustementVitesseVoitures(spheresA, spheresB);
+                    this.ajustementVitesseVoitures(this.retournerVoitureImpact(spheresA), this.retournerVoitureImpact(spheresB));
 
                     return;
                 }
@@ -87,17 +86,10 @@ export class GestionnaireCollision {
 
     private resoudreContact(sphereA: Sphere, sphereB: Sphere, spheresA: Array<Sphere>): void {
         const voiture: Voiture = this.retournerVoitureImpact(spheresA);
-        const boundAtoBcenter: number = sphereA.distanceToPoint(sphereB.center);
-        const boundBtoAcenter: number = sphereB.distanceToPoint(sphereA.center);
-        let vecteurAB: Vector3 = sphereB.center.clone().sub(sphereA.center).clone();
-        const vecteurABnormaliser: Vector3 = vecteurAB.clone().normalize();
-
-        const distance2: Vector3 = vecteurABnormaliser.clone().multiplyScalar(boundAtoBcenter);
-        const distance1: Vector3 = vecteurABnormaliser.clone().multiplyScalar(boundBtoAcenter);
-
-        vecteurAB = vecteurAB.sub(distance1);
-        vecteurAB = vecteurAB.sub(distance2);
-        this.reculerAuto(voiture, vecteurAB);
+        const vecteurAB: Vector3 = sphereB.center.clone().sub(sphereA.center).clone();
+        const distance1: Vector3 = vecteurAB.clone().normalize().multiplyScalar(sphereB.distanceToPoint(sphereA.center));
+        const distance2: Vector3 = vecteurAB.clone().normalize().multiplyScalar(sphereA.distanceToPoint(sphereB.center));
+        this.reculerAuto(voiture, vecteurAB.sub(distance1).sub(distance2));
     }
 
     private reculerAuto(voiture: Voiture, distanceAReculer: Vector3): void {
@@ -115,33 +107,21 @@ export class GestionnaireCollision {
         return null;
     }
 
-    private ajustementVitesseVoitures( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
-        const autoA: Voiture = this.retournerVoitureImpact(spheresA);
-        const autoB: Voiture = this.retournerVoitureImpact(spheresB);
-
-        const vitesseAutoA: Vector3 = autoA.vitesseEnWorld();
-        const vitesseAutoB: Vector3 = autoB.vitesseEnWorld();
-
-        const nouvelleVitesseA: Vector3 = this.calculeNouvelleVitesse(vitesseAutoA, autoA.position, vitesseAutoB, autoB.position);
-        const nouvelleVitesseB: Vector3 = this.calculeNouvelleVitesse(vitesseAutoB, autoB.position, vitesseAutoA, autoB.position);
-
-        autoA.vitesseEnLocal(this.ajustementFriction(nouvelleVitesseA, autoA));
-        autoB.vitesseEnLocal(this.ajustementFriction(nouvelleVitesseB, autoB));
+    private ajustementVitesseVoitures(autoA: Voiture, autoB: Voiture): void {
+        autoA.vitesseEnLocal(this.ajustementFriction(this.calculeNouvelleVitesse(autoA, autoB), autoA));
+        autoB.vitesseEnLocal(this.ajustementFriction(this.calculeNouvelleVitesse(autoB, autoA), autoB));
     }
 
-    private calculeNouvelleVitesse( vecteurVitesseA: Vector3, vecteurPositionA: Vector3,
-                                    vecteurVitesseB: Vector3, vecteurPositionB: Vector3): Vector3 {
+    private calculeNouvelleVitesse(autoA: Voiture, autoB: Voiture): Vector3 {
         // Formule : https://en.wikipedia.org/wiki/Elastic_collision
-        const soustractionVitesse: Vector3 = vecteurVitesseA.clone().sub(vecteurVitesseB);
-        let soustractionPosition: Vector3 = vecteurPositionA.clone().sub(vecteurPositionB);
-        let produitSclaire: number = soustractionVitesse.clone().dot(soustractionPosition);
+        const soustractionVitesse: Vector3 = autoA.vitesseEnWorld().sub(autoB.vitesseEnWorld());
+        let soustractionPosition: Vector3 = autoA.position.clone().sub(autoB.position);
+        const produitSclaire: number = soustractionVitesse.dot(soustractionPosition);
         const DEUX: number = 2;
-        const denominateur: number = Math.pow(soustractionVitesse.clone().length(), DEUX);
-        produitSclaire = produitSclaire / denominateur;
-        soustractionPosition = soustractionPosition.multiplyScalar(produitSclaire);
+        const denominateur: number = Math.pow(soustractionVitesse.length(), DEUX);
+        soustractionPosition = soustractionPosition.multiplyScalar(produitSclaire / denominateur);
 
-        return vecteurVitesseA.clone().sub(soustractionPosition);
-
+        return autoA.vitesseEnWorld().sub(soustractionPosition);
     }
 
     private ajustementFriction(vitesseAAjuster: Vector3, voiture: Voiture): Vector3 {

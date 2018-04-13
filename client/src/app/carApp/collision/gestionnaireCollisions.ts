@@ -17,34 +17,31 @@ const NOMBRE_SPHERE: number = 3;
 const DISTANCE_CRITIQUE: number = 2;
 
 export class GestionnaireCollision {
-    private arrayDeSphere: Array<Sphere[]>;
-    private voitureJoueur: Voiture;
-    private voituresAi: Voiture[];
+    private spheres: Map<Voiture, Sphere[]>;
+    private voitures: Voiture[];
 
     public constructor(voitureJoueur: Voiture, voituresAi: Voiture[]) {
-        this.arrayDeSphere = new Array<Array<Sphere>>();
-        this.voituresAi = voituresAi;
-        this.voitureJoueur = voitureJoueur;
-        this.insererSphereDansAutos(voitureJoueur, voituresAi);
+        this.spheres = new Map<Voiture, Sphere[]>();
+        this.voitures = voituresAi.concat([voitureJoueur]);
+        this.insererSphereDansVoitures();
     }
 
     public miseAjour(): void {
-        this.miseAjourSpheresVoiture(this.voitureJoueur, this.arrayDeSphere[0]);
-        for (let i: number = 1; i < this.arrayDeSphere.length; i++) {
-            this.miseAjourSpheresVoiture(this.voituresAi[i - 1], this.arrayDeSphere[i]);
+        for (const voiture of this.voitures) {
+            this.miseAjourSpheresVoiture(voiture);
         }
         this.gestionCollision();
     }
 
-    private miseAjourSpheresVoiture(voiture: Voiture, spheres: Array<Sphere>): void {
+    private miseAjourSpheresVoiture(voiture: Voiture): void {
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
             const positionTempo: Vector3 = voiture.position.clone().add(voiture.getDirection().clone().multiply(VECTEUR_PLACEMENT[i]));
-            spheres[i].center.set(positionTempo.x, positionTempo.y, positionTempo.z);
+            this.spheres.get(voiture)[i].center.set(positionTempo.x, positionTempo.y, positionTempo.z);
         }
     }
 
-    public genererSphere(): Array<Sphere> {
-        const spheres: Array<Sphere> = new Array<Sphere>();
+    private genererSphere(): Sphere[] {
+        const spheres: Sphere[] = [];
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
             spheres.push(SPHERE.clone());
         }
@@ -52,25 +49,16 @@ export class GestionnaireCollision {
         return spheres;
     }
 
-    private insererSphereDansVoitureAI(voitures: Voiture[]): void {
-        for (const _voiture of voitures) {
-            this.arrayDeSphere.push(this.genererSphere());
+    private insererSphereDansVoitures(): void {
+        for (const voiture of this.voitures) {
+            this.spheres.set(voiture, this.genererSphere());
         }
     }
 
-    private insererSphereDansVoitureJoueur(voiture: Voiture): void {
-        this.arrayDeSphere.push(this.genererSphere());
-    }
-
-    private insererSphereDansAutos(voitureJoueur: Voiture, voitureAi: Voiture[]): void {
-        this.insererSphereDansVoitureJoueur(voitureJoueur);
-        this.insererSphereDansVoitureAI(voitureAi);
-    }
-
     private gestionCollision(): void {
-        for (let i: number = 0; i < this.arrayDeSphere.length; i++) {
-            for ( let j: number = i + 1; j < this.arrayDeSphere.length; j++ ) {
-                this.verifierPerimetrePriver(this.arrayDeSphere[i], this.arrayDeSphere[j]);
+        for (let i: number = 0; i < this.voitures.length; i++) {
+            for ( let j: number = i + 1; j < this.voitures.length; j++ ) {
+                this.verifierPerimetrePriver(this.spheres.get(this.voitures[j]), this.spheres.get(this.voitures[i]));
             }
         }
     }
@@ -98,18 +86,18 @@ export class GestionnaireCollision {
     }
 
     private resoudreContact(sphereA: Sphere, sphereB: Sphere, spheresA: Array<Sphere>): void {
-            const voiture: Voiture = this.retournerVoitureImpact(spheresA);
-            const boundAtoBcenter: number = sphereA.distanceToPoint(sphereB.center);
-            const boundBtoAcenter: number = sphereB.distanceToPoint(sphereA.center);
-            let vecteurAB: Vector3 = sphereB.center.clone().sub(sphereA.center).clone();
-            const vecteurABnormaliser: Vector3 = vecteurAB.clone().normalize();
+        const voiture: Voiture = this.retournerVoitureImpact(spheresA);
+        const boundAtoBcenter: number = sphereA.distanceToPoint(sphereB.center);
+        const boundBtoAcenter: number = sphereB.distanceToPoint(sphereA.center);
+        let vecteurAB: Vector3 = sphereB.center.clone().sub(sphereA.center).clone();
+        const vecteurABnormaliser: Vector3 = vecteurAB.clone().normalize();
 
-            const distance2: Vector3 = vecteurABnormaliser.clone().multiplyScalar(boundAtoBcenter);
-            const distance1: Vector3 = vecteurABnormaliser.clone().multiplyScalar(boundBtoAcenter);
+        const distance2: Vector3 = vecteurABnormaliser.clone().multiplyScalar(boundAtoBcenter);
+        const distance1: Vector3 = vecteurABnormaliser.clone().multiplyScalar(boundBtoAcenter);
 
-            vecteurAB = vecteurAB.sub(distance1);
-            vecteurAB = vecteurAB.sub(distance2);
-            this.reculerAuto(voiture, vecteurAB);
+        vecteurAB = vecteurAB.sub(distance1);
+        vecteurAB = vecteurAB.sub(distance2);
+        this.reculerAuto(voiture, vecteurAB);
     }
 
     private reculerAuto(voiture: Voiture, distanceAReculer: Vector3): void {
@@ -117,10 +105,14 @@ export class GestionnaireCollision {
         voiture.position.set(ajustement.x, ajustement.y, ajustement.z);
     }
 
-    private retournerVoitureImpact( spheres: Array<Sphere>): Voiture {
-        return this.arrayDeSphere.indexOf(spheres) === 0
-            ? this.voitureJoueur
-            : this.voituresAi[this.arrayDeSphere.indexOf(spheres) - 1];
+    private retournerVoitureImpact(spheres: Array<Sphere>): Voiture {
+        for (const voiture of this.voitures) {
+            if (this.spheres.get(voiture) === spheres) {
+                return voiture;
+            }
+        }
+
+        return null;
     }
 
     private ajustementVitesseVoitures( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
@@ -155,5 +147,4 @@ export class GestionnaireCollision {
     private ajustementFriction(vitesseAAjuster: Vector3, voiture: Voiture): Vector3 {
         return vitesseAAjuster.clone().projectOnVector(voiture.direction);
     }
-
 }

@@ -115,12 +115,10 @@ export class GestionnaireVoitures {
 
     private positionnerVoitures(piste: PisteJeu): void {
         const sensHoraire: number = piste.estSensHoraire() ? 1 : -1;
-        let place: number = Math.floor(Math.random() * (NOMBRE_AI + 1));
+        let place: number = this.placeAleatoire();
         for (let i: number = 0; i < NOMBRE_AI + 1; i++) {
-            console.log(place);
             const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
             const vecteurPerpendiculaire: Vector3 = piste.premierSegment.direction.applyEuler(ANGLE_DROIT).normalize();
-            // vecteurPerpendiculaire.applyEuler(ANGLE_DROIT).normalize();
             position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[place][0]));
             position.add(piste.premierSegment.direction.normalize().multiplyScalar(sensHoraire * POSITION_VOITURES[place][1]));
             this.voitures[i].position.set(position.x, position.y, position.z);
@@ -128,6 +126,10 @@ export class GestionnaireVoitures {
                 ? place = 0
                 : place++;
         }
+    }
+
+    private placeAleatoire(): number {
+        return Math.floor(Math.random() * (NOMBRE_AI + 1));
     }
 
     private async chargerTexture(URL_TEXTURE: string, voiture: Voiture, rotation: Euler): Promise<Object3D> {

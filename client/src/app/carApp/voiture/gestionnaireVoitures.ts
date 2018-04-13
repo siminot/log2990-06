@@ -73,7 +73,7 @@ export class GestionnaireVoitures {
         this._voituresAI = [];
         this.controleursAI = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
-        this.gestionnaireCollisions = new GestionnaireCollision();
+        this.gestionnaireCollisions = null;
     }
 
     protected initialisationTouches(): void {
@@ -96,7 +96,7 @@ export class GestionnaireVoitures {
         this.positionnerVoitures(piste);
         this.initialisationTouches();
         this.changerTempsJournee(TEMPS_JOURNEE_INITIAL);
-        this.gestionnaireCollisions.insererSphereDansAutos(this.voitureJoueur, this.tableauVoitureAI);
+        this.gestionnaireCollisions = new GestionnaireCollision(this.voitureJoueur, this.tableauVoitureAI);
     }
 
     private creerVoitureJoueur(piste: PisteJeu): void {
@@ -147,8 +147,7 @@ export class GestionnaireVoitures {
         for (const voiture of this.voituresEnMouvement) {
             voiture.miseAJour(tempsDepuisDerniereTrame);
         }
-        this.gestionnaireCollisions.miseAjour(this.voitureJoueur, this.tableauVoitureAI);
-        this.gestionnaireCollisions.gestionCollision(this.voitureJoueur, this.tableauVoitureAI);
+        this.gestionnaireCollisions.miseAjour(this.voitureJoueur, this._voituresAI);
     }
 
     public changerTempsJournee(temps: TempsJournee): void {

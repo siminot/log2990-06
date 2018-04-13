@@ -17,9 +17,10 @@ export class GestionnaireCollision {
     private voitureJoueur: Voiture;
     private voituresAi: Voiture[];
 
-    public constructor() {
+    public constructor(voitureJoueur: Voiture, voituresAi: Voiture[]) {
         this.arrayDeSphere = new Array<Array<Sphere>>();
         this.voituresAi = [];
+        this.insererSphereDansAutos(voitureJoueur, voituresAi);
     }
 
     public creationShpere(): Sphere {
@@ -33,6 +34,7 @@ export class GestionnaireCollision {
         for (let i: number = 1; i < this.arrayDeSphere.length; i++) {
             this.miseAjourP(voituresAi[i - 1], this.arrayDeSphere[i]);
         }
+        this.gestionCollision(voitureJoueur, voituresAi);
     }
 
     private miseAjourP(voiture: Voiture, spheres: Array<Sphere>): void {
@@ -64,7 +66,7 @@ export class GestionnaireCollision {
         this.arrayDeSphere.push(this.genererSphere());
     }
 
-    public insererSphereDansAutos(voitureJoueur: Voiture, voitureAi: Voiture[]): void {
+    private insererSphereDansAutos(voitureJoueur: Voiture, voitureAi: Voiture[]): void {
         this.insererSphereDansVoitureJoueur(voitureJoueur);
         this.insererSphereDansVoitureAI(voitureAi);
     }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ServiceHttp } from "../serviceHttp/http-request.service";
 import { SocketService } from "../service-socket/service-socket";
-import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
+import { Difficulte } from "../../../../../common/communication/Difficulte";
 import { Router } from "@angular/router";
 import { listeMotsLongue } from "./../objetsTest/objetsTest";
 

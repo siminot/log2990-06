@@ -4,7 +4,7 @@ import { ConfigPartieComponent } from "./config-partie.component";
 // import { ProviderAstType } from "@angular/compiler";
 import { SocketService } from "../service-socket/service-socket";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
+import { Difficulte } from "../../../../../common/communication/Difficulte";
 import { Router } from "@angular/router";
 
 describe("ConfigPartieComponent", () => {

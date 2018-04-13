@@ -6,7 +6,7 @@ import * as WebRequest from "web-request";
 import { Mot, MotBase } from "./mot";
 import { ConfigurationPartie } from "./configurationPartie";
 import { REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
-import { Difficulte } from "../../../common/communication/IConfigurationPartie";
+import { Difficulte } from "../../../common/communication/Difficulte";
 
 import { GenSquelette } from "./genSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";

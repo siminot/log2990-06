@@ -106,6 +106,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     public initialiser(texture: Object3D, rotation: Euler): void {
         this.add(texture);
         this.setRotationFromEuler(rotation);
+        this.updateMatrix();
     }
 
     public virerGauche(): void {

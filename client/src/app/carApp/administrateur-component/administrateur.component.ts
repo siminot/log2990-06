@@ -26,13 +26,12 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public creerNouvellePiste(): void {
         this.gestionnaireBD.pisteEdition = null;
-        this.gestionnaireBD.obtenirPistes();
     }
 
     public async supprimerToutesPistes(): Promise<void> {
         for (const piste of this.pistes) {
            await this.gestionnaireBD.supprimerPiste(piste);
-           this.obtenirPistes();
         }
+        this.obtenirPistes();
     }
 }

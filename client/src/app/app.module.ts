@@ -52,6 +52,7 @@ import { DecimalPipe } from "@angular/common";
 // import { ResultatsFinCourseComponent } from "./carApp/resultats-fin-course/resultats-fin-course.component";
 import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
 import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps/tableau-meilleurs-temps.component";
+import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gestionnaire-des-temps.service";
 
 @NgModule({
     declarations: [
@@ -74,7 +75,8 @@ import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps
         VueTeteHauteComponent,
         FinCourseComponent,
         VueTeteHauteComponent,
-        TableauMeilleursTempsComponent
+        TableauMeilleursTempsComponent,
+        GestionnaireDesTempsService
     ],
     imports: [
         BrowserModule,

@@ -24,17 +24,17 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public async supprimerPiste(piste: PisteBD): Promise<void> {
         await this.gestionnaireBD.supprimerPiste(piste);
-        window.location.reload();
+        this.obtenirPistes();
     }
 
     public creerNouvellePiste(): void {
         this.gestionnaireBD.pisteEdition = null;
     }
 
-    public supprimerToutesPistes(): void {
+    public async supprimerToutesPistes(): Promise<void> {
         for (const piste of this.pistes) {
-            this.gestionnaireBD.supprimerPiste(piste);
+           await this.gestionnaireBD.supprimerPiste(piste);
+           this.obtenirPistes();
         }
-        window.location.reload();
     }
 }

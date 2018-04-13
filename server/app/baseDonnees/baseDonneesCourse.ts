@@ -50,7 +50,7 @@ export class BaseDonneesCourse {
     }
 
     private async modifierUnePiste(identifiant: string, piste: PisteBD): Promise<void> {
-        this.modelPiste.findByIdAndUpdate(identifiant, {
+       await this.modelPiste.findByIdAndUpdate(identifiant, {
             nom: piste.nom, description: piste.description, points: piste.points,
             type: piste.type, temps: piste.temps, nbFoisJoue: piste.nbFoisJoue
         })
@@ -61,7 +61,7 @@ export class BaseDonneesCourse {
 
     private async incrementerNbFoisJoue(identifiant: string, piste: PisteBD): Promise<void> {
         piste.nbFoisJoue = piste.nbFoisJoue + 1;
-        this.modelPiste.findByIdAndUpdate(identifiant, {
+        await this.modelPiste.findByIdAndUpdate(identifiant, {
             nom: piste.nom, description: piste.description, points: piste.points,
             type: piste.type, temps: piste.temps, nbFoisJoue: piste.nbFoisJoue
         })
@@ -71,7 +71,7 @@ export class BaseDonneesCourse {
     }
 
     private async supprimerUnePiste(identifiant: string): Promise<void> {
-        this.modelPiste.findByIdAndRemove(identifiant).exec()
+        await this.modelPiste.findByIdAndRemove(identifiant).exec()
             .catch(() => {
                 throw new ErreurSupressionBaseDonnees();
             });

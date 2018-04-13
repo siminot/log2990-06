@@ -6,7 +6,6 @@ import { HttpClient } from "@angular/common/http";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed, inject } from "@angular/core/testing";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
-import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
 
 const NOMBRE_ELEMENTS_SCENE: number = 4;
 const NOMBRE_VOITURES: number = NOMBRE_AI + 1;
@@ -27,8 +26,7 @@ describe("GestionnaireScene", () => {
         gestionnaireScene = new GestionnaireScene(new GestionnaireSkybox(),
                                                   new GestionnaireVoitures(new GestionnaireClavier()),
                                                   new GestionnaireBDCourse(httpClient),
-                                                  new GestionnaireClavier(),
-                                                  new GestionnaireCollision());
+                                                  new GestionnaireClavier());
     }));
 
     it("Constructeur", () => {

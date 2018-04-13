@@ -47,7 +47,7 @@ describe("CameraJeu2D", () => {
 
   describe("Constantes pour camera", () => {
     it("Plan rapproche est valide", () => {
-      assert(PLAN_RAPPROCHE >= 0 && PLAN_RAPPROCHE < PLAN_ELOIGNE);
+      assert(PLAN_RAPPROCHE < PLAN_ELOIGNE);
     });
 
     it("Plan eloigne est valide", () => {

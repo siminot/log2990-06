@@ -1,20 +1,21 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { TableauMeilleursTempsComponent } from "./tableau-meilleurs-temps.component";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
-import { HttpClient, HttpHandler } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("TableauMeilleursTempsComponent", () => {
   let component: TableauMeilleursTempsComponent;
   let fixture: ComponentFixture<TableauMeilleursTempsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ],
       declarations: [ TableauMeilleursTempsComponent ],
-      providers: [ GestionnaireBDCourse, HttpClient, HttpHandler]
+      providers: [ GestionnaireBDCourse ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TableauMeilleursTempsComponent);

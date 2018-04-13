@@ -106,6 +106,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     public initialiser(texture: Object3D, rotation: Euler): void {
         this.add(texture);
         this.setRotationFromEuler(rotation);
+        this.updateMatrix();
     }
 
     public virerGauche(): void {
@@ -160,18 +161,9 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     public vitesseEnLocal(nouvelleVitesse: Vector3): void {
-        // const vitessePerpen: Vector3 = nouvelleVitesse.clone().
-
-        const rotationMatrix: Matrix4 = new Matrix4();
-
-        rotationMatrix.extractRotation(this.matrix);
-        const rotationQuaternion: Quaternion = new Quaternion();
-        rotationQuaternion.setFromRotationMatrix(rotationMatrix);
-
-
-
+        const rotationMatrix: Matrix4 = new Matrix4().extractRotation(this.matrix);
+        const rotationQuaternion: Quaternion = new Quaternion().setFromRotationMatrix(rotationMatrix);
         this._speed = nouvelleVitesse.applyQuaternion(rotationQuaternion.inverse());
-
     }
 
     public miseAJour(deltaTime: number): void {

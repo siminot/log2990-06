@@ -1,7 +1,7 @@
 import { Mongoose, Model, Schema, Document } from "mongoose";
 import { PisteBD } from "../../../client/src/app/carApp/piste/IPisteBD";
 import { ErreurRechercheBaseDonnees } from "../exceptions/erreurRechercheBD";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { injectable } from "inversify";
 import { ErreurSupressionBaseDonnees } from "../exceptions/erreurSupressionBD";
 import { ErreurModificationBaseDonnees } from "../exceptions/erreurModificationBD";
@@ -99,40 +99,40 @@ export class BaseDonneesCourse {
         return piste;
     }
 
-    public async requeteDePistes(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async requeteDePistes(req: Request, res: Response): Promise<void> {
         this.assurerConnection().catch(() => {
             throw new ErreurConnectionBD();
         });
         res.send(await this.obtenirPistes());
     }
 
-    public async requeteUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async requeteUnePiste(req: Request, res: Response): Promise<void> {
         this.assurerConnection().catch(() => { throw new ErreurConnectionBD(); });
         res.send(await this.obtenirUnePiste(req.params.id));
     }
 
-    public async requeteAjoutDUnePiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async requeteAjoutDUnePiste(req: Request, res: Response): Promise<void> {
         this.assurerConnection().catch(() => {
             throw new ErreurConnectionBD();
         });
         res.send(await this.ajouterPiste(req.body));
     }
 
-    public async requeteSupprimerPiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async requeteSupprimerPiste(req: Request, res: Response): Promise<void> {
         this.assurerConnection().catch(() => {
             throw new ErreurConnectionBD();
         });
         res.send(await this.supprimerUnePiste(req.params.id));
     }
 
-    public async requeteModifierPiste(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async requeteModifierPiste(req: Request, res: Response): Promise<void> {
         this.assurerConnection().catch(() => {
             throw new ErreurConnectionBD();
         });
         res.send(await this.modifierUnePiste(req.params.id, req.body));
     }
 
-    public async requeteIncrementerNbFoisJoue(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async requeteIncrementerNbFoisJoue(req: Request, res: Response): Promise<void> {
         this.assurerConnection().catch(() => { throw new ErreurConnectionBD(); });
         res.send(await this.incrementerNbFoisJoue(req.params.id, req.body));
     }

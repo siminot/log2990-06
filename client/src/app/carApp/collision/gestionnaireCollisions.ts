@@ -2,7 +2,6 @@ import { Voiture } from "../voiture/voiture";
 import { Injectable } from "@angular/core";
 import { Vector3, Sphere} from "three";
 
-
 const FACTEUR_AVANT: number = 1.1;
 const FACTEUR_ARRIERE: number = -1;
 const FACTEUR_MILIEU: number = 0;
@@ -10,6 +9,7 @@ const LARGEUR_AUTO: number = 0.8;
 const SPHERE_AVANT: Vector3 = new Vector3(FACTEUR_AVANT, FACTEUR_AVANT, FACTEUR_AVANT);
 const SPHERE_ARRIERE: Vector3 = new Vector3(FACTEUR_ARRIERE, FACTEUR_ARRIERE, FACTEUR_ARRIERE);
 const SPHERE_MILIEU: Vector3 = new Vector3(FACTEUR_MILIEU, FACTEUR_MILIEU, FACTEUR_MILIEU);
+const VECTEUR_PLACEMENT: Vector3[] = [SPHERE_ARRIERE, SPHERE_MILIEU, SPHERE_AVANT];
 const NOMBRE_SPHERE: number = 3;
 const DISTANCE_CRITIQUE: number = 2;
 
@@ -21,6 +21,7 @@ export class GestionnaireCollision {
 
     public constructor() {
         this.arrayDeSphere = new Array<Array<Sphere>>();
+        this.voituresAi = [];
     }
 
     public creationShpere(): Sphere {
@@ -37,24 +38,22 @@ export class GestionnaireCollision {
     }
 
     private miseAjourP(voiture: Voiture, spheres: Array<Sphere>): void {
-        const vecteurPlacement: Vector3[] = [SPHERE_ARRIERE, SPHERE_MILIEU, SPHERE_AVANT];
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
             let directionTempo: Vector3 = voiture.getDirection().clone();
-            let positionTempo: Vector3 = voiture.position.clone();
-            directionTempo = directionTempo.multiply(vecteurPlacement[i]);
+            const positionTempo: Vector3 = voiture.position.clone();
+            directionTempo = directionTempo.multiply(VECTEUR_PLACEMENT[i]);
             positionTempo.add(directionTempo);
             spheres[i].center.set(positionTempo.x, positionTempo.y, positionTempo.z);
         }
     }
 
     public genererSphere(): Array<Sphere> {
-        let tabTempo: Array<Sphere> = new Array<Sphere>();
+        const spheres: Array<Sphere> = new Array<Sphere>();
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
-            let tempo: Sphere = this.creationShpere();
-            tabTempo.push(tempo);
+            spheres.push(this.creationShpere());
         }
 
-        return tabTempo;
+        return spheres;
     }
 
     private insererSphereDansVoitureAI(voitures: Voiture[]): void {
@@ -91,19 +90,15 @@ export class GestionnaireCollision {
         }
     }
 
-    private observationZoneCritique ( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void{
-        for ( const sphereA of spheresA){
-            let resolu: Boolean = false;
+    private observationZoneCritique ( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
+        for (const sphereA of spheresA) {
             for ( const sphereB of spheresB) {
                 if (sphereA.intersectsSphere(sphereB)) {
                     this.resoudreContact(sphereA, sphereB, spheresA);
                     this.ajustementVitesseVoitures(spheresA, spheresB);
-                    resolu = true;
-                    break;
+
+                    return;
                 }
-            }
-            if (resolu) {
-                break;
             }
         }
     }
@@ -129,12 +124,9 @@ export class GestionnaireCollision {
     }
 
     private retournerVoitureImpact( spheres: Array<Sphere>): Voiture {
-        const indexAutoA: number = this.arrayDeSphere.indexOf(spheres);
-        if ( indexAutoA === 0 ) {
-            return this.voitureJoueur;
-        } else {
-            return this.voituresAi[indexAutoA - 1];
-        }
+        return this.arrayDeSphere.indexOf(spheres) === 0
+            ? this.voitureJoueur
+            : this.voituresAi[this.arrayDeSphere.indexOf(spheres) - 1];
     }
 
     private ajustementVitesseVoitures( spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
@@ -144,15 +136,11 @@ export class GestionnaireCollision {
         const vitesseAutoA: Vector3 = autoA.vitesseEnWorld();
         const vitesseAutoB: Vector3 = autoB.vitesseEnWorld();
 
-        const nouvelleVitesseA : Vector3 = this.calculeNouvelleVitesse(vitesseAutoA, autoA.position, vitesseAutoB, autoB.position);
-        const nouvelleVitesseB : Vector3 = this.calculeNouvelleVitesse(vitesseAutoB, autoB.position, vitesseAutoA, autoB.position);
+        const nouvelleVitesseA: Vector3 = this.calculeNouvelleVitesse(vitesseAutoA, autoA.position, vitesseAutoB, autoB.position);
+        const nouvelleVitesseB: Vector3 = this.calculeNouvelleVitesse(vitesseAutoB, autoB.position, vitesseAutoA, autoB.position);
 
         autoA.vitesseEnLocal(this.ajustementFriction(nouvelleVitesseA, autoA));
         autoB.vitesseEnLocal(this.ajustementFriction(nouvelleVitesseB, autoB));
-
-        // autoA.vitesseEnLocal(this.calculeNouvelleVitesse(vitesseAutoA, autoA.position, vitesseAutoB, autoB.position));
-        // autoB.vitesseEnLocal(this.calculeNouvelleVitesse(vitesseAutoB, autoB.position, vitesseAutoA, autoB.position));
-
     }
 
     private calculeNouvelleVitesse( vecteurVitesseA: Vector3, vecteurPositionA: Vector3,
@@ -161,18 +149,17 @@ export class GestionnaireCollision {
         const soustractionVitesse: Vector3 = vecteurVitesseA.clone().sub(vecteurVitesseB);
         let soustractionPosition: Vector3 = vecteurPositionA.clone().sub(vecteurPositionB);
         let produitSclaire: number = soustractionVitesse.clone().dot(soustractionPosition);
-        const denominateur: number = Math.pow(soustractionVitesse.clone().length(), 2);
+        const DEUX: number = 2;
+        const denominateur: number = Math.pow(soustractionVitesse.clone().length(), DEUX);
         produitSclaire = produitSclaire / denominateur;
         soustractionPosition = soustractionPosition.multiplyScalar(produitSclaire);
 
-        // return this.vitesseAutoToLocal(vecteurVitesseA.clone().sub(soustractionPosition));
         return vecteurVitesseA.clone().sub(soustractionPosition);
 
     }
 
-    private ajustementFriction( vitesseAAjuster: Vector3, voiture: Voiture): Vector3 {
+    private ajustementFriction(vitesseAAjuster: Vector3, voiture: Voiture): Vector3 {
         return vitesseAAjuster.clone().projectOnVector(voiture.direction);
-
     }
 
 }

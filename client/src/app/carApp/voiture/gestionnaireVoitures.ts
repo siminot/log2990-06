@@ -146,7 +146,7 @@ export class GestionnaireVoitures {
         for (const voiture of this.voituresEnMouvement) {
             voiture.miseAJour(tempsDepuisDerniereTrame);
         }
-        this.gestionnaireCollisions.miseAjour(this.voitureJoueur, this._voituresAI);
+        this.gestionnaireCollisions.miseAjour();
     }
 
     public changerTempsJournee(temps: TempsJournee): void {

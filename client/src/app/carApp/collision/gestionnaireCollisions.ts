@@ -23,19 +23,20 @@ export class GestionnaireCollision {
 
     public constructor(voitureJoueur: Voiture, voituresAi: Voiture[]) {
         this.arrayDeSphere = new Array<Array<Sphere>>();
-        this.voituresAi = [];
+        this.voituresAi = voituresAi;
+        this.voitureJoueur = voitureJoueur;
         this.insererSphereDansAutos(voitureJoueur, voituresAi);
     }
 
-    public miseAjour(voitureJoueur: Voiture, voituresAi: Voiture[]): void {
-        this.miseAjourP(voitureJoueur, this.arrayDeSphere[0]);
+    public miseAjour(): void {
+        this.miseAjourSpheresVoiture(this.voitureJoueur, this.arrayDeSphere[0]);
         for (let i: number = 1; i < this.arrayDeSphere.length; i++) {
-            this.miseAjourP(voituresAi[i - 1], this.arrayDeSphere[i]);
+            this.miseAjourSpheresVoiture(this.voituresAi[i - 1], this.arrayDeSphere[i]);
         }
-        this.gestionCollision(voitureJoueur, voituresAi);
+        this.gestionCollision();
     }
 
-    private miseAjourP(voiture: Voiture, spheres: Array<Sphere>): void {
+    private miseAjourSpheresVoiture(voiture: Voiture, spheres: Array<Sphere>): void {
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
             let directionTempo: Vector3 = voiture.getDirection().clone();
             const positionTempo: Vector3 = voiture.position.clone();
@@ -69,9 +70,7 @@ export class GestionnaireCollision {
         this.insererSphereDansVoitureAI(voitureAi);
     }
 
-    public gestionCollision(voitureJoueur: Voiture, voitureAi: Voiture[]): void {
-        this.voitureJoueur = voitureJoueur;
-        this.voituresAi = voitureAi;
+    private gestionCollision(): void {
         for (let i: number = 0; i < this.arrayDeSphere.length; i++) {
             for ( let j: number = i + 1; j < this.arrayDeSphere.length; j++ ) {
                 this.verifierPerimetrePriver(this.arrayDeSphere[i], this.arrayDeSphere[j]);

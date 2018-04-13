@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
@@ -176,7 +176,7 @@ module Route {
             return Math.floor(millisecondes * nbMax / MILLE) + 1;
         }
 
-        public async requeteDeGrille(req: Request, res: Response, next: NextFunction): Promise<void> {
+        public async requeteDeGrille(req: Request, res: Response): Promise<void> {
             this.optionsPartie.niveauDeDifficulte = (req.params.difficulte);
             this.initGrille();
             await this.remplirLaGrilleDeMots();

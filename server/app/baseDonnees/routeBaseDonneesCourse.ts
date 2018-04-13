@@ -1,5 +1,5 @@
 import { injectable, inject } from "inversify";
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 
 import { ServiceWeb } from "../serviceweb";
 import Types from "../types";
@@ -17,28 +17,28 @@ export class RouteBaseDonneesCourse extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-            await this.baseDonneesCourse.requeteDePistes(req, res, next);
+        router.get("/", async (req: Request, res: Response) => {
+            await this.baseDonneesCourse.requeteDePistes(req, res);
         });
 
-        router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
-            await this.baseDonneesCourse.requeteUnePiste(req, res, next);
+        router.get("/:id", async (req: Request, res: Response) => {
+            await this.baseDonneesCourse.requeteUnePiste(req, res);
         });
 
-        router.post("/ajouter", async (req: Request, res: Response, next: NextFunction) => {
-            await this.baseDonneesCourse.requeteAjoutDUnePiste(req, res, next);
+        router.post("/ajouter", async (req: Request, res: Response) => {
+            await this.baseDonneesCourse.requeteAjoutDUnePiste(req, res);
         });
 
-        router.patch("/modifier/:id", async (req: Request, res: Response, next: NextFunction) => {
-            await this.baseDonneesCourse.requeteModifierPiste(req, res, next);
+        router.patch("/modifier/:id", async (req: Request, res: Response) => {
+            await this.baseDonneesCourse.requeteModifierPiste(req, res);
         });
 
-        router.patch("/incrementer/:id", async (req: Request, res: Response, next: NextFunction) => {
-            await this.baseDonneesCourse.requeteIncrementerNbFoisJoue(req, res, next);
+        router.patch("/incrementer/:id", async (req: Request, res: Response) => {
+            await this.baseDonneesCourse.requeteIncrementerNbFoisJoue(req, res);
         });
 
-        router.delete("/supprimer/:id", async (req: Request, res: Response, next: NextFunction) => {
-            await this.baseDonneesCourse.requeteSupprimerPiste(req, res, next);
+        router.delete("/supprimer/:id", async (req: Request, res: Response) => {
+            await this.baseDonneesCourse.requeteSupprimerPiste(req, res);
         });
 
         return router;

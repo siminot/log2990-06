@@ -1,0 +1,39 @@
+table {
+    border: 2px solid black;
+    border-radius: 50px;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 10px;
+
+}
+
+th {
+    color: purple;
+    font-size: 20px;
+}
+button {
+    position:relative;
+    padding:8px;
+    font-family: 'Press Start 2P', cursive;
+    font-size:10px;
+    cursor: pointer;
+    text-decoration:none;
+    color:purple;
+    background-color: white;
+    border-radius:5px;
+    border: 2px solid rgba(0, 0, 0, 0.747);
+}
+button:enabled:hover {
+    color:white;
+    background-color:blue;
+}
+
+button:disabled {
+    color: purple;
+    cursor:not-allowed;
+}
+
+

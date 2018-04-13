@@ -31,14 +31,17 @@ export class PisteJeu extends PisteAbstraite {
     }
 
     public exporter(): Point[] {
-        const piste: Point[] = super.exporter();
+        let piste: Point[] = super.exporter();
         const premierPoint: Point = piste[0];
         piste.splice(0, 1);
         piste.push(premierPoint);
 
-        return this.estSensHoraire()
-            ? piste.reverse()
-            : piste;
+        if (this.estSensHoraire()) {
+            piste = piste.reverse();
+        }
+        piste.push(new Point(this.zoneDeDepart.x, this.zoneDeDepart.z));
+
+        return piste;
     }
 
     public ajouterPoint(point: Point): void {

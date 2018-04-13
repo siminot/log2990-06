@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { Scene } from "three";
+import { Scene, Vector3 } from "three";
 import { IScene } from "./IScene";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
@@ -29,7 +29,6 @@ export class GestionnaireScene implements IScene {
     private clavier: UtilisateurPeripherique;
     private signalDepart: SignalDepart;
     private sonDepart: SonDepart;
-    private _pointsCourse: Point[];
 
     public get scene(): Scene {
         return this._scene;
@@ -41,7 +40,6 @@ export class GestionnaireScene implements IScene {
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
                        private gestionnaireCollision: GestionnaireCollision) {
         this._scene = new Scene;
-        this._pointsCourse = [];
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.sonDepart = new SonDepart();
@@ -52,7 +50,6 @@ export class GestionnaireScene implements IScene {
 
     private initialisationPiste(points: Point[]): void {
         this.piste = new PisteJeu();
-        this._pointsCourse = points;
         this.piste.importer(points);
 
         if (!this.piste.estValide) {
@@ -119,6 +116,10 @@ export class GestionnaireScene implements IScene {
     }
 
     public get obtenirPoints(): Point[] {
-        return this._pointsCourse;
+        return this.piste.exporter();
+    }
+
+    public get obtenirZoneDepart(): Vector3 {
+        return this.piste.zoneDeDepart;
     }
 }

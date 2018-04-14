@@ -1,6 +1,16 @@
 <div id="container">
     <h2>Résultats</h2>
 
+    <table>
+        <tr class="ligne">
+            <th id="titreColNom">Nom</th>
+            <th id="titreColTemps">Temps</th>
+        </tr>
+
+        <tr class="ligne" *ngFor="let piste of listePistes">
+            <td class="ligne">{{ piste.nom }}</td>
+        </tr>
+    </table>
     
 
 </div>

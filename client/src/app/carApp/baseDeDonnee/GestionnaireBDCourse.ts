@@ -3,6 +3,7 @@ import { PisteBD } from "../piste/IPisteBD";
 import { HttpClient } from "@angular/common/http";
 import { Point } from "../elementsGeometrie/point";
 import { Observable } from "rxjs/Observable";
+import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
 
 export const PISTES_URL: string = "http://localhost:3000/apipistes/";
 const URL_SUPPRIMER_PISTE: string = PISTES_URL + "supprimer/";

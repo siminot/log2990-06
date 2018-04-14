@@ -28,22 +28,43 @@ td div, th div {
     padding: 10px;
 }
 
-.colonneNom, .colonneTemps, #titreColNom, #titreColTemps, #colonneInputNom, #colonneTempsJoueur {
+/* DEBUT de la section pour les bordures de tableau pour les lignes normales. */
+.colonneNom, .colonneTemps, #colonneInputNom, #colonneTempsJoueur {
     border-top: 2px solid rgba(0, 0, 0, 0.750);
     border-bottom: 2px solid rgba(0, 0, 0, 0.750);  
 }
 
-.colonneNom, #titreColNom, #colonneInputNom {
+.colonneNom, #colonneInputNom {
     border-left: 2px solid rgba(0, 0, 0, 0.750);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
 
-.colonneTemps, #titreColTemps, #colonneTempsJoueur {
+.colonneTemps, #colonneTempsJoueur {
     border-right: 2px solid rgba(0, 0, 0, 0.750);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+/* FIN de la section pour les bordures de tableau pour les lignes normales. */
+
+/* DEBUT de la section pour les bordures de tableau pour la ligne des TITRES. */
+#titreColNom, #titreColTemps {
+    border-top: 3px solid rgba(0, 0, 0, 0.750);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.750);
+}
+
+#titreColNom {
+    border-left: 3px solid rgba(0, 0, 0, 0.750);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#titreColTemps {
+    border-right: 3px solid rgba(0, 0, 0, 0.750);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+/* FIN de la section pour les bordures des TITRES. */
 
 .colonneTemps, #colonneTempsJoueur {
     text-align: center;

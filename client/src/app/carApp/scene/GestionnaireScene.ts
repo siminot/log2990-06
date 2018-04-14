@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { Scene } from "three";
+import { Scene, Vector3 } from "three";
 import { IScene } from "./IScene";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
@@ -46,9 +46,9 @@ export class GestionnaireScene implements IScene {
         this.creerScene();
     }
 
-    private initialisationPiste(point: Point[]): void {
+    private initialisationPiste(points: Point[]): void {
         this.piste = new PisteJeu();
-        this.piste.importer(point);
+        this.piste.importer(points);
 
         if (!this.piste.estValide) {
             this.piste = new PisteJeu();
@@ -106,5 +106,13 @@ export class GestionnaireScene implements IScene {
         this._scene.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerDecor();
         this._scene.add(this.gestionnaireSkybox.skybox);
+    }
+
+    public get obtenirPoints(): Point[] {
+        return this.piste.exporter();
+    }
+
+    public get obtenirZoneDepart(): Vector3 {
+        return this.piste.zoneDeDepart;
     }
 }

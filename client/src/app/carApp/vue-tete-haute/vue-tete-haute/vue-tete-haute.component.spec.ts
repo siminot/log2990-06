@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { VueTeteHauteComponent } from "./vue-tete-haute.component";
 import { TimerService } from "../../timer/timer.service";
 import { TempsAffichage } from "./tempsAffichage";
+import { GestionnaireDesTempsService } from "../../GestionnaireDesTemps/gestionnaire-des-temps.service";
 
 describe("VueTeteHauteComponent", () => {
     let component: VueTeteHauteComponent;
@@ -11,9 +12,10 @@ describe("VueTeteHauteComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [VueTeteHauteComponent],
-            providers: [TimerService]
+            providers: [TimerService, GestionnaireDesTempsService]
         })
-            .compileComponents();
+            .compileComponents()
+            .catch( () => {} );
     }));
 
     beforeEach(() => {

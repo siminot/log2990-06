@@ -24,7 +24,7 @@ describe("GrilleMultiJoeur", () => {
             providers: [HttpHandler],
             declarations: [GrilleMultijoueurComponent],
             // tslint:disable-next-line:max-line-length
-        }).compileComponents();
+        }).compileComponents().catch();
         TestBed.overrideComponent(GrilleMultijoueurComponent, {
             set: {
               providers: [

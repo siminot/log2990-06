@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { TimerService } from "../../timer/timer.service";
 import { TempsAffichage } from "./tempsAffichage";
+import { DeroulemenCourseService } from "../../deroulement-course/deroulemen-course.service";
+import { GestionnaireDesTempsService } from "../../GestionnaireDesTemps/gestionnaire-des-temps.service";
+import { TempsJoueur } from "../../GestionnaireDesTemps/tempsJoueur";
 
 const TAUX_REFRESH: number = 20;
 const NBR_TOURS: number = 3;
@@ -18,9 +21,16 @@ export class VueTeteHauteComponent implements OnInit {
     private numTour: number;
     private rafraichissement: NodeJS.Timer;
 
-    public constructor(private timer: TimerService) {
+    public constructor(private timer: TimerService,
+                       private gestionTemps: GestionnaireDesTempsService) {
         this.tempsActuel = 0;
         this.numTour = 1;
+        this.initialisationDesTemps();
+        this.souscriptionTour();
+        this.souscriptionDebutCourse();
+    }
+
+    private initialisationDesTemps(): void {
         this.tempsCourse = new TempsAffichage();
         this.tempsTours = new Array<TempsAffichage>();
         for (let i: number = 0; i < NBR_TOURS; i++) {
@@ -56,5 +66,37 @@ export class VueTeteHauteComponent implements OnInit {
 
     private courseTermiee(): void {
         clearInterval(this.rafraichissement);
+        this.envoyerTempsJoueur();
     }
+
+    private envoyerTempsJoueur(): void {
+        this.gestionTemps.actualiserTempsJoueur = this.creerTempsJoueur();
+    }
+
+    private creerTempsJoueur(): TempsJoueur {
+        const leTempsDuJoueur: TempsJoueur = new TempsJoueur;
+        leTempsDuJoueur.definirAI = false;
+        leTempsDuJoueur.definirTempsCourse = this.tempsCourse.obtenirTemps;
+        for (let i: number = 0; i < NBR_TOURS; i++) {
+            leTempsDuJoueur.definirTempsTour = this.tempsTours[i].obtenirTemps;
+        }
+        console.log(leTempsDuJoueur.obtenirTempsCourse);
+
+        return leTempsDuJoueur;
+    }
+
+    private souscriptionDebutCourse(): void {
+        DeroulemenCourseService.souscriptionDebutCourse()
+        .subscribe( () => {
+            this.debuterCourse();
+        });
+    }
+
+    private souscriptionTour(): void {
+        DeroulemenCourseService.souscriptionTourJoueur()
+        .subscribe( () => {
+            this.nouveauTour(0);
+        });
+    }
+
 }

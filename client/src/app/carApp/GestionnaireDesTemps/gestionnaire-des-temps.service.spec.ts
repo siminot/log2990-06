@@ -49,7 +49,7 @@ describe("GestionnaireDesTempsService", () => {
 
         it("Devrait lancer une erreur",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
-            expect( () => { service.AIXCourseComplete(3); }).toThrow(new InvalidArgumentError());
+            expect( () => { service.AIXCourseComplete(4); }).toThrow(new InvalidArgumentError());
         }));
 
         it("Devrait lancer une erreur",
@@ -84,7 +84,7 @@ describe("GestionnaireDesTempsService", () => {
 
         it("Devrait lancer une erreur",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
-            expect( () => { service.AIxTourComplete(3); }).toThrow(new InvalidArgumentError());
+            expect( () => { service.AIxTourComplete(4); }).toThrow(new InvalidArgumentError());
         }));
 
         it("Devrait lancer une erreur",
@@ -93,10 +93,5 @@ describe("GestionnaireDesTempsService", () => {
         }));
 
     });
-
-    // Prototype de test
-    // it("", inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
-
-    // }));
 
 });

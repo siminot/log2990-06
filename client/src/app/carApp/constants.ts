@@ -10,3 +10,4 @@ export const RAD_TO_DEG: number = STRAIGHT_ANGLE_DEG / Math.PI;
 export const PI_OVER_2: number = Math.PI / 2;
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Jour;
 export const NOM_PISTE_JEU: string = "pisteJeu";
+export const NOM_VOITURE_JOUEUR: string = "voitureJoueur";

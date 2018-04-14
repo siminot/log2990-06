@@ -6,7 +6,7 @@ import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClav
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 import { PisteJeu } from "../piste/pisteJeu";
-import { PI_OVER_2, TEMPS_JOURNEE_INITIAL } from "../constants";
+import { PI_OVER_2, TEMPS_JOURNEE_INITIAL, NOM_VOITURE_JOUEUR } from "../constants";
 import { ControleurVoiture } from "../controleurVoiture/controleurVoiture";
 import { IObjetEnMouvement } from "./IObjetEnMouvement";
 import { TempsJournee } from "../skybox/tempsJournee";
@@ -101,6 +101,7 @@ export class GestionnaireVoitures {
 
     private creerVoitureJoueur(piste: PisteJeu): void {
         this._voitureJoueur = new Voiture();
+        this._voitureJoueur.name = NOM_VOITURE_JOUEUR;
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
             .catch(() => { throw new ErreurChargementTexture(); });

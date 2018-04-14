@@ -56,12 +56,12 @@ export class GestionnaireCollision {
     }
 
     private gestionCollision(): void {
+        this.detectionCollisionHorsPiste();
         for (let i: number = 0; i < this.voitures.length; i++) {
             for (let j: number = i + 1; j < this.voitures.length; j++) {
                 this.verifierPerimetrePriver(this.spheres.get(this.voitures[j]), this.spheres.get(this.voitures[i]));
             }
         }
-        this.detectionCollisionHorsPiste();
     }
 
     private detectionCollisionHorsPiste(): void {
@@ -73,6 +73,7 @@ export class GestionnaireCollision {
     }
 
     private gererCollisionHorsPiste(voiture: Voiture): void {
+        // TODO : collisions hors-piste
         return ;
     }
 

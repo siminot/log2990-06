@@ -5,6 +5,7 @@ import { Wheel } from "./wheel";
 import { GroupePhares } from "./groupePhares";
 import { SonVoiture } from "../son/SonVoiture";
 import { IObjetEnMouvement } from "./IObjetEnMouvement";
+import { VerificateurSortiePiste } from "./VerificateurSortiePiste";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -34,6 +35,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     private weightRear: number;
     private phares: GroupePhares;
     private _sonVoiture: SonVoiture;
+    private sortiePiste: VerificateurSortiePiste;
 
     public get isAcceleratorPressed(): boolean {
         return this._isAcceleratorPressed;
@@ -100,6 +102,8 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this._sonVoiture = new SonVoiture();
         this.add(this._sonVoiture.obtenirSonRepos);
         this.add(this._sonVoiture.obtenirSonAccel);
+        this.sortiePiste = new VerificateurSortiePiste();
+        this.add(this.sortiePiste);
         this.initialiserPhares();
     }
 
@@ -185,7 +189,10 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         // Angular rotation of the car
         const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
         this.rotateY(this._speed.length() / R);
+    }
 
+    public estSurPiste(): boolean {
+        return this.sortiePiste.estSurPiste();
     }
 
     public eteindrePhares(): void {
@@ -209,6 +216,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     private physicsUpdate(deltaTime: number): void {
+        console.log(this.estSurPiste());
         this.rearWheel.ajouterVelociteAngulaire(this.getAngularAcceleration() * deltaTime);
         this.engine.update(this._speed.length(), this.rearWheel.radius);
         this.weightRear = this.getWeightDistribution();

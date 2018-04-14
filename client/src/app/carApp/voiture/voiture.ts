@@ -216,7 +216,6 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     private physicsUpdate(deltaTime: number): void {
-        console.log(this.estSurPiste());
         this.rearWheel.ajouterVelociteAngulaire(this.getAngularAcceleration() * deltaTime);
         this.engine.update(this._speed.length(), this.rearWheel.radius);
         this.weightRear = this.getWeightDistribution();

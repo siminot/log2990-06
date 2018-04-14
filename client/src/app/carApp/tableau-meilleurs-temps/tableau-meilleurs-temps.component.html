@@ -1,22 +1,6 @@
 <div id="container">
     <h2>Résultats</h2>
 
-    <mat-table class="mat-elevation-z8" [dataSource]="listePistes">
-
-        <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>id</mat-header-cell>
-            <mat-cell *matCellDef="let piste">{{ piste.id }}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="nom">
-            <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
-            <mat-cell *matCellDef="let piste">{{ piste.nom }}</mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef=""></mat-header-row>
-
-        <mat-row *matRowDef="let row; columns: "></mat-row>
-
-    </mat-table>
+    
 
 </div>

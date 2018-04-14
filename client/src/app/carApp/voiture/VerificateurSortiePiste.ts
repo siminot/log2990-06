@@ -2,13 +2,15 @@ import { Object3D, Raycaster, Vector3, Intersection } from "three";
 import { NOM_PISTE_JEU, NOM_VOITURE_JOUEUR } from "../constants";
 
 const BAS: Vector3 = new Vector3(0, -1, 0);
-const LARGEUR: number = 0.5;
-const PROFONDEUR: number = -1.55;
+const LARGEUR: number = 0.2;
+const PROFONDEUR: number = 1;
 const HAUTEUR: number = 0.5;
 const PLAN_RAPPROCHE: number = 5;
 const PLAN_ELOIGNE: number = -5;
 
 const POSITIONS_RAYONS: Vector3[] = [
+    new Vector3(-LARGEUR, HAUTEUR,           0),
+    new Vector3( LARGEUR, HAUTEUR,           0),
     new Vector3( LARGEUR, HAUTEUR,  PROFONDEUR),
     new Vector3( LARGEUR, HAUTEUR, -PROFONDEUR),
     new Vector3(-LARGEUR, HAUTEUR,  PROFONDEUR),
@@ -34,9 +36,8 @@ export class VerificateurSortiePiste extends Object3D {
     private get rayons(): Raycaster[] {
         const rayons: Raycaster[] = [];
         const positionVoiture: Vector3 = new Vector3(this.voiture.position.x, 0, this.voiture.position.z);
-
         for (const position of POSITIONS_RAYONS) {
-            rayons.push(new Raycaster(positionVoiture.add(position), BAS, PLAN_ELOIGNE, PLAN_RAPPROCHE));
+            rayons.push(new Raycaster(positionVoiture.clone().add(position), BAS, PLAN_ELOIGNE, PLAN_RAPPROCHE));
         }
 
         return rayons;

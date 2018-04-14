@@ -47,10 +47,10 @@ import { TimerService } from "./carApp/timer/timer.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDividerModule } from "@angular/material/divider";
-import { MatTableModule } from "@angular/material/table";
+
+import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from "@angular/material";
 
 import { DecimalPipe } from "@angular/common";
-// import { ResultatsFinCourseComponent } from "./carApp/resultats-fin-course/resultats-fin-course.component";
 import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
 import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps/tableau-meilleurs-temps.component";
 import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gestionnaire-des-temps.service";
@@ -86,7 +86,11 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
         BrowserAnimationsModule,
         MatExpansionModule,
         MatDividerModule,
-        MatTableModule
+        MatTableModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule
     ],
     providers: [
         ServiceDeRenduJeu,

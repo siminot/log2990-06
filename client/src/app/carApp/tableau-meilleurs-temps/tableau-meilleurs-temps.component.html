@@ -22,7 +22,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr *ngIf="placeMeriteeAuTableau">
             <td colspan="2">
                 <div class="messageAjoutTempJoueur">
                     <p>Entrez votre nom, vous vous méritez une place sur le tableau!</p>
@@ -30,7 +30,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr *ngIf="placeMeriteeAuTableau">
             <td>
                 <div id="colonneInputNom">
                     <p>INPUT ICI</p>

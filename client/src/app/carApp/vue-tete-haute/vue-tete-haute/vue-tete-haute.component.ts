@@ -80,7 +80,6 @@ export class VueTeteHauteComponent implements OnInit {
         for (let i: number = 0; i < NBR_TOURS; i++) {
             leTempsDuJoueur.definirTempsTour = this.tempsTours[i].obtenirTemps;
         }
-        console.log(leTempsDuJoueur.obtenirTempsCourse);
 
         return leTempsDuJoueur;
     }

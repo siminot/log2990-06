@@ -61,6 +61,19 @@ export class GestionnaireCollision {
                 this.verifierPerimetrePriver(this.spheres.get(this.voitures[j]), this.spheres.get(this.voitures[i]));
             }
         }
+        this.detectionCollisionHorsPiste();
+    }
+
+    private detectionCollisionHorsPiste(): void {
+        for (const voiture of this.voitures) {
+            if (!voiture.estSurPiste) {
+                this.gererCollisionHorsPiste(voiture);
+            }
+        }
+    }
+
+    private gererCollisionHorsPiste(voiture: Voiture): void {
+        return ;
     }
 
     private verifierPerimetrePriver(spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {

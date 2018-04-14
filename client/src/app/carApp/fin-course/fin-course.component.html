@@ -27,14 +27,7 @@
 
   <br>
 
-  <ng-container *ngIf="peutComparer; else elseTemplate">
-    <h2>Bravo vous avez finis premier! Vous pouvez alors vous comparer aux meilleurs temps!</h2>
-  </ng-container>
-  <ng-template #elseTemplate>
-    <h2>Malheureusement vous n'avez finis premier! Meilleure chance la prochaine fois!</h2>
-  </ng-template>
-
-  <button [disabled]="!peutComparer" (click)="compare()">
+  <button (click)="compare()">
     Comparer avec les meilleurs temps
   </button>
 

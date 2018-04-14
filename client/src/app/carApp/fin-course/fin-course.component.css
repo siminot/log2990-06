@@ -31,9 +31,5 @@ button:enabled:hover {
     background-color:blue;
 }
 
-button:disabled {
-    color: purple;
-    cursor:not-allowed;
-}
 
 

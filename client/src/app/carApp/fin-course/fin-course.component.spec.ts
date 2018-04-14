@@ -52,18 +52,4 @@ describe("FinCourseComponent: ", () => {
         });
     });
 
-    describe("Peut comparer avec les resultats: ", () => {
-        it("devrait etre apte a comparer", () => {
-            component.resultatsCourse[0].joueurEstHumain = true;
-            expect(component["peutComparerAvecLesMeilleursTemps"]()).toEqual(true);
-
-        });
-
-        it("ne devrait pas etre apte a comparer", () => {
-            component.resultatsCourse[0].joueurEstHumain = false;
-            expect(component["peutComparerAvecLesMeilleursTemps"]()).toEqual(false);
-
-        });
-    });
-
 });

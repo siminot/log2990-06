@@ -9,7 +9,7 @@ const TEMPS_SIGNAL_DEPART: number = 650;
 const TEMPS_MAXIMAL: number = 10;
 const DEBUT_COMPTEUR: number = 3;
 
-const MESSAGE_PREPARATION: string = "Préparez-vous au départ";
+const MESSAGE_PREPARATION: string = "Préparez-vous";
 const SIGNAL_DEPART: string = "GO";
 
 const DIMENSION: number = 10;

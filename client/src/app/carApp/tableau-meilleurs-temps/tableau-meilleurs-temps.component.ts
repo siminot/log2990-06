@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { PisteBD } from "../piste/IPisteBD";
 import { Subscription } from "rxjs/Subscription";
-import { MatTableDataSource } from "@angular/material";
 
 @Component({
     selector: "app-tableau-meilleurs-temps",
@@ -27,8 +26,6 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         temps: [{ nom: "Ken Block the second", min: 3, sec: 0, milliSec: 0 }],
         nbFoisJoue: 0
     }];
-
-    private colonnesAffichees: string[];
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse) {
     }

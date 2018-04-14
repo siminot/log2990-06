@@ -9,6 +9,10 @@
     font-family: 'Press Start 2P', cursive;
 }
 
+.colonneNom, .colonneTemps, #messageAjoutTempJoueur, #colonneInputNom, #colonneTempsJoueur {
+    font-size: 12px;
+}
+
 #table {
     border-collapse: collapse;
     min-width: 75%;
@@ -41,6 +45,6 @@ td div, th div {
     border-bottom-right-radius: 5px;
 }
 
-.colonneTemps {
+.colonneTemps, #colonneTempsJoueur {
     text-align: center;
 }

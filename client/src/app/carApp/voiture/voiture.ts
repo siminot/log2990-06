@@ -191,8 +191,12 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this.rotateY(this._speed.length() / R);
     }
 
-    public estSurPiste(): boolean {
-        return this.sortiePiste.estSurPiste();
+    public get estSurPiste(): boolean {
+        return this.sortiePiste.estSurPiste;
+    }
+
+    public get positionSortiePiste(): Vector3 {
+        return this.sortiePiste.positionSortiePiste;
     }
 
     public eteindrePhares(): void {

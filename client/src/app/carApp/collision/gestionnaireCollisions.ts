@@ -16,6 +16,9 @@ const VECTEUR_PLACEMENT: Vector3[] = [SPHERE_ARRIERE, SPHERE_MILIEU, SPHERE_AVAN
 const NOMBRE_SPHERE: number = 3;
 const DISTANCE_CRITIQUE: number = 2;
 
+const DITANCE_RECUL: number = 2;
+const RAPORT_VITESSE: number = 0.75;
+
 export class GestionnaireCollision {
     private spheres: Map<Voiture, Sphere[]>;
     private voitures: Voiture[];
@@ -73,7 +76,9 @@ export class GestionnaireCollision {
     }
 
     private gererCollisionHorsPiste(voiture: Voiture): void {
-        // TODO : collisions hors-piste
+        this.reculerAuto(voiture, voiture.direction.normalize().multiplyScalar(DITANCE_RECUL));
+        voiture.vitesseEnLocal(voiture.vitesseDansMonde.multiplyScalar(RAPORT_VITESSE));
+
         return ;
     }
 

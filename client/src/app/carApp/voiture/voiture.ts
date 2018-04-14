@@ -5,6 +5,9 @@ import { Wheel } from "./wheel";
 import { GroupePhares } from "./groupePhares";
 import { SonVoiture } from "../son/SonVoiture";
 import { IObjetEnMouvement } from "./IObjetEnMouvement";
+import { VerificateurSortiePiste } from "./VerificateurSortiePiste";
+import { SonCollision } from "../son/SonCollision";
+import { SonSortieRoute } from "../son/SonSortieRoute";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -34,6 +37,17 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     private weightRear: number;
     private phares: GroupePhares;
     private _sonVoiture: SonVoiture;
+    private _sonCollision: SonCollision;
+    private _sonSortieRoute: SonSortieRoute;
+    private sortiePiste: VerificateurSortiePiste;
+
+    public  jouerSonCollision(): void {
+        this._sonCollision.jouerSon();
+    }
+
+    public  jouerSonSortieRoute(): void {
+        this._sonSortieRoute.jouerSon();
+    }
 
     public get isAcceleratorPressed(): boolean {
         return this._isAcceleratorPressed;
@@ -97,15 +111,26 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this.steeringWheelDirection = 0;
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
+        this.sortiePiste = new VerificateurSortiePiste();
+        this.add(this.sortiePiste);
+        this.initialiserPhares();
+        this.initialiserSons();
+    }
+
+    private initialiserSons(): void {
         this._sonVoiture = new SonVoiture();
         this.add(this._sonVoiture.obtenirSonRepos);
         this.add(this._sonVoiture.obtenirSonAccel);
-        this.initialiserPhares();
-    }
+        this._sonCollision = new SonCollision();
+        this.add(this._sonCollision.obtenirSon);
+        this._sonSortieRoute = new SonSortieRoute();
+        this.add(this._sonSortieRoute.obtenirSon);
+     }
 
     public initialiser(texture: Object3D, rotation: Euler): void {
         this.add(texture);
         this.setRotationFromEuler(rotation);
+        this.updateMatrix();
     }
 
     public virerGauche(): void {
@@ -149,7 +174,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         return this.direction;
     }
 
-    public vitesseEnWorld(): Vector3 {
+    public get vitesseDansMonde(): Vector3 {
         const rotationMatrix: Matrix4 = new Matrix4();
 
         rotationMatrix.extractRotation(this.matrix);
@@ -160,18 +185,9 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     public vitesseEnLocal(nouvelleVitesse: Vector3): void {
-        // const vitessePerpen: Vector3 = nouvelleVitesse.clone().
-
-        const rotationMatrix: Matrix4 = new Matrix4();
-
-        rotationMatrix.extractRotation(this.matrix);
-        const rotationQuaternion: Quaternion = new Quaternion();
-        rotationQuaternion.setFromRotationMatrix(rotationMatrix);
-
-
-
+        const rotationMatrix: Matrix4 = new Matrix4().extractRotation(this.matrix);
+        const rotationQuaternion: Quaternion = new Quaternion().setFromRotationMatrix(rotationMatrix);
         this._speed = nouvelleVitesse.applyQuaternion(rotationQuaternion.inverse());
-
     }
 
     public miseAJour(deltaTime: number): void {
@@ -193,7 +209,14 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         // Angular rotation of the car
         const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
         this.rotateY(this._speed.length() / R);
+    }
 
+    public get estSurPiste(): boolean {
+        return this.sortiePiste.estSurPiste;
+    }
+
+    public get positionSortiePiste(): Vector3 {
+        return this.sortiePiste.positionSortiePiste;
     }
 
     public eteindrePhares(): void {

@@ -48,12 +48,15 @@ describe("GestionnaireVoitures", () => {
 
     it("Position des voitures est aléatoire", () => {
         const tableauPlaces: number[] = [0, 0, 0, 0];
-        for (let i: number = 0; i < 10000; i++) {
+        const NOMBRE_ESSAIS: number = 10000;
+
+        for (let i: number = 0; i < NOMBRE_ESSAIS; i++) {
             const place: number = gestionnaire["placeAleatoire"]();
             tableauPlaces[place]++;
         }
-        for (let j: number = 0; j < 4; j++) {
-            expect(tableauPlaces[j] / 10000).toBeGreaterThan(0.24);
+
+        for (const place of tableauPlaces) {
+            expect(place / NOMBRE_ESSAIS).toBeGreaterThan(1 / (tableauPlaces.length + 1));
         }
     });
 });

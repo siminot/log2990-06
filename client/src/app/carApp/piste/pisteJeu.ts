@@ -5,6 +5,7 @@ import { Droite } from "../elementsGeometrie/droite";
 import { SegmentPiste } from "../elementsAffichage/jeu/segmentPiste";
 import { PisteAbstraite } from "./pisteAbstraite";
 import { LigneDeDepart } from "../elementsAffichage/jeu/ligneDepart";
+import { NOM_PISTE_JEU } from "../constants";
 
 export class PisteJeu extends PisteAbstraite {
 
@@ -15,6 +16,7 @@ export class PisteJeu extends PisteAbstraite {
         super();
         this.intersections = [];
         this._premierSegment = null;
+        this.name = NOM_PISTE_JEU;
     }
 
     public importer(points: Point[]): void {

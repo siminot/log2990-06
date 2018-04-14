@@ -6,7 +6,7 @@ import { EvenementClavier, TypeEvenementClavier } from "../clavier/evenementClav
 import { UtilisateurPeripherique } from "../peripheriques/UtilisateurPeripherique";
 import { ErreurChargementTexture } from "../../exceptions/erreurChargementTexture";
 import { PisteJeu } from "../piste/pisteJeu";
-import { PI_OVER_2, TEMPS_JOURNEE_INITIAL } from "../constants";
+import { PI_OVER_2, TEMPS_JOURNEE_INITIAL, NOM_VOITURE_JOUEUR } from "../constants";
 import { ControleurVoiture } from "../controleurVoiture/controleurVoiture";
 import { IObjetEnMouvement } from "./IObjetEnMouvement";
 import { TempsJournee } from "../skybox/tempsJournee";
@@ -101,6 +101,7 @@ export class GestionnaireVoitures {
 
     private creerVoitureJoueur(piste: PisteJeu): void {
         this._voitureJoueur = new Voiture();
+        this._voitureJoueur.name = NOM_VOITURE_JOUEUR;
         const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
@@ -120,12 +121,12 @@ export class GestionnaireVoitures {
     private positionnerVoitures(piste: PisteJeu): void {
         const sensHoraire: number = piste.estSensHoraire() ? 1 : -1;
         let place: number = this.placeAleatoire();
-        for (let i: number = 0; i < NOMBRE_AI + 1; i++) {
+        for (const voiture of this.voitures) {
             const position: Vector3 = new Vector3(piste.zoneDeDepart.x, piste.zoneDeDepart.y, piste.zoneDeDepart.z);
             const vecteurPerpendiculaire: Vector3 = piste.premierSegment.direction.applyEuler(ANGLE_DROIT).normalize();
             position.add(vecteurPerpendiculaire.multiplyScalar(POSITION_VOITURES[place][0]));
             position.add(piste.premierSegment.direction.normalize().multiplyScalar(sensHoraire * POSITION_VOITURES[place][1]));
-            this.voitures[i].position.set(position.x, position.y, position.z);
+            voiture.position.set(position.x, position.y, position.z);
             place >= NOMBRE_AI
                 ? place = 0
                 : place++;
@@ -150,7 +151,7 @@ export class GestionnaireVoitures {
         for (const voiture of this.voituresEnMouvement) {
             voiture.miseAJour(tempsDepuisDerniereTrame);
         }
-        this.gestionnaireCollisions.miseAjour(this.voitureJoueur, this._voituresAI);
+        this.gestionnaireCollisions.miseAjour();
     }
 
     public changerTempsJournee(temps: TempsJournee): void {

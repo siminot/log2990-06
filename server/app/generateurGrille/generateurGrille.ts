@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import "reflect-metadata";
 import { injectable, } from "inversify";
 import * as WebRequest from "web-request";
@@ -6,7 +6,7 @@ import * as WebRequest from "web-request";
 import { Mot, MotBase } from "./mot";
 import { ConfigurationPartie } from "./configurationPartie";
 import { REQUETE_COMMUN, REQUETE_NONCOMMUN } from "./constantes";
-import { Difficulte } from "../../../common/communication/IConfigurationPartie";
+import { Difficulte } from "../../../common/communication/Difficulte";
 
 import { GenSquelette } from "./genSquelette";
 import { GenerateurListeMots } from "./generateurListeMots";
@@ -176,7 +176,7 @@ module Route {
             return Math.floor(millisecondes * nbMax / MILLE) + 1;
         }
 
-        public async requeteDeGrille(req: Request, res: Response, next: NextFunction): Promise<void> {
+        public async requeteDeGrille(req: Request, res: Response): Promise<void> {
             this.optionsPartie.niveauDeDifficulte = (req.params.difficulte);
             this.initGrille();
             await this.remplirLaGrilleDeMots();

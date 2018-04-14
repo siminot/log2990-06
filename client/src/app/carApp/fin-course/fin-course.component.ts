@@ -11,15 +11,12 @@ import { RESULTATS_BIDONS } from "./resultatsBidon";
 
 export class FinCourseComponent {
 
-    public peutComparer: boolean;
     public resultatsCourse: ResultatJoueur[];
-    private router: Router;
 
-    public constructor() {
+    public constructor(private router: Router) {
         this.resultatsCourse = RESULTATS_BIDONS;
         this.classerLesTemps();
         this.ajouterRangs();
-        this.peutComparer = this.peutComparerAvecLesMeilleursTemps();
     }
 
     private classerLesTemps(): void {
@@ -33,10 +30,6 @@ export class FinCourseComponent {
             resultat.rang = rang;
             rang++;
         }
-    }
-
-    private peutComparerAvecLesMeilleursTemps(): boolean {
-        return this.resultatsCourse[0].joueurEstHumain;
     }
 
     public compare(): void {

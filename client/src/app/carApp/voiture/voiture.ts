@@ -154,7 +154,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         return this.direction;
     }
 
-    public vitesseEnWorld(): Vector3 {
+    public get vitesseDansMonde(): Vector3 {
         const rotationMatrix: Matrix4 = new Matrix4();
 
         rotationMatrix.extractRotation(this.matrix);

@@ -48,8 +48,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDividerModule } from "@angular/material/divider";
 
-import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from "@angular/material";
-
 import { DecimalPipe } from "@angular/common";
 import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
 import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps/tableau-meilleurs-temps.component";
@@ -85,12 +83,7 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
         FormsModule,
         BrowserAnimationsModule,
         MatExpansionModule,
-        MatDividerModule,
-        MatTableModule,
-        MatInputModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatSortModule
+        MatDividerModule
     ],
     providers: [
         ServiceDeRenduJeu,

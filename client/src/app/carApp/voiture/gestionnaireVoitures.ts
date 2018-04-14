@@ -111,9 +111,9 @@ export class GestionnaireVoitures {
             this._voituresAI.push(new Voiture());
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI], this._voituresAI[i], rotation)
             .catch(() => { throw new ErreurChargementTexture(); });
-            this.controleurJoueur = new ControleurJoueur(this.voitureJoueur, piste.exporter());
-            this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
+            this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter(), i));
         }
+        this.controleurJoueur = new ControleurJoueur(this.voitureJoueur, piste.exporter());
     }
 
     private positionnerVoitures(piste: PisteJeu): void {

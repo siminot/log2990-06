@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { TimerService } from "../../timer/timer.service";
 import { TempsAffichage } from "./tempsAffichage";
 import { DeroulemenCourseService } from "../../deroulement-course/deroulemen-course.service";
+import { GestionnaireDesTempsService } from "../../GestionnaireDesTemps/gestionnaire-des-temps.service";
+import { TempsJoueur } from "../../GestionnaireDesTemps/tempsJoueur";
 
 const TAUX_REFRESH: number = 20;
 const NBR_TOURS: number = 3;
@@ -19,11 +21,12 @@ export class VueTeteHauteComponent implements OnInit {
     private numTour: number;
     private rafraichissement: NodeJS.Timer;
 
-    public constructor(private timer: TimerService) {
+    public constructor(private timer: TimerService,
+                       private gestionTemps: GestionnaireDesTempsService) {
         this.tempsActuel = 0;
         this.numTour = 1;
         this.initialisationDesTemps();
-        this.marchePls();
+        this.souscriptionTour();
         // POUR DES RAISONs DE TEST
         this.debuterCourse();
         // POUR DES RAISONS DE TEST
@@ -65,10 +68,15 @@ export class VueTeteHauteComponent implements OnInit {
 
     private courseTermiee(): void {
         clearInterval(this.rafraichissement);
+        this.envoyerTempsJoueur();
     }
 
-    private marchePls(): void {
-        DeroulemenCourseService.testonsDesChoses()
+    private envoyerTempsJoueur(): void {
+        this.gestionTemps.actualiserTempsJoueur = new TempsJoueur();
+    }
+
+    private souscriptionTour(): void {
+        DeroulemenCourseService.souscriptionTourJoueur()
         .subscribe( () => {
             this.nouveauTour(0);
         });

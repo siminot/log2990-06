@@ -1,20 +1,24 @@
 import { Subject } from "rxjs/Subject";
 
-const sujetJoueur: Subject<void> = new Subject();
+const sujetJoueur: Subject<void> = new Subject<void>();
+const sujetAi: Subject<number> = new Subject<number>();
 
 export class DeroulemenCourseService {
 
     public static nouveauTourJoueur(): void {
         sujetJoueur.next();
-        console.log("TOUR_JOUEUR");
     }
 
-    public static nouveauTourAi(): void {
-        console.log("nouveauTourAI");
+    public static nouveauTourAi(noAi: number): void {
+        sujetAi.next(noAi);
     }
 
-    public static testonsDesChoses(): Subject<void> {
+    public static souscriptionTourJoueur(): Subject<void> {
         return sujetJoueur;
+    }
+
+    public static SouscriptionTourAi(): Subject<number> {
+        return sujetAi;
     }
 
 }

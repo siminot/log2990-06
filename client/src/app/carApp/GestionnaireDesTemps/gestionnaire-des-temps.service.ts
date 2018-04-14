@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { TimerService } from "../timer/timer.service";
 import { InvalidArgumentError } from "../../exceptions/invalidArgumentError";
 import { TempsJoueur } from "./tempsJoueur";
+import { DeroulemenCourseService } from "../deroulement-course/deroulemen-course.service";
 
 const NBR_JOUEURS: number = 4;
 
@@ -13,6 +14,7 @@ export class GestionnaireDesTempsService {
 
     public constructor(private timer: TimerService) {
         this.initialisation();
+        this.souscriptionTourAi();
     }
 
     private initialisation(): void {
@@ -27,9 +29,9 @@ export class GestionnaireDesTempsService {
         this.tempsJoueur = temps;
     }
 
-    public AIxTourComplete(noJoueur: number): void {
+    private AIxTourComplete(noJoueur: number): void {
         this.verifierIndex(noJoueur);
-        this.tempsAIs[noJoueur].definirTempsTour = this.timer.nouveauTour(noJoueur);
+        this.tempsAIs[noJoueur].definirTempsTour = this.timer.nouveauTour(noJoueur + 1);
     }
 
     public AIXCourseComplete(noJoueur: number): void {
@@ -38,7 +40,7 @@ export class GestionnaireDesTempsService {
     }
 
     private verifierIndex(noJoueur: number): void {
-        if (noJoueur < 0 || noJoueur >= NBR_JOUEURS - 1) {
+        if (noJoueur < 0 || noJoueur >= NBR_JOUEURS) {
             throw new InvalidArgumentError();
         }
     }
@@ -51,5 +53,12 @@ export class GestionnaireDesTempsService {
         }
 
         return tempsFinCourse;
+    }
+
+    private souscriptionTourAi(): void {
+        DeroulemenCourseService.SouscriptionTourAi()
+        .subscribe( (noAi) => {
+            this.AIxTourComplete(noAi);
+        });
     }
 }

@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Point } from "../elementsGeometrie/point";
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
+import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
 
 export const PISTES_URL: string = "http://localhost:3000/apipistes/";
 const URL_SUPPRIMER_PISTE: string = PISTES_URL + "supprimer/";
@@ -36,16 +37,18 @@ export class GestionnaireBDCourse {
     }
 
     private obtenirPoints(piste: PisteBD): Point[] {
-        const points: Point[] = [];
-        if (piste === null) {
-            return points;
-        } else {
-            for (const point of piste.points) {
-                points.push(new Point(point.x, point.y));
-            }
+        return piste !== null
+            ? this.creationPointsSelonInterface(piste.points)
+            : [];
+    }
 
-            return points;
+    private creationPointsSelonInterface(pointsdefinition: IDefinitionPoint[]): Point[] {
+        const points: Point[] = [];
+        for (const point of pointsdefinition) {
+            points.push(new Point(point.x, point.y));
         }
+
+        return points;
     }
 
     public obtenirPistes(): Observable<PisteBD[]> {

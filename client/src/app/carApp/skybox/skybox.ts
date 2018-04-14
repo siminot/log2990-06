@@ -20,6 +20,7 @@ const FORMAT: string = ".jpg";
 const CHEMIN_TEXTURE: string = CHEMIN_PAYSAGE + "textures/";
 const RAPPRT_TEXTURE: number = 8;
 export const TAILLE_REPETITION: number = TAILLE_SKYBOX / RAPPRT_TEXTURE;
+export const NOM_SURFACE_HORS_PISTE: string = "horsPiste";
 
 // Lumière ambiante
 const COULEUR_LUMIERE_AMBIANTE: number = 0xFFFFFF;
@@ -65,6 +66,7 @@ export class Skybox extends Mesh {
 
     private chargerPlancher(): void {
         const plancher: Mesh = new Mesh(this.geometriePlancher, this.materielPlancher);
+        plancher.name = NOM_SURFACE_HORS_PISTE;
         const ANGLE: number = 90;
         plancher.receiveShadow = true;
         plancher.rotation.x = ANGLE / RAD_TO_DEG;

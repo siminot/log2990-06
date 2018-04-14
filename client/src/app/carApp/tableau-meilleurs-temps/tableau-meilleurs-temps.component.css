@@ -12,6 +12,7 @@
 #table {
     border-collapse: collapse;
     min-width: 75%;
+    max-width: 98%;
 }
 
 td, th {
@@ -23,18 +24,18 @@ td div, th div {
     padding: 10px;
 }
 
-.colonneNom, .colonneTemps, #titreColNom, #titreColTemps {
+.colonneNom, .colonneTemps, #titreColNom, #titreColTemps, #colonneInputNom, #colonneTempsJoueur {
     border-top: 2px solid rgba(0, 0, 0, 0.750);
     border-bottom: 2px solid rgba(0, 0, 0, 0.750);  
 }
 
-.colonneNom, #titreColNom {
+.colonneNom, #titreColNom, #colonneInputNom {
     border-left: 2px solid rgba(0, 0, 0, 0.750);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
 
-.colonneTemps, #titreColTemps {
+.colonneTemps, #titreColTemps, #colonneTempsJoueur {
     border-right: 2px solid rgba(0, 0, 0, 0.750);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;

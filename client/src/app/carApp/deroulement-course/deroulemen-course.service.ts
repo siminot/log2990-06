@@ -1,9 +1,9 @@
 import { Subject } from "rxjs/Subject";
 
-const sujetJoueur: Subject<void> = new Subject<void>();
-const sujetAi: Subject<number> = new Subject<number>();
-const sujetDebutCourse: Subject<void> = new Subject<void>();
-const sujetFinCourse: Subject<void> = new Subject<void>();
+export const sujetJoueur: Subject<void> = new Subject<void>();
+export const sujetAi: Subject<number> = new Subject<number>();
+export const sujetDebutCourse: Subject<void> = new Subject<void>();
+export const sujetFinCourse: Subject<void> = new Subject<void>();
 
 export class DeroulemenCourseService {
 

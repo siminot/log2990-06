@@ -10,7 +10,7 @@ import { PisteComponent } from "./carApp/piste-component/piste.component";
 import { AdministrateurComponent } from "./carApp/administrateur-component/administrateur.component";
 import { ChoixCourseComponent } from "./carApp/choixCourse-component/choixCourse.component";
 import { FinPartieSoloComponent } from "./crosswords/fin-partie/solo/fin-partie-solo.component";
-import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps/tableau-meilleurs-temps.component"
+import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps/tableau-meilleurs-temps.component";
 
 const routes: Routes = [
   { path: "CarGame", component: CarGameComponent },

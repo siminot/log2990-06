@@ -95,7 +95,6 @@ export class ControleurJoueur implements IObjetEnMouvement {
         if (this.pointDestination === this.piste[this.piste.length - 1]) {
             DeroulemenCourseService.nouveauTourJoueur();
         }
-        console.log("point");
         this.pointDestination = this.pointSuivant;
     }
 

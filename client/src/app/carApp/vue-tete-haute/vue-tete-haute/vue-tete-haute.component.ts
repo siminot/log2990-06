@@ -70,7 +70,19 @@ export class VueTeteHauteComponent implements OnInit {
     }
 
     private envoyerTempsJoueur(): void {
-        this.gestionTemps.actualiserTempsJoueur = new TempsJoueur();
+        this.gestionTemps.actualiserTempsJoueur = this.creerTempsJoueur();
+    }
+
+    private creerTempsJoueur(): TempsJoueur {
+        const leTempsDuJoueur: TempsJoueur = new TempsJoueur;
+        leTempsDuJoueur.definirAI = false;
+        leTempsDuJoueur.definirTempsCourse = this.tempsCourse.obtenirTemps;
+        for (let i: number = 0; i < NBR_TOURS; i++) {
+            leTempsDuJoueur.definirTempsTour = this.tempsTours[i].obtenirTemps;
+        }
+        console.log(leTempsDuJoueur.obtenirTempsCourse);
+
+        return leTempsDuJoueur;
     }
 
     private souscriptionDebutCourse(): void {

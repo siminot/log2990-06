@@ -29,7 +29,7 @@ export class GestionnaireDesTempsService {
         this.tempsJoueur = temps;
     }
 
-    private AIxTourComplete(noJoueur: number): void {
+    public AIxTourComplete(noJoueur: number): void {
         this.verifierIndex(noJoueur);
         this.tempsAIs[noJoueur].definirTempsTour = this.timer.nouveauTour(noJoueur + 1);
     }

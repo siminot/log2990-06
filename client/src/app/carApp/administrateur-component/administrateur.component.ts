@@ -33,7 +33,7 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public supprimerToutesPistes(): void {
         for (const piste of this.pistes) {
-            this.gestionnaireBD.supprimerPiste(piste);
+            this.gestionnaireBD.supprimerPiste(piste).catch();
         }
         window.location.reload();
     }

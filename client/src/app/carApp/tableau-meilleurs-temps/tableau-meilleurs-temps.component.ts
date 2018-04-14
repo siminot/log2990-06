@@ -27,7 +27,10 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         nbFoisJoue: 0
     }];
 
+    public placeMeriteeAuTableau: boolean;
+
     public constructor(private gestionnaireBD: GestionnaireBDCourse) {
+        this.placeMeriteeAuTableau = true;
     }
 
     public ngOnInit(): void {

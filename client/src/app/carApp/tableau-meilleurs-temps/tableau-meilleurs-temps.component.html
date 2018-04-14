@@ -8,9 +8,10 @@
         </tr>
 
         <tr class="ligne" *ngFor="let piste of listePistes">
-            <td class="ligne">{{ piste.nom }}</td>
+            <td class="colonneNom">{{ piste.nom }}</td>
+            <td class="colonneTemps" *ngFor="let te of piste.temps">
+                {{ te.min }}:{{ te.sec | number:'2.0-0' }}.{{ te.milliSec | number:'2.0-0' }}
+            </td>
         </tr>
     </table>
-    
-
 </div>

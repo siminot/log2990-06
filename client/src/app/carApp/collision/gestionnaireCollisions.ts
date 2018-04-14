@@ -78,8 +78,9 @@ export class GestionnaireCollision {
     private gererCollisionHorsPiste(voiture: Voiture): void {
         this.reculerAuto(voiture, voiture.direction.normalize().multiplyScalar(DITANCE_RECUL));
         voiture.vitesseEnLocal(voiture.vitesseDansMonde.multiplyScalar(RAPORT_VITESSE));
+        voiture.jouerSonSortieRoute();
 
-        return ;
+        return;
     }
 
     private verifierPerimetrePriver(spheresA: Array<Sphere>, spheresB: Array<Sphere>): void {
@@ -96,11 +97,17 @@ export class GestionnaireCollision {
                 if (sphereA.intersectsSphere(sphereB)) {
                     this.resoudreContact(sphereA, sphereB, spheresA);
                     this.ajustementVitesseVoitures(this.retournerVoitureImpact(spheresA), this.retournerVoitureImpact(spheresB));
+                    this.jouerSonCollision(this.retournerVoitureImpact(spheresA), this.retournerVoitureImpact(spheresB));
 
                     return;
                 }
             }
         }
+    }
+
+    private jouerSonCollision(voitureA: Voiture, voitureB: Voiture): void {
+        voitureA.jouerSonCollision();
+        voitureB.jouerSonCollision();
     }
 
     private resoudreContact(sphereA: Sphere, sphereB: Sphere, spheresA: Array<Sphere>): void {

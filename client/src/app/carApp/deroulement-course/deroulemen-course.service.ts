@@ -1,14 +1,20 @@
-import { Injectable } from "@angular/core";
+import { Subject } from "rxjs/Subject";
 
-@Injectable()
+const sujetJoueur: Subject<void> = new Subject();
+
 export class DeroulemenCourseService {
 
     public static nouveauTourJoueur(): void {
-        console.log("nouveauTourJoueur");
+        sujetJoueur.next();
+        console.log("TOUR_JOUEUR");
     }
 
     public static nouveauTourAi(): void {
         console.log("nouveauTourAI");
+    }
+
+    public static testonsDesChoses(): Subject<void> {
+        return sujetJoueur;
     }
 
 }

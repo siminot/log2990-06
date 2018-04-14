@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { TimerService } from "../../timer/timer.service";
 import { TempsAffichage } from "./tempsAffichage";
+import { DeroulemenCourseService } from "../../deroulement-course/deroulemen-course.service";
 
 const TAUX_REFRESH: number = 20;
 const NBR_TOURS: number = 3;
@@ -21,6 +22,14 @@ export class VueTeteHauteComponent implements OnInit {
     public constructor(private timer: TimerService) {
         this.tempsActuel = 0;
         this.numTour = 1;
+        this.initialisationDesTemps();
+        this.marchePls();
+        // POUR DES RAISONs DE TEST
+        this.debuterCourse();
+        // POUR DES RAISONS DE TEST
+    }
+
+    private initialisationDesTemps(): void {
         this.tempsCourse = new TempsAffichage();
         this.tempsTours = new Array<TempsAffichage>();
         for (let i: number = 0; i < NBR_TOURS; i++) {
@@ -57,4 +66,12 @@ export class VueTeteHauteComponent implements OnInit {
     private courseTermiee(): void {
         clearInterval(this.rafraichissement);
     }
+
+    private marchePls(): void {
+        DeroulemenCourseService.testonsDesChoses()
+        .subscribe( () => {
+            this.nouveauTour(0);
+        });
+    }
+
 }

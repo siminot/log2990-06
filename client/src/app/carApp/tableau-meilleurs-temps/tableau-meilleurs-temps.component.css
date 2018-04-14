@@ -11,6 +11,7 @@
 
 #table {
     border-collapse: collapse;
+    min-width: 75%;
 }
 
 td, th {
@@ -37,4 +38,8 @@ td div, th div {
     border-right: 2px solid rgba(0, 0, 0, 0.750);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+.colonneTemps {
+    text-align: center;
 }

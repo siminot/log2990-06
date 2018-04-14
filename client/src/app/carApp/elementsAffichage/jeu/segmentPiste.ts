@@ -2,8 +2,7 @@ import { Group, Mesh, CircleGeometry, PlaneGeometry, Vector3, Texture,
          RepeatWrapping, MeshPhongMaterial, TextureLoader, BackSide } from "three";
 import { Droite } from "../../elementsGeometrie/droite";
 import { Point } from "../../elementsGeometrie/point";
-import { PI_OVER_2 } from "../../constants";
-import { NOM_PISTE_JEU } from "../../constants";
+import { PI_OVER_2, NOM_PISTE_JEU } from "../../constants";
 
 export const LARGEUR_PISTE: number = 10;
 const NOMBRE_SEGMENTS: number = 25;

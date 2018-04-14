@@ -13,6 +13,10 @@
     font-size: 12px;
 }
 
+#titreDeLaPage {
+    font-size: 18px;
+}
+
 #table {
     border-collapse: collapse;
     min-width: 75%;

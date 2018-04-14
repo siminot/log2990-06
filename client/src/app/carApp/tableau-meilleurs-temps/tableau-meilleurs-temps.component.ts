@@ -34,6 +34,8 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         this.abonnementPistes = this.gestionnaireBD.obtenirPistes()
             .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
 
+
+        // Pourra être supprimé une fois que la classe recevra un temps de course.
         if (this.gestionnaireBD.pisteJeu === null) {
             this.gestionnaireBD.pisteJeu = this.listePistes[0];
         }

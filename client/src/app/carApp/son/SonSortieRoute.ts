@@ -24,7 +24,9 @@ export class SonSortieRoute extends SonAbstrait {
     }
 
     public jouerSon(): void {
-        this._audio.play();
+        if (!this._audio.isPlaying) {
+            this._audio.play();
+        }
     }
 
 }

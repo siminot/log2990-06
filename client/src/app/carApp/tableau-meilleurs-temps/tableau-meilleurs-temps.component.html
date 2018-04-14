@@ -1,16 +1,24 @@
 <div id="container">
     <h2>Tableau des meilleurs temps</h2>
 
-    <table>
+    <table id="table">
         <tr class="ligne">
-            <th id="titreColNom">Nom</th>
-            <th id="titreColTemps">Temps</th>
+            <th>
+                <div id="titreColNom">Nom</div>
+            </th>
+            <th>
+                <div id="titreColTemps">Temps</div>
+            </th>
         </tr>
 
         <tr class="ligne" *ngFor="let piste of listePistes">
-            <td class="colonneNom">{{ piste.nom }}</td>
-            <td class="colonneTemps" *ngFor="let te of piste.temps">
-                {{ te.min }}:{{ te.sec | number:'2.0-0' }}.{{ te.milliSec | number:'2.0-0' }}
+            <td>
+                <div class="colonneNom">{{ piste.nom }}</div>
+            </td>
+            <td *ngFor="let te of piste.temps">
+                <div class="colonneTemps">
+                    {{ te.min }}:{{ te.sec | number:'2.0-0' }}.{{ te.milliSec | number:'2.0-0' }}
+                </div>
             </td>
         </tr>
     </table>

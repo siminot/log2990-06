@@ -9,3 +9,32 @@
     font-family: 'Press Start 2P', cursive;
 }
 
+#table {
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 0;
+}
+
+td div, th div {
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.colonneNom, .colonneTemps, #titreColNom, #titreColTemps {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.colonneNom, #titreColNom {
+    border-left: 1px solid black;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.colonneTemps, #titreColTemps {
+    border-right: 1px solid black;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

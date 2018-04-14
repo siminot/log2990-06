@@ -27,9 +27,7 @@ export class VueTeteHauteComponent implements OnInit {
         this.numTour = 1;
         this.initialisationDesTemps();
         this.souscriptionTour();
-        // POUR DES RAISONs DE TEST
-        this.debuterCourse();
-        // POUR DES RAISONS DE TEST
+        this.souscriptionDebutCourse();
     }
 
     private initialisationDesTemps(): void {
@@ -73,6 +71,13 @@ export class VueTeteHauteComponent implements OnInit {
 
     private envoyerTempsJoueur(): void {
         this.gestionTemps.actualiserTempsJoueur = new TempsJoueur();
+    }
+
+    private souscriptionDebutCourse(): void {
+        DeroulemenCourseService.souscriptionDebutCourse()
+        .subscribe( () => {
+            this.debuterCourse();
+        });
     }
 
     private souscriptionTour(): void {

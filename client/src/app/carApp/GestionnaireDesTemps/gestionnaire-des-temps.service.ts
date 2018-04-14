@@ -56,7 +56,7 @@ export class GestionnaireDesTempsService {
     }
 
     private souscriptionTourAi(): void {
-        DeroulemenCourseService.SouscriptionTourAi()
+        DeroulemenCourseService.souscriptionTourAi()
         .subscribe( (noAi) => {
             this.AIxTourComplete(noAi);
         });

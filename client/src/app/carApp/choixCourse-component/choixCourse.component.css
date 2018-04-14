@@ -58,6 +58,13 @@ ul, li {
 .pisteDescription {
     font-size: 10px;
     position:relative;
+    display: table-cell;
+    width: 50%;
+}
+
+.apercuPiste {
+    position:relative;
+    display: table-cell;
 }
 
 #listePistes {

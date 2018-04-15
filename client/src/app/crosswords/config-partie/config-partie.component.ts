@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { ServiceHttp } from "../serviceHttp/http-request.service";
 import { SocketService } from "../service-socket/service-socket";
-import { Difficulte } from "../../../../../common/communication/IConfigurationPartie";
+import { Difficulte } from "../../../../../common/communication/Difficulte";
 import { Router } from "@angular/router";
 import { listeMotsLongue } from "./../objetsTest/objetsTest";
 
 export const REQUETE_INIT: string = "http://localhost:3000/grille/";
+const TOUCHE_ENTREE: string = "Enter";
 
 @Component({
     selector: "app-config-partie",
@@ -73,7 +74,7 @@ export class ConfigPartieComponent implements OnInit {
     }
 
     public enterKeyPress(touche: KeyboardEvent, section: string): void {
-        if (touche.key === "Enter") {
+        if (touche.key === TOUCHE_ENTREE) {
             if (touche.target instanceof HTMLInputElement) {
                 this.modifierNomPartie(touche.target.value);
             }
@@ -87,7 +88,7 @@ export class ConfigPartieComponent implements OnInit {
     }
 
     public entrerNomJoueur(touche: KeyboardEvent, section: string): void {
-        if (touche.key === "Enter") {
+        if (touche.key === TOUCHE_ENTREE) {
             if (touche.target instanceof HTMLInputElement) {
                 this.nomJoueur = touche.target.value;
             }
@@ -101,9 +102,6 @@ export class ConfigPartieComponent implements OnInit {
 
     private demandeEtEnvoieGrille(): void {
         this.serviceSocket.demandeDeGrille().subscribe(() => {
-            // this.serviceHTTP.obtenirMots().subscribe( (x) => {
-            //     this.serviceSocket.envoyerGrille(x);
-            // });
             this.serviceSocket.envoyerGrille(listeMotsLongue);
         });
     }

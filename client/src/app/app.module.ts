@@ -40,7 +40,6 @@ import { MainGrilleMultiComponent } from "./crosswords/main-grille-multi/main-gr
 import { SocketService } from "./crosswords/service-socket/service-socket";
 import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse";
 import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
-import { GestionnaireCollision } from "./carApp/collision/gestionnaireCollisions";
 import { VueTeteHauteComponent } from "./carApp/vue-tete-haute/vue-tete-haute/vue-tete-haute.component";
 import { TimerService } from "./carApp/timer/timer.service";
 
@@ -103,7 +102,6 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
         ServiceHttp,
         SocketService,
         InfojoueurService,
-        GestionnaireCollision,
         DecimalPipe,
         TimerService,
         GestionnaireDesTempsService

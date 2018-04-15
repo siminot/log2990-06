@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { Scene } from "three";
+import { Scene, Vector3 } from "three";
 import { IScene } from "./IScene";
 import { GestionnaireSkybox } from "../skybox/gestionnaireSkybox";
 import { GestionnaireVoitures } from "../voiture/gestionnaireVoitures";
@@ -12,7 +12,6 @@ import { TempsJournee } from "../skybox/tempsJournee";
 import { TEMPS_JOURNEE_INITIAL } from "../constants";
 import { PISTE_TEST } from "../piste/pisteTest";
 import { Point } from "../elementsGeometrie/point";
-import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
 import { SignalDepart } from "../signalDepart/signalDepart";
 import { SonDepart } from "../son/SonDepart";
 
@@ -37,8 +36,7 @@ export class GestionnaireScene implements IScene {
     public constructor(private gestionnaireSkybox: GestionnaireSkybox,
                        private gestionnaireVoiture: GestionnaireVoitures,
                        @Inject(GestionnaireBDCourse) gestionnaireBDCourse: GestionnaireBDCourse,
-                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
-                       private gestionnaireCollision: GestionnaireCollision) {
+                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier) {
         this._scene = new Scene;
         this.clavier = new UtilisateurPeripherique(gestionnaireClavier);
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
@@ -48,9 +46,9 @@ export class GestionnaireScene implements IScene {
         this.creerScene();
     }
 
-    private initialisationPiste(point: Point[]): void {
+    private initialisationPiste(points: Point[]): void {
         this.piste = new PisteJeu();
-        this.piste.importer(point);
+        this.piste.importer(points);
 
         if (!this.piste.estValide) {
             this.piste = new PisteJeu();
@@ -76,8 +74,6 @@ export class GestionnaireScene implements IScene {
         this._scene.add(this.piste);
         this._scene.add(this.gestionnaireSkybox.skybox);
         this._scene.add(this.gestionnaireVoiture.voitureJoueur);
-        this.gestionnaireCollision.insererSphereDansAutos(this.gestionnaireVoiture.voitureJoueur,
-                                                          this.gestionnaireVoiture.tableauVoitureAI);
     }
 
     private signalerDepart(): void {
@@ -89,10 +85,7 @@ export class GestionnaireScene implements IScene {
     public miseAJour(tempsDepuisDerniereTrame: number): void {
         if (this.signalDepart.estTermine) {
             this.gestionnaireVoiture.miseAJourVoitures(tempsDepuisDerniereTrame);
-            this.gestionnaireCollision.miseAjour(this.gestionnaireVoiture.voitureJoueur, this.gestionnaireVoiture.tableauVoitureAI);
-            this.gestionnaireCollision.gestionCollision(this.gestionnaireVoiture.voitureJoueur, this.gestionnaireVoiture.tableauVoitureAI);
         }
-
     }
 
     public miseAJourTempsJournee(): void {
@@ -113,5 +106,13 @@ export class GestionnaireScene implements IScene {
         this._scene.remove(this.gestionnaireSkybox.skybox);
         this.gestionnaireSkybox.changerDecor();
         this._scene.add(this.gestionnaireSkybox.skybox);
+    }
+
+    public get obtenirPoints(): Point[] {
+        return this.piste.exporter();
+    }
+
+    public get obtenirZoneDepart(): Vector3 {
+        return this.piste.zoneDeDepart;
     }
 }

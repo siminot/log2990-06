@@ -1,5 +1,6 @@
 import { Sprite, Vector3, SpriteMaterial, Texture } from "three";
 import { SonDepart } from "../son/SonDepart";
+import { DeroulemenCourseService } from "../deroulement-course/deroulemen-course.service";
 
 const ROUGE: string = "#ff0000";
 const VERT: string = "#00ff00";
@@ -9,7 +10,7 @@ const TEMPS_SIGNAL_DEPART: number = 650;
 const TEMPS_MAXIMAL: number = 10;
 const DEBUT_COMPTEUR: number = 3;
 
-const MESSAGE_PREPARATION: string = "Préparez-vous au départ";
+const MESSAGE_PREPARATION: string = "Préparez-vous";
 const SIGNAL_DEPART: string = "GO";
 
 const DIMENSION: number = 10;
@@ -52,6 +53,7 @@ export class SignalDepart extends Sprite {
         } else {
             this.compteur--;
             this.nouveauSignal(SIGNAL_DEPART, VERT);
+            DeroulemenCourseService.debutCourse();
         }
     }
 

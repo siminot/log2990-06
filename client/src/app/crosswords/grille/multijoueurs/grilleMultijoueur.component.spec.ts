@@ -19,24 +19,22 @@ describe("GrilleMultiJoeur", () => {
 
         beforeEach(async() => {
 
-
         TestBed.configureTestingModule({
             imports: [RouterTestingModule.withRoutes([])],
             providers: [HttpHandler],
             declarations: [GrilleMultijoueurComponent],
             // tslint:disable-next-line:max-line-length
-        }).compileComponents();
+        }).compileComponents().catch();
         TestBed.overrideComponent(GrilleMultijoueurComponent, {
             set: {
               providers: [
-                { provide: SocketService, useClass: MockSocketService }, InfojoueurService, ServiceInteractionComponent, ServiceHttp,
-                , HttpClient,
+                { provide: SocketService, useClass: MockSocketService },
+                InfojoueurService, ServiceInteractionComponent, ServiceHttp, HttpClient,
               ]
             }
           });
 
         });
-
 
         beforeEach(() => {
         fixture = TestBed.createComponent(GrilleMultijoueurComponent);

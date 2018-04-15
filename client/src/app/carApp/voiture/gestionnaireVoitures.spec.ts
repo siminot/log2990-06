@@ -45,4 +45,18 @@ describe("GestionnaireVoitures", () => {
     it("get voituresAI renvoie un groupe contenant les voitures AI", () => {
         expect(gestionnaire.voituresAI.children.length).toBe(NOMBRE_AI);
     });
+
+    it("Position des voitures est aléatoire", () => {
+        const tableauPlaces: number[] = [0, 0, 0, 0];
+        const NOMBRE_ESSAIS: number = 10000;
+
+        for (let i: number = 0; i < NOMBRE_ESSAIS; i++) {
+            const place: number = gestionnaire["placeAleatoire"]();
+            tableauPlaces[place]++;
+        }
+
+        for (const place of tableauPlaces) {
+            expect(place / NOMBRE_ESSAIS).toBeGreaterThan(1 / (tableauPlaces.length + 1));
+        }
+    });
 });

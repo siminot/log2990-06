@@ -21,11 +21,11 @@
             </th>
         </tr>
 
-        <tr *ngFor="let piste of listePistes">
+        <tr *ngFor="let te of pisteCourante.temps">
             <td>
-                <div class="colonneNom">{{ piste.nom }}</div>
+                <div class="colonneNom">{{ te.nom }}</div>
             </td>
-            <td *ngFor="let te of piste.temps">
+            <td>
                 <div class="colonneTemps">
                     {{ te.min }}:{{ te.sec | number:'2.0-0' }}.{{ te.milliSec | number:'2.0-0' }}
                 </div>

@@ -19,7 +19,8 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         {
         _id: "1a", nom: "Une piste", description: "Une description",
         points: null, type: "Hello",
-        temps: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0 }],
+        temps: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0 },
+                { nom: "Ken Block le second", min: 1, sec: 29, milliSec: 15 }],
         nbFoisJoue: 0
         },
         {
@@ -43,6 +44,13 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
         this.values = "";
         this.nomJoueur = "";
+
+        // Pourra être supprimé une fois que la classe recevra un temps de course.
+        if (this.gestionnaireBD.pisteJeu === null) {
+            this.gestionnaireBD.pisteJeu = this.listePistes[0];
+        }
+
+        this.pisteCourante = this.gestionnaireBD.pisteJeu;
     }
 
     public generationTempsRandomPourTest(): void {
@@ -55,14 +63,6 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.abonnementPistes = this.gestionnaireBD.obtenirPistes()
             .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
-
-
-        // Pourra être supprimé une fois que la classe recevra un temps de course.
-        if (this.gestionnaireBD.pisteJeu === null) {
-            this.gestionnaireBD.pisteJeu = this.listePistes[0];
-        }
-
-        this.pisteCourante = this.gestionnaireBD.pisteJeu;
     }
 
     public peutSoumettre(value: string): boolean {
@@ -70,8 +70,8 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     }
 
     public soumissionNom(): void {
-        
-        console.log(this.nomJoueur);
+        this.pisteCourante.temps.push(this.tempsJoueurTableau);
+        console.log(this.pisteCourante);
     }
 
     public ngOnDestroy(): void {

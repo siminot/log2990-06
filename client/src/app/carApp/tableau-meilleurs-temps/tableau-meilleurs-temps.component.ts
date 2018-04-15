@@ -79,13 +79,14 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
     public soumissionNom(): void {
         const tempsJoueur: TempsAffichage = this.gestionnaireTemps.tempsJoueur.tempsCourse;
+        console.log(tempsJoueur);
         const tempsAAjouter: ITempsBD = {
             nom: this.nomJoueur,
-            min: +tempsJoueur.minutes,
-            sec: +tempsJoueur.secondes,
+            min: Number(tempsJoueur.minutes),
+            sec: Number(tempsJoueur.secondes),
             milliSec: +tempsJoueur.millisecondes
         };
-
+        console.log(tempsAAjouter);
         this.pisteCourante.temps.push(tempsAAjouter);
 
         this.joueurAjouteAuTableau = true;

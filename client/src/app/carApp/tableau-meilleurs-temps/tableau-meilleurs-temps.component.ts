@@ -34,7 +34,7 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse) {
         // À ajuster lorsque la connexion avec le service de temps sera établie.
-        this.placeMeriteeAuTableau = true;
+        this.placeMeriteeAuTableau = false;
 
         this.generationTempsRandomPourTest();
 

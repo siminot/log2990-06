@@ -10,10 +10,14 @@
     <table id="table" align="center">
         <tr>
             <th>
-                <div id="titreColNom">Nom</div>
+                <div id="titreColNom">
+                    <p>Nom</p>
+                </div>
             </th>
             <th>
-                <div id="titreColTemps">Temps</div>
+                <div id="titreColTemps">
+                    <p>Temps</p>
+                </div>
             </th>
         </tr>
 
@@ -39,12 +43,21 @@
         <tr *ngIf="placeMeriteeAuTableau">
             <td>
                 <div id="colonneInputNom">
-                    <input #box type="text">
+                    <input #box type="text" placeholder="Entrez votre nom ici">
                 </div>
             </td>
             <td>
                 <div id="colonneTempsJoueur">
-                    <p>{{ tempsJoueurTableau.min }}:{{ tempsJoueurTableau.sec | number:'2.0-0' }}.{{ tempsJoueurTableau.milliSec | number:'2.0-0' }}</p>
+                    <p>{{ tempsJoueurTableau.min }}:{{ tempsJoueurTableau.sec | number:'2.0-0' }}.{{ tempsJoueurTableau.milliSec
+                        | number:'2.0-0' }}</p>
+                </div>
+            </td>
+        </tr>
+
+        <tr *ngIf="placeMeriteeAuTableau">
+            <td colspan="2">
+                <div id="soumissionNom">
+                    <button id="btnSoumissionNom">Soumettre</button>
                 </div>
             </td>
         </tr>

@@ -8,7 +8,6 @@ import { IObjetEnMouvement } from "./IObjetEnMouvement";
 import { VerificateurSortiePiste } from "./VerificateurSortiePiste";
 import { SonCollision } from "../son/SonCollision";
 import { SonSortieRoute } from "../son/SonSortieRoute";
-import { PisteJeu } from "../piste/pisteJeu";
 
 export const DEFAULT_WHEELBASE: number = 2.78;
 export const DEFAULT_MASS: number = 1515;
@@ -128,9 +127,9 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this.add(this._sonSortieRoute.obtenirSon);
      }
 
-    public initialiser(texture: Object3D, piste: PisteJeu): void {
+    public initialiser(texture: Object3D, angle: number): void {
         this.add(texture);
-        this.rotateY(piste.premierSegment.angle);
+        this.rotateY(angle);
         this.updateMatrix();
         console.log(this.direction);
     }

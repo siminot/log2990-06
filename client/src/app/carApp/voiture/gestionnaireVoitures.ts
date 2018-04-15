@@ -144,7 +144,7 @@ export class GestionnaireVoitures {
         return new Promise<Object3D>((resolve) => {
                     new ObjectLoader(new LoadingManager()).load(
                         CHEMIN_TEXTURE + URL_TEXTURE,
-                        (object) => voiture.initialiser(object, piste));
+                        (object) => voiture.initialiser(object, piste.premierSegment.angle));
                });
     }
 

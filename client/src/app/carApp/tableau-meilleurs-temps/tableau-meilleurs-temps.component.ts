@@ -15,13 +15,14 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
     public pisteCourante: PisteBD;
 
-    private listePistes: PisteBD[] = [{
+    private listePistes: PisteBD[] = [
+        {
         _id: "1a", nom: "Une piste", description: "Une description",
         points: null, type: "Hello",
         temps: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0 }],
         nbFoisJoue: 0
-    },
-                                      {
+        },
+        {
         _id: "2a", nom: "Une deuxieme piste", description: "Une deuxiemem description",
         points: null, type: "blabla",
         temps: [{ nom: "Ken Block the second", min: 3, sec: 0, milliSec: 0 }],
@@ -34,7 +35,7 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse) {
         // À ajuster lorsque la connexion avec le service de temps sera établie.
-        this.placeMeriteeAuTableau = false;
+        this.placeMeriteeAuTableau = true;
 
         this.generationTempsRandomPourTest();
 

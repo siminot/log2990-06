@@ -105,5 +105,12 @@ td div, th div {
     width: 60%;
     height: 40%;
     margin: auto;
+    border: 1px solid rgba(0, 0, 0, 0.500);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.200);
     border-radius: 5px;
+}
+
+input:focus {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.500) !important;
+    border: 2px solid rgba(128, 0, 128, 0.500) !important;
 }

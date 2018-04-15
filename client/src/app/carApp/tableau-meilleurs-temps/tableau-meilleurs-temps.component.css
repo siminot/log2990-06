@@ -5,8 +5,13 @@
     margin: 0;
 }
 
-#container {
+#container, input[type="text"] {
     font-family: 'Press Start 2P', cursive;
+}
+
+.divider {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .colonneNom, .colonneTemps, #messageAjoutTempJoueur, #colonneInputNom, #colonneTempsJoueur {
@@ -75,16 +80,11 @@ td div, th div {
 }
 
 #colonneTempsJoueur, #colonneInputNom {
-    height: 30px;
+    height: 35px;
     position: relative;
 }
 
-.divider {
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-#colonneTempsJoueur > p {
+#colonneTempsJoueur > p ,  {
     background-color:purple;
     position: absolute;
     top:0;
@@ -94,4 +94,16 @@ td div, th div {
     width:50%;
     height:30%;
     margin:auto;
+}
+#colonneInputNom > input {
+    /* background-color:purple; */
+    /* right:0; */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    width: 60%;
+    height: 40%;
+    margin: auto;
+    border-radius: 5px;
 }

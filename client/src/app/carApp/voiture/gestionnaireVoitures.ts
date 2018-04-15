@@ -100,19 +100,19 @@ export class GestionnaireVoitures {
     }
 
     private creerVoitureJoueur(piste: PisteJeu): void {
+        console.log(piste.premierSegment.direction.normalize());
+        console.log(piste.premierSegment.angle);
         this._voitureJoueur = new Voiture();
         this._voitureJoueur.name = NOM_VOITURE_JOUEUR;
-        const rotation: Euler = new Euler(0, piste.premierSegment.angle);
-        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, rotation)
+        this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, piste)
             .catch(() => { throw new ErreurChargementTexture(); });
-
     }
 
     private creerVoituresAI(piste: PisteJeu): void {
-        const rotation: Euler = new Euler(0, piste.premierSegment.angle);
+        // const rotation: Euler = new Euler(0, piste.premierSegment.angle);
         for (let i: number = 0; i < NOMBRE_AI; i++) {
             this._voituresAI.push(new Voiture());
-            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI], this._voituresAI[i], rotation)
+            this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI], this._voituresAI[i], piste)
             .catch(() => { throw new ErreurChargementTexture(); });
             this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
         }
@@ -137,11 +137,11 @@ export class GestionnaireVoitures {
         return Math.floor(Math.random() * (NOMBRE_AI + 1));
     }
 
-    private async chargerTexture(URL_TEXTURE: string, voiture: Voiture, rotation: Euler): Promise<Object3D> {
+    private async chargerTexture(URL_TEXTURE: string, voiture: Voiture, piste: PisteJeu): Promise<Object3D> {
         return new Promise<Object3D>((resolve) => {
                     new ObjectLoader(new LoadingManager()).load(
                         CHEMIN_TEXTURE + URL_TEXTURE,
-                        (object) => voiture.initialiser(object, rotation));
+                        (object) => voiture.initialiser(object, piste));
                });
     }
 

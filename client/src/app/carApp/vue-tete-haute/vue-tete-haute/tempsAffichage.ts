@@ -8,29 +8,41 @@ export class TempsAffichage {
 
     private _minutes: string;
     private _secondes: string;
-    private _milliseconde: string;
+    private _millisecondes: string;
     private _temps: number;
 
     public constructor() {
         this._temps = 0;
         this._minutes = "--";
         this._secondes = "--";
-        this._milliseconde = "--";
+        this._millisecondes = "--";
     }
 
     public set tempsAffichable(temps: number) {
         this._temps = temps;
         this._minutes = this.formaterTempsMinute(temps);
         this._secondes = this.formaterTempsSec(temps);
-        this._milliseconde = this.formaterTempsMS(temps);
+        this._millisecondes = this.formaterTempsMS(temps);
     }
 
     public get tempsFormate(): string {
-        return this._minutes + " : " + this._secondes + " : " + this._milliseconde;
+        return this._minutes + " : " + this._secondes + " : " + this._millisecondes;
     }
 
-    public get obtenirTemps(): number {
+    public get temps(): number {
         return this._temps;
+    }
+
+    public get minutes(): string {
+        return this._minutes;
+    }
+
+    public get secondes(): string {
+        return this._secondes;
+    }
+
+    public get millisecondes(): string {
+        return this._millisecondes;
     }
 
     private ajouterZero(temps: string): string {
@@ -61,6 +73,4 @@ export class TempsAffichage {
 
         return tempsMS;
     }
-    
-
 }

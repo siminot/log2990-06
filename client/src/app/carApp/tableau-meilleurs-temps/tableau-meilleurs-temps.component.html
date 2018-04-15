@@ -1,6 +1,10 @@
 <div id="container">
     <h2 id="titreDeLaPage">Tableau des meilleurs temps</h2>
 
+    <div class="divider">
+        <mat-divider></mat-divider>
+    </div>
+
     <br>
 
     <table id="table" align="center">
@@ -35,12 +39,12 @@
         <tr *ngIf="placeMeriteeAuTableau">
             <td>
                 <div id="colonneInputNom">
-                    <p>INPUT ICI</p>
+                    <input #box (keyup)="onKey(box.value)">
                 </div>
             </td>
             <td>
                 <div id="colonneTempsJoueur">
-                    <p>TEMPS DU JOUEUR ICI</p>
+                    <p>{{ tempsJoueurTableau.min }}:{{ tempsJoueurTableau.sec | number:'2.0-0' }}.{{ tempsJoueurTableau.milliSec | number:'2.0-0' }}</p>
                 </div>
             </td>
         </tr>

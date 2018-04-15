@@ -73,3 +73,12 @@ td div, th div {
 .colonneTemps, #colonneTempsJoueur {
     text-align: center;
 }
+
+#colonneTempsJoueur, #colonneInputNom {
+    height: 30px;
+}
+
+.divider {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

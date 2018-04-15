@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { PisteBD } from "../piste/IPisteBD";
 import { Subscription } from "rxjs/Subscription";
+import { ITempsBD } from "../piste/ITempsBD";
 
 @Component({
     selector: "app-tableau-meilleurs-temps",
@@ -28,10 +29,23 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     }];
 
     public placeMeriteeAuTableau: boolean;
+    public tempsJoueurTableau: ITempsBD;
+    private values: string;
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse) {
         // À ajuster lorsque la connexion avec le service de temps sera établie.
         this.placeMeriteeAuTableau = true;
+
+        this.generationTempsRandomPourTest();
+
+        this.values = "";
+    }
+
+    public generationTempsRandomPourTest(): void {
+        this.tempsJoueurTableau = { nom: "Random Name",
+                                    min: 4,
+                                    sec: 10,
+                                    milliSec: 25 };
     }
 
     public ngOnInit(): void {
@@ -45,6 +59,11 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         }
 
         this.pisteCourante = this.gestionnaireBD.pisteJeu;
+    }
+
+    public onKey(value: string): void {
+        this.values += value + " | ";
+        console.log(this.values);
     }
 
     public ngOnDestroy(): void {

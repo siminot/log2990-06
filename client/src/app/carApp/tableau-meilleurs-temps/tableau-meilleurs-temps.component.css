@@ -130,3 +130,7 @@ input:focus {
     color: white !important;
     background-color: blue !important;
 }
+#btnSoumissionNom:disabled {
+    color: purple !important;
+    background-color:white !important;
+}

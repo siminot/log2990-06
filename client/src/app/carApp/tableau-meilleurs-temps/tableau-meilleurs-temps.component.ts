@@ -33,6 +33,8 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     public tempsJoueurTableau: ITempsBD;
     private values: string;
 
+    public nomJoueur: string;
+
     public constructor(private gestionnaireBD: GestionnaireBDCourse) {
         // À ajuster lorsque la connexion avec le service de temps sera établie.
         this.placeMeriteeAuTableau = true;
@@ -40,6 +42,7 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         this.generationTempsRandomPourTest();
 
         this.values = "";
+        this.nomJoueur = "";
     }
 
     public generationTempsRandomPourTest(): void {
@@ -65,6 +68,16 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     public onKey(value: string): void {
         this.values += value + " | ";
         console.log(this.values);
+    }
+
+    public peutSoumettre(value: string): boolean {
+        console.log(this.nomJoueur.length);
+
+        return this.nomJoueur.length !== 0;
+    }
+
+    public soumissionNom(): void {
+        console.log(this.nomJoueur);
     }
 
     public ngOnDestroy(): void {

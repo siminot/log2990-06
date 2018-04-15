@@ -76,9 +76,22 @@ td div, th div {
 
 #colonneTempsJoueur, #colonneInputNom {
     height: 30px;
+    position: relative;
 }
 
 .divider {
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+#colonneTempsJoueur > p {
+    background-color:purple;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    width:50%;
+    height:30%;
+    margin:auto;
 }

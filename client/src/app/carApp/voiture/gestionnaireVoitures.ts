@@ -10,6 +10,7 @@ import { PI_OVER_2, TEMPS_JOURNEE_INITIAL, NOM_VOITURE_JOUEUR } from "../constan
 import { ControleurVoiture } from "../controleurVoiture/controleurVoiture";
 import { IObjetEnMouvement } from "./IObjetEnMouvement";
 import { TempsJournee } from "../skybox/tempsJournee";
+import { ControleurJoueur } from "../controleurVoiture/controleurJoueur";
 import { GestionnaireCollision } from "../collision/gestionnaireCollisions";
 
 // AI
@@ -47,6 +48,7 @@ export class GestionnaireVoitures {
 
     private _voitureJoueur: Voiture;
     private _voituresAI: Voiture[];
+    private controleurJoueur: ControleurJoueur;
     private controleursAI: ControleurVoiture[];
     private gestionnaireCollisions: GestionnaireCollision;
     private clavier: UtilisateurPeripherique;
@@ -114,8 +116,9 @@ export class GestionnaireVoitures {
             this._voituresAI.push(new Voiture());
             this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_AI], this._voituresAI[i], piste)
             .catch(() => { throw new ErreurChargementTexture(); });
-            this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter()));
+            this.controleursAI.push(new ControleurVoiture(this._voituresAI[i], piste.exporter(), i));
         }
+        this.controleurJoueur = new ControleurJoueur(this.voitureJoueur, piste.exporter());
     }
 
     private positionnerVoitures(piste: PisteJeu): void {
@@ -177,6 +180,7 @@ export class GestionnaireVoitures {
     }
 
     public get voituresEnMouvement(): IObjetEnMouvement[] {
-        return (this.controleursAI as IObjetEnMouvement[]).concat([this._voitureJoueur]);
+        return (this.controleursAI as IObjetEnMouvement[])
+                .concat(this.controleurJoueur as IObjetEnMouvement);
     }
 }

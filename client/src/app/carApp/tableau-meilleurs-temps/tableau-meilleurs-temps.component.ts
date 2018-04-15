@@ -3,6 +3,9 @@ import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { PisteBD } from "../piste/IPisteBD";
 import { Subscription } from "rxjs/Subscription";
 import { ITempsBD } from "../piste/ITempsBD";
+import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
+// import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
+import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
 
 @Component({
     selector: "app-tableau-meilleurs-temps",
@@ -36,7 +39,8 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
     public nomJoueur: string;
 
-    public constructor(private gestionnaireBD: GestionnaireBDCourse) {
+    public constructor(private gestionnaireBD: GestionnaireBDCourse,
+                       private gestionnaireTemps: GestionnaireDesTempsService) {
         // À ajuster lorsque la connexion avec le service de temps sera établie.
         this.placeMeriteeAuTableau = true;
 
@@ -74,6 +78,8 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     }
 
     public soumissionNom(): void {
+        const tempsJoueur: TempsAffichage = this.gestionnaireTemps.tempsJoueur.tempsCourse;
+
         this.tempsJoueurTableau.nom = this.nomJoueur;
         this.pisteCourante.temps.push(this.tempsJoueurTableau);
 

@@ -65,18 +65,12 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         this.pisteCourante = this.gestionnaireBD.pisteJeu;
     }
 
-    public onKey(value: string): void {
-        this.values += value + " | ";
-        console.log(this.values);
-    }
-
     public peutSoumettre(value: string): boolean {
-        console.log(this.nomJoueur.length);
-
         return this.nomJoueur.length !== 0;
     }
 
     public soumissionNom(): void {
+        
         console.log(this.nomJoueur);
     }
 

@@ -32,7 +32,7 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
     public placeMeriteeAuTableau: boolean;
     public tempsJoueurTableau: ITempsBD;
-    private values: string;
+    private joueurAjouteAuTableau: boolean;
 
     public nomJoueur: string;
 
@@ -42,8 +42,8 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
         this.generationTempsRandomPourTest();
 
-        this.values = "";
         this.nomJoueur = "";
+        this.joueurAjouteAuTableau = false;
 
         // Pourra être supprimé une fois que la classe recevra un temps de course.
         if (this.gestionnaireBD.pisteJeu === null) {
@@ -65,13 +65,23 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
             .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
     }
 
-    public peutSoumettre(value: string): boolean {
-        return this.nomJoueur.length !== 0;
+    public peutEcrire(): boolean {
+        return !this.joueurAjouteAuTableau;
+    }
+
+    public peutSoumettre(): boolean {
+        return this.nomJoueur.length !== 0 && !this.joueurAjouteAuTableau;
     }
 
     public soumissionNom(): void {
+        this.tempsJoueurTableau.nom = this.nomJoueur;
         this.pisteCourante.temps.push(this.tempsJoueurTableau);
-        console.log(this.pisteCourante);
+
+        this.joueurAjouteAuTableau = true;
+        this.nomJoueur = "MERCI & BRAVO";
+
+        // À DÉCOMENTER LORSQUE LE COMPOSANT S'APPELLERA AU BON MOMENT DANS LE JEU.
+        // this.gestionnaireBD.mettreAJourPiste(this.pisteCourante);
     }
 
     public ngOnDestroy(): void {

@@ -30,8 +30,8 @@ describe("FinCourseComponent: ", () => {
             let plusPetitTemps: number = 0;
             let estBienClasse: boolean = true;
             for (const resultat of component.resultatsCourse) {
-                if (plusPetitTemps <= resultat.tempsCourse.obtenirTemps) {
-                    plusPetitTemps = resultat.tempsCourse.obtenirTemps;
+                if (plusPetitTemps <= resultat.tempsCourse.temps) {
+                    plusPetitTemps = resultat.tempsCourse.temps;
                 } else {
                     estBienClasse = false;
                 }

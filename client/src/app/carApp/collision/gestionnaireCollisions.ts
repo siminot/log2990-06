@@ -36,7 +36,7 @@ export class GestionnaireCollision {
         this.gestionCollision();
     }
 
-    private miseAjourSpheresVoiture(voiture: Voiture): void {
+    public miseAjourSpheresVoiture(voiture: Voiture): void {
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
             const positionTempo: Vector3 = voiture.position.clone().add(voiture.getDirection().clone().multiply(VECTEUR_PLACEMENT[i]));
             this.spheres.get(voiture)[i].center.set(positionTempo.x, positionTempo.y, positionTempo.z);

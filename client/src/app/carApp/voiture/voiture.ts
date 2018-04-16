@@ -61,6 +61,10 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this._speed = nouvelleVitesse;
     }
 
+    public setSpeed(nouvelleVitesse: Vector3) {
+        this._speed = nouvelleVitesse;
+    }
+
     public get currentGear(): number {
         return this.engine.currentGear;
     }

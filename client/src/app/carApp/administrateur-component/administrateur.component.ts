@@ -36,14 +36,4 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         }
         this.obtenirPistes();
     }
-
-    public changerImgHover(i: any): void {
-        (document.getElementsByClassName("deleteImg")[i] as HTMLImageElement).src = "../../../assets/listeTempsPistesCourse/delete_hover.png";
-        // (document.getElementById("deleteImg") as HTMLImageElement).src = "../../../assets/listeTempsPistesCourse/delete_hover.png";
-    }
-
-    public changerImgNonHover(i: any): void {
-        (document.getElementsByClassName("deleteImg")[i] as HTMLImageElement).src = "../../../assets/listeTempsPistesCourse/delete.png";
-        // (document.getElementById("deleteImg") as HTMLImageElement).src = "../../../assets/listeTempsPistesCourse/delete.png";
-    }
 }

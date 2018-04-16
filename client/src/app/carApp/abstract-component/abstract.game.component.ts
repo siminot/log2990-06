@@ -16,10 +16,14 @@ export abstract class AbstractGameComponent implements AfterViewInit {
 
     public ngAfterViewInit(): void {
         this.gestionnaireEcran.initialiserConteneur(this.containerRef.nativeElement);
+        this.initialiserServiceDeRendu();
+    }
+
+    protected initialiserServiceDeRendu(): void {
         this.serviceDeRendu
-            .initialiser()
-            .then(/* do nothing */)
-            .catch((err) => console.error(err));
+        .initialiser()
+        .then(/* do nothing */)
+        .catch((err) => console.error(err));
     }
 
     // Gestion des évènements de l'ecran

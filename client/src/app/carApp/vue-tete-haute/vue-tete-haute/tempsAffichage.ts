@@ -33,16 +33,32 @@ export class TempsAffichage {
         return this._temps;
     }
 
+    public set temps(t: number) {
+        this._temps = t;
+    }
+
     public get minutes(): string {
         return this._minutes;
+    }
+
+    public set minutes(m: string) {
+        this._minutes = m;
     }
 
     public get secondes(): string {
         return this._secondes;
     }
 
+    public set secondes(s: string) {
+        this._secondes = s;
+    }
+
     public get millisecondes(): string {
         return this._millisecondes;
+    }
+
+    public set millisecondes(m: string) {
+        this._millisecondes = m;
     }
 
     private ajouterZero(temps: string): string {

@@ -3,13 +3,10 @@ import { Engine } from "./engine";
 import { Wheel } from "./wheel";
 import { Vector3, Object3D } from "three";
 import { PI_OVER_2 } from "../constants";
-import { PisteJeu } from "../piste/pisteJeu";
 
 const MS_BETWEEN_FRAMES: number = 16.6667;
 const NOMBRE_PHARES: number = 2;
 const NOMBRE_SONS: number = 2;
-
-// const ROTATION_TEST: Euler = new Euler(0, PI_OVER_2, 0, "XYZ");
 
 /* tslint:disable: no-magic-numbers */
 class MockEngine extends Engine {
@@ -20,11 +17,9 @@ class MockEngine extends Engine {
 
 describe("Voiture", () => {
     let car: Voiture;
-    let piste: PisteJeu;
 
     beforeEach(async (done: () => void) => {
         car = new Voiture();
-        piste = new PisteJeu();
         car.initialiser(new Object3D, PI_OVER_2);
 
         car.accelerer();

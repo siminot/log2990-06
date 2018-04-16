@@ -131,7 +131,6 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this.add(texture);
         this.rotateY(angle);
         this.updateMatrix();
-        console.log(this.direction);
     }
 
     public virerGauche(): void {

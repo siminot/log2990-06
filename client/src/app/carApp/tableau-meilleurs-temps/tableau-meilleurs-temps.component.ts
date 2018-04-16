@@ -79,6 +79,13 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
     public soumissionNom(): void {
         const tempsJoueur: TempsAffichage = this.gestionnaireTemps.tempsJoueur.tempsCourse;
+        // GÉNÉRATION D'UN TEMPS RANDOM SI LA COURSE N'EST PAS TERMINÉ.
+        if (tempsJoueur.minutes === "--") {
+            tempsJoueur.minutes = "1";
+            tempsJoueur.secondes = "22";
+            tempsJoueur.millisecondes = "98";
+        }
+
         console.log(tempsJoueur);
         const tempsAAjouter: ITempsBD = {
             nom: this.nomJoueur,
@@ -92,8 +99,8 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         this.joueurAjouteAuTableau = true;
         this.nomJoueur = "MERCI & BRAVO";
 
-        // À DÉCOMENTER LORSQUE LE COMPOSANT S'APPELLERA AU BON MOMENT DANS LE JEU.
-        // this.gestionnaireBD.mettreAJourPiste(this.pisteCourante);
+        console.log(this.pisteCourante);
+        this.gestionnaireBD.mettreAJourPiste(this.pisteCourante);
     }
 
     public ngOnDestroy(): void {

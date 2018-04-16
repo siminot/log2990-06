@@ -14,7 +14,7 @@ import { ServiceDeRenduApercu } from "../serviceDeRendu/serviceDeRenduApercu";
 
 export class ApercuPisteComponent extends AbstractGameComponent {
 
-    public constructor(@Inject(ServiceDeRenduApercu) public serviceDeRendu: ServiceDeRenduApercu,
+    public constructor(@Inject(ServiceDeRenduApercu) serviceDeRendu: ServiceDeRenduApercu,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
                        @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
                        @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris) {

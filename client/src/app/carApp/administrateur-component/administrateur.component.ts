@@ -38,11 +38,12 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
     }
 
     public changerImgHover(i: any): void {
-        console.log((document.getElementsByClassName("deleteImg")[i] as HTMLImageElement));
+        (document.getElementsByClassName("deleteImg")[i] as HTMLImageElement).src = "../../../assets/listeTempsPistesCourse/delete_hover.png";
         // (document.getElementById("deleteImg") as HTMLImageElement).src = "../../../assets/listeTempsPistesCourse/delete_hover.png";
     }
 
     public changerImgNonHover(i: any): void {
+        (document.getElementsByClassName("deleteImg")[i] as HTMLImageElement).src = "../../../assets/listeTempsPistesCourse/delete.png";
         // (document.getElementById("deleteImg") as HTMLImageElement).src = "../../../assets/listeTempsPistesCourse/delete.png";
     }
 }

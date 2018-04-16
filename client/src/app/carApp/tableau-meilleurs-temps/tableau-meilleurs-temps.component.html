@@ -21,7 +21,7 @@
             </th>
         </tr>
 
-        <tr *ngFor="let te of pisteCourante.temps">
+        <tr *ngFor="let te of pisteCourante.temps | slice:0:5">
             <td>
                 <div class="colonneNom">{{ te.nom }}</div>
             </td>

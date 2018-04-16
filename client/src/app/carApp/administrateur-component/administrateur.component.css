@@ -76,12 +76,21 @@ ul, li {
     position:relative;
 }
 
-#listePistes {
-    /* margin-bottom: 50px; */
-}
-
 .divider {
     margin-top: 15px;
     margin-bottom: 15px;
 }
 
+.temps {
+    position: relative;
+}
+
+#deleteImg {
+    position: absolute;
+    height: 85%;
+    left: 325px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    cursor: pointer;
+}

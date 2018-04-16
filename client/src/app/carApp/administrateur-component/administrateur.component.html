@@ -36,9 +36,9 @@
                     </div>
                 
                     <ul>
-                        <li *ngFor="let temps of piste.temps">
+                        <li *ngFor="let temps of piste.temps" class="temps">
                             {{ temps.min }}:{{ temps.sec | number:'2.0-0' }}.{{ temps.milliSec | number:'2.0-0' }} par {{ temps.nom }}
-                            <span>ahah</span>
+                            <img id="deleteImg" src="../../../assets/listeTempsPistesCourse/delete.png">
                         </li>
                     </ul>
                 

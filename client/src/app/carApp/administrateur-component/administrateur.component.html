@@ -48,7 +48,7 @@
                             <input id="inputMilli" class="inputTemps" [(ngModel)]="_milliSec" placeholder="MilliSecondes">
                             <span>par</span>
                             <input id="inputNom" class="inputTemps" [(ngModel)]="_nom" placeholder="Nom">
-                            <button class="addImgBtn" [disabled]="!peutAjouter(piste)" (click)="ajoutTemps()"><img class="addImg" src="../../../assets/listeTempsPistesCourse/add.png"></button>
+                            <button class="addImgBtn" [disabled]="!peutAjouter()" (click)="ajoutTemps(piste)"><img class="addImg" src="../../../assets/listeTempsPistesCourse/add.png"></button>
                         </li>
                     </ul>
                 

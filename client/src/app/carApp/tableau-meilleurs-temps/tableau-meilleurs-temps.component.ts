@@ -7,6 +7,21 @@ import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnair
 // import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
 import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
 
+const LISTE_PISTES: PisteBD[] = [
+    {
+    _id: "1a", nom: "Une piste", description: "Une description",
+    points: null, type: "Hello",
+    temps: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0 },
+            { nom: "Ken Block le second", min: 1, sec: 29, milliSec: 15 }],
+    nbFoisJoue: 0
+    },
+    {
+    _id: "2a", nom: "Une deuxieme piste", description: "Une deuxiemem description",
+    points: null, type: "blabla",
+    temps: [{ nom: "Ken Block the second", min: 3, sec: 0, milliSec: 0 }],
+    nbFoisJoue: 0
+}];
+
 @Component({
     selector: "app-tableau-meilleurs-temps",
     templateUrl: "./tableau-meilleurs-temps.component.html",
@@ -15,24 +30,7 @@ import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage"
 export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     private pistes: PisteBD[];
     private abonnementPistes: Subscription;
-
     public pisteCourante: PisteBD;
-
-    private listePistes: PisteBD[] = [
-        {
-        _id: "1a", nom: "Une piste", description: "Une description",
-        points: null, type: "Hello",
-        temps: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0 },
-                { nom: "Ken Block le second", min: 1, sec: 29, milliSec: 15 }],
-        nbFoisJoue: 0
-        },
-        {
-        _id: "2a", nom: "Une deuxieme piste", description: "Une deuxiemem description",
-        points: null, type: "blabla",
-        temps: [{ nom: "Ken Block the second", min: 3, sec: 0, milliSec: 0 }],
-        nbFoisJoue: 0
-    }];
-
     public placeMeriteeAuTableau: boolean;
     public tempsJoueurTableau: ITempsBD;
     private joueurAjouteAuTableau: boolean;
@@ -51,7 +49,7 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
         // Pourra être supprimé une fois que la classe recevra un temps de course.
         if (this.gestionnaireBD.pisteJeu === null) {
-            this.gestionnaireBD.pisteJeu = this.listePistes[0];
+            this.gestionnaireBD.pisteJeu = LISTE_PISTES[0];
         }
 
         this.pisteCourante = this.gestionnaireBD.pisteJeu;
@@ -86,20 +84,17 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
             tempsJoueur.millisecondes = "98";
         }
 
-        console.log(tempsJoueur);
         const tempsAAjouter: ITempsBD = {
             nom: this.nomJoueur,
             min: Number(tempsJoueur.minutes),
             sec: Number(tempsJoueur.secondes),
             milliSec: +tempsJoueur.millisecondes
         };
-        console.log(tempsAAjouter);
         this.pisteCourante.temps.push(tempsAAjouter);
 
         this.joueurAjouteAuTableau = true;
         this.nomJoueur = "MERCI & BRAVO";
 
-        console.log(this.pisteCourante);
         this.gestionnaireBD.mettreAJourPiste(this.pisteCourante);
     }
 

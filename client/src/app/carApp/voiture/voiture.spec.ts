@@ -6,7 +6,8 @@ import { PI_OVER_2 } from "../constants";
 
 const MS_BETWEEN_FRAMES: number = 16.6667;
 const NOMBRE_PHARES: number = 2;
-const NOMBRE_SONS: number = 2;
+const NOMBRE_SONS: number = 4;
+const NOMBRE_RAYCASTER: number = 1;
 
 /* tslint:disable: no-magic-numbers */
 class MockEngine extends Engine {
@@ -124,7 +125,7 @@ describe("Voiture", () => {
     it("phares initialises", () => {
         car = new Voiture(undefined);
         car.initialiser(new Object3D(), PI_OVER_2);
-        expect(car.children.length - NOMBRE_SONS).toBe(NOMBRE_PHARES);
+        expect(car.children.length - NOMBRE_SONS - NOMBRE_RAYCASTER).toBe(NOMBRE_PHARES);
     });
 
     it("la direction est bien initialisee", () => {

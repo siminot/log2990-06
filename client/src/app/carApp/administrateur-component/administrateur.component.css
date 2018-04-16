@@ -22,7 +22,7 @@ ul, li {
     list-style-image: url('../../../assets/purple_ghost.jpg');
 }
 
-.pisteTitre, .pisteDescription, .titre, .creer, .piste, .editer, .supprimer, #suppToutesPistes, #titrePrincipal {
+.pisteTitre, .pisteDescription, .titre, .creer, .piste, .editer, .supprimer, #suppToutesPistes, #titrePrincipal, .inputTemps {
     font-family: 'Press Start 2P', cursive;
 }
 
@@ -96,7 +96,9 @@ ul, li {
 }
 
 .inputTemps {
-    width: 85px;
+    font-size: 8px;
+    width: 125px;
+    height: 20px;
     border: 1px solid rgba(0, 0, 0, 0.350);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.250);
     border-radius: 5px;
@@ -106,12 +108,24 @@ ul, li {
     border: 2px solid rgba(128, 0, 128, 0.500) !important;
 }
 #inputNom {
-    width: 125px;
+    width: 175px;
 }
 
-.addImg {
-    margin-left: 15px;
+.addImgBtn {
     height: 15px;
+    width: 15px;
+    border: none;
+    box-shadow: none;
     vertical-align: middle;
     cursor: pointer;
+    background-color: white;
+    padding: 0;
+}
+.addImgBtn:disabled {
+    cursor: not-allowed !important;
+    opacity: 0.5 !important;
+}
+.addImg {
+    height: 15px;
+    width:15px;
 }

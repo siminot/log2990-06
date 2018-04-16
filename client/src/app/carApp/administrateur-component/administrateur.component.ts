@@ -19,14 +19,7 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
         super(gestionnaireBD);
-        // this._min = null;
-        // this._sec = null;
-        // this._milliSec = null;
-        // this._nom = "";
-        this._min = 1;
-        this._sec = 10;
-        this._milliSec = 45;
-        this._nom = "Seb";
+        this.miseAZeroDuTemps();
     }
 
     public editerPiste(piste: PisteBD): void {
@@ -68,6 +61,7 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         const nouveauTemps: ITempsBD = this.creerTempsBD();
         this.pistes[indicePiste].temps.push(nouveauTemps);
         this.gestionnaireBD.mettreAJourPiste(this.pistes[indicePiste]);
+        this.miseAZeroDuTemps();
     }
 
     private creerTempsBD(): ITempsBD {
@@ -81,5 +75,12 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         } else {
             throw new IndiceInvalideErreur();
         }
+    }
+
+    private miseAZeroDuTemps(): void {
+        this._min = null;
+        this._sec = null;
+        this._milliSec = null;
+        this._nom = "";
     }
 }

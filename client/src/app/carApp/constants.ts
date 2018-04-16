@@ -11,3 +11,6 @@ export const PI_OVER_2: number = Math.PI / 2;
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Jour;
 export const NOM_PISTE_JEU: string = "pisteJeu";
 export const NOM_VOITURE_JOUEUR: string = "voitureJoueur";
+
+export const CHIFFRE_UN: string = "1";
+export const CHIFFRE_NEUF: string = "9";

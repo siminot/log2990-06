@@ -4,23 +4,7 @@ import { PisteBD } from "../piste/IPisteBD";
 import { Subscription } from "rxjs/Subscription";
 import { ITempsBD } from "../piste/ITempsBD";
 import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
-// import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
 import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
-
-const LISTE_PISTES: PisteBD[] = [
-    {
-    _id: "1a", nom: "Une piste", description: "Une description",
-    points: null, type: "Hello",
-    temps: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0 },
-            { nom: "Ken Block le second", min: 1, sec: 29, milliSec: 15 }],
-    nbFoisJoue: 0
-    },
-    {
-    _id: "2a", nom: "Une deuxieme piste", description: "Une deuxiemem description",
-    points: null, type: "blabla",
-    temps: [{ nom: "Ken Block the second", min: 3, sec: 0, milliSec: 0 }],
-    nbFoisJoue: 0
-}];
 
 @Component({
     selector: "app-tableau-meilleurs-temps",
@@ -32,34 +16,18 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     private abonnementPistes: Subscription;
     public pisteCourante: PisteBD;
     public placeMeriteeAuTableau: boolean;
-    public tempsJoueurTableau: ITempsBD;
     private joueurAjouteAuTableau: boolean;
 
     public nomJoueur: string;
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse,
                        private gestionnaireTemps: GestionnaireDesTempsService) {
-        // À ajuster lorsque la connexion avec le service de temps sera établie.
-        this.placeMeriteeAuTableau = true;
-
-        this.generationTempsRandomPourTest();
-
         this.nomJoueur = "";
         this.joueurAjouteAuTableau = false;
-
-        // Pourra être supprimé une fois que la classe recevra un temps de course.
-        if (this.gestionnaireBD.pisteJeu === null) {
-            this.gestionnaireBD.pisteJeu = LISTE_PISTES[0];
-        }
-
         this.pisteCourante = this.gestionnaireBD.pisteJeu;
-    }
 
-    public generationTempsRandomPourTest(): void {
-        this.tempsJoueurTableau = { nom: "Random Name",
-                                    min: 4,
-                                    sec: 10,
-                                    milliSec: 25 };
+        // À ajuster lorsque la connexion avec le service de temps sera établie.
+        this.placeMeriteeAuTableau = true;
     }
 
     public ngOnInit(): void {

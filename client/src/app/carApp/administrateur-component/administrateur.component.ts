@@ -39,10 +39,16 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
     }
 
     public effacerTemps(temps: ITempsBD, piste: PisteBD): void {
-        console.log(this.pistes);
-        delete this.pistes[this.pistes.indexOf(piste)].temps[this.pistes[this.pistes.indexOf(piste)].temps.indexOf(temps)];
-        console.log(this.pistes);
-        // this.gestionnaireBD.mettreAJourPiste(piste);
-        // this.obtenirPistes();
+        console.log("Indice de la piste : " + this.pistes.indexOf(piste));
+        console.log("Indice du temps : " + this.pistes[this.pistes.indexOf(piste)].temps.indexOf(temps));
+        console.log("Liste des temps de la piste : ");
+        console.log(this.pistes[this.pistes.indexOf(piste)].temps);
+        console.log("Temps à supprimer : ");
+        console.log(this.pistes[this.pistes.indexOf(piste)].temps[this.pistes[this.pistes.indexOf(piste)].temps.indexOf(temps)]);
+        this.pistes[this.pistes.indexOf(piste)].temps.splice(this.pistes[this.pistes.indexOf(piste)].temps.indexOf(temps), 1);
+        console.log("Liste des temps de la piste : ");
+        console.log(this.pistes[this.pistes.indexOf(piste)].temps);
+        this.gestionnaireBD.mettreAJourPiste(this.pistes[this.pistes.indexOf(piste)]);
+        this.obtenirPistes();
     }
 }

@@ -53,4 +53,8 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         this.pistes[indicePiste].temps.splice(indiceTemps, 1);
         this.gestionnaireBD.mettreAJourPiste(this.pistes[this.pistes.indexOf(piste)]);
     }
+
+    public peutAjouter(): boolean {
+        return this._min !== null && this._sec !== null && this._milliSec !== null && this._nom !== "";
+    }
 }

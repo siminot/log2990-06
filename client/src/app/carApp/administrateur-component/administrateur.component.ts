@@ -68,9 +68,12 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public ajoutTemps(piste: PisteBD): void {
         const indicePiste: number = this.getIndicePiste(piste);
-        console.log("Ajout du temps.");
-
+        const nouveauTemps: ITempsBD = this.creerTempsBD();
+        this.pistes[indicePiste].temps.push(nouveauTemps);
+        this.gestionnaireBD.mettreAJourPiste(this.pistes[indicePiste]);
     }
 
-    
+    private creerTempsBD(): ITempsBD {
+        return { nom: this._nom, min: this._min, sec: this._sec, milliSec: this._milliSec };
+    }
 }

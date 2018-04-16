@@ -18,10 +18,14 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
         super(gestionnaireBD);
-        this._min = null;
-        this._sec = null;
-        this._milliSec = null;
-        this._nom = "";
+        // this._min = null;
+        // this._sec = null;
+        // this._milliSec = null;
+        // this._nom = "";
+        this._min = 1;
+        this._sec = 10;
+        this._milliSec = 45;
+        this._nom = "Seb";
     }
 
     public editerPiste(piste: PisteBD): void {
@@ -39,16 +43,20 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         this.gestionnaireBD.pisteEdition = null;
     }
 
+    private getIndicePiste(piste: PisteBD): number {
+        return this.pistes.indexOf(piste);
+    }
+
     public async supprimerToutesPistes(): Promise<void> {
         for (const piste of this.pistes) {
             await this.gestionnaireBD.supprimerPiste(piste);
-            delete this.pistes[this.pistes.indexOf(piste)];
+            delete this.pistes[this.getIndicePiste(piste)];
         }
         this.obtenirPistes();
     }
 
     public effacerTemps(temps: ITempsBD, piste: PisteBD): void {
-        const indicePiste: number = this.pistes.indexOf(piste);
+        const indicePiste: number = this.getIndicePiste(piste);
         const indiceTemps: number = this.pistes[this.pistes.indexOf(piste)].temps.indexOf(temps);
         this.pistes[indicePiste].temps.splice(indiceTemps, 1);
         this.gestionnaireBD.mettreAJourPiste(this.pistes[this.pistes.indexOf(piste)]);
@@ -57,4 +65,12 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
     public peutAjouter(): boolean {
         return this._min !== null && this._sec !== null && this._milliSec !== null && this._nom !== "";
     }
+
+    public ajoutTemps(piste: PisteBD): void {
+        const indicePiste: number = this.getIndicePiste(piste);
+        console.log("Ajout du temps.");
+
+    }
+
+    
 }

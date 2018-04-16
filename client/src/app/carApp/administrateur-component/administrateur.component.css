@@ -110,7 +110,8 @@ ul, li {
 }
 
 .addImg {
-    height: 15px;
-
+    height: 10px;
+    margin: auto;
+    vertical-align: middle;
     cursor: pointer;
 }

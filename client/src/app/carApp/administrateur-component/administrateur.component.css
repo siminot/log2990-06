@@ -85,7 +85,7 @@ ul, li {
     position: relative;
 }
 
-#deleteImg {
+.deleteImg {
     position: absolute;
     height: 85%;
     left: 325px;

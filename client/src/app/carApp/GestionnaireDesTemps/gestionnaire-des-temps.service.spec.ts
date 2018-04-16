@@ -6,13 +6,11 @@ import { InvalidArgumentError } from "../../exceptions/invalidArgumentError";
 const TEMPSTEST: number = 12345;
 
 class MockTimer {
-
     private tempsTest: number = TEMPSTEST;
 
     public nouveauTour(noJoueur: number): number { return this.tempsTest; }
     public get obtenirTempsActuel(): number { return this.tempsTest; }
     public get obtenirTempsTourJoueur(): number { return this.tempsTest; }
-
 }
 
 describe("GestionnaireDesTempsService", () => {

@@ -40,7 +40,7 @@
                             {{ temps.min }}:{{ temps.sec | number:'2.0-0' }}.{{ temps.milliSec | number:'2.0-0' }} par {{ temps.nom }}
                             <img class="deleteImg" src="../../../assets/listeTempsPistesCourse/delete_red.png" (click)="effacerTemps(temps, piste)">
                         </li>
-                        <li>
+                        <li class="ligneNouveauTemps">
                             <input id="inputMin" class="inputTemps" [(ngModel)]="_min" placeholder="Minutes">
                             <span>:</span>
                             <input id="inputSec" class="inputTemps" [(ngModel)]="_sec" placeholder="Secondes">
@@ -48,6 +48,7 @@
                             <input id="inputMilli" class="inputTemps" [(ngModel)]="_milliSec" placeholder="MilliSecondes">
                             <span>par</span>
                             <input id="inputNom" class="inputTemps" [(ngModel)]="_nom" placeholder="Nom">
+                            <img class="addImg" src="../../../assets/listeTempsPistesCourse/add.png">
                         </li>
                     </ul>
                 

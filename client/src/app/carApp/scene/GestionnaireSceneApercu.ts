@@ -10,7 +10,7 @@ export class GestionnaireSceneApercu implements IScene {
 
     private _scene: Scene;
     private piste: PisteJeu;
-    @Input() private points: Point[];
+    @Input() public points: Point[];
 
     public get scene(): Scene {
         return this._scene;

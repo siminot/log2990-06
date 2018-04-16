@@ -11,8 +11,17 @@ import { ITempsBD } from "../piste/ITempsBD";
 })
 export class AdministrateurComponent extends AbstractListePisteComponent {
 
+    private _min: number;
+    private _sec: number;
+    private _milliSec: number;
+    private _nom: string;
+
     public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
         super(gestionnaireBD);
+        this._min = null;
+        this._sec = null;
+        this._milliSec = null;
+        this._nom = "";
     }
 
     public editerPiste(piste: PisteBD): void {

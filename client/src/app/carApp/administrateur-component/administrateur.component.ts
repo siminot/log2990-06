@@ -11,7 +11,7 @@ import { AbstractListePisteComponent } from "../abstract-component/abstract.list
 export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public constructor(@Inject(GestionnaireBDCourse) gestionnaireBD: GestionnaireBDCourse) {
-      super(gestionnaireBD);
+        super(gestionnaireBD);
     }
 
     public editerPiste(piste: PisteBD): void {
@@ -21,6 +21,7 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public async supprimerPiste(piste: PisteBD): Promise<void> {
         await this.gestionnaireBD.supprimerPiste(piste);
+        delete this.pistes[this.pistes.indexOf(piste)];
         this.obtenirPistes();
     }
 
@@ -30,7 +31,8 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public async supprimerToutesPistes(): Promise<void> {
         for (const piste of this.pistes) {
-           await this.gestionnaireBD.supprimerPiste(piste);
+            await this.gestionnaireBD.supprimerPiste(piste);
+            delete this.pistes[this.pistes.indexOf(piste)];
         }
         this.obtenirPistes();
     }

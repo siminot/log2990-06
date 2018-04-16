@@ -41,7 +41,7 @@
                             <img class="deleteImg" src="../../../assets/listeTempsPistesCourse/delete_red.png" (click)="effacerTemps(temps, piste)">
                         </li>
                         <li class="ligneNouveauTemps">
-                            <input id="inputMin" class="inputTemps" [(ngModel)]="_min" placeholder="Minutes">
+                            <input id="inputMin" [appEstUnChiffre]="true" categorie="minutes" valeur="_min" class="inputTemps" [(ngModel)]="_min" placeholder="Minutes">
                             <span>:</span>
                             <input id="inputSec" class="inputTemps" [(ngModel)]="_sec" placeholder="Secondes">
                             <span>.</span>

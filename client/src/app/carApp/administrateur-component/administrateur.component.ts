@@ -2,6 +2,7 @@ import { Component, Inject } from "@angular/core";
 import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
+import { ITempsBD } from "../piste/ITempsBD";
 
 @Component({
     selector: "app-admin",
@@ -35,5 +36,13 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
             delete this.pistes[this.pistes.indexOf(piste)];
         }
         this.obtenirPistes();
+    }
+
+    public effacerTemps(temps: ITempsBD, piste: PisteBD): void {
+        console.log(this.pistes);
+        delete this.pistes[this.pistes.indexOf(piste)].temps[this.pistes[this.pistes.indexOf(piste)].temps.indexOf(temps)];
+        console.log(this.pistes);
+        // this.gestionnaireBD.mettreAJourPiste(piste);
+        // this.obtenirPistes();
     }
 }

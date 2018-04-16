@@ -12,13 +12,11 @@ import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage"
     styleUrls: ["./tableau-meilleurs-temps.component.css"]
 })
 export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
-    private pistes: PisteBD[];
-    private abonnementPistes: Subscription;
     private joueurAAjouteAuTableau: boolean;
     private pisteCourante: PisteBD;
     private _placeMeriteeAuTableau: boolean;
     private tempsJoueurTableau: ITempsBD;
-    public nomJoueur: string;
+    private nomJoueur: string;
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse,
                        private gestionnaireTemps: GestionnaireDesTempsService) {
@@ -53,8 +51,6 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        this.abonnementPistes = this.gestionnaireBD.obtenirPistes()
-            .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
     }
 
     public peutEcrire(): boolean {
@@ -74,7 +70,6 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.abonnementPistes.unsubscribe();
     }
 
 }

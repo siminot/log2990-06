@@ -18,8 +18,8 @@ class MockTimer {
 describe("GestionnaireDesTempsService", () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [GestionnaireDesTempsService,
-                        { provide: TimerService, useClass: MockTimer }]
+            providers: [ GestionnaireDesTempsService,
+                         { provide: TimerService, useClass: MockTimer }]
         });
     });
 

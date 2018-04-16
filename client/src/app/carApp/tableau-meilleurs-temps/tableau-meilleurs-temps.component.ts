@@ -14,36 +14,24 @@ import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage"
 export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     private pistes: PisteBD[];
     private abonnementPistes: Subscription;
-    public pisteCourante: PisteBD;
-    public placeMeriteeAuTableau: boolean;
-    private joueurAjouteAuTableau: boolean;
-
+    private joueurAAjouteAuTableau: boolean;
+    private pisteCourante: PisteBD;
+    private _placeMeriteeAuTableau: boolean;
+    private tempsJoueurTableau: ITempsBD;
     public nomJoueur: string;
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse,
                        private gestionnaireTemps: GestionnaireDesTempsService) {
         this.nomJoueur = "";
-        this.joueurAjouteAuTableau = false;
+        this.joueurAAjouteAuTableau = false;
         this.pisteCourante = this.gestionnaireBD.pisteJeu;
+        this.obtenirTempsPourTableau();
 
         // À ajuster lorsque la connexion avec le service de temps sera établie.
-        this.placeMeriteeAuTableau = true;
+        this._placeMeriteeAuTableau = true;
     }
 
-    public ngOnInit(): void {
-        this.abonnementPistes = this.gestionnaireBD.obtenirPistes()
-            .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
-    }
-
-    public peutEcrire(): boolean {
-        return !this.joueurAjouteAuTableau;
-    }
-
-    public peutSoumettre(): boolean {
-        return this.nomJoueur.length !== 0 && !this.joueurAjouteAuTableau;
-    }
-
-    public soumissionNom(): void {
+    private obtenirTempsPourTableau(): void {
         const tempsJoueur: TempsAffichage = this.gestionnaireTemps.tempsJoueur.tempsCourse;
         // GÉNÉRATION D'UN TEMPS RANDOM SI LA COURSE N'EST PAS TERMINÉ.
         if (tempsJoueur.minutes === "--") {
@@ -52,17 +40,36 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
             tempsJoueur.millisecondes = "98";
         }
 
-        const tempsAAjouter: ITempsBD = {
-            nom: this.nomJoueur,
+        this.tempsJoueurTableau = {
+            nom: "",
             min: Number(tempsJoueur.minutes),
             sec: Number(tempsJoueur.secondes),
             milliSec: +tempsJoueur.millisecondes
         };
-        this.pisteCourante.temps.push(tempsAAjouter);
+    }
 
-        this.joueurAjouteAuTableau = true;
+    public placeMeriteeAuTableau(): boolean {
+        return this._placeMeriteeAuTableau;
+    }
+
+    public ngOnInit(): void {
+        this.abonnementPistes = this.gestionnaireBD.obtenirPistes()
+            .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
+    }
+
+    public peutEcrire(): boolean {
+        return !this.joueurAAjouteAuTableau;
+    }
+
+    public peutSoumettre(): boolean {
+        return this.nomJoueur.length !== 0 && !this.joueurAAjouteAuTableau;
+    }
+
+    public soumissionNom(): void {
+        this.tempsJoueurTableau.nom = this.nomJoueur;
+        this.pisteCourante.temps.push(this.tempsJoueurTableau);
+        this.joueurAAjouteAuTableau = true;
         this.nomJoueur = "MERCI & BRAVO";
-
         this.gestionnaireBD.mettreAJourPiste(this.pisteCourante);
     }
 

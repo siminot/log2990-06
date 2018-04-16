@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { PisteBD } from "../piste/IPisteBD";
-import { Subscription } from "rxjs/Subscription";
 import { ITempsBD } from "../piste/ITempsBD";
 import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
 import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";

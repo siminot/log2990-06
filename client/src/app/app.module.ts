@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
+import { ApercuPisteComponent } from "./carApp/apercuPiste/apercuPiste.component";
 import { CarGameComponent } from "./carApp/game-component/carGame.component";
 import { PisteComponent } from "./carApp/piste-component/piste.component";
 import { AdministrateurComponent } from "./carApp/administrateur-component/administrateur.component";
@@ -52,9 +53,12 @@ import { DecimalPipe } from "@angular/common";
 import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
 import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps/tableau-meilleurs-temps.component";
 import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gestionnaire-des-temps.service";
+import { ServiceDeRenduApercu } from "./carApp/serviceDeRendu/serviceDeRenduApercu";
+import { GestionnaireSceneApercu } from "./carApp/scene/GestionnaireSceneApercu";
 
 @NgModule({
     declarations: [
+        ApercuPisteComponent,
         AppComponent,
         CarGameComponent,
         PisteComponent,
@@ -86,9 +90,11 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
         MatDividerModule
     ],
     providers: [
+        ServiceDeRenduApercu,
         ServiceDeRenduJeu,
         ServiceDeRenduPistes,
         GestionnaireScene,
+        GestionnaireSceneApercu,
         GestionnaireScenePiste,
         GestionnaireCamera,
         GestionnaireCameraPiste,
@@ -110,6 +116,7 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
     bootstrap: [AppComponent],
     exports: [
         AppComponent,
+        ApercuPisteComponent,
         CarGameComponent,
         PisteComponent,
         AdministrateurComponent,
@@ -121,5 +128,4 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
         GrilleMultijoueurComponent
     ],
 })
-    // entryComponents: [ DialogComponent ]
 export class AppModule { }

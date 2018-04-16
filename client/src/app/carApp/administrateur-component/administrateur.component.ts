@@ -3,6 +3,7 @@ import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
 import { ITempsBD } from "../piste/ITempsBD";
+import { IndiceInvalideErreur } from "../../exceptions/indiceInvalide";
 
 @Component({
     selector: "app-admin",
@@ -43,10 +44,6 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         this.gestionnaireBD.pisteEdition = null;
     }
 
-    private getIndicePiste(piste: PisteBD): number {
-        return this.pistes.indexOf(piste);
-    }
-
     public async supprimerToutesPistes(): Promise<void> {
         for (const piste of this.pistes) {
             await this.gestionnaireBD.supprimerPiste(piste);
@@ -57,9 +54,9 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public effacerTemps(temps: ITempsBD, piste: PisteBD): void {
         const indicePiste: number = this.getIndicePiste(piste);
-        const indiceTemps: number = this.pistes[this.pistes.indexOf(piste)].temps.indexOf(temps);
+        const indiceTemps: number = this.pistes[this.getIndicePiste(piste)].temps.indexOf(temps);
         this.pistes[indicePiste].temps.splice(indiceTemps, 1);
-        this.gestionnaireBD.mettreAJourPiste(this.pistes[this.pistes.indexOf(piste)]);
+        this.gestionnaireBD.mettreAJourPiste(this.pistes[this.getIndicePiste(piste)]);
     }
 
     public peutAjouter(): boolean {
@@ -68,15 +65,21 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
 
     public ajoutTemps(piste: PisteBD): void {
         const indicePiste: number = this.getIndicePiste(piste);
-        // if (indicePiste >= -1) {}
-        console.log(piste);
-        console.log(indicePiste);
-        // const nouveauTemps: ITempsBD = this.creerTempsBD();
-        // this.pistes[indicePiste].temps.push(nouveauTemps);
-        // this.gestionnaireBD.mettreAJourPiste(this.pistes[indicePiste]);
+        const nouveauTemps: ITempsBD = this.creerTempsBD();
+        this.pistes[indicePiste].temps.push(nouveauTemps);
+        this.gestionnaireBD.mettreAJourPiste(this.pistes[indicePiste]);
     }
 
     private creerTempsBD(): ITempsBD {
         return { nom: this._nom, min: this._min, sec: this._sec, milliSec: this._milliSec };
+    }
+
+    private getIndicePiste(piste: PisteBD): number {
+        const indice: number = this.pistes.indexOf(piste);
+        if (indice >= -1) {
+            return indice;
+        } else {
+            throw new IndiceInvalideErreur();
+        }
     }
 }

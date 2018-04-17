@@ -1,11 +1,11 @@
-import { Injectable, Input } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Scene, MeshBasicMaterial, PlaneGeometry, Mesh, DoubleSide } from "three";
 import { IScene } from "./IScene";
 import { PisteJeu } from "../piste/pisteJeu";
-import { PISTE_TEST } from "../piste/pisteTest";
 import { Point } from "../elementsGeometrie/point";
 import { PI_OVER_2 } from "../constants";
 import { PROFONDEUR_SCENE } from "./GestionnaireScenePiste";
+import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
 
 const COULEUR_FOND: number = 0xFFFFFF;
 
@@ -13,7 +13,6 @@ const COULEUR_FOND: number = 0xFFFFFF;
 export class GestionnaireSceneApercu extends Scene implements IScene {
 
     private piste: PisteJeu;
-    @Input() public points: Point[];
 
     public get scene(): Scene {
         return this;
@@ -21,8 +20,6 @@ export class GestionnaireSceneApercu extends Scene implements IScene {
 
     public constructor() {
         super();
-        this.initialisationPiste();
-        this.add(this.piste);
         this.ajouterCouleurDeFond(); // POUR TESTER
     }
 
@@ -35,13 +32,18 @@ export class GestionnaireSceneApercu extends Scene implements IScene {
         this.add(new Mesh(geometrie, MATERIEL));
     }
 
-    private initialisationPiste(): void {
+    public initialisationPiste(piste: IDefinitionPoint[]): void {
         this.piste = new PisteJeu();
-        this.piste.importer(this.points);
+        this.piste.importer(this.creationPoints(piste));
+        this.add(this.piste);
+    }
 
-        if (!this.piste.estValide) {
-            this.piste = new PisteJeu();
-            this.piste.importer(PISTE_TEST);
+    private creationPoints(pointsdefinition: IDefinitionPoint[]): Point[] {
+        const points: Point[] = [];
+        for (const point of pointsdefinition) {
+            points.push(new Point(point.x, point.y));
         }
+
+        return points;
     }
 }

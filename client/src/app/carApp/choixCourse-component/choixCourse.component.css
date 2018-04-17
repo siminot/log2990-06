@@ -22,7 +22,7 @@ ul, li {
     list-style-image: url('../../../assets/purple_ghost.jpg');
 }
 
-.pisteTitre, .pisteDescription, .selection, #titrePrincipal, #titreChoixPiste {
+.pisteTitre, .pisteDescription, .selection, #titrePrincipal, #titreChoixPiste, .apercuPiste {
     font-family: 'Press Start 2P', cursive;
 }
 
@@ -68,7 +68,7 @@ ul, li {
     margin-bottom: 5px;
 }
 
-.pisteDescription {
+.pisteDescription,  .apercuPiste{
     font-size: 10px;
     position:relative;
     display: table-cell;

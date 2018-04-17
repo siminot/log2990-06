@@ -5,9 +5,9 @@ import { container } from "./inversify.config";
 
 import { SocketServer } from "./socketServer/socketServer";
 
-const server: Server = container.get<Server>(Types.Server);
+export const LE_SERVER: Server = container.get<Server>(Types.Server);
 
-server.init();
+LE_SERVER.init();
 
-const socketServer: SocketServer = new SocketServer(server.server);
+const socketServer: SocketServer = new SocketServer(LE_SERVER.server);
 socketServer.init();

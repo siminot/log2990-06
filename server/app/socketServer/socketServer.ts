@@ -6,7 +6,7 @@ import { InfoPartieServeur } from "./infoPartieServeur";
 
 export class SocketServer {
 
-    private io: SocketIO.Server;
+    public io: SocketIO.Server;
     private parties: Array<InfoPartieServeur>;
 
     public constructor(private leServeur: http.Server) {

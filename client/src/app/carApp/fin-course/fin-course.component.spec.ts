@@ -42,8 +42,8 @@ describe("FinCourseComponent: ", () => {
         });
     });
 
-    describe("Ajouter les rangs: ", () => {
-        it("les rangs devrait etre non nuls", () => {
+    describe("Ajouter les positions: ", () => {
+        it("les positions devrait etre non nulles", () => {
             let positionsSontNonNulles: boolean = true;
             for (const resultat of component.resultatsCourse) {
                 if (resultat.position === null) {

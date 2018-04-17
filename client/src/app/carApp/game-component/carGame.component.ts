@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy } from "@angular/core";
+import { Component, Inject, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
 import { AbstractGameComponent } from "../abstract-component/abstract.game.component";
 import { ServiceDeRenduJeu } from "../serviceDeRendu/serviceDeRenduJeu";
 import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
@@ -12,13 +12,20 @@ import { GestionnaireSouris } from "../souris/gestionnaireSouris";
     styleUrls: ["./game.component.css"]
 })
 
-export class CarGameComponent extends AbstractGameComponent implements OnInit, OnDestroy {
+export class CarGameComponent extends AbstractGameComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public constructor(@Inject(ServiceDeRenduJeu) public serviceDeRendu: ServiceDeRenduJeu,
                        @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
                        @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
                        @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris) {
         super(serviceDeRendu, gestionnaireClavier, gestionnaireEcran, gestionnaireSouris);
+    }
+
+    protected initialiserServiceDeRendu(): void {
+        this.serviceDeRendu
+        .initialiser()
+        .then(() => this.serviceDeRendu.initialiserStats())
+        .catch((err) => console.error(err));
     }
 
     public ngOnInit(): void {

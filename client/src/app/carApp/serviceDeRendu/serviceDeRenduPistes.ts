@@ -7,7 +7,7 @@ import { GestionnaireScenePiste } from "../scene/GestionnaireScenePiste";
 @Injectable()
 export class ServiceDeRenduPistes extends ServiceDeRenduAbstrait {
 
-    public constructor(protected gestionnaireScene: GestionnaireScenePiste,
+    public constructor(@Inject(GestionnaireScenePiste) gestionnaireScene: GestionnaireScenePiste,
                        @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
                        @Inject(GestionnaireCameraPiste) gestionnaireCamera: GestionnaireCameraPiste) {
     super(gestionnaireEcran, gestionnaireCamera, gestionnaireScene);

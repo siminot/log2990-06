@@ -59,7 +59,7 @@ export class GestionnaireDesTempsService {
 
     private estimerTempsAi(): void {
         for (const tempsAI of this._tempsAIs) {
-            let estimeDernierTour: number;
+            let estimeDernierTour: number = this.timer.obtenirTempsActuel;
             for (const tempsTour of tempsAI.tempsTours) {
                 if (tempsTour.temps > 0) {
                     estimeDernierTour = tempsTour.temps;

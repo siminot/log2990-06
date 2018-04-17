@@ -7,7 +7,6 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class ServiceDeRenduApercu /* extends ServiceDeRenduAbstrait */ {
     protected renderer: WebGLRenderer;
-    protected tempsDerniereMiseAJour: number;
     private gestionnaireCamera: GestionnaireCameraPiste;
     private gestionnaireScene: GestionnaireSceneApercu;
 
@@ -20,23 +19,15 @@ export class ServiceDeRenduApercu /* extends ServiceDeRenduAbstrait */ {
 
     public async initialiser(gestionnaireScene: GestionnaireSceneApercu): Promise<void> {
         this.gestionnaireScene = gestionnaireScene;
-        this.commencerBoucleDeRendu();
+        this.initialiserRendu();
     }
 
     // Rendu
 
-    private commencerBoucleDeRendu(): void {
+    private initialiserRendu(): void {
         this.renderer.setPixelRatio(devicePixelRatio);
         this.gestionnaireEcran.ajouterElementConteneur(this.renderer.domElement);
         this.redimensionnement();
-
-        this.tempsDerniereMiseAJour = Date.now();
-
-        this.rendu();
-    }
-
-    private rendu(): void {
-        requestAnimationFrame(() => this.rendu());
         this.renderer.render(this.scene, this.camera);
     }
 

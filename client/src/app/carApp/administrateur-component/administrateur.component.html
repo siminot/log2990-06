@@ -43,9 +43,9 @@
                         <li class="ligneNouveauTemps">
                             <input id="inputMin" [appEstUnChiffre]="true" categorie="minutes" valeur="_min" class="inputTemps" [(ngModel)]="_min" placeholder="Minutes">
                             <span>:</span>
-                            <input id="inputSec" class="inputTemps" [(ngModel)]="_sec" placeholder="Secondes">
+                            <input id="inputSec" [appEstUnChiffre]="true" categorie="secondes" class="inputTemps" [(ngModel)]="_sec" placeholder="Secondes">
                             <span>.</span>
-                            <input id="inputMilli" class="inputTemps" [(ngModel)]="_milliSec" placeholder="MilliSecondes">
+                            <input id="inputMilli" [appEstUnChiffre]="true" categorie="millisecondes" class="inputTemps" [(ngModel)]="_milliSec" placeholder="MilliSecondes">
                             <span>par</span>
                             <input id="inputNom" class="inputTemps" [(ngModel)]="_nom" placeholder="Nom">
                             <button class="addImgBtn" [disabled]="!peutAjouter()" (click)="ajoutTemps(piste)"><img class="addImg" src="../../../assets/listeTempsPistesCourse/add.png"></button>

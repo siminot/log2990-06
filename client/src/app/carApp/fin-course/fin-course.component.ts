@@ -5,7 +5,7 @@ import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnair
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
 
-const JOUEUR: string = "Joeur";
+const JOUEUR: string = "Joueur";
 const AI: string = "AI";
 
 @Component({
@@ -15,7 +15,7 @@ const AI: string = "AI";
 })
 export class FinCourseComponent implements OnInit {
 
-    public resultatsCourse: ResultatJoueur[];
+    public resultatsCourse: Array<ResultatJoueur>;
     public nomPiste: string;
 
     public constructor(private router: Router,
@@ -24,6 +24,7 @@ export class FinCourseComponent implements OnInit {
 
     public ngOnInit(): void {
         this.nomPiste = this.gestionnaireBD.pisteJeu.nom;
+        this.resultatsCourse = new Array<ResultatJoueur>();
         this.creerResultatJoueurs();
         this.classerLesTemps();
         this.ajouterPositions();
@@ -31,7 +32,7 @@ export class FinCourseComponent implements OnInit {
 
     private creerResultatJoueurs(): void {
         const tempsDesJoueurs: TempsJoueur[] = this.gestionnaireTemps.obtenirTempsDesJoueurs();
-        this.resultatsCourse[0] = new ResultatJoueur(JOUEUR, tempsDesJoueurs[0]);
+        this.resultatsCourse.push(new ResultatJoueur(JOUEUR, tempsDesJoueurs[0]));
         for (let i: number = 1; i < tempsDesJoueurs.length; i++ ) {
             this.resultatsCourse.push(new ResultatJoueur(AI + " " + i , tempsDesJoueurs[i]));
         }

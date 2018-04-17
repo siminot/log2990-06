@@ -4,6 +4,7 @@ import { TempsAffichage } from "./tempsAffichage";
 import { DeroulemenCourseService } from "../../deroulement-course/deroulemen-course.service";
 import { GestionnaireDesTempsService } from "../../GestionnaireDesTemps/gestionnaire-des-temps.service";
 import { TempsJoueur } from "../../GestionnaireDesTemps/tempsJoueur";
+import { Router } from "@angular/router";
 
 const TAUX_REFRESH: number = 20;
 const NBR_TOURS: number = 3;
@@ -22,7 +23,8 @@ export class VueTeteHauteComponent implements OnInit {
     private rafraichissement: NodeJS.Timer;
 
     public constructor(private timer: TimerService,
-                       private gestionTemps: GestionnaireDesTempsService) {
+                       private gestionTemps: GestionnaireDesTempsService,
+                       private router: Router) {
         this.tempsActuel = 0;
         this.numTour = 1;
         this.initialisationDesTemps();
@@ -59,15 +61,16 @@ export class VueTeteHauteComponent implements OnInit {
         if (this.numTour <= NBR_TOURS) {
             this.tempsTours[this.numTour++ - 1].tempsAffichable = this.timer.nouveauTour(noJoueur);
             if (this.numTour > NBR_TOURS) {
-                this.courseTermiee();
+                this.courseTerminee();
             }
         }
     }
 
-    private courseTermiee(): void {
+    private courseTerminee(): void {
         clearInterval(this.rafraichissement);
         this.envoyerTempsJoueur();
         DeroulemenCourseService.finCourse();
+        this.router.navigate(["/finCourse"]);
     }
 
     private envoyerTempsJoueur(): void {

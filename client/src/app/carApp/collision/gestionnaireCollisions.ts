@@ -11,7 +11,7 @@ const SPHERE_ARRIERE: Vector3 = new Vector3(FACTEUR_ARRIERE, FACTEUR_ARRIERE, FA
 const SPHERE_MILIEU: Vector3 = new Vector3(FACTEUR_MILIEU, FACTEUR_MILIEU, FACTEUR_MILIEU);
 const ORIGINE: Vector3 = new Vector3(0, 0, 0);
 const SPHERE: Sphere = new Sphere(ORIGINE, LARGEUR_AUTO);
-
+const VITESSE_MAXIMAL: number = 30;
 const VECTEUR_PLACEMENT: Vector3[] = [SPHERE_ARRIERE, SPHERE_MILIEU, SPHERE_AVANT];
 const NOMBRE_SPHERE: number = 3;
 const DISTANCE_CRITIQUE: number = 2;
@@ -134,6 +134,7 @@ export class GestionnaireCollision {
     }
 
     private ajustementVitesseVoitures(autoA: Voiture, autoB: Voiture): void {
+
         const nouvelleVitesseA: Vector3 = this.calculeNouvelleVitesse(autoA, autoB);
         const nouvelleVitesseB: Vector3 = this.calculeNouvelleVitesse(autoB, autoA);
 
@@ -148,8 +149,10 @@ export class GestionnaireCollision {
         const DEUX: number = 2;
         const denominateur: number = Math.pow(soustractionVitesse.length(), DEUX);
         soustractionPosition.multiplyScalar(soustractionVitesse.dot(soustractionPosition) / denominateur);
+        const aRetourner: Vector3 = autoA.vitesseDansMonde.clone().sub(soustractionPosition);
 
-        return autoA.vitesseDansMonde.clone().sub(soustractionPosition);
+        return aRetourner.length() > VITESSE_MAXIMAL ? autoA.vitesseDansMonde.clone() : aRetourner;
+
     }
 
     private ajustementFriction(vitesseAAjuster: Vector3, voiture: Voiture): Vector3 {

@@ -13,6 +13,5 @@ export class ResultatJoueur {
         this.nom = nom;
         this.tempsCourse = tempsJoueur.tempsCourse;
         this.tempsTours = tempsJoueur.tempsTours;
-        
     }
 }

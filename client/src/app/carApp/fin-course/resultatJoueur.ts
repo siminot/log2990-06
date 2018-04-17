@@ -12,6 +12,7 @@ export class ResultatJoueur {
         this.position = null;
         this.nom = nom;
         this.tempsCourse = tempsJoueur.tempsCourse;
-        this.tempsTours = this.tempsTours;
+        this.tempsTours = tempsJoueur.tempsTours;
+        
     }
 }

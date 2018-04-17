@@ -41,20 +41,22 @@ describe("GestionnaireDesTempsService", () => {
 
         it("Devrait changer le temps de la course pour le troisieme AI",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
-            service.AIXCourseComplete(2);
-            expect(service["_tempsAIs"][2].tempsCourse.temps).toEqual(TEMPSTEST);
+            const NUMERO_JOUEUR: number = 2;
+            service.AIXCourseComplete(NUMERO_JOUEUR);
+            expect(service["_tempsAIs"][NUMERO_JOUEUR].tempsCourse.temps).toEqual(TEMPSTEST);
         }));
 
         it("Devrait lancer une erreur",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
-            expect( () => { service.AIXCourseComplete(4); }).toThrow(new InvalidArgumentError());
+            const NUMERO_JOUEUR: number = 4;
+            expect( () => { service.AIXCourseComplete(NUMERO_JOUEUR); }).toThrow(new InvalidArgumentError());
         }));
 
         it("Devrait lancer une erreur",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
-            expect( () => { service.AIXCourseComplete(-10); }).toThrow(new InvalidArgumentError());
+            const NUMERO_JOUEUR: number = -10;
+            expect( () => { service.AIXCourseComplete(NUMERO_JOUEUR); }).toThrow(new InvalidArgumentError());
         }));
-
     });
 
     describe("Ajout de temps de tour", () => {
@@ -68,28 +70,31 @@ describe("GestionnaireDesTempsService", () => {
 
         it("Devrait changer le temps de la course pour le deuxieme AI",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
+               const PREMIER_JOUEUR: number = 1;
+               const DEUXIEME_JOUEUR: number = 2;
                service.AIxTourComplete(1);
                service.AIxTourComplete(1);
                service.AIxTourComplete(1);
-               expect(service["_tempsAIs"][1].tempsTours[2].temps).toEqual(TEMPSTEST);
+               expect(service["_tempsAIs"][PREMIER_JOUEUR].tempsTours[DEUXIEME_JOUEUR].temps).toEqual(TEMPSTEST);
         }));
 
         it("le temps des tours pas encore fait sont a 0",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
-               service.AIxTourComplete(2);
-               expect(service["_tempsAIs"][2].tempsTours[2].temps).toEqual(0);
+               const NUMERO_JOUEUR: number = 2;
+               service.AIxTourComplete(NUMERO_JOUEUR);
+               expect(service["_tempsAIs"][NUMERO_JOUEUR].tempsTours[NUMERO_JOUEUR].temps).toEqual(0);
         }));
 
         it("Devrait lancer une erreur",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
-            expect( () => { service.AIxTourComplete(4); }).toThrow(new InvalidArgumentError());
+            const NUMERO_JOUEUR: number = 4;
+            expect( () => { service.AIxTourComplete(NUMERO_JOUEUR); }).toThrow(new InvalidArgumentError());
         }));
 
         it("Devrait lancer une erreur",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
-            expect( () => { service.AIxTourComplete(-10); }).toThrow(new InvalidArgumentError());
+            const NUMERO_JOUEUR: number = -10;
+            expect( () => { service.AIxTourComplete(NUMERO_JOUEUR); }).toThrow(new InvalidArgumentError());
         }));
-
     });
-
 });

@@ -1,3 +1,34 @@
-<p>
-  fin-course works!
-</p>
+<div>
+  <h1>Fin de course</h1>
+  <h2>Résultats de la piste: {{nomPiste}}</h2>
+
+  <br>
+
+  <table>
+    <thead>
+      <th>Position</th>
+      <th>Nom</th>
+      <th>Temps du parcours</th>
+      <th>Tour 1</th>
+      <th>Tour 2</th>
+      <th>Tour 3</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let resultatCourse of resultatsCourse">
+        <td>{{resultatCourse.position}}</td>
+        <td>{{resultatCourse.nom}}</td>
+        <td>{{resultatCourse.tempsCourse.tempsFormate}}</td>
+        <td>{{resultatCourse.tempsTours[0].tempsFormate}}</td>
+        <td>{{resultatCourse.tempsTours[1].tempsFormate}}</td>
+        <td>{{resultatCourse.tempsTours[2].tempsFormate}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <button (click)="compare()">
+    Comparer avec les meilleurs temps
+  </button>
+
+</div>

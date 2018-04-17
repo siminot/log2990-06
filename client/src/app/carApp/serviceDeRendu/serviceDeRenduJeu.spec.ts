@@ -20,7 +20,6 @@ describe("Service de rendu de jeu", () => {
     let gestionnaireCamera: GestionnaireCamera;
     let gestionnaireBD: GestionnaireBDCourse;
     let gestionnaireClavier: GestionnaireClavier;
-
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
@@ -34,7 +33,8 @@ describe("Service de rendu de jeu", () => {
         gestionnaireClavier = new GestionnaireClavier();
         gestionnaireVoitures = new GestionnaireVoitures(gestionnaireClavier);
         gestionnaireSkybox = new GestionnaireSkybox();
-        gestionnaireScene = new GestionnaireScene(gestionnaireSkybox, gestionnaireVoitures, gestionnaireBD, gestionnaireClavier);
+        gestionnaireScene = new GestionnaireScene(gestionnaireSkybox, gestionnaireVoitures, gestionnaireBD,
+                                                  gestionnaireClavier);
         gestionnaireEcran = new GestionnaireEcran();
         gestionnaireCamera = new GestionnaireCamera(gestionnaireVoitures, gestionnaireClavier);
         serviceDeRendu = new ServiceDeRenduJeu(gestionnaireScene, gestionnaireEcran, gestionnaireCamera);

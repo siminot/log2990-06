@@ -5,11 +5,24 @@
     margin:0;
 }
 
+#bg {
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background-image: url("../../../assets/background/choixPiste.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    z-index: -1000;
+    opacity: 0.5;
+}
+
 ul, li {
     list-style-image: url('../../../assets/purple_ghost.jpg');
 }
 
-.pisteTitre, .pisteDescription, .selection, #titrePrincipal, #titreChoixPiste {
+.pisteTitre, .pisteDescription, .selection, #titrePrincipal, #titreChoixPiste, .apercuPiste {
     font-family: 'Press Start 2P', cursive;
 }
 
@@ -49,15 +62,22 @@ ul, li {
 
 .piste {
     border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.404);
+    border: 2px solid rgba(0, 0, 0, 0.404);
     width: 95%;
     left: 0px;
     margin-bottom: 5px;
 }
 
-.pisteDescription {
+.pisteDescription,  .apercuPiste{
     font-size: 10px;
     position:relative;
+    display: table-cell;
+    width: 80%;
+}
+
+.apercuPiste {
+    position:relative;
+    display: table-cell;
 }
 
 #listePistes {
@@ -67,4 +87,10 @@ ul, li {
 .divider {
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.thumb {
+    height:100%;
+    width:100%;
+    border: 2px solid black;
 }

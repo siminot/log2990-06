@@ -5,6 +5,7 @@ import { Droite } from "../elementsGeometrie/droite";
 import { SegmentPiste } from "../elementsAffichage/jeu/segmentPiste";
 import { PisteAbstraite } from "./pisteAbstraite";
 import { LigneDeDepart } from "../elementsAffichage/jeu/ligneDepart";
+import { NOM_PISTE_JEU } from "../constants";
 
 export class PisteJeu extends PisteAbstraite {
 
@@ -15,6 +16,7 @@ export class PisteJeu extends PisteAbstraite {
         super();
         this.intersections = [];
         this._premierSegment = null;
+        this.name = NOM_PISTE_JEU;
     }
 
     public importer(points: Point[]): void {
@@ -31,14 +33,17 @@ export class PisteJeu extends PisteAbstraite {
     }
 
     public exporter(): Point[] {
-        const piste: Point[] = super.exporter();
+        let piste: Point[] = super.exporter();
         const premierPoint: Point = piste[0];
         piste.splice(0, 1);
         piste.push(premierPoint);
 
-        return this.estSensHoraire()
-            ? piste.reverse()
-            : piste;
+        if (this.estSensHoraire()) {
+            piste = piste.reverse();
+        }
+        piste.push(new Point(this.zoneDeDepart.x, this.zoneDeDepart.z));
+
+        return piste;
     }
 
     public ajouterPoint(point: Point): void {

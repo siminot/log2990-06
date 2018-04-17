@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 
 import { ServiceLexical } from "./ServiceLexical";
 import { Frequence } from "./Mot";
@@ -17,11 +17,11 @@ export class RouteServiceLexical extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/commun/contrainte/:contrainte", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/commun/contrainte/:contrainte", (req: Request, res: Response) => {
             ServiceLexical.servirMotsSelonContrainte(req.params.contrainte, Frequence.Commun, res);
         });
 
-        router.get("/noncommun/contrainte/:contrainte", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/noncommun/contrainte/:contrainte", (req: Request, res: Response) => {
             ServiceLexical.servirMotsSelonContrainte(req.params.contrainte, Frequence.NonCommun, res);
         });
 

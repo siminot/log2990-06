@@ -1,8 +1,8 @@
 import { Group, Mesh, CircleGeometry, PlaneGeometry, Vector3, Texture,
-         RepeatWrapping, MeshPhongMaterial, TextureLoader, BackSide } from "three";
+         RepeatWrapping, MeshPhongMaterial, TextureLoader, DoubleSide } from "three";
 import { Droite } from "../../elementsGeometrie/droite";
 import { Point } from "../../elementsGeometrie/point";
-import { PI_OVER_2 } from "../../constants";
+import { PI_OVER_2, NOM_PISTE_JEU } from "../../constants";
 
 export const LARGEUR_PISTE: number = 10;
 const NOMBRE_SEGMENTS: number = 25;
@@ -23,8 +23,11 @@ export class SegmentPiste extends Group {
         super();
         this.droite = new Droite(point1, point2);
         this.position.set(point1.x, 0, point1.y);
+        this.name = NOM_PISTE_JEU;
         this.ajouterCercle();
-        this.add(new Mesh(this.geometrieSegment, this.obtenirMaterielSelonDimension(this.longueur)));
+        const segment: Mesh = new Mesh(this.geometrieSegment, this.obtenirMaterielSelonDimension(this.longueur));
+        segment.name = NOM_PISTE_JEU;
+        this.add(segment);
     }
 
     private ajouterCercle(): void {
@@ -36,6 +39,7 @@ export class SegmentPiste extends Group {
                                       this.obtenirMaterielSelonDimension(LARGEUR_PISTE));
         cercle.rotateX(PI_OVER_2);
         cercle.receiveShadow = true;
+        cercle.name = NOM_PISTE_JEU;
         this.add(cercle);
     }
 
@@ -43,7 +47,7 @@ export class SegmentPiste extends Group {
         const texture: Texture = this.texture;
         texture.repeat.set(LARGEUR_PISTE / TAILLE_REPETITION, dimension / TAILLE_REPETITION);
 
-        return new MeshPhongMaterial( {side: BackSide, map: texture, depthWrite: false});
+        return new MeshPhongMaterial( {side: DoubleSide, map: texture, depthWrite: false});
     }
 
     private get texture(): Texture {

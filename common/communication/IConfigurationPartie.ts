@@ -1,9 +1,4 @@
-export enum Difficulte {
-    Facile = "facile",
-    Normal = "normal",
-    Difficile = "difficile"
-}
-
+import { Difficulte } from "./Difficulte";
 
 export interface IConfigurationPartie {
     nombreDeJoueurs: number;

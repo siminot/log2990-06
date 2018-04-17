@@ -1,0 +1,65 @@
+<div id="container">
+    <h2 id="titreDeLaPage">Tableau des meilleurs temps</h2>
+
+    <div class="divider">
+        <mat-divider></mat-divider>
+    </div>
+
+    <br>
+
+    <table id="table" align="center">
+        <tr>
+            <th>
+                <div id="titreColNom">
+                    <p>Nom</p>
+                </div>
+            </th>
+            <th>
+                <div id="titreColTemps">
+                    <p>Temps</p>
+                </div>
+            </th>
+        </tr>
+
+        <tr *ngFor="let te of pisteCourante.temps | slice:0:5">
+            <td>
+                <div class="colonneNom">{{ te.nom }}</div>
+            </td>
+            <td>
+                <div class="colonneTemps">
+                    {{ te.min }}:{{ te.sec | number:'2.0-0' }}.{{ te.milliSec | number:'2.0-0' }}
+                </div>
+            </td>
+        </tr>
+
+        <tr *ngIf="placeMeriteeAuTableau()">
+            <td colspan="2">
+                <div id="messageAjoutTempJoueur">
+                    <p>Entrez votre nom, vous vous méritez une place sur le tableau!</p>
+                </div>
+            </td>
+        </tr>
+
+        <tr *ngIf="placeMeriteeAuTableau()">
+            <td>
+                <div id="colonneInputNom">
+                    <input #box type="text" placeholder="Entrez votre nom ici" [(ngModel)]="nomJoueur" [disabled]="!peutEcrire()">
+                </div>
+            </td>
+            <td>
+                <div id="colonneTempsJoueur">
+                    <p>{{ tempsJoueurTableau.min }}:{{ tempsJoueurTableau.sec | number:'2.0-0' }}.{{ tempsJoueurTableau.milliSec
+                        | number:'2.0-0' }}</p>
+                </div>
+            </td>
+        </tr>
+
+        <tr *ngIf="placeMeriteeAuTableau()">
+            <td colspan="2">
+                <div id="soumissionNom">
+                    <button id="btnSoumissionNom" [disabled]="!peutSoumettre()" (click)="soumissionNom()">Soumettre</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

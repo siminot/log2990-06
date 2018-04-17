@@ -1,14 +1,13 @@
 import { Voiture, DEFAULT_WHEELBASE, DEFAULT_MASS, DEFAULT_DRAG_COEFFICIENT } from "./voiture";
 import { Engine } from "./engine";
 import { Wheel } from "./wheel";
-import { Vector3, Object3D, Euler } from "three";
+import { Vector3, Object3D } from "three";
 import { PI_OVER_2 } from "../constants";
 
 const MS_BETWEEN_FRAMES: number = 16.6667;
 const NOMBRE_PHARES: number = 2;
-const NOMBRE_SONS: number = 2;
-
-const ROTATION_TEST: Euler = new Euler(0, PI_OVER_2, 0, "XYZ");
+const NOMBRE_SONS: number = 4;
+const NOMBRE_RAYCASTER: number = 1;
 
 /* tslint:disable: no-magic-numbers */
 class MockEngine extends Engine {
@@ -22,7 +21,7 @@ describe("Voiture", () => {
 
     beforeEach(async (done: () => void) => {
         car = new Voiture();
-        car.initialiser(new Object3D, ROTATION_TEST);
+        car.initialiser(new Object3D, PI_OVER_2);
 
         car.accelerer();
         car.miseAJour(MS_BETWEEN_FRAMES);
@@ -125,25 +124,15 @@ describe("Voiture", () => {
 
     it("phares initialises", () => {
         car = new Voiture(undefined);
-        car.initialiser(new Object3D(), ROTATION_TEST);
-        expect(car.children.length - NOMBRE_SONS).toBe(NOMBRE_PHARES);
-    });
-
-    it("boiteCollision suit la voiture", () => {
-        car = new Voiture(undefined);
-        car.initialiser(new Object3D(), ROTATION_TEST);
-        car.accelerer();
-        car.miseAJour(MS_BETWEEN_FRAMES);
-        expect(car["boiteCollision"].getCenter().x).toBeCloseTo(car.position.x);
-        expect(car["boiteCollision"].getCenter().y).toEqual(car.position.y);
-        expect(car["boiteCollision"].getCenter().z).toBeCloseTo(car.position.z);
+        car.initialiser(new Object3D(), PI_OVER_2);
+        expect(car.children.length - NOMBRE_SONS - NOMBRE_RAYCASTER).toBe(NOMBRE_PHARES);
     });
 
     it("la direction est bien initialisee", () => {
         car = new Voiture(undefined);
         expect(car.direction.x).toEqual(0);
         expect(car.direction.z).toEqual(-1);
-        car.initialiser(new Object3D(), ROTATION_TEST);
+        car.initialiser(new Object3D(), PI_OVER_2);
         expect(car.direction.x).toEqual(-1);
         expect(car.direction.z).toBeCloseTo(0);
     });

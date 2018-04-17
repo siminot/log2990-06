@@ -11,18 +11,18 @@ export abstract class ServiceDeRenduAbstrait {
 
     public constructor(protected gestionnaireEcran: GestionnaireEcran,
                        protected gestionnaireCamera: ICamera,
-                       protected gestionnaireScene: IScene) {
+                       public gestionnaireScene: IScene) {
         this.renderer = new WebGLRenderer();
+        this.stats = null;
     }
 
     // Initialisation
 
     public async initialiser(): Promise<void> {
-        this.initialiserStats();
         this.commencerBoucleDeRendu();
     }
 
-    private initialiserStats(): void {
+    public initialiserStats(): void {
         this.stats = new Stats();
         this.stats.dom.style.position = "absolute";
         this.gestionnaireEcran.ajouterElementConteneur(this.stats.dom);
@@ -44,7 +44,10 @@ export abstract class ServiceDeRenduAbstrait {
         requestAnimationFrame(() => this.rendu());
         this.miseAJour();
         this.renderer.render(this.scene, this.camera);
-        this.stats.update();
+
+        if (this.stats !== null) {
+            this.stats.update();
+        }
     }
 
     protected miseAJour(): void { }

@@ -6,31 +6,59 @@ const DIVISEUR_POUR_DEUX_DECIMALS: number = 10;
 
 export class TempsAffichage {
 
-    private minutes: string;
-    private secondes: string;
-    private milliseconde: string;
-    private temps: number;
+    private _minutes: string;
+    private _secondes: string;
+    private _millisecondes: string;
+    private _temps: number;
 
     public constructor() {
-        this.temps = 0;
-        this.minutes = "--";
-        this.secondes = "--";
-        this.milliseconde = "--";
+        this._temps = 0;
+        this._minutes = "--";
+        this._secondes = "--";
+        this._millisecondes = "--";
     }
 
     public set tempsAffichable(temps: number) {
-        this.temps = temps;
-        this.minutes = this.formaterTempsMinute(temps);
-        this.secondes = this.formaterTempsSec(temps);
-        this.milliseconde = this.formaterTempsMS(temps);
+        this._temps = temps;
+        this._minutes = this.formaterTempsMinute(temps);
+        this._secondes = this.formaterTempsSec(temps);
+        this._millisecondes = this.formaterTempsMS(temps);
     }
 
     public get tempsFormate(): string {
-        return this.minutes + " : " + this.secondes + " : " + this.milliseconde;
+        return this._minutes + " : " + this._secondes + " : " + this._millisecondes;
     }
 
-    public get obtenirTemps(): number {
-        return this.temps;
+    public get temps(): number {
+        return this._temps;
+    }
+
+    public set temps(t: number) {
+        this._temps = t;
+    }
+
+    public get minutes(): string {
+        return this._minutes;
+    }
+
+    public set minutes(m: string) {
+        this._minutes = m;
+    }
+
+    public get secondes(): string {
+        return this._secondes;
+    }
+
+    public set secondes(s: string) {
+        this._secondes = s;
+    }
+
+    public get millisecondes(): string {
+        return this._millisecondes;
+    }
+
+    public set millisecondes(m: string) {
+        this._millisecondes = m;
     }
 
     private ajouterZero(temps: string): string {
@@ -61,5 +89,4 @@ export class TempsAffichage {
 
         return tempsMS;
     }
-
 }

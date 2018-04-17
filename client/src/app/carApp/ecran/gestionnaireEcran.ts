@@ -1,6 +1,3 @@
-import { Injectable } from "@angular/core";
-
-@Injectable()
 export class GestionnaireEcran {
 
     private conteneur: HTMLDivElement;
@@ -32,11 +29,13 @@ export class GestionnaireEcran {
     }
 
     public estLaBonneCible(element: EventTarget): boolean {
-        if (element instanceof HTMLCanvasElement) {
-            return this.hauteur === element.clientHeight &&
-                    this.largeur === element.clientWidth;
-        } else {
-            return false;
-        }
+        return element instanceof HTMLCanvasElement
+            ? this.estMemeDimensionQue(element)
+            : false;
+    }
+
+    private estMemeDimensionQue(element: HTMLCanvasElement): boolean {
+        return this.hauteur === element.clientHeight &&
+               this.largeur === element.clientWidth;
     }
 }

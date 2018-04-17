@@ -1,4 +1,4 @@
-import { Vector3, TextureLoader, Texture, RepeatWrapping, MeshPhongMaterial, BackSide, Mesh, PlaneGeometry } from "three";
+import { Vector3, TextureLoader, Texture, RepeatWrapping, MeshPhongMaterial, Mesh, PlaneGeometry, DoubleSide } from "three";
 import { LARGEUR_PISTE } from "./segmentPiste";
 import { PI_OVER_2 } from "../../constants";
 
@@ -33,7 +33,7 @@ export class LigneDeDepart extends Mesh {
         const rapport: number = 4;
         texture.repeat.set(LONGUEUR / rapport, LARGEUR_PISTE / rapport);
 
-        return new MeshPhongMaterial( {side: BackSide, map: texture, depthWrite: false});
+        return new MeshPhongMaterial( {side: DoubleSide, map: texture, depthWrite: false});
     }
 
     private get geometrie(): PlaneGeometry {

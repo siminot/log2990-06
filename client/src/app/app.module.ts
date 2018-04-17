@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
+import { ApercuPisteComponent } from "./carApp/apercuPiste/apercuPiste.component";
 import { CarGameComponent } from "./carApp/game-component/carGame.component";
 import { PisteComponent } from "./carApp/piste-component/piste.component";
 import { AdministrateurComponent } from "./carApp/administrateur-component/administrateur.component";
@@ -47,11 +48,17 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDividerModule } from "@angular/material/divider";
 
-import { ResultatsFinCourseComponent } from "./carApp/resultats-fin-course/resultats-fin-course.component";
+import { DecimalPipe } from "@angular/common";
 import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
+import { TableauMeilleursTempsComponent } from "./carApp/tableau-meilleurs-temps/tableau-meilleurs-temps.component";
+import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gestionnaire-des-temps.service";
+import { EstUnChiffreDirective } from "./carApp/directive-est-un-chiffre/est-un-chiffre.directive";
+import { ServiceDeRenduApercu } from "./carApp/serviceDeRendu/serviceDeRenduApercu";
+import { GestionnaireSceneApercu } from "./carApp/scene/GestionnaireSceneApercu";
 
 @NgModule({
     declarations: [
+        ApercuPisteComponent,
         AppComponent,
         CarGameComponent,
         PisteComponent,
@@ -69,9 +76,10 @@ import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
         FinPartieSoloComponent,
         MainGrilleMultiComponent,
         VueTeteHauteComponent,
-        ResultatsFinCourseComponent,
         FinCourseComponent,
-        VueTeteHauteComponent
+        VueTeteHauteComponent,
+        TableauMeilleursTempsComponent,
+        EstUnChiffreDirective
     ],
     imports: [
         BrowserModule,
@@ -83,9 +91,11 @@ import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
         MatDividerModule
     ],
     providers: [
+        ServiceDeRenduApercu,
         ServiceDeRenduJeu,
         ServiceDeRenduPistes,
         GestionnaireScene,
+        GestionnaireSceneApercu,
         GestionnaireScenePiste,
         GestionnaireCamera,
         GestionnaireCameraPiste,
@@ -100,11 +110,14 @@ import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
         ServiceHttp,
         SocketService,
         InfojoueurService,
-        TimerService
+        DecimalPipe,
+        TimerService,
+        GestionnaireDesTempsService
     ],
     bootstrap: [AppComponent],
     exports: [
         AppComponent,
+        ApercuPisteComponent,
         CarGameComponent,
         PisteComponent,
         AdministrateurComponent,
@@ -115,6 +128,5 @@ import { FinCourseComponent } from "./carApp/fin-course/fin-course.component";
         FinPartieSoloComponent,
         GrilleMultijoueurComponent
     ],
-    // entryComponents: [ DialogComponent ]
 })
 export class AppModule { }

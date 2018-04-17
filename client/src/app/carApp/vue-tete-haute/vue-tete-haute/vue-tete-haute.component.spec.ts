@@ -3,17 +3,23 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { VueTeteHauteComponent } from "./vue-tete-haute.component";
 import { TimerService } from "../../timer/timer.service";
 import { TempsAffichage } from "./tempsAffichage";
+import { GestionnaireDesTempsService } from "../../GestionnaireDesTemps/gestionnaire-des-temps.service";
+import { Router } from "@angular/router";
 
 describe("VueTeteHauteComponent", () => {
     let component: VueTeteHauteComponent;
     let fixture: ComponentFixture<VueTeteHauteComponent>;
+    // tslint:disable-next-line:prefer-const
+    let mockRouter: Router;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [VueTeteHauteComponent],
-            providers: [TimerService]
+            providers: [TimerService, GestionnaireDesTempsService,
+                        { provide: Router, useValue: mockRouter }]
         })
-            .compileComponents();
+            .compileComponents()
+            .catch( () => {} );
     }));
 
     beforeEach(() => {

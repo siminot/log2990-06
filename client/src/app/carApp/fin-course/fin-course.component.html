@@ -15,12 +15,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let resultatCourse of resultatsCourse">
-        <td>{{resultatCourse.rang}}</td>
+        <td>{{resultatCourse.position}}</td>
         <td>{{resultatCourse.nom}}</td>
         <td>{{resultatCourse.tempsCourse.tempsFormate}}</td>
-        <td>{{resultatCourse.tempsDesTours[0].tempsFormate}}</td>
-        <td>{{resultatCourse.tempsDesTours[1].tempsFormate}}</td>
-        <td>{{resultatCourse.tempsDesTours[2].tempsFormate}}</td>
+        <td>{{resultatCourse.tempsTours[0].tempsFormate}}</td>
+        <td>{{resultatCourse.tempsTours[1].tempsFormate}}</td>
+        <td>{{resultatCourse.tempsTours[2].tempsFormate}}</td>
       </tr>
     </tbody>
   </table>

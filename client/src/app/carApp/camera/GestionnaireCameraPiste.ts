@@ -3,9 +3,11 @@ import { Camera, OrthographicCamera } from "three";
 import { ICamera } from "../camera/ICamera";
 import { PI_OVER_2 } from "../constants";
 
-export const PLAN_RAPPROCHE: number = -10;
+export const PLAN_RAPPROCHE: number = -20;
 export const PLAN_ELOIGNE: number = 50;
 export const ZOOM_DEFAUT: number = 3;
+const ZOOM_PETITE_FENETRE: number = 1;
+const PIXELS_PETITE_FENETRE: number = 200000;
 
 @Injectable()
 export class GestionnaireCameraPiste implements ICamera {
@@ -29,6 +31,7 @@ export class GestionnaireCameraPiste implements ICamera {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.ajusterVue();
+        this.ajusterZoom();
     }
 
     private ajusterVue(): void {
@@ -37,6 +40,16 @@ export class GestionnaireCameraPiste implements ICamera {
         this._camera.right = (this.largeur / DEUX);
         this._camera.top = (this.hauteur / DEUX);
         this._camera.bottom = -(this.hauteur / DEUX);
+        this._camera.updateProjectionMatrix();
+    }
+
+    private ajusterZoom(): void {
+        console.log(this);
+        if (this.largeur * this.hauteur < PIXELS_PETITE_FENETRE) {
+            this._camera.zoom = ZOOM_PETITE_FENETRE;
+            // console.log("PETITE FENETRE");
+        }
+
         this._camera.updateProjectionMatrix();
     }
 

@@ -1,5 +1,5 @@
 import { Group, Mesh, CircleGeometry, PlaneGeometry, Vector3, Texture,
-         RepeatWrapping, MeshPhongMaterial, TextureLoader, BackSide } from "three";
+         RepeatWrapping, MeshPhongMaterial, TextureLoader, DoubleSide } from "three";
 import { Droite } from "../../elementsGeometrie/droite";
 import { Point } from "../../elementsGeometrie/point";
 import { PI_OVER_2, NOM_PISTE_JEU } from "../../constants";
@@ -47,7 +47,7 @@ export class SegmentPiste extends Group {
         const texture: Texture = this.texture;
         texture.repeat.set(LARGEUR_PISTE / TAILLE_REPETITION, dimension / TAILLE_REPETITION);
 
-        return new MeshPhongMaterial( {side: BackSide, map: texture, depthWrite: false});
+        return new MeshPhongMaterial( {side: DoubleSide, map: texture, depthWrite: false});
     }
 
     private get texture(): Texture {

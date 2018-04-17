@@ -33,7 +33,6 @@ export class ServiceDeRenduApercu /* extends ServiceDeRenduAbstrait */ {
         this.tempsDerniereMiseAJour = Date.now();
 
         this.rendu();
-        console.log(this.gestionnaireScene.scene);
     }
 
     private rendu(): void {

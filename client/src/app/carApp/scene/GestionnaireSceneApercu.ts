@@ -7,7 +7,7 @@ import { PI_OVER_2 } from "../constants";
 import { PROFONDEUR_SCENE } from "./GestionnaireScenePiste";
 import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
 
-const COULEUR_FOND: number = 0x0000FF;
+const COULEUR_FOND: number = 0xFFFFFF;
 
 @Injectable()
 export class GestionnaireSceneApercu extends Scene implements IScene {
@@ -24,7 +24,7 @@ export class GestionnaireSceneApercu extends Scene implements IScene {
     }
 
     private ajouterCouleurDeFond(): void {
-        const DIMENSIONS: number = 50000;
+        const DIMENSIONS: number = 5000;
         const MATERIEL: MeshBasicMaterial = new MeshBasicMaterial({ color: COULEUR_FOND, side: DoubleSide });
         const geometrie: PlaneGeometry = new PlaneGeometry(DIMENSIONS, DIMENSIONS);
         geometrie.rotateX(PI_OVER_2);

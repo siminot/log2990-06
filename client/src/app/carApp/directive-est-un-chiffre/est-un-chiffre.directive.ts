@@ -6,41 +6,47 @@ import { CHIFFRE_ZERO, CHIFFRE_NEUF, TAB_KEYCODE, BACKSPACE_KEYCODE } from "../c
 })
 export class EstUnChiffreDirective {
 
-    @Input()
-    public appEstUnChiffre: boolean;
+  @Input()
+  public appEstUnChiffre: boolean;
 
-    @Input("categorie")
-    public categorie: string;
+  @Input("categorie")
+  public categorie: string;
 
-    @Input("valeur")
-    public valeur: number;
+  @Input("valeur")
+  public valeur: number;
 
-    public constructor(private el: ElementRef) { }
+  public constructor(private el: ElementRef) { }
 
-    @HostListener("keydown", ["$event"])
-    public onKeyDown(event: KeyboardEvent): void {
-      if (this.appEstUnChiffre && !this.estUnChiffre(event) && !this.estToucheUtile(event) && !this.respectContraintes(event)) {
-        event.preventDefault();
-      }
+  @HostListener("keydown", ["$event"])
+  public onKeyDown(event: KeyboardEvent): void {
+    if (!this.respectContraintes(event)) {
+
+      event.preventDefault();
+
     }
+  }
 
-    private estUnChiffre(event: KeyboardEvent): boolean {
-      return event.keyCode >= 48 && event.keyCode <= 57;
-    }
+  private estUnChiffre(event: KeyboardEvent): boolean {
+    return event.keyCode >= 48 && event.keyCode <= 57;
+  }
 
-    private estToucheUtile(event: KeyboardEvent): boolean {
-      return event.keyCode === BACKSPACE_KEYCODE || event.keyCode === TAB_KEYCODE;
-    }
+  private estToucheUtile(event: KeyboardEvent): boolean {
+    return event.keyCode === BACKSPACE_KEYCODE || event.keyCode === TAB_KEYCODE;
+  }
 
-    private respectContraintes(event: KeyboardEvent): boolean {
-      if (this.categorie === "minutes" && this.estUnChiffre(event)) {
+  private respectContraintes(event: KeyboardEvent): boolean {
+    if (this.estUnChiffre(event)) {
+      if (this.categorie === "minutes") {
         const currentValue: number = this.el.nativeElement.value;
         const addValue: number = event.keyCode - 48;
         const possibleNewValue: number = currentValue * 10 + addValue;
 
         return possibleNewValue < 60 ? true : false;
       }
-
+    } else if (this.estToucheUtile(event)) {
+      return true;
+    } else {
       return false;
     }
+  }
 }

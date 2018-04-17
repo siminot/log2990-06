@@ -1,34 +1,40 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ResultatJoueur } from "./resultatJoueur";
-import { RESULTATS_BIDONS } from "./resultatsBidon";
-import { TimerService } from "../timer/timer.service";
+import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
+
+const JOUEUR: string = "Joeur";
+const AI: string = "AI";
 
 @Component({
     selector: "app-fin-course",
     templateUrl: "./fin-course.component.html",
     styleUrls: ["./fin-course.component.css"]
 })
-
-export class FinCourseComponent {
+export class FinCourseComponent implements OnInit {
 
     public resultatsCourse: ResultatJoueur[];
     public nomPiste: string;
 
     public constructor(private router: Router,
                        private gestionnaireBD: GestionnaireBDCourse,
-                       private serviceTemps: TimerService) {
+                       private gestionnaireTemps: GestionnaireDesTempsService) {}
 
-        this.nomPiste = gestionnaireBD.pisteJeu.nom;
-        this.resultatsCourse = RESULTATS_BIDONS;
+    public ngOnInit(): void {
+        this.nomPiste = this.gestionnaireBD.pisteJeu.nom;
+        this.creerResultatJoueurs();
         this.classerLesTemps();
         this.ajouterPositions();
     }
 
     private creerResultatJoueurs(): void {
-        const resultats: ResultatJoueur[] = [];
-        
+        const tempsDesJoueurs: TempsJoueur[] = this.gestionnaireTemps.obtenirTempsDesJoueurs();
+        this.resultatsCourse[0] = new ResultatJoueur(JOUEUR, tempsDesJoueurs[0]);
+        for (let i: number = 1; i < tempsDesJoueurs.length; i++ ) {
+            this.resultatsCourse.push(new ResultatJoueur(AI + " " + i , tempsDesJoueurs[i]));
+        }
     }
 
     private classerLesTemps(): void {

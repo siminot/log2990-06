@@ -59,4 +59,13 @@ export class TempsJoueur {
         return this._tempsTours;
     }
 
+    public get sommeTempsTours(): number {
+        let somme: number = 0;
+        for (const tempsTour of this.tempsTours) {
+            somme += tempsTour.temps;
+        }
+
+        return somme;
+    }
+
 }

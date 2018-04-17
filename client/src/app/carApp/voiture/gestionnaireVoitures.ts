@@ -102,8 +102,6 @@ export class GestionnaireVoitures {
     }
 
     private creerVoitureJoueur(piste: PisteJeu): void {
-        console.log(piste.premierSegment.direction.normalize());
-        console.log(piste.premierSegment.angle);
         this._voitureJoueur = new Voiture();
         this._voitureJoueur.name = NOM_VOITURE_JOUEUR;
         this.chargerTexture(NOMS_TEXTURES[TEXTURE_DEFAUT_JOUEUR], this._voitureJoueur, piste)

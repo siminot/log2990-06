@@ -16,6 +16,7 @@ export class GestionnaireDesTempsService {
     public constructor(private timer: TimerService) {
         this.initialisation();
         this.souscriptionTourAi();
+        this.souscriptionFinCourse();
     }
 
     private initialisation(): void {
@@ -56,6 +57,21 @@ export class GestionnaireDesTempsService {
         return tempsFinCourse;
     }
 
+    private estimerTempsAi(): void {
+        for (const tempsAI of this._tempsAIs) {
+            let estimeDernierTour: number = this.timer.obtenirTempsActuel;
+            for (const tempsTour of tempsAI.tempsTours) {
+                if (tempsTour.temps > 0) {
+                    estimeDernierTour = tempsTour.temps;
+                } else if (tempsTour.temps === 0) {
+                    tempsTour.tempsAffichable = estimeDernierTour - 500;
+                }
+            }
+            tempsAI.tempsCourse.tempsAffichable = tempsAI.sommeTempsTours;
+            console.log(tempsAI.tempsCourse);
+        }
+    }
+
     public get tempsJoueur(): TempsJoueur {
         return this._tempsJoueur;
     }
@@ -64,6 +80,13 @@ export class GestionnaireDesTempsService {
         DeroulemenCourseService.souscriptionTourAi()
         .subscribe( (noAi) => {
             this.AIxTourComplete(noAi);
+        });
+    }
+
+    private souscriptionFinCourse(): void {
+        DeroulemenCourseService.souscriptionFinCourse()
+        .subscribe( () => {
+            this.estimerTempsAi();
         });
     }
 }

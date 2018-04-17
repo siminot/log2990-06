@@ -67,6 +67,7 @@ export class VueTeteHauteComponent implements OnInit {
     private courseTermiee(): void {
         clearInterval(this.rafraichissement);
         this.envoyerTempsJoueur();
+        DeroulemenCourseService.finCourse();
     }
 
     private envoyerTempsJoueur(): void {

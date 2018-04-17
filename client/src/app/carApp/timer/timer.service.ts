@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { DeroulemenCourseService } from "../deroulement-course/deroulemen-course.service";
 
 const NBR_JOUEURS: number = 4;
 
@@ -16,6 +17,7 @@ export class TimerService {
         this.tempsDebutTour = new Array<number>(NBR_JOUEURS).fill(0);
         this.tempsActuel = 0;
         this.tempsTour = new Array<number>(NBR_JOUEURS).fill(0);
+        this.souscriptionFinCourse();
     }
 
     public debuterCourse(): void {
@@ -27,6 +29,7 @@ export class TimerService {
 
     public terminerCourse(): void {
         clearInterval(this.leTimer);
+        console.log("TIMER ARRETE");
     }
 
     private partirTimer(): void {
@@ -57,6 +60,13 @@ export class TimerService {
 
     public get obtenirTempsTourJoueur(): number {
         return this.tempsTour[0];
+    }
+
+    private souscriptionFinCourse(): void {
+        DeroulemenCourseService.souscriptionFinCourse()
+        .subscribe( () => {
+            this.terminerCourse();
+        });
     }
 
 }

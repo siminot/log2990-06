@@ -6,6 +6,7 @@ import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { ServiceDeRenduApercu } from "../serviceDeRendu/serviceDeRenduApercu";
 import { GestionnaireSceneApercu } from "../scene/GestionnaireSceneApercu";
 import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
+import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
 
 @Component({
     moduleId: module.id,
@@ -18,15 +19,16 @@ export class ApercuPisteComponent extends AbstractGameComponent implements After
 
     @Input() public piste: IDefinitionPoint[];
 
-    public constructor(@Inject(ServiceDeRenduApercu) serviceDeRendu: ServiceDeRenduApercu,
-                       @Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
+    public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
                        @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
                        @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
                        private gestionnaireScene: GestionnaireSceneApercu) {
-        super(serviceDeRendu, gestionnaireClavier, gestionnaireEcran, gestionnaireSouris);
+        super(new ServiceDeRenduApercu(gestionnaireScene, gestionnaireEcran, new GestionnaireCameraPiste()),
+              gestionnaireClavier, gestionnaireEcran, gestionnaireSouris);
     }
 
     public ngAfterViewInit(): void {
+        super.ngAfterViewInit();
         this.gestionnaireScene.initialisationPiste(this.piste);
     }
 }

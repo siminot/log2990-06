@@ -3,14 +3,15 @@ import { TimerService } from "../timer/timer.service";
 import { InvalidArgumentError } from "../../exceptions/invalidArgumentError";
 import { TempsJoueur } from "./tempsJoueur";
 import { DeroulemenCourseService } from "../deroulement-course/deroulemen-course.service";
+// import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
 
 const NBR_JOUEURS: number = 4;
 
 @Injectable()
 export class GestionnaireDesTempsService {
 
-    private tempsJoueur: TempsJoueur;
-    private tempsAIs: Array<TempsJoueur>;
+    private _tempsJoueur: TempsJoueur;
+    private _tempsAIs: Array<TempsJoueur>;
 
     public constructor(private timer: TimerService) {
         this.initialisation();
@@ -18,25 +19,25 @@ export class GestionnaireDesTempsService {
     }
 
     private initialisation(): void {
-        this.tempsJoueur = new TempsJoueur();
-        this.tempsAIs = new Array<TempsJoueur>(NBR_JOUEURS - 1);
+        this._tempsJoueur = new TempsJoueur();
+        this._tempsAIs = new Array<TempsJoueur>(NBR_JOUEURS - 1);
         for (let i: number = 0; i < NBR_JOUEURS - 1; i++) {
-            this.tempsAIs[i] = new TempsJoueur();
+            this._tempsAIs[i] = new TempsJoueur();
         }
     }
 
     public set actualiserTempsJoueur(temps: TempsJoueur) {
-        this.tempsJoueur = temps;
+        this._tempsJoueur = temps;
     }
 
     public AIxTourComplete(noJoueur: number): void {
         this.verifierIndex(noJoueur);
-        this.tempsAIs[noJoueur].definirTempsTour = this.timer.nouveauTour(noJoueur + 1);
+        this._tempsAIs[noJoueur].definirTempsTour = this.timer.nouveauTour(noJoueur + 1);
     }
 
     public AIXCourseComplete(noJoueur: number): void {
         this.verifierIndex(noJoueur);
-        this.tempsAIs[noJoueur].definirTempsCourse = this.timer.obtenirTempsActuel;
+        this._tempsAIs[noJoueur].definirTempsCourse = this.timer.obtenirTempsActuel;
     }
 
     private verifierIndex(noJoueur: number): void {
@@ -45,14 +46,18 @@ export class GestionnaireDesTempsService {
         }
     }
 
-    public get obtenirTempsDesJoueurs(): Array<TempsJoueur> {
+    public obtenirTempsDesJoueurs(): Array<TempsJoueur> {
         const tempsFinCourse: Array<TempsJoueur> = new Array<TempsJoueur>();
-        tempsFinCourse.push(this.tempsJoueur);
-        for (const tempsAi of this.tempsAIs) {
+        tempsFinCourse.push(this._tempsJoueur);
+        for (const tempsAi of this._tempsAIs) {
             tempsFinCourse.push(tempsAi);
         }
 
         return tempsFinCourse;
+    }
+
+    public get tempsJoueur(): TempsJoueur {
+        return this._tempsJoueur;
     }
 
     private souscriptionTourAi(): void {

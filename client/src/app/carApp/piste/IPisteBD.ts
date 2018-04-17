@@ -1,4 +1,5 @@
 import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
+import { ITempsBD } from "./ITempsBD";
 
 export interface PisteBD {
     _id: string;
@@ -6,6 +7,6 @@ export interface PisteBD {
     description: string;
     type: string;
     points: IDefinitionPoint[];
-    temps: [{ nom: string, min: number, sec: number, milliSec: number }];
+    temps: ITempsBD[];
     nbFoisJoue: number;
 }

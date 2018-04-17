@@ -1,45 +1,74 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { PisteBD } from "../piste/IPisteBD";
-import { Subscription } from "rxjs/Subscription";
+import { ITempsBD } from "../piste/ITempsBD";
+import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
+import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
 
 @Component({
-  selector: "app-tableau-meilleurs-temps",
-  templateUrl: "./tableau-meilleurs-temps.component.html",
-  styleUrls: ["./tableau-meilleurs-temps.component.css"]
+    selector: "app-tableau-meilleurs-temps",
+    templateUrl: "./tableau-meilleurs-temps.component.html",
+    styleUrls: ["./tableau-meilleurs-temps.component.css"]
 })
 export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
-  private pistes: PisteBD[];
-  private abonnementPistes: Subscription;
+    private joueurAAjouteAuTableau: boolean;
+    private pisteCourante: PisteBD;
+    private _placeMeriteeAuTableau: boolean;
+    private tempsJoueurTableau: ITempsBD;
+    private nomJoueur: string;
 
-  public pisteCourante: PisteBD;
-  // private abonnementPisteCourante: Subscription;
+    public constructor(private gestionnaireBD: GestionnaireBDCourse,
+                       private gestionnaireTemps: GestionnaireDesTempsService) {
+        this.nomJoueur = "";
+        this.joueurAAjouteAuTableau = false;
+        this.pisteCourante = this.gestionnaireBD.pisteJeu;
+        this.obtenirTempsPourTableau();
 
-  private unePiste: PisteBD = { _id: "1a", nom: "Une piste", description: "Une description",
-                                points: null, type: "Hello",
-                                temps: [{ nom: "Ken Block", min: 1, sec: 0, milliSec: 0}],
-                                nbFoisJoue: 0};
+        // À ajuster lorsque la connexion avec le service de temps sera établie.
+        this._placeMeriteeAuTableau = true;
+    }
 
-  public constructor(private gestionnaireBD: GestionnaireBDCourse) {
+    private obtenirTempsPourTableau(): void {
+        const tempsJoueur: TempsAffichage = this.gestionnaireTemps.tempsJoueur.tempsCourse;
+        // GÉNÉRATION D'UN TEMPS RANDOM SI LA COURSE N'EST PAS TERMINÉ.
+        if (tempsJoueur.minutes === "--") {
+            tempsJoueur.minutes = "1";
+            tempsJoueur.secondes = "22";
+            tempsJoueur.millisecondes = "98";
+        }
 
-  }
+        this.tempsJoueurTableau = {
+            nom: "",
+            min: Number(tempsJoueur.minutes),
+            sec: Number(tempsJoueur.secondes),
+            milliSec: +tempsJoueur.millisecondes
+        };
+    }
 
-  public ngOnInit(): void {
-      this.abonnementPistes = this.gestionnaireBD.obtenirPistes()
-          .subscribe((pistes: PisteBD[]) => this.pistes = pistes);
-      // this.abonnementPisteCourante = this.gestionnaireBD.obtenirUnePiste(this.gestionnaireBD.pisteJeu._id)
-      //     .subscribe((piste: PisteBD) => this.pisteCourante = piste);
+    public placeMeriteeAuTableau(): boolean {
+        return this._placeMeriteeAuTableau;
+    }
 
-      if (this.gestionnaireBD.pisteJeu === null) {
-          this.gestionnaireBD.pisteJeu = this.unePiste;
-      }
+    public ngOnInit(): void {
+    }
 
-      this.pisteCourante = this.gestionnaireBD.pisteJeu;
-  }
+    public peutEcrire(): boolean {
+        return !this.joueurAAjouteAuTableau;
+    }
 
-  public ngOnDestroy(): void {
-      this.abonnementPistes.unsubscribe();
-      // this.abonnementPisteCourante.unsubscribe();
-  }
+    public peutSoumettre(): boolean {
+        return this.nomJoueur.length !== 0 && !this.joueurAAjouteAuTableau;
+    }
+
+    public soumissionNom(): void {
+        this.tempsJoueurTableau.nom = this.nomJoueur;
+        this.pisteCourante.temps.push(this.tempsJoueurTableau);
+        this.joueurAAjouteAuTableau = true;
+        this.nomJoueur = "MERCI & BRAVO";
+        this.gestionnaireBD.mettreAJourPiste(this.pisteCourante);
+    }
+
+    public ngOnDestroy(): void {
+    }
 
 }

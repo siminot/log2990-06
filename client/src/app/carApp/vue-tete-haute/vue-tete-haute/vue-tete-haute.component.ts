@@ -76,9 +76,9 @@ export class VueTeteHauteComponent implements OnInit {
     private creerTempsJoueur(): TempsJoueur {
         const leTempsDuJoueur: TempsJoueur = new TempsJoueur;
         leTempsDuJoueur.definirAI = false;
-        leTempsDuJoueur.definirTempsCourse = this.tempsCourse.obtenirTemps;
+        leTempsDuJoueur.definirTempsCourse = this.tempsCourse.temps;
         for (let i: number = 0; i < NBR_TOURS; i++) {
-            leTempsDuJoueur.definirTempsTour = this.tempsTours[i].obtenirTemps;
+            leTempsDuJoueur.definirTempsTour = this.tempsTours[i].temps;
         }
 
         return leTempsDuJoueur;

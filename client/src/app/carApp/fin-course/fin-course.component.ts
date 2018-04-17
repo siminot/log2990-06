@@ -21,7 +21,7 @@ export class FinCourseComponent {
 
     private classerLesTemps(): void {
         this.resultatsCourse.sort((a: ResultatJoueur, b: ResultatJoueur) =>
-            a.tempsCourse.obtenirTemps - b.tempsCourse.obtenirTemps);
+            a.tempsCourse.temps - b.tempsCourse.temps);
     }
 
     private ajouterRangs(): void {

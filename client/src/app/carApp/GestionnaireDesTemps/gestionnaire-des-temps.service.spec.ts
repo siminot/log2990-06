@@ -18,8 +18,8 @@ class MockTimer {
 describe("GestionnaireDesTempsService", () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [GestionnaireDesTempsService,
-                        { provide: TimerService, useClass: MockTimer }]
+            providers: [ GestionnaireDesTempsService,
+                         { provide: TimerService, useClass: MockTimer }]
         });
     });
 
@@ -32,19 +32,19 @@ describe("GestionnaireDesTempsService", () => {
         it("Devrait changer le temps de la course pour le premier AI",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
             service.AIXCourseComplete(0);
-            expect(service["tempsAIs"][0].obtenirTempsCourse.obtenirTemps).toEqual(TEMPSTEST);
+            expect(service["_tempsAIs"][0].tempsCourse.temps).toEqual(TEMPSTEST);
         }));
 
         it("Devrait changer le temps de la course pour le deuxieme AI",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
             service.AIXCourseComplete(1);
-            expect(service["tempsAIs"][1].obtenirTempsCourse.obtenirTemps).toEqual(TEMPSTEST);
+            expect(service["_tempsAIs"][1].tempsCourse.temps).toEqual(TEMPSTEST);
         }));
 
         it("Devrait changer le temps de la course pour le troisieme AI",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
             service.AIXCourseComplete(2);
-            expect(service["tempsAIs"][2].obtenirTempsCourse.obtenirTemps).toEqual(TEMPSTEST);
+            expect(service["_tempsAIs"][2].tempsCourse.temps).toEqual(TEMPSTEST);
         }));
 
         it("Devrait lancer une erreur",
@@ -65,7 +65,7 @@ describe("GestionnaireDesTempsService", () => {
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
                service.AIxTourComplete(0);
                service.AIxTourComplete(0);
-               expect(service["tempsAIs"][0].obtenirTempsTours[1].obtenirTemps).toEqual(TEMPSTEST);
+               expect(service["_tempsAIs"][0].tempsTours[1].temps).toEqual(TEMPSTEST);
         }));
 
         it("Devrait changer le temps de la course pour le deuxieme AI",
@@ -73,13 +73,13 @@ describe("GestionnaireDesTempsService", () => {
                service.AIxTourComplete(1);
                service.AIxTourComplete(1);
                service.AIxTourComplete(1);
-               expect(service["tempsAIs"][1].obtenirTempsTours[2].obtenirTemps).toEqual(TEMPSTEST);
+               expect(service["_tempsAIs"][1].tempsTours[2].temps).toEqual(TEMPSTEST);
         }));
 
         it("le temps des tours pas encore fait sont a 0",
            inject([GestionnaireDesTempsService], (service: GestionnaireDesTempsService) => {
                service.AIxTourComplete(2);
-               expect(service["tempsAIs"][2].obtenirTempsTours[2].obtenirTemps).toEqual(0);
+               expect(service["_tempsAIs"][2].tempsTours[2].temps).toEqual(0);
         }));
 
         it("Devrait lancer une erreur",

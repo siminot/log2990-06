@@ -36,7 +36,7 @@ export class GestionnaireCollision {
         this.gestionCollision();
     }
 
-    private miseAjourSpheresVoiture(voiture: Voiture): void {
+    public miseAjourSpheresVoiture(voiture: Voiture): void {
         for (let i: number = 0; i < NOMBRE_SPHERE; i++) {
             const positionTempo: Vector3 = voiture.position.clone().add(voiture.getDirection().clone().multiply(VECTEUR_PLACEMENT[i]));
             this.spheres.get(voiture)[i].center.set(positionTempo.x, positionTempo.y, positionTempo.z);
@@ -143,7 +143,7 @@ export class GestionnaireCollision {
 
     private calculeNouvelleVitesse(autoA: Voiture, autoB: Voiture): Vector3 {
         // Formule : https://en.wikipedia.org/wiki/Elastic_collision
-        const soustractionVitesse: Vector3 = autoA.vitesseDansMonde.sub(autoB.vitesseDansMonde);
+        const soustractionVitesse: Vector3 = autoA.vitesseDansMonde.clone().sub(autoB.vitesseDansMonde);
         const soustractionPosition: Vector3 = autoA.position.clone().sub(autoB.position);
         const DEUX: number = 2;
         const denominateur: number = Math.pow(soustractionVitesse.length(), DEUX);

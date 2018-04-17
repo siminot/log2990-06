@@ -62,7 +62,7 @@ export class GestionnaireBDCourse {
     }
 
     public mettreAJourPiste(piste: PisteBD): Promise<Object> {
-        return this.http.patch(URL_MODIFIER_PISTE + this.pisteEdition._id, piste).toPromise();
+        return this.http.patch(URL_MODIFIER_PISTE + piste._id, piste).toPromise();
     }
 
     public incrementerNbFoisJouePiste(piste: PisteBD): Promise<Object> {

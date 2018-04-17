@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { FinCourseComponent } from "./fin-course.component";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("FinCourseComponent: ", () => {
     let component: FinCourseComponent;
@@ -8,6 +9,7 @@ describe("FinCourseComponent: ", () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+        imports: [ RouterTestingModule ],
         declarations: [ FinCourseComponent ]
     })
     .compileComponents();
@@ -30,8 +32,8 @@ describe("FinCourseComponent: ", () => {
             let plusPetitTemps: number = 0;
             let estBienClasse: boolean = true;
             for (const resultat of component.resultatsCourse) {
-                if (plusPetitTemps <= resultat.tempsCourse.obtenirTemps) {
-                    plusPetitTemps = resultat.tempsCourse.obtenirTemps;
+                if (plusPetitTemps <= resultat.tempsCourse.temps) {
+                    plusPetitTemps = resultat.tempsCourse.temps;
                 } else {
                     estBienClasse = false;
                 }

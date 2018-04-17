@@ -5,6 +5,19 @@
     margin:0;
 }
 
+#bg {
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background-image: url("../../../assets/background/choixPiste.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    z-index: -1000;
+    opacity: 0.5;
+}
+
 ul, li {
     list-style-image: url('../../../assets/purple_ghost.jpg');
 }

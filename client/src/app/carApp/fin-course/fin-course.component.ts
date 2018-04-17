@@ -1,22 +1,41 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ResultatJoueur } from "./resultatJoueur";
-import { RESULTATS_BIDONS } from "./resultatsBidon";
+import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
+
+const JOUEUR: string = "Joueur";
+const AI: string = "AI";
 
 @Component({
     selector: "app-fin-course",
     templateUrl: "./fin-course.component.html",
     styleUrls: ["./fin-course.component.css"]
 })
+export class FinCourseComponent implements OnInit {
 
-export class FinCourseComponent {
+    public resultatsCourse: Array<ResultatJoueur>;
+    public nomPiste: string;
 
-    public resultatsCourse: ResultatJoueur[];
+    public constructor(private router: Router,
+                       private gestionnaireBD: GestionnaireBDCourse,
+                       private gestionnaireTemps: GestionnaireDesTempsService) {}
 
-    public constructor(private router: Router) {
-        this.resultatsCourse = RESULTATS_BIDONS;
+    public ngOnInit(): void {
+        this.nomPiste = this.gestionnaireBD.pisteJeu.nom;
+        this.resultatsCourse = new Array<ResultatJoueur>();
+        this.creerResultatJoueurs();
         this.classerLesTemps();
-        this.ajouterRangs();
+        this.ajouterPositions();
+    }
+
+    private creerResultatJoueurs(): void {
+        const tempsDesJoueurs: TempsJoueur[] = this.gestionnaireTemps.obtenirTempsDesJoueurs();
+        this.resultatsCourse.push(new ResultatJoueur(JOUEUR, tempsDesJoueurs[0]));
+        for (let i: number = 1; i < tempsDesJoueurs.length; i++ ) {
+            this.resultatsCourse.push(new ResultatJoueur(AI + " " + i , tempsDesJoueurs[i]));
+        }
     }
 
     private classerLesTemps(): void {
@@ -24,11 +43,11 @@ export class FinCourseComponent {
             a.tempsCourse.temps - b.tempsCourse.temps);
     }
 
-    private ajouterRangs(): void {
-        let rang: number = 1;
+    private ajouterPositions(): void {
+        let position: number = 1;
         for (const resultat of this.resultatsCourse) {
-            resultat.rang = rang;
-            rang++;
+            resultat.position = position;
+            position++;
         }
     }
 

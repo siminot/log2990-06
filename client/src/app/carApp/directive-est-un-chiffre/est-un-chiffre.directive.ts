@@ -1,52 +1,49 @@
 import { Directive, Input, HostListener, ElementRef } from "@angular/core";
-import { CHIFFRE_ZERO, CHIFFRE_NEUF, TAB_KEYCODE, BACKSPACE_KEYCODE } from "../constants";
+import * as CONST from "../constants";
 
 @Directive({
-  selector: "[appEstUnChiffre]"
+    selector: "[appEstUnChiffre]"
 })
 export class EstUnChiffreDirective {
 
-  @Input()
-  public appEstUnChiffre: boolean;
+    @Input()
+    public appEstUnChiffre: boolean;
 
-  @Input("categorie")
-  public categorie: string;
+    @Input("categorie")
+    public categorie: string;
 
-  @Input("valeur")
-  public valeur: number;
+    @Input("valeur")
+    public valeur: number;
 
-  public constructor(private el: ElementRef) { }
+    public constructor(private el: ElementRef) { }
 
-  @HostListener("keydown", ["$event"])
-  public onKeyDown(event: KeyboardEvent): void {
-    if (!this.respectContraintes(event)) {
-
-      event.preventDefault();
-
+    @HostListener("keydown", ["$event"])
+    public onKeyDown(event: KeyboardEvent): void {
+        if (!this.respectContraintes(event)) {
+            event.preventDefault();
+        }
     }
-  }
 
-  private estUnChiffre(event: KeyboardEvent): boolean {
-    return event.keyCode >= 48 && event.keyCode <= 57;
-  }
-
-  private estToucheUtile(event: KeyboardEvent): boolean {
-    return event.keyCode === BACKSPACE_KEYCODE || event.keyCode === TAB_KEYCODE;
-  }
-
-  private respectContraintes(event: KeyboardEvent): boolean {
-    if (this.estUnChiffre(event)) {
-      if (this.categorie === "minutes") {
-        const currentValue: number = this.el.nativeElement.value;
-        const addValue: number = event.keyCode - 48;
-        const possibleNewValue: number = currentValue * 10 + addValue;
-
-        return possibleNewValue < 60 ? true : false;
-      }
-    } else if (this.estToucheUtile(event)) {
-      return true;
-    } else {
-      return false;
+    private estUnChiffre(event: KeyboardEvent): boolean {
+        return event.keyCode >= CONST.CHIFFRE_ZERO_KEYCODE && event.keyCode <= CONST.CHIFFRE_NEUF_KEYCODE;
     }
-  }
+
+    private estToucheUtile(event: KeyboardEvent): boolean {
+        return event.keyCode === CONST.BACKSPACE_KEYCODE || event.keyCode === CONST.TAB_KEYCODE;
+    }
+
+    private respectContraintes(event: KeyboardEvent): boolean {
+        if (this.estUnChiffre(event)) {
+            const currentValue: number = this.el.nativeElement.value;
+            const addValue: number = event.keyCode - CONST.CHIFFRE_ZERO_KEYCODE;
+            const possibleNewValue: number = currentValue * CONST.MULT_PAR_DIX + addValue;
+            if (this.categorie === "minutes" || this.categorie === "secondes") {
+                return possibleNewValue < CONST.NB_MAX_SEC_MIN ? true : false;
+            } else {
+                return possibleNewValue < CONST.NB_MAX_MILLISEC ? true : false;
+            }
+        } else {
+            return this.estToucheUtile(event) ? true : false;
+        }
+    }
 }

@@ -61,10 +61,6 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this._speed = nouvelleVitesse;
     }
 
-    public setSpeed(nouvelleVitesse: Vector3) {
-        this._speed = nouvelleVitesse;
-    }
-
     public get currentGear(): number {
         return this.engine.currentGear;
     }
@@ -217,10 +213,6 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
 
     public get estSurPiste(): boolean {
         return this.sortiePiste.estSurPiste;
-    }
-
-    public get positionSortiePiste(): Vector3 {
-        return this.sortiePiste.positionSortiePiste;
     }
 
     public eteindrePhares(): void {

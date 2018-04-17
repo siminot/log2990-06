@@ -11,7 +11,7 @@
 
     <div id="listePistes">
         <mat-accordion multi="false">
-            <mat-expansion-panel class="piste" *ngFor="let piste of pistes">
+            <mat-expansion-panel class="unePiste" *ngFor="let piste of pistes">
                 <mat-expansion-panel-header class="pisteTitre">
                     {{ piste.nom | uppercase }}
                 </mat-expansion-panel-header>
@@ -36,8 +36,19 @@
                     </div>
                 
                     <ul>
-                        <li *ngFor="let temps of piste.temps">
+                        <li *ngFor="let temps of piste.temps; let i = index" class="temps">
                             {{ temps.min }}:{{ temps.sec | number:'2.0-0' }}.{{ temps.milliSec | number:'2.0-0' }} par {{ temps.nom }}
+                            <img class="deleteImg" src="../../../assets/listeTempsPistesCourse/delete_red.png" (click)="effacerTemps(temps, piste)">
+                        </li>
+                        <li class="ligneNouveauTemps">
+                            <input id="inputMin" [appEstUnChiffre]="true" categorie="minutes" valeur="_min" class="inputTemps" [(ngModel)]="_min" placeholder="Minutes">
+                            <span>:</span>
+                            <input id="inputSec" [appEstUnChiffre]="true" categorie="secondes" class="inputTemps" [(ngModel)]="_sec" placeholder="Secondes">
+                            <span>.</span>
+                            <input id="inputMilli" [appEstUnChiffre]="true" categorie="millisecondes" class="inputTemps" [(ngModel)]="_milliSec" placeholder="MilliSecondes">
+                            <span>par</span>
+                            <input id="inputNom" class="inputTemps" [(ngModel)]="_nom" placeholder="Nom">
+                            <button class="addImgBtn" [disabled]="!peutAjouter()" (click)="ajoutTemps(piste)"><img class="addImg" src="../../../assets/listeTempsPistesCourse/add.png"></button>
                         </li>
                     </ul>
                 

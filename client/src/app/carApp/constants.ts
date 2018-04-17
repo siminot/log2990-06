@@ -11,3 +11,13 @@ export const PI_OVER_2: number = Math.PI / 2;
 export const TEMPS_JOURNEE_INITIAL: TempsJournee = TempsJournee.Jour;
 export const NOM_PISTE_JEU: string = "pisteJeu";
 export const NOM_VOITURE_JOUEUR: string = "voitureJoueur";
+
+export const CHIFFRE_ZERO_KEYCODE: number = 48;
+export const CHIFFRE_ZERO: string = "0";
+export const CHIFFRE_NEUF_KEYCODE: number = 57;
+export const CHIFFRE_NEUF: string = "9";
+export const BACKSPACE_KEYCODE: number = 8;
+export const TAB_KEYCODE: number = 9;
+export const MULT_PAR_DIX: number = 10;
+export const NB_MAX_SEC_MIN: number = 60;
+export const NB_MAX_MILLISEC: number = 100;

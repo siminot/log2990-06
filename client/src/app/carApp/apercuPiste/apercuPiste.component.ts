@@ -1,12 +1,8 @@
-import { Component, Inject, Input, AfterViewInit } from "@angular/core";
-import { AbstractGameComponent } from "../abstract-component/abstract.game.component";
-import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { Component, Input, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
-import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { ServiceDeRenduApercu } from "../serviceDeRendu/serviceDeRenduApercu";
 import { GestionnaireSceneApercu } from "../scene/GestionnaireSceneApercu";
 import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
-import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
 
 @Component({
     moduleId: module.id,
@@ -15,20 +11,30 @@ import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
     styleUrls: ["./apercuPiste.component.css"]
 })
 
-export class ApercuPisteComponent extends AbstractGameComponent implements AfterViewInit {
+export class ApercuPisteComponent implements AfterViewInit {
 
+    @ViewChild("container")
+    protected containerRef: ElementRef;
     @Input() public piste: IDefinitionPoint[];
+    private serviceDeRendu: ServiceDeRenduApercu;
+    private gestionnaireScene: GestionnaireSceneApercu;
+    // private gestionnaireScene: GestionnaireSceneApercu;
 
-    public constructor(@Inject(GestionnaireClavier) gestionnaireClavier: GestionnaireClavier,
-                       @Inject(GestionnaireEcran) gestionnaireEcran: GestionnaireEcran,
-                       @Inject(GestionnaireSouris) gestionnaireSouris: GestionnaireSouris,
-                       private gestionnaireScene: GestionnaireSceneApercu) {
-        super(new ServiceDeRenduApercu(gestionnaireScene, gestionnaireEcran, new GestionnaireCameraPiste()),
-              gestionnaireClavier, gestionnaireEcran, gestionnaireSouris);
+    public constructor(private gestionnaireEcran: GestionnaireEcran) {
+        this.serviceDeRendu = new ServiceDeRenduApercu(gestionnaireEcran);
+        this.gestionnaireScene = new GestionnaireSceneApercu();
     }
 
     public ngAfterViewInit(): void {
-        super.ngAfterViewInit();
         this.gestionnaireScene.initialisationPiste(this.piste);
+        this.gestionnaireEcran.initialiserConteneur(this.containerRef.nativeElement);
+        this.initialiserServiceDeRendu();
+    }
+
+    protected initialiserServiceDeRendu(): void {
+        this.serviceDeRendu
+        .initialiser(this.gestionnaireScene)
+        .then(/* do nothing */)
+        .catch((err) => console.error(err));
     }
 }

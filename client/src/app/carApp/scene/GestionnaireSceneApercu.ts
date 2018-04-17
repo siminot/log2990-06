@@ -7,12 +7,12 @@ import { PI_OVER_2 } from "../constants";
 import { PROFONDEUR_SCENE } from "./GestionnaireScenePiste";
 import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
 
-const COULEUR_FOND: number = 0xFFFFFF;
+const COULEUR_FOND: number = 0x0000FF;
 
 @Injectable()
 export class GestionnaireSceneApercu extends Scene implements IScene {
 
-    private piste: PisteJeu;
+    public piste: PisteJeu;
 
     public get scene(): Scene {
         return this;

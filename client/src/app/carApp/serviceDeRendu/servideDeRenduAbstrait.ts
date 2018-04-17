@@ -11,7 +11,7 @@ export abstract class ServiceDeRenduAbstrait {
 
     public constructor(protected gestionnaireEcran: GestionnaireEcran,
                        protected gestionnaireCamera: ICamera,
-                       protected gestionnaireScene: IScene) {
+                       public gestionnaireScene: IScene) {
         this.renderer = new WebGLRenderer();
         this.stats = null;
     }

@@ -19,13 +19,9 @@ const POSITIONS_RAYONS: Vector3[] = [
 
 export class VerificateurSortiePiste extends Object3D {
 
-    public positionSortiePiste: Vector3;
-
     public get estSurPiste(): boolean {
         for (const rayon of this.rayons) {
             if (!this.contientLaPiste(rayon.intersectObject(this.scene, true))) {
-                this.positionSortiePiste = new Vector3(rayon.ray.origin.x, 0, rayon.ray.origin.z);
-
                 return false;
             }
         }

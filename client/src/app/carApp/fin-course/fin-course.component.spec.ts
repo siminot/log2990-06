@@ -44,13 +44,13 @@ describe("FinCourseComponent: ", () => {
 
     describe("Ajouter les rangs: ", () => {
         it("les rangs devrait etre non nuls", () => {
-            let rangsSontNonNuls: boolean = true;
+            let positionsSontNonNulles: boolean = true;
             for (const resultat of component.resultatsCourse) {
-                if (resultat.rang === null) {
-                    rangsSontNonNuls = false;
+                if (resultat.position === null) {
+                    positionsSontNonNulles = false;
                 }
             }
-            expect(rangsSontNonNuls).toEqual(true);
+            expect(positionsSontNonNulles).toEqual(true);
         });
     });
 

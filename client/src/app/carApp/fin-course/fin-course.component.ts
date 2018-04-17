@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { ResultatJoueur } from "./resultatJoueur";
 import { RESULTATS_BIDONS } from "./resultatsBidon";
+import { TimerService } from "../timer/timer.service";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 
 @Component({
     selector: "app-fin-course",
@@ -12,11 +14,21 @@ import { RESULTATS_BIDONS } from "./resultatsBidon";
 export class FinCourseComponent {
 
     public resultatsCourse: ResultatJoueur[];
+    public nomPiste: string;
 
-    public constructor(private router: Router) {
+    public constructor(private router: Router,
+                       private gestionnaireBD: GestionnaireBDCourse,
+                       private serviceTemps: TimerService) {
+
+        this.nomPiste = gestionnaireBD.pisteJeu.nom;
         this.resultatsCourse = RESULTATS_BIDONS;
         this.classerLesTemps();
-        this.ajouterRangs();
+        this.ajouterPositions();
+    }
+
+    private creerResultatJoueurs(): void {
+        const resultats: ResultatJoueur[] = [];
+        
     }
 
     private classerLesTemps(): void {
@@ -24,11 +36,11 @@ export class FinCourseComponent {
             a.tempsCourse.temps - b.tempsCourse.temps);
     }
 
-    private ajouterRangs(): void {
-        let rang: number = 1;
+    private ajouterPositions(): void {
+        let position: number = 1;
         for (const resultat of this.resultatsCourse) {
-            resultat.rang = rang;
-            rang++;
+            resultat.position = position;
+            position++;
         }
     }
 

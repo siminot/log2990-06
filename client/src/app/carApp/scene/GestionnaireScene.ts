@@ -65,6 +65,16 @@ export class GestionnaireScene implements IScene {
         this.avancerTemps();
         this.miseAJourTempsJournee();
         this.signalerDepart();
+        this.choisirSceneAleatoire();
+
+    }
+
+    private choisirSceneAleatoire(): void {
+        if (Math.round(Math.random())) {
+            this.miseAJourTempsJournee();
+        }
+        this.gestionnaireSkybox.changerSkyboxAleatoire();
+        this.changerDecor();
     }
 
     private ajouterElements(): void {

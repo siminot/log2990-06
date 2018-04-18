@@ -41,12 +41,11 @@ export class GestionnaireSkybox {
         this.tempsJournee = TEMPS_JOURNEE_INITIAL;
         this.chargerSkybox();
         this.miseAJourSkybox();
-        this.changerSkyboxAleatoire();
     }
 
-    private changerSkyboxAleatoire(): void {
-        const NOMBRE_ALEATOIRE: number = Math.random() * this.environnements.get(TempsJournee.Jour).length;
-        for (let i: number = 1 ; i < NOMBRE_ALEATOIRE ; i++) {
+    public changerSkyboxAleatoire(): void {
+        const NOMBRE_ALEATOIRE: number = Math.random() * this.environnements.get(this.tempsJournee).length;
+        for (let i: number = 0 ; i < NOMBRE_ALEATOIRE ; i++) {
             this.changerDecor();
         }
     }

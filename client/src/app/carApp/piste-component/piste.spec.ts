@@ -10,7 +10,8 @@ describe("PisteComponent", () => {
         TestBed.configureTestingModule({
             declarations: [PisteComponent]
         })
-            .compileComponents();
+            .compileComponents()
+            .catch();
     }));
 
     beforeEach(() => {

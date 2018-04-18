@@ -86,7 +86,6 @@ td div, th div {
 }
 
 #colonneTempsJoueur > p , #titreColNom > p, #titreColTemps > p {
-    /* background-color:purple; */
     position: absolute;
     top:0;
     bottom: 0;

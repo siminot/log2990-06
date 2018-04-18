@@ -20,8 +20,9 @@ export class TableauMeilleursTempsComponent implements OnInit {
     private _tempsAAjouterAuTableau: ITempsBD;
     private _nomJoueur: string;
 
-    public constructor(private gestionnaireBD: GestionnaireBDCourse,
-                       private gestionnaireTemps: GestionnaireDesTempsService) {
+    public constructor(
+        private gestionnaireBD: GestionnaireBDCourse,
+        private gestionnaireTemps: GestionnaireDesTempsService) {
         this._nomJoueur = "";
         this._joueurASoumisAuTableau = false;
         this._pisteCourante = this.gestionnaireBD.pisteJeu;
@@ -37,8 +38,8 @@ export class TableauMeilleursTempsComponent implements OnInit {
     private obtenirResultats(): void {
         const tempsJoueurs: TempsJoueur[] = this.gestionnaireTemps.obtenirTempsDesJoueurs();
         this._resultatsCourse.push(new ResultatJoueur("Joueur", tempsJoueurs[0]));
-        for (let i: number = 1; i < tempsJoueurs.length; i++ ) {
-            this._resultatsCourse.push(new ResultatJoueur("AI" + " " + i , tempsJoueurs[i]));
+        for (let i: number = 1; i < tempsJoueurs.length; i++) {
+            this._resultatsCourse.push(new ResultatJoueur("AI" + " " + i, tempsJoueurs[i]));
         }
         this.classerTempsCourse();
         this.ajouterPosition();
@@ -52,9 +53,9 @@ export class TableauMeilleursTempsComponent implements OnInit {
     private classerTempsTableau(): void {
         this._pisteCourante.temps.sort((a: ITempsBD, b: ITempsBD) => {
             const tmpA: number = a.milliSec + a.sec * CONST.SECONDS_TO_MILLISECS +
-                                 a.min * CONST.MIN_TO_MILLISECS;
+                a.min * CONST.MIN_TO_MILLISECS;
             const tmpB: number = b.milliSec + b.sec * CONST.SECONDS_TO_MILLISECS +
-                                 b.min * CONST.MIN_TO_MILLISECS;
+                b.min * CONST.MIN_TO_MILLISECS;
 
             return tmpA > tmpB ? 1 : -1;
         });
@@ -73,7 +74,7 @@ export class TableauMeilleursTempsComponent implements OnInit {
             nom: null,
             min: +this._resultatsCourse[0].tempsCourse.minutes,
             sec: +this._resultatsCourse[0].tempsCourse.secondes,
-            milliSec : +this._resultatsCourse[0].tempsCourse.millisecondes
+            milliSec: +this._resultatsCourse[0].tempsCourse.millisecondes
         };
     }
 

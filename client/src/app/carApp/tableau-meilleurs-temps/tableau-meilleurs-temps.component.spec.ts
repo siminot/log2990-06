@@ -10,6 +10,7 @@ import { Point } from "../elementsGeometrie/point";
 import { PisteBD } from "../piste/IPisteBD";
 import { MatDividerModule } from "@angular/material/divider";
 import { ITempsBD } from "../piste/ITempsBD";
+import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
 
 describe("TableauMeilleursTempsComponent", () => {
     let component: TableauMeilleursTempsComponent;
@@ -36,6 +37,11 @@ describe("TableauMeilleursTempsComponent", () => {
                 { nom: "Joe La Bine", min: 0, sec: 30, milliSec: 0 }],
         nbFoisJoue: 2
     };
+    const NB_MILLISECS_DANS_UNE_MIN: number = 60000;
+    const TEMPS_JOUEUR: TempsJoueur = new TempsJoueur();
+    TEMPS_JOUEUR.nom = "Joe La Bine";
+    TEMPS_JOUEUR.definirAI = false;
+    TEMPS_JOUEUR.definirTempsCourse = NB_MILLISECS_DANS_UNE_MIN;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -47,12 +53,13 @@ describe("TableauMeilleursTempsComponent", () => {
             .compileComponents()
             .catch( () => { throw new Error("Erreur de la creation du test"); } );
     }));
-    
+
     beforeEach(() => {
         fixture = TestBed.createComponent(TableauMeilleursTempsComponent);
         component = fixture.componentInstance;
         component["_pisteCourante"] = PISTE;
         component["classerTempsTableau"]();
+        // component["_resultatsCourse"]
     });
 
     it("Devrait bien construire", () => {
@@ -70,6 +77,12 @@ describe("TableauMeilleursTempsComponent", () => {
         it("Devrait contenir un des temps défini plus haut.", () => {
             const UN_TEMPS: ITempsBD = { nom: "Joe La Bine", min: 0, sec: 0, milliSec: 0 };
             expect(component["_pisteCourante"].temps).toContain(UN_TEMPS);
+        });
+    });
+
+    describe("Resultat course : ", () => {
+        it("Lattribut devrait être défini.", () => {
+            expect(component["_resultatsCourse"]).toBeDefined();
         });
     });
 });

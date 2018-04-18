@@ -55,6 +55,12 @@ export class GroupePhares extends Group {
         this._fonctionnent = true;
     }
 
+    public changerEtatPhares(): void {
+        this.fonctionnent
+            ? this.eteindre()
+            : this.allumer();
+    }
+
     public get fonctionnent(): boolean {
         return this._fonctionnent;
     }

@@ -188,9 +188,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     public changerEtatPhares(): void {
-        this.phares.fonctionnent
-            ? this.phares.eteindre()
-            : this.phares.allumer();
+        this.phares.changerEtatPhares();
     }
 
     private initialiserPhares(): void {

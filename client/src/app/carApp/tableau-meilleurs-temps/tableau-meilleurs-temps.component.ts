@@ -38,12 +38,16 @@ export class TableauMeilleursTempsComponent implements OnInit {
 
     private obtenirResultats(): void {
         const tempsJoueurs: TempsJoueur[] = this.gestionnaireTemps.obtenirTempsDesJoueurs();
-        this._resultatsCourse.push(new ResultatJoueur("Joueur", tempsJoueurs[0]));
-        for (let i: number = 1; i < tempsJoueurs.length; i++) {
-            this._resultatsCourse.push(new ResultatJoueur("AI" + " " + i, tempsJoueurs[i]));
+        if (tempsJoueurs !== null) {
+            this._resultatsCourse.push(new ResultatJoueur("Joueur", tempsJoueurs[0]));
+            for (let i: number = 1; i < tempsJoueurs.length; i++) {
+                this._resultatsCourse.push(new ResultatJoueur("AI" + " " + i, tempsJoueurs[i]));
+            }
+            this.classerTempsCourse();
+            this.ajouterPosition();
+        } else {
+            throw new ErreurTableauVide();
         }
-        this.classerTempsCourse();
-        this.ajouterPosition();
     }
 
     private classerTempsCourse(): void {

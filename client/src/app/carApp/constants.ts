@@ -23,3 +23,6 @@ export const TAB_KEYCODE: number = 9;
 export const MULT_PAR_DIX: number = 10;
 export const NB_MAX_SEC_MIN: number = 60;
 export const NB_MAX_MILLISEC: number = 100;
+
+export const SECONDS_TO_MILLISECS: number = 1000;
+export const MIN_TO_MILLISECS: number = 60000;

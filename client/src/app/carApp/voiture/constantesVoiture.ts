@@ -10,3 +10,5 @@ export const CAR_SURFACE: number = 3;
 export const AIR_DENSITY: number = 1.2;
 export const TIRE_PRESSURE: number = 1;
 export const VITESSE_MIN: number = 2;
+export const DISTRIBUTION_POIDS_MINIMAL: number = 0.25;
+export const DISTRIBUTION_POIDS_MAXIMAL: number = 0.75;

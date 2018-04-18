@@ -10,7 +10,7 @@ import { SonCollision } from "../son/SonCollision";
 import { SonSortieRoute } from "../son/SonSortieRoute";
 import { MAXIMUM_STEERING_ANGLE, INITIAL_WEIGHT_DISTRIBUTION, MINIMUM_SPEED, NUMBER_REAR_WHEELS,
          NUMBER_WHEELS, CAR_SURFACE, AIR_DENSITY, TIRE_PRESSURE, VITESSE_MIN, DEFAULT_WHEELBASE,
-         DEFAULT_MASS, DEFAULT_DRAG_COEFFICIENT} from "./constantesVoiture";
+         DEFAULT_MASS, DEFAULT_DRAG_COEFFICIENT, DISTRIBUTION_POIDS_MINIMAL, DISTRIBUTION_POIDS_MAXIMAL} from "./constantesVoiture";
 
 export class Voiture extends Object3D implements IObjetEnMouvement {
     private readonly engine: Engine;
@@ -38,10 +38,6 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this._sonSortieRoute.jouerSon();
     }
 
-    public get isAcceleratorPressed(): boolean {
-        return this._isAcceleratorPressed;
-    }
-
     public get speed(): Vector3 {
         return this._speed.clone();
     }
@@ -63,13 +59,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     public get direction(): Vector3 {
-        const rotationMatrix: Matrix4 = new Matrix4();
-        const carDirection: Vector3 = new Vector3(0, 0, -1);
-
-        rotationMatrix.extractRotation(this.matrix);
-        carDirection.applyMatrix4(rotationMatrix);
-
-        return carDirection;
+        return new Vector3(0, 0, -1).applyMatrix4(this.matriceRotation);
     }
 
     public constructor(
@@ -100,8 +90,7 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this.steeringWheelDirection = 0;
         this.weightRear = INITIAL_WEIGHT_DISTRIBUTION;
         this._speed = new Vector3(0, 0, 0);
-        this.sortiePiste = new VerificateurSortiePiste();
-        this.add(this.sortiePiste);
+        this.add(this.sortiePiste = new VerificateurSortiePiste());
         this.initialiserPhares();
         this.initialiserSons();
     }
@@ -159,45 +148,31 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
         this._sonVoiture.jouerAccel();
     }
 
-    public getDirection(): Vector3 {
-        return this.direction;
-    }
-
     public get vitesseDansMonde(): Vector3 {
-        const rotationMatrix: Matrix4 = new Matrix4();
-
-        rotationMatrix.extractRotation(this.matrix);
-        const rotationQuaternion: Quaternion = new Quaternion();
-        rotationQuaternion.setFromRotationMatrix(rotationMatrix);
-
-        return this._speed.clone().applyMatrix4(rotationMatrix);
+        return this.speed.applyMatrix4(this.matriceRotation);
     }
 
     public vitesseEnLocal(nouvelleVitesse: Vector3): void {
-        const rotationMatrix: Matrix4 = new Matrix4().extractRotation(this.matrix);
-        const rotationQuaternion: Quaternion = new Quaternion().setFromRotationMatrix(rotationMatrix);
-        this._speed = nouvelleVitesse.applyQuaternion(rotationQuaternion.inverse());
+        this._speed = nouvelleVitesse.applyQuaternion(this.quaternionRotation.inverse());
+    }
+
+    private get matriceRotation(): Matrix4 {
+        return new Matrix4().extractRotation(this.matrix);
+    }
+
+    private get quaternionRotation(): Quaternion {
+        return new Quaternion().setFromRotationMatrix(this.matriceRotation);
     }
 
     public miseAJour(deltaTime: number): void {
-        deltaTime = deltaTime / MS_TO_SECONDS;
+        this._speed.applyMatrix4(this.matriceRotation);
+        this.physicsUpdate(deltaTime / MS_TO_SECONDS);
+        this._speed = this.speed.applyQuaternion(this.quaternionRotation.inverse());
+        this.rotateY(this._speed.length() / this.rotationAngulaire(deltaTime / MS_TO_SECONDS));
+    }
 
-        // Move to car coordinates
-        const rotationMatrix: Matrix4 = new Matrix4();
-        rotationMatrix.extractRotation(this.matrix);
-        const rotationQuaternion: Quaternion = new Quaternion();
-        rotationQuaternion.setFromRotationMatrix(rotationMatrix);
-        this._speed.applyMatrix4(rotationMatrix);
-
-        // Physics calculations
-        this.physicsUpdate(deltaTime);
-
-        // Move back to world coordinates
-        this._speed = this.speed.applyQuaternion(rotationQuaternion.inverse());
-
-        // Angular rotation of the car
-        const R: number = DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
-        this.rotateY(this._speed.length() / R);
+    private rotationAngulaire(deltaTime: number): number {
+        return DEFAULT_WHEELBASE / Math.sin(this.steeringWheelDirection * deltaTime);
     }
 
     public get estSurPiste(): boolean {
@@ -219,112 +194,102 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     }
 
     private initialiserPhares(): void {
-        this.phares = new GroupePhares();
+        this.add(this.phares = new GroupePhares());
         this.phares.initialiser();
-        this.add(this.phares);
     }
 
     private physicsUpdate(deltaTime: number): void {
-        this.rearWheel.ajouterVelociteAngulaire(this.getAngularAcceleration() * deltaTime);
+        this.rearWheel.ajouterVelociteAngulaire(this.accelerationAngulaire * deltaTime);
         this.engine.update(this._speed.length(), this.rearWheel.radius);
-        this.weightRear = this.getWeightDistribution();
-        this._speed.add(this.getDeltaSpeed(deltaTime));
+        this.weightRear = this.distributionDuPoids;
+        this._speed.add(this.obtenirDeltaVitesse(deltaTime));
         this._speed.setLength(this._speed.length() <= MINIMUM_SPEED && !this._isAcceleratorPressed ? 0 : this._speed.length());
-        this.position.add(this.getDeltaPosition(deltaTime));
+        this.position.add(this.obtenirDeltaPosition(deltaTime));
         this.rearWheel.update(this._speed.length());
-        this.updateSon();
-    }
-
-    private updateSon(): void {
         this._sonVoiture.actualiserSon(this.rpm);
     }
 
-    private getWeightDistribution(): number {
-        /* tslint:disable:no-magic-numbers */
-        const distribution: number =
-            this.mass + (1 / this.wheelbase) * this.mass * this.getAcceleration().length() / 2;
-
-        return Math.min(Math.max(0.25, distribution), 0.75);
-        /* tslint:enable:no-magic-numbers */
+    private get distributionDuPoids(): number {
+        return Math.min(Math.max(DISTRIBUTION_POIDS_MINIMAL, this.poids), DISTRIBUTION_POIDS_MAXIMAL);
     }
 
-    private getLongitudinalForce(): Vector3 {
-        const resultingForce: Vector3 = new Vector3();
-
-        if (this._speed.length() >= MINIMUM_SPEED) {
-            resultingForce.add(this.getDragForce()).add(this.getRollingResistance());
-        }
-
-        if (this.isAcceleratorPressed) {
-            const accelerationForce: Vector3 = this.direction;
-            accelerationForce.multiplyScalar(this.getTractionForce());
-            resultingForce.add(accelerationForce);
-        } else if (this.isBraking && this.isGoingForward()) {
-            resultingForce.add(this.getBrakeForce());
-        }
-
-        return resultingForce;
+    private get poids(): number {
+        // tslint:disable-next-line:no-magic-numbers
+        return this.mass + (1 / this.wheelbase) * this.mass * this.acceleration.length() / 2;
     }
 
-    private getRollingResistance(): Vector3 {
+    private get forceLongitudinale(): Vector3 {
+        const forceResultante: Vector3 = new Vector3();
+
+        if (this._isAcceleratorPressed) {
+            forceResultante.add(this.forceAcceleration);
+        } else if (this.isBraking && this.seDirigeVersAvant) {
+            forceResultante.add(this.forceDeFreinage);
+        }
+
+        return this._speed.length() >= MINIMUM_SPEED
+            ? forceResultante.add(this.getDragForce()).add(this.distanceDeRoulement)
+            : forceResultante;
+    }
+
+    private get forceAcceleration(): Vector3 {
+        return this.direction.multiplyScalar(this.getTractionForce());
+    }
+
+    private get distanceDeRoulement(): Vector3 {
         // formula taken from: https://www.engineeringtoolbox.com/rolling-friction-resistance-d_1303.html
         // tslint:disable-next-line:no-magic-numbers
-        const rollingCoefficient: number = (1 / TIRE_PRESSURE) * (Math.pow(this.speed.length() * 3.6 / 100, 2) * 0.0095 + 0.01) + 0.005;
+        const coefficientDeRoulement: number = (1 / TIRE_PRESSURE) * (Math.pow(this.speed.length() * 3.6 / 100, 2) * 0.0095 + 0.01) + 0.005;
 
-        return this.direction.multiplyScalar(rollingCoefficient * this.mass * GRAVITY);
+        return this.direction.multiplyScalar(coefficientDeRoulement * this.mass * GRAVITY);
     }
 
     private getDragForce(): Vector3 {
-        const resistance: Vector3 = this.direction;
-        resistance.multiplyScalar(AIR_DENSITY * CAR_SURFACE * -this.dragCoefficient * this.speed.length() * this.speed.length());
-
-        return resistance;
+        return this.direction.multiplyScalar(AIR_DENSITY * CAR_SURFACE * -this.dragCoefficient * this.speed.length() * this.speed.length());
     }
 
     private getTractionForce(): number {
-        const maxForce: number =
-            this.rearWheel.frictionCoefficient * this.mass * GRAVITY * this.weightRear * NUMBER_REAR_WHEELS / NUMBER_WHEELS;
-
-        return -Math.min(this.getEngineForce(), maxForce);
+        return -Math.min(this.forceDuMoteur,
+                         this.rearWheel.frictionCoefficient * this.mass * GRAVITY * this.weightRear * NUMBER_REAR_WHEELS / NUMBER_WHEELS);
     }
 
-    private getAngularAcceleration(): number {
-        return this.getTotalTorque() / (this.rearWheel.inertia * NUMBER_REAR_WHEELS);
+    private get accelerationAngulaire(): number {
+        return this.torqueTotal / (this.rearWheel.inertia * NUMBER_REAR_WHEELS);
     }
 
-    private getBrakeForce(): Vector3 {
+    private get forceDeFreinage(): Vector3 {
         return this.direction.multiplyScalar(this.rearWheel.frictionCoefficient * this.mass * GRAVITY);
     }
 
-    private getBrakeTorque(): number {
-        return this.getBrakeForce().length() * this.rearWheel.radius;
+    private get torqueDesFreins(): number {
+        return this.forceDeFreinage.length() * this.rearWheel.radius;
     }
 
-    private getTractionTorque(): number {
+    private get torqueDeTraction(): number {
         return this.getTractionForce() * this.rearWheel.radius;
     }
 
-    private getTotalTorque(): number {
-        return this.getTractionTorque() * NUMBER_REAR_WHEELS + this.getBrakeTorque();
+    private get torqueTotal(): number {
+        return this.torqueDeTraction * NUMBER_REAR_WHEELS + this.torqueDesFreins;
     }
 
-    private getEngineForce(): number {
+    private get forceDuMoteur(): number {
         return this.engine.getDriveTorque() / this.rearWheel.radius;
     }
 
-    private getAcceleration(): Vector3 {
-        return this.getLongitudinalForce().divideScalar(this.mass);
+    private get acceleration(): Vector3 {
+        return this.forceLongitudinale.divideScalar(this.mass);
     }
 
-    private getDeltaSpeed(deltaTime: number): Vector3 {
-        return this.getAcceleration().multiplyScalar(deltaTime);
+    private obtenirDeltaVitesse(deltaTemps: number): Vector3 {
+        return this.acceleration.multiplyScalar(deltaTemps);
     }
 
-    private getDeltaPosition(deltaTime: number): Vector3 {
-        return this.speed.multiplyScalar(deltaTime);
+    private obtenirDeltaPosition(deltaTemps: number): Vector3 {
+        return this.speed.multiplyScalar(deltaTemps);
     }
 
-    private isGoingForward(): boolean {
+    private get seDirigeVersAvant(): boolean {
         // tslint:disable-next-line:no-magic-numbers
         return this.speed.normalize().dot(this.direction) > 0.05;
     }

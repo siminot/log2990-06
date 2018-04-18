@@ -44,11 +44,6 @@ describe("Voiture", () => {
     });
 
     it("should decelerate when brake is pressed", () => {
-        // Remove rolling resistance and drag force so the only force slowing down the car is the brakes.
-        car["getRollingResistance"] = () => {
-            return new Vector3(0, 0, 0);
-        };
-
         car["getDragForce"] = () => {
             return new Vector3(0, 0, 0);
         };

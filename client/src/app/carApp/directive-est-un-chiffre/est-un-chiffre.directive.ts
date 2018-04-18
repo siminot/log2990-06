@@ -25,7 +25,15 @@ export class EstUnChiffreDirective {
     }
 
     private estUnChiffre(event: KeyboardEvent): boolean {
+        return this.estChiffreClavier(event) || this.estChiffreNumPad(event);
+    }
+
+    private estChiffreClavier(event: KeyboardEvent): boolean {
         return event.keyCode >= CONST.CHIFFRE_ZERO_KEYCODE && event.keyCode <= CONST.CHIFFRE_NEUF_KEYCODE;
+    }
+
+    private estChiffreNumPad(event: KeyboardEvent): boolean {
+        return event.keyCode >= CONST.CHIFFRE_ZERO_NUMPAD_KEYCODE && event.keyCode <= CONST.CHIFFRE_NEUF_NUMPAD_KEYCODE;
     }
 
     private estToucheUtile(event: KeyboardEvent): boolean {

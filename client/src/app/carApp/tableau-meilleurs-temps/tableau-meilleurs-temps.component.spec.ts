@@ -9,6 +9,7 @@ import { TimerService } from "../timer/timer.service";
 import { Point } from "../elementsGeometrie/point";
 import { PisteBD } from "../piste/IPisteBD";
 import { MatDividerModule } from "@angular/material/divider";
+import { ITempsBD } from "../piste/ITempsBD";
 
 describe("TableauMeilleursTempsComponent", () => {
     let component: TableauMeilleursTempsComponent;
@@ -29,7 +30,10 @@ describe("TableauMeilleursTempsComponent", () => {
         description: "Champs de ble",
         points: PISTE_TEST,
         type: "Type1",
-        temps: [{ nom: "Joe La Bine", min: 0, sec: 0, milliSec: 0 }],
+        temps: [{ nom: "Joe La Bine", min: 0, sec: 0, milliSec: 0 },
+                { nom: "Joe La Bine", min: 1, sec: 0, milliSec: 0 },
+                { nom: "Joe La Bine", min: 2, sec: 0, milliSec: 0 },
+                { nom: "Joe La Bine", min: 0, sec: 30, milliSec: 0 }],
         nbFoisJoue: 2
     };
 
@@ -43,25 +47,29 @@ describe("TableauMeilleursTempsComponent", () => {
             .compileComponents()
             .catch( () => { throw new Error("Erreur de la creation du test"); } );
     }));
-
-    // beforeEach(() => {
-    //     fixture = TestBed.createComponent(TableauMeilleursTempsComponent);
-    //     component = fixture.componentInstance;
-    //     fixture.detectChanges();
-    // });
-
+    
     beforeEach(() => {
         fixture = TestBed.createComponent(TableauMeilleursTempsComponent);
         component = fixture.componentInstance;
         component["_pisteCourante"] = PISTE;
+        component["classerTempsTableau"]();
     });
 
     it("Devrait bien construire", () => {
         expect(component).toBeTruthy();
     });
 
-    it("Devrait recevoir une piste du gestionnaire BD.", () => {
-        expect(component["_pisteCourante"]).toBeDefined();
+    describe("Piste courante : ", () => {
+        it("L'attribut devrait être défini.", () => {
+            expect(component["_pisteCourante"]).toBeDefined();
+        });
+        it("Devrait contenir 4 pistes.", () => {
+            const NB_PISTES_ATTENDU: number = 4;
+            expect(component["_pisteCourante"].temps.length).toBe(NB_PISTES_ATTENDU);
+        });
+        it("Devrait contenir un des temps défini plus haut.", () => {
+            const UN_TEMPS: ITempsBD = { nom: "Joe La Bine", min: 0, sec: 0, milliSec: 0 };
+            expect(component["_pisteCourante"].temps).toContain(UN_TEMPS);
+        });
     });
-
 });

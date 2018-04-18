@@ -18,7 +18,6 @@ export class ApercuPisteComponent implements AfterViewInit {
     @Input() public piste: IDefinitionPoint[];
     private serviceDeRendu: ServiceDeRenduApercu;
     private gestionnaireScene: GestionnaireSceneApercu;
-    // private gestionnaireScene: GestionnaireSceneApercu;
 
     public constructor(private gestionnaireEcran: GestionnaireEcran) {
         this.serviceDeRendu = new ServiceDeRenduApercu(gestionnaireEcran);
@@ -34,7 +33,6 @@ export class ApercuPisteComponent implements AfterViewInit {
     protected initialiserServiceDeRendu(): void {
         this.serviceDeRendu
         .initialiser(this.gestionnaireScene)
-        .then(/* do nothing */)
         .catch((err) => console.error(err));
     }
 }

@@ -3,8 +3,9 @@ import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { PisteBD } from "../piste/IPisteBD";
 import { ITempsBD } from "../piste/ITempsBD";
 import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
-import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
 import { ErreurMettreAJourPiste } from "../../exceptions/erreurMettreAJourPiste";
+import { ResultatJoueur } from "../fin-course/resultatJoueur";
+import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
 
 @Component({
     selector: "app-tableau-meilleurs-temps",
@@ -12,61 +13,74 @@ import { ErreurMettreAJourPiste } from "../../exceptions/erreurMettreAJourPiste"
     styleUrls: ["./tableau-meilleurs-temps.component.css"]
 })
 export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
-    private joueurAAjouteAuTableau: boolean;
-    private pisteCourante: PisteBD;
-    private _placeMeriteeAuTableau: boolean;
-    private tempsJoueurTableau: ITempsBD;
-    private nomJoueur: string;
+    private _joueurASoumisAuTableau: boolean;
+    private _pisteCourante: PisteBD;
+    private _resultatsCourse: Array<ResultatJoueur>;
+    private _tempsAAjouterAuTableau: ITempsBD;
+    private _nomJoueur: string;
 
     public constructor(private gestionnaireBD: GestionnaireBDCourse,
                        private gestionnaireTemps: GestionnaireDesTempsService) {
-        this.nomJoueur = "";
-        this.joueurAAjouteAuTableau = false;
-        this.pisteCourante = this.gestionnaireBD.pisteJeu;
-        this.obtenirTempsPourTableau();
-
-        // À ajuster lorsque la connexion avec le service de temps sera établie.
-        this._placeMeriteeAuTableau = true;
+        this._nomJoueur = "";
+        this._joueurASoumisAuTableau = false;
+        this._pisteCourante = this.gestionnaireBD.pisteJeu;
     }
 
-    private obtenirTempsPourTableau(): void {
-        const tempsJoueur: TempsAffichage = this.gestionnaireTemps.tempsJoueur.tempsCourse;
-        // GÉNÉRATION D'UN TEMPS RANDOM SI LA COURSE N'EST PAS TERMINÉ.
-        if (tempsJoueur.minutes === "--") {
-            tempsJoueur.minutes = "1";
-            tempsJoueur.secondes = "22";
-            tempsJoueur.millisecondes = "98";
-        }
+    public ngOnInit(): void {
+        this._resultatsCourse = new Array<ResultatJoueur>();
+        this.obtenirResultats();
+        this.formatterTempsDuJoueurAAJouter();
+    }
 
-        this.tempsJoueurTableau = {
-            nom: "",
-            min: Number(tempsJoueur.minutes),
-            sec: Number(tempsJoueur.secondes),
-            milliSec: +tempsJoueur.millisecondes
+    private obtenirResultats(): void {
+        const tempsJoueurs: TempsJoueur[] = this.gestionnaireTemps.obtenirTempsDesJoueurs();
+        this._resultatsCourse.push(new ResultatJoueur("Joueur", tempsJoueurs[0]));
+        for (let i: number = 1; i < tempsJoueurs.length; i++ ) {
+            this._resultatsCourse.push(new ResultatJoueur("AI" + " " + i , tempsJoueurs[i]));
+        }
+        this.classerTempsCourse();
+        this.ajouterPosition();
+    }
+
+    private classerTempsCourse(): void {
+        this._resultatsCourse.sort((a: ResultatJoueur, b: ResultatJoueur) =>
+            a.tempsCourse.temps - b.tempsCourse.temps);
+    }
+
+    private ajouterPosition(): void {
+        let position: number = 1;
+        for (const resultat of this._resultatsCourse) {
+            resultat.position = position;
+            position++;
+        }
+    }
+
+    private formatterTempsDuJoueurAAJouter(): void {
+        this._tempsAAjouterAuTableau = {
+            nom: null,
+            min: +this._resultatsCourse[0].tempsCourse.minutes,
+            sec: +this._resultatsCourse[0].tempsCourse.secondes,
+            milliSec : +this._resultatsCourse[0].tempsCourse.millisecondes
         };
     }
 
     public placeMeriteeAuTableau(): boolean {
-        return this._placeMeriteeAuTableau;
+        return this._resultatsCourse[0].position === 1;
     }
-
-    public ngOnInit(): void {
-    }
-
     public peutEcrire(): boolean {
-        return !this.joueurAAjouteAuTableau;
+        return !this._joueurASoumisAuTableau;
     }
 
     public peutSoumettre(): boolean {
-        return this.nomJoueur.length !== 0 && !this.joueurAAjouteAuTableau;
+        return this._nomJoueur.length !== 0 && !this._joueurASoumisAuTableau;
     }
 
     public soumissionNom(): void {
-        this.tempsJoueurTableau.nom = this.nomJoueur;
-        this.pisteCourante.temps.push(this.tempsJoueurTableau);
-        this.joueurAAjouteAuTableau = true;
-        this.nomJoueur = "MERCI & BRAVO";
-        this.gestionnaireBD.mettreAJourPiste(this.pisteCourante)
+        this._tempsAAjouterAuTableau.nom = this._nomJoueur;
+        this._pisteCourante.temps.push(this._tempsAAjouterAuTableau);
+        this._joueurASoumisAuTableau = true;
+        this._nomJoueur = "MERCI & BRAVO";
+        this.gestionnaireBD.mettreAJourPiste(this._pisteCourante)
             .catch(() => { throw new ErreurMettreAJourPiste; });
     }
 

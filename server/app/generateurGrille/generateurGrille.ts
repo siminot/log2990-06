@@ -98,7 +98,7 @@ module Route {
             let indiceAleatoire: number = 0;
             do {
                 indiceAleatoire = this.nombreAleatoire(lesMotsRecus.length) - 1;
-                // limiter le nombre d'essai pour chaque mot
+                // Limiter le nombre d'essais pour chaque mot
                 if (nbEssaisPourMemeMot++ === NB_ESSAIS_MAX || nbEssaisPourMemeMot >= lesMotsRecus.length) {
                     this.retourEtatAvantMot(motActuel, contrainteDuMot);
 
@@ -110,7 +110,7 @@ module Route {
                     prochainIndice = this.obtenirIndiceMotPlusImportant(motActuel);
                 } else { nbEssaisPourMemeMot--; }
 
-                if (prochainIndice === -1) { // Detection de la fin!
+                if (prochainIndice === -1) {
                     this.motsDejaPlaces[motActuel.mot] = 1;
 
                     return true;

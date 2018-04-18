@@ -3,9 +3,6 @@ import { MotAPI } from "./MotAPI";
 import * as assert from "assert";
 
 {
-    // const expect = require("expect");
-
-    // MotAPI pour test
     const WORD: string = "test";
     const SCORE: number = 1000;
     const FREQUENCE_MEDIANE: number = 10;

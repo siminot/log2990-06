@@ -1,8 +1,6 @@
-import {
-    BoxGeometry, BackSide, Mesh, MeshBasicMaterial, TextureLoader,
-    PlaneGeometry, MeshPhongMaterial, Texture, RepeatWrapping, MultiMaterial,
-    AmbientLight, DirectionalLight
-} from "three";
+import { BoxGeometry, BackSide, Mesh, MeshBasicMaterial, TextureLoader,
+         PlaneGeometry, MeshPhongMaterial, Texture, RepeatWrapping, MultiMaterial,
+         AmbientLight, DirectionalLight } from "three";
 import { RAD_TO_DEG } from "../constants";
 import { ElementsInitialisationSkybox } from "./gestionnaireSkybox";
 import { TempsJournee } from "./tempsJournee";
@@ -26,9 +24,7 @@ export const NOM_SURFACE_HORS_PISTE: string = "horsPiste";
 const COULEUR_LUMIERE_AMBIANTE: number = 0xFFFFFF;
 const INTENSITE_AMBIANTE_NUIT: number = 0.3;
 const INTENSITE_AMBIANTE_JOUR: number = 0.7;
-const COULEUR_LUMIERE_SOLEIL: number = 0xFFFFFF;
 const INTENSITE_SOLEIL: number = 0.1;
-// const POSITION_SOLEIL: Vector3 = new Vector3(0, 1, 0);
 
 export class Skybox extends Mesh {
 
@@ -80,8 +76,7 @@ export class Skybox extends Mesh {
 
     private chargerSoleil(): void {
         if (this.estJour) {
-            const soleil: DirectionalLight = new DirectionalLight(COULEUR_LUMIERE_SOLEIL, INTENSITE_SOLEIL);
-            // soleil.position = POSITION_SOLEIL;
+            const soleil: DirectionalLight = new DirectionalLight(COULEUR_LUMIERE_AMBIANTE, INTENSITE_SOLEIL);
             soleil.castShadow = true;
             this.add(soleil);
         }

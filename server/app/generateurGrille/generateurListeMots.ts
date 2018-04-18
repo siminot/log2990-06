@@ -13,9 +13,16 @@ export class GenerateurListeMots {
         return this.listeMot;
     }
 
-    // Sort la liste en ordre decroissant et retire les mots de 1 lettres
     private nettoyerMots(): void {
+        this.trierMotsOrdreDecroissant();
+        this.retirerMotsUneLettre();
+    }
+
+    private trierMotsOrdreDecroissant(): void {
         this.listeMot.sort((n1: Mot, n2: Mot) => n2.longueur - n1.longueur);
+    }
+
+    private retirerMotsUneLettre(): void {
         while (this.listeMot[this.listeMot.length - 1].longueur === 1) {
             this.listeMot.pop();
         }
@@ -47,7 +54,6 @@ export class GenerateurListeMots {
     }
 
     private genererListeMot(uneGrille: Array<Array<string>>): number {
-
         let ctrMots: number = 0;
         for (let i: number = 0; i < uneGrille.length; i++) {
             for (let j: number = 0; j < uneGrille.length; j++) {
@@ -55,14 +61,14 @@ export class GenerateurListeMots {
                     if (j === 0) {
                         this.listeMot.push(this.genererMot(j, i, false, uneGrille));
                         ctrMots++;
-                    } else if (uneGrille[i][j - 1] === NOIR) {   // Car je ne veux pas acceder a un espace memoire a [-1]
+                    } else if (uneGrille[i][j - 1] === NOIR) {
                          this.listeMot.push(this.genererMot(j, i, false, uneGrille));
                          ctrMots++;
                     }
                     if (i === 0) {
                         this.listeMot.push(this.genererMot(j, i, true, uneGrille));
                         ctrMots++;
-                    } else if (uneGrille[i - 1][j] === NOIR) {   // Car je ne veux pas acceder a un espace memoire a [-1]
+                    } else if (uneGrille[i - 1][j] === NOIR) {
                         this.listeMot.push(this.genererMot(j, i, true, uneGrille));
                         ctrMots++;
                     }
@@ -73,5 +79,4 @@ export class GenerateurListeMots {
 
         return ctrMots;
     }
-
 }

@@ -6,9 +6,5 @@ import { Router } from "express";
 @injectable()
 export  abstract class ServiceWeb {
     public readonly mainRoute: string;
-
-    public constructor() { /* Vide */ }
-
     public abstract get routes(): Router;
-
 }

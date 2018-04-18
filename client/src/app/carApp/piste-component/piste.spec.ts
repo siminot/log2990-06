@@ -1,6 +1,15 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { ComponentFixture, TestBed, async } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { GestionnaireEditionPiste } from "../editeurPiste/gestionnaireEditionPiste";
 import { PisteComponent } from "./piste.component";
+import { ServiceDeRenduPistes } from "../serviceDeRendu/serviceDeRenduPistes";
+import { GestionnaireClavier } from "../clavier/gestionnaireClavier";
+import { GestionnaireEcran } from "../ecran/gestionnaireEcran";
+import { GestionnaireSouris } from "../souris/gestionnaireSouris";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
+import { GestionnaireScenePiste } from "../scene/GestionnaireScenePiste";
 
 describe("PisteComponent", () => {
     let component: PisteComponent;
@@ -8,9 +17,19 @@ describe("PisteComponent", () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [PisteComponent]
+            imports: [FormsModule, HttpClientTestingModule],
+            declarations: [PisteComponent],
+            providers: [ GestionnaireEditionPiste,
+                         GestionnaireBDCourse,
+                         ServiceDeRenduPistes,
+                         GestionnaireClavier,
+                         GestionnaireEcran,
+                         GestionnaireSouris,
+                         GestionnaireCameraPiste,
+                         GestionnaireScenePiste ]
         })
-            .compileComponents();
+            .compileComponents()
+            .catch();
     }));
 
     beforeEach(() => {

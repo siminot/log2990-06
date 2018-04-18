@@ -28,7 +28,6 @@ export class ServiceInteractionComponent {
   public constructor(private httpReq: ServiceHttp) {
     this.genererGrille();
   }
-  //
 
   public get mots(): Mot[] {
     return this._mots;
@@ -51,7 +50,6 @@ export class ServiceInteractionComponent {
   public souscrireServiceSocket(): void {
     this.serviceEnvoieMots(this.mots);
     this.serviceEnvoieMatriceLettres(this.matriceDesMotsSurGrille);
-    // this.insererMotsDansGrille();
   }
 
   public souscrireRequeteGrille(): void {

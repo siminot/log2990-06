@@ -20,7 +20,7 @@ export class GestionnaireSceneApercu extends Scene implements IScene {
 
     public constructor() {
         super();
-        this.ajouterCouleurDeFond(); // POUR TESTER
+        this.ajouterCouleurDeFond();
     }
 
     private ajouterCouleurDeFond(): void {

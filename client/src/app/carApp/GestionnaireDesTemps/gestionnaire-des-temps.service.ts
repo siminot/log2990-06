@@ -3,7 +3,6 @@ import { TimerService } from "../timer/timer.service";
 import { InvalidArgumentError } from "../../exceptions/invalidArgumentError";
 import { TempsJoueur } from "./tempsJoueur";
 import { DeroulemenCourseService } from "../deroulement-course/deroulemen-course.service";
-// import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
 
 const NBR_JOUEURS: number = 4;
 const ESTIMATION: number = 500;

@@ -1,4 +1,3 @@
-// import { Server } from "./../server";
 import * as http from "http";
 import * as socket from "socket.io";
 import * as event from "./../../../common/communication/evenementSocket";

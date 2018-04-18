@@ -7,6 +7,8 @@ import { PaquetPartie } from "../objetsTest/paquetPartie";
 import { Router } from "@angular/router";
 
 const SERVER_URL: string = "http://localhost:3000/";
+const MESSAGE_PROBLEME_CONNECTION: string = "Problème de connection avec le serveur! \nRetour à la page d'acceuil.";
+
 @Injectable()
 export class SocketService {
 
@@ -30,21 +32,9 @@ export class SocketService {
         });
 
         this.socketClient.on(event.JOUEUR_QUITTE, () => {
-            alert("Problème de connection avec le serveur! \nRetour à la page d'acceuil.");
+            alert(MESSAGE_PROBLEME_CONNECTION);
             this.socketClient.disconnect();
             this.router.navigateByUrl("/");
-        });
-    }
-
-    // pu utile
-    public envoyerDiff(difficultee: string): void {
-        this.socketClient.emit(event.ENVOYER_DIFF, difficultee);
-        this.attenteDeCreationPartie();
-    }
-
-    // pu utile
-    public attenteDeCreationPartie(): void {
-        this.socketClient.on(event.DEMANDER_GRILLE, () => {
         });
     }
 

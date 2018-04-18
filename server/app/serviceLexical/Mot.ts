@@ -1,7 +1,6 @@
 import { Definition } from "./Definition";
 import { MotAPI } from "./MotAPI";
 import { IMot } from "../../../common/communication/IMot";
-// import { define } from "mime";
 
 export enum Frequence { Commun, NonCommun }
 export enum TypeMot { Nom, Verbe, Adjectif, Adverbe }
@@ -19,16 +18,14 @@ export class Mot implements IMot {
     public definitions: Definition[];
     public frequence: number;
 
-    // Construction d'un mot
-
     public constructor(mot: MotAPI) {
         this.mot = null;
+
         if (mot.word !== undefined) {
             this.mot = mot.word;
         }
 
         this.definitions = this.extraireDefinitions(mot.defs);
-
         this.frequence = this.extraireFrequence(mot.tags[MotAPI.TAG_INDICE_FREQUENCE]);
     }
 

@@ -8,7 +8,7 @@
             <div id="InputsEnregistrement">
                 <div>
                     <label class="infoTexte">Nom:</label>
-                    <input type="text" [(ngModel)]="nom" placeholder="">
+                    <input [appNbCaractMax]="5" type="text" [(ngModel)]="nom" placeholder="">
                 </div>
                 <div>
                     <label class="infoTexte">Description:</label>

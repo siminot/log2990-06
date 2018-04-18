@@ -24,6 +24,7 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         this._nomJoueur = "";
         this._joueurASoumisAuTableau = false;
         this._pisteCourante = this.gestionnaireBD.pisteJeu;
+        this.classerTempsTableau();
     }
 
     public ngOnInit(): void {
@@ -45,6 +46,15 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     private classerTempsCourse(): void {
         this._resultatsCourse.sort((a: ResultatJoueur, b: ResultatJoueur) =>
             a.tempsCourse.temps - b.tempsCourse.temps);
+    }
+
+    private classerTempsTableau(): void {
+        this._pisteCourante.temps.sort((a: ITempsBD, b: ITempsBD) => {
+            const tmpA: number = a.milliSec + a.sec * 1000 + a.min * 60000;
+            const tmpB: number = b.milliSec + b.sec * 1000 + b.min * 60000;
+
+            return tmpA > tmpB ? 1 : -1;
+        });
     }
 
     private ajouterPosition(): void {
@@ -78,6 +88,7 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     public soumissionNom(): void {
         this._tempsAAjouterAuTableau.nom = this._nomJoueur;
         this._pisteCourante.temps.push(this._tempsAAjouterAuTableau);
+        this.classerTempsTableau();
         this._joueurASoumisAuTableau = true;
         this._nomJoueur = "MERCI & BRAVO";
         this.gestionnaireBD.mettreAJourPiste(this._pisteCourante)

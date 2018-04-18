@@ -76,7 +76,11 @@ export class ConfigPartieComponent implements OnInit {
     public enterKeyPress(touche: KeyboardEvent, section: string): void {
         if (touche.key === TOUCHE_ENTREE) {
             if (touche.target instanceof HTMLInputElement) {
-                this.modifierNomPartie(touche.target.value);
+                if (touche.target.value === "") {
+                    this.modifierNomPartie("salle" + this.listePartie.length);
+                } else {
+                    this.modifierNomPartie(touche.target.value);
+                }
             }
             this.apparaitreSection(section);
             this.disparaitreSection("inputNomPartie");
@@ -90,7 +94,9 @@ export class ConfigPartieComponent implements OnInit {
     public entrerNomJoueur(touche: KeyboardEvent, section: string): void {
         if (touche.key === TOUCHE_ENTREE) {
             if (touche.target instanceof HTMLInputElement) {
-                this.nomJoueur = touche.target.value;
+                this.nomJoueur = touche.target.value === "" ?
+                "joueur" :
+                touche.target.value;
             }
             this.apparaitreSection(section);
             this.disparaitreSection("inputNomJoueur");

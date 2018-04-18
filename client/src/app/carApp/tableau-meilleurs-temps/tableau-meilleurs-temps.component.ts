@@ -51,14 +51,16 @@ export class TableauMeilleursTempsComponent implements OnInit {
     }
 
     private classerTempsTableau(): void {
-        this._pisteCourante.temps.sort((a: ITempsBD, b: ITempsBD) => {
-            const tmpA: number = a.milliSec + a.sec * CONST.SECONDS_TO_MILLISECS +
-                a.min * CONST.MIN_TO_MILLISECS;
-            const tmpB: number = b.milliSec + b.sec * CONST.SECONDS_TO_MILLISECS +
-                b.min * CONST.MIN_TO_MILLISECS;
+        if (this._pisteCourante !== null) {
+            this._pisteCourante.temps.sort((a: ITempsBD, b: ITempsBD) => {
+                const tmpA: number = a.milliSec + a.sec * CONST.SECONDS_TO_MILLISECS +
+                    a.min * CONST.MIN_TO_MILLISECS;
+                const tmpB: number = b.milliSec + b.sec * CONST.SECONDS_TO_MILLISECS +
+                    b.min * CONST.MIN_TO_MILLISECS;
 
-            return tmpA > tmpB ? 1 : -1;
-        });
+                return tmpA > tmpB ? 1 : -1;
+            });
+        }
     }
 
     private ajouterPosition(): void {

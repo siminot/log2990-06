@@ -8,11 +8,11 @@
             <div id="InputsEnregistrement">
                 <div>
                     <label class="infoTexte">Nom:</label>
-                    <input [appNbCaractMax]="5" type="text" [(ngModel)]="nom" placeholder="">
+                    <input [appNbCaractMax]="30" type="text" [(ngModel)]="nom" placeholder="">
                 </div>
                 <div>
                     <label class="infoTexte">Description:</label>
-                    <input type="text" [(ngModel)]="description" placeholder="">
+                    <input [appNbCaractMax]="140" type="text" [(ngModel)]="description" placeholder="">
                 </div>
             </div> 
             

@@ -16,8 +16,6 @@ export abstract class ServiceDeRenduAbstrait {
         this.stats = null;
     }
 
-    // Initialisation
-
     public async initialiser(): Promise<void> {
         this.commencerBoucleDeRendu();
     }
@@ -27,8 +25,6 @@ export abstract class ServiceDeRenduAbstrait {
         this.stats.dom.style.position = "absolute";
         this.gestionnaireEcran.ajouterElementConteneur(this.stats.dom);
     }
-
-    // Rendu
 
     private commencerBoucleDeRendu(): void {
         this.renderer.setPixelRatio(devicePixelRatio);
@@ -50,16 +46,13 @@ export abstract class ServiceDeRenduAbstrait {
         }
     }
 
+    // À redéfinir si le rendu nécessite une mise à jour entre les frames
     protected miseAJour(): void { }
-
-    // Mise à jour de la taille de la fenetre
 
     public redimensionnement(): void {
         this.renderer.setSize(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
         this.gestionnaireCamera.redimensionnement(this.gestionnaireEcran.largeur, this.gestionnaireEcran.hauteur);
     }
-
-    // Obtenir la scene et la camera
 
     protected get scene(): Scene {
         return this.gestionnaireScene.scene;

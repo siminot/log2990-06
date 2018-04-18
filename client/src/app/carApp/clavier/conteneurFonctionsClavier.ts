@@ -13,7 +13,6 @@ export class ConteneurFonctionsClavier extends ConteneurFonctions {
     }
 
     // Redefinition pour seulement prendre les Evenements associes au clavier
-
     public obtenirFonctions(evenement: EvenementClavier): Function[] {
         return super.obtenirFonctions(evenement);
     }

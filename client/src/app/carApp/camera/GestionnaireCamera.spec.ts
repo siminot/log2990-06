@@ -37,20 +37,17 @@ describe("Gestionnaire camera", () => {
     });
 
     it("Bon nombre de camera initialisees", () => {
-      // const gestionnaireCamera: GestionnaireCamera = new GestionnaireCamera(new GestionnaireVoitures());
       const NOMBRE_CAMERAS: number = 2;
       expect(gestionnaireCamera["cameras"].length === NOMBRE_CAMERAS);
     });
 
     it("La premiere camera est 3D", () => {
-      // const gestionnaireCamera: GestionnaireCamera = new GestionnaireCamera(new GestionnaireVoitures());
       expect(gestionnaireCamera["cameraCourante"] instanceof CameraJeu3D);
     });
   });
 
   describe("Changement de camera", () => {
     it("Alterner la camera du jeu entre 2D et 3D", () => {
-      // const gestionnaireCamera: GestionnaireCamera = new GestionnaireCamera(new GestionnaireVoitures());
       let cameraCourante: CameraJeu;
       if (gestionnaireCamera["cameraCourante"] instanceof CameraJeu3D) {
         gestionnaireCamera.changerCamera();
@@ -65,5 +62,4 @@ describe("Gestionnaire camera", () => {
       }
     });
   });
-
 });

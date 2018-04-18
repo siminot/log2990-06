@@ -2,90 +2,82 @@ import { Mot } from "../../objetsTest/mot";
 
 export class GrilleFocus {
 
-  public constructor(private document: Document,
-                     private positionCourante: number) { }
+    public constructor(private document: Document,
+                       private positionCourante: number) { }
 
-  public focusSurBonneLettre(motSelectionne: Mot): void {
-    let elemTmp: HTMLInputElement, idTmp: string;
-    let i: number;
+    public focusSurBonneLettre(motSelectionne: Mot): void {
+        let elemTmp: HTMLInputElement, idTmp: string;
+        let i: number;
 
-    for (i = 0; i < motSelectionne.longueur; i++) {
-      idTmp = motSelectionne.positionsLettres[i];
-      elemTmp = this.document.getElementById(idTmp) as HTMLInputElement;
+        for (i = 0; i < motSelectionne.longueur; i++) {
+            idTmp = motSelectionne.positionsLettres[i];
+            elemTmp = this.document.getElementById(idTmp) as HTMLInputElement;
 
-      if (elemTmp.value === "") {
-        this.positionCourante = i;
+            if (elemTmp.value === "") {
+                this.positionCourante = i;
+                elemTmp.focus();
+
+                return;
+            }
+        }
+
+        this.positionCourante = motSelectionne.longueur - 1;
         elemTmp.focus();
-
-        return;
-      }
     }
 
-    this.positionCourante = motSelectionne.longueur - 1;
-    elemTmp.focus();
-  }
+    public focusOnNextLetter(motSelectionne: Mot): boolean {
+        if (this.positionCourante < motSelectionne.longueur - 1) {
+            this.positionCourante++;
+            const elem: HTMLInputElement =
+                this.document.getElementById(motSelectionne.positionsLettres[this.positionCourante]) as HTMLInputElement;
+            if (elem !== null) {
+                if (elem.value !== "") {
+                    return this.focusOnNextLetter(motSelectionne);
+                } else {
+                    elem.focus();
+                }
+            }
+        } else if (this.positionCourante === motSelectionne.longueur - 1) {
 
-  public focusOnNextLetter(motSelectionne: Mot): boolean {
-    if (this.positionCourante < motSelectionne.longueur - 1) {
-      this.positionCourante++;
-      const elem: HTMLInputElement =
+            return true;
+        }
+
+        return false;
+    }
+
+    public removeFocusFromSelectedWord(motSelectionne: Mot): void {
+        const elem: HTMLInputElement =
         this.document.getElementById(motSelectionne.positionsLettres[this.positionCourante]) as HTMLInputElement;
-      if (elem !== null) {
-        if (elem.value !== "") {
-          return this.focusOnNextLetter(motSelectionne);
-        } else {
-          elem.focus();
-        }
-      }
-    } else if (this.positionCourante === motSelectionne.longueur - 1) {
-
-      return true;
+        elem.blur();
     }
 
-    return false;
-  }
+    public focusOnPreviousLetter(motSelectionne: Mot, lockedLetter: boolean[][]): void {
+        const idCourant: string = motSelectionne.positionsLettres[this.positionCourante];
+        const elemCourant: HTMLInputElement = this.document.getElementById(idCourant) as HTMLInputElement;
+        const xCour: number = +motSelectionne.positionsLettres[this.positionCourante][0];
+        const yCour: number = +motSelectionne.positionsLettres[this.positionCourante][1];
 
-  public removeFocusFromSelectedWord(motSelectionne: Mot): void {
-    const elem: HTMLInputElement = this.document.getElementById(motSelectionne.positionsLettres[this.positionCourante]) as HTMLInputElement;
-    elem.blur();
-  }
+        if (this.isLastLetterOfWord(motSelectionne) && !lockedLetter[xCour][yCour] && elemCourant.value !== "") {
+            elemCourant.value = "";
+        } else if (this.positionCourante > 0 || (this.isLastLetterOfWord(motSelectionne) && lockedLetter[xCour][yCour])) {
+            this.positionCourante--;
+            const idPrev: string = motSelectionne.positionsLettres[this.positionCourante];
+            const previousElem: HTMLInputElement = this.document.getElementById(idPrev) as HTMLInputElement;
+            const xPrev: number = +motSelectionne.positionsLettres[this.positionCourante][0];
+            const yPrev: number = +motSelectionne.positionsLettres[this.positionCourante][1];
 
-  public focusOnPreviousLetter(motSelectionne: Mot, lockedLetter: boolean[][]): void {
-    const idCourant: string = motSelectionne.positionsLettres[this.positionCourante];
-    const elemCourant: HTMLInputElement = this.document.getElementById(idCourant) as HTMLInputElement;
-    const xCour: number = +motSelectionne.positionsLettres[this.positionCourante][0];
-    const yCour: number = +motSelectionne.positionsLettres[this.positionCourante][1];
-
-    if (this.isLastLetterOfWord(motSelectionne) && !lockedLetter[xCour][yCour] && elemCourant.value !== "") {
-      elemCourant.value = "";
-    } else if (this.positionCourante > 0 || (this.isLastLetterOfWord(motSelectionne) && lockedLetter[xCour][yCour])) {
-      this.positionCourante--;
-      const idPrev: string = motSelectionne.positionsLettres[this.positionCourante];
-      const previousElem: HTMLInputElement = this.document.getElementById(idPrev) as HTMLInputElement;
-      const xPrev: number = +motSelectionne.positionsLettres[this.positionCourante][0];
-      const yPrev: number = +motSelectionne.positionsLettres[this.positionCourante][1];
-
-      if (previousElem !== null) {
-        if (!lockedLetter[xPrev][yPrev]) {
-          previousElem.focus();
-          previousElem.value = "";
-        } else {
-          this.focusOnPreviousLetter(motSelectionne, lockedLetter);
+            if (previousElem !== null) {
+                if (!lockedLetter[xPrev][yPrev]) {
+                    previousElem.focus();
+                    previousElem.value = "";
+                } else {
+                    this.focusOnPreviousLetter(motSelectionne, lockedLetter);
+                }
+            }
         }
-      }
     }
-  }
 
-  // public enleverLeFocusGrille(): void {
-  //   const elem: HTMLInputElement =
-  //     this.document.getElementById("01") as HTMLInputElement;
-  //   elem.focus();
-  //   console.log("Changement focus!");
-
-  //   //
-  // }
-
-  private isLastLetterOfWord(motSelectionne: Mot): boolean {
-    return this.positionCourante === motSelectionne.longueur - 1 ? true : false;
-  }
+    private isLastLetterOfWord(motSelectionne: Mot): boolean {
+        return this.positionCourante === motSelectionne.longueur - 1 ? true : false;
+    }
 }

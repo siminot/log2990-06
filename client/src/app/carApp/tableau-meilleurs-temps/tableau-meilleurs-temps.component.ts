@@ -38,11 +38,11 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         for (let i: number = 1; i < tempsJoueurs.length; i++ ) {
             this._resultatsCourse.push(new ResultatJoueur("AI" + " " + i , tempsJoueurs[i]));
         }
-        this.classerTemps();
+        this.classerTempsCourse();
         this.ajouterPosition();
     }
 
-    private classerTemps(): void {
+    private classerTempsCourse(): void {
         this._resultatsCourse.sort((a: ResultatJoueur, b: ResultatJoueur) =>
             a.tempsCourse.temps - b.tempsCourse.temps);
     }

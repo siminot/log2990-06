@@ -12,7 +12,6 @@ export class AppComponent implements AfterContentChecked {
     }
 
     public ngAfterContentChecked(): void {
-        console.log(this.router.url);
         this.router.url === "/" ? this.remettreImageBackground() : this.retirerBackgroundImage();
     }
 

@@ -43,7 +43,7 @@
         <tr *ngIf="placeMeriteeAuTableau()">
             <td>
                 <div id="colonneInputNom">
-                    <input #box type="text" placeholder="Entrez votre nom ici" [(ngModel)]="_nomJoueur" [disabled]="!peutEcrire()">
+                    <input type="text" placeholder="Entrez votre nom ici" (ngModel)="_nomJoueur" required [disabled]="!peutEcrire()">
                 </div>
             </td>
             <td>

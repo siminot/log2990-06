@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { PisteBD } from "../piste/IPisteBD";
 import { ITempsBD } from "../piste/ITempsBD";
@@ -6,24 +6,27 @@ import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnair
 import { ErreurMettreAJourPiste } from "../../exceptions/erreurMettreAJourPiste";
 import { ResultatJoueur } from "../fin-course/resultatJoueur";
 import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
+import * as CONST from "../constants";
 
 @Component({
     selector: "app-tableau-meilleurs-temps",
     templateUrl: "./tableau-meilleurs-temps.component.html",
     styleUrls: ["./tableau-meilleurs-temps.component.css"]
 })
-export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
+export class TableauMeilleursTempsComponent implements OnInit {
     private _joueurASoumisAuTableau: boolean;
     private _pisteCourante: PisteBD;
     private _resultatsCourse: Array<ResultatJoueur>;
     private _tempsAAjouterAuTableau: ITempsBD;
     private _nomJoueur: string;
 
-    public constructor(private gestionnaireBD: GestionnaireBDCourse,
-                       private gestionnaireTemps: GestionnaireDesTempsService) {
+    public constructor(
+        private gestionnaireBD: GestionnaireBDCourse,
+        private gestionnaireTemps: GestionnaireDesTempsService) {
         this._nomJoueur = "";
         this._joueurASoumisAuTableau = false;
         this._pisteCourante = this.gestionnaireBD.pisteJeu;
+        this.classerTempsTableau();
     }
 
     public ngOnInit(): void {
@@ -34,17 +37,34 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
 
     private obtenirResultats(): void {
         const tempsJoueurs: TempsJoueur[] = this.gestionnaireTemps.obtenirTempsDesJoueurs();
-        this._resultatsCourse.push(new ResultatJoueur("Joueur", tempsJoueurs[0]));
-        for (let i: number = 1; i < tempsJoueurs.length; i++ ) {
-            this._resultatsCourse.push(new ResultatJoueur("AI" + " " + i , tempsJoueurs[i]));
+        if (tempsJoueurs !== null) {
+            this._resultatsCourse.push(new ResultatJoueur("Joueur", tempsJoueurs[0]));
+            for (let i: number = 1; i < tempsJoueurs.length; i++) {
+                this._resultatsCourse.push(new ResultatJoueur("AI" + " " + i, tempsJoueurs[i]));
+            }
+            this.classerTempsCourse();
+            this.ajouterPosition();
         }
-        this.classerTempsCourse();
-        this.ajouterPosition();
     }
 
     private classerTempsCourse(): void {
-        this._resultatsCourse.sort((a: ResultatJoueur, b: ResultatJoueur) =>
-            a.tempsCourse.temps - b.tempsCourse.temps);
+        if (this._resultatsCourse !== null) {
+            this._resultatsCourse.sort((a: ResultatJoueur, b: ResultatJoueur) =>
+                a.tempsCourse.temps - b.tempsCourse.temps);
+        }
+    }
+
+    private classerTempsTableau(): void {
+        if (this._pisteCourante !== null) {
+            this._pisteCourante.temps.sort((a: ITempsBD, b: ITempsBD) => {
+                const tmpA: number = a.milliSec + a.sec * CONST.SECONDS_TO_MILLISECS +
+                    a.min * CONST.MIN_TO_MILLISECS;
+                const tmpB: number = b.milliSec + b.sec * CONST.SECONDS_TO_MILLISECS +
+                    b.min * CONST.MIN_TO_MILLISECS;
+
+                return tmpA > tmpB ? 1 : -1;
+            });
+        }
     }
 
     private ajouterPosition(): void {
@@ -60,7 +80,7 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
             nom: null,
             min: +this._resultatsCourse[0].tempsCourse.minutes,
             sec: +this._resultatsCourse[0].tempsCourse.secondes,
-            milliSec : +this._resultatsCourse[0].tempsCourse.millisecondes
+            milliSec: +this._resultatsCourse[0].tempsCourse.millisecondes
         };
     }
 
@@ -78,13 +98,10 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
     public soumissionNom(): void {
         this._tempsAAjouterAuTableau.nom = this._nomJoueur;
         this._pisteCourante.temps.push(this._tempsAAjouterAuTableau);
+        this.classerTempsTableau();
         this._joueurASoumisAuTableau = true;
         this._nomJoueur = "MERCI & BRAVO";
         this.gestionnaireBD.mettreAJourPiste(this._pisteCourante)
             .catch(() => { throw new ErreurMettreAJourPiste; });
     }
-
-    public ngOnDestroy(): void {
-    }
-
 }

@@ -8,8 +8,7 @@ import { Router } from "@angular/router";
 })
 export class AppComponent implements AfterViewChecked {
 
-    public constructor(private router: Router) {
-    }
+    public constructor(private router: Router) {}
 
     public ngAfterViewChecked(): void {
         this.router.url === "/" ? this.remettreImageBackground() : this.retirerBackgroundImage();

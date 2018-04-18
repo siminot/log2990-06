@@ -15,7 +15,6 @@ import { Point } from "../elementsGeometrie/point";
 import { SignalDepart } from "../signalDepart/signalDepart";
 import { SonDepart } from "../son/SonDepart";
 
-// Touches clavier
 const CHANGER_DECOR: EvenementClavier = new EvenementClavier("t", TypeEvenementClavier.TOUCHE_RELEVEE);
 const CHANGER_HEURE_JOURNEE: EvenementClavier = new EvenementClavier("n", TypeEvenementClavier.TOUCHE_RELEVEE);
 

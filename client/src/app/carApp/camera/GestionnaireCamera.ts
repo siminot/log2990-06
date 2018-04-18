@@ -13,7 +13,6 @@ import { LISTENER } from "../son/SonAbstrait";
 
 const CAMERA_INITIALE: number = 0;
 
-// Touches
 const ZOOM: EvenementClavier = new EvenementClavier("=", TypeEvenementClavier.TOUCHE_APPUYEE);
 const DEZOOM: EvenementClavier = new EvenementClavier("-", TypeEvenementClavier.TOUCHE_APPUYEE);
 const CHANGER_CAMERA: EvenementClavier = new EvenementClavier("c", TypeEvenementClavier.TOUCHE_RELEVEE);

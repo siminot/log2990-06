@@ -3,6 +3,12 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { TableauMeilleursTempsComponent } from "./tableau-meilleurs-temps.component";
 import { Router } from "@angular/router";
 import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { HttpClient, HttpHandler } from "@angular/common/http";
+import { TimerService } from "../timer/timer.service";
+import { Point } from "../elementsGeometrie/point";
+import { PisteBD } from "../piste/IPisteBD";
+import { MatDividerModule } from "@angular/material/divider";
 
 describe("TableauMeilleursTempsComponent", () => {
     let component: TableauMeilleursTempsComponent;
@@ -10,20 +16,44 @@ describe("TableauMeilleursTempsComponent", () => {
     // tslint:disable-next-line:prefer-const
     let mockRouter: Router;
 
+    const LONGUEUR: number = 100;
+    const PISTE_TEST: Point[] = [
+        new Point(0, 0),
+        new Point(-LONGUEUR, 0),
+        new Point(-LONGUEUR, -LONGUEUR),
+        new Point(0, -LONGUEUR),
+    ];
+    const PISTE: PisteBD = {
+        _id: "2",
+        nom: "Piste 2",
+        description: "Champs de ble",
+        points: PISTE_TEST,
+        type: "Type1",
+        temps: [{ nom: "Joe La Bine", min: 0, sec: 0, milliSec: 0 }],
+        nbFoisJoue: 2
+    };
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [TableauMeilleursTempsComponent],
-            providers: [GestionnaireDesTempsService,
-                        { provide: Router, useValue: mockRouter }]
+            imports: [ MatDividerModule ],
+            declarations: [ TableauMeilleursTempsComponent ],
+            providers: [ TimerService, GestionnaireDesTempsService, GestionnaireBDCourse, HttpClient, HttpHandler,
+                         { provide: Router, useValue: mockRouter }]
         })
             .compileComponents()
-            .catch( () => {} );
+            .catch( () => { throw new Error("Erreur de la creation du test"); } );
     }));
+
+    // beforeEach(() => {
+    //     fixture = TestBed.createComponent(TableauMeilleursTempsComponent);
+    //     component = fixture.componentInstance;
+    //     fixture.detectChanges();
+    // });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TableauMeilleursTempsComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
+        component["_pisteCourante"] = PISTE;
     });
 
     it("Devrait bien construire", () => {

@@ -11,6 +11,7 @@ import { PisteBD } from "../piste/IPisteBD";
 import { MatDividerModule } from "@angular/material/divider";
 import { ITempsBD } from "../piste/ITempsBD";
 import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
+import { ResultatJoueur } from "../fin-course/resultatJoueur";
 
 describe("TableauMeilleursTempsComponent", () => {
     let component: TableauMeilleursTempsComponent;
@@ -59,7 +60,8 @@ describe("TableauMeilleursTempsComponent", () => {
         component = fixture.componentInstance;
         component["_pisteCourante"] = PISTE;
         component["classerTempsTableau"]();
-        // component["_resultatsCourse"]
+        component.ngOnInit();
+        component["_resultatsCourse"].push(new ResultatJoueur("Joueur", TEMPS_JOUEUR));
     });
 
     it("Devrait bien construire", () => {
@@ -83,6 +85,9 @@ describe("TableauMeilleursTempsComponent", () => {
     describe("Resultat course : ", () => {
         it("Lattribut devrait être défini.", () => {
             expect(component["_resultatsCourse"]).toBeDefined();
+        });
+        it("Devrait contenir le joueur en premiere position du tableau.", () => {
+            expect(component["_resultatsCourse"][0].nom).toBe("Joueur");
         });
     });
 });

@@ -6,6 +6,7 @@ import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnair
 import { ErreurMettreAJourPiste } from "../../exceptions/erreurMettreAJourPiste";
 import { ResultatJoueur } from "../fin-course/resultatJoueur";
 import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
+import * as CONST from "../constants";
 
 @Component({
     selector: "app-tableau-meilleurs-temps",
@@ -50,8 +51,10 @@ export class TableauMeilleursTempsComponent implements OnInit {
 
     private classerTempsTableau(): void {
         this._pisteCourante.temps.sort((a: ITempsBD, b: ITempsBD) => {
-            const tmpA: number = a.milliSec + a.sec * 1000 + a.min * 60000;
-            const tmpB: number = b.milliSec + b.sec * 1000 + b.min * 60000;
+            const tmpA: number = a.milliSec + a.sec * CONST.SECONDS_TO_MILLISECS +
+                                 a.min * CONST.MIN_TO_MILLISECS;
+            const tmpB: number = b.milliSec + b.sec * CONST.SECONDS_TO_MILLISECS +
+                                 b.min * CONST.MIN_TO_MILLISECS;
 
             return tmpA > tmpB ? 1 : -1;
         });

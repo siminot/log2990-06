@@ -1,10 +1,10 @@
 export const CONNECTION = "connection";
 export const DECO = "disconnect";
-export const ID = "identification";                 // 1
-export const CREATEUR = "creerPartie";              // 2
-export const DEMANDER_GRILLE = "demanderGrille";    // 3
+export const ID = "identification";
+export const CREATEUR = "creerPartie";
+export const DEMANDER_GRILLE = "demanderGrille";
 export const ENVOYER_DIFF = "envoyerDiff";
-export const ENVOYER_GRILLE = "envoyerGrille";      // 4
+export const ENVOYER_GRILLE = "envoyerGrille";
 
 export const COMMENCER_PARTIE = "commencerPartie";
 export const PAGE_CHARGEE = "pageChargee";
@@ -17,7 +17,7 @@ export const ROOM_CREEE = "roomCreee";
 
 export const JOUEUR_QUITTE = "joueurQuitte";
 
-export const REJOINDRE = "rejoindrePartie";         // 2
+export const REJOINDRE = "rejoindrePartie";
 export const ENVOYER_LISTE_PARTIES = "envoyerListeParties";
 
 export const MOT_SELECTIONNE = "motSelecitonne";

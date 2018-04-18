@@ -43,7 +43,10 @@ export class EstUnChiffreDirective {
     private respectContraintes(event: KeyboardEvent): boolean {
         if (this.estUnChiffre(event)) {
             const currentValue: number = this.el.nativeElement.value;
-            const addValue: number = event.keyCode - CONST.CHIFFRE_ZERO_KEYCODE;
+            let addValue: number;
+            this.estChiffreClavier(event) ? addValue = event.keyCode - CONST.CHIFFRE_ZERO_KEYCODE :
+                                            addValue = event.keyCode - CONST.CHIFFRE_ZERO_NUMPAD_KEYCODE;
+
             const possibleNewValue: number = currentValue * CONST.MULT_PAR_DIX + addValue;
             if (this.categorie === "minutes" || this.categorie === "secondes") {
                 return possibleNewValue < CONST.NB_MAX_SEC_MIN ? true : false;

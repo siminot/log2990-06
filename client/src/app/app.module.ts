@@ -55,6 +55,7 @@ import { GestionnaireDesTempsService } from "./carApp/GestionnaireDesTemps/gesti
 import { EstUnChiffreDirective } from "./carApp/directive-est-un-chiffre/est-un-chiffre.directive";
 import { ServiceDeRenduApercu } from "./carApp/serviceDeRendu/serviceDeRenduApercu";
 import { GestionnaireSceneApercu } from "./carApp/scene/GestionnaireSceneApercu";
+import { NbCaractMaxDirective } from './carApp/directive-nb-caract-max/nb-caract-max.directive';
 
 @NgModule({
     declarations: [
@@ -79,7 +80,8 @@ import { GestionnaireSceneApercu } from "./carApp/scene/GestionnaireSceneApercu"
         FinCourseComponent,
         VueTeteHauteComponent,
         TableauMeilleursTempsComponent,
-        EstUnChiffreDirective
+        EstUnChiffreDirective,
+        NbCaractMaxDirective
     ],
     imports: [
         BrowserModule,

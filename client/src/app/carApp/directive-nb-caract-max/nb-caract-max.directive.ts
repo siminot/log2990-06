@@ -12,9 +12,9 @@ export class NbCaractMaxDirective {
     public constructor(private el: ElementRef) {
     }
 
-    @HostListener("keyup", ["$event"])
-    public onKeyUp(event: KeyboardEvent): void {
-        if (this.el.nativeElement.value.length > +this.appNbCaractMax) {
+    @HostListener("keydown", ["$event"])
+    public onKeyDown(event: KeyboardEvent): void {
+        if (+this.el.nativeElement.value.length > +this.appNbCaractMax) {
             event.preventDefault();
         }
     }

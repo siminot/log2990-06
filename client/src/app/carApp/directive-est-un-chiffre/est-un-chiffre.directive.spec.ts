@@ -6,9 +6,7 @@ import { By } from "@angular/platform-browser";
 @Component({
     template: "<input [appEstUnChiffre]='true' categorie='minutes'>"
 })
-class TestEstUnChiffreComponent {
-
-}
+class TestEstUnChiffreComponent {}
 
 describe("EstUnChiffreDirective", () => {
     let component: TestEstUnChiffreComponent;

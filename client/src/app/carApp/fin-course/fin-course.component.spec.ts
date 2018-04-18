@@ -1,7 +1,25 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { FinCourseComponent } from "./fin-course.component";
 import { RouterTestingModule } from "@angular/router/testing";
+import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
+import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
+import { Router } from "@angular/router";
+import { resultatsBidon } from "./resultatBidon";
+import { pisteBidon } from "./pisteBidon";
+import { PisteBD } from "../piste/IPisteBD";
+import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
+
+class GestionnaireBDCourseBidon {
+    public pisteJeu: PisteBD = pisteBidon;
+}
+
+class GestionnaireDesTempsBidon {
+    public obtenirTempsDesJoueurs(): Array<TempsJoueur> {
+        return resultatsBidon;
+    }
+}
+// tslint:disable-next-line:prefer-const
+let routerBidon: Router;
 
 describe("FinCourseComponent: ", () => {
     let component: FinCourseComponent;
@@ -10,7 +28,10 @@ describe("FinCourseComponent: ", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
         imports: [ RouterTestingModule ],
-        declarations: [ FinCourseComponent ]
+        declarations: [ FinCourseComponent ],
+        providers: [ { provide: Router, useValue: routerBidon },
+                     { provide: GestionnaireBDCourse, useClass: GestionnaireBDCourseBidon },
+                     { provide: GestionnaireDesTempsService, useClass: GestionnaireDesTempsBidon } ]
     })
     .compileComponents().catch();
     }));
@@ -24,6 +45,18 @@ describe("FinCourseComponent: ", () => {
     describe("Constructeur: ", () => {
         it("should create: ", () => {
             expect(component).toBeTruthy();
+        });
+    });
+
+    describe("nom de la piste", () => {
+        it("le nom de la piste devrait etre le bon", () => {
+            expect(component.nomPiste).toBe("bob");
+        });
+    });
+
+    describe("resultats", () => {
+        it("ils sont thruthy", () => {
+            expect(component.resultatsCourse).toBeTruthy();
         });
     });
 

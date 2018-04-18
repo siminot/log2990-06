@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { PisteBD } from "../piste/IPisteBD";
 import { ITempsBD } from "../piste/ITempsBD";
@@ -12,7 +12,7 @@ import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
     templateUrl: "./tableau-meilleurs-temps.component.html",
     styleUrls: ["./tableau-meilleurs-temps.component.css"]
 })
-export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
+export class TableauMeilleursTempsComponent implements OnInit {
     private _joueurASoumisAuTableau: boolean;
     private _pisteCourante: PisteBD;
     private _resultatsCourse: Array<ResultatJoueur>;
@@ -94,8 +94,4 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         this.gestionnaireBD.mettreAJourPiste(this._pisteCourante)
             .catch(() => { throw new ErreurMettreAJourPiste; });
     }
-
-    public ngOnDestroy(): void {
-    }
-
 }

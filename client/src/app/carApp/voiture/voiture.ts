@@ -8,20 +8,9 @@ import { IObjetEnMouvement } from "./IObjetEnMouvement";
 import { VerificateurSortiePiste } from "./VerificateurSortiePiste";
 import { SonCollision } from "../son/SonCollision";
 import { SonSortieRoute } from "../son/SonSortieRoute";
-
-export const DEFAULT_WHEELBASE: number = 2.78;
-export const DEFAULT_MASS: number = 1515;
-export const DEFAULT_DRAG_COEFFICIENT: number = 0.35;
-
-const MAXIMUM_STEERING_ANGLE: number = 0.25;
-const INITIAL_WEIGHT_DISTRIBUTION: number = 0.5;
-const MINIMUM_SPEED: number = 0.2;
-const NUMBER_REAR_WHEELS: number = 2;
-const NUMBER_WHEELS: number = 4;
-const CAR_SURFACE: number = 3;
-const AIR_DENSITY: number = 1.2;
-const TIRE_PRESSURE: number = 1;
-const VITESSE_MIN: number = 2;
+import { MAXIMUM_STEERING_ANGLE, INITIAL_WEIGHT_DISTRIBUTION, MINIMUM_SPEED, NUMBER_REAR_WHEELS,
+         NUMBER_WHEELS, CAR_SURFACE, AIR_DENSITY, TIRE_PRESSURE, VITESSE_MIN, DEFAULT_WHEELBASE,
+         DEFAULT_MASS, DEFAULT_DRAG_COEFFICIENT} from "./constantesVoiture";
 
 export class Voiture extends Object3D implements IObjetEnMouvement {
     private readonly engine: Engine;

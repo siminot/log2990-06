@@ -1,4 +1,5 @@
-import { Voiture, DEFAULT_WHEELBASE, DEFAULT_MASS, DEFAULT_DRAG_COEFFICIENT } from "./voiture";
+import { Voiture } from "./voiture";
+import { DEFAULT_WHEELBASE, DEFAULT_MASS, DEFAULT_DRAG_COEFFICIENT } from "./constantesVoiture";
 import { Engine } from "./engine";
 import { Wheel } from "./wheel";
 import { Vector3, Object3D } from "three";

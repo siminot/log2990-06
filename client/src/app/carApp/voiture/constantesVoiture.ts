@@ -1,0 +1,12 @@
+export const DEFAULT_WHEELBASE: number = 2.78;
+export const DEFAULT_MASS: number = 1515;
+export const DEFAULT_DRAG_COEFFICIENT: number = 0.35;
+export const MAXIMUM_STEERING_ANGLE: number = 0.25;
+export const INITIAL_WEIGHT_DISTRIBUTION: number = 0.5;
+export const MINIMUM_SPEED: number = 0.2;
+export const NUMBER_REAR_WHEELS: number = 2;
+export const NUMBER_WHEELS: number = 4;
+export const CAR_SURFACE: number = 3;
+export const AIR_DENSITY: number = 1.2;
+export const TIRE_PRESSURE: number = 1;
+export const VITESSE_MIN: number = 2;

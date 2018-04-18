@@ -1,9 +1,9 @@
 <div id="bg"></div>
 <div style="text-align:center" id="topMenu">
-    <a routerLink="/choixCourse" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" class="menuItem">Car</a>
-    <a routerLink="/ConfigPartie" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" class="menuItem">Crossword</a>
-    <a routerLink="/" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }" class="menuItem">Home</a>
-    <a routerLink="/tableauMeilleursTemps" routerLinkActive="active"[routerLinkActiveOptions]="{ exact:true }" class="menuItem">Tableau meilleurs temps</a>
+    <a routerLink="/choixCourse" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" class="menuItem" (click)="retirerBackgroundImage()">Car</a>
+    <a routerLink="/ConfigPartie" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" class="menuItem" (click)="retirerBackgroundImage()">Crossword</a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" class="menuItem" (click)="remettreImageBackground()">Home</a>
+    <a routerLink="/tableauMeilleursTemps" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" class="menuItem" (click)="retirerBackgroundImage()">Tableau meilleurs temps</a>
 </div>
 
 <div id="app">

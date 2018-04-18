@@ -5,4 +5,13 @@ import { Component } from "@angular/core";
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.css"]
 })
-export class AppComponent { }
+export class AppComponent {
+
+    public retirerBackgroundImage(): void {
+        document.getElementById("bg").id = "nobg";
+    }
+
+    public remettreImageBackground(): void {
+        document.getElementById("nobg").id = "bg";
+    }
+ }

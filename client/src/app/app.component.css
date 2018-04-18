@@ -44,3 +44,16 @@
     z-index: -1000;
     opacity: 0.7;
 }
+
+#nobg {
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background-image: none;
+    background-attachment: fixed;
+    background-size: cover;
+    z-index: -1000;
+    opacity: 0.7;
+}

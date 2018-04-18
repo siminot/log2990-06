@@ -20,7 +20,7 @@ export const SKYBOX: ElementsInitialisationSkybox[] = [
     new ElementsInitialisationSkybox(TempsJournee.Nuit, "nuit1", "grass4"),
     new ElementsInitialisationSkybox(TempsJournee.Nuit, "nuit2", "pave1"),
     new ElementsInitialisationSkybox(TempsJournee.Jour, "jour1", "grass2"),
-    new ElementsInitialisationSkybox(TempsJournee.Jour, "jour2", "roche1"),
+    new ElementsInitialisationSkybox(TempsJournee.Jour, "jour2", "grass2"),
 ];
 
 @Injectable()

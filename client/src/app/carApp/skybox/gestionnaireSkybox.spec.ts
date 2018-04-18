@@ -1,5 +1,6 @@
-import { GestionnaireSkybox } from "./gestionnaireSkybox";
+import { GestionnaireSkybox, SKYBOX } from "./gestionnaireSkybox";
 import { TempsJournee } from "./tempsJournee";
+import { NOM_TEXTURE_PISTE } from "../elementsAffichage/jeu/segmentPiste";
 
 describe ("GestionnaireSkybox", () => {
     let gestionnaire: GestionnaireSkybox;
@@ -44,5 +45,11 @@ describe ("GestionnaireSkybox", () => {
         expect(skyboxAvant).not.toEqual(skyboxApres);
         expect(tempsApres).toEqual(tempsTest);
         expect(tempsApres).not.toEqual(tempsAvant);
+    });
+
+    it ("La surface hors-piste est différente de la piste", () => {
+        for (const element of SKYBOX) {
+            expect(element.plancher).not.toEqual(NOM_TEXTURE_PISTE);
+        }
     });
 });

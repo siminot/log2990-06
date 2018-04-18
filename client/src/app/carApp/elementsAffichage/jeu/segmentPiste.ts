@@ -10,9 +10,9 @@ const DROITE_REFERENCE: Droite = new Droite(new Point(0, 0), new Point(0, 1));
 
 // Texture
 const CHEMIN: string = "./../../../../assets/skybox/textures/";
-const NOM_TEXTURE: string = "roche1";
+export const NOM_TEXTURE_PISTE: string = "roche1";
 const FORMAT: string = ".jpg";
-const URL_TEXTURE: string = CHEMIN + NOM_TEXTURE + FORMAT;
+const URL_TEXTURE: string = CHEMIN + NOM_TEXTURE_PISTE + FORMAT;
 const TAILLE_REPETITION: number = 8;
 
 export class SegmentPiste extends Group {

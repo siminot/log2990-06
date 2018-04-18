@@ -13,8 +13,10 @@ export const NOM_PISTE_JEU: string = "pisteJeu";
 export const NOM_VOITURE_JOUEUR: string = "voitureJoueur";
 
 export const CHIFFRE_ZERO_KEYCODE: number = 48;
+export const CHIFFRE_ZERO_NUMPAD_KEYCODE: number = 96;
 export const CHIFFRE_ZERO: string = "0";
 export const CHIFFRE_NEUF_KEYCODE: number = 57;
+export const CHIFFRE_NEUF_NUMPAD_KEYCODE: number = 105;
 export const CHIFFRE_NEUF: string = "9";
 export const BACKSPACE_KEYCODE: number = 8;
 export const TAB_KEYCODE: number = 9;

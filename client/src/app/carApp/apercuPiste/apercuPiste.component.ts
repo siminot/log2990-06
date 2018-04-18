@@ -33,7 +33,6 @@ export class ApercuPisteComponent implements AfterViewInit {
     protected initialiserServiceDeRendu(): void {
         this.serviceDeRendu
         .initialiser(this.gestionnaireScene)
-        .then(/* do nothing */)
         .catch((err) => console.error(err));
     }
 }

@@ -72,11 +72,6 @@ export abstract class GrilleAbs implements OnDestroy {
         this.validateWord();
       }
     }
-    // for(const ligne of this.matriceDesMotsSurGrille){
-    //   for(const lettre of ligne){
-    //     lettre.caseDecouverte = true;
-    //   }
-    // }
   }
 
   protected retrieveWordFromClick(event: KeyboardEvent): Mot {

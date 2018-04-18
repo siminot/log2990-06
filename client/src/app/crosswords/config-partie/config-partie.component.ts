@@ -15,7 +15,6 @@ const TOUCHE_ENTREE: string = "Enter";
 })
 export class ConfigPartieComponent implements OnInit {
 
-    // private estCreateurPartie: boolean;
     private nomPartie: string;
     private nomJoueur: string;
     private difficultee: string;

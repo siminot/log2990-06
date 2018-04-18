@@ -22,7 +22,6 @@ export abstract class AbstractGameComponent implements AfterViewInit {
     protected initialiserServiceDeRendu(): void {
         this.serviceDeRendu
         .initialiser()
-        .then(/* do nothing */)
         .catch((err) => console.error(err));
     }
 

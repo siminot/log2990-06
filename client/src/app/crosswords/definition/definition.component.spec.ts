@@ -51,17 +51,5 @@ describe("DefinitionComponent", () => {
       }
       expect(result).toEqual(expectedValues);
     });
-
-/*     it("remettre toute les caseDecouverte a false", () => {
-      const matrice: Array<Array<LettreGrille>> = component["matriceDesMotsSurGrille"];
-      matrice[0][0] = {
-        caseDecouverte: true,
-        lettre: "P",
-        lettreDecouverte: true
-      };
-      component["cacherCases"]();
-
-      expect(matrice[0][0].caseDecouverte).toBeFalsy();
-    }); */
   });
 });

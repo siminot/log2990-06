@@ -41,7 +41,7 @@ export class VueTeteHauteComponent implements OnInit {
     }
 
     public debuterCourse(): void {
-        this.timer.debuterCourse(); // lancer quand la course commence (a retirer)
+        this.timer.debuterCourse();
         this.updateTempsCourse();
     }
 

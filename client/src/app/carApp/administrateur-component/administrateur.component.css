@@ -71,11 +71,18 @@ ul, li {
     margin-bottom: 5px;
 }
 
-.pisteDescription, .apercuPiste {
+.pisteDescription {
     font-size: 10px;
     position:relative;
     display: table-cell;
-    width: 80%;
+    width: 400px;
+}
+
+.apercuPiste {
+    width: 300px !important;
+    font-size: 10px;
+    display: table-cell;
+    
 }
 
 .divider {
@@ -89,7 +96,8 @@ ul, li {
 
 .deleteImg {
     position: absolute;
-    height: 85%;
+    height: 21px;
+    height: 17px;
     left: 325px;
     top: 0;
     bottom: 0;
@@ -130,9 +138,4 @@ ul, li {
 .addImg {
     height: 15px;
     width:15px;
-}
-
-.apercuPiste {
-    position:relative;
-    display: table-cell;
 }

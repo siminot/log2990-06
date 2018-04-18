@@ -35,7 +35,7 @@
                     </div>
 
                     <ul>
-                        <li *ngFor="let te of piste.temps">
+                        <li *ngFor="let te of piste.temps | slice:0:5">
                             {{ te.min }}:{{ te.sec | number:'2.0-0' }}.{{ te.milliSec | number:'2.0-0' }} par {{ te.nom }}
                         </li>
                     </ul>

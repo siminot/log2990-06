@@ -15,7 +15,7 @@ describe("TableauMeilleursTempsComponent", () => {
       declarations: [ TableauMeilleursTempsComponent, MatDivider ],
       providers: [ GestionnaireBDCourse ]
     })
-    .compileComponents();
+    .compileComponents().catch();
   });
 
   beforeEach(() => {

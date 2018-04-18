@@ -6,6 +6,7 @@ import { DeroulemenCourseService } from "../deroulement-course/deroulemen-course
 // import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
 
 const NBR_JOUEURS: number = 4;
+const ESTIMATION: number = 500;
 
 @Injectable()
 export class GestionnaireDesTempsService {
@@ -64,11 +65,10 @@ export class GestionnaireDesTempsService {
                 if (tempsTour.temps > 0) {
                     estimeDernierTour = tempsTour.temps;
                 } else if (tempsTour.temps === 0) {
-                    tempsTour.tempsAffichable = estimeDernierTour - 500;
+                    tempsTour.tempsAffichable = estimeDernierTour - ESTIMATION;
                 }
             }
             tempsAI.tempsCourse.tempsAffichable = tempsAI.sommeTempsTours;
-            console.log(tempsAI.tempsCourse);
         }
     }
 

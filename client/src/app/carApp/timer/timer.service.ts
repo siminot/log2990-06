@@ -29,7 +29,6 @@ export class TimerService {
 
     public terminerCourse(): void {
         clearInterval(this.leTimer);
-        console.log("TIMER ARRETE");
     }
 
     private partirTimer(): void {

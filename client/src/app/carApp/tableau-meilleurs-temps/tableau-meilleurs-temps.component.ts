@@ -4,6 +4,7 @@ import { PisteBD } from "../piste/IPisteBD";
 import { ITempsBD } from "../piste/ITempsBD";
 import { GestionnaireDesTempsService } from "../GestionnaireDesTemps/gestionnaire-des-temps.service";
 import { TempsAffichage } from "../vue-tete-haute/vue-tete-haute/tempsAffichage";
+import { ErreurMettreAJourPiste } from "../../exceptions/erreurMettreAJourPiste";
 
 @Component({
     selector: "app-tableau-meilleurs-temps",
@@ -65,7 +66,8 @@ export class TableauMeilleursTempsComponent implements OnInit, OnDestroy {
         this.pisteCourante.temps.push(this.tempsJoueurTableau);
         this.joueurAAjouteAuTableau = true;
         this.nomJoueur = "MERCI & BRAVO";
-        this.gestionnaireBD.mettreAJourPiste(this.pisteCourante);
+        this.gestionnaireBD.mettreAJourPiste(this.pisteCourante)
+            .catch(() => { throw new ErreurMettreAJourPiste; });
     }
 
     public ngOnDestroy(): void {

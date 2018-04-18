@@ -4,6 +4,8 @@ import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
 import { ITempsBD } from "../piste/ITempsBD";
 import { IndiceInvalideErreur } from "../../exceptions/indiceInvalide";
+import { ErreurEffacerTemps } from "../../exceptions/erreurEffacerTemps";
+import { ErreurMettreAJourPiste } from "../../exceptions/erreurMettreAJourPiste";
 
 @Component({
     selector: "app-admin",
@@ -49,7 +51,7 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         const indicePiste: number = this.getIndicePiste(piste);
         const indiceTemps: number = this.pistes[this.getIndicePiste(piste)].temps.indexOf(temps);
         this.pistes[indicePiste].temps.splice(indiceTemps, 1);
-        this.gestionnaireBD.mettreAJourPiste(this.pistes[this.getIndicePiste(piste)]);
+        this.gestionnaireBD.mettreAJourPiste(this.pistes[this.getIndicePiste(piste)]).catch( () => { throw new ErreurEffacerTemps; });
     }
 
     public peutAjouter(): boolean {
@@ -60,7 +62,7 @@ export class AdministrateurComponent extends AbstractListePisteComponent {
         const indicePiste: number = this.getIndicePiste(piste);
         const nouveauTemps: ITempsBD = this.creerTempsBD();
         this.pistes[indicePiste].temps.push(nouveauTemps);
-        this.gestionnaireBD.mettreAJourPiste(this.pistes[indicePiste]);
+        this.gestionnaireBD.mettreAJourPiste(this.pistes[indicePiste]).catch(() => {throw new ErreurMettreAJourPiste; });
         this.miseAZeroDuTemps();
     }
 

@@ -12,7 +12,7 @@ describe("FinCourseComponent: ", () => {
         imports: [ RouterTestingModule ],
         declarations: [ FinCourseComponent ]
     })
-    .compileComponents();
+    .compileComponents().catch();
     }));
 
     beforeEach(() => {

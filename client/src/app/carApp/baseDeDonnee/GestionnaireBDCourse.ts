@@ -49,23 +49,23 @@ export class GestionnaireBDCourse {
         return this.http.get<PisteBD[]>(PISTES_URL);
     }
 
-    public async obtenirUnePiste(identifiant: string): Promise<void> {
-       await this.http.get<PisteBD>(PISTES_URL + identifiant).subscribe();
+    public obtenirUnePiste(identifiant: string): Observable<PisteBD> {
+       return this.http.get<PisteBD>(PISTES_URL + identifiant);
     }
 
-    public supprimerPiste(piste: PisteBD): Promise<Object> {
+    public async supprimerPiste(piste: PisteBD): Promise<Object> {
         return this.http.delete(URL_SUPPRIMER_PISTE + piste._id).toPromise();
     }
 
-    public creerNouvellePiste(piste: PisteBD): Promise<Object> {
+    public async creerNouvellePiste(piste: PisteBD): Promise<Object> {
         return this.http.post(URL_AJOUTER_PISTE, piste).toPromise();
     }
 
-    public mettreAJourPiste(piste: PisteBD): Promise<Object> {
+    public async mettreAJourPiste(piste: PisteBD): Promise<Object> {
         return this.http.patch(URL_MODIFIER_PISTE + piste._id, piste).toPromise();
     }
 
-    public incrementerNbFoisJouePiste(piste: PisteBD): Promise<Object> {
+    public async incrementerNbFoisJouePiste(piste: PisteBD): Promise<Object> {
         return this.http.patch(URL_INC_NB_FOIS_JOUE_PISTE + piste._id, piste).toPromise();
     }
 }

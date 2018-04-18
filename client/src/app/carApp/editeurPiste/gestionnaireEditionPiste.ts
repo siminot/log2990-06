@@ -9,6 +9,8 @@ import { PisteEdition } from "../piste/pisteEdition";
 import { Point } from "../elementsGeometrie/point";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { PisteBD } from "../piste/IPisteBD";
+import { ErreurCreationPiste } from "../../exceptions/erreurCreationPiste";
+import { ErreurMettreAJourPiste } from "../../exceptions/erreurMettreAJourPiste";
 
 @Injectable()
 export class GestionnaireEditionPiste {
@@ -40,14 +42,15 @@ export class GestionnaireEditionPiste {
                                     points: this._piste.exporter(), type: "Hello",
                                     temps: [],
                                     nbFoisJoue: 0};
-        this.gestionnaireBD.creerNouvellePiste(unePiste);
+        this.gestionnaireBD.creerNouvellePiste(unePiste).catch(() => { throw new ErreurCreationPiste; });
     }
 
     public mettreAJourPiste(nom: string, description: string): void {
         this.gestionnaireBD.mettreAJourPiste({ _id: null, nom: nom, description: description, points: this._piste.exporter(),
                                                type: "Une piste",
                                                temps: [],
-                                               nbFoisJoue: 0 });
+                                               nbFoisJoue: 0 })
+            .catch(() => { throw new ErreurMettreAJourPiste; });
     }
 
     private inscriptionSouris(): void {

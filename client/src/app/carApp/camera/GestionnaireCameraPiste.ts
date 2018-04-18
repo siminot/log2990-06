@@ -44,10 +44,8 @@ export class GestionnaireCameraPiste implements ICamera {
     }
 
     private ajusterZoom(): void {
-        console.log(this);
         if (this.largeur * this.hauteur < PIXELS_PETITE_FENETRE) {
             this._camera.zoom = ZOOM_PETITE_FENETRE;
-            // console.log("PETITE FENETRE");
         }
 
         this._camera.updateProjectionMatrix();

@@ -2,6 +2,7 @@ import { Component, Inject } from "@angular/core";
 import { PisteBD } from "../piste/IPisteBD";
 import { GestionnaireBDCourse } from "../baseDeDonnee/GestionnaireBDCourse";
 import { AbstractListePisteComponent } from "../abstract-component/abstract.listePiste.component";
+import { ErreurIncrementerNbFoisJoue } from "../../exceptions/erreurIncrementerNbFoisJoue";
 
 @Component({
     selector: "app-choix-course",
@@ -18,6 +19,6 @@ export class ChoixCourseComponent extends AbstractListePisteComponent {
         if (piste !== undefined) {
             this.gestionnaireBD.pisteJeu = piste;
         }
-        this.gestionnaireBD.incrementerNbFoisJouePiste(piste);
+        this.gestionnaireBD.incrementerNbFoisJouePiste(piste).catch( () => { throw new ErreurIncrementerNbFoisJoue; });
     }
 }

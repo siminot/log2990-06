@@ -22,7 +22,7 @@ ul, li {
     list-style-image: url('../../../assets/purple_ghost.jpg');
 }
 
-.pisteTitre, .pisteDescription, .titre, .creer, .unePiste, .editer, .supprimer, #suppToutesPistes, #titrePrincipal, .inputTemps {
+.pisteTitre, .pisteDescription, .titre, .creer, .unePiste, .editer, .supprimer, #suppToutesPistes, #titrePrincipal, .inputTemps, .apercuPiste {
     font-family: 'Press Start 2P', cursive;
 }
 
@@ -71,9 +71,11 @@ ul, li {
     margin-bottom: 5px;
 }
 
-.pisteDescription {
+.pisteDescription, .apercuPiste {
     font-size: 10px;
     position:relative;
+    display: table-cell;
+    width: 80%;
 }
 
 .divider {
@@ -128,4 +130,9 @@ ul, li {
 .addImg {
     height: 15px;
     width:15px;
+}
+
+.apercuPiste {
+    position:relative;
+    display: table-cell;
 }

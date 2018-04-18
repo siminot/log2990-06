@@ -56,6 +56,11 @@
                     <button class="supprimer" title="supprimer" (click)="supprimerPiste(piste)">Supprimer</button>
                 </div>
 
+                <div class="apercuPiste">
+                    Aperçu
+                    <app-apercu-piste-component [piste]="piste.points"></app-apercu-piste-component>
+                </div>
+
             </mat-expansion-panel>
         </mat-accordion>
         <button id="suppToutesPistes" title="suppToutesPistes" (click)="supprimerToutesPistes()">Supprimer toutes les pistes</button>

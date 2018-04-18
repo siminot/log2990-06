@@ -1,19 +1,22 @@
-import { Directive, Input, HostListener } from "@angular/core";
+import { Directive, Input, HostListener, ElementRef } from "@angular/core";
 import * as CONST from "../constants";
 
 @Directive({
-  selector: "[appNbCaractMax]"
+    selector: "[appNbCaractMax]"
 })
 export class NbCaractMaxDirective {
 
-  @Input()
-  private appNbCaractMax: string;
+    @Input()
+    private appNbCaractMax: string;
 
-  public constructor() { }
+    public constructor(private el: ElementRef) {
+    }
 
-  @HostListener("keydown", ["$event"])
-  public onKeyDown(event: KeyboardEvent): void {
-    
-  }
+    @HostListener("keyup", ["$event"])
+    public onKeyUp(event: KeyboardEvent): void {
+        if (this.el.nativeElement.value.length > +this.appNbCaractMax) {
+            event.preventDefault();
+        }
+    }
 
 }

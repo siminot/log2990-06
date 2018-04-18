@@ -1,4 +1,4 @@
-import { Component, AfterContentChecked } from "@angular/core";
+import { Component, AfterViewChecked } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
@@ -6,12 +6,12 @@ import { Router } from "@angular/router";
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.css"]
 })
-export class AppComponent implements AfterContentChecked {
+export class AppComponent implements AfterViewChecked {
 
     public constructor(private router: Router) {
     }
 
-    public ngAfterContentChecked(): void {
+    public ngAfterViewChecked(): void {
         this.router.url === "/" ? this.remettreImageBackground() : this.retirerBackgroundImage();
     }
 

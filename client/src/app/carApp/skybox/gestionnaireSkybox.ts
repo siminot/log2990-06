@@ -43,6 +43,13 @@ export class GestionnaireSkybox {
         this.miseAJourSkybox();
     }
 
+    public changerSkyboxAleatoire(): void {
+        const NOMBRE_ALEATOIRE: number = Math.random() * this.environnements.get(this.tempsJournee).length;
+        for (let i: number = 0 ; i < NOMBRE_ALEATOIRE ; i++) {
+            this.changerDecor();
+        }
+    }
+
     private get skyboxSelonTemps(): Skybox[] {
         if (this.environnements.get(this.tempsJournee) === undefined) {
             this.environnements.set(this.tempsJournee , new Array<Skybox>());

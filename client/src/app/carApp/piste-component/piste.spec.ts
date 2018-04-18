@@ -10,6 +10,7 @@ import { GestionnaireSouris } from "../souris/gestionnaireSouris";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { GestionnaireCameraPiste } from "../camera/GestionnaireCameraPiste";
 import { GestionnaireScenePiste } from "../scene/GestionnaireScenePiste";
+import { NbCaractMaxDirective } from "../directive-nb-caract-max/nb-caract-max.directive";
 
 describe("PisteComponent", () => {
     let component: PisteComponent;
@@ -18,7 +19,7 @@ describe("PisteComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule, HttpClientTestingModule],
-            declarations: [PisteComponent],
+            declarations: [PisteComponent, NbCaractMaxDirective],
             providers: [ GestionnaireEditionPiste,
                          GestionnaireBDCourse,
                          ServiceDeRenduPistes,

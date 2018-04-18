@@ -7,6 +7,7 @@ import { ErreurMettreAJourPiste } from "../../exceptions/erreurMettreAJourPiste"
 import { ResultatJoueur } from "../fin-course/resultatJoueur";
 import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
 import * as CONST from "../constants";
+import { ErreurTableauVide } from "../../exceptions/erreurTableauVide";
 
 @Component({
     selector: "app-tableau-meilleurs-temps",
@@ -46,8 +47,12 @@ export class TableauMeilleursTempsComponent implements OnInit {
     }
 
     private classerTempsCourse(): void {
-        this._resultatsCourse.sort((a: ResultatJoueur, b: ResultatJoueur) =>
-            a.tempsCourse.temps - b.tempsCourse.temps);
+        if (this._resultatsCourse !== null) {
+            this._resultatsCourse.sort((a: ResultatJoueur, b: ResultatJoueur) =>
+                a.tempsCourse.temps - b.tempsCourse.temps);
+        } else {
+            throw new ErreurTableauVide();
+        }
     }
 
     private classerTempsTableau(): void {
@@ -60,6 +65,8 @@ export class TableauMeilleursTempsComponent implements OnInit {
 
                 return tmpA > tmpB ? 1 : -1;
             });
+        } else {
+            throw new ErreurTableauVide();
         }
     }
 

@@ -1,17 +1,32 @@
-import { Component } from "@angular/core";
+import { Component, AfterContentChecked } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.css"]
 })
-export class AppComponent {
+export class AppComponent implements AfterContentChecked {
+
+    public constructor(private router: Router) {
+    }
+
+    public ngAfterContentChecked(): void {
+        console.log(this.router.url);
+        this.router.url === "/" ? this.remettreImageBackground() : this.retirerBackgroundImage();
+    }
 
     public retirerBackgroundImage(): void {
-        document.getElementById("bg").id = "nobg";
+        const bg: HTMLElement = document.getElementById("bgHome");
+        if (bg !== null) {
+            bg.id = "nobgHome";
+        }
     }
 
     public remettreImageBackground(): void {
-        document.getElementById("nobg").id = "bg";
+        const bg: HTMLElement = document.getElementById("nobgHome");
+        if (bg !== null) {
+            bg.id = "bgHome";
+        }
     }
  }

@@ -4,6 +4,7 @@
     width:100vw;
     margin-top: 10px;
     display:block;
+    text-align:center;
 }
 
 .menuItem {
@@ -32,7 +33,7 @@
     width: 100vw;
 }
 
-#bg {
+#bgHome {
     position: absolute;
     top:0;
     left:0;
@@ -45,7 +46,7 @@
     opacity: 0.7;
 }
 
-#nobg {
+#nobgHome {
     position: absolute;
     top:0;
     left:0;

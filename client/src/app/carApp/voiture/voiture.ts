@@ -30,11 +30,11 @@ export class Voiture extends Object3D implements IObjetEnMouvement {
     private _sonSortieRoute: SonSortieRoute;
     private sortiePiste: VerificateurSortiePiste;
 
-    public  jouerSonCollision(): void {
+    public jouerSonCollision(): void {
         this._sonCollision.jouerSon();
     }
 
-    public  jouerSonSortieRoute(): void {
+    public jouerSonSortieRoute(): void {
         this._sonSortieRoute.jouerSon();
     }
 

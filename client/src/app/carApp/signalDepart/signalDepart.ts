@@ -63,7 +63,7 @@ export class SignalDepart extends Sprite {
     }
 
     private miseAJourSprite(): void {
-        this.material.setValues(this.materielSprite);
+        this.material = this.materielSprite;
         this.scale.set(DIMENSION, DIMENSION, 1);
         this.position.set(this.zoneDepart.x, HAUTEUR, this.zoneDepart.z);
     }

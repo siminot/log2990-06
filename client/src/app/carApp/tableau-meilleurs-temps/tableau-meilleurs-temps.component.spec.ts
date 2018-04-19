@@ -12,6 +12,7 @@ import { MatDividerModule } from "@angular/material/divider";
 import { ITempsBD } from "../piste/ITempsBD";
 import { TempsJoueur } from "../GestionnaireDesTemps/tempsJoueur";
 import { ResultatJoueur } from "../fin-course/resultatJoueur";
+import { FormsModule } from "@angular/forms";
 
 describe("TableauMeilleursTempsComponent", () => {
     let component: TableauMeilleursTempsComponent;
@@ -46,7 +47,7 @@ describe("TableauMeilleursTempsComponent", () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ MatDividerModule ],
+            imports: [ MatDividerModule, FormsModule ],
             declarations: [ TableauMeilleursTempsComponent ],
             providers: [ TimerService, GestionnaireDesTempsService, GestionnaireBDCourse, HttpClient, HttpHandler,
                          { provide: Router, useValue: mockRouter }]

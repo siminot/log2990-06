@@ -76,7 +76,10 @@ export class GestionnaireCollision {
     }
 
     private gererCollisionHorsPiste(voiture: Voiture): void {
-        this.reculerAuto(voiture, voiture.direction.normalize().multiplyScalar(DITANCE_RECUL));
+        voiture.speed.z < 0
+            ? this.reculerAuto(voiture, voiture.direction.normalize().multiplyScalar(DITANCE_RECUL))
+            : this.reculerAuto(voiture, voiture.direction.normalize().multiplyScalar(-DITANCE_RECUL));
+
         voiture.vitesseEnLocal(voiture.vitesseDansMonde.multiplyScalar(RAPORT_VITESSE));
         voiture.jouerSonSortieRoute();
 

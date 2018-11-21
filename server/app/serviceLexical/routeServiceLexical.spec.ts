@@ -7,10 +7,11 @@ import { RouteServiceLexical } from "./routeServiceLexical";
 import { Mot } from "./Mot";
 import * as WebRequest from "web-request";
 import { ServiceWeb } from "../serviceweb";
+import { SERVER_URL } from "../../../common/communication/Server";
 
 const ROUTE: ServiceWeb = new RouteServiceLexical();
 
-const URL_SERVICE_LEXICAL: string = "http://localhost:3000" + ROUTE.mainRoute;
+const URL_SERVICE_LEXICAL: string = SERVER_URL.slice(0, -1) + ROUTE.mainRoute;
 const URL_DEFINITION: string = "/def/";
 const URL_COMMUN: string = "/commun";
 const URL_NONCOMMUN: string = "/noncommun";

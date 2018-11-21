@@ -3,8 +3,8 @@ import { SocketServer } from "./socketServer";
 import * as http from "http";
 import * as event from "./../../../common/communication/evenementSocket";
 import * as socketIo from "socket.io-client";
+import { SERVER_URL } from "../../../common/communication/Server";
 
-const SERVER_URL: string = "http://localhost:3000/";
 
 describe("SocketServer", () => {
 

@@ -3,11 +3,12 @@ import { HttpClient} from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import { Mot } from "../objetsTest/mot";
 import { Difficulte } from "../../../../../common/communication/Difficulte";
+import { SERVER_URL } from "../../../../../common/communication/Server";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
 export const DIFFICULTE_DEFAUT: Difficulte = Difficulte.Facile;
-const URL_REQUETE: string = "http://localhost:3000/grille/";
+const URL_REQUETE: string = SERVER_URL + "grille/";
 
 @Injectable()
 export class ServiceHttp {

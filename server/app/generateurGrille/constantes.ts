@@ -1,3 +1,5 @@
+import { SERVER_URL } from "../../../common/communication/Server";
+
 export const TAILLE_TABLEAU: number = 10;
 export const TAILLE_TEST: number = 10;
 export const TAILLE_MINIMUM: number = 2;
@@ -8,5 +10,5 @@ export const POURCENTAGE_NOIR: number = 0.45;
 export const PROB_CASE_N: number = 0.25;
 export const HEURISTIQUE_LNG_MOT: number = 1.75;
 
-export const REQUETE_COMMUN: string = "http://localhost:3000/servicelexical/commun/contrainte/";
-export const REQUETE_NONCOMMUN: string = "http://localhost:3000/servicelexical/noncommun/contrainte/";
+export const REQUETE_COMMUN: string = SERVER_URL + "servicelexical/commun/contrainte/";
+export const REQUETE_NONCOMMUN: string = SERVER_URL + "servicelexical/noncommun/contrainte/";

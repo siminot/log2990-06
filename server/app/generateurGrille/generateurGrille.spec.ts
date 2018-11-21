@@ -2,6 +2,7 @@ import { GenerateurGrille } from "./generateurGrille";
 import * as assert from "assert";
 import * as WebRequest from "web-request";
 import { Mot } from "./mot";
+import { SERVER_URL } from "../../../common/communication/Server";
 
 describe("Tests GenerateurGrille", () => {
 
@@ -21,7 +22,7 @@ describe("Tests GenerateurGrille", () => {
 
         const TEMPS_MAXIMAL: number = 30000; // une grille doit etre retournee en moins de 30 secondes
         it("requeteGrille fonctionne (le serveur doit fonctionner)", async () => {
-            const URL_TEST: string = "http://localhost:3000/grille/facile";
+            const URL_TEST: string = SERVER_URL + "grille/facile";
             const data: Mot = await WebRequest.json<Mot>(URL_TEST);
             assert.ok(data);
 

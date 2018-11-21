@@ -4,8 +4,9 @@ import { HttpClient } from "@angular/common/http";
 import { Point } from "../elementsGeometrie/point";
 import { Observable } from "rxjs/Observable";
 import { IDefinitionPoint } from "../../../../../common/communication/IDefinitionPoint";
+import { SERVER_URL } from "../../../../../common/communication/Server";
 
-export const PISTES_URL: string = "http://localhost:3000/apipistes/";
+export const PISTES_URL: string = SERVER_URL + "apipistes/";
 const URL_SUPPRIMER_PISTE: string = PISTES_URL + "supprimer/";
 const URL_AJOUTER_PISTE: string = PISTES_URL + "ajouter/";
 const URL_MODIFIER_PISTE: string = PISTES_URL + "modifier/";

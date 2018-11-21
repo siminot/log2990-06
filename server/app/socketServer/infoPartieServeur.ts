@@ -2,6 +2,7 @@ import { Mot } from "./mot";
 import { PaquetPartie } from "./paquet";
 import * as event from "./../../../common/communication/evenementSocket";
 import * as WebRequest from "web-request";
+import { SERVER_URL } from "../../../common/communication/Server";
 
 const NB_JOUEUR_MAX: number = 2;
 
@@ -231,7 +232,7 @@ export class InfoPartieServeur {
     }
 
     private async genererGrille(): Promise<Mot[]> {
-        return WebRequest.json<Mot[]>("http://localhost:3000/grille/" + this.difficultee);
+        return WebRequest.json<Mot[]>(SERVER_URL + "grille/" + this.difficultee);
     }
 
     public detruirePartie(): void {

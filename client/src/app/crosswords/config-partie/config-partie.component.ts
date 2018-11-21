@@ -4,8 +4,9 @@ import { SocketService } from "../service-socket/service-socket";
 import { Difficulte } from "../../../../../common/communication/Difficulte";
 import { Router } from "@angular/router";
 import { listeMotsLongue } from "./../objetsTest/objetsTest";
+import { SERVER_URL } from "../../../../../common/communication/Server";
 
-export const REQUETE_INIT: string = "http://localhost:3000/grille/";
+export const REQUETE_INIT: string = SERVER_URL + "grille/";
 const TOUCHE_ENTREE: string = "Enter";
 
 @Component({

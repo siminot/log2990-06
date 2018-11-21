@@ -6,8 +6,9 @@
 import * as assert from "assert";
 import * as WebRequest from "web-request";
 import { PisteBD } from "../../../client/src/app/carApp/piste/IPisteBD";
+import { SERVER_URL } from "../../../common/communication/Server";
 
-const URL_SERVICE: string = "http://localhost:3000/apipistes/";
+const URL_SERVICE: string = SERVER_URL + "apipistes/";
 {
     describe("Tests sur les routes de la base de données.", () => {
         describe("Accéder aux routes (serveur doit rouler pour que ca fonctionne)", async () => {

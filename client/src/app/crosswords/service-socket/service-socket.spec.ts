@@ -1,8 +1,7 @@
 import { SocketService } from "./service-socket";
 import * as socketIo from "socket.io-client";
 import { Router } from "@angular/router";
-
-const SERVER_URL: string = "http://localhost:3000/";
+import { SERVER_URL } from "../../../../../common/communication/Server";
 
 describe("ServiceSocketService", () => {
     // On veut utiliser let afin de ne pas l'initialser

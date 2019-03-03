@@ -1,14 +1,14 @@
 import { injectable, inject } from "inversify";
 import { Router, Request, Response } from "express";
 
-import { ServiceWeb } from "../serviceweb";
+import { ServiceWeb, SERVER_HOSTNAME } from "../serviceweb";
 import Types from "../types";
 import { BaseDonneesCourse } from "./baseDonneesCourse";
 
 @injectable()
 export class RouteBaseDonneesCourse extends ServiceWeb {
 
-    public readonly mainRoute: string = "/apipistes";
+    public readonly mainRoute: string = SERVER_HOSTNAME + "/apipistes";
 
     public constructor(@inject(Types.BaseDonneesCourse) private baseDonneesCourse: BaseDonneesCourse) {
         super();

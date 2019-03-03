@@ -3,12 +3,12 @@ import { Router, Request, Response } from "express";
 
 import { ServiceLexical } from "./ServiceLexical";
 import { Frequence } from "./Mot";
-import { ServiceWeb } from "../serviceweb";
+import { ServiceWeb, SERVER_HOSTNAME } from "../serviceweb";
 
 @injectable()
 export class RouteServiceLexical extends ServiceWeb {
 
-    public readonly mainRoute: string = "/serviceLexical";
+    public readonly mainRoute: string = SERVER_HOSTNAME + "/serviceLexical";
 
     public constructor() {
         super();

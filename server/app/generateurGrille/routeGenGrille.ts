@@ -3,12 +3,12 @@ import { Router, Request, Response } from "express";
 
 import Types from "../types";
 import { GenerateurGrille } from "./generateurGrille";
-import { ServiceWeb } from "../serviceweb";
+import { ServiceWeb, SERVER_HOSTNAME } from "../serviceweb";
 
 @injectable()
 export class RouteGenGrille extends ServiceWeb {
 
-    public readonly mainRoute: string = "/grille";
+    public readonly mainRoute: string = SERVER_HOSTNAME + "/grille";
 
     public constructor(@inject(Types.GenerateurGrille) private genGrille: GenerateurGrille) { super(); }
 

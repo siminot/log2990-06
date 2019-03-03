@@ -7,7 +7,7 @@ import * as CONST from "../constants";
 
 export abstract class AbstractListePisteComponent implements OnInit, OnDestroy {
 
-    protected pistes: PisteBD[];
+    public pistes: PisteBD[];
     private abonnementPistes: Subscription;
 
     public constructor(protected gestionnaireBD: GestionnaireBDCourse) {}

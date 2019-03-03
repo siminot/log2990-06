@@ -11,9 +11,9 @@ import { EncadrementCase } from "./librairieGrille/encadrementCase";
 const REGLE_JEU: string = "Cliquez sur une définition afin d'effectuer une tentative.";
 
 export abstract class GrilleAbs implements OnDestroy {
+  public matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
 
   protected mots: Mot[];
-  protected matriceDesMotsSurGrille: Array<Array<LettreGrille>>;
   protected motSelectionne: Mot;
   protected lockedLetter: boolean[][];
 
@@ -182,6 +182,10 @@ export abstract class GrilleAbs implements OnDestroy {
     this.subscriptionMots.unsubscribe();
     this.subscriptionMatrice.unsubscribe();
     this.subscriptionMotSelec.unsubscribe();
+  }
+
+  public rejouerPartie(): void {
+    return;
   }
 
 }

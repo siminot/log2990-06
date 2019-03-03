@@ -14,8 +14,9 @@ import * as CONST from "../constants";
     styleUrls: ["./tableau-meilleurs-temps.component.css"]
 })
 export class TableauMeilleursTempsComponent implements OnInit {
+    public _pisteCourante: PisteBD;
+
     private _joueurASoumisAuTableau: boolean;
-    private _pisteCourante: PisteBD;
     private _resultatsCourse: Array<ResultatJoueur>;
     private _tempsAAjouterAuTableau: ITempsBD;
     private _nomJoueur: string;

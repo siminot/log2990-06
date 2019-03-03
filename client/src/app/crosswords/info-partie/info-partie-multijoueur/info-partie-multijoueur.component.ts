@@ -12,10 +12,10 @@ import { PaquetPartie } from "../../objetsTest/paquetPartie";
 
 export class InfoPartieMultijoueurComponent extends InfoPartieAbs {
 
-  private _motsDecouvertsJoueur1: number;
-  private _motsDecouvertsJoueur2: number;
-  private _nomJoueur1: string;
-  private _nomJoueur2: string;
+  public _motsDecouvertsJoueur1: number;
+  public _motsDecouvertsJoueur2: number;
+  public _nomJoueur1: string;
+  public _nomJoueur2: string;
 
   public constructor(_servicePointage: InfojoueurService,
                      private socketClient: SocketService) {

@@ -17,9 +17,9 @@ const POURCENTAGE_MAX: number = 100;
 
 @Injectable()
 export class InfoJoueurSoloComponent extends InfoPartieAbs implements OnInit, OnDestroy {
+  public _nomJoueur: string;
+  public _nbMotsDecouverts: number;
 
-  private _nomJoueur: string;
-  private _nbMotsDecouverts: number;
   private _barreProgression: HTMLElement;
   private _subscriptionNbMotsDecouv: Subscription;
 

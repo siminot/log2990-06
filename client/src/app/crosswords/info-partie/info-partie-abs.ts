@@ -6,10 +6,11 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Observable } from "rxjs/Observable";
 
 export abstract class InfoPartieAbs {
+  public _difficulte: string;
+  public _timer: number;
+  public _formatedTimer: string;
+
   protected _listeMots: Mot[];
-  private _timer: number;
-  private _formatedTimer: string;
-  protected _difficulte: string;
 
   private _timerObservable$: Observable<number>;
 

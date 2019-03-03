@@ -15,12 +15,12 @@ const TOUCHE_ENTREE: string = "Enter";
     styleUrls: ["./config-partie.component.css"]
 })
 export class ConfigPartieComponent implements OnInit {
+    public estCreateur: boolean;
+    public listePartie: Array<Array<string>>;
 
     private nomPartie: string;
     private nomJoueur: string;
     private difficultee: string;
-    private listePartie: Array<Array<string>>;
-    private estCreateur: boolean;
 
     public constructor(private serviceHTTP: ServiceHttp,
                        private serviceSocket: SocketService,
@@ -43,10 +43,10 @@ export class ConfigPartieComponent implements OnInit {
         document.getElementById(laSection).classList.add("pasVisible");
     }
 
-    public ajouterDifficulte(difficulte: Difficulte): void {
+    public ajouterDifficulte(difficulte: string): void {
         this.difficultee = difficulte;
         if (difficulte !== undefined) {
-            this.serviceHTTP.difficulte = difficulte;
+            this.serviceHTTP.difficulte = difficulte as Difficulte;
         }
     }
 

@@ -15,11 +15,10 @@ const NBR_TOURS: number = 3;
     styleUrls: ["./vue-tete-haute.component.css"]
 })
 export class VueTeteHauteComponent implements OnInit {
-
+    public tempsCourse: TempsAffichage;
+    public tempsTours: Array<TempsAffichage>;
+    public numTour: number;
     private tempsActuel: number;
-    private tempsCourse: TempsAffichage;
-    private tempsTours: Array<TempsAffichage>;
-    private numTour: number;
     private rafraichissement: NodeJS.Timer;
 
     public constructor(private timer: TimerService,

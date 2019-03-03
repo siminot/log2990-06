@@ -24,6 +24,8 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   private motSelectionne: Mot;
 
+  public estVertical: boolean;
+
   public constructor(private listeMotsService: ServiceInteractionComponent) {
     this.mots = this.listeMotsService.mots;
     this.matriceDesMotsSurGrille = this.listeMotsService.matrice;

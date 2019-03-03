@@ -43,6 +43,7 @@ import { GestionnaireBDCourse } from "./carApp/baseDeDonnee/GestionnaireBDCourse
 import { GestionnaireEditionPiste } from "./carApp/editeurPiste/gestionnaireEditionPiste";
 import { VueTeteHauteComponent } from "./carApp/vue-tete-haute/vue-tete-haute/vue-tete-haute.component";
 import { TimerService } from "./carApp/timer/timer.service";
+import { DefinitionComponent } from "./crosswords/definition/definition.component";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatExpansionModule } from "@angular/material/expansion";
@@ -81,7 +82,8 @@ import { NbCaractMaxDirective } from "./carApp/directive-nb-caract-max/nb-caract
         VueTeteHauteComponent,
         TableauMeilleursTempsComponent,
         EstUnChiffreDirective,
-        NbCaractMaxDirective
+        NbCaractMaxDirective,
+        DefinitionComponent
     ],
     imports: [
         BrowserModule,

@@ -6,9 +6,8 @@ import { injectable } from "inversify";
 import { ErreurSupressionBaseDonnees } from "../exceptions/erreurSupressionBD";
 import { ErreurModificationBaseDonnees } from "../exceptions/erreurModificationBD";
 import { ErreurConnectionBD } from "../exceptions/erreurConnectionBD";
+import { MONGO_DB_URL } from "../../../common/communication/Server";
 import "reflect-metadata";
-
-const URL_BD: string = "mongodb://admin:admin@ds123129.mlab.com:23129/log2990";
 
 @injectable()
 export class BaseDonneesCourse {
@@ -31,7 +30,7 @@ export class BaseDonneesCourse {
     }
 
     private async seConnecter(): Promise<void> {
-        await this.mongoose.connect(URL_BD);
+        await this.mongoose.connect(MONGO_DB_URL);
     }
 
     private get estConnecte(): boolean {

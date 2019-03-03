@@ -4,6 +4,7 @@ import * as logger from "morgan";
 import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
+import * as helmet from "helmet";
 import Types from "./types";
 import { injectable, inject } from "inversify";
 
@@ -44,6 +45,7 @@ export class Application {
                        "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization");
             next();
           });
+        this.app.use(helmet());
     }
 
     public routes(): void {

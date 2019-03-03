@@ -4,7 +4,7 @@
   "version": "1.1.0",
   "private": true,
   "scripts": {
-    "start": "tsc && concurrently --kill-others \"tsc -w \" \"nodemon out/server/app/www.js\" ",
+    "start": "set NODE_ENV=production && tsc && concurrently --kill-others \"tsc -w \" \"node out/server/app/www.js\" ",
     "lint": "tslint --project tsconfig.json \"./app/**/*.ts\" --format stylish",
     "test": "mocha -r ts-node/register app/**/*.spec.ts",
     "tsc": "tsc",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@angular/http": "^5.2.9",
+    "@types/helmet": "0.0.42",
     "@types/socket.io-client": "^1.4.32",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.0",
@@ -21,6 +22,7 @@
     "debug": ">=2.6.9",
     "expect": "^22.1.0",
     "express": "^4.16.4",
+    "helmet": "^3.15.1",
     "inversify": "^4.3.0",
     "jasmine-expect": "^3.8.1",
     "mongodb": "^3.0.3",

@@ -3,7 +3,7 @@
 import { injectable } from "inversify";
 import { Router } from "express";
 
-export const SERVER_HOSTNAME: string = "server";
+export const SERVER_HOSTNAME: string = "/server";
 
 @injectable()
 export abstract class ServiceWeb {
